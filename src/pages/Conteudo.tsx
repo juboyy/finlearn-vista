@@ -2,6 +2,7 @@ import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, Bell, Bookmark, Heart, MessageCircle, Flame, Crown, ChevronLeft, ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const articles = [
   {
@@ -172,10 +173,12 @@ const Conteudo = () => {
                   <span className="text-border">•</span>
                   <span className="text-sm text-muted-foreground">12 Mar 2024</span>
                 </div>
-                <Button size="lg" className="w-fit">
-                  Ler Artigo Completo
-                  <ChevronRight size={16} className="ml-2" />
-                </Button>
+                <Link to="/artigo/1">
+                  <Button size="lg" className="w-fit">
+                    Ler Artigo Completo
+                    <ChevronRight size={16} className="ml-2" />
+                  </Button>
+                </Link>
               </div>
             </div>
           </section>
