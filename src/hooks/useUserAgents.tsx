@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 export interface UserAgent {
@@ -76,146 +75,78 @@ export const useUserAgents = () => {
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
-  const initializeDefaultAgents = async (userId: string) => {
-    const { error } = await supabase
-      .from('user_agents')
-      .insert(
-        DEFAULT_AGENTS.map(agent => ({
-          ...agent,
-          user_id: userId
-        }))
-      );
-
-    if (error) {
-      console.error('Error initializing default agents:', error);
-      toast({
-        title: "Erro ao criar agentes padrão",
-        description: error.message,
-        variant: "destructive",
-      });
-    }
-  };
-
-  const fetchAgents = async () => {
-    try {
-      setLoading(true);
-      const { data: { user } } = await supabase.auth.getUser();
-      
-      if (!user) {
-        setAgents([]);
-        return;
+  // Initialize with default agents from localStorage or defaults
+  const initializeAgents = () => {
+    const stored = localStorage.getItem('user_agents');
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        setAgents(parsed);
+      } catch (error) {
+        console.error('Error parsing stored agents:', error);
+        createDefaultAgents();
       }
-
-      const { data, error } = await supabase
-        .from('user_agents')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: true });
-
-      if (error) throw error;
-
-      // If no agents exist, initialize with defaults
-      if (!data || data.length === 0) {
-        await initializeDefaultAgents(user.id);
-        await fetchAgents(); // Fetch again after initialization
-        return;
-      }
-
-      setAgents(data);
-    } catch (error: any) {
-      console.error('Error fetching agents:', error);
-      toast({
-        title: "Erro ao carregar agentes",
-        description: error.message,
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
+    } else {
+      createDefaultAgents();
     }
   };
 
-  const toggleAgentStatus = async (agentId: string, currentStatus: boolean) => {
-    try {
-      const { error } = await supabase
-        .from('user_agents')
-        .update({ is_active: !currentStatus })
-        .eq('id', agentId);
-
-      if (error) throw error;
-
-      // Update local state
-      setAgents(prev => 
-        prev.map(agent => 
-          agent.id === agentId 
-            ? { ...agent, is_active: !currentStatus }
-            : agent
-        )
-      );
-
-      toast({
-        title: currentStatus ? "Agente desativado" : "Agente ativado",
-        description: currentStatus 
-          ? "O agente foi desativado com sucesso." 
-          : "O agente foi ativado com sucesso.",
-      });
-    } catch (error: any) {
-      console.error('Error toggling agent status:', error);
-      toast({
-        title: "Erro ao atualizar status",
-        description: error.message,
-        variant: "destructive",
-      });
-    }
+  const createDefaultAgents = () => {
+    const defaultAgents: UserAgent[] = DEFAULT_AGENTS.map((agent, index) => ({
+      id: `agent-${index + 1}`,
+      user_id: 'local-user',
+      agent_key: agent.agent_key,
+      agent_name: agent.agent_name,
+      agent_description: agent.agent_description,
+      agent_category: agent.agent_category,
+      agent_image: agent.agent_image,
+      agent_bg_color: agent.agent_bg_color,
+      rating: agent.rating,
+      credits: agent.credits,
+      max_credits: agent.max_credits,
+      is_active: agent.is_active,
+      last_interaction: new Date().toISOString(),
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    }));
+    
+    setAgents(defaultAgents);
+    localStorage.setItem('user_agents', JSON.stringify(defaultAgents));
   };
 
-  const updateAgentCredits = async (agentId: string, newCredits: number) => {
-    try {
-      const { error } = await supabase
-        .from('user_agents')
-        .update({ credits: newCredits })
-        .eq('id', agentId);
+  const toggleAgentStatus = (agentId: string, currentStatus: boolean) => {
+    const updatedAgents = agents.map(agent => 
+      agent.id === agentId 
+        ? { ...agent, is_active: !currentStatus, updated_at: new Date().toISOString() }
+        : agent
+    );
+    
+    setAgents(updatedAgents);
+    localStorage.setItem('user_agents', JSON.stringify(updatedAgents));
+    
+    toast({
+      title: currentStatus ? "Agente desativado" : "Agente ativado",
+      description: currentStatus 
+        ? "O agente foi desativado com sucesso." 
+        : "O agente foi ativado com sucesso.",
+    });
+  };
 
-      if (error) throw error;
-
-      setAgents(prev => 
-        prev.map(agent => 
-          agent.id === agentId 
-            ? { ...agent, credits: newCredits }
-            : agent
-        )
-      );
-    } catch (error: any) {
-      console.error('Error updating agent credits:', error);
-      toast({
-        title: "Erro ao atualizar créditos",
-        description: error.message,
-        variant: "destructive",
-      });
-    }
+  const updateAgentCredits = (agentId: string, newCredits: number) => {
+    const updatedAgents = agents.map(agent => 
+      agent.id === agentId 
+        ? { ...agent, credits: newCredits, updated_at: new Date().toISOString() }
+        : agent
+    );
+    
+    setAgents(updatedAgents);
+    localStorage.setItem('user_agents', JSON.stringify(updatedAgents));
   };
 
   useEffect(() => {
-    fetchAgents();
-
-    // Subscribe to realtime changes
-    const channel = supabase
-      .channel('user_agents_changes')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'user_agents'
-        },
-        () => {
-          fetchAgents();
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
+    setLoading(true);
+    initializeAgents();
+    setLoading(false);
   }, []);
 
   return {
@@ -223,6 +154,6 @@ export const useUserAgents = () => {
     loading,
     toggleAgentStatus,
     updateAgentCredits,
-    refetch: fetchAgents
+    refetch: initializeAgents
   };
 };
