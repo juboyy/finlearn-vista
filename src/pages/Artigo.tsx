@@ -393,7 +393,7 @@ const Artigo = () => {
                       </div>
                     </div>
                   </div>
-                  <Button className="bg-pastel-blue hover:bg-pastel-blue/80">
+                  <Button className="bg-pastel-blue-dark text-pastel-gray-dark hover:bg-pastel-blue-dark/80">
                     <Plus size={16} className="mr-2" />
                     Seguir
                   </Button>

@@ -51,6 +51,10 @@ All colors MUST be HSL.
     --pastel-green: 152 45% 83%;
     --pastel-yellow: 44 46% 83%;
     --pastel-peach: 24 46% 83%;
+    
+    /* Dark Pastel Colors */
+    --pastel-blue-dark: 206 49% 45%;
+    --pastel-gray-dark: 220 12% 40%;
 
     /* Sidebar - Dark Pastel Gray */
     --sidebar-background: 220 12% 28%;
@@ -104,6 +108,9 @@ All colors MUST be HSL.
     --pastel-green: 152 45% 73%;
     --pastel-yellow: 44 46% 73%;
     --pastel-peach: 24 46% 73%;
+    
+    --pastel-blue-dark: 206 49% 40%;
+    --pastel-gray-dark: 220 12% 35%;
 
     --sidebar-background: 220 12% 20%;
     --sidebar-foreground: 0 0% 100%;
