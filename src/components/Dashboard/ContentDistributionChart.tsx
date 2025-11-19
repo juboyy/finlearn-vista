@@ -3,8 +3,8 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip, Sector } fro
 
 const data = [
   { name: "Artigos", value: 40, color: "hsl(206, 45%, 65%)" },
-  { name: "Podcasts", value: 25, color: "hsl(24, 42%, 67%)" },
   { name: "Vídeos", value: 20, color: "hsl(322, 40%, 68%)" },
+  { name: "Podcasts", value: 25, color: "hsl(24, 42%, 67%)" },
   { name: "Cursos", value: 15, color: "hsl(152, 42%, 65%)" },
 ];
 
