@@ -28,9 +28,9 @@ export const ContentCard = ({
   badgeColor 
 }: ContentCardProps) => {
   return (
-    <div className="rounded-lg border border-border overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
+    <div className="rounded-lg border border-border overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2 flex flex-col group">
       <div className="h-40 overflow-hidden">
-        <img src={image} alt={title} className="w-full h-full object-cover" />
+        <img src={image} alt={title} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110" />
       </div>
       <div className="p-4 flex flex-col flex-grow">
         <Badge className={cn("mb-2 self-start", badgeColor)}>

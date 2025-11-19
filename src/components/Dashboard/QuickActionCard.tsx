@@ -13,9 +13,9 @@ export const QuickActionCard = ({ icon: Icon, title, description, bgColor, onCli
   return (
     <button 
       onClick={onClick}
-      className={cn("w-full flex items-center gap-4 p-4 rounded-lg hover:opacity-80 transition-opacity text-left", bgColor)}
+      className={cn("w-full flex items-center gap-4 p-4 rounded-lg hover:opacity-80 hover:scale-105 transition-all duration-300 text-left", bgColor)}
     >
-      <div className="w-10 h-10 bg-card rounded-lg flex items-center justify-center">
+      <div className="w-10 h-10 bg-card rounded-lg flex items-center justify-center transition-transform group-hover:rotate-6">
         <Icon className="text-foreground" size={20} />
       </div>
       <div>

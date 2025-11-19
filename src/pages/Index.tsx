@@ -5,6 +5,8 @@ import { QuickActionCard } from "@/components/Dashboard/QuickActionCard";
 import { EventCard } from "@/components/Dashboard/EventCard";
 import { ContentCard } from "@/components/Dashboard/ContentCard";
 import { ProgressBar } from "@/components/Dashboard/ProgressBar";
+import { LearningProgressChart } from "@/components/Dashboard/LearningProgressChart";
+import { ContentDistributionChart } from "@/components/Dashboard/ContentDistributionChart";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Award, Clock, Flame, TrendingUp, Coins, Scale, Bot, Mic, Video, BookMarked, Bell, Plus, Clock as ClockIcon, Headphones, Play } from "lucide-react";
 
@@ -35,51 +37,57 @@ const Index = () => {
         
         <div className="p-8">
           <section className="grid grid-cols-4 gap-6 mb-8">
-            <StatCard
-              icon={BookOpen}
-              value="24"
-              label="Cursos em Progresso"
-              trend="+12%"
-              bgColor="bg-pastel-blue"
-            />
-            <StatCard
-              icon={Award}
-              value="8"
-              label="Certificados Obtidos"
-              trend="+3"
-              bgColor="bg-pastel-green"
-            />
-            <StatCard
-              icon={Clock}
-              value="12.5h"
-              label="Tempo de Estudo"
-              trend="Esta semana"
-              trendType="neutral"
-              bgColor="bg-pastel-yellow"
-            />
-            <StatCard
-              icon={Flame}
-              value="15"
-              label="Dias Consecutivos"
-              trend="Sequência"
-              trendType="neutral"
-              bgColor="bg-pastel-pink"
-            />
+            <div className="animate-fade-in" style={{ animationDelay: "0.1s" }}>
+              <StatCard
+                icon={BookOpen}
+                value="24"
+                label="Cursos em Progresso"
+                trend="+12%"
+                bgColor="bg-pastel-blue"
+              />
+            </div>
+            <div className="animate-fade-in" style={{ animationDelay: "0.2s" }}>
+              <StatCard
+                icon={Award}
+                value="8"
+                label="Certificados Obtidos"
+                trend="+3"
+                bgColor="bg-pastel-green"
+              />
+            </div>
+            <div className="animate-fade-in" style={{ animationDelay: "0.3s" }}>
+              <StatCard
+                icon={Clock}
+                value="12.5h"
+                label="Tempo de Estudo"
+                trend="Esta semana"
+                trendType="neutral"
+                bgColor="bg-pastel-yellow"
+              />
+            </div>
+            <div className="animate-fade-in" style={{ animationDelay: "0.4s" }}>
+              <StatCard
+                icon={Flame}
+                value="15"
+                label="Dias Consecutivos"
+                trend="Sequência"
+                trendType="neutral"
+                bgColor="bg-pastel-pink"
+              />
+            </div>
           </section>
           
           <div className="grid grid-cols-3 gap-6 mb-8">
-            <section className="col-span-2 bg-card rounded-xl p-6 border border-border">
+            <section className="col-span-2 bg-card rounded-xl p-6 border border-border animate-fade-in">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-lg font-semibold text-foreground">Progresso de Aprendizado</h2>
-                <select className="text-sm text-foreground border border-border rounded-lg px-3 py-2 bg-background focus:outline-none focus:ring-2 focus:ring-ring">
+                <select className="text-sm text-foreground border border-border rounded-lg px-3 py-2 bg-background focus:outline-none focus:ring-2 focus:ring-ring transition-all">
                   <option>Últimos 7 dias</option>
                   <option>Últimos 30 dias</option>
                   <option>Últimos 90 dias</option>
                 </select>
               </div>
-              <div className="h-64 flex items-center justify-center text-muted-foreground">
-                <p>Gráfico de progresso - Integração Plotly disponível</p>
-              </div>
+              <LearningProgressChart />
             </section>
             
             <section className="bg-card rounded-xl p-6 border border-border">
@@ -188,11 +196,9 @@ const Index = () => {
               </div>
             </section>
             
-            <section className="col-span-1 bg-card rounded-xl p-6 border border-border">
+            <section className="col-span-1 bg-card rounded-xl p-6 border border-border animate-fade-in" style={{ animationDelay: "0.2s" }}>
               <h2 className="text-lg font-semibold text-foreground mb-4">Distribuição de Conteúdo</h2>
-              <div className="flex items-center justify-center h-48 text-muted-foreground">
-                <p>Gráfico de pizza - Integração Plotly disponível</p>
-              </div>
+              <ContentDistributionChart />
             </section>
           </div>
           
