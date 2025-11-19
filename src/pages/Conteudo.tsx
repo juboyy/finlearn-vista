@@ -202,70 +202,65 @@ const Conteudo = () => {
             {/* Main Articles */}
             <section className="col-span-2 space-y-6">
               {articles.map((article) => (
-                <Link 
-                  key={article.id} 
-                  to={article.id === 4 ? `/artigo-premium/${article.id}` : `/artigo/${article.id}`}
-                >
-                  <article className="bg-card border border-border rounded-xl overflow-hidden hover:shadow-md transition">
-                    <div className="grid grid-cols-5">
-                      <div className="col-span-2 h-56 overflow-hidden">
-                        <img src={article.image} alt={article.title} className="w-full h-full object-cover" />
+                <article key={article.id} className="bg-card border border-border rounded-xl overflow-hidden hover:shadow-md transition">
+                  <div className="grid grid-cols-5">
+                    <div className="col-span-2 h-56 overflow-hidden">
+                      <img src={article.image} alt={article.title} className="w-full h-full object-cover" />
+                    </div>
+                    <div className="col-span-3 p-6">
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className={`text-xs font-medium px-2 py-1 rounded ${
+                          article.categoryColor === 'primary' ? 'text-primary bg-primary/10' :
+                          article.categoryColor === 'secondary' ? 'text-secondary bg-secondary/10' :
+                          article.categoryColor === 'accent' ? 'text-accent bg-accent/10' :
+                          article.categoryColor === 'success' ? 'text-success bg-success/10' :
+                          'text-primary bg-primary/10'
+                        }`}>
+                          {article.category}
+                        </span>
+                        <span className="text-xs text-muted-foreground">•</span>
+                        <span className="text-xs text-muted-foreground">{article.readTime} de leitura</span>
+                        {article.isPremium && (
+                          <>
+                            <span className="text-xs text-muted-foreground">•</span>
+                            <span className="text-xs font-medium text-warning bg-warning/10 px-2 py-1 rounded">
+                              <Crown size={10} className="inline mr-1" />
+                              Premium
+                            </span>
+                          </>
+                        )}
                       </div>
-                      <div className="col-span-3 p-6">
-                        <div className="flex items-center gap-2 mb-3">
-                          <span className={`text-xs font-medium px-2 py-1 rounded ${
-                            article.categoryColor === 'primary' ? 'text-primary bg-primary/10' :
-                            article.categoryColor === 'secondary' ? 'text-secondary bg-secondary/10' :
-                            article.categoryColor === 'accent' ? 'text-accent bg-accent/10' :
-                            article.categoryColor === 'success' ? 'text-success bg-success/10' :
-                            'text-primary bg-primary/10'
-                          }`}>
-                            {article.category}
-                          </span>
-                          <span className="text-xs text-muted-foreground">•</span>
-                          <span className="text-xs text-muted-foreground">{article.readTime} de leitura</span>
-                          {article.isPremium && (
-                            <>
-                              <span className="text-xs text-muted-foreground">•</span>
-                              <span className="text-xs font-medium text-warning bg-warning/10 px-2 py-1 rounded">
-                                <Crown size={10} className="inline mr-1" />
-                                Premium
-                              </span>
-                            </>
-                          )}
+                      <h3 className="text-xl font-semibold text-foreground mb-3 hover:text-primary cursor-pointer">
+                        {article.title}
+                      </h3>
+                      <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
+                        {article.description}
+                      </p>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <img src={article.avatar} alt="Author" className="w-8 h-8 rounded-full object-cover" />
+                          <div>
+                            <div className="font-medium text-sm text-foreground">{article.author}</div>
+                            <div className="text-xs text-muted-foreground">{article.date}</div>
+                          </div>
                         </div>
-                        <h3 className="text-xl font-semibold text-foreground mb-3 hover:text-primary cursor-pointer">
-                          {article.title}
-                        </h3>
-                        <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
-                          {article.description}
-                        </p>
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <img src={article.avatar} alt="Author" className="w-8 h-8 rounded-full object-cover" />
-                            <div>
-                              <div className="font-medium text-sm text-foreground">{article.author}</div>
-                              <div className="text-xs text-muted-foreground">{article.date}</div>
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                            <button className="hover:text-primary transition">
-                              <Heart size={16} className="inline mr-1" />
-                              {article.likes}
-                            </button>
-                            <button className="hover:text-primary transition">
-                              <MessageCircle size={16} className="inline mr-1" />
-                              {article.comments}
-                            </button>
-                            <button className="hover:text-primary transition">
-                              <Bookmark size={16} />
-                            </button>
-                          </div>
+                        <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                          <button className="hover:text-primary transition">
+                            <Heart size={16} className="inline mr-1" />
+                            {article.likes}
+                          </button>
+                          <button className="hover:text-primary transition">
+                            <MessageCircle size={16} className="inline mr-1" />
+                            {article.comments}
+                          </button>
+                          <button className="hover:text-primary transition">
+                            <Bookmark size={16} />
+                          </button>
                         </div>
                       </div>
                     </div>
-                  </article>
-                </Link>
+                  </div>
+                </article>
               ))}
             </section>
 
