@@ -1,4 +1,4 @@
-import { Home, Newspaper, Bot, GraduationCap, Book, MessageCircle, Store, TrendingUp, CreditCard, Settings } from "lucide-react";
+import { Home, Newspaper, Bot, GraduationCap, Book, MessageCircle, Store, TrendingUp, Users, Settings } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 
 const navigation = [
@@ -9,8 +9,8 @@ const navigation = [
   { name: "Biblioteca", href: "/biblioteca", icon: Book },
   { name: "Comunidade", href: "/comunidade", icon: MessageCircle },
   { name: "Marketplace", href: "/marketplace", icon: Store },
+  { name: "Autores", href: "/autores", icon: Users },
   { name: "Analytics", href: "/analytics", icon: TrendingUp },
-  { name: "Assinatura", href: "/assinatura", icon: CreditCard },
 ];
 
 export const Sidebar = () => {
