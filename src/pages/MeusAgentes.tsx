@@ -101,7 +101,7 @@ export default function MeusAgentes() {
       </header>
 
       {/* Breadcrumb */}
-      <div className="px-8 py-3 bg-background">
+      <div className="px-8 pt-6 pb-3 bg-background">
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Link to="/" className="hover:text-foreground transition flex items-center gap-1">
             <Home size={16} />
