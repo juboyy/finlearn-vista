@@ -13,7 +13,7 @@ const navigation = [
   { name: "Analytics", href: "/analytics", icon: TrendingUp },
 ];
 
-export const Sidebar = () => {
+export const SidebarFix = () => {
   return (
     <aside className="w-64 bg-sidebar border-r border-sidebar-border flex flex-col">
       <div className="p-6 border-b border-sidebar-border">

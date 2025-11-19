@@ -1,4 +1,4 @@
-import { Sidebar } from "@/components/Dashboard/Sidebar";
+import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { StatCard } from "@/components/Dashboard/StatCard";
 import { CourseCard } from "@/components/Dashboard/CourseCard";
 import { QuickActionCard } from "@/components/Dashboard/QuickActionCard";
@@ -13,7 +13,7 @@ import { BookOpen, Award, Clock, Flame, TrendingUp, Coins, Scale, Bot, Mic, Vide
 const Index = () => {
   return (
     <div className="flex h-screen overflow-hidden">
-      <Sidebar />
+      <SidebarFix />
       
       <main className="flex-1 overflow-y-auto">
         <header className="bg-card border-b border-border sticky top-0 z-10">
