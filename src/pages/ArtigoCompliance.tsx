@@ -451,11 +451,11 @@ export default function ArtigoCompliance() {
 
       {/* Paywall Overlay */}
       {showPaywall && (
-        <div className="fixed inset-0 z-50 animate-fade-in">
+        <div className="fixed inset-0 z-50 animate-fade-in overflow-y-auto">
           <div className="absolute inset-0 bg-background/95 backdrop-blur-md" />
-          <div className="absolute bottom-0 left-0 right-0 animate-slide-in-right">
-            <div className="max-w-4xl mx-auto px-6 pb-8">
-              <div className="bg-card rounded-t-3xl shadow-2xl border-t-4 border-primary p-10">
+          <div className="relative min-h-screen flex items-start justify-center py-8 animate-scale-in">
+            <div className="max-w-4xl mx-auto px-6 w-full">
+              <div className="bg-card rounded-3xl shadow-2xl border-t-4 border-primary p-10">
                 <div className="text-center mb-8">
                   <div className="inline-flex items-center justify-center w-20 h-20 bg-primary/20 rounded-full mb-6">
                     <Crown className="text-primary" size={36} />
