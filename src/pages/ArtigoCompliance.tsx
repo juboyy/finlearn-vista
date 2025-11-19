@@ -460,34 +460,23 @@ export default function ArtigoCompliance() {
             </div>
 
             <div className="bg-card rounded-xl p-6 border border-border">
-              <h3 className="text-sm font-semibold text-foreground mb-4">Compartilhar Artigo</h3>
-              <div className="space-y-3">
-                <button className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition text-left">
-                  <div className="w-10 h-10 bg-[hsl(206,35%,75%)] rounded-lg flex items-center justify-center">
-                    <Share2 size={18} className="text-[hsl(220,15%,30%)]" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-foreground">LinkedIn</p>
-                    <p className="text-xs text-muted-foreground">Compartilhar no LinkedIn</p>
-                  </div>
+              <h3 className="text-sm font-semibold text-foreground mb-4">Compartilhar</h3>
+              <div className="grid grid-cols-2 gap-3">
+                <button className="flex flex-col items-center gap-2 p-4 rounded-lg bg-muted hover:bg-muted/70 transition">
+                  <Share2 size={20} className="text-[hsl(206,35%,65%)]" />
+                  <span className="text-xs font-medium text-foreground">LinkedIn</span>
                 </button>
-                <button className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition text-left">
-                  <div className="w-10 h-10 bg-[hsl(160,35%,75%)] rounded-lg flex items-center justify-center">
-                    <Share2 size={18} className="text-[hsl(220,15%,30%)]" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-foreground">WhatsApp</p>
-                    <p className="text-xs text-muted-foreground">Enviar via WhatsApp</p>
-                  </div>
+                <button className="flex flex-col items-center gap-2 p-4 rounded-lg bg-muted hover:bg-muted/70 transition">
+                  <Share2 size={20} className="text-[hsl(206,35%,65%)]" />
+                  <span className="text-xs font-medium text-foreground">Twitter</span>
                 </button>
-                <button className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition text-left">
-                  <div className="w-10 h-10 bg-[hsl(280,35%,75%)] rounded-lg flex items-center justify-center">
-                    <Share2 size={18} className="text-[hsl(220,15%,30%)]" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-foreground">E-mail</p>
-                    <p className="text-xs text-muted-foreground">Enviar por e-mail</p>
-                  </div>
+                <button className="flex flex-col items-center gap-2 p-4 rounded-lg bg-muted hover:bg-muted/70 transition">
+                  <Share2 size={20} className="text-[hsl(206,35%,65%)]" />
+                  <span className="text-xs font-medium text-foreground">Facebook</span>
+                </button>
+                <button className="flex flex-col items-center gap-2 p-4 rounded-lg bg-muted hover:bg-muted/70 transition">
+                  <Share2 size={20} className="text-[hsl(280,35%,65%)]" />
+                  <span className="text-xs font-medium text-foreground">Copiar</span>
                 </button>
               </div>
             </div>
