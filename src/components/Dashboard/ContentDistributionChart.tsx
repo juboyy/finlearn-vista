@@ -7,36 +7,7 @@ const data = [
   { name: "Cursos", value: 15, color: "hsl(152, 45%, 83%)" },
 ];
 
-const RADIAN = Math.PI / 180;
 
-interface LabelProps {
-  cx: number;
-  cy: number;
-  midAngle: number;
-  innerRadius: number;
-  outerRadius: number;
-  percent: number;
-}
-
-const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: LabelProps) => {
-  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-  const x = cx + radius * Math.cos(-midAngle * RADIAN);
-  const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-  return (
-    <text
-      x={x}
-      y={y}
-      fill="hsl(220, 15%, 20%)"
-      textAnchor={x > cx ? "start" : "end"}
-      dominantBaseline="central"
-      fontSize="14"
-      fontWeight="600"
-    >
-      {`${(percent * 100).toFixed(0)}%`}
-    </text>
-  );
-};
 
 export const ContentDistributionChart = () => {
   return (
@@ -46,11 +17,9 @@ export const ContentDistributionChart = () => {
           data={data}
           cx="50%"
           cy="50%"
-          labelLine={false}
-          label={renderCustomizedLabel}
           outerRadius={80}
           innerRadius={40}
-          paddingAngle={3}
+          paddingAngle={0}
           dataKey="value"
           animationBegin={0}
           animationDuration={1000}
