@@ -3,8 +3,8 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip, Sector } fro
 
 const data = [
   { name: "Artigos", value: 40, color: "hsl(206, 45%, 65%)" },
-  { name: "Vídeos", value: 20, color: "hsl(322, 40%, 68%)" },
   { name: "Podcasts", value: 25, color: "hsl(24, 42%, 67%)" },
+  { name: "Vídeos", value: 20, color: "hsl(322, 40%, 68%)" },
   { name: "Cursos", value: 15, color: "hsl(152, 42%, 65%)" },
 ];
 
@@ -44,7 +44,7 @@ export const ContentDistributionChart = () => {
   };
 
   return (
-    <ResponsiveContainer width="100%" height={280}>
+    <ResponsiveContainer width="100%" height={250}>
       <PieChart>
         <Pie
           data={data}
@@ -85,20 +85,17 @@ export const ContentDistributionChart = () => {
         />
         <Legend
           verticalAlign="bottom"
-          align="center"
+          height={40}
           iconType="circle"
-          iconSize={10}
+          iconSize={12}
           wrapperStyle={{
-            paddingTop: "12px",
-            paddingBottom: "4px",
-            fontSize: "13px",
+            paddingTop: "24px",
+            fontSize: "14px",
             fontWeight: 500,
             color: "hsl(220, 15%, 35%)",
-            display: "grid",
-            gridTemplateColumns: "repeat(2, minmax(0, 140px))",
-            gap: "6px 32px",
+            display: "flex",
             justifyContent: "center",
-            margin: "0 auto",
+            gap: "16px",
           }}
         />
       </PieChart>
