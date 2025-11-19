@@ -12,9 +12,9 @@ interface StatCardProps {
 
 export const StatCard = ({ icon: Icon, value, label, trend, trendType = "positive", bgColor }: StatCardProps) => {
   return (
-    <div className="bg-card rounded-xl p-6 border border-border">
+    <div className="bg-card rounded-xl p-6 border border-border hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
       <div className="flex items-center justify-between mb-4">
-        <div className={cn("w-12 h-12 rounded-lg flex items-center justify-center", bgColor)}>
+        <div className={cn("w-12 h-12 rounded-lg flex items-center justify-center transition-transform hover:scale-110 duration-300", bgColor)}>
           <Icon className="text-foreground" size={24} />
         </div>
         {trend && (
