@@ -178,9 +178,9 @@ export default function ArtigoCompliance() {
           <article className="col-span-7">
             <div className="bg-card rounded-xl p-10 border border-border mb-6">
               <div className="flex items-center gap-2 mb-4">
-                <span className="px-3 py-1 bg-secondary text-[hsl(220,15%,30%)] text-sm rounded-full font-medium">Compliance</span>
-                <span className="px-3 py-1 bg-[hsl(206,49%,65%)] text-[hsl(220,15%,30%)] text-sm rounded-full font-medium">BACEN</span>
-                <span className="px-3 py-1 bg-accent text-[hsl(220,15%,30%)] text-sm rounded-full font-medium">Regulatório</span>
+                <span className="px-3 py-1 bg-[hsl(280,35%,75%)] text-[hsl(220,15%,30%)] text-sm rounded-full font-medium">Compliance</span>
+                <span className="px-3 py-1 bg-[hsl(206,35%,75%)] text-[hsl(220,15%,30%)] text-sm rounded-full font-medium">BACEN</span>
+                <span className="px-3 py-1 bg-[hsl(340,35%,75%)] text-[hsl(220,15%,30%)] text-sm rounded-full font-medium">Regulatório</span>
               </div>
 
               <h1 className="text-4xl font-bold text-foreground mb-4 leading-tight">
