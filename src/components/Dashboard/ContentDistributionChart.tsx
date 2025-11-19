@@ -85,17 +85,20 @@ export const ContentDistributionChart = () => {
         />
         <Legend
           verticalAlign="bottom"
-          height={40}
+          height={60}
           iconType="circle"
           iconSize={12}
           wrapperStyle={{
-            paddingTop: "24px",
+            paddingTop: "8px",
             fontSize: "14px",
             fontWeight: 500,
             color: "hsl(220, 15%, 35%)",
-            display: "flex",
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "8px 24px",
             justifyContent: "center",
-            gap: "16px",
+            width: "fit-content",
+            margin: "0 auto",
           }}
         />
       </PieChart>
