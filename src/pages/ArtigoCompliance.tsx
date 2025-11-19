@@ -417,13 +417,13 @@ export default function ArtigoCompliance() {
                     <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
                   )}
                 </button>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground py-2 border-l-2 border-transparent pl-3 cursor-not-allowed">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground/60 py-2 border-l-2 border-transparent pl-3 cursor-not-allowed">
                   Impactos na Gestão de Riscos
-                  <Lock size={12} />
+                  <Lock size={16} className="text-muted-foreground/60" />
                 </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground py-2 border-l-2 border-transparent pl-3 cursor-not-allowed">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground/60 py-2 border-l-2 border-transparent pl-3 cursor-not-allowed">
                   O Futuro do Compliance
-                  <Lock size={12} />
+                  <Lock size={16} className="text-muted-foreground/60" />
                 </div>
               </nav>
             </div>
