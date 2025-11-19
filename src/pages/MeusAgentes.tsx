@@ -20,78 +20,55 @@ import {
   Store,
   History,
   Settings as SettingsIcon,
-  Lightbulb
+  Lightbulb,
+  Loader2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Progress } from "@/components/ui/progress";
+import { useUserAgents } from "@/hooks/useUserAgents";
 
 export default function MeusAgentes() {
-  const myAgents = [
-    {
-      id: 1,
-      name: "Ana - Analista Técnica",
-      description: "Especialista em análise técnica, padrões gráficos e estratégias de trading. Fornece insights detalhados sobre movimentos de mercado.",
-      category: "Análise Técnica",
-      icon: ChartLine,
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/f28f1efee6-bb8cd63f0a8ea0129291.png",
-      bgColor: "bg-[hsl(206,35%,85%)]",
-      rating: "4.9",
-      lastInteraction: "há 2 horas",
-      credits: 750,
-      maxCredits: 1000,
-      isActive: true
-    },
-    {
-      id: 2,
-      name: "Ricardo - Especialista em Renda Fixa",
-      description: "Expert em títulos públicos, CDBs, LCIs e estratégias conservadoras. Ajuda na construção de carteiras de renda fixa eficientes.",
-      category: "Renda Fixa",
-      icon: Landmark,
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4f08e86bcd-772ce53ecbb47d504bde.png",
-      bgColor: "bg-[hsl(280,35%,85%)]",
-      rating: "4.8",
-      lastInteraction: "ontem",
-      credits: 420,
-      maxCredits: 1000,
-      isActive: true
-    },
-    {
-      id: 3,
-      name: "Marina - Mercado de Capitais",
-      description: "Especialista em IPOs, ofertas públicas, estruturação de operações e regulação do mercado de capitais brasileiro.",
-      category: "Mercado de Capitais",
-      icon: Building2,
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/521bb99722-72b06772970c6fd465e6.png",
-      bgColor: "bg-[hsl(340,35%,85%)]",
-      rating: "4.7",
-      lastInteraction: "há 3 dias",
-      credits: 890,
-      maxCredits: 1000,
-      isActive: true
-    },
-    {
-      id: 4,
-      name: "Professor João - Educador",
-      description: "Educador financeiro com foco em fundamentos e teoria econômica. Explica conceitos complexos de forma didática.",
-      category: "Educação",
-      icon: GraduationCap,
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4450be57c6-3f9f4c9c029e3c4d7519.png",
-      bgColor: "bg-[hsl(160,35%,85%)]",
-      rating: "4.9",
-      lastInteraction: "há 1 semana",
-      credits: 950,
-      maxCredits: 1000,
-      isActive: false
+  const { agents, loading, toggleAgentStatus } = useUserAgents();
+
+  const getCategoryIcon = (category: string) => {
+    switch (category) {
+      case "Análise Técnica":
+        return ChartLine;
+      case "Renda Fixa":
+        return Landmark;
+      case "Mercado de Capitais":
+        return Building2;
+      case "Educação":
+        return GraduationCap;
+      default:
+        return ChartLine;
     }
-  ];
+  };
 
   const getProgressColor = (percentage: number) => {
     if (percentage > 70) return "bg-[hsl(206,35%,75%)]";
     if (percentage > 40) return "bg-[hsl(45,35%,75%)]";
     return "bg-[hsl(0,35%,75%)]";
   };
+
+  const calculateLastInteraction = (lastInteraction: string) => {
+    const now = new Date();
+    const then = new Date(lastInteraction);
+    const diffInHours = Math.floor((now.getTime() - then.getTime()) / (1000 * 60 * 60));
+    
+    if (diffInHours < 1) return "há poucos minutos";
+    if (diffInHours < 24) return `há ${diffInHours} horas`;
+    const diffInDays = Math.floor(diffInHours / 24);
+    if (diffInDays === 1) return "ontem";
+    if (diffInDays < 7) return `há ${diffInDays} dias`;
+    return `há ${Math.floor(diffInDays / 7)} semana${Math.floor(diffInDays / 7) > 1 ? 's' : ''}`;
+  };
+
+  const totalCredits = agents.reduce((sum, agent) => sum + agent.credits, 0);
+  const totalMaxCredits = agents.reduce((sum, agent) => sum + agent.max_credits, 0);
+  const totalPercentage = totalMaxCredits > 0 ? (totalCredits / totalMaxCredits) * 100 : 0;
 
   return (
     <div className="min-h-screen bg-background">
@@ -140,57 +117,63 @@ export default function MeusAgentes() {
       </div>
 
       <main className="p-8">
-        <div className="grid grid-cols-3 gap-6">
+        {loading ? (
+          <div className="flex items-center justify-center py-20">
+            <Loader2 className="animate-spin text-primary" size={48} />
+          </div>
+        ) : (
+          <div className="grid grid-cols-3 gap-6">
           {/* Agent List */}
           <section className="col-span-2">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-semibold text-foreground">Os Meus Agentes</h2>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <span>{myAgents.filter(a => a.isActive).length} agentes ativos</span>
+                <span>{agents.filter(a => a.is_active).length} agentes ativos</span>
               </div>
             </div>
 
             <div className="space-y-4">
-              {myAgents.map((agent) => {
-                const percentage = (agent.credits / agent.maxCredits) * 100;
+              {agents.map((agent) => {
+                const percentage = (agent.credits / agent.max_credits) * 100;
                 const progressColor = getProgressColor(percentage);
+                const Icon = getCategoryIcon(agent.agent_category);
                 
                 return (
                   <div 
                     key={agent.id} 
-                    className={`bg-card border border-border rounded-xl p-6 hover:shadow-md transition ${!agent.isActive ? 'opacity-60' : ''}`}
+                    className={`bg-card border border-border rounded-xl p-6 hover:shadow-md transition ${!agent.is_active ? 'opacity-60' : ''}`}
                   >
                     <div className="flex items-start gap-6">
-                      <div className={`w-24 h-24 rounded-xl ${agent.bgColor} flex items-center justify-center flex-shrink-0 overflow-hidden ${!agent.isActive ? 'grayscale' : ''}`}>
-                        <img src={agent.image} alt={agent.name} className="w-full h-full object-cover" />
+                      <div className={`w-24 h-24 rounded-xl ${agent.agent_bg_color} flex items-center justify-center flex-shrink-0 overflow-hidden ${!agent.is_active ? 'grayscale' : ''}`}>
+                        <img src={agent.agent_image} alt={agent.agent_name} className="w-full h-full object-cover" />
                       </div>
                       <div className="flex-1">
                         <div className="flex items-start justify-between mb-3">
                           <div>
                             <div className="flex items-center gap-3 mb-2">
-                              <h3 className={`text-lg font-semibold ${agent.isActive ? 'text-foreground' : 'text-muted-foreground'}`}>
-                                {agent.name}
+                              <h3 className={`text-lg font-semibold ${agent.is_active ? 'text-foreground' : 'text-muted-foreground'}`}>
+                                {agent.agent_name}
                               </h3>
                               <span className={`inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-md ${
-                                agent.isActive 
+                                agent.is_active 
                                   ? 'bg-[hsl(160,35%,85%)] text-[hsl(220,15%,30%)]' 
                                   : 'bg-muted text-muted-foreground'
                               }`}>
-                                <span className={`w-1.5 h-1.5 rounded-full ${agent.isActive ? 'bg-[hsl(160,35%,55%)]' : 'bg-muted-foreground'}`}></span>
-                                {agent.isActive ? 'Ativo' : 'Inativo'}
+                                <span className={`w-1.5 h-1.5 rounded-full ${agent.is_active ? 'bg-[hsl(160,35%,55%)]' : 'bg-muted-foreground'}`}></span>
+                                {agent.is_active ? 'Ativo' : 'Inativo'}
                               </span>
                             </div>
-                            <p className={`text-sm mb-3 ${agent.isActive ? 'text-muted-foreground' : 'text-muted-foreground/70'}`}>
-                              {agent.description}
+                            <p className={`text-sm mb-3 ${agent.is_active ? 'text-muted-foreground' : 'text-muted-foreground/70'}`}>
+                              {agent.agent_description}
                             </p>
-                            <div className={`flex items-center gap-4 text-xs ${agent.isActive ? 'text-muted-foreground' : 'text-muted-foreground/50'}`}>
+                            <div className={`flex items-center gap-4 text-xs ${agent.is_active ? 'text-muted-foreground' : 'text-muted-foreground/50'}`}>
                               <span className="flex items-center gap-1">
-                                <agent.icon size={14} />
-                                {agent.category}
+                                <Icon size={14} />
+                                {agent.agent_category}
                               </span>
                               <span className="flex items-center gap-1">
                                 <Clock size={14} />
-                                Última interação: {agent.lastInteraction}
+                                Última interação: {calculateLastInteraction(agent.last_interaction)}
                               </span>
                               <span className="flex items-center gap-1">
                                 <Star size={14} className="text-[hsl(45,35%,65%)]" />
@@ -198,21 +181,24 @@ export default function MeusAgentes() {
                               </span>
                             </div>
                           </div>
-                          <Switch checked={agent.isActive} />
+                          <Switch 
+                            checked={agent.is_active} 
+                            onCheckedChange={() => toggleAgentStatus(agent.id, agent.is_active)}
+                          />
                         </div>
                         
-                        <div className={`rounded-lg p-4 mb-4 ${agent.isActive ? 'bg-muted' : 'bg-muted/50'}`}>
+                        <div className={`rounded-lg p-4 mb-4 ${agent.is_active ? 'bg-muted' : 'bg-muted/50'}`}>
                           <div className="flex items-center justify-between mb-2">
-                            <span className={`text-sm font-medium ${agent.isActive ? 'text-foreground' : 'text-muted-foreground'}`}>
+                            <span className={`text-sm font-medium ${agent.is_active ? 'text-foreground' : 'text-muted-foreground'}`}>
                               Créditos Disponíveis
                             </span>
-                            <span className={`text-sm font-semibold ${agent.isActive ? 'text-foreground' : 'text-muted-foreground'}`}>
-                              {agent.credits} / {agent.maxCredits}
+                            <span className={`text-sm font-semibold ${agent.is_active ? 'text-foreground' : 'text-muted-foreground'}`}>
+                              {agent.credits} / {agent.max_credits}
                             </span>
                           </div>
                           <div className="w-full h-2 bg-background rounded-full overflow-hidden">
                             <div 
-                              className={`h-full ${agent.isActive ? progressColor : 'bg-muted-foreground/30'} rounded-full transition-all`}
+                              className={`h-full ${agent.is_active ? progressColor : 'bg-muted-foreground/30'} rounded-full transition-all`}
                               style={{ width: `${percentage}%` }}
                             ></div>
                           </div>
@@ -222,21 +208,21 @@ export default function MeusAgentes() {
                         <div className="flex items-center gap-3">
                           <Button 
                             className="flex-1 bg-[hsl(206,35%,75%)] text-[hsl(220,15%,30%)] hover:bg-[hsl(206,35%,65%)]"
-                            disabled={!agent.isActive}
+                            disabled={!agent.is_active}
                           >
                             <MessageSquare size={16} className="mr-2" />
                             Conversar
                           </Button>
-                          <Button variant="outline" size="icon" disabled={!agent.isActive}>
+                          <Button variant="outline" size="icon" disabled={!agent.is_active}>
                             <Mic size={16} />
                           </Button>
-                          <Button variant="outline" size="icon" disabled={!agent.isActive}>
+                          <Button variant="outline" size="icon" disabled={!agent.is_active}>
                             <Video size={16} />
                           </Button>
-                          <Button variant="outline" size="icon" disabled={!agent.isActive}>
+                          <Button variant="outline" size="icon" disabled={!agent.is_active}>
                             <Pen size={16} />
                           </Button>
-                          <Button variant="outline" size="icon" disabled={!agent.isActive}>
+                          <Button variant="outline" size="icon" disabled={!agent.is_active}>
                             <MoreVertical size={16} />
                           </Button>
                         </div>
@@ -258,9 +244,9 @@ export default function MeusAgentes() {
                 <div>
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm font-medium text-foreground">Créditos Totais</span>
-                    <span className="text-sm font-semibold text-foreground">3.010 / 4.000</span>
+                    <span className="text-sm font-semibold text-foreground">{totalCredits.toLocaleString()} / {totalMaxCredits.toLocaleString()}</span>
                   </div>
-                  <Progress value={75.25} className="h-2" />
+                  <Progress value={totalPercentage} className="h-2" />
                   <p className="text-xs text-muted-foreground mt-1">Renova em 12 dias</p>
                 </div>
 
@@ -352,6 +338,7 @@ export default function MeusAgentes() {
             </section>
           </aside>
         </div>
+        )}
       </main>
     </div>
   );
