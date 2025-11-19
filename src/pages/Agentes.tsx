@@ -20,9 +20,11 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { AgentChat } from "@/components/AgentChat";
 
 export default function Agentes() {
   const [activeFilter, setActiveFilter] = useState("Todos");
+  const [chatAgent, setChatAgent] = useState<{ name: string; image: string } | null>(null);
 
   const filters = ["Todos", "Análise", "Mentoria", "Educação", "Pesquisa"];
 
@@ -165,6 +167,13 @@ export default function Agentes() {
 
   return (
     <div className="min-h-screen bg-background">
+      {chatAgent && (
+        <AgentChat
+          agentName={chatAgent.name}
+          agentImage={chatAgent.image}
+          onClose={() => setChatAgent(null)}
+        />
+      )}
       {/* Header */}
       <header className="bg-card border-b border-border sticky top-0 z-40">
         <div className="px-8 py-4 flex items-center justify-between">
@@ -292,7 +301,10 @@ export default function Agentes() {
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Button className="flex-1">
+                      <Button 
+                        className="flex-1"
+                        onClick={() => setChatAgent({ name: agent.name, image: agent.image })}
+                      >
                         <MessageSquare size={16} className="mr-2" />
                         Chat
                       </Button>
@@ -342,7 +354,11 @@ export default function Agentes() {
                   <img src={agent.creatorAvatar} alt={agent.creator} className="w-5 h-5 rounded-full object-cover" />
                   <span>por {agent.creator}</span>
                 </div>
-                <Button className="w-full" size="sm">
+                <Button 
+                  className="w-full" 
+                  size="sm"
+                  onClick={() => setChatAgent({ name: agent.name, image: agent.image })}
+                >
                   <MessageSquare size={14} className="mr-1" />
                   Usar Agente
                 </Button>
