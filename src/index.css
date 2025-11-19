@@ -113,3 +113,33 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  /* Sidebar Scrollbar - White bar only, no background, no arrows */
+  .sidebar-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .sidebar-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .sidebar-scroll::-webkit-scrollbar-thumb {
+    background: hsl(0 0% 100%);
+    border-radius: 3px;
+  }
+
+  .sidebar-scroll::-webkit-scrollbar-thumb:hover {
+    background: hsl(0 0% 90%);
+  }
+
+  .sidebar-scroll::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  /* Firefox */
+  .sidebar-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(0 0% 100%) transparent;
+  }
+}
