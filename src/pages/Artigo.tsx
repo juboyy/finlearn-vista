@@ -6,11 +6,30 @@ import {
   Plus, Linkedin, Twitter, Mail, Facebook, Link as LinkIcon, MessageCircle, Bot
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
 
 const Artigo = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState(12);
   const [activeSection, setActiveSection] = useState("");
+
+  // Refs para animação de fade-in
+  const headerRef = useFadeInOnScroll<HTMLDivElement>();
+  const contentOptionsRef = useFadeInOnScroll<HTMLDivElement>();
+  const featuredImageRef = useFadeInOnScroll<HTMLDivElement>();
+  const introRef = useFadeInOnScroll<HTMLParagraphElement>();
+  const section1Ref = useFadeInOnScroll<HTMLDivElement>();
+  const tipBoxRef = useFadeInOnScroll<HTMLDivElement>();
+  const section2Ref = useFadeInOnScroll<HTMLDivElement>();
+  const modalitiesRef = useFadeInOnScroll<HTMLDivElement>();
+  const section3Ref = useFadeInOnScroll<HTMLDivElement>();
+  const checklistRef = useFadeInOnScroll<HTMLUListElement>();
+  const section4Ref = useFadeInOnScroll<HTMLDivElement>();
+  const comparisonRef = useFadeInOnScroll<HTMLDivElement>();
+  const section5Ref = useFadeInOnScroll<HTMLDivElement>();
+  const trendsRef = useFadeInOnScroll<HTMLDivElement>();
+  const conclusionRef = useFadeInOnScroll<HTMLDivElement>();
+  const authorRef = useFadeInOnScroll<HTMLDivElement>();
 
   useEffect(() => {
     const updateProgress = () => {
@@ -175,7 +194,7 @@ const Artigo = () => {
           {/* Article Content */}
           <article className="col-span-7">
             <div className="bg-card rounded-xl p-10 border border-border mb-6">
-              <div className="flex items-center gap-2 mb-4">
+              <div ref={headerRef} className="flex items-center gap-2 mb-4 opacity-0">
                 <span className="px-3 py-1 bg-pastel-blue/20 text-foreground text-sm rounded-full font-medium">Crédito</span>
                 <span className="px-3 py-1 bg-pastel-green/20 text-foreground text-sm rounded-full font-medium">Imobiliário</span>
                 <span className="px-3 py-1 bg-pastel-peach/20 text-foreground text-sm rounded-full font-medium">Financiamento</span>
@@ -204,7 +223,7 @@ const Artigo = () => {
               </div>
 
               {/* Content Consumption Options */}
-              <div className="bg-muted/50 rounded-xl p-6 mb-8 border border-border">
+              <div ref={contentOptionsRef} className="bg-muted/50 rounded-xl p-6 mb-8 border border-border opacity-0">
                 <h3 className="text-sm font-semibold text-foreground mb-4 flex items-center gap-2">
                   <Volume2 size={16} className="text-pastel-purple" />
                   Escolha como consumir este conteúdo
@@ -232,7 +251,7 @@ const Artigo = () => {
               </div>
 
               {/* Featured Image */}
-              <div className="h-96 overflow-hidden rounded-xl mb-8">
+              <div ref={featuredImageRef} className="h-96 overflow-hidden rounded-xl mb-8 opacity-0">
                 <img 
                   className="w-full h-full object-cover" 
                   src="https://storage.googleapis.com/uxpilot-auth.appspot.com/e9f4ab2317-1e3bd4dce6a6584fbcbe.png" 
@@ -242,17 +261,19 @@ const Artigo = () => {
 
               {/* Article Body */}
               <div className="prose prose-slate max-w-none">
-                <p className="text-lg text-foreground leading-relaxed mb-6 font-medium">
+                <p ref={introRef} className="text-lg text-foreground leading-relaxed mb-6 font-medium opacity-0">
                   O crédito imobiliário é uma das principais ferramentas para realização do sonho da casa própria no Brasil. Com as recentes mudanças nas taxas de juros e nas condições de financiamento, entender os detalhes desse mercado tornou-se ainda mais essencial para profissionais do setor financeiro e futuros compradores.
                 </p>
 
-                <h2 id="o-que-e-credito" className="text-2xl font-bold text-foreground mt-10 mb-4">O que é Crédito Imobiliário?</h2>
-                <p className="text-base text-foreground leading-relaxed mb-6">
-                  O crédito imobiliário é uma modalidade de empréstimo de longo prazo destinado exclusivamente à compra, construção ou reforma de imóveis. No Brasil, esse tipo de financiamento é regulamentado pelo Sistema Financeiro de Habitação (SFH) e pelo Sistema de Financiamento Imobiliário (SFI), cada um com suas características e regras específicas.
-                </p>
+                <div ref={section1Ref} className="opacity-0">
+                  <h2 id="o-que-e-credito" className="text-2xl font-bold text-foreground mt-10 mb-4">O que é Crédito Imobiliário?</h2>
+                  <p className="text-base text-foreground leading-relaxed mb-6">
+                    O crédito imobiliário é uma modalidade de empréstimo de longo prazo destinado exclusivamente à compra, construção ou reforma de imóveis. No Brasil, esse tipo de financiamento é regulamentado pelo Sistema Financeiro de Habitação (SFH) e pelo Sistema de Financiamento Imobiliário (SFI), cada um com suas características e regras específicas.
+                  </p>
+                </div>
 
                 {/* Tip Box */}
-                <div className="bg-pastel-yellow/20 border-l-4 border-pastel-yellow rounded-r-lg p-6 my-8">
+                <div ref={tipBoxRef} className="bg-pastel-yellow/20 border-l-4 border-pastel-yellow rounded-r-lg p-6 my-8 opacity-0">
                   <div className="flex gap-4">
                     <Lightbulb size={24} className="text-foreground flex-shrink-0" />
                     <div>
@@ -264,13 +285,15 @@ const Artigo = () => {
                   </div>
                 </div>
 
-                <h2 id="principais-modalidades" className="text-2xl font-bold text-foreground mt-10 mb-4">Principais Modalidades de Financiamento</h2>
-                <p className="text-base text-foreground leading-relaxed mb-6">
-                  Existem diferentes tipos de financiamento imobiliário disponíveis no mercado brasileiro, cada um adequado a perfis específicos de compradores:
-                </p>
+                <div ref={section2Ref} className="opacity-0">
+                  <h2 id="principais-modalidades" className="text-2xl font-bold text-foreground mt-10 mb-4">Principais Modalidades de Financiamento</h2>
+                  <p className="text-base text-foreground leading-relaxed mb-6">
+                    Existem diferentes tipos de financiamento imobiliário disponíveis no mercado brasileiro, cada um adequado a perfis específicos de compradores:
+                  </p>
+                </div>
 
                 {/* Numbered List */}
-                <div className="space-y-4 mb-8">
+                <div ref={modalitiesRef} className="space-y-4 mb-8 opacity-0">
                   <div className="bg-card border border-border rounded-lg p-5">
                     <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
                       <span className="w-8 h-8 bg-pastel-blue/30 rounded-full flex items-center justify-center text-sm font-bold text-foreground">1</span>
@@ -300,13 +323,15 @@ const Artigo = () => {
                   </div>
                 </div>
 
-                <h2 id="documentacao-necessaria" className="text-2xl font-bold text-foreground mt-10 mb-4">Documentação Necessária</h2>
-                <p className="text-base text-foreground leading-relaxed mb-6">
-                  Para solicitar um financiamento imobiliário, é necessário reunir uma série de documentos que comprovem sua capacidade de pagamento e regularidade fiscal:
-                </p>
+                <div ref={section3Ref} className="opacity-0">
+                  <h2 id="documentacao-necessaria" className="text-2xl font-bold text-foreground mt-10 mb-4">Documentação Necessária</h2>
+                  <p className="text-base text-foreground leading-relaxed mb-6">
+                    Para solicitar um financiamento imobiliário, é necessário reunir uma série de documentos que comprovem sua capacidade de pagamento e regularidade fiscal:
+                  </p>
+                </div>
 
                 {/* Checklist */}
-                <ul className="space-y-3 mb-8">
+                <ul ref={checklistRef} className="space-y-3 mb-8 opacity-0">
                   <li className="flex items-start gap-3">
                     <CheckCircle2 size={20} className="text-pastel-green mt-1" />
                     <span className="text-foreground">Documentos pessoais (RG, CPF, comprovante de residência)</span>
@@ -329,13 +354,15 @@ const Artigo = () => {
                   </li>
                 </ul>
 
-                <h2 id="tabelas-amortizacao" className="text-2xl font-bold text-foreground mt-10 mb-4">Tabelas de Amortização: SAC vs. PRICE</h2>
-                <p className="text-base text-foreground leading-relaxed mb-6">
-                  A escolha do sistema de amortização impacta diretamente no valor total pago ao longo do financiamento:
-                </p>
+                <div ref={section4Ref} className="opacity-0">
+                  <h2 id="tabelas-amortizacao" className="text-2xl font-bold text-foreground mt-10 mb-4">Tabelas de Amortização: SAC vs. PRICE</h2>
+                  <p className="text-base text-foreground leading-relaxed mb-6">
+                    A escolha do sistema de amortização impacta diretamente no valor total pago ao longo do financiamento:
+                  </p>
+                </div>
 
                 {/* Comparison Grid */}
-                <div className="grid grid-cols-2 gap-4 mb-8">
+                <div ref={comparisonRef} className="grid grid-cols-2 gap-4 mb-8 opacity-0">
                   <div className="bg-pastel-blue/20 rounded-lg p-5 border border-pastel-blue">
                     <h3 className="font-semibold text-foreground mb-3">Sistema SAC</h3>
                     <ul className="space-y-2 text-sm text-foreground">
@@ -356,13 +383,15 @@ const Artigo = () => {
                   </div>
                 </div>
 
-                <h2 id="tendencias-mercado" className="text-2xl font-bold text-foreground mt-10 mb-4">Tendências do Mercado em 2024</h2>
-                <p className="text-base text-foreground leading-relaxed mb-6">
-                  O mercado de crédito imobiliário passa por transformações importantes, impulsionadas por mudanças na economia e inovações tecnológicas no setor financeiro:
-                </p>
+                <div ref={section5Ref} className="opacity-0">
+                  <h2 id="tendencias-mercado" className="text-2xl font-bold text-foreground mt-10 mb-4">Tendências do Mercado em 2024</h2>
+                  <p className="text-base text-foreground leading-relaxed mb-6">
+                    O mercado de crédito imobiliário passa por transformações importantes, impulsionadas por mudanças na economia e inovações tecnológicas no setor financeiro:
+                  </p>
+                </div>
 
                 {/* Trends */}
-                <div className="space-y-4 mb-8">
+                <div ref={trendsRef} className="space-y-4 mb-8 opacity-0">
                   <div className="flex gap-4 p-4 bg-card rounded-lg border border-border">
                     <div className="w-10 h-10 bg-pastel-blue/30 rounded-lg flex items-center justify-center flex-shrink-0">
                       <ChartLine size={18} className="text-foreground" />
@@ -398,14 +427,16 @@ const Artigo = () => {
                   </div>
                 </div>
 
-                <h2 className="text-2xl font-bold text-foreground mt-10 mb-4">Conclusão</h2>
-                <p className="text-base text-foreground leading-relaxed mb-6">
-                  O crédito imobiliário continua sendo uma das formas mais acessíveis de adquirir um imóvel no Brasil. Com planejamento adequado, compreensão das modalidades disponíveis e atenção às condições de mercado, é possível realizar o sonho da casa própria com segurança financeira.
-                </p>
+                <div ref={conclusionRef} className="opacity-0">
+                  <h2 className="text-2xl font-bold text-foreground mt-10 mb-4">Conclusão</h2>
+                  <p className="text-base text-foreground leading-relaxed mb-6">
+                    O crédito imobiliário continua sendo uma das formas mais acessíveis de adquirir um imóvel no Brasil. Com planejamento adequado, compreensão das modalidades disponíveis e atenção às condições de mercado, é possível realizar o sonho da casa própria com segurança financeira.
+                  </p>
+                </div>
               </div>
 
               {/* Author Bio */}
-              <div className="mt-10 pt-8 border-t border-border">
+              <div ref={authorRef} className="mt-10 pt-8 border-t border-border opacity-0">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
                     <img 
