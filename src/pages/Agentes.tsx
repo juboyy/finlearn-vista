@@ -264,7 +264,7 @@ export default function Agentes() {
               ))}
               <Button variant="outline" className="bg-[hsl(45,35%,75%)] text-[hsl(220,15%,30%)] border-[hsl(45,35%,65%)] hover:bg-[hsl(45,35%,65%)]">
                 <Settings size={16} className="mr-2" />
-                Editar Agentes
+                Ver Agentes
               </Button>
               <Button className="bg-[hsl(160,35%,75%)] text-[hsl(220,15%,30%)] hover:bg-[hsl(160,35%,65%)]">
                 <Plus size={16} className="mr-2" />
