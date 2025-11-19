@@ -85,11 +85,11 @@ export const ContentDistributionChart = () => {
         />
         <Legend
           verticalAlign="bottom"
-          height={40}
+          height={36}
           iconType="circle"
           iconSize={12}
           wrapperStyle={{
-            paddingTop: "24px",
+            paddingTop: "8px",
             fontSize: "14px",
             fontWeight: 500,
             color: "hsl(220, 15%, 35%)",
