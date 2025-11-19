@@ -9,6 +9,7 @@ import Conteudo from "./pages/Conteudo";
 import Artigo from "./pages/Artigo";
 import ArtigoCompliance from "./pages/ArtigoCompliance";
 import Agentes from "./pages/Agentes";
+import MeusAgentes from "./pages/MeusAgentes";
 import NotFound from "./pages/NotFound";
 
 const App = () => {
@@ -33,6 +34,7 @@ const App = () => {
             <Route path="/artigo/:id" element={<Artigo />} />
             <Route path="/artigo/compliance" element={<ArtigoCompliance />} />
             <Route path="/agentes" element={<Agentes />} />
+            <Route path="/meus-agentes" element={<MeusAgentes />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
