@@ -445,6 +445,52 @@ export default function ArtigoCompliance() {
                 Iniciar Chat
               </button>
             </div>
+
+            <div className="bg-card rounded-xl p-6 border border-border">
+              <h3 className="text-sm font-semibold text-foreground mb-4">Tags Populares</h3>
+              <div className="flex flex-wrap gap-2">
+                <span className="px-3 py-1 bg-[hsl(280,35%,75%)] text-[hsl(220,15%,30%)] text-xs rounded-full font-medium cursor-pointer hover:opacity-80 transition">Compliance</span>
+                <span className="px-3 py-1 bg-[hsl(206,35%,75%)] text-[hsl(220,15%,30%)] text-xs rounded-full font-medium cursor-pointer hover:opacity-80 transition">BACEN</span>
+                <span className="px-3 py-1 bg-[hsl(340,35%,75%)] text-[hsl(220,15%,30%)] text-xs rounded-full font-medium cursor-pointer hover:opacity-80 transition">Regulatório</span>
+                <span className="px-3 py-1 bg-[hsl(160,35%,75%)] text-[hsl(220,15%,30%)] text-xs rounded-full font-medium cursor-pointer hover:opacity-80 transition">PLD/FT</span>
+                <span className="px-3 py-1 bg-[hsl(45,35%,75%)] text-[hsl(220,15%,30%)] text-xs rounded-full font-medium cursor-pointer hover:opacity-80 transition">Governança</span>
+                <span className="px-3 py-1 bg-[hsl(190,35%,75%)] text-[hsl(220,15%,30%)] text-xs rounded-full font-medium cursor-pointer hover:opacity-80 transition">Risco</span>
+                <span className="px-3 py-1 bg-[hsl(320,35%,75%)] text-[hsl(220,15%,30%)] text-xs rounded-full font-medium cursor-pointer hover:opacity-80 transition">Auditoria</span>
+              </div>
+            </div>
+
+            <div className="bg-card rounded-xl p-6 border border-border">
+              <h3 className="text-sm font-semibold text-foreground mb-4">Compartilhar Artigo</h3>
+              <div className="space-y-3">
+                <button className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition text-left">
+                  <div className="w-10 h-10 bg-[hsl(206,35%,75%)] rounded-lg flex items-center justify-center">
+                    <Share2 size={18} className="text-[hsl(220,15%,30%)]" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-foreground">LinkedIn</p>
+                    <p className="text-xs text-muted-foreground">Compartilhar no LinkedIn</p>
+                  </div>
+                </button>
+                <button className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition text-left">
+                  <div className="w-10 h-10 bg-[hsl(160,35%,75%)] rounded-lg flex items-center justify-center">
+                    <Share2 size={18} className="text-[hsl(220,15%,30%)]" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-foreground">WhatsApp</p>
+                    <p className="text-xs text-muted-foreground">Enviar via WhatsApp</p>
+                  </div>
+                </button>
+                <button className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition text-left">
+                  <div className="w-10 h-10 bg-[hsl(280,35%,75%)] rounded-lg flex items-center justify-center">
+                    <Share2 size={18} className="text-[hsl(220,15%,30%)]" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-foreground">E-mail</p>
+                    <p className="text-xs text-muted-foreground">Enviar por e-mail</p>
+                  </div>
+                </button>
+              </div>
+            </div>
           </aside>
         </div>
       </main>
