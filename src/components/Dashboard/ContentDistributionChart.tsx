@@ -44,7 +44,7 @@ export const ContentDistributionChart = () => {
   };
 
   return (
-    <ResponsiveContainer width="100%" height={250}>
+    <ResponsiveContainer width="100%" height={280}>
       <PieChart>
         <Pie
           data={data}
@@ -85,19 +85,19 @@ export const ContentDistributionChart = () => {
         />
         <Legend
           verticalAlign="bottom"
-          height={60}
+          align="center"
           iconType="circle"
-          iconSize={12}
+          iconSize={10}
           wrapperStyle={{
-            paddingTop: "8px",
-            fontSize: "14px",
+            paddingTop: "12px",
+            paddingBottom: "4px",
+            fontSize: "13px",
             fontWeight: 500,
             color: "hsl(220, 15%, 35%)",
             display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "8px 24px",
+            gridTemplateColumns: "repeat(2, minmax(0, 140px))",
+            gap: "6px 32px",
             justifyContent: "center",
-            width: "fit-content",
             margin: "0 auto",
           }}
         />
