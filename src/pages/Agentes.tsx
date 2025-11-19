@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { 
   Search, 
   Bell, 
@@ -16,7 +17,8 @@ import {
   ChartLine,
   Landmark,
   Bitcoin,
-  Settings
+  Settings,
+  Home
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -176,28 +178,40 @@ export default function Agentes() {
       )}
       {/* Header */}
       <header className="bg-card border-b border-border sticky top-0 z-40">
-        <div className="px-8 py-4 flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-semibold text-foreground">Agentes de IA</h1>
-            <p className="text-sm text-muted-foreground mt-1">Escolha um assistente especializado para suas necessidades</p>
+        <div className="px-8 py-4">
+          {/* Breadcrumb */}
+          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
+            <Link to="/" className="hover:text-foreground transition flex items-center gap-1">
+              <Home size={16} />
+              <span>Dashboard</span>
+            </Link>
+            <ChevronRight size={16} />
+            <span className="text-foreground font-medium">Agentes de IA</span>
           </div>
-          <div className="flex items-center gap-4">
-            <div className="relative">
-              <Input 
-                type="text" 
-                placeholder="Buscar agente..." 
-                className="w-80 pl-10"
-              />
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
+          
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-semibold text-foreground">Agentes de IA</h1>
+              <p className="text-sm text-muted-foreground mt-1">Escolha um assistente especializado para suas necessidades</p>
             </div>
-            <button className="relative p-2 text-muted-foreground hover:bg-muted rounded-lg transition">
-              <Bell size={20} />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-[hsl(45,35%,75%)] rounded-full" />
-            </button>
-            <Button>
-              <Plus size={16} className="mr-2" />
-              Nova Conversa
-            </Button>
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                <Input 
+                  type="text" 
+                  placeholder="Buscar agente..." 
+                  className="w-80 pl-10"
+                />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
+              </div>
+              <button className="relative p-2 text-muted-foreground hover:bg-muted rounded-lg transition">
+                <Bell size={20} />
+                <span className="absolute top-1 right-1 w-2 h-2 bg-[hsl(45,35%,75%)] rounded-full" />
+              </button>
+              <Button>
+                <Plus size={16} className="mr-2" />
+                Nova Conversa
+              </Button>
+            </div>
           </div>
         </div>
       </header>
