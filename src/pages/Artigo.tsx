@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 const Artigo = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState(12);
+  const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
     const updateProgress = () => {
@@ -24,11 +25,48 @@ const Artigo = () => {
       setTimeRemaining(remainingMinutes);
     };
     
-    window.addEventListener('scroll', updateProgress);
-    updateProgress();
+    const updateActiveSection = () => {
+      const sections = [
+        'o-que-e-credito',
+        'principais-modalidades',
+        'documentacao-necessaria',
+        'tabelas-amortizacao',
+        'tendencias-mercado'
+      ];
+      
+      const scrollPosition = window.scrollY + 150;
+      
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const element = document.getElementById(sections[i]);
+        if (element && element.offsetTop <= scrollPosition) {
+          setActiveSection(sections[i]);
+          break;
+        }
+      }
+    };
     
-    return () => window.removeEventListener('scroll', updateProgress);
+    const handleScroll = () => {
+      updateProgress();
+      updateActiveSection();
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const offset = 100;
+      const elementPosition = element.offsetTop - offset;
+      window.scrollTo({
+        top: elementPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   const circumference = 2 * Math.PI * 40;
   const offset = circumference - (scrollProgress / 100) * circumference;
@@ -208,7 +246,7 @@ const Artigo = () => {
                   O crédito imobiliário é uma das principais ferramentas para realização do sonho da casa própria no Brasil. Com as recentes mudanças nas taxas de juros e nas condições de financiamento, entender os detalhes desse mercado tornou-se ainda mais essencial para profissionais do setor financeiro e futuros compradores.
                 </p>
 
-                <h2 className="text-2xl font-bold text-foreground mt-10 mb-4">O que é Crédito Imobiliário?</h2>
+                <h2 id="o-que-e-credito" className="text-2xl font-bold text-foreground mt-10 mb-4">O que é Crédito Imobiliário?</h2>
                 <p className="text-base text-foreground leading-relaxed mb-6">
                   O crédito imobiliário é uma modalidade de empréstimo de longo prazo destinado exclusivamente à compra, construção ou reforma de imóveis. No Brasil, esse tipo de financiamento é regulamentado pelo Sistema Financeiro de Habitação (SFH) e pelo Sistema de Financiamento Imobiliário (SFI), cada um com suas características e regras específicas.
                 </p>
@@ -226,7 +264,7 @@ const Artigo = () => {
                   </div>
                 </div>
 
-                <h2 className="text-2xl font-bold text-foreground mt-10 mb-4">Principais Modalidades de Financiamento</h2>
+                <h2 id="principais-modalidades" className="text-2xl font-bold text-foreground mt-10 mb-4">Principais Modalidades de Financiamento</h2>
                 <p className="text-base text-foreground leading-relaxed mb-6">
                   Existem diferentes tipos de financiamento imobiliário disponíveis no mercado brasileiro, cada um adequado a perfis específicos de compradores:
                 </p>
@@ -262,7 +300,7 @@ const Artigo = () => {
                   </div>
                 </div>
 
-                <h2 className="text-2xl font-bold text-foreground mt-10 mb-4">Documentação Necessária</h2>
+                <h2 id="documentacao-necessaria" className="text-2xl font-bold text-foreground mt-10 mb-4">Documentação Necessária</h2>
                 <p className="text-base text-foreground leading-relaxed mb-6">
                   Para solicitar um financiamento imobiliário, é necessário reunir uma série de documentos que comprovem sua capacidade de pagamento e regularidade fiscal:
                 </p>
@@ -291,7 +329,7 @@ const Artigo = () => {
                   </li>
                 </ul>
 
-                <h2 className="text-2xl font-bold text-foreground mt-10 mb-4">Tabelas de Amortização: SAC vs. PRICE</h2>
+                <h2 id="tabelas-amortizacao" className="text-2xl font-bold text-foreground mt-10 mb-4">Tabelas de Amortização: SAC vs. PRICE</h2>
                 <p className="text-base text-foreground leading-relaxed mb-6">
                   A escolha do sistema de amortização impacta diretamente no valor total pago ao longo do financiamento:
                 </p>
@@ -318,7 +356,7 @@ const Artigo = () => {
                   </div>
                 </div>
 
-                <h2 className="text-2xl font-bold text-foreground mt-10 mb-4">Tendências do Mercado em 2024</h2>
+                <h2 id="tendencias-mercado" className="text-2xl font-bold text-foreground mt-10 mb-4">Tendências do Mercado em 2024</h2>
                 <p className="text-base text-foreground leading-relaxed mb-6">
                   O mercado de crédito imobiliário passa por transformações importantes, impulsionadas por mudanças na economia e inovações tecnológicas no setor financeiro:
                 </p>
@@ -471,21 +509,71 @@ const Artigo = () => {
             <div className="bg-card rounded-xl p-6 border border-border sticky top-24">
               <h3 className="text-sm font-semibold text-foreground mb-4">Neste Artigo</h3>
               <nav className="space-y-2">
-                <a href="#" className="block text-sm text-muted-foreground hover:text-foreground py-2 border-l-2 border-transparent hover:border-pastel-blue pl-3 transition">
+                <button 
+                  onClick={() => scrollToSection('o-que-e-credito')}
+                  className={`block w-full text-left text-sm py-2 border-l-2 pl-3 transition flex items-center gap-2 ${
+                    activeSection === 'o-que-e-credito' 
+                      ? 'text-foreground border-pastel-blue font-medium' 
+                      : 'text-muted-foreground border-transparent hover:text-foreground hover:border-pastel-blue'
+                  }`}
+                >
+                  {activeSection === 'o-que-e-credito' && (
+                    <span className="w-2 h-2 bg-pastel-blue rounded-full animate-pulse"></span>
+                  )}
                   O que é Crédito Imobiliário?
-                </a>
-                <a href="#" className="block text-sm text-muted-foreground hover:text-foreground py-2 border-l-2 border-transparent hover:border-pastel-blue pl-3 transition">
+                </button>
+                <button 
+                  onClick={() => scrollToSection('principais-modalidades')}
+                  className={`block w-full text-left text-sm py-2 border-l-2 pl-3 transition flex items-center gap-2 ${
+                    activeSection === 'principais-modalidades' 
+                      ? 'text-foreground border-pastel-blue font-medium' 
+                      : 'text-muted-foreground border-transparent hover:text-foreground hover:border-pastel-blue'
+                  }`}
+                >
+                  {activeSection === 'principais-modalidades' && (
+                    <span className="w-2 h-2 bg-pastel-blue rounded-full animate-pulse"></span>
+                  )}
                   Principais Modalidades
-                </a>
-                <a href="#" className="block text-sm text-muted-foreground hover:text-foreground py-2 border-l-2 border-transparent hover:border-pastel-blue pl-3 transition">
+                </button>
+                <button 
+                  onClick={() => scrollToSection('documentacao-necessaria')}
+                  className={`block w-full text-left text-sm py-2 border-l-2 pl-3 transition flex items-center gap-2 ${
+                    activeSection === 'documentacao-necessaria' 
+                      ? 'text-foreground border-pastel-blue font-medium' 
+                      : 'text-muted-foreground border-transparent hover:text-foreground hover:border-pastel-blue'
+                  }`}
+                >
+                  {activeSection === 'documentacao-necessaria' && (
+                    <span className="w-2 h-2 bg-pastel-blue rounded-full animate-pulse"></span>
+                  )}
                   Documentação Necessária
-                </a>
-                <a href="#" className="block text-sm text-muted-foreground hover:text-foreground py-2 border-l-2 border-transparent hover:border-pastel-blue pl-3 transition">
+                </button>
+                <button 
+                  onClick={() => scrollToSection('tabelas-amortizacao')}
+                  className={`block w-full text-left text-sm py-2 border-l-2 pl-3 transition flex items-center gap-2 ${
+                    activeSection === 'tabelas-amortizacao' 
+                      ? 'text-foreground border-pastel-blue font-medium' 
+                      : 'text-muted-foreground border-transparent hover:text-foreground hover:border-pastel-blue'
+                  }`}
+                >
+                  {activeSection === 'tabelas-amortizacao' && (
+                    <span className="w-2 h-2 bg-pastel-blue rounded-full animate-pulse"></span>
+                  )}
                   Tabelas de Amortização
-                </a>
-                <a href="#" className="block text-sm text-muted-foreground hover:text-foreground py-2 border-l-2 border-transparent hover:border-pastel-blue pl-3 transition">
+                </button>
+                <button 
+                  onClick={() => scrollToSection('tendencias-mercado')}
+                  className={`block w-full text-left text-sm py-2 border-l-2 pl-3 transition flex items-center gap-2 ${
+                    activeSection === 'tendencias-mercado' 
+                      ? 'text-foreground border-pastel-blue font-medium' 
+                      : 'text-muted-foreground border-transparent hover:text-foreground hover:border-pastel-blue'
+                  }`}
+                >
+                  {activeSection === 'tendencias-mercado' && (
+                    <span className="w-2 h-2 bg-pastel-blue rounded-full animate-pulse"></span>
+                  )}
                   Tendências do Mercado
-                </a>
+                </button>
               </nav>
             </div>
 
