@@ -1,4 +1,5 @@
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from "recharts";
+import { useState } from "react";
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip, Sector } from "recharts";
 
 const data = [
   { name: "Artigos", value: 40, color: "hsl(206, 49%, 81%)" },
@@ -9,7 +10,39 @@ const data = [
 
 
 
+const renderActiveShape = (props: any) => {
+  const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill } = props;
+
+  return (
+    <g>
+      <Sector
+        cx={cx}
+        cy={cy}
+        innerRadius={innerRadius}
+        outerRadius={outerRadius + 10}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        fill={fill}
+        style={{
+          filter: "drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15))",
+          transition: "all 0.3s ease-in-out",
+        }}
+      />
+    </g>
+  );
+};
+
 export const ContentDistributionChart = () => {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  const onPieEnter = (_: any, index: number) => {
+    setActiveIndex(index);
+  };
+
+  const onPieLeave = () => {
+    setActiveIndex(null);
+  };
+
   return (
     <ResponsiveContainer width="100%" height={250}>
       <PieChart>
@@ -22,10 +55,22 @@ export const ContentDistributionChart = () => {
           paddingAngle={0}
           dataKey="value"
           animationBegin={0}
-          animationDuration={1000}
+          animationDuration={800}
+          animationEasing="ease-out"
+          onMouseEnter={onPieEnter}
+          onMouseLeave={onPieLeave}
+          activeIndex={activeIndex ?? undefined}
+          activeShape={renderActiveShape}
         >
           {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={entry.color} />
+            <Cell 
+              key={`cell-${index}`} 
+              fill={entry.color}
+              style={{
+                cursor: "pointer",
+                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+              }}
+            />
           ))}
         </Pie>
         <Tooltip
