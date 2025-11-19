@@ -1,12 +1,252 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Sidebar } from "@/components/Dashboard/Sidebar";
+import { StatCard } from "@/components/Dashboard/StatCard";
+import { CourseCard } from "@/components/Dashboard/CourseCard";
+import { QuickActionCard } from "@/components/Dashboard/QuickActionCard";
+import { EventCard } from "@/components/Dashboard/EventCard";
+import { ContentCard } from "@/components/Dashboard/ContentCard";
+import { ProgressBar } from "@/components/Dashboard/ProgressBar";
+import { Button } from "@/components/ui/button";
+import { BookOpen, Award, Clock, Flame, TrendingUp, Coins, Scale, Bot, Mic, Video, BookMarked, Bell, Plus, Clock as ClockIcon, Headphones, Play } from "lucide-react";
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="flex h-screen overflow-hidden">
+      <Sidebar />
+      
+      <main className="flex-1 overflow-y-auto">
+        <header className="bg-card border-b border-border sticky top-0 z-10">
+          <div className="px-8 py-4 flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-semibold text-foreground">Bem-vindo, João</h1>
+              <p className="text-sm text-muted-foreground mt-1">Terça-feira, 16 de Novembro de 2024</p>
+            </div>
+            <div className="flex items-center gap-4">
+              <button className="relative p-2 text-foreground hover:bg-muted rounded-lg transition-colors">
+                <Bell size={20} />
+                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+              </button>
+              <Button className="bg-pastel-purple hover:bg-pastel-purple/80 text-foreground">
+                <Plus size={18} className="mr-2" />
+                Novo Conteúdo
+              </Button>
+            </div>
+          </div>
+        </header>
+        
+        <div className="p-8">
+          <section className="grid grid-cols-4 gap-6 mb-8">
+            <StatCard
+              icon={BookOpen}
+              value="24"
+              label="Cursos em Progresso"
+              trend="+12%"
+              bgColor="bg-pastel-blue"
+            />
+            <StatCard
+              icon={Award}
+              value="8"
+              label="Certificados Obtidos"
+              trend="+3"
+              bgColor="bg-pastel-green"
+            />
+            <StatCard
+              icon={Clock}
+              value="12.5h"
+              label="Tempo de Estudo"
+              trend="Esta semana"
+              trendType="neutral"
+              bgColor="bg-pastel-yellow"
+            />
+            <StatCard
+              icon={Flame}
+              value="15"
+              label="Dias Consecutivos"
+              trend="Sequência"
+              trendType="neutral"
+              bgColor="bg-pastel-pink"
+            />
+          </section>
+          
+          <div className="grid grid-cols-3 gap-6 mb-8">
+            <section className="col-span-2 bg-card rounded-xl p-6 border border-border">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-lg font-semibold text-foreground">Progresso de Aprendizado</h2>
+                <select className="text-sm text-foreground border border-border rounded-lg px-3 py-2 bg-background focus:outline-none focus:ring-2 focus:ring-ring">
+                  <option>Últimos 7 dias</option>
+                  <option>Últimos 30 dias</option>
+                  <option>Últimos 90 dias</option>
+                </select>
+              </div>
+              <div className="h-64 flex items-center justify-center text-muted-foreground">
+                <p>Gráfico de progresso - Integração Plotly disponível</p>
+              </div>
+            </section>
+            
+            <section className="bg-card rounded-xl p-6 border border-border">
+              <h2 className="text-lg font-semibold text-foreground mb-6">Acesso Rápido</h2>
+              <div className="space-y-3">
+                <QuickActionCard
+                  icon={Bot}
+                  title="Chat com IA"
+                  description="Tire suas dúvidas"
+                  bgColor="bg-pastel-blue"
+                />
+                <QuickActionCard
+                  icon={Mic}
+                  title="Podcast"
+                  description="Ouça enquanto trabalha"
+                  bgColor="bg-pastel-green"
+                />
+                <QuickActionCard
+                  icon={Video}
+                  title="Webinars"
+                  description="Ao vivo e gravados"
+                  bgColor="bg-pastel-purple"
+                />
+                <QuickActionCard
+                  icon={BookMarked}
+                  title="eBooks"
+                  description="Material complementar"
+                  bgColor="bg-pastel-peach"
+                />
+              </div>
+            </section>
+          </div>
+          
+          <div className="grid grid-cols-3 gap-6 mb-8">
+            <section className="col-span-2 bg-card rounded-xl p-6 border border-border">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-lg font-semibold text-foreground">Cursos em Andamento</h2>
+                <a href="#" className="text-sm text-muted-foreground hover:text-foreground font-medium">Ver todos</a>
+              </div>
+              <div className="space-y-4">
+                <CourseCard
+                  icon={TrendingUp}
+                  title="Análise Técnica Avançada"
+                  progress={67}
+                  completedLessons={12}
+                  totalLessons={18}
+                  bgColor="bg-pastel-blue"
+                />
+                <CourseCard
+                  icon={Coins}
+                  title="Fundamentos de Criptomoedas"
+                  progress={33}
+                  completedLessons={5}
+                  totalLessons={15}
+                  bgColor="bg-pastel-green"
+                />
+                <CourseCard
+                  icon={Scale}
+                  title="Compliance no Mercado Financeiro"
+                  progress={80}
+                  completedLessons={8}
+                  totalLessons={10}
+                  bgColor="bg-pastel-purple"
+                />
+              </div>
+            </section>
+            
+            <section className="bg-card rounded-xl p-6 border border-border">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-lg font-semibold text-foreground">Próximos Eventos</h2>
+              </div>
+              <div className="space-y-4">
+                <EventCard
+                  day="18"
+                  month="NOV"
+                  title="Webinar: Mercado de Capitais 2025"
+                  time="14:00 - 16:00"
+                  bgColor="bg-pastel-yellow"
+                />
+                <EventCard
+                  day="20"
+                  month="NOV"
+                  title="Live: Análise de Ações Tech"
+                  time="19:00 - 20:30"
+                  bgColor="bg-pastel-pink"
+                />
+                <EventCard
+                  day="22"
+                  month="NOV"
+                  title="Workshop: Trading Algorítmico"
+                  time="10:00 - 12:00"
+                  bgColor="bg-pastel-peach"
+                />
+              </div>
+            </section>
+          </div>
+          
+          <div className="grid grid-cols-3 gap-6 mb-8">
+            <section className="col-span-2 bg-card rounded-xl p-6 border border-border">
+              <h2 className="text-lg font-semibold text-foreground mb-4">Progresso por Tópico</h2>
+              <div className="space-y-4">
+                <ProgressBar label="Mercado de Capitais" progress={75} barColor="bg-pastel-blue" />
+                <ProgressBar label="Meios de Pagamento" progress={60} barColor="bg-pastel-peach" />
+                <ProgressBar label="Blockchain & DeFi" progress={45} barColor="bg-pastel-pink" />
+                <ProgressBar label="Regulamentação & Compliance" progress={85} barColor="bg-pastel-green" />
+              </div>
+            </section>
+            
+            <section className="col-span-1 bg-card rounded-xl p-6 border border-border">
+              <h2 className="text-lg font-semibold text-foreground mb-4">Distribuição de Conteúdo</h2>
+              <div className="flex items-center justify-center h-48 text-muted-foreground">
+                <p>Gráfico de pizza - Integração Plotly disponível</p>
+              </div>
+            </section>
+          </div>
+          
+          <section className="bg-card rounded-xl p-6 border border-border">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-lg font-semibold text-foreground">Conteúdo Recomendado para Você</h2>
+              <div className="flex gap-2">
+                <Button variant="secondary" className="bg-pastel-blue text-foreground">Todos</Button>
+                <Button variant="ghost" className="text-muted-foreground hover:text-foreground">Artigos</Button>
+                <Button variant="ghost" className="text-muted-foreground hover:text-foreground">Podcasts</Button>
+                <Button variant="ghost" className="text-muted-foreground hover:text-foreground">Vídeos</Button>
+              </div>
+            </div>
+            <div className="grid grid-cols-3 gap-6">
+              <ContentCard
+                type="Artigo"
+                title="Tendências do Mercado Financeiro para 2025"
+                description="Análise completa das principais tendências que irão moldar o mercado financeiro no próximo ano."
+                author="Ana Clara"
+                authorImage="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg"
+                tags={["#Finanças", "#Mercado"]}
+                duration="8 min de leitura"
+                durationIcon={<ClockIcon size={12} />}
+                image="https://storage.googleapis.com/uxpilot-auth.appspot.com/b8bc545c0e-55fe421d08b90c0ee2d9.png"
+                badgeColor="bg-pastel-blue text-foreground"
+              />
+              <ContentCard
+                type="Podcast"
+                title="Estratégias de Investimento em Tempos Incertos"
+                description="Conversamos com especialistas sobre como proteger seu portfólio durante períodos de volatilidade."
+                author="Marcos Borges"
+                authorImage="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg"
+                tags={["#Investimentos"]}
+                duration="45 min"
+                durationIcon={<Headphones size={12} />}
+                image="https://storage.googleapis.com/uxpilot-auth.appspot.com/733059b1b5-0aee1b308141ce005fdc.png"
+                badgeColor="bg-pastel-green text-foreground"
+              />
+              <ContentCard
+                type="Vídeo"
+                title="Introdução ao Mercado de Derivativos"
+                description="Aprenda os conceitos fundamentais sobre opções, futuros e outros derivativos financeiros."
+                author="Sofia Lima"
+                authorImage="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg"
+                tags={["#Derivativos", "#Avançado"]}
+                duration="32 min"
+                durationIcon={<Play size={12} />}
+                image="https://storage.googleapis.com/uxpilot-auth.appspot.com/9dc38647cf-736f132f165b91980e51.png"
+                badgeColor="bg-pastel-purple text-foreground"
+              />
+            </div>
+          </section>
+        </div>
+      </main>
     </div>
   );
 };
