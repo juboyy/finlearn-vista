@@ -230,9 +230,11 @@ const Conteudo = () => {
                           </>
                         )}
                       </div>
-                      <h3 className="text-xl font-semibold text-foreground mb-3 hover:text-primary cursor-pointer">
-                        {article.title}
-                      </h3>
+                      <Link to={article.id === 5 ? '/artigo/compliance' : `/artigo/${article.id}`}>
+                        <h3 className="text-xl font-semibold text-foreground mb-3 hover:text-primary cursor-pointer">
+                          {article.title}
+                        </h3>
+                      </Link>
                       <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
                         {article.description}
                       </p>
