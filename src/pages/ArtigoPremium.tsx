@@ -14,6 +14,8 @@ const ArtigoPremium = () => {
   const [showPaywall, setShowPaywall] = useState(false);
 
   useEffect(() => {
+    let paywallShown = false;
+    
     const updateProgress = () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -24,28 +26,25 @@ const ArtigoPremium = () => {
       const totalMinutes = 12;
       const remainingMinutes = Math.ceil(totalMinutes * (1 - scrollPercent / 100));
       setTimeRemaining(remainingMinutes);
-    };
-
-    const checkPaywallTrigger = () => {
+      
+      // Check paywall trigger
       const triggerElement = document.getElementById('paywall-trigger');
-      if (triggerElement && !showPaywall) {
-        const rect = triggerElement.getBoundingClientRect();
-        if (rect.top < window.innerHeight) {
+      if (triggerElement && !paywallShown) {
+        const triggerPosition = triggerElement.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        
+        if (triggerPosition < windowHeight) {
+          paywallShown = true;
           setShowPaywall(true);
         }
       }
     };
     
-    const handleScroll = () => {
-      updateProgress();
-      checkPaywallTrigger();
-    };
+    window.addEventListener('scroll', updateProgress);
+    updateProgress();
     
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-    
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [showPaywall]);
+    return () => window.removeEventListener('scroll', updateProgress);
+  }, []);
 
   const circumference = 2 * Math.PI * 40;
   const offset = circumference - (scrollProgress / 100) * circumference;
