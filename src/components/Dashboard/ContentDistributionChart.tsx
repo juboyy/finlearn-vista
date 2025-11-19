@@ -2,10 +2,10 @@ import { useState } from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip, Sector } from "recharts";
 
 const data = [
-  { name: "Artigos", value: 40, color: "hsl(206, 49%, 81%)" },
-  { name: "Podcasts", value: 25, color: "hsl(24, 46%, 83%)" },
-  { name: "Vídeos", value: 20, color: "hsl(322, 42%, 83%)" },
-  { name: "Cursos", value: 15, color: "hsl(152, 45%, 83%)" },
+  { name: "Artigos", value: 40, color: "hsl(206, 45%, 65%)" },
+  { name: "Podcasts", value: 25, color: "hsl(24, 42%, 67%)" },
+  { name: "Vídeos", value: 20, color: "hsl(322, 40%, 68%)" },
+  { name: "Cursos", value: 15, color: "hsl(152, 42%, 65%)" },
 ];
 
 
@@ -85,13 +85,17 @@ export const ContentDistributionChart = () => {
         />
         <Legend
           verticalAlign="bottom"
-          height={36}
+          height={40}
           iconType="circle"
-          iconSize={10}
+          iconSize={12}
           wrapperStyle={{
-            paddingTop: "20px",
-            fontSize: "13px",
-            color: "hsl(215, 16%, 47%)",
+            paddingTop: "24px",
+            fontSize: "14px",
+            fontWeight: 500,
+            color: "hsl(220, 15%, 35%)",
+            display: "flex",
+            justifyContent: "center",
+            gap: "16px",
           }}
         />
       </PieChart>
