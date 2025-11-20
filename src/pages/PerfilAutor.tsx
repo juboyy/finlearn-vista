@@ -512,7 +512,25 @@ const PerfilAutor = () => {
                   <li>
                     <a href="#" className="flex items-center justify-between p-3 bg-muted rounded-lg hover:bg-accent transition-colors">
                       <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 flex items-center justify-center rounded-md" style={{ backgroundColor: 'hsl(340, 60%, 90%)' }}><i className="fa-brands fa-instagram" style={{ color: 'hsl(340, 60%, 60%)' }}></i></div>
+                        <span className="text-sm font-medium text-foreground">@marinasantos.oficial</span>
+                      </div>
+                      <i className="fa-solid fa-external-link-alt text-muted-foreground"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" className="flex items-center justify-between p-3 bg-muted rounded-lg hover:bg-accent transition-colors">
+                      <div className="flex items-center gap-3">
                         <div className="w-8 h-8 flex items-center justify-center rounded-md" style={{ backgroundColor: 'hsl(0, 50%, 90%)' }}><i className="fa-brands fa-youtube" style={{ color: 'hsl(0, 50%, 60%)' }}></i></div>
+                        <span className="text-sm font-medium text-foreground">@marinasantos</span>
+                      </div>
+                      <i className="fa-solid fa-external-link-alt text-muted-foreground"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" className="flex items-center justify-between p-3 bg-muted rounded-lg hover:bg-accent transition-colors">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 flex items-center justify-center rounded-md" style={{ backgroundColor: 'hsl(120, 25%, 90%)' }}><i className="fa-brands fa-medium" style={{ color: 'hsl(120, 25%, 45%)' }}></i></div>
                         <span className="text-sm font-medium text-foreground">@marinasantos</span>
                       </div>
                       <i className="fa-solid fa-external-link-alt text-muted-foreground"></i>
