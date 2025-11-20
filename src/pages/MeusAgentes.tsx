@@ -28,6 +28,7 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Progress } from "@/components/ui/progress";
 import { useUserAgents } from "@/hooks/useUserAgents";
+import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 
 export default function MeusAgentes() {
   const { agents, loading, toggleAgentStatus } = useUserAgents();
@@ -71,7 +72,9 @@ export default function MeusAgentes() {
   const totalPercentage = totalMaxCredits > 0 ? (totalCredits / totalMaxCredits) * 100 : 0;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="flex min-h-screen bg-background">
+      <SidebarFix />
+      <div className="flex-1">
       {/* Header */}
       <header className="bg-card border-b border-border sticky top-0 z-40">
         <div className="px-8 py-4 flex items-center justify-between">
@@ -343,6 +346,7 @@ export default function MeusAgentes() {
         </div>
         )}
       </main>
+      </div>
     </div>
   );
 }
