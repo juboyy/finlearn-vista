@@ -130,7 +130,7 @@ const CriarAgente = () => {
       <SidebarFix />
 
       {/* Main Content */}
-      <main className="flex-1 ml-64">
+      <main className="flex-1">
         {/* Header */}
         <header className="bg-card/80 backdrop-blur-xl border-b border-border sticky top-0 z-40">
           <div className="px-8 py-4">
