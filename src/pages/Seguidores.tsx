@@ -231,10 +231,10 @@ const Seguidores = () => {
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2">
                       <span className="text-sm text-slate-600">Visualizar:</span>
-                      <button className="p-2 bg-pastel-blue text-slate-700 rounded-lg transition">
+                      <button className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg">
                         <i className="fas fa-th-large"></i>
                       </button>
-                      <button className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg">
+                      <button className="p-2 bg-pastel-blue text-slate-700 rounded-lg transition">
                         <i className="fas fa-list"></i>
                       </button>
                     </div>
