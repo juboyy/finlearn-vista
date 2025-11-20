@@ -317,7 +317,7 @@ const Autores = () => {
 
                 <div className="border-b border-slate-100 hover:bg-slate-50 transition-colors cursor-pointer">
                   <div className="grid grid-cols-12 gap-4 px-6 py-4 items-center">
-                    <div className="col-span-5 flex items-center gap-4">
+                    <div className="col-span-4 flex items-center gap-4">
                       <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" alt="Carlos Silva" className="w-12 h-12 rounded-full object-cover flex-shrink-0" />
                       <div className="min-w-0 flex-1">
                         <h3 className="font-semibold text-slate-800 truncate">Carlos Silva</h3>
@@ -328,9 +328,13 @@ const Autores = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="col-span-3">
+                    <div className="col-span-2">
                       <div className="text-sm font-semibold text-slate-700">42 artigos</div>
                       <div className="text-xs text-slate-500">Último: há 1 dia</div>
+                    </div>
+                    <div className="col-span-2">
+                      <div className="text-sm font-semibold text-slate-700">62/100</div>
+                      <div className="text-xs text-slate-500">Bom</div>
                     </div>
                     <div className="col-span-2">
                       <div className="text-sm text-slate-700">22/01/2023</div>
