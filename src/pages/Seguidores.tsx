@@ -260,28 +260,22 @@ const Seguidores = () => {
               <section className="bg-card rounded-xl p-4 border border-border">
                 <div className="flex items-center gap-3">
                   <button 
-                    onClick={() => setActiveTab("seguindo")}
-                    className={`px-6 py-2.5 rounded-lg font-medium transition flex items-center gap-2 ${
-                      activeTab === "seguindo" 
-                        ? "bg-pastel-blue text-slate-700" 
-                        : "text-slate-600 hover:bg-slate-100"
-                    }`}
+                    onClick={() => navigate('/autores')}
+                    className="px-6 py-2.5 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2"
                   >
                     <Check size={18} />
                     <span>Seguindo</span>
                   </button>
                   <button 
-                    onClick={() => setActiveTab("seguidores")}
-                    className={`px-6 py-2.5 rounded-lg font-medium transition flex items-center gap-2 ${
-                      activeTab === "seguidores" 
-                        ? "bg-pastel-green text-slate-700" 
-                        : "text-slate-600 hover:bg-slate-100"
-                    }`}
+                    className="px-6 py-2.5 bg-pastel-green text-slate-700 rounded-lg font-medium flex items-center gap-2"
                   >
                     <Users size={18} />
                     <span>Seguidores</span>
                   </button>
-                  <button className="px-6 py-2.5 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2">
+                  <button 
+                    onClick={() => navigate('/autores')}
+                    className="px-6 py-2.5 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2"
+                  >
                     <Users size={18} />
                     <span>Todos Autores</span>
                   </button>
