@@ -45,8 +45,8 @@ All colors MUST be HSL.
     --radius: 0.75rem;
 
     /* Pastel Colors */
-    --pastel-blue: 206 35% 75%;
-    --pastel-purple: 206 35% 75%;
+    --pastel-blue: 206 35% 88%;
+    --pastel-purple: 206 35% 88%;
     --pastel-pink: 322 42% 70%;
     --pastel-green: 152 45% 70%;
     --pastel-yellow: 44 46% 70%;
@@ -98,8 +98,8 @@ All colors MUST be HSL.
     --input: 220 15% 25%;
     --ring: 206 49% 70%;
 
-    --pastel-blue: 206 30% 65%;
-    --pastel-purple: 206 30% 65%;
+    --pastel-blue: 206 30% 80%;
+    --pastel-purple: 206 30% 80%;
     --pastel-pink: 322 42% 60%;
     --pastel-green: 152 45% 60%;
     --pastel-yellow: 44 46% 60%;
