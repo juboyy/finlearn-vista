@@ -1,139 +1,158 @@
-import { NavLink } from "@/components/NavLink";
-import { Home, Newspaper, Bot, GraduationCap, Book, Store, MessageSquare } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-const navigation = [{
-  name: "Dashboard",
-  href: "/",
-  icon: Home
-}, {
-  name: "Conteúdo",
-  href: "/conteudo",
-  icon: Newspaper
-}, {
-  name: "Agentes IA",
-  href: "/agentes",
-  icon: Bot
-}, {
-  name: "Aprendizado",
-  href: "/aprendizado",
-  icon: GraduationCap
-}, {
-  name: "Biblioteca",
-  href: "/biblioteca",
-  icon: Book
-}, {
-  name: "Marketplace",
-  href: "/marketplace",
-  icon: Store
-}, {
-  name: "Comunidade",
-  href: "/comunidade",
-  icon: MessageSquare
-}];
+import { SidebarFix } from "@/components/Dashboard/SidebarFix";
+import { Bell } from "lucide-react";
+import { useState } from "react";
+
+type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'documentos' | 'estudos';
+
 const Aprendizado = () => {
-  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState<TabType>('todos');
   
-  return <div className="flex h-screen overflow-hidden">
-      <aside className="w-64 bg-white border-r border-slate-200 flex flex-col">
-        <div className="p-6 border-b border-slate-200">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-pastel-blue rounded-lg flex items-center justify-center">
-              <i className="fas fa-chart-line text-slate-600 text-lg"></i>
-            </div>
-            <span className="text-xl font-semibold text-slate-800">FinLearn</span>
-          </div>
-        </div>
-
-        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
-          {navigation.map(item => <NavLink key={item.name} to={item.href} className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-100 transition" activeClassName="bg-pastel-blue text-slate-800 font-medium">
-              <item.icon className="w-5 h-5" />
-              <span>{item.name}</span>
-            </NavLink>)}
-        </nav>
-
-        <div className="p-4 border-t border-slate-200">
-          <div className="flex items-center gap-3 px-4 py-3">
-            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" alt="User" className="w-10 h-10 rounded-full object-cover" />
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-slate-800 truncate">João Silva</p>
-              <p className="text-xs text-slate-500 truncate">Premium</p>
-            </div>
-            <button className="text-slate-400 hover:text-slate-600">
-              <i className="fas fa-cog"></i>
-            </button>
-          </div>
-        </div>
-      </aside>
-
-      <main className="flex-1 overflow-y-auto">
+  return (
+    <div className="flex h-screen overflow-hidden">
+      <SidebarFix />
+      
+      <main className="flex-1 overflow-y-auto flex flex-col">
         <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
-          <div className="px-8 py-4 flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-semibold text-slate-800">Hub de Aprendizado</h1>
-              <p className="text-sm text-slate-500 mt-1">
-                Explore cursos, webinars, podcasts e aulas com avatares IA
-              </p>
-            </div>
-            <div className="flex items-center gap-4">
-              <button className="relative p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
-                <i className="fas fa-bell text-lg"></i>
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-              </button>
-              <button className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
-                <i className="fas fa-filter mr-2"></i>
-                Filtrar Conteúdo
-              </button>
+          <div className="px-8 py-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-2xl font-semibold text-slate-800">Hub de Aprendizado</h1>
+                <p className="text-sm text-slate-500 mt-1">Explore cursos, webinars, podcasts e aulas com avatares IA</p>
+              </div>
+              <div className="flex items-center gap-4">
+                <button className="relative p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
+                  <Bell size={20} />
+                  <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                </button>
+                <button className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                  <i className="fas fa-plus mr-2"></i>
+                  Criar Conteúdo
+                </button>
+              </div>
             </div>
           </div>
         </header>
 
-        <div className="p-8">
-          <section className="mb-8">
-            <div className="bg-white rounded-xl border border-slate-200 p-1.5 flex gap-1 overflow-x-auto">
-              <button className="px-5 py-2.5 bg-pastel-blue text-slate-800 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm">
-                <i className="fas fa-th-large text-sm"></i>
+        <div className="px-8 py-6 bg-slate-50 border-b border-slate-200 sticky top-[81px] z-10 bg-opacity-95 backdrop-blur-sm">
+          <div className="mb-4">
+            <div className="flex items-center gap-2 overflow-x-auto pb-2">
+              <button 
+                onClick={() => setActiveTab('todos')}
+                className={`px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm ${
+                  activeTab === 'todos' ? 'bg-pastel-blue text-slate-800' : 'text-slate-600 hover:bg-slate-100'
+                }`}
+              >
+                <i className="fas fa-table-cells"></i>
                 <span>Todos</span>
               </button>
-              <button className="px-5 py-2.5 text-slate-600 hover:bg-slate-100 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm" onClick={() => navigate('/podcasts')}>
-                <i className="fas fa-podcast text-sm"></i>
+              <button 
+                onClick={() => setActiveTab('podcasts')}
+                className={`px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm ${
+                  activeTab === 'podcasts' ? 'bg-pastel-blue text-slate-800' : 'text-slate-600 hover:bg-slate-100'
+                }`}
+              >
+                <i className="fas fa-podcast"></i>
                 <span>Podcasts</span>
               </button>
-              <button className="px-5 py-2.5 text-slate-600 hover:bg-slate-100 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm">
-                <i className="fas fa-graduation-cap text-sm"></i>
+              <button 
+                onClick={() => setActiveTab('cursos')}
+                className={`px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm ${
+                  activeTab === 'cursos' ? 'bg-pastel-blue text-slate-800' : 'text-slate-600 hover:bg-slate-100'
+                }`}
+              >
+                <i className="fas fa-graduation-cap"></i>
                 <span>Cursos</span>
               </button>
-              <button className="px-5 py-2.5 text-slate-600 hover:bg-slate-100 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm">
-                <i className="fas fa-robot text-sm"></i>
+              <button 
+                onClick={() => setActiveTab('avatar-ia')}
+                className={`px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm ${
+                  activeTab === 'avatar-ia' ? 'bg-pastel-blue text-slate-800' : 'text-slate-600 hover:bg-slate-100'
+                }`}
+              >
+                <i className="fas fa-robot"></i>
                 <span>Avatar IA</span>
               </button>
-              <button className="px-5 py-2.5 text-slate-600 hover:bg-slate-100 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm">
-                <i className="fas fa-file-alt text-sm"></i>
+              <button 
+                onClick={() => setActiveTab('ebooks')}
+                className={`px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm ${
+                  activeTab === 'ebooks' ? 'bg-pastel-blue text-slate-800' : 'text-slate-600 hover:bg-slate-100'
+                }`}
+              >
+                <i className="fas fa-book-open"></i>
                 <span>E-books</span>
               </button>
-              <button className="px-5 py-2.5 text-slate-600 hover:bg-slate-100 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm">
-                <i className="fas fa-video text-sm"></i>
+              <button 
+                onClick={() => setActiveTab('webinars')}
+                className={`px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm ${
+                  activeTab === 'webinars' ? 'bg-pastel-blue text-slate-800' : 'text-slate-600 hover:bg-slate-100'
+                }`}
+              >
+                <i className="fas fa-video"></i>
                 <span>Webinars</span>
               </button>
-              <button className="px-5 py-2.5 text-slate-600 hover:bg-slate-100 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm">
-                <i className="fas fa-newspaper text-sm"></i>
+              <button 
+                onClick={() => setActiveTab('artigos')}
+                className={`px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm ${
+                  activeTab === 'artigos' ? 'bg-pastel-blue text-slate-800' : 'text-slate-600 hover:bg-slate-100'
+                }`}
+              >
+                <i className="fas fa-newspaper"></i>
                 <span>Artigos</span>
               </button>
-              <button className="px-5 py-2.5 text-slate-600 hover:bg-slate-100 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm">
-                <i className="fas fa-chart-line text-sm"></i>
+              <button 
+                onClick={() => setActiveTab('analises')}
+                className={`px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm ${
+                  activeTab === 'analises' ? 'bg-pastel-blue text-slate-800' : 'text-slate-600 hover:bg-slate-100'
+                }`}
+              >
+                <i className="fas fa-chart-line"></i>
                 <span>Análises</span>
               </button>
-              <button className="px-5 py-2.5 text-slate-600 hover:bg-slate-100 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm">
-                <i className="fas fa-file-text text-sm"></i>
+              <button 
+                onClick={() => setActiveTab('documentos')}
+                className={`px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm ${
+                  activeTab === 'documentos' ? 'bg-pastel-blue text-slate-800' : 'text-slate-600 hover:bg-slate-100'
+                }`}
+              >
+                <i className="fas fa-file-alt"></i>
                 <span>Documentos</span>
               </button>
-              <button className="px-5 py-2.5 text-slate-600 hover:bg-slate-100 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm">
-                <i className="fas fa-flask text-sm"></i>
+              <button 
+                onClick={() => setActiveTab('estudos')}
+                className={`px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm ${
+                  activeTab === 'estudos' ? 'bg-pastel-blue text-slate-800' : 'text-slate-600 hover:bg-slate-100'
+                }`}
+              >
+                <i className="fas fa-flask"></i>
                 <span>Estudos Acadêmicos</span>
               </button>
             </div>
-          </section>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="relative flex-1">
+              <i className="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+              <input 
+                type="text" 
+                placeholder="Buscar podcasts, episódios ou temas..." 
+                className="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pastel-blue"
+              />
+            </div>
+            <button className="px-5 py-3 bg-white border border-slate-200 text-slate-700 rounded-lg font-medium hover:bg-slate-50 transition flex items-center gap-2 whitespace-nowrap">
+              <i className="fas fa-filter"></i>
+              <span>Filtro Avançado</span>
+            </button>
+            <button className="px-5 py-3 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2 whitespace-nowrap">
+              <i className="fas fa-history"></i>
+              <span>Histórico</span>
+            </button>
+          </div>
+        </div>
 
-          <div className="grid grid-cols-3 gap-6 mb-8">
+        <div className="flex-1 p-8 pb-32">
+          {activeTab === 'todos' && (
+            <>
+
+              <div className="grid grid-cols-3 gap-6 mb-8">
             <section className="col-span-2 bg-white rounded-xl border border-slate-200 overflow-hidden">
               <div className="h-80 bg-pastel-blue overflow-hidden relative">
                 <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/deacdd849a-af7a052b4fb4b857dbcf.png" alt="illustration of a financial professional studying market analysis on multiple screens, modern office environment, pastel colors, outlined style" className="w-full h-full object-cover" />
@@ -865,8 +884,101 @@ const Aprendizado = () => {
               </div>
             </div>
           </section>
+            </>
+          )}
+
+          {activeTab === 'podcasts' && (
+            <div className="text-center py-16">
+              <div className="w-20 h-20 bg-pastel-blue rounded-full flex items-center justify-center mx-auto mb-4">
+                <i className="fas fa-podcast text-3xl text-slate-700"></i>
+              </div>
+              <h3 className="text-xl font-semibold text-slate-800 mb-2">Podcasts</h3>
+              <p className="text-slate-600">Conteúdo exclusivo de podcasts será exibido aqui</p>
+            </div>
+          )}
+
+          {activeTab === 'cursos' && (
+            <div className="text-center py-16">
+              <div className="w-20 h-20 bg-pastel-green rounded-full flex items-center justify-center mx-auto mb-4">
+                <i className="fas fa-graduation-cap text-3xl text-slate-700"></i>
+              </div>
+              <h3 className="text-xl font-semibold text-slate-800 mb-2">Cursos</h3>
+              <p className="text-slate-600">Explore cursos completos de finanças e investimentos</p>
+            </div>
+          )}
+
+          {activeTab === 'avatar-ia' && (
+            <div className="text-center py-16">
+              <div className="w-20 h-20 bg-pastel-purple rounded-full flex items-center justify-center mx-auto mb-4">
+                <i className="fas fa-robot text-3xl text-slate-700"></i>
+              </div>
+              <h3 className="text-xl font-semibold text-slate-800 mb-2">Avatar IA</h3>
+              <p className="text-slate-600">Aprenda com avatares de inteligência artificial</p>
+            </div>
+          )}
+
+          {activeTab === 'ebooks' && (
+            <div className="text-center py-16">
+              <div className="w-20 h-20 bg-pastel-pink rounded-full flex items-center justify-center mx-auto mb-4">
+                <i className="fas fa-book-open text-3xl text-slate-700"></i>
+              </div>
+              <h3 className="text-xl font-semibold text-slate-800 mb-2">E-books</h3>
+              <p className="text-slate-600">Biblioteca digital de e-books especializados</p>
+            </div>
+          )}
+
+          {activeTab === 'webinars' && (
+            <div className="text-center py-16">
+              <div className="w-20 h-20 bg-pastel-yellow rounded-full flex items-center justify-center mx-auto mb-4">
+                <i className="fas fa-video text-3xl text-slate-700"></i>
+              </div>
+              <h3 className="text-xl font-semibold text-slate-800 mb-2">Webinars</h3>
+              <p className="text-slate-600">Participe de webinars ao vivo com especialistas</p>
+            </div>
+          )}
+
+          {activeTab === 'artigos' && (
+            <div className="text-center py-16">
+              <div className="w-20 h-20 bg-pastel-peach rounded-full flex items-center justify-center mx-auto mb-4">
+                <i className="fas fa-newspaper text-3xl text-slate-700"></i>
+              </div>
+              <h3 className="text-xl font-semibold text-slate-800 mb-2">Artigos</h3>
+              <p className="text-slate-600">Leia artigos aprofundados sobre o mercado financeiro</p>
+            </div>
+          )}
+
+          {activeTab === 'analises' && (
+            <div className="text-center py-16">
+              <div className="w-20 h-20 bg-pastel-yellow rounded-full flex items-center justify-center mx-auto mb-4">
+                <i className="fas fa-chart-line text-3xl text-slate-700"></i>
+              </div>
+              <h3 className="text-xl font-semibold text-slate-800 mb-2">Análises</h3>
+              <p className="text-slate-600">Análises detalhadas do mercado financeiro</p>
+            </div>
+          )}
+
+          {activeTab === 'documentos' && (
+            <div className="text-center py-16">
+              <div className="w-20 h-20 bg-pastel-green rounded-full flex items-center justify-center mx-auto mb-4">
+                <i className="fas fa-file-alt text-3xl text-slate-700"></i>
+              </div>
+              <h3 className="text-xl font-semibold text-slate-800 mb-2">Documentos</h3>
+              <p className="text-slate-600">Acesse documentos técnicos e regulamentações</p>
+            </div>
+          )}
+
+          {activeTab === 'estudos' && (
+            <div className="text-center py-16">
+              <div className="w-20 h-20 bg-pastel-purple rounded-full flex items-center justify-center mx-auto mb-4">
+                <i className="fas fa-flask text-3xl text-slate-700"></i>
+              </div>
+              <h3 className="text-xl font-semibold text-slate-800 mb-2">Estudos Acadêmicos</h3>
+              <p className="text-slate-600">Pesquisas e estudos acadêmicos sobre finanças</p>
+            </div>
+          )}
         </div>
       </main>
-    </div>;
+    </div>
+  );
 };
 export default Aprendizado;
