@@ -22,7 +22,6 @@ const navigation = [
 const Aprendizado = () => {
   return (
     <div className="flex h-screen overflow-hidden">
-      {/* Sidebar */}
       <aside className="w-64 bg-white border-r border-slate-200 flex flex-col">
         <div className="p-6 border-b border-slate-200">
           <div className="flex items-center gap-3">
@@ -65,9 +64,7 @@ const Aprendizado = () => {
         </div>
       </aside>
 
-      {/* Main Content */}
       <main className="flex-1 overflow-y-auto">
-        {/* Header */}
         <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
           <div className="px-8 py-4 flex items-center justify-between">
             <div>
@@ -90,7 +87,6 @@ const Aprendizado = () => {
         </header>
 
         <div className="p-8">
-          {/* Learning Tabs */}
           <section className="mb-8">
             <div className="bg-white rounded-xl border border-slate-200 p-1.5 flex gap-1 overflow-x-auto">
               <button className="px-5 py-2.5 bg-pastel-blue text-slate-800 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm">
@@ -132,9 +128,7 @@ const Aprendizado = () => {
             </div>
           </section>
 
-          {/* Featured Course and Stats */}
           <div className="grid grid-cols-3 gap-6 mb-8">
-            {/* Featured Course */}
             <section className="col-span-2 bg-white rounded-xl border border-slate-200 overflow-hidden">
               <div className="h-80 bg-pastel-blue overflow-hidden relative">
                 <img
@@ -181,7 +175,6 @@ const Aprendizado = () => {
               </div>
             </section>
 
-            {/* Learning Stats */}
             <section className="space-y-6">
               <div className="bg-white rounded-xl p-6 border border-slate-200">
                 <div className="flex items-center justify-between mb-4">
@@ -212,9 +205,7 @@ const Aprendizado = () => {
             </section>
           </div>
 
-          {/* Continue Progress Section */}
           <section className="grid grid-cols-3 gap-6 mb-8">
-            {/* Continue Where You Left Off */}
             <div className="col-span-2">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-semibold text-slate-800">Continue de Onde Parou</h2>
@@ -224,7 +215,6 @@ const Aprendizado = () => {
               </div>
 
               <div className="space-y-4">
-                {/* Continue Card - Course */}
                 <div className="bg-white rounded-xl border border-slate-200 p-4 flex items-center gap-4 transition hover:shadow-md">
                   <div className="w-32 h-20 rounded-lg overflow-hidden flex-shrink-0">
                     <img
@@ -257,7 +247,6 @@ const Aprendizado = () => {
                   </div>
                 </div>
 
-                {/* Continue Card - Podcast */}
                 <div className="bg-white rounded-xl border border-slate-200 p-4 flex items-center gap-4 transition hover:shadow-md">
                   <div className="w-32 h-20 rounded-lg overflow-hidden flex-shrink-0">
                     <img
@@ -292,7 +281,6 @@ const Aprendizado = () => {
               </div>
             </div>
 
-            {/* My Progress Section */}
             <div>
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-semibold text-slate-800">Meu Progresso</h2>
@@ -352,7 +340,6 @@ const Aprendizado = () => {
             </div>
           </section>
 
-          {/* Courses Section */}
           <section className="mb-8">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-semibold text-slate-800">Cursos em Destaque</h2>
@@ -362,7 +349,6 @@ const Aprendizado = () => {
             </div>
 
             <div className="grid grid-cols-3 gap-6">
-              {/* Course Card 1 */}
               <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
                 <div className="h-48 bg-pastel-purple overflow-hidden relative">
                   <img
@@ -401,7 +387,6 @@ const Aprendizado = () => {
                 </div>
               </div>
 
-              {/* Course Card 2 */}
               <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
                 <div className="h-48 bg-pastel-pink overflow-hidden relative">
                   <img
@@ -437,7 +422,6 @@ const Aprendizado = () => {
                 </div>
               </div>
 
-              {/* Course Card 3 */}
               <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
                 <div className="h-48 bg-pastel-green overflow-hidden relative">
                   <img
@@ -478,7 +462,6 @@ const Aprendizado = () => {
             </div>
           </section>
 
-          {/* Webinars Section */}
           <section className="mb-8">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-semibold text-slate-800">Webinars Ao Vivo e Gravados</h2>
@@ -488,7 +471,6 @@ const Aprendizado = () => {
             </div>
 
             <div className="grid grid-cols-2 gap-6">
-              {/* Webinar Card 1 */}
               <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
                 <div className="flex items-start gap-4">
                   <div className="w-20 h-20 bg-pastel-yellow rounded-xl flex flex-col items-center justify-center flex-shrink-0">
@@ -527,7 +509,6 @@ const Aprendizado = () => {
                 </div>
               </div>
 
-              {/* Webinar Card 2 */}
               <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
                 <div className="flex items-start gap-4">
                   <div className="w-20 h-20 bg-pastel-peach rounded-xl flex flex-col items-center justify-center flex-shrink-0">
@@ -568,7 +549,6 @@ const Aprendizado = () => {
             </div>
           </section>
 
-          {/* Podcasts Section */}
           <section className="mb-8">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-semibold text-slate-800">Podcasts Recomendados</h2>
@@ -578,7 +558,6 @@ const Aprendizado = () => {
             </div>
 
             <div className="grid grid-cols-4 gap-6">
-              {/* Podcast Card 1 */}
               <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
                 <div className="h-40 bg-pastel-blue overflow-hidden">
                   <img
@@ -597,7 +576,6 @@ const Aprendizado = () => {
                 </div>
               </div>
 
-              {/* Podcast Card 2 */}
               <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
                 <div className="h-40 bg-pastel-green overflow-hidden">
                   <img
@@ -618,7 +596,6 @@ const Aprendizado = () => {
                 </div>
               </div>
 
-              {/* Podcast Card 3 */}
               <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
                 <div className="h-40 bg-pastel-purple overflow-hidden">
                   <img
@@ -637,7 +614,6 @@ const Aprendizado = () => {
                 </div>
               </div>
 
-              {/* Podcast Card 4 */}
               <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
                 <div className="h-40 bg-pastel-pink overflow-hidden">
                   <img
@@ -658,7 +634,6 @@ const Aprendizado = () => {
             </div>
           </section>
 
-          {/* Avatar Section */}
           <section className="mb-8">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-semibold text-slate-800">Aulas com Avatar IA</h2>
@@ -668,7 +643,6 @@ const Aprendizado = () => {
             </div>
 
             <div className="grid grid-cols-3 gap-6">
-              {/* Avatar Card 1 */}
               <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
                 <div className="flex items-center gap-4 mb-4">
                   <div className="w-16 h-16 rounded-full overflow-hidden">
@@ -699,7 +673,6 @@ const Aprendizado = () => {
                 </button>
               </div>
 
-              {/* Avatar Card 2 */}
               <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
                 <div className="flex items-center gap-4 mb-4">
                   <div className="w-16 h-16 rounded-full overflow-hidden">
@@ -730,7 +703,6 @@ const Aprendizado = () => {
                 </button>
               </div>
 
-              {/* Avatar Card 3 */}
               <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
                 <div className="flex items-center gap-4 mb-4">
                   <div className="w-16 h-16 rounded-full overflow-hidden">
@@ -762,7 +734,6 @@ const Aprendizado = () => {
             </div>
           </section>
 
-          {/* Learning Paths Section */}
           <section>
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-semibold text-slate-800">
@@ -774,7 +745,6 @@ const Aprendizado = () => {
             </div>
 
             <div className="grid grid-cols-3 gap-6">
-              {/* Path Card 1 */}
               <div className="bg-white rounded-xl border border-slate-200 p-6 flex flex-col justify-between hover:shadow-lg transition">
                 <div>
                   <div className="flex items-start justify-between mb-4">
@@ -818,7 +788,6 @@ const Aprendizado = () => {
                 </button>
               </div>
 
-              {/* Path Card 2 */}
               <div className="bg-white rounded-xl border border-slate-200 p-6 flex flex-col justify-between hover:shadow-lg transition">
                 <div>
                   <div className="flex items-start justify-between mb-4">
@@ -862,7 +831,6 @@ const Aprendizado = () => {
                 </button>
               </div>
 
-              {/* Path Card 3 */}
               <div className="bg-white rounded-xl border border-slate-200 p-6 flex flex-col justify-between hover:shadow-lg transition">
                 <div>
                   <div className="flex items-start justify-between mb-4">
