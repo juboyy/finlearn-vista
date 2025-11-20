@@ -1,78 +1,18 @@
 import { useState } from "react";
-import { NavLink } from "@/components/NavLink";
+import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import {
-  Home,
-  Newspaper,
-  Bot,
-  GraduationCap,
-  Book,
-  Store,
-  MessageSquare,
-  Settings,
   Bell,
   Upload,
   Search,
   Filter,
   Heart,
   ShoppingCart,
-  ChartLine,
 } from "lucide-react";
-
-const navigation = [
-  { name: "Dashboard", href: "/", icon: Home },
-  { name: "Conteúdo", href: "/conteudo", icon: Newspaper },
-  { name: "Agentes IA", href: "/agentes", icon: Bot },
-  { name: "Aprendizado", href: "/aprendizado", icon: GraduationCap },
-  { name: "Biblioteca", href: "/biblioteca", icon: Book },
-  { name: "Marketplace", href: "/marketplace", icon: Store },
-  { name: "Comunidade", href: "/comunidade", icon: MessageSquare },
-];
 
 const Marketplace = () => {
   return (
     <div className="flex h-screen overflow-hidden">
-      {/* Sidebar */}
-      <aside className="w-64 bg-white border-r border-slate-200 flex flex-col">
-        <div className="p-6 border-b border-slate-200">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-pastel-blue rounded-lg flex items-center justify-center">
-              <ChartLine className="text-slate-700 w-5 h-5" />
-            </div>
-            <span className="text-xl font-semibold text-slate-800">FinLearn</span>
-          </div>
-        </div>
-
-        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
-          {navigation.map((item) => (
-            <NavLink
-              key={item.name}
-              to={item.href}
-              className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-100 transition"
-              activeClassName="bg-pastel-blue text-slate-800 font-medium"
-            >
-              <item.icon className="w-5 h-5" />
-              <span>{item.name}</span>
-            </NavLink>
-          ))}
-        </nav>
-
-        <div className="p-4 border-t border-slate-200">
-          <div className="flex items-center gap-3 px-4 py-3">
-            <img
-              src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg"
-              alt="User"
-              className="w-10 h-10 rounded-full object-cover"
-            />
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-slate-800 truncate">João Silva</p>
-              <p className="text-xs text-slate-500 truncate">Premium</p>
-            </div>
-            <button className="text-slate-400 hover:text-slate-600">
-              <Settings className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
-      </aside>
+      <SidebarFix />
 
       {/* Main Content */}
       <main className="flex-1 overflow-y-auto">
