@@ -304,34 +304,70 @@ export default function ArtigoCreditoRural() {
               </section>
 
               {/* Risk Analysis */}
-              <section>
+              <section className="mb-8">
                 <h2 className="text-2xl font-bold text-slate-800 mb-4">Análise de Risco Regional</h2>
-                <div className="bg-slate-50 rounded-lg p-6 mb-4">
+                <div className="bg-slate-50 rounded-lg p-6 mb-6">
                   <div id="risk-chart" className="h-96"></div>
                 </div>
-                <div className="grid grid-cols-4 gap-4 mb-4">
-                  <div className="bg-white border border-slate-200 rounded-lg p-4 text-center">
-                    <p className="text-xs text-slate-500 mb-1">Centro-Oeste</p>
-                    <p className="text-2xl font-bold text-green-600">1.5%</p>
-                    <p className="text-xs text-slate-600 mt-1">Baixo Risco</p>
-                  </div>
-                  <div className="bg-white border border-slate-200 rounded-lg p-4 text-center">
-                    <p className="text-xs text-slate-500 mb-1">Sul</p>
-                    <p className="text-2xl font-bold text-yellow-600">2.6%</p>
-                    <p className="text-xs text-slate-600 mt-1">Médio Risco</p>
-                  </div>
-                  <div className="bg-white border border-slate-200 rounded-lg p-4 text-center">
-                    <p className="text-xs text-slate-500 mb-1">Sudeste</p>
-                    <p className="text-2xl font-bold text-yellow-600">3.2%</p>
-                    <p className="text-xs text-slate-600 mt-1">Médio Risco</p>
-                  </div>
-                  <div className="bg-white border border-slate-200 rounded-lg p-4 text-center">
-                    <p className="text-xs text-slate-500 mb-1">Nordeste</p>
-                    <p className="text-2xl font-bold text-red-600">4.7%</p>
-                    <p className="text-xs text-slate-600 mt-1">Alto Risco</p>
-                  </div>
+                
+                {/* Risk Table */}
+                <h3 className="text-xl font-semibold text-slate-800 mb-4">Perfil de Risco Regional - Métricas Detalhadas</h3>
+                <div className="overflow-x-auto mb-4">
+                  <table className="w-full border-collapse">
+                    <thead>
+                      <tr className="bg-slate-100">
+                        <th className="text-left p-4 font-semibold text-slate-800 border border-slate-200" style={{ width: '42%' }}>Região</th>
+                        <th className="text-left p-4 font-semibold text-slate-800 border border-slate-200" style={{ width: '28%' }}>Taxa de Inadimplência</th>
+                        <th className="text-left p-4 font-semibold text-slate-800 border border-slate-200" style={{ width: '20%' }}>Volume (R$ bi)</th>
+                        <th className="text-left p-4 font-semibold text-slate-800 border border-slate-200" style={{ width: '10%' }}>Participação</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td className="p-4 text-slate-700 border border-slate-200">Centro-Oeste</td>
+                        <td className="p-4 border border-slate-200">
+                          <span className="px-2 py-1 bg-[#C5E8D4] text-slate-700 rounded text-sm font-medium">2,1%</span>
+                        </td>
+                        <td className="p-4 text-slate-700 border border-slate-200">R$ 186,4</td>
+                        <td className="p-4 text-slate-700 border border-slate-200">45%</td>
+                      </tr>
+                      <tr className="bg-slate-50">
+                        <td className="p-4 text-slate-700 border border-slate-200">Sul</td>
+                        <td className="p-4 border border-slate-200">
+                          <span className="px-2 py-1 bg-[#E8E0C5] text-slate-700 rounded text-sm font-medium">2,8%</span>
+                        </td>
+                        <td className="p-4 text-slate-700 border border-slate-200">R$ 123,6</td>
+                        <td className="p-4 text-slate-700 border border-slate-200">30%</td>
+                      </tr>
+                      <tr>
+                        <td className="p-4 text-slate-700 border border-slate-200">Sudeste</td>
+                        <td className="p-4 border border-slate-200">
+                          <span className="px-2 py-1 bg-[#B8D4E8] text-slate-700 rounded text-sm font-medium">3,2%</span>
+                        </td>
+                        <td className="p-4 text-slate-700 border border-slate-200">R$ 61,8</td>
+                        <td className="p-4 text-slate-700 border border-slate-200">15%</td>
+                      </tr>
+                      <tr className="bg-slate-50">
+                        <td className="p-4 text-slate-700 border border-slate-200">Nordeste</td>
+                        <td className="p-4 border border-slate-200">
+                          <span className="px-2 py-1 bg-[#E8C5D8] text-slate-700 rounded text-sm font-medium">4,7%</span>
+                        </td>
+                        <td className="p-4 text-slate-700 border border-slate-200">R$ 32,9</td>
+                        <td className="p-4 text-slate-700 border border-slate-200">8%</td>
+                      </tr>
+                      <tr>
+                        <td className="p-4 text-slate-700 border border-slate-200">Norte</td>
+                        <td className="p-4 border border-slate-200">
+                          <span className="px-2 py-1 bg-[#E8D4C5] text-slate-700 rounded text-sm font-medium">3,8%</span>
+                        </td>
+                        <td className="p-4 text-slate-700 border border-slate-200">R$ 8,2</td>
+                        <td className="p-4 text-slate-700 border border-slate-200">2%</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
-                <p className="text-slate-700 text-sm">
+                
+                <p className="text-slate-700 leading-relaxed">
                   <strong>Insights:</strong> A dispersão regional da inadimplência reflete diferenças estruturais significativas. O Centro-Oeste beneficia-se de maior escala produtiva, tecnologia avançada e clima favorável. O Nordeste enfrenta desafios climáticos (secas) e menor acesso a tecnologia e infraestrutura.
                 </p>
               </section>
