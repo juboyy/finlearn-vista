@@ -1,5 +1,4 @@
 import { BarChart3 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
 type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'documentos' | 'estudos';
 
@@ -9,8 +8,6 @@ interface MenutabbarFixProps {
 }
 
 export const MenutabbarFix = ({ activeTab, setActiveTab }: MenutabbarFixProps) => {
-  const navigate = useNavigate();
-  
   return (
     <div className="px-8 py-6 bg-slate-50 border-b border-slate-200 sticky top-[81px] z-10 bg-opacity-95 backdrop-blur-sm">
       <div className="mb-4">
@@ -61,7 +58,7 @@ export const MenutabbarFix = ({ activeTab, setActiveTab }: MenutabbarFixProps) =
             <span>E-books</span>
           </button>
           <button 
-            onClick={() => navigate('/webinars')}
+            onClick={() => setActiveTab('webinars')}
             className={`px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm ${
               activeTab === 'webinars' ? 'bg-pastel-blue text-slate-800' : 'text-slate-600 hover:bg-slate-100'
             }`}
