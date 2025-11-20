@@ -2,12 +2,14 @@ import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { MenutabbarFix } from "@/components/Dashboard/MenutabbarFix";
 import { Bell, Play, Clock, BookOpen, TrendingUp, Headphones, Calendar, Users, MessageCircle, Star, BookMarked, Video, Award, Heart, CheckCircle, PlayCircle, Trophy, ChartLine, Shield, Bitcoin, Gavel, PieChart, Repeat, Globe, Leaf, Plus, BookOpenCheck, CreditCard } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ebookRiskManagementPink from "@/assets/ebook-risk-management-pink.png";
 
 type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'documentos' | 'estudos';
 
 const Aprendizado = () => {
   const [activeTab, setActiveTab] = useState<TabType>('todos');
+  const navigate = useNavigate();
   
   return (
     <div className="flex h-screen overflow-hidden">
@@ -2320,7 +2322,10 @@ const Aprendizado = () => {
                         <div>
                           <span className="text-2xl font-bold text-foreground">R$ 149</span>
                         </div>
-                        <button className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition">
+                        <button 
+                          onClick={() => navigate('/ebook/1')}
+                          className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition"
+                        >
                           Ver Mais
                         </button>
                       </div>
@@ -2353,7 +2358,10 @@ const Aprendizado = () => {
                         <div>
                           <span className="text-2xl font-bold text-foreground">R$ 189</span>
                         </div>
-                        <button className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition">
+                        <button 
+                          onClick={() => navigate('/ebook/2')}
+                          className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition"
+                        >
                           Ver Mais
                         </button>
                       </div>
@@ -2388,7 +2396,10 @@ const Aprendizado = () => {
                           <span className="text-2xl font-bold text-foreground">R$ 112</span>
                           <span className="text-slate-400 line-through ml-2 text-sm">R$ 149</span>
                         </div>
-                        <button className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition">
+                        <button 
+                          onClick={() => navigate('/ebook/3')}
+                          className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition"
+                        >
                           Ver Mais
                         </button>
                       </div>
@@ -2421,7 +2432,10 @@ const Aprendizado = () => {
                         <div>
                           <span className="text-2xl font-bold text-foreground">R$ 99</span>
                         </div>
-                        <button className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition">
+                        <button 
+                          onClick={() => navigate('/ebook/4')}
+                          className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition"
+                        >
                           Ver Mais
                         </button>
                       </div>

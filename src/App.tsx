@@ -30,6 +30,7 @@ import Checkout from "./pages/Checkout";
 import CheckoutPayment from "./pages/CheckoutPayment";
 import Podcasts from "./pages/Podcasts";
 import Webinars from "./pages/Webinars";
+import EbookDetalhes from "./pages/EbookDetalhes";
 
 import NotFound from "./pages/NotFound";
 
@@ -76,6 +77,7 @@ const App = () => {
           <Route path="/checkout/payment" element={<CheckoutPayment />} />
           <Route path="/podcasts" element={<Podcasts />} />
           <Route path="/webinars" element={<Webinars />} />
+          <Route path="/ebook/:id" element={<EbookDetalhes />} />
           
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
