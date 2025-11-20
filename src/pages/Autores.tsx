@@ -260,7 +260,10 @@ const Autores = () => {
                     <i className="fas fa-user-check mr-2"></i>
                     Seguindo
                   </button>
-                  <button className="px-6 py-2.5 bg-pastel-green text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                  <button 
+                    onClick={() => navigate('/seguidores')}
+                    className="px-6 py-2.5 bg-pastel-green text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
+                  >
                     <i className="fas fa-users mr-2"></i>
                     Seguidores
                   </button>
