@@ -1,7 +1,5 @@
-import { useState } from "react";
 import { Home, Newspaper, Bot, GraduationCap, Book, MessageCircle, Store, TrendingUp, Users, Settings } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
-import { SettingsDialog } from "./SettingsDialog";
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: Home },
@@ -16,11 +14,7 @@ const navigation = [
 ];
 
 export const SidebarFix = () => {
-  const [settingsOpen, setSettingsOpen] = useState(false);
-  
   return (
-    <>
-    <SettingsDialog open={settingsOpen} onOpenChange={setSettingsOpen} />
     <aside className="w-64 bg-sidebar border-r border-sidebar-border flex flex-col h-screen sticky top-0">
       <div className="p-6 border-b border-sidebar-border">
         <div className="flex items-center gap-3">
@@ -57,15 +51,11 @@ export const SidebarFix = () => {
             <p className="text-sm font-medium text-sidebar-foreground truncate">João Silva</p>
             <p className="text-xs text-sidebar-foreground/70 truncate">Premium</p>
           </div>
-          <button 
-            className="text-sidebar-foreground/70 hover:text-sidebar-foreground transition-colors"
-            onClick={() => setSettingsOpen(true)}
-          >
+          <button className="text-sidebar-foreground/70 hover:text-sidebar-foreground transition-colors">
             <Settings size={18} />
           </button>
         </div>
       </div>
     </aside>
-    </>
   );
 };
