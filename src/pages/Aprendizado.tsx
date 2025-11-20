@@ -749,8 +749,8 @@ const Aprendizado = () => {
                 <div>
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-pastel-blue/30 rounded-lg flex items-center justify-center">
-                        <i className="fas fa-chart-line text-pastel-blue text-xl"></i>
+                      <div className="w-12 h-12 bg-pastel-blue rounded-lg flex items-center justify-center">
+                        <i className="fas fa-chart-line text-slate-700 text-xl"></i>
                       </div>
                       <div>
                         <h3 className="font-semibold text-slate-800">Analista de Mercado</h3>
@@ -792,8 +792,8 @@ const Aprendizado = () => {
                 <div>
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-pastel-green/30 rounded-lg flex items-center justify-center">
-                        <i className="fab fa-bitcoin text-pastel-green text-xl"></i>
+                      <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center">
+                        <i className="fab fa-bitcoin text-slate-700 text-xl"></i>
                       </div>
                       <div>
                         <h3 className="font-semibold text-slate-800">Especialista em Cripto</h3>
@@ -835,8 +835,8 @@ const Aprendizado = () => {
                 <div>
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-pastel-purple/30 rounded-lg flex items-center justify-center">
-                        <i className="fas fa-gavel text-pastel-purple text-xl"></i>
+                      <div className="w-12 h-12 bg-pastel-purple rounded-lg flex items-center justify-center">
+                        <i className="fas fa-gavel text-slate-700 text-xl"></i>
                       </div>
                       <div>
                         <h3 className="font-semibold text-slate-800">Consultor de Compliance</h3>
