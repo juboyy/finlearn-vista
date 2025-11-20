@@ -703,14 +703,14 @@ const CheckoutPayment = () => {
       {isApproved && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 animate-fade-in">
           <div className="bg-white rounded-2xl p-8 max-w-md mx-4 text-center shadow-2xl animate-scale-in">
-            <div className="w-20 h-20 bg-pastel-green rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
-              <i className="fas fa-check text-4xl text-slate-700"></i>
+            <div className="w-20 h-20 bg-pastel-green rounded-full flex items-center justify-center mx-auto mb-6">
+              <i className="fas fa-check text-4xl text-slate-700 animate-[scale-in_0.6s_ease-out]"></i>
             </div>
             <h2 className="text-3xl font-bold text-slate-800 mb-3">Pagamento Aprovado!</h2>
             <p className="text-slate-600 mb-2">Sua assinatura Premium foi ativada com sucesso.</p>
             <p className="text-sm text-slate-500 mb-6">Você receberá um e-mail de confirmação em instantes.</p>
             
-            <div className="bg-pastel-blue bg-opacity-20 rounded-lg p-4 mb-6">
+            <div className="bg-pastel-green bg-opacity-20 rounded-lg p-4 mb-6">
               <div className="flex items-center justify-between text-sm mb-2">
                 <span className="text-slate-600">Plano</span>
                 <span className="font-semibold text-slate-800">Premium Mensal</span>
@@ -729,7 +729,7 @@ const CheckoutPayment = () => {
 
             <button 
               onClick={() => navigate('/')}
-              className="w-full px-6 py-3 bg-pastel-blue text-slate-800 rounded-lg font-semibold hover:bg-opacity-80 transition mb-3"
+              className="w-full px-6 py-3 bg-pastel-green text-slate-800 rounded-lg font-semibold hover:bg-opacity-80 transition mb-3"
             >
               Ir para Dashboard
             </button>
