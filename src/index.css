@@ -31,9 +31,15 @@ All colors MUST be HSL.
 
     --success: 152 68% 80%;
     --success-foreground: 164 76% 20%;
+    --success-light: 152 68% 90%;
 
     --warning: 48 96% 76%;
     --warning-foreground: 43 96% 26%;
+    --warning-light: 48 96% 88%;
+    
+    --primary-light: 206 49% 85%;
+    --secondary-light: 152 35% 85%;
+    --accent-light: 270 35% 88%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
@@ -92,9 +98,15 @@ All colors MUST be HSL.
 
     --success: 152 45% 55%;
     --success-foreground: 0 0% 100%;
+    --success-light: 152 45% 75%;
 
     --warning: 44 46% 63%;
     --warning-foreground: 220 10% 30%;
+    --warning-light: 44 46% 78%;
+    
+    --primary-light: 206 30% 75%;
+    --secondary-light: 152 45% 75%;
+    --accent-light: 270 35% 75%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;

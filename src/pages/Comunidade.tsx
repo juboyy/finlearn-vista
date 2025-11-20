@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { MessageCircle, Users, Trophy, Star, TrendingUp, DollarSign, Scale, Briefcase, ChartLine, Bell, Plus, Pen, Flame, Clock, Eye, Heart, MessageSquare, Bookmark, Crown } from "lucide-react";
 import creditoRuralImage from "@/assets/credito-rural-2025.png";
 
 export default function Comunidade() {
   const [activeTab, setActiveTab] = useState<"discussoes" | "artigos">("discussoes");
+  const navigate = useNavigate();
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -71,7 +73,10 @@ export default function Comunidade() {
                 <div className="w-12 h-12 bg-pastel-pink rounded-lg flex items-center justify-center">
                   <Star className="text-slate-700 w-6 h-6" />
                 </div>
-                <button className="px-6 py-1.5 bg-pastel-pink border border-pastel-pink text-slate-700 rounded-lg text-xs font-medium hover:bg-opacity-80 transition">
+                <button 
+                  onClick={() => navigate('/rankings')}
+                  className="px-6 py-1.5 bg-pastel-pink border border-pastel-pink text-slate-700 rounded-lg text-xs font-medium hover:bg-opacity-80 transition"
+                >
                   Ver Ranking
                 </button>
               </div>

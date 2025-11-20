@@ -42,11 +42,16 @@ export default {
         success: {
           DEFAULT: "hsl(var(--success))",
           foreground: "hsl(var(--success-foreground))",
+          light: "hsl(var(--success-light))",
         },
         warning: {
           DEFAULT: "hsl(var(--warning))",
           foreground: "hsl(var(--warning-foreground))",
+          light: "hsl(var(--warning-light))",
         },
+        "primary-light": "hsl(var(--primary-light))",
+        "secondary-light": "hsl(var(--secondary-light))",
+        "accent-light": "hsl(var(--accent-light))",
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
