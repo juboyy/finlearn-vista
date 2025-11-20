@@ -47,13 +47,47 @@ const DescobrirNovos = () => {
 
         <div className="p-8">
           <section className="bg-white rounded-xl p-4 border border-slate-200 mb-6">
-            <div className="relative">
-              <input 
-                type="text" 
-                placeholder="Buscar autores por nome, instituição ou especialidade..." 
-                className="w-full pl-12 pr-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pastel-blue focus:border-transparent text-slate-700 placeholder:text-slate-400"
-              />
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-slate-600">Visualizar:</span>
+                  <button className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg">
+                    <i className="fas fa-th-large"></i>
+                  </button>
+                  <button className="p-2 bg-pastel-blue text-slate-700 rounded-lg transition">
+                    <i className="fas fa-list"></i>
+                  </button>
+                </div>
+                <div className="flex items-center gap-2">
+                  <select className="text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pastel-blue appearance-none pr-8 bg-white">
+                    <option>Nome (A-Z)</option>
+                    <option>Mais seguidos</option>
+                    <option>Mais ativos</option>
+                    <option>Novos autores</option>
+                  </select>
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <button 
+                  onClick={() => navigate('/estatisticas')}
+                  className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition flex items-center gap-2 font-medium"
+                >
+                  <i className="fas fa-chart-bar"></i>
+                  <span>Estatísticas</span>
+                </button>
+                <button className="px-4 py-2 bg-pastel-green text-slate-700 rounded-lg text-sm font-medium flex items-center gap-2">
+                  <i className="fas fa-layer-group"></i>
+                  <span>Todos</span>
+                </button>
+                <button className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition flex items-center gap-2 font-medium">
+                  <i className="far fa-star"></i>
+                  <span>Favoritos</span>
+                </button>
+                <button className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition flex items-center gap-2 font-medium">
+                  <i className="far fa-bell"></i>
+                  <span>Com Notificação</span>
+                </button>
+              </div>
             </div>
           </section>
 
