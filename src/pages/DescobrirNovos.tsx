@@ -121,6 +121,42 @@ const DescobrirNovos = () => {
                   <h2 className="text-lg font-semibold text-slate-800">Filtrar por Categoria</h2>
                   <button className="text-xs text-slate-500 hover:text-slate-700">Limpar</button>
                 </div>
+                <div className="mb-4">
+                  <select className="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-pastel-blue bg-white text-slate-700">
+                    <option value="">Selecione uma categoria</option>
+                    <option value="analise-mercado">Análise de Mercado</option>
+                    <option value="regulamentacao">Regulamentação</option>
+                    <option value="meios-pagamento">Meios de Pagamento</option>
+                    <option value="investimentos">Investimentos</option>
+                    <option value="banking-fintech">Banking & Fintech</option>
+                    <option value="cartoes">Cartões</option>
+                    <option value="credito">Crédito e Financiamento</option>
+                    <option value="seguros">Seguros</option>
+                    <option value="criptomoedas">Criptomoedas</option>
+                    <option value="blockchain">Blockchain</option>
+                    <option value="open-banking">Open Banking</option>
+                    <option value="open-finance">Open Finance</option>
+                    <option value="pix">PIX</option>
+                    <option value="esg">ESG e Sustentabilidade</option>
+                    <option value="compliance">Compliance</option>
+                    <option value="lgpd">LGPD</option>
+                    <option value="kyc-aml">KYC e AML</option>
+                    <option value="fraude">Prevenção à Fraude</option>
+                    <option value="cybersecurity">Cybersecurity</option>
+                    <option value="ia-ml">IA e Machine Learning</option>
+                    <option value="apis">APIs e Integração</option>
+                    <option value="cloud">Cloud Banking</option>
+                    <option value="baas">Banking as a Service</option>
+                    <option value="embedded-finance">Embedded Finance</option>
+                    <option value="wealth-management">Wealth Management</option>
+                    <option value="asset-management">Asset Management</option>
+                    <option value="renda-fixa">Renda Fixa</option>
+                    <option value="renda-variavel">Renda Variável</option>
+                    <option value="fundos">Fundos de Investimento</option>
+                    <option value="derivatives">Derivativos</option>
+                    <option value="forex">Câmbio (Forex)</option>
+                  </select>
+                </div>
                 <div className="space-y-2">
                   {[
                     { name: 'Análise de Mercado', count: 156, color: '#7FA8C9' },
@@ -142,6 +178,22 @@ const DescobrirNovos = () => {
 
               <section className="bg-white rounded-xl p-6 border border-slate-200">
                 <h2 className="text-lg font-semibold text-slate-800 mb-4">Nível de Expertise</h2>
+                <div className="mb-4">
+                  <select className="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-pastel-blue bg-white text-slate-700">
+                    <option value="">Selecione o nível</option>
+                    <option value="todos">Todos os níveis</option>
+                    <option value="iniciante">Iniciante (1-2 anos)</option>
+                    <option value="junior">Júnior (2-4 anos)</option>
+                    <option value="pleno">Pleno (4-7 anos)</option>
+                    <option value="senior">Sênior (7-10 anos)</option>
+                    <option value="especialista">Especialista (10+ anos)</option>
+                    <option value="master">Master (15+ anos)</option>
+                    <option value="thought-leader">Thought Leader</option>
+                    <option value="certificado">Certificações Profissionais</option>
+                    <option value="phd">PhD / Doutorado</option>
+                    <option value="executivo">C-Level / Executivo</option>
+                  </select>
+                </div>
                 <div className="space-y-2">
                   {['Todos os níveis', 'Iniciante', 'Intermediário', 'Especialista'].map((level) => (
                     <label key={level} className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-100 cursor-pointer transition">
@@ -154,6 +206,24 @@ const DescobrirNovos = () => {
 
               <section className="bg-white rounded-xl p-6 border border-slate-200">
                 <h2 className="text-lg font-semibold text-slate-800 mb-4">Frequência de Publicação</h2>
+                <div className="mb-4">
+                  <select className="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-pastel-blue bg-white text-slate-700">
+                    <option value="">Selecione a frequência</option>
+                    <option value="multiplo-diario">Múltiplas vezes ao dia</option>
+                    <option value="diario">Diário</option>
+                    <option value="3x-semana">3x por semana</option>
+                    <option value="2x-semana">2x por semana</option>
+                    <option value="semanal">Semanal</option>
+                    <option value="quinzenal">Quinzenal</option>
+                    <option value="mensal">Mensal</option>
+                    <option value="bimestral">Bimestral</option>
+                    <option value="trimestral">Trimestral</option>
+                    <option value="irregular">Irregular</option>
+                    <option value="alto-volume">Alto Volume (10+ por mês)</option>
+                    <option value="medio-volume">Médio Volume (5-10 por mês)</option>
+                    <option value="baixo-volume">Baixo Volume (1-4 por mês)</option>
+                  </select>
+                </div>
                 <div className="space-y-2">
                   {[
                     { name: 'Diário', count: 34 },
@@ -171,6 +241,43 @@ const DescobrirNovos = () => {
 
               <section className="bg-white rounded-xl p-6 border border-slate-200">
                 <h2 className="text-lg font-semibold text-slate-800 mb-4">Tipo de Instituição</h2>
+                <div className="mb-4">
+                  <select className="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-pastel-blue bg-white text-slate-700">
+                    <option value="">Selecione o tipo</option>
+                    <option value="banco-comercial">Banco Comercial</option>
+                    <option value="banco-investimento">Banco de Investimento</option>
+                    <option value="banco-digital">Banco Digital</option>
+                    <option value="fintech-pagamentos">Fintech de Pagamentos</option>
+                    <option value="fintech-credito">Fintech de Crédito</option>
+                    <option value="fintech-investimentos">Fintech de Investimentos</option>
+                    <option value="neobank">Neobank</option>
+                    <option value="corretora">Corretora de Valores</option>
+                    <option value="gestora">Gestora de Recursos</option>
+                    <option value="asset-management">Asset Management</option>
+                    <option value="private-equity">Private Equity</option>
+                    <option value="venture-capital">Venture Capital</option>
+                    <option value="insurtech">Insurtech</option>
+                    <option value="seguradora">Seguradora</option>
+                    <option value="credtech">Credtech</option>
+                    <option value="regulador">Órgão Regulador</option>
+                    <option value="bacen">Banco Central</option>
+                    <option value="cvm">CVM</option>
+                    <option value="susep">SUSEP</option>
+                    <option value="consultoria">Consultoria Financeira</option>
+                    <option value="auditoria">Auditoria</option>
+                    <option value="compliance">Compliance</option>
+                    <option value="tech-provider">Provedor de Tecnologia</option>
+                    <option value="processadora">Processadora de Pagamentos</option>
+                    <option value="adquirente">Adquirente</option>
+                    <option value="subadquirente">Subadquirente</option>
+                    <option value="bandeira">Bandeira de Cartões</option>
+                    <option value="bureau">Bureau de Crédito</option>
+                    <option value="academia">Academia / Universidade</option>
+                    <option value="think-tank">Think Tank</option>
+                    <option value="associacao">Associação de Classe</option>
+                    <option value="midia">Mídia Especializada</option>
+                  </select>
+                </div>
                 <div className="space-y-2">
                   {[
                     { name: 'Banco', count: 98 },
