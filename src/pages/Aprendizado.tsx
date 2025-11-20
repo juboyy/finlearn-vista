@@ -1119,7 +1119,7 @@ const Aprendizado = () => {
                           <span>28h de conteúdo</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                          <Certificate className="w-4 h-4" />
+                          <Award className="w-4 h-4" />
                           <span>Certificado</span>
                         </div>
                       </div>
@@ -1179,7 +1179,7 @@ const Aprendizado = () => {
                   <div className="bg-card rounded-xl border border-border p-6 hover:shadow-lg transition">
                     <div className="flex items-center justify-between mb-4">
                       <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center">
-                        <Certificate className="text-foreground" size={24} />
+                        <Award className="text-foreground" size={24} />
                       </div>
                       <span className="text-xs text-green-600 font-medium">Verificados</span>
                     </div>
@@ -1214,7 +1214,7 @@ const Aprendizado = () => {
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
-                          <Certificate className="text-pastel-blue" size={16} />
+                          <Award className="text-pastel-blue" size={16} />
                           <span className="text-sm font-medium text-foreground">4</span>
                         </div>
                       </div>
@@ -1235,7 +1235,7 @@ const Aprendizado = () => {
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
-                          <Certificate className="text-pastel-green" size={16} />
+                          <Award className="text-pastel-green" size={16} />
                           <span className="text-sm font-medium text-foreground">3</span>
                         </div>
                       </div>
@@ -1256,7 +1256,7 @@ const Aprendizado = () => {
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
-                          <Certificate className="text-pastel-purple" size={16} />
+                          <Award className="text-pastel-purple" size={16} />
                           <span className="text-sm font-medium text-foreground">2</span>
                         </div>
                       </div>
@@ -1277,7 +1277,7 @@ const Aprendizado = () => {
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
-                          <Certificate className="text-pastel-pink" size={16} />
+                          <Award className="text-pastel-pink" size={16} />
                           <span className="text-sm font-medium text-foreground">2</span>
                         </div>
                       </div>
@@ -1298,7 +1298,7 @@ const Aprendizado = () => {
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
-                          <Certificate className="text-pastel-peach" size={16} />
+                          <Award className="text-pastel-peach" size={16} />
                           <span className="text-sm font-medium text-foreground">1</span>
                         </div>
                       </div>
