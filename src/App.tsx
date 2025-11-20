@@ -18,6 +18,7 @@ import { Biblioteca } from "./pages/Biblioteca";
 import Marketplace from "./pages/Marketplace";
 import Aprendizado from "./pages/Aprendizado";
 import Comunidade from "./pages/Comunidade";
+import Rankings from "./pages/Rankings";
 import Discussao from "./pages/Discussao";
 import ArtigoCreditoRural from "./pages/ArtigoCreditoRural";
 import NotFound from "./pages/NotFound";
@@ -53,6 +54,7 @@ const App = () => {
           <Route path="/marketplace" element={<Marketplace />} />
           <Route path="/aprendizado" element={<Aprendizado />} />
           <Route path="/comunidade" element={<Comunidade />} />
+          <Route path="/rankings" element={<Rankings />} />
           <Route path="/discussao/:id" element={<Discussao />} />
           <Route path="/artigo/credito-rural" element={<ArtigoCreditoRural />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
