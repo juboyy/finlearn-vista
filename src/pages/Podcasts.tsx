@@ -1,7 +1,12 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Bell } from "lucide-react";
+import { useState } from "react";
+
+type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'documentos' | 'estudos';
 
 const Podcasts = () => {
+  const [activeTab, setActiveTab] = useState<TabType>('todos');
+  
   return (
     <div className="flex h-screen overflow-hidden">
       <SidebarFix />
@@ -31,43 +36,93 @@ const Podcasts = () => {
         <div className="px-8 py-6 bg-slate-50 border-b border-slate-200 sticky top-[81px] z-10 bg-opacity-95 backdrop-blur-sm">
           <div className="mb-4">
             <div className="flex items-center gap-2 overflow-x-auto pb-2">
-              <button className="px-4 py-2 bg-pastel-blue text-slate-800 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm">
+              <button 
+                onClick={() => setActiveTab('todos')}
+                className={`px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm ${
+                  activeTab === 'todos' ? 'bg-pastel-blue text-slate-800' : 'text-slate-600 hover:bg-slate-100'
+                }`}
+              >
                 <i className="fas fa-table-cells"></i>
                 <span>Todos</span>
               </button>
-              <button className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm">
+              <button 
+                onClick={() => setActiveTab('podcasts')}
+                className={`px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm ${
+                  activeTab === 'podcasts' ? 'bg-pastel-blue text-slate-800' : 'text-slate-600 hover:bg-slate-100'
+                }`}
+              >
                 <i className="fas fa-podcast"></i>
                 <span>Podcasts</span>
               </button>
-              <button className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm">
+              <button 
+                onClick={() => setActiveTab('cursos')}
+                className={`px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm ${
+                  activeTab === 'cursos' ? 'bg-pastel-blue text-slate-800' : 'text-slate-600 hover:bg-slate-100'
+                }`}
+              >
                 <i className="fas fa-graduation-cap"></i>
                 <span>Cursos</span>
               </button>
-              <button className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm">
+              <button 
+                onClick={() => setActiveTab('avatar-ia')}
+                className={`px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm ${
+                  activeTab === 'avatar-ia' ? 'bg-pastel-blue text-slate-800' : 'text-slate-600 hover:bg-slate-100'
+                }`}
+              >
                 <i className="fas fa-robot"></i>
                 <span>Avatar IA</span>
               </button>
-              <button className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm">
+              <button 
+                onClick={() => setActiveTab('ebooks')}
+                className={`px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm ${
+                  activeTab === 'ebooks' ? 'bg-pastel-blue text-slate-800' : 'text-slate-600 hover:bg-slate-100'
+                }`}
+              >
                 <i className="fas fa-book-open"></i>
                 <span>E-books</span>
               </button>
-              <button className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm">
+              <button 
+                onClick={() => setActiveTab('webinars')}
+                className={`px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm ${
+                  activeTab === 'webinars' ? 'bg-pastel-blue text-slate-800' : 'text-slate-600 hover:bg-slate-100'
+                }`}
+              >
                 <i className="fas fa-video"></i>
                 <span>Webinars</span>
               </button>
-              <button className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm">
+              <button 
+                onClick={() => setActiveTab('artigos')}
+                className={`px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm ${
+                  activeTab === 'artigos' ? 'bg-pastel-blue text-slate-800' : 'text-slate-600 hover:bg-slate-100'
+                }`}
+              >
                 <i className="fas fa-newspaper"></i>
                 <span>Artigos</span>
               </button>
-              <button className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm">
+              <button 
+                onClick={() => setActiveTab('analises')}
+                className={`px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm ${
+                  activeTab === 'analises' ? 'bg-pastel-blue text-slate-800' : 'text-slate-600 hover:bg-slate-100'
+                }`}
+              >
                 <i className="fas fa-chart-line"></i>
                 <span>Análises</span>
               </button>
-              <button className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm">
+              <button 
+                onClick={() => setActiveTab('documentos')}
+                className={`px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm ${
+                  activeTab === 'documentos' ? 'bg-pastel-blue text-slate-800' : 'text-slate-600 hover:bg-slate-100'
+                }`}
+              >
                 <i className="fas fa-file-alt"></i>
                 <span>Documentos</span>
               </button>
-              <button className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm">
+              <button 
+                onClick={() => setActiveTab('estudos')}
+                className={`px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm ${
+                  activeTab === 'estudos' ? 'bg-pastel-blue text-slate-800' : 'text-slate-600 hover:bg-slate-100'
+                }`}
+              >
                 <i className="fas fa-flask"></i>
                 <span>Estudos Acadêmicos</span>
               </button>
@@ -94,275 +149,204 @@ const Podcasts = () => {
         </div>
 
         <div className="flex-1 p-8 pb-32">
-          <section className="mb-8">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-semibold text-slate-800">Continue Ouvindo</h2>
-              <a href="#" className="text-sm text-slate-600 hover:text-slate-800 font-medium">Ver todos</a>
-            </div>
-            <div className="grid grid-cols-3 gap-6">
-              <div className="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-lg transition">
-                <div className="flex gap-4">
-                  <div className="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-pastel-blue">
-                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png" alt="podcast cover" className="w-full h-full object-cover" />
+          {activeTab === 'todos' && (
+            <>
+              <section className="mb-8">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-xl font-semibold text-slate-800">Continue Ouvindo</h2>
+                  <a href="#" className="text-sm text-slate-600 hover:text-slate-800 font-medium">Ver todos</a>
+                </div>
+                <div className="grid grid-cols-3 gap-6">
+                  <div className="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-lg transition">
+                    <div className="flex gap-4">
+                      <div className="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-pastel-blue">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png" alt="podcast cover" className="w-full h-full object-cover" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs text-slate-500 mb-1">Mercados em Foco</p>
+                        <h3 className="font-semibold text-slate-800 mb-1 line-clamp-2">Análise Semanal: Volatilidade e Oportunidades</h3>
+                        <div className="flex items-center gap-2 mb-3">
+                          <span className="text-xs text-slate-500">28 min restantes</span>
+                        </div>
+                        <div className="w-full bg-slate-200 rounded-full h-1 mb-2">
+                          <div className="bg-pastel-blue h-1 rounded-full" style={{ width: '65%' }}></div>
+                        </div>
+                        <button className="text-slate-600 hover:text-slate-800">
+                          <i className="fas fa-play-circle text-2xl"></i>
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs text-slate-500 mb-1">Mercados em Foco</p>
-                    <h3 className="font-semibold text-slate-800 mb-1 line-clamp-2">Análise Semanal: Volatilidade e Oportunidades</h3>
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="text-xs text-slate-500">28 min restantes</span>
+                  <div className="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-lg transition">
+                    <div className="flex gap-4">
+                      <div className="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-pastel-green">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/cf142f2fa8-3e14b0bb9b96f766efe7.png" alt="podcast cover" className="w-full h-full object-cover" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs text-slate-500 mb-1">Investidor Inteligente</p>
+                        <h3 className="font-semibold text-slate-800 mb-1 line-clamp-2">Diversificação de Carteira em 2024</h3>
+                        <div className="flex items-center gap-2 mb-3">
+                          <span className="text-xs text-slate-500">15 min restantes</span>
+                        </div>
+                        <div className="w-full bg-slate-200 rounded-full h-1 mb-2">
+                          <div className="bg-pastel-green h-1 rounded-full" style={{ width: '82%' }}></div>
+                        </div>
+                        <button className="text-slate-600 hover:text-slate-800">
+                          <i className="fas fa-play-circle text-2xl"></i>
+                        </button>
+                      </div>
                     </div>
-                    <div className="w-full bg-slate-200 rounded-full h-1 mb-2">
-                      <div className="bg-pastel-blue h-1 rounded-full" style={{ width: '65%' }}></div>
+                  </div>
+                  <div className="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-lg transition">
+                    <div className="flex gap-4">
+                      <div className="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-pastel-purple">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/270689fe5d-6ce96dde7db22c1b8808.png" alt="podcast cover" className="w-full h-full object-cover" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs text-slate-500 mb-1">FinTech Brasil</p>
+                        <h3 className="font-semibold text-slate-800 mb-1 line-clamp-2">Inovações em Meios de Pagamento</h3>
+                        <div className="flex items-center gap-2 mb-3">
+                          <span className="text-xs text-slate-500">22 min restantes</span>
+                        </div>
+                        <div className="w-full bg-slate-200 rounded-full h-1 mb-2">
+                          <div className="bg-pastel-purple h-1 rounded-full" style={{ width: '45%' }}></div>
+                        </div>
+                        <button className="text-slate-600 hover:text-slate-800">
+                          <i className="fas fa-play-circle text-2xl"></i>
+                        </button>
+                      </div>
                     </div>
-                    <button className="text-slate-600 hover:text-slate-800">
-                      <i className="fas fa-play-circle text-2xl"></i>
-                    </button>
                   </div>
                 </div>
-              </div>
-              <div className="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-lg transition">
-                <div className="flex gap-4">
-                  <div className="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-pastel-green">
-                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/cf142f2fa8-3e14b0bb9b96f766efe7.png" alt="podcast cover" className="w-full h-full object-cover" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs text-slate-500 mb-1">Investidor Inteligente</p>
-                    <h3 className="font-semibold text-slate-800 mb-1 line-clamp-2">Diversificação de Carteira em 2024</h3>
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="text-xs text-slate-500">15 min restantes</span>
-                    </div>
-                    <div className="w-full bg-slate-200 rounded-full h-1 mb-2">
-                      <div className="bg-pastel-green h-1 rounded-full" style={{ width: '82%' }}></div>
-                    </div>
-                    <button className="text-slate-600 hover:text-slate-800">
-                      <i className="fas fa-play-circle text-2xl"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-lg transition">
-                <div className="flex gap-4">
-                  <div className="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-pastel-purple">
-                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/270689fe5d-6ce96dde7db22c1b8808.png" alt="podcast cover" className="w-full h-full object-cover" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs text-slate-500 mb-1">FinTech Brasil</p>
-                    <h3 className="font-semibold text-slate-800 mb-1 line-clamp-2">Inovações em Meios de Pagamento</h3>
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="text-xs text-slate-500">22 min restantes</span>
-                    </div>
-                    <div className="w-full bg-slate-200 rounded-full h-1 mb-2">
-                      <div className="bg-pastel-purple h-1 rounded-full" style={{ width: '45%' }}></div>
-                    </div>
-                    <button className="text-slate-600 hover:text-slate-800">
-                      <i className="fas fa-play-circle text-2xl"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
+              </section>
 
-          <section className="mb-8">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-semibold text-slate-800">Séries Populares</h2>
-              <a href="#" className="text-sm text-slate-600 hover:text-slate-800 font-medium">Explorar todas</a>
-            </div>
-            <div className="grid grid-cols-5 gap-6">
-              <div className="group cursor-pointer">
-                <div className="relative mb-3">
-                  <div className="w-full aspect-square rounded-xl overflow-hidden bg-pastel-blue">
-                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png" alt="series cover" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                  </div>
-                  <button className="absolute bottom-2 right-2 w-12 h-12 bg-slate-800 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg hover:scale-110 transform">
-                    <i className="fas fa-play ml-1"></i>
-                  </button>
+              <section className="mb-8">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-xl font-semibold text-slate-800">Explorar por Categoria</h2>
                 </div>
-                <h3 className="font-semibold text-slate-800 mb-1">Mercados em Foco</h3>
-                <p className="text-sm text-slate-500">142 episódios</p>
-              </div>
-              <div className="group cursor-pointer">
-                <div className="relative mb-3">
-                  <div className="w-full aspect-square rounded-xl overflow-hidden bg-pastel-green">
-                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/cf142f2fa8-3e14b0bb9b96f766efe7.png" alt="series cover" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                <div className="grid grid-cols-4 gap-4">
+                  <div className="bg-pastel-blue rounded-xl p-6 hover:shadow-lg transition cursor-pointer group">
+                    <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                      <i className="fas fa-chart-line text-2xl text-slate-700"></i>
+                    </div>
+                    <h3 className="font-semibold text-slate-800 mb-1">Análise de Mercado</h3>
+                    <p className="text-sm text-slate-600">48 episódios</p>
                   </div>
-                  <button className="absolute bottom-2 right-2 w-12 h-12 bg-slate-800 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg hover:scale-110 transform">
-                    <i className="fas fa-play ml-1"></i>
-                  </button>
-                </div>
-                <h3 className="font-semibold text-slate-800 mb-1">Investidor Inteligente</h3>
-                <p className="text-sm text-slate-500">89 episódios</p>
-              </div>
-              <div className="group cursor-pointer">
-                <div className="relative mb-3">
-                  <div className="w-full aspect-square rounded-xl overflow-hidden bg-pastel-purple">
-                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/270689fe5d-6ce96dde7db22c1b8808.png" alt="series cover" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                  <div className="bg-pastel-green rounded-xl p-6 hover:shadow-lg transition cursor-pointer group">
+                    <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                      <i className="fas fa-piggy-bank text-2xl text-slate-700"></i>
+                    </div>
+                    <h3 className="font-semibold text-slate-800 mb-1">Investimentos</h3>
+                    <p className="text-sm text-slate-600">67 episódios</p>
                   </div>
-                  <button className="absolute bottom-2 right-2 w-12 h-12 bg-slate-800 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg hover:scale-110 transform">
-                    <i className="fas fa-play ml-1"></i>
-                  </button>
-                </div>
-                <h3 className="font-semibold text-slate-800 mb-1">FinTech Brasil</h3>
-                <p className="text-sm text-slate-500">67 episódios</p>
-              </div>
-              <div className="group cursor-pointer">
-                <div className="relative mb-3">
-                  <div className="w-full aspect-square rounded-xl overflow-hidden bg-pastel-pink">
-                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/84f47f0351-d5b7ae096302eba637e5.png" alt="series cover" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                  <div className="bg-pastel-purple rounded-xl p-6 hover:shadow-lg transition cursor-pointer group">
+                    <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                      <i className="fas fa-landmark text-2xl text-slate-700"></i>
+                    </div>
+                    <h3 className="font-semibold text-slate-800 mb-1">Regulação Bancária</h3>
+                    <p className="text-sm text-slate-600">32 episódios</p>
                   </div>
-                  <button className="absolute bottom-2 right-2 w-12 h-12 bg-slate-800 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg hover:scale-110 transform">
-                    <i className="fas fa-play ml-1"></i>
-                  </button>
-                </div>
-                <h3 className="font-semibold text-slate-800 mb-1">Economia Global</h3>
-                <p className="text-sm text-slate-500">201 episódios</p>
-              </div>
-              <div className="group cursor-pointer">
-                <div className="relative mb-3">
-                  <div className="w-full aspect-square rounded-xl overflow-hidden bg-pastel-yellow">
-                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/8627363c2b-a72824be4bec8ab72346.png" alt="series cover" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                  <div className="bg-pastel-pink rounded-xl p-6 hover:shadow-lg transition cursor-pointer group">
+                    <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                      <i className="fas fa-gavel text-2xl text-slate-700"></i>
+                    </div>
+                    <h3 className="font-semibold text-slate-800 mb-1">Compliance</h3>
+                    <p className="text-sm text-slate-600">29 episódios</p>
                   </div>
-                  <button className="absolute bottom-2 right-2 w-12 h-12 bg-slate-800 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg hover:scale-110 transform">
-                    <i className="fas fa-play ml-1"></i>
-                  </button>
                 </div>
-                <h3 className="font-semibold text-slate-800 mb-1">Compliance em Foco</h3>
-                <p className="text-sm text-slate-500">54 episódios</p>
-              </div>
-            </div>
-          </section>
+              </section>
+            </>
+          )}
 
-          <section className="mb-8">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-semibold text-slate-800">Episódios Recentes</h2>
+          {activeTab === 'podcasts' && (
+            <div className="text-center py-16">
+              <div className="w-20 h-20 bg-pastel-blue rounded-full flex items-center justify-center mx-auto mb-4">
+                <i className="fas fa-podcast text-3xl text-slate-700"></i>
+              </div>
+              <h3 className="text-xl font-semibold text-slate-800 mb-2">Podcasts</h3>
+              <p className="text-slate-600">Conteúdo exclusivo de podcasts será exibido aqui</p>
             </div>
-            <div className="space-y-3">
-              <div className="bg-white rounded-xl border border-slate-200 p-4 flex items-center gap-4 hover:shadow-lg transition group">
-                <button className="w-14 h-14 bg-pastel-blue rounded-lg flex items-center justify-center flex-shrink-0 hover:bg-slate-800 hover:text-white transition">
-                  <i className="fas fa-play text-xl"></i>
-                </button>
-                <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-pastel-blue">
-                  <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png" alt="episode cover" className="w-full h-full object-cover" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-xs text-slate-500 mb-1">Mercados em Foco • Episódio #143</p>
-                  <h3 className="font-semibold text-slate-800 mb-1">Impactos da Taxa Selic nas Ações Brasileiras</h3>
-                  <p className="text-sm text-slate-600 line-clamp-1">Análise detalhada sobre como as mudanças na taxa básica de juros afetam diferentes setores da bolsa.</p>
-                </div>
-                <div className="flex items-center gap-6 flex-shrink-0">
-                  <span className="text-sm text-slate-500">45 min</span>
-                  <button className="text-slate-400 hover:text-slate-800">
-                    <i className="fas fa-bookmark text-lg"></i>
-                  </button>
-                  <button className="text-slate-400 hover:text-slate-800">
-                    <i className="fas fa-ellipsis-v text-lg"></i>
-                  </button>
-                </div>
-              </div>
-              <div className="bg-white rounded-xl border border-slate-200 p-4 flex items-center gap-4 hover:shadow-lg transition group">
-                <button className="w-14 h-14 bg-pastel-green rounded-lg flex items-center justify-center flex-shrink-0 hover:bg-slate-800 hover:text-white transition">
-                  <i className="fas fa-play text-xl"></i>
-                </button>
-                <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-pastel-green">
-                  <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/cf142f2fa8-3e14b0bb9b96f766efe7.png" alt="episode cover" className="w-full h-full object-cover" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-xs text-slate-500 mb-1">Investidor Inteligente • Episódio #90</p>
-                  <h3 className="font-semibold text-slate-800 mb-1">Estratégias de Hedge para Proteção de Carteira</h3>
-                  <p className="text-sm text-slate-600 line-clamp-1">Aprenda técnicas avançadas para proteger seus investimentos em momentos de volatilidade.</p>
-                </div>
-                <div className="flex items-center gap-6 flex-shrink-0">
-                  <span className="text-sm text-slate-500">52 min</span>
-                  <button className="text-slate-400 hover:text-slate-800">
-                    <i className="fas fa-bookmark text-lg"></i>
-                  </button>
-                  <button className="text-slate-400 hover:text-slate-800">
-                    <i className="fas fa-ellipsis-v text-lg"></i>
-                  </button>
-                </div>
-              </div>
-              <div className="bg-white rounded-xl border border-slate-200 p-4 flex items-center gap-4 hover:shadow-lg transition group">
-                <button className="w-14 h-14 bg-pastel-purple rounded-lg flex items-center justify-center flex-shrink-0 hover:bg-slate-800 hover:text-white transition">
-                  <i className="fas fa-play text-xl"></i>
-                </button>
-                <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-pastel-purple">
-                  <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/270689fe5d-6ce96dde7db22c1b8808.png" alt="episode cover" className="w-full h-full object-cover" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-xs text-slate-500 mb-1">FinTech Brasil • Episódio #68</p>
-                  <h3 className="font-semibold text-slate-800 mb-1">Open Banking e a Revolução dos Dados Financeiros</h3>
-                  <p className="text-sm text-slate-600 line-clamp-1">Entenda como o compartilhamento de dados está transformando o setor financeiro brasileiro.</p>
-                </div>
-                <div className="flex items-center gap-6 flex-shrink-0">
-                  <span className="text-sm text-slate-500">38 min</span>
-                  <button className="text-slate-400 hover:text-slate-800">
-                    <i className="fas fa-bookmark text-lg"></i>
-                  </button>
-                  <button className="text-slate-400 hover:text-slate-800">
-                    <i className="fas fa-ellipsis-v text-lg"></i>
-                  </button>
-                </div>
-              </div>
-              <div className="bg-white rounded-xl border border-slate-200 p-4 flex items-center gap-4 hover:shadow-lg transition group">
-                <button className="w-14 h-14 bg-pastel-pink rounded-lg flex items-center justify-center flex-shrink-0 hover:bg-slate-800 hover:text-white transition">
-                  <i className="fas fa-play text-xl"></i>
-                </button>
-                <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-pastel-pink">
-                  <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/84f47f0351-d5b7ae096302eba637e5.png" alt="episode cover" className="w-full h-full object-cover" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-xs text-slate-500 mb-1">Economia Global • Episódio #202</p>
-                  <h3 className="font-semibold text-slate-800 mb-1">Inflação Global: Causas e Consequências</h3>
-                  <p className="text-sm text-slate-600 line-clamp-1">Uma visão abrangente sobre os fatores que estão pressionando a inflação mundial.</p>
-                </div>
-                <div className="flex items-center gap-6 flex-shrink-0">
-                  <span className="text-sm text-slate-500">41 min</span>
-                  <button className="text-slate-400 hover:text-slate-800">
-                    <i className="fas fa-bookmark text-lg"></i>
-                  </button>
-                  <button className="text-slate-400 hover:text-slate-800">
-                    <i className="fas fa-ellipsis-v text-lg"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </section>
+          )}
 
-          <section className="mb-8">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-semibold text-slate-800">Explorar por Categoria</h2>
+          {activeTab === 'cursos' && (
+            <div className="text-center py-16">
+              <div className="w-20 h-20 bg-pastel-green rounded-full flex items-center justify-center mx-auto mb-4">
+                <i className="fas fa-graduation-cap text-3xl text-slate-700"></i>
+              </div>
+              <h3 className="text-xl font-semibold text-slate-800 mb-2">Cursos</h3>
+              <p className="text-slate-600">Explore cursos completos de finanças e investimentos</p>
             </div>
-            <div className="grid grid-cols-4 gap-4">
-              <div className="bg-pastel-blue rounded-xl p-6 hover:shadow-lg transition cursor-pointer group">
-                <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <i className="fas fa-chart-line text-2xl text-slate-700"></i>
-                </div>
-                <h3 className="font-semibold text-slate-800 mb-1">Análise de Mercado</h3>
-                <p className="text-sm text-slate-600">48 episódios</p>
+          )}
+
+          {activeTab === 'avatar-ia' && (
+            <div className="text-center py-16">
+              <div className="w-20 h-20 bg-pastel-purple rounded-full flex items-center justify-center mx-auto mb-4">
+                <i className="fas fa-robot text-3xl text-slate-700"></i>
               </div>
-              <div className="bg-pastel-green rounded-xl p-6 hover:shadow-lg transition cursor-pointer group">
-                <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <i className="fas fa-piggy-bank text-2xl text-slate-700"></i>
-                </div>
-                <h3 className="font-semibold text-slate-800 mb-1">Investimentos</h3>
-                <p className="text-sm text-slate-600">67 episódios</p>
-              </div>
-              <div className="bg-pastel-purple rounded-xl p-6 hover:shadow-lg transition cursor-pointer group">
-                <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <i className="fas fa-landmark text-2xl text-slate-700"></i>
-                </div>
-                <h3 className="font-semibold text-slate-800 mb-1">Regulação Bancária</h3>
-                <p className="text-sm text-slate-600">32 episódios</p>
-              </div>
-              <div className="bg-pastel-pink rounded-xl p-6 hover:shadow-lg transition cursor-pointer group">
-                <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <i className="fas fa-gavel text-2xl text-slate-700"></i>
-                </div>
-                <h3 className="font-semibold text-slate-800 mb-1">Compliance</h3>
-                <p className="text-sm text-slate-600">29 episódios</p>
-              </div>
+              <h3 className="text-xl font-semibold text-slate-800 mb-2">Avatar IA</h3>
+              <p className="text-slate-600">Aprenda com avatares de inteligência artificial</p>
             </div>
-          </section>
+          )}
+
+          {activeTab === 'ebooks' && (
+            <div className="text-center py-16">
+              <div className="w-20 h-20 bg-pastel-pink rounded-full flex items-center justify-center mx-auto mb-4">
+                <i className="fas fa-book-open text-3xl text-slate-700"></i>
+              </div>
+              <h3 className="text-xl font-semibold text-slate-800 mb-2">E-books</h3>
+              <p className="text-slate-600">Biblioteca digital de e-books especializados</p>
+            </div>
+          )}
+
+          {activeTab === 'webinars' && (
+            <div className="text-center py-16">
+              <div className="w-20 h-20 bg-pastel-yellow rounded-full flex items-center justify-center mx-auto mb-4">
+                <i className="fas fa-video text-3xl text-slate-700"></i>
+              </div>
+              <h3 className="text-xl font-semibold text-slate-800 mb-2">Webinars</h3>
+              <p className="text-slate-600">Participe de webinars ao vivo com especialistas</p>
+            </div>
+          )}
+
+          {activeTab === 'artigos' && (
+            <div className="text-center py-16">
+              <div className="w-20 h-20 bg-pastel-peach rounded-full flex items-center justify-center mx-auto mb-4">
+                <i className="fas fa-newspaper text-3xl text-slate-700"></i>
+              </div>
+              <h3 className="text-xl font-semibold text-slate-800 mb-2">Artigos</h3>
+              <p className="text-slate-600">Leia artigos aprofundados sobre o mercado financeiro</p>
+            </div>
+          )}
+
+          {activeTab === 'analises' && (
+            <div className="text-center py-16">
+              <div className="w-20 h-20 bg-pastel-blue rounded-full flex items-center justify-center mx-auto mb-4">
+                <i className="fas fa-chart-line text-3xl text-slate-700"></i>
+              </div>
+              <h3 className="text-xl font-semibold text-slate-800 mb-2">Análises</h3>
+              <p className="text-slate-600">Análises técnicas e fundamentalistas detalhadas</p>
+            </div>
+          )}
+
+          {activeTab === 'documentos' && (
+            <div className="text-center py-16">
+              <div className="w-20 h-20 bg-pastel-green rounded-full flex items-center justify-center mx-auto mb-4">
+                <i className="fas fa-file-alt text-3xl text-slate-700"></i>
+              </div>
+              <h3 className="text-xl font-semibold text-slate-800 mb-2">Documentos</h3>
+              <p className="text-slate-600">Documentos oficiais e relatórios financeiros</p>
+            </div>
+          )}
+
+          {activeTab === 'estudos' && (
+            <div className="text-center py-16">
+              <div className="w-20 h-20 bg-pastel-purple rounded-full flex items-center justify-center mx-auto mb-4">
+                <i className="fas fa-flask text-3xl text-slate-700"></i>
+              </div>
+              <h3 className="text-xl font-semibold text-slate-800 mb-2">Estudos Acadêmicos</h3>
+              <p className="text-slate-600">Pesquisas e estudos acadêmicos sobre economia e finanças</p>
+            </div>
+          )}
         </div>
 
         <div className="fixed bottom-0 left-64 right-0 bg-white border-t border-slate-200 p-4 shadow-lg z-20">
