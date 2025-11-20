@@ -521,7 +521,7 @@ const CheckoutPayment = () => {
               </div>
 
               <aside className="w-96 space-y-6">
-                <section className="bg-white rounded-xl p-6 border border-slate-200 sticky top-24">
+                <section className="bg-white rounded-xl p-6 border border-slate-200">
                   <h2 className="text-xl font-semibold text-slate-800 mb-6">Resumo da Compra</h2>
                   
                   <div className="space-y-4 mb-6">
