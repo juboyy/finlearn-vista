@@ -958,7 +958,7 @@ const CriarAgente = () => {
                       <h4 className="font-bold text-lg text-foreground">Assistente Financeiro Pro</h4>
                       <p className="text-sm text-muted-foreground mt-1">Consultor de Investimentos</p>
                       <div className="flex items-center gap-2 mt-2">
-                        <span className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">Ativo</span>
+                        <span className="px-2 py-1 bg-primary/40 text-foreground text-xs rounded-full font-medium">Ativo</span>
                         <span className="px-2 py-1 bg-muted text-muted-foreground text-xs rounded-full">Privado</span>
                       </div>
                     </div>
