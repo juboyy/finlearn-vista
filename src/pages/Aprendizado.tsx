@@ -179,7 +179,7 @@ const Aprendizado = () => {
               <div className="bg-white rounded-xl p-6 border border-slate-200">
                 <div className="flex items-center justify-between mb-4">
                   <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center">
-                    <i className="fas fa-trophy text-slate-700 text-xl"></i>
+                    <i className="fas fa-trophy text-slate-600 text-xl"></i>
                   </div>
                 </div>
                 <h3 className="text-3xl font-bold text-slate-800 mb-1">8</h3>
@@ -192,7 +192,7 @@ const Aprendizado = () => {
               <div className="bg-white rounded-xl p-6 border border-slate-200">
                 <div className="flex items-center justify-between mb-4">
                   <div className="w-12 h-12 bg-pastel-yellow rounded-lg flex items-center justify-center">
-                    <i className="fas fa-clock text-slate-700 text-xl"></i>
+                    <i className="fas fa-clock text-slate-600 text-xl"></i>
                   </div>
                 </div>
                 <h3 className="text-3xl font-bold text-slate-800 mb-1">127h</h3>
@@ -323,13 +323,13 @@ const Aprendizado = () => {
                   <h3 className="text-base font-semibold text-slate-800 mb-3">Conquistas</h3>
                   <div className="flex items-center gap-3">
                     <div className="w-12 h-12 bg-pastel-yellow rounded-lg flex items-center justify-center">
-                      <i className="fas fa-trophy text-slate-700 text-xl"></i>
+                      <i className="fas fa-trophy text-slate-600 text-xl"></i>
                     </div>
                     <div className="w-12 h-12 bg-pastel-blue rounded-lg flex items-center justify-center">
-                      <i className="fas fa-medal text-slate-700 text-xl"></i>
+                      <i className="fas fa-medal text-slate-600 text-xl"></i>
                     </div>
                     <div className="w-12 h-12 bg-pastel-pink rounded-lg flex items-center justify-center">
-                      <i className="fas fa-fire text-slate-700 text-xl"></i>
+                      <i className="fas fa-fire text-slate-600 text-xl"></i>
                     </div>
                     <button className="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center text-slate-500 hover:bg-slate-200 transition">
                       <i className="fas fa-plus text-xl"></i>
@@ -793,7 +793,7 @@ const Aprendizado = () => {
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center">
-                        <i className="fab fa-bitcoin text-slate-700 text-xl"></i>
+                        <i className="fab fa-bitcoin text-slate-600 text-xl"></i>
                       </div>
                       <div>
                         <h3 className="font-semibold text-slate-800">Especialista em Cripto</h3>
@@ -836,7 +836,7 @@ const Aprendizado = () => {
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 bg-pastel-purple rounded-lg flex items-center justify-center">
-                        <i className="fas fa-gavel text-slate-700 text-xl"></i>
+                        <i className="fas fa-gavel text-slate-600 text-xl"></i>
                       </div>
                       <div>
                         <h3 className="font-semibold text-slate-800">Consultor de Compliance</h3>
