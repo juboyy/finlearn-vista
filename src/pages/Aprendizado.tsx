@@ -26,7 +26,7 @@ const Aprendizado = () => {
         <div className="p-6 border-b border-slate-200">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-pastel-blue rounded-lg flex items-center justify-center">
-              <i className="fas fa-chart-line text-slate-700 text-lg"></i>
+              <i className="fas fa-chart-line text-slate-600 text-lg"></i>
             </div>
             <span className="text-xl font-semibold text-slate-800">FinLearn</span>
           </div>
