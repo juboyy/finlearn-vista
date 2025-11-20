@@ -1,10 +1,12 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Bell } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'documentos' | 'estudos';
 
 const Aprendizado = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<TabType>('todos');
   
   return (
@@ -46,10 +48,8 @@ const Aprendizado = () => {
                 <span>Todos</span>
               </button>
               <button 
-                onClick={() => setActiveTab('podcasts')}
-                className={`px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm ${
-                  activeTab === 'podcasts' ? 'bg-pastel-blue text-slate-800' : 'text-slate-600 hover:bg-slate-100'
-                }`}
+                onClick={() => navigate('/podcasts')}
+                className="px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm text-slate-600 hover:bg-slate-100"
               >
                 <i className="fas fa-podcast"></i>
                 <span>Podcasts</span>
@@ -885,16 +885,6 @@ const Aprendizado = () => {
             </div>
           </section>
             </>
-          )}
-
-          {activeTab === 'podcasts' && (
-            <div className="text-center py-16">
-              <div className="w-20 h-20 bg-pastel-blue rounded-full flex items-center justify-center mx-auto mb-4">
-                <i className="fas fa-podcast text-3xl text-slate-700"></i>
-              </div>
-              <h3 className="text-xl font-semibold text-slate-800 mb-2">Podcasts</h3>
-              <p className="text-slate-600">Conteúdo exclusivo de podcasts será exibido aqui</p>
-            </div>
           )}
 
           {activeTab === 'cursos' && (
