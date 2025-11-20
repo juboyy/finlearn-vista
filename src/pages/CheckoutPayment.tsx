@@ -89,12 +89,40 @@ const CheckoutPayment = () => {
     return v;
   };
 
+  const playSuccessSound = () => {
+    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+    
+    const playTone = (frequency: number, startTime: number, duration: number) => {
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      oscillator.frequency.value = frequency;
+      oscillator.type = 'sine';
+      
+      gainNode.gain.setValueAtTime(0, startTime);
+      gainNode.gain.linearRampToValueAtTime(0.3, startTime + 0.01);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + duration);
+      
+      oscillator.start(startTime);
+      oscillator.stop(startTime + duration);
+    };
+    
+    const currentTime = audioContext.currentTime;
+    playTone(523.25, currentTime, 0.15);
+    playTone(659.25, currentTime + 0.15, 0.15);
+    playTone(783.99, currentTime + 0.3, 0.3);
+  };
+
   const handleFinalizarPagamento = () => {
     setIsProcessing(true);
     
     setTimeout(() => {
       setIsProcessing(false);
       setIsApproved(true);
+      playSuccessSound();
     }, 2500);
   };
 
