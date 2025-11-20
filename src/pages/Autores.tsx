@@ -256,7 +256,7 @@ const Autores = () => {
 
               <section className="bg-white rounded-xl p-4 border border-slate-200">
                 <div className="flex items-center gap-3">
-                  <button className="px-6 py-2.5 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                  <button className="px-6 py-2.5 bg-pastel-blue text-slate-700 rounded-lg font-medium flex items-center gap-2">
                     <i className="fas fa-user-check mr-2"></i>
                     Seguindo
                   </button>
@@ -267,7 +267,7 @@ const Autores = () => {
                     <i className="fas fa-users mr-2"></i>
                     Seguidores
                   </button>
-                  <button className="px-6 py-2.5 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                  <button className="px-6 py-2.5 bg-pastel-purple text-slate-700 rounded-lg font-medium flex items-center gap-2">
                     <i className="fas fa-user-friends mr-2"></i>
                     Todos Autores
                   </button>
