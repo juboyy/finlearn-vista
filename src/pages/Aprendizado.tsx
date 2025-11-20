@@ -179,22 +179,22 @@ const Aprendizado = () => {
                   <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center">
                     <i className="fas fa-trophy text-slate-600 text-xl"></i>
                   </div>
-                  <span className="text-xs text-slate-500">Este mês</span>
+                  <span className="text-xs text-slate-500 font-bold">Este mês</span>
                 </div>
                 <h3 className="text-3xl font-bold text-slate-800 mb-1">8</h3>
                 <p className="text-sm text-slate-500 mb-3">Certificados Conquistados</p>
                 <div className="mb-4 space-y-2">
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-slate-600">Análise Técnica</span>
-                    <span className="text-slate-500">3</span>
+                    <span className="text-slate-500 font-bold">3</span>
                   </div>
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-slate-600">Gestão de Risco</span>
-                    <span className="text-slate-500">2</span>
+                    <span className="text-slate-500 font-bold">2</span>
                   </div>
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-slate-600">Outros</span>
-                    <span className="text-slate-500">3</span>
+                    <span className="text-slate-500 font-bold">3</span>
                   </div>
                 </div>
                 <button className="w-full px-4 py-2 bg-pastel-green text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
@@ -207,22 +207,22 @@ const Aprendizado = () => {
                   <div className="w-12 h-12 bg-pastel-yellow rounded-lg flex items-center justify-center">
                     <i className="fas fa-clock text-slate-600 text-xl"></i>
                   </div>
-                  <span className="text-xs text-slate-500">Últimos 7 dias</span>
+                  <span className="text-xs text-slate-500 font-bold">Últimos 7 dias</span>
                 </div>
                 <h3 className="text-3xl font-bold text-slate-800 mb-1">127h</h3>
                 <p className="text-sm text-slate-500 mb-3">Tempo Total de Estudo</p>
                 <div className="mb-4 space-y-2">
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-slate-600">Vídeo-aulas</span>
-                    <span className="text-slate-500">82h</span>
+                    <span className="text-slate-500 font-bold">82h</span>
                   </div>
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-slate-600">Podcasts</span>
-                    <span className="text-slate-500">28h</span>
+                    <span className="text-slate-500 font-bold">28h</span>
                   </div>
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-slate-600">Leitura</span>
-                    <span className="text-slate-500">17h</span>
+                    <span className="text-slate-500 font-bold">17h</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 text-xs text-slate-600">
