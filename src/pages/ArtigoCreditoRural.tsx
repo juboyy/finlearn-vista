@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Share2, Bookmark, Bell, ThumbsUp, Heart, UserPlus, Eye, MessageCircle, MessageSquare, Clock, Bold, Italic, Link2 as LinkIcon, Image as ImageIcon, MoreHorizontal, Users } from "lucide-react";
+import { ArrowLeft, Share2, Bookmark, Bell, ThumbsUp, Heart, UserPlus, Eye, MessageCircle, MessageSquare, Clock, Bold, Italic, Link2 as LinkIcon, Image as ImageIcon, MoreHorizontal, Users, TrendingUp, Target, CheckCircle2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import creditoRuralImage from "@/assets/credito-rural-2025.png";
 
@@ -412,7 +412,7 @@ export default function ArtigoCreditoRural() {
                   <div className="bg-white border-l-4 border-pastel-green rounded-lg p-6">
                     <div className="flex items-start gap-4">
                       <div className="w-10 h-10 bg-pastel-green rounded-lg flex items-center justify-center flex-shrink-0">
-                        <span className="text-slate-700 text-lg">✓</span>
+                        <CheckCircle2 className="w-5 h-5 text-slate-700" />
                       </div>
                       <div>
                         <h3 className="font-semibold text-slate-800 mb-2">Diversificação Regional</h3>
@@ -423,7 +423,7 @@ export default function ArtigoCreditoRural() {
                   <div className="bg-white border-l-4 border-pastel-blue rounded-lg p-6">
                     <div className="flex items-start gap-4">
                       <div className="w-10 h-10 bg-pastel-blue rounded-lg flex items-center justify-center flex-shrink-0">
-                        <span className="text-slate-700 text-lg">📈</span>
+                        <TrendingUp className="w-5 h-5 text-slate-700" />
                       </div>
                       <div>
                         <h3 className="font-semibold text-slate-800 mb-2">Tecnologia e Monitoramento</h3>
@@ -434,7 +434,7 @@ export default function ArtigoCreditoRural() {
                   <div className="bg-white border-l-4 border-pastel-purple rounded-lg p-6">
                     <div className="flex items-start gap-4">
                       <div className="w-10 h-10 bg-pastel-purple rounded-lg flex items-center justify-center flex-shrink-0">
-                        <span className="text-slate-700 text-lg">🎯</span>
+                        <Target className="w-5 h-5 text-slate-700" />
                       </div>
                       <div>
                         <h3 className="font-semibold text-slate-800 mb-2">Segmentação de Clientes</h3>
@@ -448,38 +448,32 @@ export default function ArtigoCreditoRural() {
               {/* Conclusion */}
               <section>
                 <h2 className="text-2xl font-bold text-slate-800 mb-4">Conclusão</h2>
-                <p className="text-slate-700 mb-4">
-                  O mercado de crédito rural brasileiro apresenta oportunidades significativas para instituições financeiras que adotarem abordagens sofisticadas de gestão de risco e precificação. A combinação de crescimento robusto do setor com disparidades regionais de inadimplência cria espaço para estratégias de alocação de capital inteligentes.
+                <p className="text-slate-700 leading-relaxed mb-4">
+                  O mercado de crédito rural brasileiro apresenta perspectivas robustas para 2025, sustentado por fundamentos macroeconômicos favoráveis e demanda estrutural por financiamento. No entanto, a gestão eficaz de risco permanece crítica, exigindo sofisticação analítica, diversificação inteligente e precificação adequada.
                 </p>
-                <p className="text-slate-700">
-                  Para 2025, recomendamos foco em <strong>três pilares principais</strong>: (1) diversificação regional priorizando regiões de menor risco, (2) investimento em tecnologia para monitoramento proativo, e (3) desenvolvimento de produtos segmentados por perfil de produtor. A implementação dessas estratégias pode resultar em ROE superior a 18% com perfil de risco controlado.
+                <p className="text-slate-700 leading-relaxed">
+                  Instituições que combinarem expertise setorial, tecnologia de ponta e estruturação criativa de produtos estarão posicionadas para capturar oportunidades significativas neste mercado dinâmico e estratégica e produtos estruturados estarão melhor posicionadas para capturar valor neste mercado em expansão, mantendo níveis adequados de rentabilidade ajustada ao risco.
                 </p>
               </section>
 
-              {/* Article Stats */}
-              <div className="flex items-center justify-between pt-6 border-t border-slate-200">
-                <div className="flex items-center gap-6">
-                  <button className="flex items-center gap-2 text-slate-600 hover:text-pastel-blue transition">
-                    <ThumbsUp className="w-5 h-5" />
-                    <span className="text-sm font-medium">42</span>
-                  </button>
-                  <button className="flex items-center gap-2 text-slate-600 hover:text-pastel-pink transition">
-                    <Heart className="w-5 h-5" />
-                    <span className="text-sm font-medium">28</span>
-                  </button>
-                  <div className="flex items-center gap-2 text-slate-500">
-                    <MessageSquare className="w-5 h-5" />
-                    <span className="text-sm font-medium">15 comentários</span>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <button className="px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
-                    Compartilhar
-                  </button>
-                  <button className="px-4 py-2 border border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-slate-50 transition">
-                    Salvar
-                  </button>
-                </div>
+              {/* Action Buttons */}
+              <div className="flex items-center gap-4 pt-6 border-t border-slate-200">
+                <button className="flex items-center gap-2 px-6 py-3 bg-[#B8D4E8] text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                  <ThumbsUp size={16} />
+                  <span>Curtir (142)</span>
+                </button>
+                <button className="flex items-center gap-2 px-6 py-3 bg-[#E8C5D8] text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                  <Heart size={16} />
+                  <span>Favoritar (89)</span>
+                </button>
+                <button className="flex items-center gap-2 px-6 py-3 bg-[#D4C5E8] text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                  <Bookmark size={16} />
+                  <span>Salvar</span>
+                </button>
+                <button className="flex items-center gap-2 px-6 py-3 bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition ml-auto">
+                  <Share2 size={16} />
+                  <span>Compartilhar</span>
+                </button>
               </div>
             </div>
           </article>
