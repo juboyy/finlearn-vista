@@ -2,6 +2,7 @@ import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { MenutabbarFix } from "@/components/Dashboard/MenutabbarFix";
 import { Bell, Play, Clock, BookOpen, TrendingUp, Headphones, Calendar, Users, MessageCircle, Star, BookMarked, Video, Award, Heart, CheckCircle, PlayCircle, Trophy, ChartLine, Shield, Bitcoin, Gavel, PieChart, Repeat, Globe, Leaf, Plus, BookOpenCheck, CreditCard } from "lucide-react";
 import { useState } from "react";
+import ebookRiskManagementPink from "@/assets/ebook-risk-management-pink.png";
 
 type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'documentos' | 'estudos';
 
@@ -2048,8 +2049,8 @@ const Aprendizado = () => {
                   {/* Reading Card 5 */}
                   <div className="bg-white rounded-xl border border-border overflow-hidden hover:shadow-lg transition group">
                     <div className="relative">
-                      <div className="h-56 overflow-hidden bg-pastel-yellow">
-                        <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/e7b331f4e1-009268f8d4cccd8cea2e.png" alt="Pastel drawing of risk management book" />
+                      <div className="h-56 overflow-hidden bg-pastel-pink">
+                        <img className="w-full h-full object-cover" src={ebookRiskManagementPink} alt="Pastel drawing of risk management book" />
                       </div>
                       <div className="absolute bottom-0 left-0 right-0 bg-slate-100 h-2.5">
                         <div className="h-full bg-emerald-700 relative" style={{ width: '56%' }}>
