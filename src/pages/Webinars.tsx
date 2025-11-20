@@ -3,31 +3,37 @@ import { MenutabbarFix } from "@/components/Dashboard/MenutabbarFix";
 import { useState } from "react";
 import { Bell } from "lucide-react";
 
+type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'documentos' | 'estudos';
+
 export default function Webinars() {
-  const [activeTab, setActiveTab] = useState<'todos'>('todos');
+  const [activeTab, setActiveTab] = useState<TabType>('webinars');
 
   return (
     <div className="flex h-screen overflow-hidden">
       <SidebarFix />
       <main className="flex-1 overflow-y-auto">
         <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
-          <div className="px-8 py-4 flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-semibold text-slate-800">Webinars</h1>
-              <p className="text-sm text-slate-500 mt-1">Participe de webinars ao vivo ou assista gravações</p>
-            </div>
-            <div className="flex items-center gap-4">
-              <button className="relative p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
-                <Bell size={20} />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-              </button>
-              <button className="px-4 py-2 bg-pastel-yellow text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
-                <i className="fas fa-calendar-plus mr-2"></i>
-                Minha Agenda
-              </button>
+          <div className="px-8 py-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-2xl font-semibold text-slate-800">Webinars</h1>
+                <p className="text-sm text-slate-500 mt-1">Participe de webinars ao vivo ou assista gravações</p>
+              </div>
+              <div className="flex items-center gap-4">
+                <button className="relative p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
+                  <Bell size={20} />
+                  <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                </button>
+                <button className="px-4 py-2 bg-pastel-yellow text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                  <i className="fas fa-calendar-plus mr-2"></i>
+                  Minha Agenda
+                </button>
+              </div>
             </div>
           </div>
         </header>
+
+        <MenutabbarFix activeTab={activeTab} setActiveTab={setActiveTab} />
 
         <div className="p-8">
           {/* Live Webinars Section */}
