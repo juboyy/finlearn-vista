@@ -9,6 +9,8 @@ const CheckoutPayment = () => {
   const [cardName, setCardName] = useState('');
   const [cardExpiry, setCardExpiry] = useState('');
   const [cardCvv, setCardCvv] = useState('');
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [isApproved, setIsApproved] = useState(false);
 
   const formatCardNumber = (value: string) => {
     const v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
@@ -85,6 +87,15 @@ const CheckoutPayment = () => {
     v = v.replace(/^(\d{5})(\d)/, '$1-$2');
     
     return v;
+  };
+
+  const handleFinalizarPagamento = () => {
+    setIsProcessing(true);
+    
+    setTimeout(() => {
+      setIsProcessing(false);
+      setIsApproved(true);
+    }, 2500);
   };
 
   return (
@@ -561,10 +572,28 @@ const CheckoutPayment = () => {
                     </div>
                   </div>
 
-                  <button className="w-full px-6 py-4 bg-pastel-blue text-slate-800 rounded-lg font-semibold hover:bg-opacity-80 transition flex items-center justify-center gap-2 mb-3 shadow-lg">
-                    <i className="fas fa-lock"></i>
-                    <span>Finalizar Pagamento</span>
-                  </button>
+                          <button 
+                            onClick={handleFinalizarPagamento}
+                            disabled={isProcessing || isApproved}
+                            className="w-full px-6 py-4 bg-pastel-blue text-slate-800 rounded-lg font-semibold hover:bg-opacity-80 transition flex items-center justify-center gap-2 mb-3 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                          >
+                            {isProcessing ? (
+                              <>
+                                <i className="fas fa-spinner fa-spin"></i>
+                                <span>Processando Pagamento...</span>
+                              </>
+                            ) : isApproved ? (
+                              <>
+                                <i className="fas fa-check-circle"></i>
+                                <span>Transação Aprovada!</span>
+                              </>
+                            ) : (
+                              <>
+                                <i className="fas fa-lock"></i>
+                                <span>Finalizar Pagamento</span>
+                              </>
+                            )}
+                          </button>
 
                   <div className="flex items-center justify-center gap-2 text-xs text-slate-500">
                     <i className="fas fa-shield-alt text-pastel-green"></i>
@@ -670,6 +699,49 @@ const CheckoutPayment = () => {
           </div>
         </div>
       </main>
+
+      {isApproved && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 animate-fade-in">
+          <div className="bg-white rounded-2xl p-8 max-w-md mx-4 text-center shadow-2xl animate-scale-in">
+            <div className="w-20 h-20 bg-pastel-green rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
+              <i className="fas fa-check text-4xl text-slate-700"></i>
+            </div>
+            <h2 className="text-3xl font-bold text-slate-800 mb-3">Pagamento Aprovado!</h2>
+            <p className="text-slate-600 mb-2">Sua assinatura Premium foi ativada com sucesso.</p>
+            <p className="text-sm text-slate-500 mb-6">Você receberá um e-mail de confirmação em instantes.</p>
+            
+            <div className="bg-pastel-blue bg-opacity-20 rounded-lg p-4 mb-6">
+              <div className="flex items-center justify-between text-sm mb-2">
+                <span className="text-slate-600">Plano</span>
+                <span className="font-semibold text-slate-800">Premium Mensal</span>
+              </div>
+              <div className="flex items-center justify-between text-sm mb-2">
+                <span className="text-slate-600">Valor</span>
+                <span className="font-semibold text-slate-800">R$ 49,00</span>
+              </div>
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-slate-600">Próxima cobrança</span>
+                <span className="font-medium text-slate-800">
+                  {new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString('pt-BR')}
+                </span>
+              </div>
+            </div>
+
+            <button 
+              onClick={() => navigate('/')}
+              className="w-full px-6 py-3 bg-pastel-blue text-slate-800 rounded-lg font-semibold hover:bg-opacity-80 transition mb-3"
+            >
+              Ir para Dashboard
+            </button>
+            <button 
+              onClick={() => setIsApproved(false)}
+              className="w-full px-6 py-3 bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition"
+            >
+              Fechar
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
