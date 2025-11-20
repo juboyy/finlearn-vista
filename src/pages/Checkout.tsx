@@ -448,7 +448,7 @@ const Checkout = () => {
                   <span className="text-lg font-semibold text-slate-800">Total Mensal</span>
                   <span className="text-2xl font-bold text-slate-800">R$ {total.toFixed(2)}</span>
                 </div>
-                <button className="w-full px-6 py-4 bg-pastel-blue text-slate-800 rounded-lg font-semibold hover:bg-opacity-80 transition flex items-center justify-center gap-2 mb-3">
+                <button onClick={() => navigate('/checkout/payment')} className="w-full px-6 py-4 bg-pastel-blue text-slate-800 rounded-lg font-semibold hover:bg-opacity-80 transition flex items-center justify-center gap-2 mb-3">
                   <i className="fas fa-lock"></i>
                   <span>Avançar Assinatura</span>
                 </button>
