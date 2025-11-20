@@ -631,7 +631,7 @@ const CriarAgente = () => {
               <div className="bg-card rounded-2xl p-6 border border-border shadow-sm">
                 <div className="flex items-center space-x-3 mb-6">
                   <div className="w-10 h-10 rounded-xl bg-pastel-blue flex items-center justify-center">
-                    <Brain className="text-muted-foreground" size={20} />
+                    <Sparkles className="text-muted-foreground" size={20} />
                   </div>
                   <h3 className="text-xl font-bold text-foreground">Capacidades & Habilidades</h3>
                 </div>
