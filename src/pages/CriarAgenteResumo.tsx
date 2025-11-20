@@ -371,9 +371,9 @@ export function CriarAgenteResumo() {
             </div>
 
             {/* Preview Column */}
-            <aside className="w-96 space-y-6">
+            <aside className="w-96 space-y-6 flex-shrink-0">
               {/* Preview Card */}
-              <div className="bg-card rounded-xl border border-border p-6 sticky top-6">
+              <div className="bg-card rounded-xl border border-border p-6">
                 <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border">
                   <div className="w-10 h-10 bg-primary rounded-md flex items-center justify-center">
                     <Eye className="h-5 w-5 text-primary-foreground" />
