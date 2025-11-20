@@ -194,7 +194,7 @@ const Conteudo = () => {
                 <Button variant="outline">Notícias</Button>
                 <Button variant="outline">Preferências</Button>
                 <Button variant="outline">Sugestões</Button>
-                <Button className="bg-accent hover:bg-accent/90 text-accent-foreground">
+                <Button className="bg-accent hover:bg-accent/90 text-accent-foreground transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
                   <SlidersHorizontal className="h-4 w-4 mr-2" />
                   Filtros
                 </Button>
