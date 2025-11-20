@@ -1014,34 +1014,23 @@ const CriarAgente = () => {
                       <div className="space-y-3">
                         <div>
                           <div className="flex justify-between text-xs mb-1">
-                            <span className="text-muted-foreground">Respostas</span>
-                            <span className="font-bold text-foreground">1,234</span>
+                            <span className="text-muted-foreground">Pronto para Lançamento</span>
+                            <span className="font-bold text-foreground">85%</span>
                           </div>
                           <div className="w-full bg-muted rounded-full h-1.5">
                             <div className="bg-pastel-blue-fg h-1.5 rounded-full" style={{
-                            width: '78%'
+                            width: '85%'
                           }}></div>
                           </div>
                         </div>
                         <div>
                           <div className="flex justify-between text-xs mb-1">
-                            <span className="text-muted-foreground">Avaliação</span>
-                            <span className="font-bold text-foreground">4.8</span>
+                            <span className="text-muted-foreground">Aderência às Necessidades</span>
+                            <span className="font-bold text-foreground">92%</span>
                           </div>
                           <div className="w-full bg-muted rounded-full h-1.5">
                             <div className="bg-pastel-green-fg h-1.5 rounded-full" style={{
-                            width: '96%'
-                          }}></div>
-                          </div>
-                        </div>
-                        <div>
-                          <div className="flex justify-between text-xs mb-1">
-                            <span className="text-muted-foreground">Precisão</span>
-                            <span className="font-bold text-foreground">94%</span>
-                          </div>
-                          <div className="w-full bg-muted rounded-full h-1.5">
-                            <div className="bg-pastel-purple-fg h-1.5 rounded-full" style={{
-                            width: '94%'
+                            width: '92%'
                           }}></div>
                           </div>
                         </div>
