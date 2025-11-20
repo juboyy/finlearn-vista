@@ -308,7 +308,7 @@ const Autores = () => {
 
                 <div className="border-b border-slate-100 hover:bg-slate-50 transition-colors cursor-pointer">
                   <div className="grid grid-cols-12 gap-4 px-6 py-4 items-center">
-                    <div className="col-span-4 flex items-center gap-4">
+                    <div className="col-span-5 flex items-center gap-4">
                       <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" alt="Carlos Silva" className="w-12 h-12 rounded-full object-cover flex-shrink-0" />
                       <div className="min-w-0 flex-1">
                         <h3 className="font-semibold text-slate-800 truncate">Carlos Silva</h3>
@@ -319,13 +319,7 @@ const Autores = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="col-span-2">
-                      <span className="inline-flex items-center gap-2 px-3 py-1 bg-slate-400 text-white rounded-full text-xs font-medium">
-                        <i className="fas fa-circle text-[6px]"></i>
-                        Cartões
-                      </span>
-                    </div>
-                    <div className="col-span-2">
+                    <div className="col-span-3">
                       <div className="text-sm font-semibold text-slate-700">42 artigos</div>
                       <div className="text-xs text-slate-500">Último: há 1 dia</div>
                     </div>
@@ -349,7 +343,7 @@ const Autores = () => {
 
                 <div className="border-b border-slate-100 hover:bg-slate-50 transition-colors cursor-pointer">
                   <div className="grid grid-cols-12 gap-4 px-6 py-4 items-center">
-                    <div className="col-span-4 flex items-center gap-4">
+                    <div className="col-span-5 flex items-center gap-4">
                       <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg" alt="Mariana Oliveira" className="w-12 h-12 rounded-full object-cover flex-shrink-0" />
                       <div className="min-w-0 flex-1">
                         <h3 className="font-semibold text-slate-800 truncate flex items-center gap-2">
@@ -363,13 +357,7 @@ const Autores = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="col-span-2">
-                      <span className="inline-flex items-center gap-2 px-3 py-1 bg-slate-400 text-white rounded-full text-xs font-medium">
-                        <i className="fas fa-circle text-[6px]"></i>
-                        Análise de Mercado
-                      </span>
-                    </div>
-                    <div className="col-span-2">
+                    <div className="col-span-3">
                       <div className="text-sm font-semibold text-slate-700">56 artigos</div>
                       <div className="text-xs text-slate-500">Último: há 3 horas</div>
                     </div>
@@ -393,7 +381,7 @@ const Autores = () => {
 
                 <div className="border-b border-slate-100 hover:bg-slate-50 transition-colors cursor-pointer">
                   <div className="grid grid-cols-12 gap-4 px-6 py-4 items-center">
-                    <div className="col-span-4 flex items-center gap-4">
+                    <div className="col-span-5 flex items-center gap-4">
                       <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg" alt="Roberto Mendes" className="w-12 h-12 rounded-full object-cover flex-shrink-0" />
                       <div className="min-w-0 flex-1">
                         <h3 className="font-semibold text-slate-800 truncate">Roberto Mendes</h3>
@@ -404,13 +392,7 @@ const Autores = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="col-span-2">
-                      <span className="inline-flex items-center gap-2 px-3 py-1 bg-slate-400 text-white rounded-full text-xs font-medium">
-                        <i className="fas fa-circle text-[6px]"></i>
-                        Banking &amp; Fintech
-                      </span>
-                    </div>
-                    <div className="col-span-2">
+                    <div className="col-span-3">
                       <div className="text-sm font-semibold text-slate-700">34 artigos</div>
                       <div className="text-xs text-slate-500">Último: há 1 semana</div>
                     </div>
@@ -434,7 +416,7 @@ const Autores = () => {
 
                 <div className="border-b border-slate-100 hover:bg-slate-50 transition-colors cursor-pointer">
                   <div className="grid grid-cols-12 gap-4 px-6 py-4 items-center">
-                    <div className="col-span-4 flex items-center gap-4">
+                    <div className="col-span-5 flex items-center gap-4">
                       <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-7.jpg" alt="Juliana Santos" className="w-12 h-12 rounded-full object-cover flex-shrink-0" />
                       <div className="min-w-0 flex-1">
                         <h3 className="font-semibold text-slate-800 truncate">Juliana Santos</h3>
@@ -445,13 +427,7 @@ const Autores = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="col-span-2">
-                      <span className="inline-flex items-center gap-2 px-3 py-1 bg-slate-400 text-white rounded-full text-xs font-medium">
-                        <i className="fas fa-circle text-[6px]"></i>
-                        Investimentos
-                      </span>
-                    </div>
-                    <div className="col-span-2">
+                    <div className="col-span-3">
                       <div className="text-sm font-semibold text-slate-700">38 artigos</div>
                       <div className="text-xs text-slate-500">Último: há 4 dias</div>
                     </div>
@@ -475,7 +451,7 @@ const Autores = () => {
 
                 <div className="border-b border-slate-100 hover:bg-slate-50 transition-colors cursor-pointer">
                   <div className="grid grid-cols-12 gap-4 px-6 py-4 items-center">
-                    <div className="col-span-4 flex items-center gap-4">
+                    <div className="col-span-5 flex items-center gap-4">
                       <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg" alt="Fernando Lima" className="w-12 h-12 rounded-full object-cover flex-shrink-0" />
                       <div className="min-w-0 flex-1">
                         <h3 className="font-semibold text-slate-800 truncate flex items-center gap-2">
@@ -489,13 +465,7 @@ const Autores = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="col-span-2">
-                      <span className="inline-flex items-center gap-2 px-3 py-1 bg-slate-400 text-white rounded-full text-xs font-medium">
-                        <i className="fas fa-circle text-[6px]"></i>
-                        Análise de Mercado
-                      </span>
-                    </div>
-                    <div className="col-span-2">
+                    <div className="col-span-3">
                       <div className="text-sm font-semibold text-slate-700">64 artigos</div>
                       <div className="text-xs text-slate-500">Último: hoje</div>
                     </div>
@@ -519,7 +489,7 @@ const Autores = () => {
 
                 <div className="border-b border-slate-100 hover:bg-slate-50 transition-colors cursor-pointer">
                   <div className="grid grid-cols-12 gap-4 px-6 py-4 items-center">
-                    <div className="col-span-4 flex items-center gap-4">
+                    <div className="col-span-5 flex items-center gap-4">
                       <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-9.jpg" alt="Ricardo Almeida" className="w-12 h-12 rounded-full object-cover flex-shrink-0" />
                       <div className="min-w-0 flex-1">
                         <h3 className="font-semibold text-slate-800 truncate">Ricardo Almeida</h3>
@@ -530,13 +500,7 @@ const Autores = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="col-span-2">
-                      <span className="inline-flex items-center gap-2 px-3 py-1 bg-slate-400 text-white rounded-full text-xs font-medium">
-                        <i className="fas fa-circle text-[6px]"></i>
-                        Meios de Pagamento
-                      </span>
-                    </div>
-                    <div className="col-span-2">
+                    <div className="col-span-3">
                       <div className="text-sm font-semibold text-slate-700">29 artigos</div>
                       <div className="text-xs text-slate-500">Último: há 5 dias</div>
                     </div>
@@ -560,7 +524,7 @@ const Autores = () => {
 
                 <div className="border-b border-slate-100 hover:bg-slate-50 transition-colors cursor-pointer">
                   <div className="grid grid-cols-12 gap-4 px-6 py-4 items-center">
-                    <div className="col-span-4 flex items-center gap-4">
+                    <div className="col-span-5 flex items-center gap-4">
                       <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg" alt="Patricia Rocha" className="w-12 h-12 rounded-full object-cover flex-shrink-0" />
                       <div className="min-w-0 flex-1">
                         <h3 className="font-semibold text-slate-800 truncate">Patricia Rocha</h3>
@@ -571,13 +535,7 @@ const Autores = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="col-span-2">
-                      <span className="inline-flex items-center gap-2 px-3 py-1 bg-slate-400 text-white rounded-full text-xs font-medium">
-                        <i className="fas fa-circle text-[6px]"></i>
-                        Cartões
-                      </span>
-                    </div>
-                    <div className="col-span-2">
+                    <div className="col-span-3">
                       <div className="text-sm font-semibold text-slate-700">51 artigos</div>
                       <div className="text-xs text-slate-500">Último: há 2 dias</div>
                     </div>
@@ -601,7 +559,7 @@ const Autores = () => {
 
                 <div className="border-b border-slate-100 hover:bg-slate-50 transition-colors cursor-pointer">
                   <div className="grid grid-cols-12 gap-4 px-6 py-4 items-center">
-                    <div className="col-span-4 flex items-center gap-4">
+                    <div className="col-span-5 flex items-center gap-4">
                       <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" alt="Eduardo Ferreira" className="w-12 h-12 rounded-full object-cover flex-shrink-0" />
                       <div className="min-w-0 flex-1">
                         <h3 className="font-semibold text-slate-800 truncate">Eduardo Ferreira</h3>
@@ -612,13 +570,7 @@ const Autores = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="col-span-2">
-                      <span className="inline-flex items-center gap-2 px-3 py-1 bg-slate-400 text-white rounded-full text-xs font-medium">
-                        <i className="fas fa-circle text-[6px]"></i>
-                        Investimentos
-                      </span>
-                    </div>
-                    <div className="col-span-2">
+                    <div className="col-span-3">
                       <div className="text-sm font-semibold text-slate-700">47 artigos</div>
                       <div className="text-xs text-slate-500">Último: ontem</div>
                     </div>
@@ -642,7 +594,7 @@ const Autores = () => {
 
                 <div className="hover:bg-slate-50 transition-colors cursor-pointer">
                   <div className="grid grid-cols-12 gap-4 px-6 py-4 items-center">
-                    <div className="col-span-4 flex items-center gap-4">
+                    <div className="col-span-5 flex items-center gap-4">
                       <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg" alt="Lucas Martins" className="w-12 h-12 rounded-full object-cover flex-shrink-0" />
                       <div className="min-w-0 flex-1">
                         <h3 className="font-semibold text-slate-800 truncate flex items-center gap-2">
@@ -656,13 +608,7 @@ const Autores = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="col-span-2">
-                      <span className="inline-flex items-center gap-2 px-3 py-1 bg-slate-400 text-white rounded-full text-xs font-medium">
-                        <i className="fas fa-circle text-[6px]"></i>
-                        Banking &amp; Fintech
-                      </span>
-                    </div>
-                    <div className="col-span-2">
+                    <div className="col-span-3">
                       <div className="text-sm font-semibold text-slate-700">33 artigos</div>
                       <div className="text-xs text-slate-500">Último: há 1 semana</div>
                     </div>
