@@ -457,33 +457,59 @@ export default function ArtigoCreditoRural() {
 
               {/* Pricing Model */}
               <section>
-                <h2 className="text-2xl font-bold text-slate-800 mb-4">Modelo de Precificação</h2>
-                <div className="bg-slate-50 rounded-lg p-6">
-                  <p className="font-semibold text-slate-800 mb-2">Exemplo de Cálculo:</p>
-                  <p className="text-slate-700 text-sm mb-3">Operação de custeio no Centro-Oeste, perfil de baixo risco:</p>
-                  <div className="space-y-1 text-sm text-slate-700 font-mono">
-                    <p>Taxa<sub>base</sub> = 8,5%</p>
-                    <p>Spread<sub>risco</sub> = 0,5% (baixo risco)</p>
-                    <p>Spread<sub>regional</sub> = 0,2% (Centro-Oeste)</p>
-                    <p>Spread<sub>modalidade</sub> = 0,3% (custeio)</p>
-                    <p className="pt-2 border-t border-slate-300 font-bold">Taxa<sub>final</sub> = 9,5% a.a.</p>
+                <h2 className="text-2xl font-bold text-slate-800 mb-4">Modelo de Precificação e Cálculo de Risco</h2>
+                <p className="text-slate-700 leading-relaxed mb-6">
+                  Para uma gestão eficiente do portfolio de crédito rural, propomos um modelo de precificação que considera múltiplos fatores de risco:
+                </p>
+                <div className="bg-slate-50 rounded-lg p-6 mb-6">
+                  <h3 className="font-semibold text-slate-800 mb-4">Fórmula de Taxa Ajustada ao Risco</h3>
+                  <div className="bg-white border border-slate-200 rounded-lg p-6 mb-4">
+                    <p className="text-center font-mono text-lg text-slate-800 mb-4">
+                      Taxa<sub>final</sub> = Taxa<sub>base</sub> + Spread<sub>risco</sub> + Spread<sub>regional</sub> + Spread<sub>modalidade</sub>
+                    </p>
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <p className="text-slate-600 mb-1">Onde:</p>
+                        <ul className="space-y-1 text-slate-700">
+                          <li><strong>Taxa<sub>base</sub></strong> = 8,5% a.a. (Selic + 2%)</li>
+                          <li><strong>Spread<sub>risco</sub></strong> = 0,5% a 3,5%</li>
+                        </ul>
+                      </div>
+                      <div>
+                        <ul className="space-y-1 text-slate-700">
+                          <li><strong>Spread<sub>regional</sub></strong> = 0,2% a 1,8%</li>
+                          <li><strong>Spread<sub>modalidade</sub></strong> = 0,3% a 1,2%</li>
+                        </ul>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className="grid grid-cols-3 gap-4 mt-4">
-                  <div className="bg-white border border-slate-200 rounded-lg p-4 text-center">
-                    <p className="text-xs text-slate-500 mb-1">Provisão Mínima</p>
-                    <p className="text-2xl font-bold text-slate-800">1.2%</p>
-                    <p className="text-xs text-slate-600 mt-1">do valor concedido</p>
+                  <div className="bg-[#E8E0C5] bg-opacity-30 border border-[#E8E0C5] rounded-lg p-4 mb-4">
+                    <p className="font-semibold text-slate-800 mb-2">Exemplo de Cálculo:</p>
+                    <p className="text-slate-700 text-sm mb-3">Operação de custeio no Centro-Oeste, perfil de baixo risco:</p>
+                    <div className="space-y-1 text-sm text-slate-700 font-mono">
+                      <p>Taxa<sub>base</sub> = 8,5%</p>
+                      <p>Spread<sub>risco</sub> = 0,5% (baixo risco)</p>
+                      <p>Spread<sub>regional</sub> = 0,2% (Centro-Oeste)</p>
+                      <p>Spread<sub>modalidade</sub> = 0,3% (custeio)</p>
+                      <p className="pt-2 border-t border-slate-300 font-bold">Taxa<sub>final</sub> = 9,5% a.a.</p>
+                    </div>
                   </div>
-                  <div className="bg-white border border-slate-200 rounded-lg p-4 text-center">
-                    <p className="text-xs text-slate-500 mb-1">Capital Mínimo</p>
-                    <p className="text-2xl font-bold text-slate-800">11%</p>
-                    <p className="text-xs text-slate-600 mt-1">Basileia III</p>
-                  </div>
-                  <div className="bg-white border border-slate-200 rounded-lg p-4 text-center">
-                    <p className="text-xs text-slate-500 mb-1">ROE Esperado</p>
-                    <p className="text-2xl font-bold text-slate-800">18.5%</p>
-                    <p className="text-xs text-slate-600 mt-1">pós-ajustes</p>
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="bg-white border border-slate-200 rounded-lg p-4 text-center">
+                      <p className="text-xs text-slate-500 mb-1">Provisão Mínima</p>
+                      <p className="text-2xl font-bold text-slate-800">1.2%</p>
+                      <p className="text-xs text-slate-600 mt-1">do valor concedido</p>
+                    </div>
+                    <div className="bg-white border border-slate-200 rounded-lg p-4 text-center">
+                      <p className="text-xs text-slate-500 mb-1">Capital Mínimo</p>
+                      <p className="text-2xl font-bold text-slate-800">11%</p>
+                      <p className="text-xs text-slate-600 mt-1">Basileia III</p>
+                    </div>
+                    <div className="bg-white border border-slate-200 rounded-lg p-4 text-center">
+                      <p className="text-xs text-slate-500 mb-1">ROE Esperado</p>
+                      <p className="text-2xl font-bold text-slate-800">18.5%</p>
+                      <p className="text-xs text-slate-600 mt-1">pós-ajustes</p>
+                    </div>
                   </div>
                 </div>
               </section>
