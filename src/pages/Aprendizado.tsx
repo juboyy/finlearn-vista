@@ -1,27 +1,36 @@
 import { NavLink } from "@/components/NavLink";
-import {
-  Home,
-  Newspaper,
-  Bot,
-  GraduationCap,
-  Book,
-  Store,
-  MessageSquare,
-} from "lucide-react";
-
-const navigation = [
-  { name: "Dashboard", href: "/", icon: Home },
-  { name: "Conteúdo", href: "/conteudo", icon: Newspaper },
-  { name: "Agentes IA", href: "/agentes", icon: Bot },
-  { name: "Aprendizado", href: "/aprendizado", icon: GraduationCap },
-  { name: "Biblioteca", href: "/biblioteca", icon: Book },
-  { name: "Marketplace", href: "/marketplace", icon: Store },
-  { name: "Comunidade", href: "/comunidade", icon: MessageSquare },
-];
-
+import { Home, Newspaper, Bot, GraduationCap, Book, Store, MessageSquare } from "lucide-react";
+const navigation = [{
+  name: "Dashboard",
+  href: "/",
+  icon: Home
+}, {
+  name: "Conteúdo",
+  href: "/conteudo",
+  icon: Newspaper
+}, {
+  name: "Agentes IA",
+  href: "/agentes",
+  icon: Bot
+}, {
+  name: "Aprendizado",
+  href: "/aprendizado",
+  icon: GraduationCap
+}, {
+  name: "Biblioteca",
+  href: "/biblioteca",
+  icon: Book
+}, {
+  name: "Marketplace",
+  href: "/marketplace",
+  icon: Store
+}, {
+  name: "Comunidade",
+  href: "/comunidade",
+  icon: MessageSquare
+}];
 const Aprendizado = () => {
-  return (
-    <div className="flex h-screen overflow-hidden">
+  return <div className="flex h-screen overflow-hidden">
       <aside className="w-64 bg-white border-r border-slate-200 flex flex-col">
         <div className="p-6 border-b border-slate-200">
           <div className="flex items-center gap-3">
@@ -33,26 +42,15 @@ const Aprendizado = () => {
         </div>
 
         <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
-          {navigation.map((item) => (
-            <NavLink
-              key={item.name}
-              to={item.href}
-              className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-100 transition"
-              activeClassName="bg-pastel-blue text-slate-800 font-medium"
-            >
+          {navigation.map(item => <NavLink key={item.name} to={item.href} className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-100 transition" activeClassName="bg-pastel-blue text-slate-800 font-medium">
               <item.icon className="w-5 h-5" />
               <span>{item.name}</span>
-            </NavLink>
-          ))}
+            </NavLink>)}
         </nav>
 
         <div className="p-4 border-t border-slate-200">
           <div className="flex items-center gap-3 px-4 py-3">
-            <img
-              src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg"
-              alt="User"
-              className="w-10 h-10 rounded-full object-cover"
-            />
+            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" alt="User" className="w-10 h-10 rounded-full object-cover" />
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium text-slate-800 truncate">João Silva</p>
               <p className="text-xs text-slate-500 truncate">Premium</p>
@@ -131,11 +129,7 @@ const Aprendizado = () => {
           <div className="grid grid-cols-3 gap-6 mb-8">
             <section className="col-span-2 bg-white rounded-xl border border-slate-200 overflow-hidden">
               <div className="h-80 bg-pastel-blue overflow-hidden relative">
-                <img
-                  src="https://storage.googleapis.com/uxpilot-auth.appspot.com/deacdd849a-af7a052b4fb4b857dbcf.png"
-                  alt="illustration of a financial professional studying market analysis on multiple screens, modern office environment, pastel colors, outlined style"
-                  className="w-full h-full object-cover"
-                />
+                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/deacdd849a-af7a052b4fb4b857dbcf.png" alt="illustration of a financial professional studying market analysis on multiple screens, modern office environment, pastel colors, outlined style" className="w-full h-full object-cover" />
                 <div className="absolute top-4 left-4">
                   <span className="px-3 py-1 bg-white text-slate-800 text-sm font-medium rounded-full">
                     Destaque
@@ -217,11 +211,7 @@ const Aprendizado = () => {
               <div className="space-y-4">
                 <div className="bg-white rounded-xl border border-slate-200 p-4 flex items-center gap-4 transition hover:shadow-md">
                   <div className="w-32 h-20 rounded-lg overflow-hidden flex-shrink-0">
-                    <img
-                      src="https://storage.googleapis.com/uxpilot-auth.appspot.com/9277263dd6-d496ce2f9588a997ccf8.png"
-                      alt="illustration of dual monitors displaying complex financial stock market charts, pastel colors, outlined style"
-                      className="w-full h-full object-cover"
-                    />
+                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/9277263dd6-d496ce2f9588a997ccf8.png" alt="illustration of dual monitors displaying complex financial stock market charts, pastel colors, outlined style" className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex justify-between items-start mb-2">
@@ -240,7 +230,9 @@ const Aprendizado = () => {
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-full bg-slate-200 rounded-full h-1.5">
-                        <div className="bg-pastel-purple h-1.5 rounded-full" style={{ width: "50%" }}></div>
+                        <div className="bg-pastel-purple h-1.5 rounded-full" style={{
+                        width: "50%"
+                      }}></div>
                       </div>
                       <span className="text-xs text-slate-500 font-medium">50%</span>
                     </div>
@@ -249,11 +241,7 @@ const Aprendizado = () => {
 
                 <div className="bg-white rounded-xl border border-slate-200 p-4 flex items-center gap-4 transition hover:shadow-md">
                   <div className="w-32 h-20 rounded-lg overflow-hidden flex-shrink-0">
-                    <img
-                      src="https://storage.googleapis.com/uxpilot-auth.appspot.com/8627363c2b-a72824be4bec8ab72346.png"
-                      alt="illustration of a professional podcast recording studio with a microphone, pastel colors, outlined style"
-                      className="w-full h-full object-cover"
-                    />
+                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/8627363c2b-a72824be4bec8ab72346.png" alt="illustration of a professional podcast recording studio with a microphone, pastel colors, outlined style" className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex justify-between items-start mb-2">
@@ -272,7 +260,9 @@ const Aprendizado = () => {
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-full bg-slate-200 rounded-full h-1.5">
-                        <div className="bg-pastel-green h-1.5 rounded-full" style={{ width: "71%" }}></div>
+                        <div className="bg-pastel-green h-1.5 rounded-full" style={{
+                        width: "71%"
+                      }}></div>
                       </div>
                       <span className="text-xs text-slate-500 font-medium">32:15 / 45:00</span>
                     </div>
@@ -294,7 +284,9 @@ const Aprendizado = () => {
                       <span className="font-medium text-slate-800">12h / 15h</span>
                     </div>
                     <div className="w-full bg-slate-200 rounded-full h-2">
-                      <div className="bg-pastel-blue h-2 rounded-full" style={{ width: "80%" }}></div>
+                      <div className="bg-pastel-blue h-2 rounded-full" style={{
+                      width: "80%"
+                    }}></div>
                     </div>
                   </div>
 
@@ -304,7 +296,9 @@ const Aprendizado = () => {
                       <span className="font-medium text-slate-800">5</span>
                     </div>
                     <div className="w-full bg-slate-200 rounded-full h-2">
-                      <div className="bg-pastel-purple h-2 rounded-full" style={{ width: "50%" }}></div>
+                      <div className="bg-pastel-purple h-2 rounded-full" style={{
+                      width: "50%"
+                    }}></div>
                     </div>
                   </div>
 
@@ -314,7 +308,9 @@ const Aprendizado = () => {
                       <span className="font-medium text-slate-800">2</span>
                     </div>
                     <div className="w-full bg-slate-200 rounded-full h-2">
-                      <div className="bg-pastel-green h-2 rounded-full" style={{ width: "30%" }}></div>
+                      <div className="bg-pastel-green h-2 rounded-full" style={{
+                      width: "30%"
+                    }}></div>
                     </div>
                   </div>
                 </div>
@@ -351,11 +347,7 @@ const Aprendizado = () => {
             <div className="grid grid-cols-3 gap-6">
               <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
                 <div className="h-48 bg-pastel-purple overflow-hidden relative">
-                  <img
-                    src="https://storage.googleapis.com/uxpilot-auth.appspot.com/f689e1e456-5ddba08158dda1d273b0.png"
-                    alt="illustration of cryptocurrency trading charts and digital assets, like bitcoin and ethereum coins, pastel colors, outlined style"
-                    className="w-full h-full object-cover"
-                  />
+                  <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/f689e1e456-5ddba08158dda1d273b0.png" alt="illustration of cryptocurrency trading charts and digital assets, like bitcoin and ethereum coins, pastel colors, outlined style" className="w-full h-full object-cover" />
                   <div className="absolute top-3 right-3 px-2 py-1 bg-white rounded-full text-xs font-medium text-slate-700">
                     Novo
                   </div>
@@ -389,11 +381,7 @@ const Aprendizado = () => {
 
               <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
                 <div className="h-48 bg-pastel-pink overflow-hidden relative">
-                  <img
-                    src="https://storage.googleapis.com/uxpilot-auth.appspot.com/efca16cd3f-1beea736c47851f428f1.png"
-                    alt="illustration of compliance documents and a gavel, representing legal framework for financial markets, pastel colors, outlined style"
-                    className="w-full h-full object-cover"
-                  />
+                  <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/efca16cd3f-1beea736c47851f428f1.png" alt="illustration of compliance documents and a gavel, representing legal framework for financial markets, pastel colors, outlined style" className="w-full h-full object-cover" />
                 </div>
                 <div className="p-5">
                   <div className="flex items-center gap-2 mb-3">
@@ -424,11 +412,7 @@ const Aprendizado = () => {
 
               <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
                 <div className="h-48 bg-pastel-green overflow-hidden relative">
-                  <img
-                    src="https://storage.googleapis.com/uxpilot-auth.appspot.com/43ade140cc-54e09b01d95bfda73dc2.png"
-                    alt="illustration of a financial risk management dashboard with charts and a shield icon, pastel colors, outlined style"
-                    className="w-full h-full object-cover"
-                  />
+                  <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/43ade140cc-54e09b01d95bfda73dc2.png" alt="illustration of a financial risk management dashboard with charts and a shield icon, pastel colors, outlined style" className="w-full h-full object-cover" />
                   <div className="absolute top-3 right-3 px-2 py-1 bg-white rounded-full text-xs font-medium text-slate-700">
                     Popular
                   </div>
@@ -560,11 +544,7 @@ const Aprendizado = () => {
             <div className="grid grid-cols-4 gap-6">
               <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
                 <div className="h-40 bg-pastel-blue overflow-hidden">
-                  <img
-                    src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png"
-                    alt="illustration of a microphone with sound waves for a podcast cover, financial market theme, pastel colors, outlined style"
-                    className="w-full h-full object-cover"
-                  />
+                  <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png" alt="illustration of a microphone with sound waves for a podcast cover, financial market theme, pastel colors, outlined style" className="w-full h-full object-cover" />
                 </div>
                 <div className="p-4">
                   <h3 className="font-medium text-slate-800 mb-2 line-clamp-2">Mercados em Foco</h3>
@@ -578,11 +558,7 @@ const Aprendizado = () => {
 
               <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
                 <div className="h-40 bg-pastel-green overflow-hidden">
-                  <img
-                    src="https://storage.googleapis.com/uxpilot-auth.appspot.com/cf142f2fa8-3e14b0bb9b96f766efe7.png"
-                    alt="illustration of a brain with a lightbulb for an investment strategies podcast cover, pastel colors, outlined style"
-                    className="w-full h-full object-cover"
-                  />
+                  <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/cf142f2fa8-3e14b0bb9b96f766efe7.png" alt="illustration of a brain with a lightbulb for an investment strategies podcast cover, pastel colors, outlined style" className="w-full h-full object-cover" />
                 </div>
                 <div className="p-4">
                   <h3 className="font-medium text-slate-800 mb-2 line-clamp-2">
@@ -598,11 +574,7 @@ const Aprendizado = () => {
 
               <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
                 <div className="h-40 bg-pastel-purple overflow-hidden">
-                  <img
-                    src="https://storage.googleapis.com/uxpilot-auth.appspot.com/270689fe5d-6ce96dde7db22c1b8808.png"
-                    alt="illustration of a robot and gears for a fintech podcast cover, technology and finance blend, pastel colors, outlined style"
-                    className="w-full h-full object-cover"
-                  />
+                  <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/270689fe5d-6ce96dde7db22c1b8808.png" alt="illustration of a robot and gears for a fintech podcast cover, technology and finance blend, pastel colors, outlined style" className="w-full h-full object-cover" />
                 </div>
                 <div className="p-4">
                   <h3 className="font-medium text-slate-800 mb-2 line-clamp-2">FinTech Brasil</h3>
@@ -616,11 +588,7 @@ const Aprendizado = () => {
 
               <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
                 <div className="h-40 bg-pastel-pink overflow-hidden">
-                  <img
-                    src="https://storage.googleapis.com/uxpilot-auth.appspot.com/84f47f0351-d5b7ae096302eba637e5.png"
-                    alt="illustration of a globe with financial charts for an economic analysis podcast cover, pastel colors, outlined style"
-                    className="w-full h-full object-cover"
-                  />
+                  <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/84f47f0351-d5b7ae096302eba637e5.png" alt="illustration of a globe with financial charts for an economic analysis podcast cover, pastel colors, outlined style" className="w-full h-full object-cover" />
                 </div>
                 <div className="p-4">
                   <h3 className="font-medium text-slate-800 mb-2 line-clamp-2">Economia Global</h3>
@@ -646,11 +614,7 @@ const Aprendizado = () => {
               <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
                 <div className="flex items-center gap-4 mb-4">
                   <div className="w-16 h-16 rounded-full overflow-hidden">
-                    <img
-                      src="https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-2bbdc31a97c8479658e1.png"
-                      alt="Classical marble bust of a woman with intelligent features, representing a finance expert. Soft pastel blue background, studio lighting, detailed sculpture."
-                      className="w-full h-full object-cover"
-                    />
+                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-2bbdc31a97c8479658e1.png" alt="Classical marble bust of a woman with intelligent features, representing a finance expert. Soft pastel blue background, studio lighting, detailed sculpture." className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-slate-800">Prof. Ana Santos</h3>
@@ -676,11 +640,7 @@ const Aprendizado = () => {
               <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
                 <div className="flex items-center gap-4 mb-4">
                   <div className="w-16 h-16 rounded-full overflow-hidden">
-                    <img
-                      src="https://storage.googleapis.com/uxpilot-auth.appspot.com/b24014b83d-0b455d5abe744d3f9416.png"
-                      alt="Classical marble bust of a wise, bearded man, representing a macroeconomics expert. Soft pastel green background, studio lighting, detailed sculpture."
-                      className="w-full h-full object-cover"
-                    />
+                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/b24014b83d-0b455d5abe744d3f9416.png" alt="Classical marble bust of a wise, bearded man, representing a macroeconomics expert. Soft pastel green background, studio lighting, detailed sculpture." className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-slate-800">Dr. Roberto Lima</h3>
@@ -706,11 +666,7 @@ const Aprendizado = () => {
               <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
                 <div className="flex items-center gap-4 mb-4">
                   <div className="w-16 h-16 rounded-full overflow-hidden">
-                    <img
-                      src="https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-db60e1b43d477718b599.png"
-                      alt="Classical marble bust of a woman with a serene and professional expression, representing an ESG consultant. Soft pastel purple background, studio lighting, detailed sculpture."
-                      className="w-full h-full object-cover"
-                    />
+                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-db60e1b43d477718b599.png" alt="Classical marble bust of a woman with a serene and professional expression, representing an ESG consultant. Soft pastel purple background, studio lighting, detailed sculpture." className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-slate-800">Profa. Marina Costa</h3>
@@ -718,7 +674,7 @@ const Aprendizado = () => {
                   </div>
                 </div>
                 <p className="text-sm text-slate-600 mb-4">
-                  Aprenda sobre investimentos sustentáveis, critérios ESG e finanças responsáveis.
+                  Aprenda sobre investimentos sustentáveis, critérios ESG e finanças responsáveis à nível global.        
                 </p>
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-1 text-sm text-slate-600">
@@ -874,8 +830,6 @@ const Aprendizado = () => {
           </section>
         </div>
       </main>
-    </div>
-  );
+    </div>;
 };
-
 export default Aprendizado;
