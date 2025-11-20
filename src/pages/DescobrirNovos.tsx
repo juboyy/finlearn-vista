@@ -202,7 +202,7 @@ const DescobrirNovos = () => {
                 </div>
                 <div className="grid grid-cols-3 gap-6">
                   {[
-                    { name: 'Beatriz Campos', title: 'CEO - Fintech Payments Pro', avatar: 'avatar-5.jpg', tags: ['PIX', 'Open Finance'], articles: 89, followers: '2.4k' },
+                    { name: 'Beatriz Campos', title: 'CEO - Fintech Payments', avatar: 'avatar-5.jpg', tags: ['PIX', 'Open Finance'], articles: 89, followers: '2.4k' },
                     { name: 'Rafael Torres', title: 'Diretor CVM', avatar: 'avatar-3.jpg', tags: ['CVM', 'Regulação'], articles: 124, followers: '3.8k' },
                     { name: 'Camila Rodrigues', title: 'Head - Banco Digital XYZ', avatar: 'avatar-6.jpg', tags: ['Renda Fixa', 'B3'], articles: 156, followers: '5.2k' }
                   ].map((author, index) => (
