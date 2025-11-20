@@ -202,8 +202,7 @@ export function Biblioteca() {
                 <input
                   type="text"
                   placeholder="Buscar na biblioteca..."
-                  className="w-80 pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:border-transparent"
-                  style={{ outlineColor: '#B8D4E8' }}
+                  className="w-80 pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B8D4E8] focus:border-transparent"
                 />
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
               </div>
@@ -377,38 +376,52 @@ export function Biblioteca() {
             {/* Main Content */}
             <div className="flex-1">
               {/* Filter Bar */}
-              <div className="flex items-center gap-4 mb-6">
-                <select className="px-4 py-2 border border-slate-200 rounded-lg text-sm text-slate-700 focus:outline-none focus:ring-2 focus:border-transparent">
-                  <option>Todos os Tipos</option>
-                  <option>Notas</option>
-                  <option>Áudios</option>
-                  <option>Links</option>
-                  <option>Rascunhos</option>
-                </select>
-                <select className="px-4 py-2 border border-slate-200 rounded-lg text-sm text-slate-700 focus:outline-none focus:ring-2 focus:border-transparent">
-                  <option>Modificado Recentemente</option>
-                  <option>Criado Recentemente</option>
-                  <option>Nome (A-Z)</option>
-                  <option>Nome (Z-A)</option>
-                </select>
-                <div className="flex gap-2 ml-auto">
-                  <button className="p-2 rounded-lg transition text-slate-700" style={{ backgroundColor: '#B8D4E8' }}>
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                      <rect x="3" y="3" width="7" height="7" />
-                      <rect x="14" y="3" width="7" height="7" />
-                      <rect x="3" y="14" width="7" height="7" />
-                      <rect x="14" y="14" width="7" height="7" />
-                    </svg>
-                  </button>
-                  <button className="p-2 text-slate-400 hover:bg-slate-100 rounded-lg transition">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                      <line x1="3" y1="6" x2="21" y2="6" />
-                      <line x1="3" y1="12" x2="21" y2="12" />
-                      <line x1="3" y1="18" x2="21" y2="18" />
-                    </svg>
-                  </button>
+              <section className="bg-white rounded-xl p-6 border border-slate-200 mb-6">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex gap-2">
+                      <button className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                          <rect x="3" y="3" width="7" height="7" />
+                          <rect x="14" y="3" width="7" height="7" />
+                          <rect x="3" y="14" width="7" height="7" />
+                          <rect x="14" y="14" width="7" height="7" />
+                        </svg>
+                      </button>
+                      <button className="p-2 rounded-lg text-slate-700" style={{ backgroundColor: '#B8D4E8' }}>
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                          <line x1="3" y1="6" x2="21" y2="6" />
+                          <line x1="3" y1="12" x2="21" y2="12" />
+                          <line x1="3" y1="18" x2="21" y2="18" />
+                        </svg>
+                      </button>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-slate-600">Ordenar:</span>
+                      <select className="text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#B8D4E8]">
+                        <option>Modificado recentemente</option>
+                        <option>Nome (A-Z)</option>
+                        <option>Nome (Z-A)</option>
+                        <option>Data de criação</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button className="px-3 py-2 rounded-lg text-sm font-medium text-slate-700" style={{ backgroundColor: '#C5E8D4' }}>
+                      Todas
+                    </button>
+                    <button className="px-3 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition">
+                      Notas
+                    </button>
+                    <button className="px-3 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition">
+                      Áudios
+                    </button>
+                    <button className="px-3 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition">
+                      Favoritos
+                    </button>
+                  </div>
                 </div>
-              </div>
+              </section>
 
               {/* Items List */}
               <section className="bg-white rounded-xl border border-slate-200 overflow-hidden">
