@@ -267,7 +267,10 @@ const Autores = () => {
                     <i className="fas fa-users mr-2"></i>
                     Seguidores
                   </button>
-                  <button className="px-6 py-2.5 bg-pastel-purple text-slate-700 rounded-lg font-medium flex items-center gap-2">
+                  <button 
+                    onClick={() => navigate('/descobrir-novos')}
+                    className="px-6 py-2.5 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2"
+                  >
                     <i className="fas fa-compass mr-2"></i>
                     Descobrir Novos
                   </button>

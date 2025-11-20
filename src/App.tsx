@@ -25,6 +25,7 @@ import Autores from "./pages/Autores";
 import Estatisticas from "./pages/Estatisticas";
 import PerfilAutor from "./pages/PerfilAutor";
 import Seguidores from "./pages/Seguidores";
+import DescobrirNovos from "./pages/DescobrirNovos";
 
 import NotFound from "./pages/NotFound";
 
@@ -66,6 +67,7 @@ const App = () => {
           <Route path="/estatisticas" element={<Estatisticas />} />
           <Route path="/perfil-autor/:id" element={<PerfilAutor />} />
           <Route path="/seguidores" element={<Seguidores />} />
+          <Route path="/descobrir-novos" element={<DescobrirNovos />} />
           
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
