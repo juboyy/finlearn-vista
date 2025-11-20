@@ -101,7 +101,9 @@ export default {
           300: "30 50% 85%",
         },
         slate: {
+          100: "220 10% 95%",
           400: "220 10% 50%",
+          800: "220 15% 20%",
         },
         pastel: {
           blue: "hsl(var(--pastel-blue))",
