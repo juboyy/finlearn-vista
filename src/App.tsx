@@ -26,6 +26,7 @@ import Estatisticas from "./pages/Estatisticas";
 import PerfilAutor from "./pages/PerfilAutor";
 import Seguidores from "./pages/Seguidores";
 import DescobrirNovos from "./pages/DescobrirNovos";
+import Checkout from "./pages/Checkout";
 
 import NotFound from "./pages/NotFound";
 
@@ -68,6 +69,7 @@ const App = () => {
           <Route path="/perfil-autor/:id" element={<PerfilAutor />} />
           <Route path="/seguidores" element={<Seguidores />} />
           <Route path="/descobrir-novos" element={<DescobrirNovos />} />
+          <Route path="/checkout" element={<Checkout />} />
           
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
