@@ -15,7 +15,7 @@ const navigation = [
 
 export const SidebarFix = () => {
   return (
-    <aside className="w-64 bg-sidebar border-r border-sidebar-border flex flex-col">
+    <aside className="w-64 bg-sidebar border-r border-sidebar-border flex flex-col fixed left-0 top-0 h-screen">
       <div className="p-6 border-b border-sidebar-border">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-sidebar-primary rounded-lg flex items-center justify-center">
@@ -25,7 +25,7 @@ export const SidebarFix = () => {
         </div>
       </div>
       
-      <nav className="flex-1 p-4 space-y-1 overflow-y-auto sidebar-scroll">
+      <nav className="flex-1 p-4 space-y-1">
         {navigation.map((item) => (
           <NavLink
             key={item.name}
