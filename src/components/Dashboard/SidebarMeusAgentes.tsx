@@ -15,9 +15,9 @@ export const SidebarMeusAgentes = () => {
       <div className="p-6 border-b border-sidebar-border">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-sidebar-primary rounded-lg flex items-center justify-center">
-            <Bot className="text-sidebar-primary-foreground" size={20} />
+            <TrendingUp className="text-sidebar-primary-foreground" size={20} />
           </div>
-          <span className="text-xl font-semibold text-sidebar-foreground">Meus Agentes</span>
+          <span className="text-xl font-semibold text-sidebar-foreground">FinLearn</span>
         </div>
       </div>
       
