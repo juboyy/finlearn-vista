@@ -71,7 +71,7 @@ export default function Comunidade() {
                 <div className="w-12 h-12 bg-pastel-pink rounded-lg flex items-center justify-center">
                   <Star className="text-slate-700 w-6 h-6" />
                 </div>
-                <button className="px-3 py-1.5 bg-pastel-pink border border-pastel-pink text-slate-700 rounded-lg text-xs font-medium hover:bg-opacity-80 transition">
+                <button className="px-4 py-1.5 bg-pastel-pink border border-pastel-pink text-slate-700 rounded-lg text-xs font-medium hover:bg-opacity-80 transition">
                   Ver Ranking
                 </button>
               </div>
