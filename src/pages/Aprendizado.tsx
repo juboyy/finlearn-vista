@@ -881,6 +881,221 @@ const Aprendizado = () => {
                   </div>
                 </div>
               </section>
+
+              <section className="mb-8">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-semibold text-slate-800">Podcasts em Destaque</h2>
+                  <a href="#" className="text-sm text-slate-600 hover:text-slate-800 font-medium">Ver todos</a>
+                </div>
+                <div className="grid grid-cols-3 gap-6">
+                  <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
+                    <div className="h-48 bg-pastel-blue overflow-hidden relative">
+                      <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png" alt="podcast cover" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="p-5">
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="px-2 py-1 bg-pastel-blue text-slate-700 text-xs rounded-full">Análise de Mercado</span>
+                        <span className="text-xs text-slate-500">• Semanal</span>
+                      </div>
+                      <h3 className="font-semibold text-slate-800 mb-2">Mercados em Foco</h3>
+                      <p className="text-sm text-slate-600 mb-4 line-clamp-2">Análise profunda dos principais movimentos do mercado financeiro</p>
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-1 text-sm text-slate-600">
+                          <i className="fas fa-star text-yellow-500 text-xs"></i>
+                          <span className="font-medium">4.9</span>
+                        </div>
+                        <span className="text-sm text-slate-500">42 episódios</span>
+                      </div>
+                      <button className="w-full px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                        Seguir
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
+                    <div className="h-48 bg-pastel-green overflow-hidden relative">
+                      <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/cf142f2fa8-3e14b0bb9b96f766efe7.png" alt="podcast cover" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="p-5">
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="px-2 py-1 bg-pastel-green text-slate-700 text-xs rounded-full">Investimentos</span>
+                        <span className="text-xs text-slate-500">• Bi-semanal</span>
+                      </div>
+                      <h3 className="font-semibold text-slate-800 mb-2">Investidor Inteligente</h3>
+                      <p className="text-sm text-slate-600 mb-4 line-clamp-2">Estratégias de investimento para construir riqueza de longo prazo</p>
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-1 text-sm text-slate-600">
+                          <i className="fas fa-star text-yellow-500 text-xs"></i>
+                          <span className="font-medium">4.8</span>
+                        </div>
+                        <span className="text-sm text-slate-500">38 episódios</span>
+                      </div>
+                      <button className="w-full px-4 py-2 bg-pastel-green text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                        Seguir
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
+                    <div className="h-48 bg-pastel-purple overflow-hidden relative">
+                      <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/270689fe5d-6ce96dde7db22c1b8808.png" alt="podcast cover" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="p-5">
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="px-2 py-1 bg-pastel-purple text-slate-700 text-xs rounded-full">FinTech</span>
+                        <span className="text-xs text-slate-500">• Semanal</span>
+                      </div>
+                      <h3 className="font-semibold text-slate-800 mb-2">FinTech Brasil</h3>
+                      <p className="text-sm text-slate-600 mb-4 line-clamp-2">Inovações tecnológicas transformando o setor financeiro</p>
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-1 text-sm text-slate-600">
+                          <i className="fas fa-star text-yellow-500 text-xs"></i>
+                          <span className="font-medium">4.7</span>
+                        </div>
+                        <span className="text-sm text-slate-500">29 episódios</span>
+                      </div>
+                      <button className="w-full px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                        Seguir
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section className="mb-8">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-semibold text-slate-800">Novos Episódios</h2>
+                  <a href="#" className="text-sm text-slate-600 hover:text-slate-800 font-medium">Ver todos</a>
+                </div>
+                <div className="space-y-4">
+                  <div className="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-lg transition">
+                    <div className="flex gap-4">
+                      <div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-pastel-pink">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png" alt="podcast cover" className="w-full h-full object-cover" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start justify-between mb-1">
+                          <div className="flex-1">
+                            <p className="text-xs text-slate-500 mb-1">Mercados em Foco</p>
+                            <h3 className="font-semibold text-slate-800 mb-1">Ep. 42: Tendências Econômicas para 2025</h3>
+                            <div className="flex items-center gap-2 mb-2">
+                              <span className="text-xs text-slate-500">45 min</span>
+                              <span className="text-xs text-slate-400">•</span>
+                              <span className="text-xs text-slate-500">Há 2 dias</span>
+                            </div>
+                          </div>
+                          <button className="text-pastel-blue hover:text-blue-600 ml-4">
+                            <i className="fas fa-play-circle text-3xl"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-lg transition">
+                    <div className="flex gap-4">
+                      <div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-pastel-yellow">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/cf142f2fa8-3e14b0bb9b96f766efe7.png" alt="podcast cover" className="w-full h-full object-cover" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start justify-between mb-1">
+                          <div className="flex-1">
+                            <p className="text-xs text-slate-500 mb-1">Investidor Inteligente</p>
+                            <h3 className="font-semibold text-slate-800 mb-1">Ep. 38: Fundos Imobiliários - Vale a Pena?</h3>
+                            <div className="flex items-center gap-2 mb-2">
+                              <span className="text-xs text-slate-500">52 min</span>
+                              <span className="text-xs text-slate-400">•</span>
+                              <span className="text-xs text-slate-500">Há 3 dias</span>
+                            </div>
+                          </div>
+                          <button className="text-pastel-green hover:text-green-600 ml-4">
+                            <i className="fas fa-play-circle text-3xl"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-lg transition">
+                    <div className="flex gap-4">
+                      <div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-pastel-peach">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/270689fe5d-6ce96dde7db22c1b8808.png" alt="podcast cover" className="w-full h-full object-cover" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start justify-between mb-1">
+                          <div className="flex-1">
+                            <p className="text-xs text-slate-500 mb-1">FinTech Brasil</p>
+                            <h3 className="font-semibold text-slate-800 mb-1">Ep. 29: Open Finance e suas Oportunidades</h3>
+                            <div className="flex items-center gap-2 mb-2">
+                              <span className="text-xs text-slate-500">38 min</span>
+                              <span className="text-xs text-slate-400">•</span>
+                              <span className="text-xs text-slate-500">Há 5 dias</span>
+                            </div>
+                          </div>
+                          <button className="text-pastel-purple hover:text-purple-600 ml-4">
+                            <i className="fas fa-play-circle text-3xl"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section className="mb-8">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-semibold text-slate-800">Trending Podcasts</h2>
+                </div>
+                <div className="grid grid-cols-4 gap-6">
+                  <div className="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-lg transition cursor-pointer">
+                    <div className="w-full aspect-square rounded-lg overflow-hidden mb-3 bg-pastel-blue">
+                      <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png" alt="podcast" className="w-full h-full object-cover" />
+                    </div>
+                    <h3 className="font-medium text-slate-800 mb-1 text-sm">Economia Real</h3>
+                    <p className="text-xs text-slate-500 mb-2">24 episódios</p>
+                    <div className="flex items-center gap-1 text-xs">
+                      <i className="fas fa-fire text-orange-500"></i>
+                      <span className="text-slate-600">8.2k ouvintes</span>
+                    </div>
+                  </div>
+
+                  <div className="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-lg transition cursor-pointer">
+                    <div className="w-full aspect-square rounded-lg overflow-hidden mb-3 bg-pastel-green">
+                      <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/cf142f2fa8-3e14b0bb9b96f766efe7.png" alt="podcast" className="w-full h-full object-cover" />
+                    </div>
+                    <h3 className="font-medium text-slate-800 mb-1 text-sm">Bolsa de Valores</h3>
+                    <p className="text-xs text-slate-500 mb-2">31 episódios</p>
+                    <div className="flex items-center gap-1 text-xs">
+                      <i className="fas fa-fire text-orange-500"></i>
+                      <span className="text-slate-600">6.5k ouvintes</span>
+                    </div>
+                  </div>
+
+                  <div className="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-lg transition cursor-pointer">
+                    <div className="w-full aspect-square rounded-lg overflow-hidden mb-3 bg-pastel-purple">
+                      <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/270689fe5d-6ce96dde7db22c1b8808.png" alt="podcast" className="w-full h-full object-cover" />
+                    </div>
+                    <h3 className="font-medium text-slate-800 mb-1 text-sm">Mundo Cripto</h3>
+                    <p className="text-xs text-slate-500 mb-2">19 episódios</p>
+                    <div className="flex items-center gap-1 text-xs">
+                      <i className="fas fa-fire text-orange-500"></i>
+                      <span className="text-slate-600">5.8k ouvintes</span>
+                    </div>
+                  </div>
+
+                  <div className="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-lg transition cursor-pointer">
+                    <div className="w-full aspect-square rounded-lg overflow-hidden mb-3 bg-pastel-pink">
+                      <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png" alt="podcast" className="w-full h-full object-cover" />
+                    </div>
+                    <h3 className="font-medium text-slate-800 mb-1 text-sm">Finanças Pessoais</h3>
+                    <p className="text-xs text-slate-500 mb-2">45 episódios</p>
+                    <div className="flex items-center gap-1 text-xs">
+                      <i className="fas fa-fire text-orange-500"></i>
+                      <span className="text-slate-600">9.1k ouvintes</span>
+                    </div>
+                  </div>
+                </div>
+              </section>
             </>
           )}
 
