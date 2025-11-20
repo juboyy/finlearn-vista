@@ -287,7 +287,7 @@ const Seguidores = () => {
                     <span>Seguidores</span>
                   </button>
                   <button 
-                    onClick={() => navigate('/autores')}
+                    onClick={() => navigate('/descobrir-novos')}
                     className="px-6 py-2.5 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2"
                   >
                     <i className="fas fa-compass"></i>
