@@ -1,9 +1,11 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Bell, Search, Plus, Users, Newspaper, Star, ChevronLeft, ChevronRight, X, UserCheck } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Autores = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -273,7 +275,10 @@ const Autores = () => {
                   </div>
                 </div>
 
-                <div className="border-b border-slate-100 hover:bg-slate-50 transition-colors cursor-pointer">
+                <div 
+                  onClick={() => navigate('/perfil-autor/ana-costa')}
+                  className="border-b border-slate-100 hover:bg-slate-50 transition-colors cursor-pointer"
+                >
                   <div className="grid grid-cols-12 gap-4 px-6 py-4 items-center">
                     <div className="col-span-4 flex items-center gap-4">
                       <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" alt="Ana Costa" className="w-12 h-12 rounded-full object-cover flex-shrink-0" />
