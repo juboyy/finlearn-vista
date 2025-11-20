@@ -99,9 +99,9 @@ const featuredAuthors = [
 const Conteudo = () => {
   return (
     <div className="flex h-screen overflow-hidden">
-      <SidebarFix />
+      <SidebarFix defaultCollapsed={true} />
       
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 overflow-y-auto ml-16">
         <header className="bg-card border-b border-border sticky top-0 z-10">
           <div className="px-8 py-4 flex items-center justify-between">
             <div>
