@@ -948,6 +948,185 @@ const CriarAgente = () => {
                 </div>
               </div>
 
+              {/* Preview do Agente Section */}
+              <div className="col-span-2 bg-card rounded-2xl border border-border shadow-sm p-6">
+                <div className="flex items-center space-x-3 mb-6">
+                  <div className="w-10 h-10 rounded-xl bg-pastel-purple flex items-center justify-center">
+                    <MessageSquare className="text-pastel-purple-fg" size={20} />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-foreground">Preview do Agente</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Veja como seu agente irá interagir com os usuários em tempo real
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  {/* Chat Preview */}
+                  <div className="lg:col-span-2">
+                    <div className="bg-secondary rounded-2xl border border-border overflow-hidden">
+                      <div className="bg-card border-b border-border p-4">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-10 h-10 rounded-full bg-pastel-blue flex items-center justify-center">
+                            <Brain className="text-pastel-blue-fg" size={20} />
+                          </div>
+                          <div>
+                            <h4 className="text-sm font-bold text-foreground">Assistente Financeiro Pro</h4>
+                            <div className="flex items-center space-x-2">
+                              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                              <span className="text-xs text-muted-foreground">Online</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="p-4 space-y-4 h-96 overflow-y-auto">
+                        <div className="flex items-start space-x-3">
+                          <div className="w-8 h-8 rounded-full bg-pastel-blue flex items-center justify-center flex-shrink-0">
+                            <Brain className="text-pastel-blue-fg" size={16} />
+                          </div>
+                          <div className="flex-1">
+                            <div className="bg-background rounded-2xl rounded-tl-none p-4 border border-border">
+                              <p className="text-sm text-foreground">
+                                Olá! Sou seu assistente financeiro. Como posso ajudá-lo hoje?
+                              </p>
+                            </div>
+                            <span className="text-xs text-muted-foreground mt-1 block">10:30</span>
+                          </div>
+                        </div>
+
+                        <div className="flex items-start space-x-3 justify-end">
+                          <div className="flex-1 flex justify-end">
+                            <div className="bg-primary rounded-2xl rounded-tr-none p-4 max-w-md">
+                              <p className="text-sm text-primary-foreground">
+                                Gostaria de uma análise do meu portfólio de investimentos.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-start space-x-3">
+                          <div className="w-8 h-8 rounded-full bg-pastel-blue flex items-center justify-center flex-shrink-0">
+                            <Brain className="text-pastel-blue-fg" size={16} />
+                          </div>
+                          <div className="flex-1">
+                            <div className="bg-background rounded-2xl rounded-tl-none p-4 border border-border">
+                              <p className="text-sm text-foreground mb-3">
+                                Perfeito! Vou analisar seu portfólio. Aqui estão os principais pontos:
+                              </p>
+                              <ul className="space-y-2 text-sm text-foreground">
+                                <li className="flex items-start">
+                                  <CheckCircle className="text-green-600 mr-2 mt-0.5 flex-shrink-0" size={16} />
+                                  <span><strong>Diversificação:</strong> Boa distribuição entre ativos</span>
+                                </li>
+                                <li className="flex items-start">
+                                  <ChartLine className="text-blue-500 mr-2 mt-0.5 flex-shrink-0" size={16} />
+                                  <span><strong>Performance:</strong> +12.5% no último trimestre</span>
+                                </li>
+                                <li className="flex items-start">
+                                  <Sparkles className="text-orange-500 mr-2 mt-0.5 flex-shrink-0" size={16} />
+                                  <span><strong>Sugestão:</strong> Considere aumentar exposição em FIIs</span>
+                                </li>
+                              </ul>
+                            </div>
+                            <span className="text-xs text-muted-foreground mt-1 block">Agora mesmo</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center space-x-3 p-4 border-t border-border bg-card">
+                        <button className="w-10 h-10 rounded-xl bg-background hover:bg-accent flex items-center justify-center transition-all duration-300 border border-border">
+                          <Upload className="text-muted-foreground" size={18} />
+                        </button>
+                        <input
+                          type="text"
+                          placeholder="Digite sua mensagem..."
+                          className="flex-1 px-4 py-3 bg-background border border-input rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-ring/20 transition-all duration-300"
+                        />
+                        <button className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center hover:bg-primary/80 transition-all duration-300">
+                          <MessageSquare className="text-primary-foreground" size={18} />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Side Cards */}
+                  <div className="space-y-4">
+                    {/* Informações do Agente */}
+                    <div className="bg-secondary rounded-2xl border border-border p-5">
+                      <h4 className="text-sm font-bold text-foreground mb-4 flex items-center">
+                        <Info className="text-pastel-purple-fg mr-2" size={16} />
+                        Informações do Agente
+                      </h4>
+                      <div className="space-y-3">
+                        <div>
+                          <p className="text-xs text-muted-foreground mb-1">Nome</p>
+                          <p className="text-sm text-foreground font-medium">Assistente Financeiro Pro</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-muted-foreground mb-1">Função</p>
+                          <p className="text-sm text-foreground font-medium">Consultor Financeiro</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-muted-foreground mb-1">Especialização</p>
+                          <div className="flex flex-wrap gap-1 mt-1">
+                            <span className="px-2 py-1 bg-pastel-blue rounded text-pastel-blue-fg text-xs">Ações</span>
+                            <span className="px-2 py-1 bg-pastel-green rounded text-pastel-green-fg text-xs">Fundos</span>
+                          </div>
+                        </div>
+                        <div>
+                          <p className="text-xs text-muted-foreground mb-1">Tom de Voz</p>
+                          <p className="text-sm text-foreground font-medium">Profissional e Amigável</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Estatísticas */}
+                    <div className="bg-secondary rounded-2xl border border-border p-5">
+                      <h4 className="text-sm font-bold text-foreground mb-4 flex items-center">
+                        <TrendingUp className="text-pastel-blue-fg mr-2" size={16} />
+                        Estatísticas
+                      </h4>
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs text-muted-foreground">Tempo de Resposta</span>
+                          <span className="text-sm text-foreground font-bold">1.2s</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs text-muted-foreground">Precisão</span>
+                          <span className="text-sm text-green-600 font-bold">98.5%</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs text-muted-foreground">Satisfação</span>
+                          <div className="flex items-center space-x-1">
+                            <Heart className="text-yellow-400 fill-yellow-400" size={14} />
+                            <span className="text-sm text-foreground font-bold">4.9</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Status do Agente */}
+                    <div className="bg-pastel-blue/50 rounded-2xl border border-pastel-blue p-5">
+                      <div className="flex items-center space-x-2 mb-3">
+                        <Sparkles className="text-pastel-blue-fg" size={16} />
+                        <h4 className="text-sm font-bold text-foreground">Status do Agente</h4>
+                      </div>
+                      <p className="text-xs text-muted-foreground mb-3">
+                        Seu agente está pronto para ser publicado!
+                      </p>
+                      <div className="flex items-center space-x-2">
+                        <div className="flex-1 bg-background rounded-full h-2">
+                          <div className="bg-pastel-blue-fg h-2 rounded-full" style={{ width: '100%' }}></div>
+                        </div>
+                        <span className="text-xs font-bold text-foreground">100%</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
 
             {/* Right Column - Preview (1 col) */}
@@ -1063,180 +1242,6 @@ const CriarAgente = () => {
                         Este agente está configurado para análise de mercado financeiro com foco em investimentos. 
                         Possui personalidade profissional e amigável, adequado para investidores intermediários.
                       </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Preview do Agente Section */}
-                <div className="col-span-2 bg-card rounded-2xl border border-border shadow-sm p-6">
-                  <div className="mb-6">
-                    <h3 className="text-xl font-bold text-foreground mb-2">Preview do Agente</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Veja como seu agente irá interagir com os usuários em tempo real
-                    </p>
-                  </div>
-
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    {/* Chat Preview */}
-                    <div className="lg:col-span-2">
-                      <div className="bg-secondary rounded-2xl border border-border overflow-hidden">
-                        <div className="bg-card border-b border-border p-4">
-                          <div className="flex items-center space-x-3">
-                            <div className="w-10 h-10 rounded-full bg-pastel-blue flex items-center justify-center">
-                              <Brain className="text-pastel-blue-fg" size={20} />
-                            </div>
-                            <div>
-                              <h4 className="text-sm font-bold text-foreground">Assistente Financeiro Pro</h4>
-                              <div className="flex items-center space-x-2">
-                                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                                <span className="text-xs text-muted-foreground">Online</span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="p-4 space-y-4 h-96 overflow-y-auto">
-                          <div className="flex items-start space-x-3">
-                            <div className="w-8 h-8 rounded-full bg-pastel-blue flex items-center justify-center flex-shrink-0">
-                              <Brain className="text-pastel-blue-fg" size={16} />
-                            </div>
-                            <div className="flex-1">
-                              <div className="bg-background rounded-2xl rounded-tl-none p-4 border border-border">
-                                <p className="text-sm text-foreground">
-                                  Olá! Sou seu assistente financeiro. Como posso ajudá-lo hoje?
-                                </p>
-                              </div>
-                              <span className="text-xs text-muted-foreground mt-1 block">10:30</span>
-                            </div>
-                          </div>
-
-                          <div className="flex items-start space-x-3 justify-end">
-                            <div className="flex-1 flex justify-end">
-                              <div className="bg-primary rounded-2xl rounded-tr-none p-4 max-w-md">
-                                <p className="text-sm text-primary-foreground">
-                                  Gostaria de uma análise do meu portfólio de investimentos.
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="flex items-start space-x-3">
-                            <div className="w-8 h-8 rounded-full bg-pastel-blue flex items-center justify-center flex-shrink-0">
-                              <Brain className="text-pastel-blue-fg" size={16} />
-                            </div>
-                            <div className="flex-1">
-                              <div className="bg-background rounded-2xl rounded-tl-none p-4 border border-border">
-                                <p className="text-sm text-foreground mb-3">
-                                  Perfeito! Vou analisar seu portfólio. Aqui estão os principais pontos:
-                                </p>
-                                <ul className="space-y-2 text-sm text-foreground">
-                                  <li className="flex items-start">
-                                    <CheckCircle className="text-green-600 mr-2 mt-0.5 flex-shrink-0" size={16} />
-                                    <span><strong>Diversificação:</strong> Boa distribuição entre ativos</span>
-                                  </li>
-                                  <li className="flex items-start">
-                                    <ChartLine className="text-blue-500 mr-2 mt-0.5 flex-shrink-0" size={16} />
-                                    <span><strong>Performance:</strong> +12.5% no último trimestre</span>
-                                  </li>
-                                  <li className="flex items-start">
-                                    <Sparkles className="text-orange-500 mr-2 mt-0.5 flex-shrink-0" size={16} />
-                                    <span><strong>Sugestão:</strong> Considere aumentar exposição em FIIs</span>
-                                  </li>
-                                </ul>
-                              </div>
-                              <span className="text-xs text-muted-foreground mt-1 block">Agora mesmo</span>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center space-x-3 p-4 border-t border-border bg-card">
-                          <button className="w-10 h-10 rounded-xl bg-background hover:bg-accent flex items-center justify-center transition-all duration-300 border border-border">
-                            <Upload className="text-muted-foreground" size={18} />
-                          </button>
-                          <input
-                            type="text"
-                            placeholder="Digite sua mensagem..."
-                            className="flex-1 px-4 py-3 bg-background border border-input rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-ring/20 transition-all duration-300"
-                          />
-                          <button className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center hover:bg-primary/80 transition-all duration-300">
-                            <MessageSquare className="text-primary-foreground" size={18} />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Side Cards */}
-                    <div className="space-y-4">
-                      {/* Informações do Agente */}
-                      <div className="bg-secondary rounded-2xl border border-border p-5">
-                        <h4 className="text-sm font-bold text-foreground mb-4 flex items-center">
-                          <Info className="text-pastel-purple-fg mr-2" size={16} />
-                          Informações do Agente
-                        </h4>
-                        <div className="space-y-3">
-                          <div>
-                            <p className="text-xs text-muted-foreground mb-1">Nome</p>
-                            <p className="text-sm text-foreground font-medium">Assistente Financeiro Pro</p>
-                          </div>
-                          <div>
-                            <p className="text-xs text-muted-foreground mb-1">Função</p>
-                            <p className="text-sm text-foreground font-medium">Consultor Financeiro</p>
-                          </div>
-                          <div>
-                            <p className="text-xs text-muted-foreground mb-1">Especialização</p>
-                            <div className="flex flex-wrap gap-1 mt-1">
-                              <span className="px-2 py-1 bg-pastel-blue rounded text-pastel-blue-fg text-xs">Ações</span>
-                              <span className="px-2 py-1 bg-pastel-green rounded text-pastel-green-fg text-xs">Fundos</span>
-                            </div>
-                          </div>
-                          <div>
-                            <p className="text-xs text-muted-foreground mb-1">Tom de Voz</p>
-                            <p className="text-sm text-foreground font-medium">Profissional e Amigável</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Estatísticas */}
-                      <div className="bg-secondary rounded-2xl border border-border p-5">
-                        <h4 className="text-sm font-bold text-foreground mb-4 flex items-center">
-                          <TrendingUp className="text-pastel-blue-fg mr-2" size={16} />
-                          Estatísticas
-                        </h4>
-                        <div className="space-y-3">
-                          <div className="flex items-center justify-between">
-                            <span className="text-xs text-muted-foreground">Tempo de Resposta</span>
-                            <span className="text-sm text-foreground font-bold">1.2s</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="text-xs text-muted-foreground">Precisão</span>
-                            <span className="text-sm text-green-600 font-bold">98.5%</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="text-xs text-muted-foreground">Satisfação</span>
-                            <div className="flex items-center space-x-1">
-                              <Heart className="text-yellow-400 fill-yellow-400" size={14} />
-                              <span className="text-sm text-foreground font-bold">4.9</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Status do Agente */}
-                      <div className="bg-pastel-blue/50 rounded-2xl border border-pastel-blue p-5">
-                        <div className="flex items-center space-x-2 mb-3">
-                          <Sparkles className="text-pastel-blue-fg" size={16} />
-                          <h4 className="text-sm font-bold text-foreground">Status do Agente</h4>
-                        </div>
-                        <p className="text-xs text-muted-foreground mb-3">
-                          Seu agente está pronto para ser publicado!
-                        </p>
-                        <div className="flex items-center space-x-2">
-                          <div className="flex-1 bg-background rounded-full h-2">
-                            <div className="bg-pastel-blue-fg h-2 rounded-full" style={{ width: '100%' }}></div>
-                          </div>
-                          <span className="text-xs font-bold text-foreground">100%</span>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
