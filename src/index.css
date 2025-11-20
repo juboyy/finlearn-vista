@@ -44,15 +44,15 @@ All colors MUST be HSL.
 
     --radius: 0.75rem;
 
-    /* Pastel Colors */
-    --pastel-blue: 206 35% 88%;
-    --pastel-indigo: 239 40% 88%;
-    --pastel-purple: 270 40% 88%;
-    --pastel-pink: 322 42% 88%;
-    --pastel-green: 152 45% 88%;
-    --pastel-yellow: 44 46% 88%;
-    --pastel-peach: 24 46% 88%;
-    --pastel-orange: 30 46% 88%;
+    /* Pastel Colors - Dark Pastels */
+    --pastel-blue: 206 50% 72%;
+    --pastel-indigo: 239 48% 72%;
+    --pastel-purple: 270 48% 72%;
+    --pastel-pink: 322 48% 72%;
+    --pastel-green: 152 48% 70%;
+    --pastel-yellow: 44 52% 72%;
+    --pastel-peach: 24 50% 72%;
+    --pastel-orange: 30 52% 72%;
 
     /* Slider specific */
     --slider-thumb: 206 50% 65%;
