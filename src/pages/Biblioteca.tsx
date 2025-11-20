@@ -4,6 +4,7 @@ import { useState } from "react";
 
 export function Biblioteca() {
   const [showModal, setShowModal] = useState(false);
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
   const libraryItems = [
     {
@@ -376,11 +377,15 @@ export function Biblioteca() {
             {/* Main Content */}
             <div className="flex-1">
               {/* Filter Bar */}
-              <section className="bg-white rounded-xl p-6 border border-slate-200 mb-6">
+              <section className="bg-white rounded-xl p-4 border border-slate-200 mb-6">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
-                    <div className="flex gap-2">
-                      <button className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-slate-600">Visualizar:</span>
+                      <button 
+                        onClick={() => setViewMode('grid')}
+                        className={`p-2 rounded-lg ${viewMode === 'grid' ? 'bg-[#B8D4E8] text-slate-700' : 'text-slate-600 hover:bg-slate-100'} transition`}
+                      >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                           <rect x="3" y="3" width="7" height="7" />
                           <rect x="14" y="3" width="7" height="7" />
@@ -388,7 +393,10 @@ export function Biblioteca() {
                           <rect x="14" y="14" width="7" height="7" />
                         </svg>
                       </button>
-                      <button className="p-2 rounded-lg text-slate-700" style={{ backgroundColor: '#B8D4E8' }}>
+                      <button 
+                        onClick={() => setViewMode('list')}
+                        className={`p-2 rounded-lg ${viewMode === 'list' ? 'bg-[#B8D4E8] text-slate-700' : 'text-slate-600 hover:bg-slate-100'} transition`}
+                      >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                           <line x1="3" y1="6" x2="21" y2="6" />
                           <line x1="3" y1="12" x2="21" y2="12" />
@@ -397,33 +405,223 @@ export function Biblioteca() {
                       </button>
                     </div>
                     <div className="flex items-center gap-2">
-                      <button className="px-3 py-2 rounded-lg text-sm font-medium text-slate-700" style={{ backgroundColor: '#C5E8D4' }}>
-                        Todas
-                      </button>
-                      <button className="px-3 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition">
-                        Notas
-                      </button>
-                      <button className="px-3 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition">
-                        Áudios
-                      </button>
-                      <button className="px-3 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition">
-                        Favoritos
-                      </button>
+                      <select className="text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#B8D4E8]">
+                        <option>Modificado recentemente</option>
+                        <option>Nome (A-Z)</option>
+                        <option>Nome (Z-A)</option>
+                        <option>Data de criação</option>
+                      </select>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-sm text-slate-600">Ordenar:</span>
-                    <select className="text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#B8D4E8]">
-                      <option>Modificado recentemente</option>
-                      <option>Nome (A-Z)</option>
-                      <option>Nome (Z-A)</option>
-                      <option>Data de criação</option>
-                    </select>
+                    <button className="px-3 py-2 rounded-lg text-sm font-medium text-slate-700 flex items-center gap-2" style={{ backgroundColor: '#C5E8D4' }}>
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                        <rect x="3" y="3" width="7" height="7" />
+                        <rect x="14" y="3" width="7" height="7" />
+                        <rect x="3" y="14" width="7" height="7" />
+                        <rect x="14" y="14" width="7" height="7" />
+                      </svg>
+                      Todas
+                    </button>
+                    <button className="px-3 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition flex items-center gap-2">
+                      <StickyNote className="w-4 h-4" />
+                      Notas
+                    </button>
+                    <button className="px-3 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition flex items-center gap-2">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                      </svg>
+                      Salvos
+                    </button>
+                    <button className="px-3 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition flex items-center gap-2">
+                      <Star className="w-4 h-4" />
+                      Favoritos
+                    </button>
                   </div>
                 </div>
               </section>
 
-              {/* Items List */}
+              {/* Grid View */}
+              {viewMode === 'grid' && (
+                <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {/* Note 1 */}
+                  <div className="bg-white rounded-xl p-5 border border-slate-200 flex flex-col justify-between hover:shadow-lg transition-shadow duration-300 group">
+                    <div>
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#7FA8C9' }}>
+                          <FileText className="h-5 w-5 text-slate-600" />
+                        </div>
+                        <div className="flex items-center gap-2 text-slate-400">
+                          <button className="hover:text-yellow-600 transition-colors">
+                            <Star className="h-4 w-4" />
+                          </button>
+                          <button className="hover:text-slate-600 transition-colors">
+                            <MoreHorizontal className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </div>
+                      <h3 className="font-semibold text-slate-800 mb-1">Estratégias de Day Trade</h3>
+                      <p className="text-sm text-slate-500 mb-4 line-clamp-2">Anotações sobre padrões gráficos e indicadores...</p>
+                    </div>
+                    <div className="flex items-center justify-between text-xs mt-auto">
+                      <span className="text-slate-400">Editado há 2 horas</span>
+                      <span className="text-white px-2 py-0.5 rounded-md font-medium" style={{ backgroundColor: '#7FA8C9' }}>trading</span>
+                    </div>
+                  </div>
+
+                  {/* Note 2 - Audio */}
+                  <div className="bg-white rounded-xl p-5 border border-slate-200 flex flex-col justify-between hover:shadow-lg transition-shadow duration-300 group">
+                    <div>
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#A68CC9' }}>
+                          <Mic className="h-5 w-5 text-slate-600" />
+                        </div>
+                        <div className="flex items-center gap-2 text-slate-400">
+                          <button className="hover:text-yellow-600 transition-colors">
+                            <Star className="h-4 w-4" />
+                          </button>
+                          <button className="hover:text-slate-600 transition-colors">
+                            <MoreHorizontal className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </div>
+                      <h3 className="font-semibold text-slate-800 mb-2">Resumo Webinar IA</h3>
+                      <div className="flex items-center gap-2 mb-4">
+                        <button className="w-6 h-6 flex items-center justify-center rounded-full text-slate-600" style={{ backgroundColor: '#A68CC9' }}>
+                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z"/>
+                          </svg>
+                        </button>
+                        <div className="w-full bg-slate-200 rounded-full h-1.5">
+                          <div className="h-1.5 rounded-full" style={{ backgroundColor: '#A68CC9', width: '75%' }}></div>
+                        </div>
+                        <span className="text-xs text-slate-500 font-mono">12:34</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between text-xs mt-auto">
+                      <span className="text-slate-400">Gravado ontem</span>
+                      <div className="w-6 h-6 rounded-full flex items-center justify-center" style={{ backgroundColor: '#E89A5C' }}>
+                        <svg className="w-3 h-3 text-slate-600" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Note 3 */}
+                  <div className="bg-white rounded-xl p-5 border border-slate-200 flex flex-col justify-between hover:shadow-lg transition-shadow duration-300 group">
+                    <div>
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#C99B8C' }}>
+                          <FileText className="h-5 w-5 text-slate-600" />
+                        </div>
+                        <div className="flex items-center gap-2 text-slate-400">
+                          <button className="text-yellow-600">
+                            <Star className="h-4 w-4 fill-current" />
+                          </button>
+                          <button className="hover:text-slate-600 transition-colors">
+                            <MoreHorizontal className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </div>
+                      <h3 className="font-semibold text-slate-800 mb-1">Análise Fundamentalista</h3>
+                      <p className="text-sm text-slate-500 mb-4 line-clamp-2">Metodologia para análise de demonstrações financeira...</p>
+                    </div>
+                    <div className="flex items-center justify-between text-xs mt-auto">
+                      <span className="text-slate-400">Editado há 1 dia</span>
+                      <span className="text-white px-2 py-0.5 rounded-md font-medium" style={{ backgroundColor: '#8CC99B' }}>estudo</span>
+                    </div>
+                  </div>
+
+                  {/* Note 4 - Audio */}
+                  <div className="bg-white rounded-xl p-5 border border-slate-200 flex flex-col justify-between hover:shadow-lg transition-shadow duration-300 group">
+                    <div>
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#8CC99B' }}>
+                          <Mic className="h-5 w-5 text-slate-600" />
+                        </div>
+                        <div className="flex items-center gap-2 text-slate-400">
+                          <button className="hover:text-yellow-600 transition-colors">
+                            <Star className="h-4 w-4" />
+                          </button>
+                          <button className="hover:text-slate-600 transition-colors">
+                            <MoreHorizontal className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </div>
+                      <h3 className="font-semibold text-slate-800 mb-2">Ideias para Carteira</h3>
+                      <div className="flex items-center gap-2 mb-4">
+                        <button className="w-6 h-6 flex items-center justify-center rounded-full text-slate-600" style={{ backgroundColor: '#8CC99B' }}>
+                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z"/>
+                          </svg>
+                        </button>
+                        <div className="w-full bg-slate-200 rounded-full h-1.5">
+                          <div className="h-1.5 rounded-full" style={{ backgroundColor: '#8CC99B', width: '30%' }}></div>
+                        </div>
+                        <span className="text-xs text-slate-500 font-mono">08:15</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between text-xs mt-auto">
+                      <span className="text-slate-400">Gravado há 3 dias</span>
+                      <span className="text-white px-2 py-0.5 rounded-md font-medium" style={{ backgroundColor: '#A68CC9' }}>mercado</span>
+                    </div>
+                  </div>
+
+                  {/* Note 5 */}
+                  <div className="bg-white rounded-xl p-5 border border-slate-200 flex flex-col justify-between hover:shadow-lg transition-shadow duration-300 group">
+                    <div>
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#C9B88C' }}>
+                          <LinkIcon className="h-5 w-5 text-slate-600" />
+                        </div>
+                        <div className="flex items-center gap-2 text-slate-400">
+                          <button className="hover:text-yellow-600 transition-colors">
+                            <Star className="h-4 w-4" />
+                          </button>
+                          <button className="hover:text-slate-600 transition-colors">
+                            <MoreHorizontal className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </div>
+                      <h3 className="font-semibold text-slate-800 mb-1">Links Importantes</h3>
+                      <p className="text-sm text-slate-500 mb-4 line-clamp-2">Coleção de links para relatórios do mercado, site...</p>
+                    </div>
+                    <div className="flex items-center justify-between text-xs mt-auto">
+                      <span className="text-slate-400">Atualizado há 5 dias</span>
+                      <span className="text-white px-2 py-0.5 rounded-md font-medium" style={{ backgroundColor: '#C97B7B' }}>Importante</span>
+                    </div>
+                  </div>
+
+                  {/* Note 6 */}
+                  <div className="bg-white rounded-xl p-5 border border-slate-200 flex flex-col justify-between hover:shadow-lg transition-shadow duration-300 group">
+                    <div>
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#7FA8C9' }}>
+                          <CalendarCheck className="h-5 w-5 text-slate-600" />
+                        </div>
+                        <div className="flex items-center gap-2 text-slate-400">
+                          <button className="text-yellow-600">
+                            <Star className="h-4 w-4 fill-current" />
+                          </button>
+                          <button className="hover:text-slate-600 transition-colors">
+                            <MoreHorizontal className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </div>
+                      <h3 className="font-semibold text-slate-800 mb-1">Cronograma de Estudos</h3>
+                      <p className="text-sm text-slate-500 mb-4 line-clamp-2">Planejamento semanal de conteúdos a estudar e...</p>
+                    </div>
+                    <div className="flex items-center justify-between text-xs mt-auto">
+                      <span className="text-slate-400">Editado há 1 semana</span>
+                      <span className="text-white px-2 py-0.5 rounded-md font-medium" style={{ backgroundColor: '#8CC99B' }}>estudo</span>
+                    </div>
+                  </div>
+                </section>
+              )}
+
+              {/* List View */}
+              {viewMode === 'list' && (
               <section className="bg-white rounded-xl border border-slate-200 overflow-hidden">
                 {/* Table Header */}
                 <div className="grid grid-cols-12 gap-4 px-6 py-3 bg-slate-50 border-b border-slate-200">
@@ -507,6 +705,7 @@ export function Biblioteca() {
                   </div>
                 ))}
               </section>
+              )}
 
               {/* Pagination */}
               <section className="flex items-center justify-center pt-6">
