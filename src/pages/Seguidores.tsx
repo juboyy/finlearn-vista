@@ -1,11 +1,10 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { Bell, Search, Download, Grid3x3, List, ChevronDown, UserPlus, Check, MoreHorizontal, ChevronLeft, ChevronRight, Users, ArrowUp, Eye, TrendingUp, Heart, MessageCircle, Share2, Circle } from "lucide-react";
+import { Bell, Search, Download, UserPlus, Check, MoreHorizontal, ChevronLeft, ChevronRight, Users, ArrowUp, Eye, TrendingUp, Heart, MessageCircle, Share2, Circle } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Seguidores = () => {
   const navigate = useNavigate();
-  const [viewMode, setViewMode] = useState<"grid" | "list">("list");
   const [activeTab, setActiveTab] = useState<"seguindo" | "seguidores">("seguidores");
 
   return (
@@ -227,32 +226,47 @@ const Seguidores = () => {
             </aside>
 
             <div className="flex-1 space-y-6">
-              <section className="bg-card rounded-xl p-4 border border-border">
+              <section className="bg-white rounded-xl p-4 border border-slate-200">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2">
                       <span className="text-sm text-slate-600">Visualizar:</span>
-                      <button 
-                        onClick={() => setViewMode("grid")}
-                        className={`p-2 rounded-lg transition ${viewMode === "grid" ? "bg-pastel-blue text-slate-700" : "text-slate-600 hover:bg-slate-100"}`}
-                      >
-                        <Grid3x3 size={18} />
+                      <button className="p-2 bg-pastel-blue text-slate-700 rounded-lg transition">
+                        <i className="fas fa-th-large"></i>
                       </button>
-                      <button 
-                        onClick={() => setViewMode("list")}
-                        className={`p-2 rounded-lg transition ${viewMode === "list" ? "bg-pastel-blue text-slate-700" : "text-slate-600 hover:bg-slate-100"}`}
-                      >
-                        <List size={18} />
+                      <button className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg">
+                        <i className="fas fa-list"></i>
                       </button>
                     </div>
                     <div className="flex items-center gap-2">
-                      <select className="text-sm border border-border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pastel-blue appearance-none pr-8 bg-card">
+                      <select className="text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pastel-blue appearance-none pr-8 bg-white">
                         <option>Mais recentes</option>
                         <option>Mais antigos</option>
                         <option>Mais ativos</option>
                         <option>Nome (A-Z)</option>
                       </select>
                     </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <button 
+                      onClick={() => navigate('/estatisticas')}
+                      className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition flex items-center gap-2 font-medium"
+                    >
+                      <i className="fas fa-chart-bar"></i>
+                      <span>Estatísticas</span>
+                    </button>
+                    <button className="px-4 py-2 bg-pastel-green text-slate-700 rounded-lg text-sm font-medium flex items-center gap-2">
+                      <i className="fas fa-layer-group"></i>
+                      <span>Todos</span>
+                    </button>
+                    <button className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition flex items-center gap-2 font-medium">
+                      <i className="far fa-star"></i>
+                      <span>Favoritos</span>
+                    </button>
+                    <button className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition flex items-center gap-2 font-medium">
+                      <i className="far fa-bell"></i>
+                      <span>Com Notificação</span>
+                    </button>
                   </div>
                 </div>
               </section>
