@@ -60,7 +60,7 @@ const Autores = () => {
                       <div className="w-8 h-8 bg-pastel-green rounded-lg flex items-center justify-center">
                         <i className="fas fa-newspaper text-slate-700 text-sm"></i>
                       </div>
-                      <span className="text-sm text-slate-700">Artigos Lidos</span>
+                      <span className="text-sm text-slate-700">Publicações Lidas</span>
                     </div>
                     <span className="font-semibold text-slate-800">324</span>
                   </div>
@@ -223,7 +223,7 @@ const Autores = () => {
                       <select className="text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pastel-blue appearance-none pr-8 bg-white">
                         <option>Nome (A-Z)</option>
                         <option>Seguindo recentemente</option>
-                        <option>Mais artigos</option>
+                        <option>Mais publicações</option>
                         <option>Mais relevantes</option>
                       </select>
                     </div>
@@ -266,7 +266,7 @@ const Autores = () => {
                 <div className="border-b border-slate-200 bg-slate-50">
                   <div className="grid grid-cols-12 gap-4 px-6 py-3 text-xs font-medium text-slate-600 uppercase tracking-wider">
                     <div className="col-span-4">Autor</div>
-                    <div className="col-span-2">Artigos</div>
+                    <div className="col-span-2">Publicações</div>
                     <div className="col-span-2">Social Selling</div>
                     <div className="col-span-2">Seguindo desde</div>
                     <div className="col-span-2 text-right">Ações</div>
@@ -290,7 +290,7 @@ const Autores = () => {
                       </div>
                     </div>
                     <div className="col-span-2">
-                      <div className="text-sm font-semibold text-slate-700">28 artigos</div>
+                      <div className="text-sm font-semibold text-slate-700">28 publicações</div>
                       <div className="text-xs text-slate-500">Último: há 2 dias</div>
                     </div>
                     <div className="col-span-2">
@@ -329,7 +329,7 @@ const Autores = () => {
                       </div>
                     </div>
                     <div className="col-span-2">
-                      <div className="text-sm font-semibold text-slate-700">42 artigos</div>
+                      <div className="text-sm font-semibold text-slate-700">42 publicações</div>
                       <div className="text-xs text-slate-500">Último: há 1 dia</div>
                     </div>
                     <div className="col-span-2">
@@ -371,7 +371,7 @@ const Autores = () => {
                       </div>
                     </div>
                     <div className="col-span-2">
-                      <div className="text-sm font-semibold text-slate-700">56 artigos</div>
+                      <div className="text-sm font-semibold text-slate-700">56 publicações</div>
                       <div className="text-xs text-slate-500">Último: há 3 horas</div>
                     </div>
                     <div className="col-span-2">
@@ -410,7 +410,7 @@ const Autores = () => {
                       </div>
                     </div>
                     <div className="col-span-2">
-                      <div className="text-sm font-semibold text-slate-700">34 artigos</div>
+                      <div className="text-sm font-semibold text-slate-700">34 publicações</div>
                       <div className="text-xs text-slate-500">Último: há 1 semana</div>
                     </div>
                     <div className="col-span-2">
@@ -449,7 +449,7 @@ const Autores = () => {
                       </div>
                     </div>
                     <div className="col-span-2">
-                      <div className="text-sm font-semibold text-slate-700">38 artigos</div>
+                      <div className="text-sm font-semibold text-slate-700">38 publicações</div>
                       <div className="text-xs text-slate-500">Último: há 4 dias</div>
                     </div>
                     <div className="col-span-2">
@@ -491,7 +491,7 @@ const Autores = () => {
                       </div>
                     </div>
                     <div className="col-span-2">
-                      <div className="text-sm font-semibold text-slate-700">64 artigos</div>
+                      <div className="text-sm font-semibold text-slate-700">64 publicações</div>
                       <div className="text-xs text-slate-500">Último: hoje</div>
                     </div>
                     <div className="col-span-2">
@@ -530,7 +530,7 @@ const Autores = () => {
                       </div>
                     </div>
                     <div className="col-span-2">
-                      <div className="text-sm font-semibold text-slate-700">29 artigos</div>
+                      <div className="text-sm font-semibold text-slate-700">29 publicações</div>
                       <div className="text-xs text-slate-500">Último: há 5 dias</div>
                     </div>
                     <div className="col-span-2">
@@ -569,7 +569,7 @@ const Autores = () => {
                       </div>
                     </div>
                     <div className="col-span-2">
-                      <div className="text-sm font-semibold text-slate-700">51 artigos</div>
+                      <div className="text-sm font-semibold text-slate-700">51 publicações</div>
                       <div className="text-xs text-slate-500">Último: há 2 dias</div>
                     </div>
                     <div className="col-span-2">
@@ -608,7 +608,7 @@ const Autores = () => {
                       </div>
                     </div>
                     <div className="col-span-2">
-                      <div className="text-sm font-semibold text-slate-700">47 artigos</div>
+                      <div className="text-sm font-semibold text-slate-700">47 publicações</div>
                       <div className="text-xs text-slate-500">Último: ontem</div>
                     </div>
                     <div className="col-span-2">
@@ -650,7 +650,7 @@ const Autores = () => {
                       </div>
                     </div>
                     <div className="col-span-2">
-                      <div className="text-sm font-semibold text-slate-700">33 artigos</div>
+                      <div className="text-sm font-semibold text-slate-700">33 publicações</div>
                       <div className="text-xs text-slate-500">Último: há 1 semana</div>
                     </div>
                     <div className="col-span-2">
