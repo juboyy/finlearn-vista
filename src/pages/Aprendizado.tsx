@@ -1,6 +1,6 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { MenutabbarFix } from "@/components/Dashboard/MenutabbarFix";
-import { Bell, Play, Clock, BookOpen, TrendingUp, Headphones, Calendar, Users, MessageCircle, Star, BookMarked, Video, Award, Heart, CheckCircle, PlayCircle, Trophy, ChartLine, Shield, Bitcoin, Gavel, PieChart, Repeat, Globe, Leaf } from "lucide-react";
+import { Bell, Play, Clock, BookOpen, TrendingUp, Headphones, Calendar, Users, MessageCircle, Star, BookMarked, Video, Award, Heart, CheckCircle, PlayCircle, Trophy, ChartLine, Shield, Bitcoin, Gavel, PieChart, Repeat, Globe, Leaf, Plus, BookOpenCheck, CreditCard } from "lucide-react";
 import { useState } from "react";
 
 type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'documentos' | 'estudos';
@@ -1898,13 +1898,553 @@ const Aprendizado = () => {
           )}
 
           {activeTab === 'ebooks' && (
-            <div className="text-center py-16">
-              <div className="w-20 h-20 bg-pastel-pink rounded-full flex items-center justify-center mx-auto mb-4">
-                <i className="fas fa-book-open text-3xl text-slate-700"></i>
-              </div>
-              <h3 className="text-xl font-semibold text-slate-800 mb-2">E-books</h3>
-              <p className="text-slate-600">Biblioteca digital de e-books especializados</p>
-            </div>
+            <>
+              {/* Stats Overview */}
+              <section className="grid grid-cols-4 gap-6 mb-8">
+                <div className="bg-white rounded-xl p-6 border border-border">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="w-12 h-12 bg-pastel-blue rounded-lg flex items-center justify-center">
+                      <BookOpen className="text-foreground" size={24} />
+                    </div>
+                    <span className="text-xs text-green-600 font-medium">+3 este mês</span>
+                  </div>
+                  <p className="text-3xl font-bold text-foreground mb-1">24</p>
+                  <p className="text-sm text-muted-foreground">eBooks Comprados</p>
+                </div>
+
+                <div className="bg-white rounded-xl p-6 border border-border">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center">
+                      <BookOpenCheck className="text-foreground" size={24} />
+                    </div>
+                    <span className="text-xs text-blue-600 font-medium">Em progresso</span>
+                  </div>
+                  <p className="text-3xl font-bold text-foreground mb-1">5</p>
+                  <p className="text-sm text-muted-foreground">Lendo Agora</p>
+                </div>
+
+                <div className="bg-white rounded-xl p-6 border border-border">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="w-12 h-12 bg-pastel-purple rounded-lg flex items-center justify-center">
+                      <CheckCircle className="text-foreground" size={24} />
+                    </div>
+                    <span className="text-xs text-purple-600 font-medium">100%</span>
+                  </div>
+                  <p className="text-3xl font-bold text-foreground mb-1">12</p>
+                  <p className="text-sm text-muted-foreground">Concluídos</p>
+                </div>
+
+                <div className="bg-white rounded-xl p-6 border border-border">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="w-12 h-12 bg-pastel-yellow rounded-lg flex items-center justify-center">
+                      <Clock className="text-foreground" size={24} />
+                    </div>
+                    <span className="text-xs text-orange-600 font-medium">Média</span>
+                  </div>
+                  <p className="text-3xl font-bold text-foreground mb-1">8h</p>
+                  <p className="text-sm text-muted-foreground">Tempo de Leitura</p>
+                </div>
+              </section>
+
+              {/* Currently Reading */}
+              <section className="mb-8">
+                <div className="flex items-center justify-between mb-6">
+                  <div>
+                    <h2 className="text-xl font-semibold text-foreground">Lendo Agora</h2>
+                    <p className="text-sm text-muted-foreground mt-1">Continue de onde parou</p>
+                  </div>
+                  <button className="text-sm text-muted-foreground hover:text-foreground font-medium">Ver Todos</button>
+                </div>
+
+                <div className="grid grid-cols-5 gap-6">
+                  {/* Reading Card 1 */}
+                  <div className="bg-white rounded-xl border border-border overflow-hidden hover:shadow-lg transition group">
+                    <div className="relative">
+                      <div className="h-56 overflow-hidden bg-pastel-purple">
+                        <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/de72874cc5-bcb1610580017fd3cfe5.png" alt="Pastel drawing of stock market analysis book cover" />
+                      </div>
+                      <div className="absolute bottom-0 left-0 right-0 bg-slate-100 h-2.5">
+                        <div className="h-full bg-emerald-600 relative" style={{ width: '68%' }}>
+                          <span className="absolute -top-8 right-0 text-xs font-semibold text-white bg-slate-800 px-2 py-1 rounded shadow-lg">68%</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="p-4">
+                      <h3 className="font-semibold text-foreground mb-1 line-clamp-2 text-sm">Guia Completo de Análise de Ações</h3>
+                      <p className="text-xs text-muted-foreground mb-3">Carlos Mendes</p>
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-muted-foreground font-medium">68% concluído</span>
+                        <button className="text-pastel-blue hover:text-blue-600 font-medium">Continuar</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Reading Card 2 */}
+                  <div className="bg-white rounded-xl border border-border overflow-hidden hover:shadow-lg transition group">
+                    <div className="relative">
+                      <div className="h-56 overflow-hidden bg-pastel-pink">
+                        <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/de72874cc5-2efb8363a6121e6b0540.png" alt="Pastel drawing of fixed income investment book" />
+                      </div>
+                      <div className="absolute bottom-0 left-0 right-0 bg-slate-100 h-2.5">
+                        <div className="h-full bg-emerald-600 relative" style={{ width: '42%' }}>
+                          <span className="absolute -top-8 right-0 text-xs font-semibold text-white bg-slate-800 px-2 py-1 rounded shadow-lg">42%</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="p-4">
+                      <h3 className="font-semibold text-foreground mb-1 line-clamp-2 text-sm">Renda Fixa Estratégica para 2025</h3>
+                      <p className="text-xs text-muted-foreground mb-3">Ricardo Alves</p>
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-muted-foreground font-medium">42% concluído</span>
+                        <button className="text-pastel-blue hover:text-blue-600 font-medium">Continuar</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Reading Card 3 */}
+                  <div className="bg-white rounded-xl border border-border overflow-hidden hover:shadow-lg transition group">
+                    <div className="relative">
+                      <div className="h-56 overflow-hidden bg-pastel-blue">
+                        <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/de72874cc5-43745d045cd52ba18a30.png" alt="Pastel drawing of financial compliance book cover" />
+                      </div>
+                      <div className="absolute bottom-0 left-0 right-0 bg-slate-100 h-2.5">
+                        <div className="h-full bg-emerald-600 relative" style={{ width: '85%' }}>
+                          <span className="absolute -top-8 right-0 text-xs font-semibold text-white bg-slate-800 px-2 py-1 rounded shadow-lg">85%</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="p-4">
+                      <h3 className="font-semibold text-foreground mb-1 line-clamp-2 text-sm">Compliance no Mercado Financeiro</h3>
+                      <p className="text-xs text-muted-foreground mb-3">Mariana Santos</p>
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-muted-foreground font-medium">85% concluído</span>
+                        <button className="text-pastel-blue hover:text-blue-600 font-medium">Continuar</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Reading Card 4 */}
+                  <div className="bg-white rounded-xl border border-border overflow-hidden hover:shadow-lg transition group">
+                    <div className="relative">
+                      <div className="h-56 overflow-hidden bg-pastel-peach">
+                        <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/e7b331f4e1-9ee7cde295eba8fd33f7.png" alt="Pastel drawing of derivatives book" />
+                      </div>
+                      <div className="absolute bottom-0 left-0 right-0 bg-slate-100 h-2.5">
+                        <div className="h-full bg-emerald-700 relative" style={{ width: '23%' }}>
+                          <span className="absolute -top-8 right-0 text-xs font-semibold text-white bg-slate-800 px-2 py-1 rounded shadow-lg">23%</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="p-4">
+                      <h3 className="font-semibold text-foreground mb-1 line-clamp-2 text-sm">Mercado de Derivativos Brasileiro</h3>
+                      <p className="text-xs text-muted-foreground mb-3">Eduardo Costa</p>
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-muted-foreground font-medium">23% concluído</span>
+                        <button className="text-pastel-blue hover:text-blue-600 font-medium">Continuar</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Reading Card 5 */}
+                  <div className="bg-white rounded-xl border border-border overflow-hidden hover:shadow-lg transition group">
+                    <div className="relative">
+                      <div className="h-56 overflow-hidden bg-pastel-yellow">
+                        <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/e7b331f4e1-009268f8d4cccd8cea2e.png" alt="Pastel drawing of risk management book" />
+                      </div>
+                      <div className="absolute bottom-0 left-0 right-0 bg-slate-100 h-2.5">
+                        <div className="h-full bg-emerald-700 relative" style={{ width: '56%' }}>
+                          <span className="absolute -top-8 right-0 text-xs font-semibold text-white bg-slate-800 px-2 py-1 rounded shadow-lg">56%</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="p-4">
+                      <h3 className="font-semibold text-foreground mb-1 line-clamp-2 text-sm">Gestão de Risco em Investimentos</h3>
+                      <p className="text-xs text-muted-foreground mb-3">Patricia Lima</p>
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-muted-foreground font-medium">56% concluído</span>
+                        <button className="text-pastel-blue hover:text-blue-600 font-medium">Continuar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* Purchased eBooks */}
+              <section className="mb-8">
+                <div className="flex items-center justify-between mb-6">
+                  <div>
+                    <h2 className="text-xl font-semibold text-foreground">Meus eBooks</h2>
+                    <p className="text-sm text-muted-foreground mt-1">Todos os seus materiais adquiridos</p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <select className="px-4 py-2 border border-border rounded-lg text-sm text-muted-foreground focus:outline-none focus:ring-2 focus:ring-pastel-blue">
+                      <option>Todos</option>
+                      <option>Não Iniciados</option>
+                      <option>Em Progresso</option>
+                      <option>Concluídos</option>
+                    </select>
+                    <button className="text-sm text-muted-foreground hover:text-foreground font-medium">Ver Todos</button>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-6 gap-6">
+                  {/* Purchased Card 1 */}
+                  <div className="bg-white rounded-xl border border-border overflow-hidden hover:shadow-lg transition group">
+                    <div className="relative">
+                      <div className="h-48 overflow-hidden bg-pastel-purple">
+                        <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/042d318ea8-038a8379a9999c4c8508.png" alt="Book cover" />
+                      </div>
+                      <button className="absolute top-2 right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 transition">
+                        <i className="fas fa-ellipsis-v text-xs"></i>
+                      </button>
+                    </div>
+                    <div className="p-3">
+                      <h3 className="font-semibold text-foreground text-xs line-clamp-2 mb-1">Guia Completo de Análise de Ações</h3>
+                      <p className="text-xs text-muted-foreground">Carlos Mendes</p>
+                    </div>
+                  </div>
+
+                  {/* Purchased Card 2 */}
+                  <div className="bg-white rounded-xl border border-border overflow-hidden hover:shadow-lg transition group">
+                    <div className="relative">
+                      <div className="h-48 overflow-hidden bg-pastel-pink">
+                        <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/8cc96e1dc0-98edd1ecb348d831557d.png" alt="Book cover" />
+                      </div>
+                      <button className="absolute top-2 right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 transition">
+                        <i className="fas fa-ellipsis-v text-xs"></i>
+                      </button>
+                    </div>
+                    <div className="p-3">
+                      <h3 className="font-semibold text-foreground text-xs line-clamp-2 mb-1">Renda Fixa Estratégica para 2025</h3>
+                      <p className="text-xs text-muted-foreground">Ricardo Alves</p>
+                    </div>
+                  </div>
+
+                  {/* Purchased Card 3 */}
+                  <div className="bg-white rounded-xl border border-border overflow-hidden hover:shadow-lg transition group">
+                    <div className="relative">
+                      <div className="h-48 overflow-hidden bg-pastel-blue">
+                        <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/2d8e805716-5c852de99d3d9a89bcd0.png" alt="Book cover" />
+                      </div>
+                      <button className="absolute top-2 right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 transition">
+                        <i className="fas fa-ellipsis-v text-xs"></i>
+                      </button>
+                    </div>
+                    <div className="p-3">
+                      <h3 className="font-semibold text-foreground text-xs line-clamp-2 mb-1">Compliance no Mercado Financeiro</h3>
+                      <p className="text-xs text-muted-foreground">Mariana Santos</p>
+                    </div>
+                  </div>
+
+                  {/* Purchased Card 4 */}
+                  <div className="bg-white rounded-xl border border-border overflow-hidden hover:shadow-lg transition group">
+                    <div className="relative">
+                      <div className="h-48 overflow-hidden bg-pastel-peach">
+                        <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/85e861ac01-1fed7f0d2f29155ea174.png" alt="Book cover" />
+                      </div>
+                      <button className="absolute top-2 right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 transition">
+                        <i className="fas fa-ellipsis-v text-xs"></i>
+                      </button>
+                    </div>
+                    <div className="p-3">
+                      <h3 className="font-semibold text-foreground text-xs line-clamp-2 mb-1">Mercado de Derivativos Brasileiro</h3>
+                      <p className="text-xs text-muted-foreground">Eduardo Costa</p>
+                    </div>
+                  </div>
+
+                  {/* Purchased Card 5 */}
+                  <div className="bg-white rounded-xl border border-border overflow-hidden hover:shadow-lg transition group">
+                    <div className="relative">
+                      <div className="h-48 overflow-hidden bg-pastel-yellow">
+                        <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/18bc726af4-46206345b92f949ccdc7.png" alt="Book cover" />
+                      </div>
+                      <button className="absolute top-2 right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 transition">
+                        <i className="fas fa-ellipsis-v text-xs"></i>
+                      </button>
+                    </div>
+                    <div className="p-3">
+                      <h3 className="font-semibold text-foreground text-xs line-clamp-2 mb-1">Gestão de Risco em Investimentos</h3>
+                      <p className="text-xs text-muted-foreground">Patricia Lima</p>
+                    </div>
+                  </div>
+
+                  {/* Purchased Card 6 */}
+                  <div className="bg-white rounded-xl border border-border overflow-hidden hover:shadow-lg transition group">
+                    <div className="relative">
+                      <div className="h-48 overflow-hidden bg-pastel-green">
+                        <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/f7f68a06ae-1340dfd72f9be05837d7.png" alt="Book cover" />
+                      </div>
+                      <button className="absolute top-2 right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 transition">
+                        <i className="fas fa-ellipsis-v text-xs"></i>
+                      </button>
+                    </div>
+                    <div className="p-3">
+                      <h3 className="font-semibold text-foreground text-xs line-clamp-2 mb-1">Gestão de Carteiras de Investimento</h3>
+                      <p className="text-xs text-muted-foreground">Paulo Rodrigues</p>
+                    </div>
+                  </div>
+
+                  {/* Purchased Card 7 */}
+                  <div className="bg-white rounded-xl border border-border overflow-hidden hover:shadow-lg transition group">
+                    <div className="relative">
+                      <div className="h-48 overflow-hidden bg-pastel-purple">
+                        <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/2d8e805716-5b1f4777a9f32d253a79.png" alt="Book cover" />
+                      </div>
+                      <button className="absolute top-2 right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 transition">
+                        <i className="fas fa-ellipsis-v text-xs"></i>
+                      </button>
+                    </div>
+                    <div className="p-3">
+                      <h3 className="font-semibold text-foreground text-xs line-clamp-2 mb-1">Valuation de Empresas na Prática</h3>
+                      <p className="text-xs text-muted-foreground">Roberto Campos</p>
+                    </div>
+                  </div>
+
+                  {/* Purchased Card 8 */}
+                  <div className="bg-white rounded-xl border border-border overflow-hidden hover:shadow-lg transition group">
+                    <div className="relative">
+                      <div className="h-48 overflow-hidden bg-pastel-blue">
+                        <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/455b4fafc0-6655a5505b3ec5a272ed.png" alt="Book cover" />
+                      </div>
+                      <button className="absolute top-2 right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 transition">
+                        <i className="fas fa-ellipsis-v text-xs"></i>
+                      </button>
+                    </div>
+                    <div className="p-3">
+                      <h3 className="font-semibold text-foreground text-xs line-clamp-2 mb-1">Macroeconomia para Investidores</h3>
+                      <p className="text-xs text-muted-foreground">Juliana Martins</p>
+                    </div>
+                  </div>
+
+                  {/* Purchased Card 9 */}
+                  <div className="bg-white rounded-xl border border-border overflow-hidden hover:shadow-lg transition group">
+                    <div className="relative">
+                      <div className="h-48 overflow-hidden bg-pastel-pink">
+                        <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/f7f68a06ae-fea791a8ec413e4c2bca.png" alt="Book cover" />
+                      </div>
+                      <button className="absolute top-2 right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 transition">
+                        <i className="fas fa-ellipsis-v text-xs"></i>
+                      </button>
+                    </div>
+                    <div className="p-3">
+                      <h3 className="font-semibold text-foreground text-xs line-clamp-2 mb-1">Planejamento Financeiro Pessoal</h3>
+                      <p className="text-xs text-muted-foreground">Fernanda Souza</p>
+                    </div>
+                  </div>
+
+                  {/* Purchased Card 10 */}
+                  <div className="bg-white rounded-xl border border-border overflow-hidden hover:shadow-lg transition group">
+                    <div className="relative">
+                      <div className="h-48 overflow-hidden bg-pastel-peach">
+                        <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/8cc96e1dc0-506c79d177bf7c1a2cfc.png" alt="Book cover" />
+                      </div>
+                      <button className="absolute top-2 right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 transition">
+                        <i className="fas fa-ellipsis-v text-xs"></i>
+                      </button>
+                    </div>
+                    <div className="p-3">
+                      <h3 className="font-semibold text-foreground text-xs line-clamp-2 mb-1">Finanças Comportamentais</h3>
+                      <p className="text-xs text-muted-foreground">André Silva</p>
+                    </div>
+                  </div>
+
+                  {/* Purchased Card 11 */}
+                  <div className="bg-white rounded-xl border border-border overflow-hidden hover:shadow-lg transition group">
+                    <div className="relative">
+                      <div className="h-48 overflow-hidden bg-pastel-yellow">
+                        <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/30e5166efa-14fdc8bed447c1e0521c.png" alt="Book cover" />
+                      </div>
+                      <button className="absolute top-2 right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 transition">
+                        <i className="fas fa-ellipsis-v text-xs"></i>
+                      </button>
+                    </div>
+                    <div className="p-3">
+                      <h3 className="font-semibold text-foreground text-xs line-clamp-2 mb-1">Fundos de Investimento no Brasil</h3>
+                      <p className="text-xs text-muted-foreground">Lucas Ferreira</p>
+                    </div>
+                  </div>
+
+                  {/* Purchased Card 12 */}
+                  <div className="bg-white rounded-xl border border-border overflow-hidden hover:shadow-lg transition group">
+                    <div className="relative">
+                      <div className="h-48 overflow-hidden bg-pastel-green">
+                        <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/2d8e805716-5a628280367d13a7b79d.png" alt="Book cover" />
+                      </div>
+                      <button className="absolute top-2 right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 transition">
+                        <i className="fas fa-ellipsis-v text-xs"></i>
+                      </button>
+                    </div>
+                    <div className="p-3">
+                      <h3 className="font-semibold text-foreground text-xs line-clamp-2 mb-1">Mercado de Capitais Brasileiro</h3>
+                      <p className="text-xs text-muted-foreground">Beatriz Oliveira</p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* Recommendations */}
+              <section className="mb-8">
+                <div className="flex items-center justify-between mb-6">
+                  <div>
+                    <h2 className="text-xl font-semibold text-foreground">Recomendados Para Você</h2>
+                    <p className="text-sm text-muted-foreground mt-1">Baseado no seu histórico de leitura</p>
+                  </div>
+                  <button className="text-sm text-muted-foreground hover:text-foreground font-medium">Ver Mais</button>
+                </div>
+
+                <div className="grid grid-cols-4 gap-6">
+                  {/* Recommendation Card 1 */}
+                  <div className="bg-white rounded-xl border border-border overflow-hidden hover:shadow-xl transition group">
+                    <div className="relative">
+                      <div className="h-56 overflow-hidden bg-pastel-purple">
+                        <img className="w-full h-full object-cover group-hover:scale-105 transition duration-300" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/15f8c44c25-dc04946d7359a29b2971.png" alt="Book cover" />
+                      </div>
+                      <button className="absolute top-3 right-3 w-10 h-10 bg-white rounded-full flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-red-50 transition">
+                        <Heart className="w-4 h-4" />
+                      </button>
+                      <span className="absolute top-3 left-3 px-3 py-1 bg-pastel-green text-foreground text-xs font-medium rounded-full">eBook</span>
+                      <div className="absolute bottom-3 left-3 flex items-center gap-1 text-xs">
+                        <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                        <span className="font-medium text-white drop-shadow">4.9</span>
+                      </div>
+                    </div>
+                    <div className="p-5">
+                      <div className="flex items-center gap-2 mb-2">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg" className="w-6 h-6 rounded-full object-cover" alt="Author" />
+                        <span className="text-xs text-muted-foreground">Thiago Barbosa</span>
+                      </div>
+                      <h3 className="font-semibold text-foreground mb-2 line-clamp-2 h-12">Estratégias com Opções: Do Básico ao Avançado</h3>
+                      <p className="text-xs text-muted-foreground mb-3 line-clamp-2">Domine as principais estratégias de opções utilizadas por traders profissionais</p>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <span className="text-2xl font-bold text-foreground">R$ 149</span>
+                        </div>
+                        <button className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition">
+                          Ver Mais
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Recommendation Card 2 */}
+                  <div className="bg-white rounded-xl border border-border overflow-hidden hover:shadow-xl transition group">
+                    <div className="relative">
+                      <div className="h-56 overflow-hidden bg-pastel-blue">
+                        <img className="w-full h-full object-cover group-hover:scale-105 transition duration-300" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5376158848-00fdf895539585de4b28.png" alt="Book cover" />
+                      </div>
+                      <button className="absolute top-3 right-3 w-10 h-10 bg-white rounded-full flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-red-50 transition">
+                        <Heart className="w-4 h-4" />
+                      </button>
+                      <span className="absolute top-3 left-3 px-3 py-1 bg-pastel-green text-foreground text-xs font-medium rounded-full">eBook</span>
+                      <div className="absolute bottom-3 left-3 flex items-center gap-1 text-xs">
+                        <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                        <span className="font-medium text-white drop-shadow">4.7</span>
+                      </div>
+                    </div>
+                    <div className="p-5">
+                      <div className="flex items-center gap-2 mb-2">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-7.jpg" className="w-6 h-6 rounded-full object-cover" alt="Author" />
+                        <span className="text-xs text-muted-foreground">Camila Ribeiro</span>
+                      </div>
+                      <h3 className="font-semibold text-foreground mb-2 line-clamp-2 h-12">Análise Quantitativa para Investimentos</h3>
+                      <p className="text-xs text-muted-foreground mb-3 line-clamp-2">Aprenda a utilizar modelos matemáticos na tomada de decisão de investimentos</p>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <span className="text-2xl font-bold text-foreground">R$ 189</span>
+                        </div>
+                        <button className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition">
+                          Ver Mais
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Recommendation Card 3 */}
+                  <div className="bg-white rounded-xl border border-border overflow-hidden hover:shadow-xl transition group">
+                    <div className="relative">
+                      <div className="h-56 overflow-hidden bg-pastel-pink">
+                        <img className="w-full h-full object-cover group-hover:scale-105 transition duration-300" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/30e5166efa-02d068c099ac82da15a0.png" alt="Book cover" />
+                      </div>
+                      <button className="absolute top-3 right-3 w-10 h-10 bg-white rounded-full flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-red-50 transition">
+                        <Heart className="w-4 h-4" />
+                      </button>
+                      <span className="absolute top-3 left-3 px-3 py-1 bg-pastel-green text-foreground text-xs font-medium rounded-full">eBook</span>
+                      <span className="absolute top-3 right-14 px-2 py-1 bg-red-500 text-white text-xs font-bold rounded">-25%</span>
+                      <div className="absolute bottom-3 left-3 flex items-center gap-1 text-xs">
+                        <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                        <span className="font-medium text-white drop-shadow">5.0</span>
+                      </div>
+                    </div>
+                    <div className="p-5">
+                      <div className="flex items-center gap-2 mb-2">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" className="w-6 h-6 rounded-full object-cover" alt="Author" />
+                        <span className="text-xs text-muted-foreground">Gabriel Mendes</span>
+                      </div>
+                      <h3 className="font-semibold text-foreground mb-2 line-clamp-2 h-12">Investindo em Mercados Internacionais</h3>
+                      <p className="text-xs text-muted-foreground mb-3 line-clamp-2">Diversifique sua carteira com investimentos no exterior de forma segura</p>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <span className="text-2xl font-bold text-foreground">R$ 112</span>
+                          <span className="text-slate-400 line-through ml-2 text-sm">R$ 149</span>
+                        </div>
+                        <button className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition">
+                          Ver Mais
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Recommendation Card 4 */}
+                  <div className="bg-white rounded-xl border border-border overflow-hidden hover:shadow-xl transition group">
+                    <div className="relative">
+                      <div className="h-56 overflow-hidden bg-pastel-peach">
+                        <img className="w-full h-full object-cover group-hover:scale-105 transition duration-300" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/bef6bed79a-85b9c79bd0b0a53a216f.png" alt="Book cover" />
+                      </div>
+                      <button className="absolute top-3 right-3 w-10 h-10 bg-white rounded-full flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-red-50 transition">
+                        <Heart className="w-4 h-4" />
+                      </button>
+                      <span className="absolute top-3 left-3 px-3 py-1 bg-pastel-green text-foreground text-xs font-medium rounded-full">eBook</span>
+                      <div className="absolute bottom-3 left-3 flex items-center gap-1 text-xs">
+                        <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                        <span className="font-medium text-white drop-shadow">4.8</span>
+                      </div>
+                    </div>
+                    <div className="p-5">
+                      <div className="flex items-center gap-2 mb-2">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg" className="w-6 h-6 rounded-full object-cover" alt="Author" />
+                        <span className="text-xs text-muted-foreground">Isabela Carvalho</span>
+                      </div>
+                      <h3 className="font-semibold text-foreground mb-2 line-clamp-2 h-12">Investimentos ESG: Futuro Sustentável</h3>
+                      <p className="text-xs text-muted-foreground mb-3 line-clamp-2">Como incorporar critérios ambientais e sociais em suas decisões de investimento</p>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <span className="text-2xl font-bold text-foreground">R$ 99</span>
+                        </div>
+                        <button className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition">
+                          Ver Mais
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* Explore More Section */}
+              <section className="bg-gradient-to-br from-pastel-blue to-pastel-purple rounded-xl p-8">
+                <div className="flex items-center justify-between">
+                  <div className="flex-1">
+                    <h2 className="text-2xl font-bold text-foreground mb-2">Explore Mais Conteúdos</h2>
+                    <p className="text-muted-foreground mb-6">Descubra milhares de eBooks e cursos no marketplace</p>
+                    <button className="px-6 py-3 bg-slate-800 text-white rounded-lg font-medium hover:bg-slate-700 transition">
+                      Ir para Marketplace
+                    </button>
+                  </div>
+                  <div className="w-80 h-48 flex items-center justify-center">
+                    <img className="w-full h-full object-contain" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/f7f68a06ae-13a5d5f0a2baf2d0c91a.png" alt="Person reading digital books" />
+                  </div>
+                </div>
+              </section>
+            </>
           )}
 
           {activeTab === 'webinars' && (
