@@ -4,6 +4,16 @@ import { Input } from "@/components/ui/input";
 import { Search, Bell, Bookmark, X, FileText, Headphones, Play, Star, Heart, MessageCircle, Crown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
+const getCategoryClasses = (categoryColor: string) => {
+  const classes = {
+    secondary: "text-secondary bg-secondary bg-opacity-10",
+    accent: "text-accent bg-accent bg-opacity-10",
+    success: "text-success bg-success bg-opacity-10",
+    primary: "text-primary bg-primary bg-opacity-10"
+  };
+  return classes[categoryColor as keyof typeof classes] || classes.primary;
+};
+
 const articles = [
   {
     id: 1,
@@ -241,7 +251,7 @@ export function ConteudoFiltros() {
                       </div>
                       <div className="col-span-3 p-6">
                         <div className="flex items-center gap-2 mb-3">
-                          <span className={`text-xs font-medium text-${article.categoryColor} bg-${article.categoryColor} bg-opacity-10 px-2 py-1 rounded`}>
+                          <span className={`text-xs font-medium ${getCategoryClasses(article.categoryColor)} px-2 py-1 rounded`}>
                             {article.category}
                           </span>
                           <span className="text-xs text-gray-400">•</span>
