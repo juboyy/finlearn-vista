@@ -458,7 +458,7 @@ export function CriarAgenteResumo() {
               </div>
 
               {/* Stats Card */}
-              <div className="bg-primary rounded-xl p-6 text-primary-foreground">
+              <div className="bg-card rounded-xl p-6 border border-border text-foreground">
                 <h4 className="text-lg font-bold mb-4 flex items-center gap-2">
                   <ChartLine className="h-5 w-5" />
                   Estatísticas Esperadas
@@ -470,8 +470,8 @@ export function CriarAgenteResumo() {
                       <span className="text-sm font-semibold">Engajamento</span>
                       <span className="text-sm font-bold">Alto</span>
                     </div>
-                    <div className="h-2 bg-white/20 rounded-full overflow-hidden">
-                      <div className="h-full w-4/5 bg-card"></div>
+                    <div className="h-2 bg-muted rounded-full overflow-hidden">
+                      <div className="h-full w-4/5 bg-success"></div>
                     </div>
                   </div>
 
@@ -480,8 +480,8 @@ export function CriarAgenteResumo() {
                       <span className="text-sm font-semibold">Precisão</span>
                       <span className="text-sm font-bold">95%</span>
                     </div>
-                    <div className="h-2 bg-white/20 rounded-full overflow-hidden">
-                      <div className="h-full w-[95%] bg-card"></div>
+                    <div className="h-2 bg-muted rounded-full overflow-hidden">
+                      <div className="h-full w-[95%] bg-success"></div>
                     </div>
                   </div>
 
@@ -490,21 +490,21 @@ export function CriarAgenteResumo() {
                       <span className="text-sm font-semibold">Satisfação</span>
                       <span className="text-sm font-bold">98%</span>
                     </div>
-                    <div className="h-2 bg-white/20 rounded-full overflow-hidden">
-                      <div className="h-full w-[98%] bg-card"></div>
+                    <div className="h-2 bg-muted rounded-full overflow-hidden">
+                      <div className="h-full w-[98%] bg-success"></div>
                     </div>
                   </div>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-white/20">
+                <div className="mt-6 pt-4 border-t border-border">
                   <div className="grid grid-cols-2 gap-4">
                     <div className="text-center">
                       <p className="text-3xl font-bold mb-1">1.2K</p>
-                      <p className="text-xs text-primary-foreground/80">Usuários Esperados</p>
+                      <p className="text-xs text-muted-foreground">Usuários Esperados</p>
                     </div>
                     <div className="text-center">
                       <p className="text-3xl font-bold mb-1">4.8</p>
-                      <p className="text-xs text-primary-foreground/80">Avaliação Média</p>
+                      <p className="text-xs text-muted-foreground">Avaliação Média</p>
                     </div>
                   </div>
                 </div>
