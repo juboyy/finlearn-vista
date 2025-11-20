@@ -122,7 +122,7 @@ export function ConteudoFiltros() {
                     <label className="flex items-center gap-3 cursor-pointer">
                       <input type="checkbox" className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" defaultChecked />
                       <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-lg bg-primary bg-opacity-10 flex items-center justify-center text-primary">
+                        <div className="w-8 h-8 rounded-lg bg-primary bg-opacity-10 flex items-center justify-center text-gray-600">
                           <FileText className="h-4 w-4" />
                         </div>
                         <span className="text-sm text-gray-700">Artigos</span>
