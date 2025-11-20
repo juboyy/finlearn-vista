@@ -1,7 +1,7 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Bell, Bookmark, Heart, MessageCircle, Flame, Crown, ChevronLeft, ChevronRight } from "lucide-react";
+import { Search, Bell, Bookmark, Heart, MessageCircle, Flame, Crown, ChevronLeft, ChevronRight, SlidersHorizontal } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const articles = [
@@ -195,7 +195,10 @@ const Conteudo = () => {
                 <Button variant="outline">Preferências</Button>
                 <Button variant="outline">Sugestões</Button>
               </div>
-              <Button variant="outline">Filtros</Button>
+              <Button variant="default" className="bg-primary hover:bg-primary/90">
+                <SlidersHorizontal className="h-4 w-4 mr-2" />
+                Filtros
+              </Button>
             </div>
           </section>
 
