@@ -641,16 +641,18 @@ const CriarAgente = () => {
                   const Icon = cap.icon;
                   const isSelected = selectedCapabilities.includes(cap.id);
                   return <button key={cap.id} onClick={() => toggleCapability(cap.id)} className={`p-4 bg-secondary rounded-xl border-2 cursor-pointer transition-all ${isSelected ? 'border-primary' : 'border-border hover:border-primary'}`}>
-                        <div className="flex items-center justify-between mb-3">
-                          <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${cap.color}`}>
-                            <Icon className="text-muted-foreground" size={18} />
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-3">
+                            <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${cap.color}`}>
+                              <Icon className="text-muted-foreground" size={18} />
+                            </div>
+                            <h4 className={`text-base font-bold ${isSelected ? 'text-foreground' : 'text-muted-foreground'}`}>
+                              {cap.label}
+                            </h4>
                           </div>
-                          {isSelected ? <CheckCircle className="text-primary" size={20} /> : <Circle className="text-muted-foreground" size={20} />}
+                          {isSelected ? <CheckCircle className="text-primary flex-shrink-0" size={20} /> : <Circle className="text-muted-foreground flex-shrink-0" size={20} />}
                         </div>
-                        <h4 className={`text-sm font-bold mb-1 ${isSelected ? 'text-foreground' : 'text-muted-foreground'}`}>
-                          {cap.label}
-                        </h4>
-                        <p className="text-xs text-muted-foreground">{cap.desc}</p>
+                        <p className="text-xs text-muted-foreground pl-[52px]">{cap.desc}</p>
                       </button>;
                 })}
                 </div>
