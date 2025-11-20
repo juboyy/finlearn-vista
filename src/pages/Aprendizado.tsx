@@ -175,19 +175,10 @@ const Aprendizado = () => {
 
             <section className="space-y-6">
               <div className="bg-white rounded-xl p-6 border border-slate-200">
-                <div className="flex items-start justify-between mb-2">
+                <div className="flex items-center justify-between mb-4">
                   <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center">
                     <i className="fas fa-trophy text-slate-600 text-xl"></i>
                   </div>
-                  <svg width="120" height="60" className="mt-1">
-                    <polyline
-                      points="0,55 30,42 60,28 90,14 120,5"
-                      fill="none"
-                      stroke="hsl(142, 76%, 70%)"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                    />
-                  </svg>
                 </div>
                 <h3 className="text-3xl font-bold text-slate-800 mb-1">8</h3>
                 <p className="text-sm text-slate-500 mb-3">Certificados Conquistados</p>
