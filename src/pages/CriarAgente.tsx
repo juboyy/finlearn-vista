@@ -151,7 +151,10 @@ const CriarAgente = () => {
                   <Save className="h-4 w-4 mr-2" />
                   Salvar Rascunho
                 </Button>
-                <Button className="rounded-xl bg-primary hover:bg-primary/80">
+                <Button 
+                  className="rounded-xl bg-primary hover:bg-primary/80"
+                  onClick={() => navigate("/criar-agente/personalidade")}
+                >
                   <Rocket className="h-4 w-4 mr-2" />
                   Próximo Step
                 </Button>

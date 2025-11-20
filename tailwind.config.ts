@@ -55,13 +55,49 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        indigo: {
+          200: "239 60% 90%",
+          300: "239 55% 85%",
+          600: "239 55% 50%",
+        },
+        sky: {
+          200: "204 60% 90%",
+          300: "204 55% 85%",
+          600: "204 55% 50%",
+        },
+        purple: {
+          300: "270 50% 85%",
+          600: "270 50% 50%",
+        },
+        pink: {
+          200: "322 50% 90%",
+          300: "322 50% 85%",
+          600: "322 50% 50%",
+        },
+        emerald: {
+          200: "152 50% 90%",
+          300: "152 50% 85%",
+          600: "152 50% 45%",
+        },
+        amber: {
+          200: "44 50% 90%",
+          600: "44 55% 50%",
+        },
+        orange: {
+          300: "30 50% 85%",
+        },
+        slate: {
+          400: "220 10% 50%",
+        },
         pastel: {
           blue: "hsl(var(--pastel-blue))",
+          indigo: "hsl(var(--pastel-indigo))",
           purple: "hsl(var(--pastel-purple))",
           pink: "hsl(var(--pastel-pink))",
           green: "hsl(var(--pastel-green))",
           yellow: "hsl(var(--pastel-yellow))",
           peach: "hsl(var(--pastel-peach))",
+          orange: "hsl(var(--pastel-orange))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",

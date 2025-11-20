@@ -46,11 +46,13 @@ All colors MUST be HSL.
 
     /* Pastel Colors */
     --pastel-blue: 206 35% 88%;
-    --pastel-purple: 206 35% 88%;
-    --pastel-pink: 322 42% 70%;
-    --pastel-green: 152 45% 70%;
-    --pastel-yellow: 44 46% 70%;
-    --pastel-peach: 24 46% 70%;
+    --pastel-indigo: 239 40% 88%;
+    --pastel-purple: 270 40% 88%;
+    --pastel-pink: 322 42% 88%;
+    --pastel-green: 152 45% 88%;
+    --pastel-yellow: 44 46% 88%;
+    --pastel-peach: 24 46% 88%;
+    --pastel-orange: 30 46% 88%;
 
     /* Slider specific */
     --slider-thumb: 206 50% 65%;
@@ -102,11 +104,13 @@ All colors MUST be HSL.
     --ring: 206 49% 70%;
 
     --pastel-blue: 206 30% 80%;
-    --pastel-purple: 206 30% 80%;
-    --pastel-pink: 322 42% 60%;
-    --pastel-green: 152 45% 60%;
-    --pastel-yellow: 44 46% 60%;
-    --pastel-peach: 24 46% 60%;
+    --pastel-indigo: 239 35% 80%;
+    --pastel-purple: 270 35% 80%;
+    --pastel-pink: 322 42% 80%;
+    --pastel-green: 152 45% 80%;
+    --pastel-yellow: 44 46% 80%;
+    --pastel-peach: 24 46% 80%;
+    --pastel-orange: 30 46% 80%;
 
     /* Slider specific */
     --slider-thumb: 206 45% 70%;
