@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { ArrowLeft, Share2, Bookmark, Bell, ThumbsUp, Heart, UserPlus, Eye, MessageCircle, MessageSquare, Clock, Bold, Italic, Link2 as LinkIcon, Image as ImageIcon, MoreHorizontal, Users, TrendingUp, Target, CheckCircle2, AlertCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +6,7 @@ import creditoRuralImage from "@/assets/credito-rural-2025.png";
 
 export default function ArtigoCreditoRural() {
   const navigate = useNavigate();
+  const [animateProgress, setAnimateProgress] = useState(false);
 
   useEffect(() => {
     // Load Plotly library for charts
@@ -17,6 +18,11 @@ export default function ArtigoCreditoRural() {
     script.onload = () => {
       renderCharts();
     };
+
+    // Trigger progress bar animation after a short delay
+    setTimeout(() => {
+      setAnimateProgress(true);
+    }, 300);
 
     return () => {
       document.body.removeChild(script);
@@ -329,8 +335,11 @@ export default function ArtigoCreditoRural() {
                         <span className="text-sm font-medium text-slate-700">Custeio</span>
                         <span className="text-sm font-bold text-slate-800">42%</span>
                       </div>
-                      <div className="w-full bg-slate-200 rounded-full h-2">
-                        <div className="bg-[#B8D4E8] h-2 rounded-full" style={{ width: '42%' }}></div>
+                      <div className="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+                        <div 
+                          className="bg-[#B8D4E8] h-2 rounded-full transition-all duration-1000 ease-out" 
+                          style={{ width: animateProgress ? '42%' : '0%' }}
+                        ></div>
                       </div>
                       <p className="text-xs text-slate-500 mt-2">R$ 173,04 bilhões</p>
                     </div>
@@ -339,8 +348,11 @@ export default function ArtigoCreditoRural() {
                         <span className="text-sm font-medium text-slate-700">Investimento</span>
                         <span className="text-sm font-bold text-slate-800">28%</span>
                       </div>
-                      <div className="w-full bg-slate-200 rounded-full h-2">
-                        <div className="bg-[#C5E8D4] h-2 rounded-full" style={{ width: '28%' }}></div>
+                      <div className="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+                        <div 
+                          className="bg-[#C5E8D4] h-2 rounded-full transition-all duration-1000 ease-out delay-150" 
+                          style={{ width: animateProgress ? '28%' : '0%' }}
+                        ></div>
                       </div>
                       <p className="text-xs text-slate-500 mt-2">R$ 115,36 bilhões</p>
                     </div>
@@ -349,8 +361,11 @@ export default function ArtigoCreditoRural() {
                         <span className="text-sm font-medium text-slate-700">Comercialização</span>
                         <span className="text-sm font-bold text-slate-800">20%</span>
                       </div>
-                      <div className="w-full bg-slate-200 rounded-full h-2">
-                        <div className="bg-[#E8E0C5] h-2 rounded-full" style={{ width: '20%' }}></div>
+                      <div className="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+                        <div 
+                          className="bg-[#E8E0C5] h-2 rounded-full transition-all duration-1000 ease-out delay-300" 
+                          style={{ width: animateProgress ? '20%' : '0%' }}
+                        ></div>
                       </div>
                       <p className="text-xs text-slate-500 mt-2">R$ 82,40 bilhões</p>
                     </div>
@@ -359,8 +374,11 @@ export default function ArtigoCreditoRural() {
                         <span className="text-sm font-medium text-slate-700">Industrialização</span>
                         <span className="text-sm font-bold text-slate-800">10%</span>
                       </div>
-                      <div className="w-full bg-slate-200 rounded-full h-2">
-                        <div className="bg-[#D4C5E8] h-2 rounded-full" style={{ width: '10%' }}></div>
+                      <div className="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+                        <div 
+                          className="bg-[#D4C5E8] h-2 rounded-full transition-all duration-1000 ease-out delay-500" 
+                          style={{ width: animateProgress ? '10%' : '0%' }}
+                        ></div>
                       </div>
                       <p className="text-xs text-slate-500 mt-2">R$ 41,20 bilhões</p>
                     </div>
