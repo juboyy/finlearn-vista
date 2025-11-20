@@ -261,9 +261,8 @@ const Autores = () => {
               <section className="bg-white rounded-xl border border-slate-200 overflow-hidden">
                 <div className="border-b border-slate-200 bg-slate-50">
                   <div className="grid grid-cols-12 gap-4 px-6 py-3 text-xs font-medium text-slate-600 uppercase tracking-wider">
-                    <div className="col-span-4">Autor</div>
-                    <div className="col-span-2">Categoria</div>
-                    <div className="col-span-2">Artigos</div>
+                    <div className="col-span-5">Autor</div>
+                    <div className="col-span-3">Artigos</div>
                     <div className="col-span-2">Seguindo desde</div>
                     <div className="col-span-2 text-right">Ações</div>
                   </div>
@@ -271,7 +270,7 @@ const Autores = () => {
 
                 <div className="border-b border-slate-100 hover:bg-slate-50 transition-colors cursor-pointer">
                   <div className="grid grid-cols-12 gap-4 px-6 py-4 items-center">
-                    <div className="col-span-4 flex items-center gap-4">
+                    <div className="col-span-5 flex items-center gap-4">
                       <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" alt="Ana Costa" className="w-12 h-12 rounded-full object-cover flex-shrink-0" />
                       <div className="min-w-0 flex-1">
                         <h3 className="font-semibold text-slate-800 truncate flex items-center gap-2">
@@ -285,13 +284,7 @@ const Autores = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="col-span-2">
-                      <span className="inline-flex items-center gap-2 px-3 py-1 bg-slate-400 text-white rounded-full text-xs font-medium">
-                        <i className="fas fa-circle text-[6px]"></i>
-                        Meios de Pagamento
-                      </span>
-                    </div>
-                    <div className="col-span-2">
+                    <div className="col-span-3">
                       <div className="text-sm font-semibold text-slate-700">28 artigos</div>
                       <div className="text-xs text-slate-500">Último: há 2 dias</div>
                     </div>
