@@ -45,12 +45,12 @@ All colors MUST be HSL.
     --radius: 0.75rem;
 
     /* Pastel Colors */
-    --pastel-blue: 206 25% 97%;
-    --pastel-purple: 206 25% 97%;
-    --pastel-pink: 322 42% 83%;
-    --pastel-green: 152 45% 83%;
-    --pastel-yellow: 44 46% 83%;
-    --pastel-peach: 24 46% 83%;
+    --pastel-blue: 206 35% 75%;
+    --pastel-purple: 206 35% 75%;
+    --pastel-pink: 322 42% 70%;
+    --pastel-green: 152 45% 70%;
+    --pastel-yellow: 44 46% 70%;
+    --pastel-peach: 24 46% 70%;
 
     /* Sidebar - Dark Pastel Gray */
     --sidebar-background: 220 12% 28%;
@@ -98,12 +98,12 @@ All colors MUST be HSL.
     --input: 220 15% 25%;
     --ring: 206 49% 70%;
 
-    --pastel-blue: 206 20% 92%;
-    --pastel-purple: 206 20% 92%;
-    --pastel-pink: 322 42% 73%;
-    --pastel-green: 152 45% 73%;
-    --pastel-yellow: 44 46% 73%;
-    --pastel-peach: 24 46% 73%;
+    --pastel-blue: 206 30% 65%;
+    --pastel-purple: 206 30% 65%;
+    --pastel-pink: 322 42% 60%;
+    --pastel-green: 152 45% 60%;
+    --pastel-yellow: 44 46% 60%;
+    --pastel-peach: 24 46% 60%;
 
     --sidebar-background: 220 12% 20%;
     --sidebar-foreground: 0 0% 100%;
