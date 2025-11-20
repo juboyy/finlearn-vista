@@ -688,7 +688,7 @@ const PerfilAutor = () => {
                   </div>
                 </li>
               </ul>
-              <button className="w-full mt-6 py-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors">
+              <button className="w-full mt-6 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
                 Ver mais
               </button>
             </section>
@@ -727,7 +727,7 @@ const PerfilAutor = () => {
                   <p className="text-sm text-foreground/80 italic">&quot;Conteúdo de altíssima qualidade, muito bem estruturado e direto ao ponto. Um dos melhores materiais que já adquiri sobre o tema.&quot;</p>
                 </div>
               </div>
-              <button className="w-full mt-6 py-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors">
+              <button className="w-full mt-6 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
                 Ver mais
               </button>
             </section>
