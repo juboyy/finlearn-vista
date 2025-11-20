@@ -66,17 +66,19 @@ export default function Comunidade() {
               </div>
             </div>
 
-            <div className="bg-white rounded-xl p-6 border border-slate-200">
-              <div className="flex items-center justify-between mb-4">
+            <div className="bg-white rounded-xl p-6 border border-slate-200 flex flex-col justify-between">
+              <div className="flex items-center justify-between mb-auto">
                 <div className="w-12 h-12 bg-pastel-pink rounded-lg flex items-center justify-center">
                   <Star className="text-slate-700 w-6 h-6" />
                 </div>
+                <button className="px-3 py-1.5 bg-pastel-pink border border-pastel-pink text-slate-700 rounded-lg text-xs font-medium hover:bg-opacity-80 transition">
+                  Ver Ranking
+                </button>
               </div>
-              <h3 className="text-3xl font-bold text-slate-800 mb-1">#12</h3>
-              <p className="text-sm text-slate-500 mb-4">Seu Ranking</p>
-              <button className="w-full px-4 py-2 bg-pastel-pink border border-pastel-pink text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
-                Ver Ranking
-              </button>
+              <div className="mt-4">
+                <h3 className="text-3xl font-bold text-slate-800 mb-1">#12</h3>
+                <p className="text-sm text-slate-500">Seu Ranking</p>
+              </div>
             </div>
           </section>
 
