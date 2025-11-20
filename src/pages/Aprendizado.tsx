@@ -125,7 +125,7 @@ const Aprendizado = () => {
               </button>
               <button className="px-5 py-2.5 text-slate-600 hover:bg-slate-100 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm">
                 <i className="fas fa-flask text-sm"></i>
-                <span>Estudos Científicos</span>
+                <span>Estudos Acadêmicos</span>
               </button>
             </div>
           </section>
