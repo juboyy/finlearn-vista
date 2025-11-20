@@ -13,6 +13,7 @@ import MeusAgentes from "./pages/MeusAgentes";
 import CriarAgente from "./pages/CriarAgente";
 import { CriarAgentePersonalidade } from "./pages/CriarAgentePersonalidade";
 import { CriarAgenteResumo } from "./pages/CriarAgenteResumo";
+import { ConteudoFiltros } from "./pages/ConteudoFiltros";
 import NotFound from "./pages/NotFound";
 
 const App = () => {
@@ -41,6 +42,7 @@ const App = () => {
             <Route path="/criar-agente" element={<CriarAgente />} />
           <Route path="/criar-agente/personalidade" element={<CriarAgentePersonalidade />} />
           <Route path="/criar-agente/resumo" element={<CriarAgenteResumo />} />
+          <Route path="/conteudo/filtros" element={<ConteudoFiltros />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
