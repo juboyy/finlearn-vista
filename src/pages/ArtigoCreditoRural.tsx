@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Share2, Bookmark, Bell, ThumbsUp, Heart, UserPlus, Eye, MessageCircle, MessageSquare, Clock, Bold, Italic, Link2 as LinkIcon, Image as ImageIcon, MoreHorizontal, Users, TrendingUp, Target, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, Share2, Bookmark, Bell, ThumbsUp, Heart, UserPlus, Eye, MessageCircle, MessageSquare, Clock, Bold, Italic, Link2 as LinkIcon, Image as ImageIcon, MoreHorizontal, Users, TrendingUp, Target, CheckCircle2, AlertCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import creditoRuralImage from "@/assets/credito-rural-2025.png";
 
@@ -264,13 +264,24 @@ export default function ArtigoCreditoRural() {
 
               {/* Credit Volume Chart */}
               <section>
-                <h2 className="text-2xl font-bold text-slate-800 mb-4">Evolução do Volume de Crédito</h2>
-                <div className="bg-slate-50 rounded-lg p-6 mb-4">
+                <h2 className="text-2xl font-bold text-slate-800 mb-4">Evolução do Volume de Crédito Rural</h2>
+                <p className="text-slate-700 leading-relaxed mb-6">
+                  A análise temporal dos últimos cinco anos revela padrões importantes de crescimento e sazonalidade no mercado de crédito rural:
+                </p>
+                <div className="bg-slate-50 rounded-lg p-6 mb-6">
                   <div id="credit-volume-chart" className="h-96"></div>
                 </div>
-                <p className="text-slate-700 text-sm">
-                  <strong>Análise:</strong> O volume total de crédito rural apresenta crescimento consistente, com CAGR de 9,1% entre 2020-2025E. O crescimento é impulsionado principalmente pelo aumento da demanda por financiamento de custeio e expansão de programas governamentais de apoio ao setor.
-                </p>
+                <div className="bg-[#B8D4E8] bg-opacity-30 border border-[#B8D4E8] rounded-lg p-6">
+                  <div className="flex items-start gap-3">
+                    <AlertCircle className="w-5 h-5 text-slate-700 mt-1 flex-shrink-0" />
+                    <div>
+                      <p className="font-semibold text-slate-800 mb-2">Insight Importante</p>
+                      <p className="text-slate-700 text-sm">
+                        O crescimento acelerado observado em 2024 é atribuído principalmente à expansão das linhas de crédito para tecnologia e sustentabilidade, que representaram 34% do volume total concedido.
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </section>
 
               {/* Distribution by Modality */}
