@@ -915,13 +915,293 @@ const Aprendizado = () => {
           )}
 
           {activeTab === 'webinars' && (
-            <div className="text-center py-16">
-              <div className="w-20 h-20 bg-pastel-yellow rounded-full flex items-center justify-center mx-auto mb-4">
-                <i className="fas fa-video text-3xl text-slate-700"></i>
-              </div>
-              <h3 className="text-xl font-semibold text-slate-800 mb-2">Webinars</h3>
-              <p className="text-slate-600">Participe de webinars ao vivo com especialistas</p>
-            </div>
+            <>
+              {/* Live Webinars Section */}
+              <section className="mb-8">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-3">
+                    <h2 className="text-xl font-semibold text-slate-800">Ao Vivo Agora</h2>
+                    <span className="px-3 py-1 bg-pastel-purple text-slate-700 text-xs rounded-full font-medium flex items-center gap-1.5">
+                      <i className="fas fa-circle text-slate-700 text-[6px]"></i>
+                      2 webinars ao vivo
+                    </span>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="bg-white rounded-xl border-2 border-pastel-purple overflow-hidden hover:shadow-xl transition flex flex-col">
+                    <div className="h-64 bg-pastel-yellow overflow-hidden relative">
+                      <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/195dbdee1c-92ffceb5d806533c0810.png" alt="Webinar ao vivo" />
+                      <div className="absolute top-4 left-4">
+                        <span className="px-3 py-1.5 bg-pastel-purple text-slate-700 text-sm font-medium rounded-full flex items-center gap-2">
+                          <i className="fas fa-circle text-[6px] animate-pulse"></i>
+                          AO VIVO
+                        </span>
+                      </div>
+                      <div className="absolute top-4 right-4 flex gap-2">
+                        <span className="px-3 py-1.5 bg-white/90 backdrop-blur text-slate-700 text-sm font-medium rounded-full flex items-center gap-1.5">
+                          <i className="fas fa-users text-xs"></i>
+                          1.2k assistindo
+                        </span>
+                      </div>
+                    </div>
+                    <div className="p-6 flex flex-col flex-1">
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="px-3 py-1 bg-pastel-yellow text-slate-700 text-xs rounded-full">Análise de Mercado</span>
+                        <span className="text-xs text-slate-500">• Começou há 15 min</span>
+                      </div>
+                      <h3 className="text-xl font-semibold text-slate-800 mb-3">Análise Semanal do Mercado: Oportunidades e Riscos</h3>
+                      <p className="text-sm text-slate-600 mb-4">Discussão em tempo real sobre os principais movimentos do mercado financeiro nesta semana com análise de ações, índices e commodities.</p>
+                      <div className="flex items-center gap-4 mb-4 pb-4 border-b border-slate-200">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/b24014b83d-0b455d5abe744d3f9416.png" alt="Palestrante" className="w-12 h-12 rounded-full object-cover" />
+                        <div>
+                          <p className="font-medium text-slate-800">Dr. Carlos Mendes</p>
+                          <p className="text-xs text-slate-500">Analista Sênior de Mercado</p>
+                        </div>
+                      </div>
+                      <button className="w-full px-6 py-3 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center justify-center gap-2 mt-auto">
+                        <i className="fas fa-play"></i>
+                        Assistir Agora
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="bg-white rounded-xl border-2 border-pastel-purple overflow-hidden hover:shadow-xl transition flex flex-col">
+                    <div className="h-64 bg-pastel-green overflow-hidden relative">
+                      <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/27ff2e3c2c-afb908f73c455f98a798.png" alt="Webinar ao vivo" />
+                      <div className="absolute top-4 left-4">
+                        <span className="px-3 py-1.5 bg-pastel-purple text-slate-700 text-sm font-medium rounded-full flex items-center gap-2">
+                          <i className="fas fa-circle text-[6px] animate-pulse"></i>
+                          AO VIVO
+                        </span>
+                      </div>
+                      <div className="absolute top-4 right-4 flex gap-2">
+                        <span className="px-3 py-1.5 bg-white/90 backdrop-blur text-slate-700 text-sm font-medium rounded-full flex items-center gap-1.5">
+                          <i className="fas fa-users text-xs"></i>
+                          842 assistindo
+                        </span>
+                      </div>
+                    </div>
+                    <div className="p-6 flex flex-col flex-1">
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="px-3 py-1 bg-pastel-green text-slate-700 text-xs rounded-full">Criptomoedas</span>
+                        <span className="text-xs text-slate-500">• Começou há 32 min</span>
+                      </div>
+                      <h3 className="text-xl font-semibold text-slate-800 mb-3">Bitcoin e Altcoins: Tendências para 2025</h3>
+                      <p className="text-sm text-slate-600 mb-4">Análise técnica e fundamentalista do mercado cripto com foco em Bitcoin, Ethereum e principais altcoins promissoras.</p>
+                      <div className="flex items-center gap-4 mb-4 pb-4 border-b border-slate-200">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-2bbdc31a97c8479658e1.png" alt="Palestrante" className="w-12 h-12 rounded-full object-cover" />
+                        <div>
+                          <p className="font-medium text-slate-800">Ana Paula Costa</p>
+                          <p className="text-xs text-slate-500">Especialista em Blockchain</p>
+                        </div>
+                      </div>
+                      <button className="w-full px-6 py-3 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center justify-center gap-2 mt-auto">
+                        <i className="fas fa-play"></i>
+                        Assistir Agora
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* Próximos Webinars */}
+              <section className="mb-8">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-semibold text-slate-800">Próximos Webinars</h2>
+                  <a href="#" className="text-sm text-slate-600 hover:text-slate-800 font-medium">Ver calendário completo</a>
+                </div>
+                <div className="grid grid-cols-3 gap-6">
+                  <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
+                    <div className="h-48 bg-pastel-blue overflow-hidden relative">
+                      <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5213464580-c5bc017767ff44227057.png" alt="Webinar" />
+                    </div>
+                    <div className="p-5">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-16 h-16 bg-pastel-blue rounded-xl flex flex-col items-center justify-center flex-shrink-0">
+                          <span className="text-xs text-slate-600 font-medium">NOV</span>
+                          <span className="text-xl text-slate-800 font-bold">20</span>
+                          <span className="text-xs text-slate-600">14:00</span>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <span className="px-2 py-1 bg-pastel-blue text-slate-700 text-xs rounded-full">Macroeconomia</span>
+                          <p className="text-xs text-slate-500 mt-1">2h de duração</p>
+                        </div>
+                      </div>
+                      <h3 className="font-semibold text-slate-800 mb-2">Cenário Macroeconômico 2025</h3>
+                      <p className="text-sm text-slate-600 mb-4">O que esperar dos mercados globais</p>
+                      <div className="flex items-center gap-2 text-xs text-slate-500 mb-4">
+                        <i className="fas fa-user-tie"></i>
+                        <span>Dr. Roberto Lima</span>
+                      </div>
+                      <button className="w-full px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                        Inscrever-se
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
+                    <div className="h-48 bg-pastel-purple overflow-hidden relative">
+                      <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/d51e1f0edd-ac69efab786c3927349b.png" alt="Webinar" />
+                    </div>
+                    <div className="p-5">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-16 h-16 bg-pastel-purple rounded-xl flex flex-col items-center justify-center flex-shrink-0">
+                          <span className="text-xs text-slate-600 font-medium">NOV</span>
+                          <span className="text-xl text-slate-800 font-bold">22</span>
+                          <span className="text-xs text-slate-600">19:00</span>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <span className="px-2 py-1 bg-pastel-purple text-slate-700 text-xs rounded-full">Tecnologia</span>
+                          <p className="text-xs text-slate-500 mt-1">1.5h de duração</p>
+                        </div>
+                      </div>
+                      <h3 className="font-semibold text-slate-800 mb-2">IA no Trading Algorítmico</h3>
+                      <p className="text-sm text-slate-600 mb-4">Estratégias automatizadas de sucesso</p>
+                      <div className="flex items-center gap-2 text-xs text-slate-500 mb-4">
+                        <i className="fas fa-user-tie"></i>
+                        <span>Prof. Ana Santos</span>
+                      </div>
+                      <button className="w-full px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                        Inscrever-se
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
+                    <div className="h-48 bg-pastel-pink overflow-hidden relative">
+                      <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/0da9896c42-46e32d6de31b8ba9ed03.png" alt="Webinar" />
+                    </div>
+                    <div className="p-5">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-16 h-16 bg-pastel-pink rounded-xl flex flex-col items-center justify-center flex-shrink-0">
+                          <span className="text-xs text-slate-600 font-medium">NOV</span>
+                          <span className="text-xl text-slate-800 font-bold">25</span>
+                          <span className="text-xs text-slate-600">10:00</span>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <span className="px-2 py-1 bg-pastel-pink text-slate-700 text-xs rounded-full">ESG</span>
+                          <p className="text-xs text-slate-500 mt-1">2h de duração</p>
+                        </div>
+                      </div>
+                      <h3 className="font-semibold text-slate-800 mb-2">Investimentos Sustentáveis</h3>
+                      <p className="text-sm text-slate-600 mb-4">ESG e o futuro das finanças</p>
+                      <div className="flex items-center gap-2 text-xs text-slate-500 mb-4">
+                        <i className="fas fa-user-tie"></i>
+                        <span>Profa. Marina Costa</span>
+                      </div>
+                      <button className="w-full px-4 py-2 bg-pastel-pink text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                        Inscrever-se
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* Webinars Gravados */}
+              <section className="mb-8">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-semibold text-slate-800">Webinars Gravados</h2>
+                  <a href="#" className="text-sm text-slate-600 hover:text-slate-800 font-medium">Ver biblioteca completa</a>
+                </div>
+                <div className="grid grid-cols-4 gap-6">
+                  <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
+                    <div className="h-36 bg-pastel-blue overflow-hidden relative">
+                      <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/a195223fa7-44607092c4e1194c081e.png" alt="Webinar gravado" />
+                      <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                        <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+                          <i className="fas fa-play text-slate-700 text-lg ml-1"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="p-4">
+                      <span className="px-2 py-1 bg-pastel-blue text-slate-700 text-xs rounded-full">Análise Técnica</span>
+                      <h3 className="font-medium text-slate-800 mt-3 mb-2 line-clamp-2">Padrões Gráficos Avançados</h3>
+                      <div className="flex items-center gap-2 text-xs text-slate-500 mb-3">
+                        <i className="fas fa-clock"></i>
+                        <span>1h 45min</span>
+                        <span>•</span>
+                        <span>2.1k views</span>
+                      </div>
+                      <button className="w-full px-3 py-2 bg-pastel-blue text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
+                        Assistir
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
+                    <div className="h-36 bg-pastel-purple overflow-hidden relative">
+                      <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/439b549209-084dc01db5f1c86775de.png" alt="Webinar gravado" />
+                      <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                        <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+                          <i className="fas fa-play text-slate-700 text-lg ml-1"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="p-4">
+                      <span className="px-2 py-1 bg-pastel-purple text-slate-700 text-xs rounded-full">DeFi</span>
+                      <h3 className="font-medium text-slate-800 mt-3 mb-2 line-clamp-2">Finanças Descentralizadas</h3>
+                      <div className="flex items-center gap-2 text-xs text-slate-500 mb-3">
+                        <i className="fas fa-clock"></i>
+                        <span>2h 15min</span>
+                        <span>•</span>
+                        <span>1.8k views</span>
+                      </div>
+                      <button className="w-full px-3 py-2 bg-pastel-purple text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
+                        Assistir
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
+                    <div className="h-36 bg-pastel-pink overflow-hidden relative">
+                      <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/fe841e9543-0d4633567d0a2f089401.png" alt="Webinar gravado" />
+                      <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                        <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+                          <i className="fas fa-play text-slate-700 text-lg ml-1"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="p-4">
+                      <span className="px-2 py-1 bg-pastel-pink text-slate-700 text-xs rounded-full">Gestão de Risco</span>
+                      <h3 className="font-medium text-slate-800 mt-3 mb-2 line-clamp-2">Proteção de Carteiras</h3>
+                      <div className="flex items-center gap-2 text-xs text-slate-500 mb-3">
+                        <i className="fas fa-clock"></i>
+                        <span>1h 30min</span>
+                        <span>•</span>
+                        <span>3.2k views</span>
+                      </div>
+                      <button className="w-full px-3 py-2 bg-pastel-pink text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
+                        Assistir
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
+                    <div className="h-36 bg-pastel-green overflow-hidden relative">
+                      <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/90085a1f92-3b2f9afbdad1bed10b3b.png" alt="Webinar gravado" />
+                      <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                        <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+                          <i className="fas fa-play text-slate-700 text-lg ml-1"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="p-4">
+                      <span className="px-2 py-1 bg-pastel-green text-slate-700 text-xs rounded-full">Value Investing</span>
+                      <h3 className="font-medium text-slate-800 mt-3 mb-2 line-clamp-2">Análise Fundamentalista</h3>
+                      <div className="flex items-center gap-2 text-xs text-slate-500 mb-3">
+                        <i className="fas fa-clock"></i>
+                        <span>2h 00min</span>
+                        <span>•</span>
+                        <span>2.7k views</span>
+                      </div>
+                      <button className="w-full px-3 py-2 bg-pastel-green text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
+                        Assistir
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </>
           )}
 
           {activeTab === 'artigos' && (
