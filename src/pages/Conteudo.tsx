@@ -2,7 +2,7 @@ import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, Bell, Bookmark, Heart, MessageCircle, Flame, Crown, ChevronLeft, ChevronRight, SlidersHorizontal } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const articles = [
   {
@@ -97,6 +97,8 @@ const featuredAuthors = [
 ];
 
 const Conteudo = () => {
+  const navigate = useNavigate();
+  
   return (
     <div className="flex h-screen overflow-hidden">
       <SidebarFix />
@@ -194,7 +196,10 @@ const Conteudo = () => {
                 <Button variant="outline">Notícias</Button>
                 <Button variant="outline">Preferências</Button>
                 <Button variant="outline">Sugestões</Button>
-                <Button className="bg-accent hover:bg-success text-accent-foreground hover:text-success-foreground transition-all duration-300">
+                <Button 
+                  className="bg-accent hover:bg-success text-accent-foreground hover:text-success-foreground transition-all duration-300"
+                  onClick={() => navigate("/conteudo/filtros")}
+                >
                   <SlidersHorizontal className="h-4 w-4 mr-2" />
                   Filtros
                 </Button>
