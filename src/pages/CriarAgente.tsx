@@ -10,6 +10,7 @@ import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
+import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 const CriarAgente = () => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
@@ -126,72 +127,10 @@ const CriarAgente = () => {
     label: "Finalização"
   }];
   return <div className="flex min-h-screen bg-background">
-      {/* Sidebar */}
-      <aside className="w-72 bg-card border-r border-border fixed left-0 top-0 h-screen overflow-y-auto">
-        <div className="p-6 border-b border-border">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
-              <Brain className="text-muted-foreground" size={20} />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-foreground">FinLearn AI</h1>
-              <p className="text-xs text-muted-foreground">Plataforma de Agentes</p>
-            </div>
-          </div>
-        </div>
-
-        <nav className="p-4">
-          <div className="space-y-2">
-            <a href="#" className="flex items-center space-x-3 px-4 py-3 rounded-xl text-muted-foreground hover:bg-secondary hover:text-foreground transition-all">
-              <TrendingUp size={18} />
-              <span className="font-medium">Dashboard</span>
-            </a>
-            <a href="#" className="flex items-center space-x-3 px-4 py-3 rounded-xl text-muted-foreground hover:bg-secondary hover:text-foreground transition-all">
-              <BookOpen size={18} />
-              <span className="font-medium">Conteúdo</span>
-            </a>
-            <a href="#" className="flex items-center space-x-3 px-4 py-3 rounded-xl bg-secondary">
-              <Brain size={18} className="text-muted-foreground" />
-              <span className="font-medium text-foreground">Agentes IA</span>
-            </a>
-            <a href="#" className="flex items-center space-x-3 px-4 py-3 rounded-xl text-muted-foreground hover:bg-secondary hover:text-foreground transition-all">
-              <GraduationCap size={18} />
-              <span className="font-medium">Treinamento</span>
-            </a>
-            <a href="#" className="flex items-center space-x-3 px-4 py-3 rounded-xl text-muted-foreground hover:bg-secondary hover:text-foreground transition-all">
-              <ChartLine size={18} />
-              <span className="font-medium">Análises</span>
-            </a>
-            <a href="#" className="flex items-center space-x-3 px-4 py-3 rounded-xl text-muted-foreground hover:bg-secondary hover:text-foreground transition-all">
-              <Users size={18} />
-              <span className="font-medium">Equipe</span>
-            </a>
-            <a href="#" className="flex items-center space-x-3 px-4 py-3 rounded-xl text-muted-foreground hover:bg-secondary hover:text-foreground transition-all">
-              <Settings size={18} />
-              <span className="font-medium">Configurações</span>
-            </a>
-          </div>
-        </nav>
-
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-border bg-card">
-          <div className="flex items-center space-x-3 px-3 py-3 rounded-xl bg-secondary">
-            <div className="relative">
-              <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" alt="User" className="w-10 h-10 rounded-full ring-2 ring-border" />
-              <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-card"></div>
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-foreground truncate">Carlos Silva</p>
-              <p className="text-xs text-muted-foreground truncate">Admin</p>
-            </div>
-            <button className="text-muted-foreground hover:text-foreground transition-colors">
-              <Settings size={16} />
-            </button>
-          </div>
-        </div>
-      </aside>
+      <SidebarFix />
 
       {/* Main Content */}
-      <main className="flex-1 ml-72">
+      <main className="flex-1">
         {/* Header */}
         <header className="bg-card/80 backdrop-blur-xl border-b border-border sticky top-0 z-40">
           <div className="px-8 py-4">
