@@ -52,12 +52,7 @@ const CheckoutPayment = () => {
 
   const getMaskedCardNumber = () => {
     if (cardNumber.replace(/\s+/g, '').length > 0) {
-      return cardNumber.split(' ').map((part, index) => {
-        if (index < 3) {
-          return '••••';
-        }
-        return part;
-      }).join(' ');
+      return cardNumber;
     }
     return '•••• •••• •••• ••••';
   };
