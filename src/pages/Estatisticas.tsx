@@ -109,7 +109,7 @@ const Estatisticas = () => {
                 <span className="absolute top-2 right-2 w-2 h-2 bg-pink-500 rounded-full"></span>
               </button>
               
-              <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 text-pastel-gray-dark font-semibold text-sm rounded-lg hover:bg-slate-200 transition-colors">
+              <button className="flex items-center gap-2 px-4 py-2 bg-pastel-gray-dark text-white font-semibold text-sm rounded-lg hover:bg-slate-700 transition-colors">
                 <Users size={16} />
                 <span>Ver Autores</span>
               </button>
