@@ -256,6 +256,154 @@ export default function Comunidade() {
                           </div>
                         </div>
                       </div>
+
+                      <div className="p-4 rounded-lg border border-slate-200 hover:border-pastel-green hover:shadow-md transition cursor-pointer">
+                        <div className="flex items-start gap-4">
+                          <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg" alt="User" className="w-10 h-10 rounded-full object-cover flex-shrink-0" />
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-start justify-between gap-4 mb-2">
+                              <div className="flex-1 min-w-0">
+                                <h3 className="font-medium text-slate-800 mb-1 hover:text-pastel-green transition">Estratégias de diversificação para portfólio de renda variável em 2025</h3>
+                                <div className="flex items-center gap-3 text-xs text-slate-500">
+                                  <span className="font-medium text-slate-700">Ana Rodrigues</span>
+                                  <span>•</span>
+                                  <span>há 5 horas</span>
+                                  <span className="px-2 py-0.5 bg-pastel-green rounded-full">Investimentos</span>
+                                </div>
+                              </div>
+                              <button className="text-slate-400 hover:text-slate-600">
+                                <Bookmark className="w-4 h-4" />
+                              </button>
+                            </div>
+                            <p className="text-sm text-slate-600 mb-3 line-clamp-2">Com as mudanças regulatórias chegando, como vocês estão pensando em rebalancear seus portfolios de ações? Quais setores estão priorizando?</p>
+                            <div className="flex items-center gap-4 text-xs text-slate-500">
+                              <span className="flex items-center gap-1">
+                                <MessageSquare className="w-4 h-4" />
+                                42 respostas
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <Eye className="w-4 h-4" />
+                                587 visualizações
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <Heart className="w-4 h-4" />
+                                35 curtidas
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="p-4 rounded-lg border border-slate-200 hover:border-pastel-purple hover:shadow-md transition cursor-pointer">
+                        <div className="flex items-start gap-4">
+                          <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg" alt="User" className="w-10 h-10 rounded-full object-cover flex-shrink-0" />
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-start justify-between gap-4 mb-2">
+                              <div className="flex-1 min-w-0">
+                                <h3 className="font-medium text-slate-800 mb-1 hover:text-pastel-purple transition">Novas diretrizes da CVM sobre fundos de investimento</h3>
+                                <div className="flex items-center gap-3 text-xs text-slate-500">
+                                  <span className="font-medium text-slate-700">Roberto Santos</span>
+                                  <span>•</span>
+                                  <span>há 1 dia</span>
+                                  <span className="px-2 py-0.5 bg-pastel-purple rounded-full">Compliance & Regulação</span>
+                                </div>
+                              </div>
+                              <button className="text-slate-400 hover:text-slate-600">
+                                <Bookmark className="w-4 h-4" />
+                              </button>
+                            </div>
+                            <p className="text-sm text-slate-600 mb-3 line-clamp-2">A CVM publicou novas diretrizes para gestão de fundos. Alguém já teve tempo de analisar o impacto operacional dessas mudanças? Vamos discutir as principais alterações.</p>
+                            <div className="flex items-center gap-4 text-xs text-slate-500">
+                              <span className="flex items-center gap-1">
+                                <MessageSquare className="w-4 h-4" />
+                                31 respostas
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <Eye className="w-4 h-4" />
+                                428 visualizações
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <Heart className="w-4 h-4" />
+                                27 curtidas
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="p-4 rounded-lg border border-slate-200 hover:border-pastel-yellow hover:shadow-md transition cursor-pointer">
+                        <div className="flex items-start gap-4">
+                          <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-7.jpg" alt="User" className="w-10 h-10 rounded-full object-cover flex-shrink-0" />
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-start justify-between gap-4 mb-2">
+                              <div className="flex-1 min-w-0">
+                                <h3 className="font-medium text-slate-800 mb-1 hover:text-pastel-yellow transition">Transição de carreira: back office para front office</h3>
+                                <div className="flex items-center gap-3 text-xs text-slate-500">
+                                  <span className="font-medium text-slate-700">Juliana Costa</span>
+                                  <span>•</span>
+                                  <span>há 1 dia</span>
+                                  <span className="px-2 py-0.5 bg-pastel-yellow rounded-full">Carreira & Networking</span>
+                                </div>
+                              </div>
+                              <button className="text-slate-400 hover:text-slate-600">
+                                <Bookmark className="w-4 h-4" />
+                              </button>
+                            </div>
+                            <p className="text-sm text-slate-600 mb-3 line-clamp-2">Trabalho há 3 anos em back office e gostaria de migrar para front office. Quais certificações e skills são essenciais? Alguém já fez essa transição?</p>
+                            <div className="flex items-center gap-4 text-xs text-slate-500">
+                              <span className="flex items-center gap-1">
+                                <MessageSquare className="w-4 h-4" />
+                                56 respostas
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <Eye className="w-4 h-4" />
+                                694 visualizações
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <Heart className="w-4 h-4" />
+                                44 curtidas
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="p-4 rounded-lg border border-slate-200 hover:border-pastel-peach hover:shadow-md transition cursor-pointer">
+                        <div className="flex items-start gap-4">
+                          <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg" alt="User" className="w-10 h-10 rounded-full object-cover flex-shrink-0" />
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-start justify-between gap-4 mb-2">
+                              <div className="flex-1 min-w-0">
+                                <h3 className="font-medium text-slate-800 mb-1 hover:text-pastel-peach transition">IA aplicada à análise fundamentalista: ferramentas e resultados</h3>
+                                <div className="flex items-center gap-3 text-xs text-slate-500">
+                                  <span className="font-medium text-slate-700">Pedro Almeida</span>
+                                  <span>•</span>
+                                  <span>há 2 dias</span>
+                                  <span className="px-2 py-0.5 bg-pastel-peach rounded-full">Análise de Mercado</span>
+                                </div>
+                              </div>
+                              <button className="text-slate-400 hover:text-slate-600">
+                                <Bookmark className="w-4 h-4" />
+                              </button>
+                            </div>
+                            <p className="text-sm text-slate-600 mb-3 line-clamp-2">Quem aqui está usando IA para análise fundamentalista? Quais ferramentas recomendam e qual a acurácia dos modelos que estão utilizando?</p>
+                            <div className="flex items-center gap-4 text-xs text-slate-500">
+                              <span className="flex items-center gap-1">
+                                <MessageSquare className="w-4 h-4" />
+                                38 respostas
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <Eye className="w-4 h-4" />
+                                521 visualizações
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <Heart className="w-4 h-4" />
+                                29 curtidas
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   ) : (
                     <div className="space-y-6">
