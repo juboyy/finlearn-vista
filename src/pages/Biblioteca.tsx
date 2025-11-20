@@ -377,8 +377,8 @@ export function Biblioteca() {
             <div className="flex-1">
               {/* Filter Bar */}
               <section className="bg-white rounded-xl p-6 border border-slate-200 mb-6">
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
                     <div className="flex gap-2">
                       <button className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
@@ -397,28 +397,28 @@ export function Biblioteca() {
                       </button>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-sm text-slate-600">Ordenar:</span>
-                      <select className="text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#B8D4E8]">
-                        <option>Modificado recentemente</option>
-                        <option>Nome (A-Z)</option>
-                        <option>Nome (Z-A)</option>
-                        <option>Data de criação</option>
-                      </select>
+                      <button className="px-3 py-2 rounded-lg text-sm font-medium text-slate-700" style={{ backgroundColor: '#C5E8D4' }}>
+                        Todas
+                      </button>
+                      <button className="px-3 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition">
+                        Notas
+                      </button>
+                      <button className="px-3 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition">
+                        Áudios
+                      </button>
+                      <button className="px-3 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition">
+                        Favoritos
+                      </button>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <button className="px-3 py-2 rounded-lg text-sm font-medium text-slate-700" style={{ backgroundColor: '#C5E8D4' }}>
-                      Todas
-                    </button>
-                    <button className="px-3 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition">
-                      Notas
-                    </button>
-                    <button className="px-3 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition">
-                      Áudios
-                    </button>
-                    <button className="px-3 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition">
-                      Favoritos
-                    </button>
+                    <span className="text-sm text-slate-600">Ordenar:</span>
+                    <select className="text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#B8D4E8]">
+                      <option>Modificado recentemente</option>
+                      <option>Nome (A-Z)</option>
+                      <option>Nome (Z-A)</option>
+                      <option>Data de criação</option>
+                    </select>
                   </div>
                 </div>
               </section>
