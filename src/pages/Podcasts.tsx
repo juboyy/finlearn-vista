@@ -73,13 +73,23 @@ const Podcasts = () => {
               </button>
             </div>
           </div>
-          <div className="relative">
-            <i className="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
-            <input 
-              type="text" 
-              placeholder="Buscar podcasts, episódios ou temas..." 
-              className="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pastel-blue"
-            />
+          <div className="flex items-center gap-3">
+            <div className="relative flex-1">
+              <i className="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+              <input 
+                type="text" 
+                placeholder="Buscar podcasts, episódios ou temas..." 
+                className="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pastel-blue"
+              />
+            </div>
+            <button className="px-5 py-3 bg-white border border-slate-200 text-slate-700 rounded-lg font-medium hover:bg-slate-50 transition flex items-center gap-2 whitespace-nowrap">
+              <i className="fas fa-filter"></i>
+              <span>Filtro Avançado</span>
+            </button>
+            <button className="px-5 py-3 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2 whitespace-nowrap">
+              <i className="fas fa-history"></i>
+              <span>Histórico</span>
+            </button>
           </div>
         </div>
 
