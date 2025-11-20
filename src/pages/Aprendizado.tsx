@@ -1,12 +1,10 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Bell } from "lucide-react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'documentos' | 'estudos';
 
 const Aprendizado = () => {
-  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<TabType>('todos');
   
   return (
@@ -48,8 +46,10 @@ const Aprendizado = () => {
                 <span>Todos</span>
               </button>
               <button 
-                onClick={() => navigate('/podcasts')}
-                className="px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm text-slate-600 hover:bg-slate-100"
+                onClick={() => setActiveTab('podcasts')}
+                className={`px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm ${
+                  activeTab === 'podcasts' ? 'bg-pastel-blue text-slate-800' : 'text-slate-600 hover:bg-slate-100'
+                }`}
               >
                 <i className="fas fa-podcast"></i>
                 <span>Podcasts</span>
@@ -884,6 +884,115 @@ const Aprendizado = () => {
               </div>
             </div>
           </section>
+            </>
+          )}
+
+          {activeTab === 'podcasts' && (
+            <>
+              <section className="mb-8">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-xl font-semibold text-slate-800">Continue Ouvindo</h2>
+                  <a href="#" className="text-sm text-slate-600 hover:text-slate-800 font-medium">Ver todos</a>
+                </div>
+                <div className="grid grid-cols-3 gap-6">
+                  <div className="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-lg transition">
+                    <div className="flex gap-4">
+                      <div className="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-pastel-blue">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png" alt="podcast cover" className="w-full h-full object-cover" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs text-slate-500 mb-1">Mercados em Foco</p>
+                        <h3 className="font-semibold text-slate-800 mb-1 line-clamp-2">Análise Semanal: Volatilidade e Oportunidades</h3>
+                        <div className="flex items-center gap-2 mb-3">
+                          <span className="text-xs text-slate-500">28 min restantes</span>
+                        </div>
+                        <div className="w-full bg-slate-200 rounded-full h-1 mb-2">
+                          <div className="bg-pastel-blue h-1 rounded-full" style={{ width: '65%' }}></div>
+                        </div>
+                        <button className="text-slate-600 hover:text-slate-800">
+                          <i className="fas fa-play-circle text-2xl"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-lg transition">
+                    <div className="flex gap-4">
+                      <div className="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-pastel-green">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/cf142f2fa8-3e14b0bb9b96f766efe7.png" alt="podcast cover" className="w-full h-full object-cover" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs text-slate-500 mb-1">Investidor Inteligente</p>
+                        <h3 className="font-semibold text-slate-800 mb-1 line-clamp-2">Diversificação de Carteira em 2024</h3>
+                        <div className="flex items-center gap-2 mb-3">
+                          <span className="text-xs text-slate-500">15 min restantes</span>
+                        </div>
+                        <div className="w-full bg-slate-200 rounded-full h-1 mb-2">
+                          <div className="bg-pastel-green h-1 rounded-full" style={{ width: '82%' }}></div>
+                        </div>
+                        <button className="text-slate-600 hover:text-slate-800">
+                          <i className="fas fa-play-circle text-2xl"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-lg transition">
+                    <div className="flex gap-4">
+                      <div className="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-pastel-purple">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/270689fe5d-6ce96dde7db22c1b8808.png" alt="podcast cover" className="w-full h-full object-cover" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs text-slate-500 mb-1">FinTech Brasil</p>
+                        <h3 className="font-semibold text-slate-800 mb-1 line-clamp-2">Inovações em Meios de Pagamento</h3>
+                        <div className="flex items-center gap-2 mb-3">
+                          <span className="text-xs text-slate-500">22 min restantes</span>
+                        </div>
+                        <div className="w-full bg-slate-200 rounded-full h-1 mb-2">
+                          <div className="bg-pastel-purple h-1 rounded-full" style={{ width: '45%' }}></div>
+                        </div>
+                        <button className="text-slate-600 hover:text-slate-800">
+                          <i className="fas fa-play-circle text-2xl"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section className="mb-8">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-xl font-semibold text-slate-800">Explorar por Categoria</h2>
+                </div>
+                <div className="grid grid-cols-4 gap-4">
+                  <div className="bg-pastel-blue rounded-xl p-6 hover:shadow-lg transition cursor-pointer group">
+                    <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                      <i className="fas fa-chart-line text-2xl text-slate-700"></i>
+                    </div>
+                    <h3 className="font-semibold text-slate-800 mb-1">Análise de Mercado</h3>
+                    <p className="text-sm text-slate-600">48 episódios</p>
+                  </div>
+                  <div className="bg-pastel-green rounded-xl p-6 hover:shadow-lg transition cursor-pointer group">
+                    <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                      <i className="fas fa-piggy-bank text-2xl text-slate-700"></i>
+                    </div>
+                    <h3 className="font-semibold text-slate-800 mb-1">Investimentos</h3>
+                    <p className="text-sm text-slate-600">67 episódios</p>
+                  </div>
+                  <div className="bg-pastel-purple rounded-xl p-6 hover:shadow-lg transition cursor-pointer group">
+                    <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                      <i className="fas fa-landmark text-2xl text-slate-700"></i>
+                    </div>
+                    <h3 className="font-semibold text-slate-800 mb-1">Regulação Bancária</h3>
+                    <p className="text-sm text-slate-600">32 episódios</p>
+                  </div>
+                  <div className="bg-pastel-pink rounded-xl p-6 hover:shadow-lg transition cursor-pointer group">
+                    <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                      <i className="fas fa-gavel text-2xl text-slate-700"></i>
+                    </div>
+                    <h3 className="font-semibold text-slate-800 mb-1">Compliance</h3>
+                    <p className="text-sm text-slate-600">29 episódios</p>
+                  </div>
+                </div>
+              </section>
             </>
           )}
 
