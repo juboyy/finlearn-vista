@@ -1,5 +1,6 @@
-import { Home, Newspaper, Bot, GraduationCap, Book, MessageCircle, Store, TrendingUp, Users, Settings } from "lucide-react";
+import { Home, Newspaper, Bot, GraduationCap, Book, MessageCircle, Store, TrendingUp, Users, Settings, ChevronDown, User, CreditCard } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
+import { useState } from "react";
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: Home },
@@ -14,6 +15,8 @@ const navigation = [
 ];
 
 export const SidebarFix = () => {
+  const [settingsOpen, setSettingsOpen] = useState(false);
+
   return (
     <aside className="w-64 bg-sidebar border-r border-sidebar-border flex flex-col h-screen sticky top-0">
       <div className="p-6 border-b border-sidebar-border">
@@ -40,21 +43,42 @@ export const SidebarFix = () => {
         ))}
       </nav>
       
-      <div className="p-4 border-t border-sidebar-border">
-        <div className="flex items-center gap-3 px-4 py-3">
-          <img 
-            src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" 
-            alt="User" 
-            className="w-10 h-10 rounded-full object-cover"
-          />
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-sidebar-foreground truncate">João Silva</p>
-            <p className="text-xs text-sidebar-foreground/70 truncate">Premium</p>
+      <div className="border-t border-sidebar-border">
+        <div className="p-4">
+          <div className="flex items-center gap-3 px-4 py-3">
+            <img 
+              src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" 
+              alt="User" 
+              className="w-10 h-10 rounded-full object-cover"
+            />
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-sidebar-foreground truncate">João Silva</p>
+              <p className="text-xs text-sidebar-foreground/70 truncate">Premium</p>
+            </div>
+            <button 
+              onClick={() => setSettingsOpen(!settingsOpen)}
+              className="text-sidebar-foreground/70 hover:text-sidebar-foreground transition-colors"
+            >
+              <ChevronDown 
+                size={18} 
+                className={`transition-transform ${settingsOpen ? 'rotate-180' : ''}`}
+              />
+            </button>
           </div>
-          <button className="text-sidebar-foreground/70 hover:text-sidebar-foreground transition-colors">
-            <Settings size={18} />
-          </button>
         </div>
+        
+        {settingsOpen && (
+          <div className="px-4 pb-4 space-y-1">
+            <button className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sidebar-foreground/80 hover:bg-sidebar-accent transition-colors text-sm">
+              <User size={16} />
+              <span>Minha Conta</span>
+            </button>
+            <button className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sidebar-foreground/80 hover:bg-sidebar-accent transition-colors text-sm">
+              <CreditCard size={16} />
+              <span>Assinaturas</span>
+            </button>
+          </div>
+        )}
       </div>
     </aside>
   );
