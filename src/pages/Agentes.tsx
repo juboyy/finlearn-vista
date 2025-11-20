@@ -23,6 +23,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AgentChat } from "@/components/AgentChat";
+import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 
 export default function Agentes() {
   const [activeFilter, setActiveFilter] = useState("Todos");
@@ -168,16 +169,18 @@ export default function Agentes() {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      {chatAgent && (
-        <AgentChat
-          agentName={chatAgent.name}
-          agentImage={chatAgent.image}
-          onClose={() => setChatAgent(null)}
-        />
-      )}
-      {/* Header */}
-      <header className="bg-card border-b border-border sticky top-0 z-40">
+    <div className="flex min-h-screen bg-background">
+      <SidebarFix />
+      <div className="flex-1">
+        {chatAgent && (
+          <AgentChat
+            agentName={chatAgent.name}
+            agentImage={chatAgent.image}
+            onClose={() => setChatAgent(null)}
+          />
+        )}
+        {/* Header */}
+        <header className="bg-card border-b border-border sticky top-0 z-40">
         <div className="px-8 py-4 flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-semibold text-foreground">Agentes de IA</h1>
@@ -450,6 +453,7 @@ export default function Agentes() {
           </section>
         </div>
       </main>
+      </div>
     </div>
   );
 }
