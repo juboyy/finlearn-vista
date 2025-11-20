@@ -335,7 +335,7 @@ const PerfilAutor = () => {
                     <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-full">Mais Popular</div>
                     <h3 className="text-lg font-bold text-foreground">Premium</h3>
                     <p className="text-3xl font-extrabold text-foreground my-4">R$ 49<span className="text-base font-medium text-muted-foreground">/mês</span></p>
-                    <button className="w-full py-2.5 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors mb-6">Assinar Premium</button>
+                    <button onClick={() => navigate('/checkout')} className="w-full py-2.5 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors mb-6">Assinar Premium</button>
                     <ul className="space-y-3 text-sm flex-1">
                       <li className="flex items-center gap-3"><Check className="text-pastel-green" size={16} /><span>Tudo do plano Gratuito</span></li>
                       <li className="flex items-center gap-3"><Check className="text-pastel-green" size={16} /><span>Acesso a todos os artigos premium</span></li>
