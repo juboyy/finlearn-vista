@@ -195,6 +195,7 @@ const Conteudo = () => {
                 <Button variant="outline">Preferências</Button>
                 <Button variant="outline">Sugestões</Button>
               </div>
+              <Button variant="outline">Filtros</Button>
             </div>
           </section>
 
