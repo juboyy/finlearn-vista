@@ -793,7 +793,7 @@ const Aprendizado = () => {
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center">
-                        <i className="fab fa-bitcoin text-slate-600 text-xl"></i>
+                        <i className="fas fa-coins text-slate-600 text-xl"></i>
                       </div>
                       <div>
                         <h3 className="font-semibold text-slate-800">Especialista em Cripto</h3>
