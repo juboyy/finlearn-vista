@@ -59,6 +59,9 @@ All colors MUST be HSL.
     --pastel-yellow: 44 38% 72%;
     --pastel-peach: 24 36% 72%;
     --pastel-orange: 30 38% 72%;
+    
+    /* Pastel Gray Dark for Icons */
+    --pastel-gray-dark: 220 12% 45%;
 
     /* Slider specific */
     --slider-thumb: 206 50% 65%;
@@ -123,6 +126,9 @@ All colors MUST be HSL.
     --pastel-yellow: 44 46% 80%;
     --pastel-peach: 24 46% 80%;
     --pastel-orange: 30 46% 80%;
+    
+    /* Pastel Gray Dark for Icons */
+    --pastel-gray-dark: 220 12% 50%;
 
     /* Slider specific */
     --slider-thumb: 206 45% 70%;
