@@ -15,6 +15,7 @@ import { CriarAgentePersonalidade } from "./pages/CriarAgentePersonalidade";
 import { CriarAgenteResumo } from "./pages/CriarAgenteResumo";
 import { ConteudoFiltros } from "./pages/ConteudoFiltros";
 import { Biblioteca } from "./pages/Biblioteca";
+import Marketplace from "./pages/Marketplace";
 import NotFound from "./pages/NotFound";
 
 const App = () => {
@@ -45,6 +46,7 @@ const App = () => {
           <Route path="/criar-agente/resumo" element={<CriarAgenteResumo />} />
           <Route path="/conteudo/filtros" element={<ConteudoFiltros />} />
           <Route path="/biblioteca" element={<Biblioteca />} />
+          <Route path="/marketplace" element={<Marketplace />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
