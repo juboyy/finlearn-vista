@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { Bell } from "lucide-react";
+import { Bell, BarChart3 } from "lucide-react";
 import { useState } from "react";
 
 type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'documentos' | 'estudos';
@@ -140,6 +140,10 @@ const Aprendizado = () => {
             <button className="px-5 py-3 bg-white border border-slate-200 text-slate-700 rounded-lg font-medium hover:bg-slate-50 transition flex items-center gap-2 whitespace-nowrap">
               <i className="fas fa-filter"></i>
               <span>Filtro Avançado</span>
+            </button>
+            <button className="px-5 py-3 bg-pastel-green text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2 whitespace-nowrap">
+              <BarChart3 size={18} />
+              <span>Analytics</span>
             </button>
             <button className="px-5 py-3 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2 whitespace-nowrap">
               <i className="fas fa-history"></i>
