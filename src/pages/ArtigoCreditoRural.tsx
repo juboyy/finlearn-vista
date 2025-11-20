@@ -28,28 +28,49 @@ export default function ArtigoCreditoRural() {
       // @ts-ignore - Plotly is loaded externally
       if (typeof Plotly === 'undefined') return;
 
-      // Credit Volume Chart
+      // Credit Volume Chart - Line Chart
       // @ts-ignore
       const volumeData = [{
-        x: ['2020', '2021', '2022', '2023', '2024E', '2025E'],
-        y: [236.5, 251.2, 280.4, 308.7, 335.8, 365.2],
-        type: 'bar',
-        marker: { color: '#C5E8D4' },
-        name: 'Volume (R$ bi)'
+        x: ['2020', '2020.5', '2021', '2021.5', '2022', '2022.5', '2023', '2023.5', '2024'],
+        y: [247, 268, 289, 315, 341, 344, 348, 380, 412],
+        type: 'scatter',
+        mode: 'lines',
+        line: { 
+          color: '#93C5D8',
+          width: 2,
+          shape: 'spline'
+        },
+        fill: 'none'
       }];
 
       // @ts-ignore
       const volumeLayout = {
-        title: { text: 'Volume de Crédito Rural (R$ bilhões)', font: { size: 16 } },
-        xaxis: { title: 'Ano' },
-        yaxis: { title: 'Volume (R$ bilhões)' },
-        margin: { t: 60, r: 20, b: 60, l: 60 },
-        plot_bgcolor: '#f8fafc',
-        paper_bgcolor: '#f8fafc'
+        xaxis: { 
+          title: '',
+          tickmode: 'array',
+          tickvals: ['2020', '2020.5', '2021', '2021.5', '2022', '2022.5', '2023', '2023.5', '2024'],
+          ticktext: ['2020', '', '2021', '', '2022', '', '2023', '', '2024'],
+          showgrid: true,
+          gridcolor: '#e2e8f0'
+        },
+        yaxis: { 
+          title: '',
+          range: [260, 440],
+          showgrid: true,
+          gridcolor: '#e2e8f0'
+        },
+        margin: { t: 20, r: 20, b: 60, l: 60 },
+        plot_bgcolor: '#ffffff',
+        paper_bgcolor: '#ffffff',
+        showlegend: false
       };
 
       // @ts-ignore
-      Plotly.newPlot('credit-volume-chart', volumeData, volumeLayout, { responsive: true, displayModeBar: false });
+      Plotly.newPlot('credit-volume-chart', volumeData, volumeLayout, { 
+        responsive: true, 
+        displayModeBar: false,
+        displaylogo: false 
+      });
 
       // Modality Chart
       // @ts-ignore
@@ -268,9 +289,10 @@ export default function ArtigoCreditoRural() {
                 <p className="text-slate-700 leading-relaxed mb-6">
                   A análise temporal dos últimos cinco anos revela padrões importantes de crescimento e sazonalidade no mercado de crédito rural:
                 </p>
-                <div className="bg-slate-50 rounded-lg p-6 mb-6">
+                <div className="bg-slate-50 rounded-lg p-6 mb-2">
                   <div id="credit-volume-chart" className="h-96"></div>
                 </div>
+                <p className="text-center text-sm text-slate-600 mb-6">Volume de Crédito Rural (R$ bilhões)</p>
                 <div className="bg-[#B8D4E8] bg-opacity-30 border border-[#B8D4E8] rounded-lg p-6">
                   <div className="flex items-start gap-3">
                     <AlertCircle className="w-5 h-5 text-slate-700 mt-1 flex-shrink-0" />
