@@ -959,7 +959,7 @@ const CriarAgente = () => {
                       <p className="text-sm text-muted-foreground mt-1">Consultor de Investimentos</p>
                       <div className="flex items-center gap-2 mt-2">
                         <span className="px-2 py-1 bg-primary/40 text-foreground text-xs rounded-full font-medium">Ativo</span>
-                        <span className="px-2 py-1 bg-muted text-muted-foreground text-xs rounded-full">Privado</span>
+                        <span className="px-2 py-1 bg-muted/60 text-foreground text-xs rounded-full font-medium">Privado</span>
                       </div>
                     </div>
 
@@ -989,7 +989,7 @@ const CriarAgente = () => {
                         {selectedCapabilities.map(capId => {
                         const cap = capabilities.find(c => c.id === capId);
                         if (!cap) return null;
-                        return <span key={capId} className="px-2 py-1 rounded-full bg-muted text-xs font-medium text-foreground border border-border">
+                        return <span key={capId} className="px-2 py-1 rounded-full bg-primary/40 text-foreground text-xs font-medium">
                               {cap.label}
                             </span>;
                       })}
@@ -1002,7 +1002,7 @@ const CriarAgente = () => {
                         {selectedTraits.map(traitId => {
                         const trait = traits.find(t => t.id === traitId);
                         if (!trait) return null;
-                        return <span key={traitId} className="px-2 py-1 rounded-full bg-muted text-xs font-medium text-foreground border border-border">
+                        return <span key={traitId} className="px-2 py-1 rounded-full bg-primary/40 text-foreground text-xs font-medium">
                               {trait.label}
                             </span>;
                       })}
