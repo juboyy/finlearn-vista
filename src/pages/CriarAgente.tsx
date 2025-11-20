@@ -131,7 +131,7 @@ const CriarAgente = () => {
         <div className="p-6 border-b border-border">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
-              <Brain className="text-primary-foreground" size={20} />
+              <Brain className="text-muted-foreground" size={20} />
             </div>
             <div>
               <h1 className="text-xl font-bold text-foreground">FinLearn AI</h1>
@@ -151,7 +151,7 @@ const CriarAgente = () => {
               <span className="font-medium">Conteúdo</span>
             </a>
             <a href="#" className="flex items-center space-x-3 px-4 py-3 rounded-xl bg-secondary">
-              <Brain size={18} className="text-primary-foreground" />
+              <Brain size={18} className="text-muted-foreground" />
               <span className="font-medium text-foreground">Agentes IA</span>
             </a>
             <a href="#" className="flex items-center space-x-3 px-4 py-3 rounded-xl text-muted-foreground hover:bg-secondary hover:text-foreground transition-all">
@@ -248,7 +248,7 @@ const CriarAgente = () => {
               <div className="bg-card rounded-2xl p-6 border border-border shadow-sm">
                 <div className="flex items-center space-x-3 mb-6">
                   <div className="w-10 h-10 rounded-xl bg-pastel-purple flex items-center justify-center">
-                    <Info className="text-pastel-purple-fg" size={20} />
+                    <Info className="text-muted-foreground" size={20} />
                   </div>
                   <h3 className="text-xl font-bold text-foreground">Informações Básicas</h3>
                 </div>
@@ -300,7 +300,7 @@ const CriarAgente = () => {
                 <div className="bg-card rounded-2xl p-6 border border-border shadow-sm">
                   <div className="flex items-center space-x-3 mb-6">
                     <div className="w-10 h-10 rounded-xl bg-pastel-blue flex items-center justify-center">
-                      <ImageIcon className="text-pastel-blue-fg" size={20} />
+                      <ImageIcon className="text-muted-foreground" size={20} />
                     </div>
                     <h3 className="text-xl font-bold text-foreground">Avatar do Agente</h3>
                   </div>
@@ -324,7 +324,7 @@ const CriarAgente = () => {
                 <div className="bg-card rounded-2xl p-6 border border-border shadow-sm">
                   <div className="flex items-center space-x-3 mb-6">
                     <div className="w-10 h-10 rounded-xl bg-pastel-green flex items-center justify-center">
-                      <Settings className="text-pastel-green-fg" size={20} />
+                      <Settings className="text-muted-foreground" size={20} />
                     </div>
                     <h3 className="text-xl font-bold text-foreground">Configurações</h3>
                   </div>
@@ -350,7 +350,7 @@ const CriarAgente = () => {
               <div className="bg-card rounded-2xl p-6 border border-border shadow-sm">
                 <div className="flex items-center space-x-3 mb-6">
                   <div className="w-10 h-10 rounded-xl bg-pastel-pink flex items-center justify-center">
-                    <Briefcase className="text-pastel-pink-fg" size={20} />
+                    <Briefcase className="text-muted-foreground" size={20} />
                   </div>
                   <h3 className="text-xl font-bold text-foreground">Área & Segmento</h3>
                 </div>
@@ -413,7 +413,7 @@ const CriarAgente = () => {
               <div className="bg-card rounded-2xl p-6 border border-border shadow-sm">
                 <div className="flex items-center space-x-3 mb-6">
                   <div className="w-10 h-10 rounded-xl bg-pastel-green flex items-center justify-center">
-                    <Brain className="text-pastel-green-fg" size={20} />
+                    <Brain className="text-muted-foreground" size={20} />
                   </div>
                   <h3 className="text-xl font-bold text-foreground">Especialidades Técnicas</h3>
                 </div>
@@ -422,27 +422,27 @@ const CriarAgente = () => {
                   <div>
                     <Label className="block text-sm font-semibold text-foreground mb-3">Conhecimentos Principais</Label>
                     <div className="flex flex-wrap gap-2">
-                      <button onClick={() => toggleKnowledge("fundamental")} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedKnowledge.includes("fundamental") ? "bg-pastel-blue text-pastel-blue-fg" : "bg-secondary border border-border text-muted-foreground hover:bg-accent"}`}>
+                      <button onClick={() => toggleKnowledge("fundamental")} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedKnowledge.includes("fundamental") ? "bg-pastel-blue text-muted-foreground" : "bg-secondary border border-border text-muted-foreground hover:bg-accent"}`}>
                         {selectedKnowledge.includes("fundamental") && <CheckCircle className="inline h-3 w-3 mr-1" />}
                         Análise Fundamentalista
                       </button>
-                      <button onClick={() => toggleKnowledge("technical")} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedKnowledge.includes("technical") ? "bg-pastel-blue text-pastel-blue-fg" : "bg-secondary border border-border text-muted-foreground hover:bg-accent"}`}>
+                      <button onClick={() => toggleKnowledge("technical")} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedKnowledge.includes("technical") ? "bg-pastel-blue text-muted-foreground" : "bg-secondary border border-border text-muted-foreground hover:bg-accent"}`}>
                         {selectedKnowledge.includes("technical") && <CheckCircle className="inline h-3 w-3 mr-1" />}
                         Análise Técnica
                       </button>
-                      <button onClick={() => toggleKnowledge("quantitative")} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedKnowledge.includes("quantitative") ? "bg-pastel-blue text-pastel-blue-fg" : "bg-secondary border border-border text-muted-foreground hover:bg-accent"}`}>
+                      <button onClick={() => toggleKnowledge("quantitative")} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedKnowledge.includes("quantitative") ? "bg-pastel-blue text-muted-foreground" : "bg-secondary border border-border text-muted-foreground hover:bg-accent"}`}>
                         {selectedKnowledge.includes("quantitative") ? <CheckCircle className="inline h-3 w-3 mr-1" /> : <Circle className="inline h-3 w-3 mr-1" />}
                         Análise Quantitativa
                       </button>
-                      <button onClick={() => toggleKnowledge("macro")} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedKnowledge.includes("macro") ? "bg-pastel-blue text-pastel-blue-fg" : "bg-secondary border border-border text-muted-foreground hover:bg-accent"}`}>
+                      <button onClick={() => toggleKnowledge("macro")} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedKnowledge.includes("macro") ? "bg-pastel-blue text-muted-foreground" : "bg-secondary border border-border text-muted-foreground hover:bg-accent"}`}>
                         {selectedKnowledge.includes("macro") ? <CheckCircle className="inline h-3 w-3 mr-1" /> : <Circle className="inline h-3 w-3 mr-1" />}
                         Análise Macroeconômica
                       </button>
-                      <button onClick={() => toggleKnowledge("risk")} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedKnowledge.includes("risk") ? "bg-pastel-blue text-pastel-blue-fg" : "bg-secondary border border-border text-muted-foreground hover:bg-accent"}`}>
+                      <button onClick={() => toggleKnowledge("risk")} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedKnowledge.includes("risk") ? "bg-pastel-blue text-muted-foreground" : "bg-secondary border border-border text-muted-foreground hover:bg-accent"}`}>
                         {selectedKnowledge.includes("risk") ? <CheckCircle className="inline h-3 w-3 mr-1" /> : <Circle className="inline h-3 w-3 mr-1" />}
                         Gestão de Risco
                       </button>
-                      <button onClick={() => toggleKnowledge("portfolio")} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedKnowledge.includes("portfolio") ? "bg-pastel-blue text-pastel-blue-fg" : "bg-secondary border border-border text-muted-foreground hover:bg-accent"}`}>
+                      <button onClick={() => toggleKnowledge("portfolio")} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedKnowledge.includes("portfolio") ? "bg-pastel-blue text-muted-foreground" : "bg-secondary border border-border text-muted-foreground hover:bg-accent"}`}>
                         {selectedKnowledge.includes("portfolio") ? <CheckCircle className="inline h-3 w-3 mr-1" /> : <Circle className="inline h-3 w-3 mr-1" />}
                         Gestão de Portfólio
                       </button>
@@ -455,10 +455,10 @@ const CriarAgente = () => {
                       <div className="p-4 bg-secondary rounded-xl border border-border">
                         <div className="flex items-center justify-between mb-2">
                           <span className="text-sm font-semibold text-foreground">Mercado de Ações</span>
-                          <span className="text-xs font-bold text-pastel-blue-fg">65%</span>
+                          <span className="text-xs font-bold text-muted-foreground">65%</span>
                         </div>
                         <div className="w-full bg-muted rounded-full h-2">
-                          <div className="bg-pastel-blue-fg h-2 rounded-full" style={{
+                          <div className="bg-muted-foreground h-2 rounded-full" style={{
                           width: '65%'
                         }}></div>
                         </div>
@@ -466,10 +466,10 @@ const CriarAgente = () => {
                       <div className="p-4 bg-secondary rounded-xl border border-border">
                         <div className="flex items-center justify-between mb-2">
                           <span className="text-sm font-semibold text-foreground">Análise de Risco</span>
-                          <span className="text-xs font-bold text-pastel-green-fg">85%</span>
+                          <span className="text-xs font-bold text-muted-foreground">85%</span>
                         </div>
                         <div className="w-full bg-muted rounded-full h-2">
-                          <div className="bg-pastel-green-fg h-2 rounded-full" style={{
+                          <div className="bg-muted-foreground h-2 rounded-full" style={{
                           width: '85%'
                         }}></div>
                         </div>
@@ -482,7 +482,7 @@ const CriarAgente = () => {
                     <div className="flex items-center space-x-4">
                       <span className="text-xs text-muted-foreground">1 ano</span>
                       <Slider value={[5]} min={0} max={20} step={1} className="flex-1" />
-                      <span className="px-4 py-2 bg-pastel-blue rounded-lg text-pastel-blue-fg font-bold text-sm">5 anos</span>
+                      <span className="px-4 py-2 bg-pastel-blue rounded-lg text-muted-foreground font-bold text-sm">5 anos</span>
                     </div>
                   </div>
                 </div>
@@ -492,7 +492,7 @@ const CriarAgente = () => {
               <div className="bg-card rounded-2xl p-6 border border-border shadow-sm">
                 <div className="flex items-center space-x-3 mb-6">
                   <div className="w-10 h-10 rounded-xl bg-pastel-purple flex items-center justify-center">
-                    <MessageSquare className="text-pastel-purple-fg" size={20} />
+                    <MessageSquare className="text-muted-foreground" size={20} />
                   </div>
                   <h3 className="text-xl font-bold text-foreground">Personalidade & Tom de Voz</h3>
                 </div>
@@ -533,15 +533,15 @@ const CriarAgente = () => {
                   <div>
                     <div className="grid grid-cols-3 gap-3">
                       <div className="p-4 bg-secondary rounded-xl border border-border text-center">
-                        <div className="text-2xl font-bold text-pastel-blue-fg mb-1">75%</div>
+                        <div className="text-2xl font-bold text-muted-foreground mb-1">75%</div>
                         <div className="text-xs text-muted-foreground">Formalidade</div>
                       </div>
                       <div className="p-4 bg-secondary rounded-xl border border-border text-center">
-                        <div className="text-2xl font-bold text-pastel-green-fg mb-1">60%</div>
+                        <div className="text-2xl font-bold text-muted-foreground mb-1">60%</div>
                         <div className="text-xs text-muted-foreground">Empatia</div>
                       </div>
                       <div className="p-4 bg-secondary rounded-xl border border-border text-center">
-                        <div className="text-2xl font-bold text-pastel-purple-fg mb-1">90%</div>
+                        <div className="text-2xl font-bold text-muted-foreground mb-1">90%</div>
                         <div className="text-xs text-muted-foreground">Objetividade</div>
                       </div>
                     </div>
@@ -553,7 +553,7 @@ const CriarAgente = () => {
               <div className="bg-card rounded-2xl p-6 border border-border shadow-sm">
                 <div className="flex items-center space-x-3 mb-6">
                   <div className="w-10 h-10 rounded-xl bg-pastel-pink flex items-center justify-center">
-                    <MessageSquare className="text-pastel-pink-fg" size={20} />
+                    <MessageSquare className="text-muted-foreground" size={20} />
                   </div>
                   <h3 className="text-xl font-bold text-foreground">Estilo de Resposta</h3>
                 </div>
@@ -631,7 +631,7 @@ const CriarAgente = () => {
               <div className="bg-card rounded-2xl p-6 border border-border shadow-sm">
                 <div className="flex items-center space-x-3 mb-6">
                   <div className="w-10 h-10 rounded-xl bg-pastel-blue flex items-center justify-center">
-                    <Brain className="text-pastel-blue-fg" size={20} />
+                    <Brain className="text-muted-foreground" size={20} />
                   </div>
                   <h3 className="text-xl font-bold text-foreground">Capacidades & Habilidades</h3>
                 </div>
@@ -660,7 +660,7 @@ const CriarAgente = () => {
               <div className="bg-card rounded-2xl p-6 border border-border shadow-sm">
                 <div className="flex items-center space-x-3 mb-6">
                   <div className="w-10 h-10 rounded-xl bg-pastel-purple flex items-center justify-center">
-                    <Mic className="text-pastel-purple-fg" size={20} />
+                    <Mic className="text-muted-foreground" size={20} />
                   </div>
                   <h3 className="text-xl font-bold text-foreground">Configurações de Voz</h3>
                 </div>
@@ -671,7 +671,7 @@ const CriarAgente = () => {
                     <div className="grid grid-cols-2 gap-3">
                       <button onClick={() => setVoiceType("male")} className={`p-4 bg-secondary border-2 rounded-xl text-left transition-all ${voiceType === "male" ? 'border-primary' : 'border-border hover:border-primary'}`}>
                         <div className="flex items-center space-x-3 mb-2">
-                          <Users className={voiceType === "male" ? "text-primary-foreground" : "text-muted-foreground"} size={18} />
+                          <Users className="text-muted-foreground" size={18} />
                           <span className={`text-sm font-bold ${voiceType === "male" ? 'text-foreground' : 'text-muted-foreground'}`}>
                             Masculina
                           </span>
@@ -680,7 +680,7 @@ const CriarAgente = () => {
                       </button>
                       <button onClick={() => setVoiceType("female")} className={`p-4 bg-secondary border-2 rounded-xl text-left transition-all ${voiceType === "female" ? 'border-primary' : 'border-border hover:border-primary'}`}>
                         <div className="flex items-center space-x-3 mb-2">
-                          <Users className={voiceType === "female" ? "text-primary-foreground" : "text-muted-foreground"} size={18} />
+                          <Users className="text-muted-foreground" size={18} />
                           <span className={`text-sm font-bold ${voiceType === "female" ? 'text-foreground' : 'text-muted-foreground'}`}>
                             Feminina
                           </span>
@@ -711,7 +711,7 @@ const CriarAgente = () => {
                     <div className="flex items-center space-x-4">
                       <span className="text-xs text-muted-foreground">0.5x</span>
                       <Slider value={voiceSpeed} onValueChange={setVoiceSpeed} min={50} max={150} step={10} className="flex-1" />
-                      <span className="px-3 py-1 bg-pastel-blue rounded-lg text-pastel-blue-fg font-bold text-xs">
+                      <span className="px-3 py-1 bg-pastel-blue rounded-lg text-muted-foreground font-bold text-xs">
                         {(voiceSpeed[0] / 100).toFixed(1)}x
                       </span>
                     </div>
@@ -730,7 +730,7 @@ const CriarAgente = () => {
                     <div className="flex items-center justify-between mb-3">
                       <span className="text-sm font-semibold text-foreground">Preview de Voz</span>
                       <button className="w-10 h-10 rounded-full bg-primary flex items-center justify-center hover:bg-primary/80 transition-all">
-                        <Play className="text-primary-foreground" size={16} />
+                        <Play className="text-muted-foreground" size={16} />
                       </button>
                     </div>
                     <div className="flex items-center space-x-2">
@@ -748,7 +748,7 @@ const CriarAgente = () => {
               <div className="bg-card rounded-2xl p-6 border border-border shadow-sm">
                 <div className="flex items-center space-x-3 mb-6">
                   <div className="w-10 h-10 rounded-xl bg-pastel-peach flex items-center justify-center">
-                    <FileCode className="text-pastel-peach-fg" size={20} />
+                    <FileCode className="text-muted-foreground" size={20} />
                   </div>
                   <h3 className="text-xl font-bold text-foreground">Estilo de Escrita</h3>
                 </div>
@@ -775,7 +775,7 @@ const CriarAgente = () => {
                       <div className="flex items-center justify-between p-3 rounded-xl bg-secondary border border-border">
                         <div className="flex items-center space-x-3">
                           <div className="w-8 h-8 rounded-lg bg-pastel-blue flex items-center justify-center">
-                            <Bold className="text-pastel-blue-fg" size={16} />
+                            <Bold className="text-muted-foreground" size={16} />
                           </div>
                           <span className="text-sm font-medium text-foreground">Negrito para ênfase</span>
                         </div>
@@ -784,7 +784,7 @@ const CriarAgente = () => {
                       <div className="flex items-center justify-between p-3 rounded-xl bg-secondary border border-border">
                         <div className="flex items-center space-x-3">
                           <div className="w-8 h-8 rounded-lg bg-pastel-purple flex items-center justify-center">
-                            <Italic className="text-pastel-purple-fg" size={16} />
+                            <Italic className="text-muted-foreground" size={16} />
                           </div>
                           <span className="text-sm font-medium text-foreground">Itálico para citações</span>
                         </div>
@@ -793,7 +793,7 @@ const CriarAgente = () => {
                       <div className="flex items-center justify-between p-3 rounded-xl bg-secondary border border-border">
                         <div className="flex items-center space-x-3">
                           <div className="w-8 h-8 rounded-lg bg-pastel-green flex items-center justify-center">
-                            <LinkIcon className="text-pastel-green-fg" size={16} />
+                            <LinkIcon className="text-muted-foreground" size={16} />
                           </div>
                           <span className="text-sm font-medium text-foreground">Links para referências</span>
                         </div>
@@ -802,7 +802,7 @@ const CriarAgente = () => {
                       <div className="flex items-center justify-between p-3 rounded-xl bg-secondary border border-border">
                         <div className="flex items-center space-x-3">
                           <div className="w-8 h-8 rounded-lg bg-pastel-pink flex items-center justify-center">
-                            <List className="text-pastel-pink-fg" size={16} />
+                            <List className="text-muted-foreground" size={16} />
                           </div>
                           <span className="text-sm font-medium text-foreground">Listas estruturadas</span>
                         </div>
@@ -811,7 +811,7 @@ const CriarAgente = () => {
                       <div className="flex items-center justify-between p-3 rounded-xl bg-secondary border border-border">
                         <div className="flex items-center space-x-3">
                           <div className="w-8 h-8 rounded-lg bg-pastel-peach flex items-center justify-center">
-                            <Hash className="text-pastel-peach-fg" size={16} />
+                            <Hash className="text-muted-foreground" size={16} />
                           </div>
                           <span className="text-sm font-medium text-foreground">Blocos de código</span>
                         </div>
@@ -837,7 +837,7 @@ const CriarAgente = () => {
               <div className="col-span-2 bg-card rounded-2xl border border-border shadow-sm p-6">
                 <div className="flex items-center space-x-3 mb-6">
                   <div className="w-10 h-10 rounded-xl bg-pastel-purple flex items-center justify-center">
-                    <MessageSquare className="text-pastel-purple-fg" size={20} />
+                    <MessageSquare className="text-muted-foreground" size={20} />
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-foreground">Preview do Agente</h3>
@@ -854,7 +854,7 @@ const CriarAgente = () => {
                       <div className="bg-card border-b border-border p-4">
                         <div className="flex items-center space-x-3">
                           <div className="w-10 h-10 rounded-full bg-pastel-blue flex items-center justify-center">
-                            <Brain className="text-pastel-blue-fg" size={20} />
+                            <Brain className="text-muted-foreground" size={20} />
                           </div>
                           <div>
                             <h4 className="text-sm font-bold text-foreground">Assistente Financeiro Pro</h4>
@@ -869,7 +869,7 @@ const CriarAgente = () => {
                       <div className="p-4 space-y-4 h-96 overflow-y-auto">
                         <div className="flex items-start space-x-3">
                           <div className="w-8 h-8 rounded-full bg-pastel-blue flex items-center justify-center flex-shrink-0">
-                            <Brain className="text-pastel-blue-fg" size={16} />
+                            <Brain className="text-muted-foreground" size={16} />
                           </div>
                           <div className="flex-1">
                             <div className="bg-background rounded-2xl rounded-tl-none p-4 border border-border">
@@ -893,7 +893,7 @@ const CriarAgente = () => {
 
                         <div className="flex items-start space-x-3">
                           <div className="w-8 h-8 rounded-full bg-pastel-blue flex items-center justify-center flex-shrink-0">
-                            <Brain className="text-pastel-blue-fg" size={16} />
+                            <Brain className="text-muted-foreground" size={16} />
                           </div>
                           <div className="flex-1">
                             <div className="bg-background rounded-2xl rounded-tl-none p-4 border border-border">
@@ -902,15 +902,15 @@ const CriarAgente = () => {
                               </p>
                               <ul className="space-y-2 text-sm text-foreground">
                                 <li className="flex items-start">
-                                  <CheckCircle className="text-green-600 mr-2 mt-0.5 flex-shrink-0" size={16} />
+                                  <CheckCircle className="text-muted-foreground mr-2 mt-0.5 flex-shrink-0" size={16} />
                                   <span><strong>Diversificação:</strong> Boa distribuição entre ativos</span>
                                 </li>
                                 <li className="flex items-start">
-                                  <ChartLine className="text-blue-500 mr-2 mt-0.5 flex-shrink-0" size={16} />
+                                  <ChartLine className="text-muted-foreground mr-2 mt-0.5 flex-shrink-0" size={16} />
                                   <span><strong>Performance:</strong> +12.5% no último trimestre</span>
                                 </li>
                                 <li className="flex items-start">
-                                  <Sparkles className="text-orange-500 mr-2 mt-0.5 flex-shrink-0" size={16} />
+                                  <Sparkles className="text-muted-foreground mr-2 mt-0.5 flex-shrink-0" size={16} />
                                   <span><strong>Sugestão:</strong> Considere aumentar exposição em FIIs</span>
                                 </li>
                               </ul>
@@ -926,7 +926,7 @@ const CriarAgente = () => {
                         </button>
                         <input type="text" placeholder="Digite sua mensagem..." className="flex-1 px-4 py-3 bg-background border border-input rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-ring/20 transition-all duration-300" />
                         <button className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center hover:bg-primary/80 transition-all duration-300">
-                          <MessageSquare className="text-primary-foreground" size={18} />
+                          <MessageSquare className="text-muted-foreground" size={18} />
                         </button>
                       </div>
                     </div>
@@ -945,7 +945,7 @@ const CriarAgente = () => {
                 <div className="bg-card rounded-2xl p-6 border border-border shadow-sm mb-6">
                   <div className="flex items-center space-x-3 mb-6">
                     <div className="w-10 h-10 rounded-xl bg-pastel-purple flex items-center justify-center">
-                      <Info className="text-pastel-purple-fg" size={20} />
+                      <Info className="text-muted-foreground" size={20} />
                     </div>
                     <h3 className="text-xl font-bold text-foreground">Preview do Agente</h3>
                   </div>
@@ -1018,7 +1018,7 @@ const CriarAgente = () => {
                             <span className="font-bold text-foreground">85%</span>
                           </div>
                           <div className="w-full bg-muted rounded-full h-1.5">
-                            <div className="bg-pastel-blue-fg h-1.5 rounded-full" style={{
+                            <div className="bg-muted-foreground h-1.5 rounded-full" style={{
                             width: '85%'
                           }}></div>
                           </div>
@@ -1029,7 +1029,7 @@ const CriarAgente = () => {
                             <span className="font-bold text-foreground">92%</span>
                           </div>
                           <div className="w-full bg-muted rounded-full h-1.5">
-                            <div className="bg-pastel-green-fg h-1.5 rounded-full" style={{
+                            <div className="bg-muted-foreground h-1.5 rounded-full" style={{
                             width: '92%'
                           }}></div>
                           </div>
