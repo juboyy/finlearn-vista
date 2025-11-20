@@ -46,74 +46,6 @@ const DescobrirNovos = () => {
         </header>
 
         <div className="p-8">
-          <section className="bg-white rounded-xl p-4 border border-slate-200 mb-6">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm text-slate-600">Visualizar:</span>
-                  <button className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg">
-                    <i className="fas fa-th-large"></i>
-                  </button>
-                  <button className="p-2 bg-pastel-blue text-slate-700 rounded-lg transition">
-                    <i className="fas fa-list"></i>
-                  </button>
-                </div>
-                <div className="flex items-center gap-2">
-                  <select className="text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pastel-blue appearance-none pr-8 bg-white">
-                    <option>Nome (A-Z)</option>
-                    <option>Mais seguidos</option>
-                    <option>Mais ativos</option>
-                    <option>Novos autores</option>
-                  </select>
-                </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <button 
-                  onClick={() => navigate('/estatisticas')}
-                  className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition flex items-center gap-2 font-medium"
-                >
-                  <i className="fas fa-chart-bar"></i>
-                  <span>Estatísticas</span>
-                </button>
-                <button className="px-4 py-2 bg-pastel-green text-slate-700 rounded-lg text-sm font-medium flex items-center gap-2">
-                  <i className="fas fa-layer-group"></i>
-                  <span>Todos</span>
-                </button>
-                <button className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition flex items-center gap-2 font-medium">
-                  <i className="far fa-star"></i>
-                  <span>Favoritos</span>
-                </button>
-                <button className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition flex items-center gap-2 font-medium">
-                  <i className="far fa-bell"></i>
-                  <span>Com Notificação</span>
-                </button>
-              </div>
-            </div>
-          </section>
-
-          <section className="bg-white rounded-xl p-4 border border-slate-200 mb-6">
-            <div className="flex items-center gap-3">
-              <button 
-                onClick={() => navigate('/autores')}
-                className="px-6 py-2.5 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2"
-              >
-                <i className="fas fa-user-check"></i>
-                <span>Seguindo</span>
-              </button>
-              <button 
-                onClick={() => navigate('/seguidores')}
-                className="px-6 py-2.5 bg-pastel-green text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2"
-              >
-                <i className="fas fa-users"></i>
-                <span>Seguidores</span>
-              </button>
-              <button className="px-6 py-2.5 bg-pastel-purple text-slate-700 rounded-lg font-medium flex items-center gap-2">
-                <i className="fas fa-compass"></i>
-                <span>Descobrir Novos</span>
-              </button>
-            </div>
-          </section>
-
           <div className="flex gap-6">
             <aside className="w-80 space-y-6">
               <section className="bg-white rounded-xl p-6 border border-slate-200">
@@ -297,6 +229,74 @@ const DescobrirNovos = () => {
             </aside>
 
             <div className="flex-1 space-y-6">
+              <section className="bg-white rounded-xl p-4 border border-slate-200">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-slate-600">Visualizar:</span>
+                      <button className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg">
+                        <i className="fas fa-th-large"></i>
+                      </button>
+                      <button className="p-2 bg-pastel-blue text-slate-700 rounded-lg transition">
+                        <i className="fas fa-list"></i>
+                      </button>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <select className="text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pastel-blue appearance-none pr-8 bg-white">
+                        <option>Nome (A-Z)</option>
+                        <option>Mais seguidos</option>
+                        <option>Mais ativos</option>
+                        <option>Novos autores</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <button 
+                      onClick={() => navigate('/estatisticas')}
+                      className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition flex items-center gap-2 font-medium"
+                    >
+                      <i className="fas fa-chart-bar"></i>
+                      <span>Estatísticas</span>
+                    </button>
+                    <button className="px-4 py-2 bg-pastel-green text-slate-700 rounded-lg text-sm font-medium flex items-center gap-2">
+                      <i className="fas fa-layer-group"></i>
+                      <span>Todos</span>
+                    </button>
+                    <button className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition flex items-center gap-2 font-medium">
+                      <i className="far fa-star"></i>
+                      <span>Favoritos</span>
+                    </button>
+                    <button className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition flex items-center gap-2 font-medium">
+                      <i className="far fa-bell"></i>
+                      <span>Com Notificação</span>
+                    </button>
+                  </div>
+                </div>
+              </section>
+
+              <section className="bg-white rounded-xl p-4 border border-slate-200">
+                <div className="flex items-center gap-3">
+                  <button 
+                    onClick={() => navigate('/autores')}
+                    className="px-6 py-2.5 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2"
+                  >
+                    <i className="fas fa-user-check"></i>
+                    <span>Seguindo</span>
+                  </button>
+                  <button 
+                    onClick={() => navigate('/seguidores')}
+                    className="px-6 py-2.5 bg-pastel-green text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2"
+                  >
+                    <i className="fas fa-users"></i>
+                    <span>Seguidores</span>
+                  </button>
+                  <button className="px-6 py-2.5 bg-pastel-purple text-slate-700 rounded-lg font-medium flex items-center gap-2">
+                    <i className="fas fa-compass"></i>
+                    <span>Descobrir Novos</span>
+                  </button>
+                </div>
+              </section>
+
               <section className="bg-white rounded-xl p-6 border border-slate-200">
                 <div className="flex items-center justify-between mb-6">
                   <div>
