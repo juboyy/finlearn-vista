@@ -72,27 +72,34 @@ export default function ArtigoCreditoRural() {
         displaylogo: false 
       });
 
-      // Modality Chart
+      // Modality Chart - Donut Chart
       // @ts-ignore
       const modalityData = [{
         values: [42, 28, 20, 10],
         labels: ['Custeio', 'Investimento', 'Comercialização', 'Industrialização'],
         type: 'pie',
+        hole: 0.4,
+        textinfo: 'none',
         marker: {
-          colors: ['#C5E8D4', '#B8D4E8', '#E8E0C5', '#E8C5D8']
-        }
+          colors: ['#B8D4E8', '#C5E8D4', '#E8E0C5', '#D4C5E8']
+        },
+        hovertemplate: '<b>%{label}</b><br>%{percent}<br><extra></extra>'
       }];
 
       // @ts-ignore
       const modalityLayout = {
-        title: { text: 'Distribuição por Modalidade (2024)', font: { size: 16 } },
-        margin: { t: 60, r: 20, b: 40, l: 20 },
+        margin: { t: 20, r: 20, b: 20, l: 20 },
         plot_bgcolor: '#f8fafc',
-        paper_bgcolor: '#f8fafc'
+        paper_bgcolor: '#f8fafc',
+        showlegend: false
       };
 
       // @ts-ignore
-      Plotly.newPlot('modality-chart', modalityData, modalityLayout, { responsive: true, displayModeBar: false });
+      Plotly.newPlot('modality-chart', modalityData, modalityLayout, { 
+        responsive: true, 
+        displayModeBar: false,
+        displaylogo: false 
+      });
 
       // Risk Chart
       // @ts-ignore
@@ -309,42 +316,53 @@ export default function ArtigoCreditoRural() {
               {/* Distribution by Modality */}
               <section>
                 <h2 className="text-2xl font-bold text-slate-800 mb-4">Distribuição por Modalidade</h2>
-                <div className="grid grid-cols-2 gap-6">
+                <p className="text-slate-700 leading-relaxed mb-6">
+                  A composição do portfolio de crédito rural apresenta características distintas que impactam diretamente na gestão de risco e na rentabilidade das operações:
+                </p>
+                <div className="grid grid-cols-2 gap-6 mb-6">
                   <div className="bg-slate-50 rounded-lg p-6">
                     <div id="modality-chart" className="h-80"></div>
                   </div>
                   <div className="space-y-4">
                     <div className="bg-white border border-slate-200 rounded-lg p-4">
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#C5E8D4' }}></div>
-                        <h4 className="font-semibold text-slate-800">Custeio</h4>
-                        <span className="ml-auto text-2xl font-bold text-slate-800">42%</span>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-sm font-medium text-slate-700">Custeio</span>
+                        <span className="text-sm font-bold text-slate-800">42%</span>
                       </div>
-                      <p className="text-sm text-slate-600">Financiamento de despesas do ciclo produtivo (insumos, defensivos, mão de obra)</p>
+                      <div className="w-full bg-slate-200 rounded-full h-2">
+                        <div className="bg-[#B8D4E8] h-2 rounded-full" style={{ width: '42%' }}></div>
+                      </div>
+                      <p className="text-xs text-slate-500 mt-2">R$ 173,04 bilhões</p>
                     </div>
                     <div className="bg-white border border-slate-200 rounded-lg p-4">
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#B8D4E8' }}></div>
-                        <h4 className="font-semibold text-slate-800">Investimento</h4>
-                        <span className="ml-auto text-2xl font-bold text-slate-800">28%</span>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-sm font-medium text-slate-700">Investimento</span>
+                        <span className="text-sm font-bold text-slate-800">28%</span>
                       </div>
-                      <p className="text-sm text-slate-600">Aquisição de máquinas, equipamentos e melhorias de infraestrutura</p>
+                      <div className="w-full bg-slate-200 rounded-full h-2">
+                        <div className="bg-[#C5E8D4] h-2 rounded-full" style={{ width: '28%' }}></div>
+                      </div>
+                      <p className="text-xs text-slate-500 mt-2">R$ 115,36 bilhões</p>
                     </div>
                     <div className="bg-white border border-slate-200 rounded-lg p-4">
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#E8E0C5' }}></div>
-                        <h4 className="font-semibold text-slate-800">Comercialização</h4>
-                        <span className="ml-auto text-2xl font-bold text-slate-800">20%</span>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-sm font-medium text-slate-700">Comercialização</span>
+                        <span className="text-sm font-bold text-slate-800">20%</span>
                       </div>
-                      <p className="text-sm text-slate-600">Financiamento para estocagem e comercialização da produção</p>
+                      <div className="w-full bg-slate-200 rounded-full h-2">
+                        <div className="bg-[#E8E0C5] h-2 rounded-full" style={{ width: '20%' }}></div>
+                      </div>
+                      <p className="text-xs text-slate-500 mt-2">R$ 82,40 bilhões</p>
                     </div>
                     <div className="bg-white border border-slate-200 rounded-lg p-4">
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#E8C5D8' }}></div>
-                        <h4 className="font-semibold text-slate-800">Industrialização</h4>
-                        <span className="ml-auto text-2xl font-bold text-slate-800">10%</span>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-sm font-medium text-slate-700">Industrialização</span>
+                        <span className="text-sm font-bold text-slate-800">10%</span>
                       </div>
-                      <p className="text-sm text-slate-600">Financiamento para beneficiamento e transformação de produtos</p>
+                      <div className="w-full bg-slate-200 rounded-full h-2">
+                        <div className="bg-[#D4C5E8] h-2 rounded-full" style={{ width: '10%' }}></div>
+                      </div>
+                      <p className="text-xs text-slate-500 mt-2">R$ 41,20 bilhões</p>
                     </div>
                   </div>
                 </div>
