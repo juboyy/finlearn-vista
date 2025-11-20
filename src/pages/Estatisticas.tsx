@@ -1,9 +1,11 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { Bell, Search, Filter, Users } from "lucide-react";
+import { Bell, Search, Filter, Users, ArrowLeft } from "lucide-react";
 import { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Estatisticas = () => {
   const chartRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (chartRef.current && (window as any).Plotly) {
@@ -83,6 +85,12 @@ const Estatisticas = () => {
         <header className="bg-card/80 backdrop-blur-sm border-b border-border sticky top-0 z-40">
           <div className="px-8 h-20 flex items-center justify-between">
             <div className="flex items-center gap-6">
+              <button 
+                onClick={() => navigate(-1)}
+                className="flex items-center justify-center w-10 h-10 rounded-lg bg-slate-100 text-pastel-gray-dark hover:bg-slate-200 transition-colors"
+              >
+                <ArrowLeft size={20} />
+              </button>
               <div>
                 <h1 className="text-2xl font-bold text-slate-900">Meus Autores</h1>
                 <p className="text-sm text-muted-foreground mt-0.5">Gerencie os criadores de conteúdo que você segue</p>
