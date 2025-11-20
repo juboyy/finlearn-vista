@@ -1,5 +1,6 @@
 import { NavLink } from "@/components/NavLink";
 import { Home, Newspaper, Bot, GraduationCap, Book, Store, MessageSquare } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 const navigation = [{
   name: "Dashboard",
   href: "/",
@@ -30,6 +31,8 @@ const navigation = [{
   icon: MessageSquare
 }];
 const Aprendizado = () => {
+  const navigate = useNavigate();
+  
   return <div className="flex h-screen overflow-hidden">
       <aside className="w-64 bg-white border-r border-slate-200 flex flex-col">
         <div className="p-6 border-b border-slate-200">
@@ -91,7 +94,7 @@ const Aprendizado = () => {
                 <i className="fas fa-th-large text-sm"></i>
                 <span>Todos</span>
               </button>
-              <button className="px-5 py-2.5 text-slate-600 hover:bg-slate-100 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm">
+              <button className="px-5 py-2.5 text-slate-600 hover:bg-slate-100 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm" onClick={() => navigate('/podcasts')}>
                 <i className="fas fa-podcast text-sm"></i>
                 <span>Podcasts</span>
               </button>
