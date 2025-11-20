@@ -1,12 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { 
-  ArrowLeft, Save, Rocket, Info, ImageIcon, Upload, BookOpen, 
-  Brain, Mic, Play, MessageSquare, ChartLine, Target, Shield, 
-  GraduationCap, Newspaper, Bell, FileText, Users, Settings,
-  CheckCircle, Circle, Briefcase, Clock, FileCode, Sparkles,
-  Heart, Bold, Italic, Link as LinkIcon, List, Hash, TrendingUp
-} from "lucide-react";
+import { ArrowLeft, Save, Rocket, Info, ImageIcon, Upload, BookOpen, Brain, Mic, Play, MessageSquare, ChartLine, Target, Shield, GraduationCap, Newspaper, Bell, FileText, Users, Settings, CheckCircle, Circle, Briefcase, Clock, FileCode, Sparkles, Heart, Bold, Italic, Link as LinkIcon, List, Hash, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,11 +10,10 @@ import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
-
 const CriarAgente = () => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
-  
+
   // Form states
   const [selectedCapabilities, setSelectedCapabilities] = useState<string[]>(["analysis", "portfolio", "risk", "education"]);
   const [selectedTraits, setSelectedTraits] = useState<string[]>(["professional", "friendly"]);
@@ -31,7 +24,7 @@ const CriarAgente = () => {
   const [responseSize, setResponseSize] = useState("medium");
   const [vocabulary, setVocabulary] = useState("intermediate");
   const [voiceType, setVoiceType] = useState("male");
-  
+
   // Switches
   const [useBold, setUseBold] = useState(true);
   const [useItalic, setUseItalic] = useState(false);
@@ -44,52 +37,95 @@ const CriarAgente = () => {
   const [fidosCheck, setFidosCheck] = useState(true);
   const [rendaFixaCheck, setRendaFixaCheck] = useState(false);
   const [derivativosCheck, setDerivativosCheck] = useState(false);
-
   const toggleCapability = (capability: string) => {
-    setSelectedCapabilities(prev => 
-      prev.includes(capability) ? prev.filter(c => c !== capability) : [...prev, capability]
-    );
+    setSelectedCapabilities(prev => prev.includes(capability) ? prev.filter(c => c !== capability) : [...prev, capability]);
   };
-
   const toggleTrait = (trait: string) => {
-    setSelectedTraits(prev => 
-      prev.includes(trait) ? prev.filter(t => t !== trait) : [...prev, trait]
-    );
+    setSelectedTraits(prev => prev.includes(trait) ? prev.filter(t => t !== trait) : [...prev, trait]);
   };
-
   const toggleKnowledge = (knowledge: string) => {
-    setSelectedKnowledge(prev => 
-      prev.includes(knowledge) ? prev.filter(k => k !== knowledge) : [...prev, knowledge]
-    );
+    setSelectedKnowledge(prev => prev.includes(knowledge) ? prev.filter(k => k !== knowledge) : [...prev, knowledge]);
   };
-
-  const capabilities = [
-    { id: "analysis", label: "Análise de Mercado", desc: "Insights e análise de mercado", icon: ChartLine, color: "bg-pastel-blue" },
-    { id: "portfolio", label: "Gestão de Portfólio", desc: "Otimização e rebalanceamento", icon: Target, color: "bg-pastel-green" },
-    { id: "risk", label: "Análise de Risco", desc: "Avaliação e mitigação", icon: Shield, color: "bg-pastel-pink" },
-    { id: "prediction", label: "Previsões", desc: "Modelos preditivos", icon: Brain, color: "bg-pastel-purple" },
-    { id: "education", label: "Educação Financeira", desc: "Tutoriais e explicações", icon: GraduationCap, color: "bg-pastel-purple" },
-    { id: "news", label: "Notícias", desc: "Resumo de eventos", icon: Newspaper, color: "bg-pastel-peach" },
-    { id: "alerts", label: "Alertas", desc: "Notificações personalizadas", icon: Bell, color: "bg-pastel-pink" },
-    { id: "reports", label: "Relatórios", desc: "Geração automática", icon: FileText, color: "bg-pastel-peach" },
-  ];
-
-  const traits = [
-    { id: "professional", label: "Profissional", desc: "Formal, objetivo e focado em resultados" },
-    { id: "friendly", label: "Amigável", desc: "Caloroso, acessível e empático" },
-    { id: "analytical", label: "Analítico", desc: "Detalhista, lógico e baseado em dados" },
-    { id: "creative", label: "Criativo", desc: "Inovador, versátil e inspirador" },
-  ];
-
-  const steps = [
-    { number: 1, label: "Informações Básicas" },
-    { number: 2, label: "Configuração" },
-    { number: 3, label: "Personalidade" },
-    { number: 4, label: "Finalização" }
-  ];
-
-  return (
-    <div className="flex min-h-screen bg-background">
+  const capabilities = [{
+    id: "analysis",
+    label: "Análise de Mercado",
+    desc: "Insights e análise de mercado",
+    icon: ChartLine,
+    color: "bg-pastel-blue"
+  }, {
+    id: "portfolio",
+    label: "Gestão de Portfólio",
+    desc: "Otimização e rebalanceamento",
+    icon: Target,
+    color: "bg-pastel-green"
+  }, {
+    id: "risk",
+    label: "Análise de Risco",
+    desc: "Avaliação e mitigação",
+    icon: Shield,
+    color: "bg-pastel-pink"
+  }, {
+    id: "prediction",
+    label: "Previsões",
+    desc: "Modelos preditivos",
+    icon: Brain,
+    color: "bg-pastel-purple"
+  }, {
+    id: "education",
+    label: "Educação Financeira",
+    desc: "Tutoriais e explicações",
+    icon: GraduationCap,
+    color: "bg-pastel-purple"
+  }, {
+    id: "news",
+    label: "Notícias",
+    desc: "Resumo de eventos",
+    icon: Newspaper,
+    color: "bg-pastel-peach"
+  }, {
+    id: "alerts",
+    label: "Alertas",
+    desc: "Notificações personalizadas",
+    icon: Bell,
+    color: "bg-pastel-pink"
+  }, {
+    id: "reports",
+    label: "Relatórios",
+    desc: "Geração automática",
+    icon: FileText,
+    color: "bg-pastel-peach"
+  }];
+  const traits = [{
+    id: "professional",
+    label: "Profissional",
+    desc: "Formal, objetivo e focado em resultados"
+  }, {
+    id: "friendly",
+    label: "Amigável",
+    desc: "Caloroso, acessível e empático"
+  }, {
+    id: "analytical",
+    label: "Analítico",
+    desc: "Detalhista, lógico e baseado em dados"
+  }, {
+    id: "creative",
+    label: "Criativo",
+    desc: "Inovador, versátil e inspirador"
+  }];
+  const steps = [{
+    number: 1,
+    label: "Informações Básicas"
+  }, {
+    number: 2,
+    label: "Configuração"
+  }, {
+    number: 3,
+    label: "Personalidade"
+  }, {
+    number: 4,
+    label: "Finalização"
+  }];
+  return <div className="flex min-h-screen bg-background">
       {/* Sidebar */}
       <aside className="w-72 bg-card border-r border-border fixed left-0 top-0 h-screen overflow-y-auto">
         <div className="p-6 border-b border-border">
@@ -140,11 +176,7 @@ const CriarAgente = () => {
         <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-border bg-card">
           <div className="flex items-center space-x-3 px-3 py-3 rounded-xl bg-secondary">
             <div className="relative">
-              <img 
-                src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" 
-                alt="User" 
-                className="w-10 h-10 rounded-full ring-2 ring-border"
-              />
+              <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" alt="User" className="w-10 h-10 rounded-full ring-2 ring-border" />
               <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-card"></div>
             </div>
             <div className="flex-1 min-w-0">
@@ -166,10 +198,7 @@ const CriarAgente = () => {
             <div className="flex items-center justify-between">
               <div>
                 <div className="flex items-center space-x-3">
-                  <button 
-                    onClick={() => navigate("/meus-agentes")}
-                    className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center hover:bg-accent transition-all border border-border"
-                  >
+                  <button onClick={() => navigate("/meus-agentes")} className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center hover:bg-accent transition-all border border-border">
                     <ArrowLeft className="text-muted-foreground" size={18} />
                   </button>
                   <div>
@@ -195,25 +224,17 @@ const CriarAgente = () => {
         {/* Wizard Steps */}
         <div className="px-8 py-6 border-b border-border bg-card">
           <div className="max-w-5xl mx-auto flex items-center justify-between">
-            {steps.map((step, idx) => (
-              <div key={step.number} className="flex items-center flex-1">
+            {steps.map((step, idx) => <div key={step.number} className="flex items-center flex-1">
                 <div className="flex flex-col items-center">
-                  <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg mb-2 transition-colors ${
-                    currentStep >= step.number ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground'
-                  }`}>
+                  <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg mb-2 transition-colors ${currentStep >= step.number ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground'}`}>
                     {step.number}
                   </div>
                   <span className={`text-sm font-medium ${currentStep >= step.number ? 'text-foreground' : 'text-muted-foreground'}`}>
                     {step.label}
                   </span>
                 </div>
-                {idx < steps.length - 1 && (
-                  <div className={`flex-1 h-1 mx-4 mt-[-20px] transition-colors ${
-                    currentStep > step.number ? 'bg-primary' : 'bg-border'
-                  }`}></div>
-                )}
-              </div>
-            ))}
+                {idx < steps.length - 1 && <div className={`flex-1 h-1 mx-4 mt-[-20px] transition-colors ${currentStep > step.number ? 'bg-primary' : 'bg-border'}`}></div>}
+              </div>)}
           </div>
         </div>
 
@@ -235,11 +256,7 @@ const CriarAgente = () => {
                 <div className="space-y-5">
                   <div>
                     <Label className="block text-sm font-semibold text-foreground mb-2">Nome do Agente</Label>
-                    <Input 
-                      placeholder="Ex: Assistente Financeiro Pro" 
-                      className="rounded-xl"
-                      defaultValue=""
-                    />
+                    <Input placeholder="Ex: Assistente Financeiro Pro" className="rounded-xl" defaultValue="" />
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
@@ -273,11 +290,7 @@ const CriarAgente = () => {
 
                   <div>
                     <Label className="block text-sm font-semibold text-foreground mb-2">Descrição Curta</Label>
-                    <Textarea 
-                      placeholder="Descreva brevemente o propósito e as capacidades do agente..."
-                      className="rounded-xl min-h-[100px]"
-                      defaultValue=""
-                    />
+                    <Textarea placeholder="Descreva brevemente o propósito e as capacidades do agente..." className="rounded-xl min-h-[100px]" defaultValue="" />
                   </div>
                 </div>
               </div>
@@ -361,31 +374,19 @@ const CriarAgente = () => {
                     <Label className="block text-sm font-semibold text-foreground mb-2">Segmento de Especialização</Label>
                     <div className="grid grid-cols-2 gap-3">
                       <label className="flex items-center space-x-3 p-3 bg-secondary rounded-xl border border-border cursor-pointer hover:border-primary transition-all">
-                        <Checkbox 
-                          checked={acoesCheck} 
-                          onCheckedChange={(checked) => setAcoesCheck(!!checked)}
-                        />
+                        <Checkbox checked={acoesCheck} onCheckedChange={checked => setAcoesCheck(!!checked)} />
                         <span className="text-sm text-foreground">Ações & Renda Variável</span>
                       </label>
                       <label className="flex items-center space-x-3 p-3 bg-secondary rounded-xl border border-border cursor-pointer hover:border-primary transition-all">
-                        <Checkbox 
-                          checked={fidosCheck} 
-                          onCheckedChange={(checked) => setFidosCheck(!!checked)}
-                        />
+                        <Checkbox checked={fidosCheck} onCheckedChange={checked => setFidosCheck(!!checked)} />
                         <span className="text-sm text-foreground">FIIs de Investimento</span>
                       </label>
                       <label className="flex items-center space-x-3 p-3 bg-secondary rounded-xl border border-border cursor-pointer hover:border-primary transition-all">
-                        <Checkbox 
-                          checked={rendaFixaCheck} 
-                          onCheckedChange={(checked) => setRendaFixaCheck(!!checked)}
-                        />
+                        <Checkbox checked={rendaFixaCheck} onCheckedChange={checked => setRendaFixaCheck(!!checked)} />
                         <span className="text-sm text-foreground">Renda Fixa</span>
                       </label>
                       <label className="flex items-center space-x-3 p-3 bg-secondary rounded-xl border border-border cursor-pointer hover:border-primary transition-all">
-                        <Checkbox 
-                          checked={derivativosCheck} 
-                          onCheckedChange={(checked) => setDerivativosCheck(!!checked)}
-                        />
+                        <Checkbox checked={derivativosCheck} onCheckedChange={checked => setDerivativosCheck(!!checked)} />
                         <span className="text-sm text-foreground">Derivativos</span>
                       </label>
                     </div>
@@ -421,69 +422,27 @@ const CriarAgente = () => {
                   <div>
                     <Label className="block text-sm font-semibold text-foreground mb-3">Conhecimentos Principais</Label>
                     <div className="flex flex-wrap gap-2">
-                      <button
-                        onClick={() => toggleKnowledge("fundamental")}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                          selectedKnowledge.includes("fundamental")
-                            ? "bg-pastel-blue text-pastel-blue-fg"
-                            : "bg-secondary border border-border text-muted-foreground hover:bg-accent"
-                        }`}
-                      >
+                      <button onClick={() => toggleKnowledge("fundamental")} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedKnowledge.includes("fundamental") ? "bg-pastel-blue text-pastel-blue-fg" : "bg-secondary border border-border text-muted-foreground hover:bg-accent"}`}>
                         {selectedKnowledge.includes("fundamental") && <CheckCircle className="inline h-3 w-3 mr-1" />}
                         Análise Fundamentalista
                       </button>
-                      <button
-                        onClick={() => toggleKnowledge("technical")}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                          selectedKnowledge.includes("technical")
-                            ? "bg-pastel-blue text-pastel-blue-fg"
-                            : "bg-secondary border border-border text-muted-foreground hover:bg-accent"
-                        }`}
-                      >
+                      <button onClick={() => toggleKnowledge("technical")} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedKnowledge.includes("technical") ? "bg-pastel-blue text-pastel-blue-fg" : "bg-secondary border border-border text-muted-foreground hover:bg-accent"}`}>
                         {selectedKnowledge.includes("technical") && <CheckCircle className="inline h-3 w-3 mr-1" />}
                         Análise Técnica
                       </button>
-                      <button
-                        onClick={() => toggleKnowledge("quantitative")}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                          selectedKnowledge.includes("quantitative")
-                            ? "bg-pastel-blue text-pastel-blue-fg"
-                            : "bg-secondary border border-border text-muted-foreground hover:bg-accent"
-                        }`}
-                      >
+                      <button onClick={() => toggleKnowledge("quantitative")} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedKnowledge.includes("quantitative") ? "bg-pastel-blue text-pastel-blue-fg" : "bg-secondary border border-border text-muted-foreground hover:bg-accent"}`}>
                         {selectedKnowledge.includes("quantitative") ? <CheckCircle className="inline h-3 w-3 mr-1" /> : <Circle className="inline h-3 w-3 mr-1" />}
                         Análise Quantitativa
                       </button>
-                      <button
-                        onClick={() => toggleKnowledge("macro")}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                          selectedKnowledge.includes("macro")
-                            ? "bg-pastel-blue text-pastel-blue-fg"
-                            : "bg-secondary border border-border text-muted-foreground hover:bg-accent"
-                        }`}
-                      >
+                      <button onClick={() => toggleKnowledge("macro")} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedKnowledge.includes("macro") ? "bg-pastel-blue text-pastel-blue-fg" : "bg-secondary border border-border text-muted-foreground hover:bg-accent"}`}>
                         {selectedKnowledge.includes("macro") ? <CheckCircle className="inline h-3 w-3 mr-1" /> : <Circle className="inline h-3 w-3 mr-1" />}
                         Análise Macroeconômica
                       </button>
-                      <button
-                        onClick={() => toggleKnowledge("risk")}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                          selectedKnowledge.includes("risk")
-                            ? "bg-pastel-blue text-pastel-blue-fg"
-                            : "bg-secondary border border-border text-muted-foreground hover:bg-accent"
-                        }`}
-                      >
+                      <button onClick={() => toggleKnowledge("risk")} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedKnowledge.includes("risk") ? "bg-pastel-blue text-pastel-blue-fg" : "bg-secondary border border-border text-muted-foreground hover:bg-accent"}`}>
                         {selectedKnowledge.includes("risk") ? <CheckCircle className="inline h-3 w-3 mr-1" /> : <Circle className="inline h-3 w-3 mr-1" />}
                         Gestão de Risco
                       </button>
-                      <button
-                        onClick={() => toggleKnowledge("portfolio")}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                          selectedKnowledge.includes("portfolio")
-                            ? "bg-pastel-blue text-pastel-blue-fg"
-                            : "bg-secondary border border-border text-muted-foreground hover:bg-accent"
-                        }`}
-                      >
+                      <button onClick={() => toggleKnowledge("portfolio")} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedKnowledge.includes("portfolio") ? "bg-pastel-blue text-pastel-blue-fg" : "bg-secondary border border-border text-muted-foreground hover:bg-accent"}`}>
                         {selectedKnowledge.includes("portfolio") ? <CheckCircle className="inline h-3 w-3 mr-1" /> : <Circle className="inline h-3 w-3 mr-1" />}
                         Gestão de Portfólio
                       </button>
@@ -499,7 +458,9 @@ const CriarAgente = () => {
                           <span className="text-xs font-bold text-pastel-blue-fg">65%</span>
                         </div>
                         <div className="w-full bg-muted rounded-full h-2">
-                          <div className="bg-pastel-blue-fg h-2 rounded-full" style={{ width: '65%' }}></div>
+                          <div className="bg-pastel-blue-fg h-2 rounded-full" style={{
+                          width: '65%'
+                        }}></div>
                         </div>
                       </div>
                       <div className="p-4 bg-secondary rounded-xl border border-border">
@@ -508,7 +469,9 @@ const CriarAgente = () => {
                           <span className="text-xs font-bold text-pastel-green-fg">85%</span>
                         </div>
                         <div className="w-full bg-muted rounded-full h-2">
-                          <div className="bg-pastel-green-fg h-2 rounded-full" style={{ width: '85%' }}></div>
+                          <div className="bg-pastel-green-fg h-2 rounded-full" style={{
+                          width: '85%'
+                        }}></div>
                         </div>
                       </div>
                     </div>
@@ -518,13 +481,7 @@ const CriarAgente = () => {
                     <Label className="block text-sm font-semibold text-foreground mb-2">Área de Experiência Simulada</Label>
                     <div className="flex items-center space-x-4">
                       <span className="text-xs text-muted-foreground">1 ano</span>
-                      <Slider 
-                        value={[5]} 
-                        min={0} 
-                        max={20} 
-                        step={1}
-                        className="flex-1"
-                      />
+                      <Slider value={[5]} min={0} max={20} step={1} className="flex-1" />
                       <span className="px-4 py-2 bg-pastel-blue rounded-lg text-pastel-blue-fg font-bold text-sm">5 anos</span>
                     </div>
                   </div>
@@ -544,30 +501,18 @@ const CriarAgente = () => {
                   <div>
                     <Label className="block text-sm font-semibold text-foreground mb-3">Traços de Personalidade</Label>
                     <div className="grid grid-cols-2 gap-3">
-                      {traits.map((trait) => {
-                        const isSelected = selectedTraits.includes(trait.id);
-                        return (
-                          <button
-                            key={trait.id}
-                            onClick={() => toggleTrait(trait.id)}
-                            className={`p-4 bg-secondary rounded-xl border-2 cursor-pointer transition-all text-left ${
-                              isSelected ? 'border-primary' : 'border-border hover:border-primary'
-                            }`}
-                          >
+                      {traits.map(trait => {
+                      const isSelected = selectedTraits.includes(trait.id);
+                      return <button key={trait.id} onClick={() => toggleTrait(trait.id)} className={`p-4 bg-secondary rounded-xl border-2 cursor-pointer transition-all text-left ${isSelected ? 'border-primary' : 'border-border hover:border-primary'}`}>
                             <div className="flex items-center justify-between mb-2">
                               <span className={`text-sm font-semibold ${isSelected ? 'text-foreground' : 'text-muted-foreground'}`}>
                                 {trait.label}
                               </span>
-                              {isSelected ? (
-                                <CheckCircle className="text-primary" size={18} />
-                              ) : (
-                                <Circle className="text-muted-foreground" size={18} />
-                              )}
+                              {isSelected ? <CheckCircle className="text-primary" size={18} /> : <Circle className="text-muted-foreground" size={18} />}
                             </div>
                             <p className="text-xs text-muted-foreground">{trait.desc}</p>
-                          </button>
-                        );
-                      })}
+                          </button>;
+                    })}
                     </div>
                   </div>
 
@@ -646,25 +591,13 @@ const CriarAgente = () => {
                   <div>
                     <Label className="block text-sm font-semibold text-foreground mb-3">Tamanho das Respostas</Label>
                     <div className="flex gap-3">
-                      <Button
-                        variant={responseSize === "short" ? "default" : "outline"}
-                        onClick={() => setResponseSize("short")}
-                        className="flex-1 rounded-xl"
-                      >
+                      <Button variant={responseSize === "short" ? "default" : "outline"} onClick={() => setResponseSize("short")} className="flex-1 rounded-xl">
                         Curtas
                       </Button>
-                      <Button
-                        variant={responseSize === "medium" ? "default" : "outline"}
-                        onClick={() => setResponseSize("medium")}
-                        className="flex-1 rounded-xl"
-                      >
+                      <Button variant={responseSize === "medium" ? "default" : "outline"} onClick={() => setResponseSize("medium")} className="flex-1 rounded-xl">
                         Médias
                       </Button>
-                      <Button
-                        variant={responseSize === "long" ? "default" : "outline"}
-                        onClick={() => setResponseSize("long")}
-                        className="flex-1 rounded-xl"
-                      >
+                      <Button variant={responseSize === "long" ? "default" : "outline"} onClick={() => setResponseSize("long")} className="flex-1 rounded-xl">
                         Longas
                       </Button>
                     </div>
@@ -704,34 +637,22 @@ const CriarAgente = () => {
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  {capabilities.map((cap) => {
-                    const Icon = cap.icon;
-                    const isSelected = selectedCapabilities.includes(cap.id);
-                    return (
-                      <button
-                        key={cap.id}
-                        onClick={() => toggleCapability(cap.id)}
-                        className={`p-4 bg-secondary rounded-xl border-2 cursor-pointer transition-all ${
-                          isSelected ? 'border-primary' : 'border-border hover:border-primary'
-                        }`}
-                      >
+                  {capabilities.map(cap => {
+                  const Icon = cap.icon;
+                  const isSelected = selectedCapabilities.includes(cap.id);
+                  return <button key={cap.id} onClick={() => toggleCapability(cap.id)} className={`p-4 bg-secondary rounded-xl border-2 cursor-pointer transition-all ${isSelected ? 'border-primary' : 'border-border hover:border-primary'}`}>
                         <div className="flex items-center justify-between mb-3">
                           <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${cap.color}`}>
                             <Icon className={isSelected ? "text-primary" : "text-muted-foreground"} size={18} />
                           </div>
-                          {isSelected ? (
-                            <CheckCircle className="text-primary" size={20} />
-                          ) : (
-                            <Circle className="text-muted-foreground" size={20} />
-                          )}
+                          {isSelected ? <CheckCircle className="text-primary" size={20} /> : <Circle className="text-muted-foreground" size={20} />}
                         </div>
                         <h4 className={`text-sm font-bold mb-1 ${isSelected ? 'text-foreground' : 'text-muted-foreground'}`}>
                           {cap.label}
                         </h4>
                         <p className="text-xs text-muted-foreground">{cap.desc}</p>
-                      </button>
-                    );
-                  })}
+                      </button>;
+                })}
                 </div>
               </div>
 
@@ -748,12 +669,7 @@ const CriarAgente = () => {
                   <div>
                     <Label className="block text-sm font-semibold text-foreground mb-2">Tipo de Voz</Label>
                     <div className="grid grid-cols-2 gap-3">
-                      <button
-                        onClick={() => setVoiceType("male")}
-                        className={`p-4 bg-secondary border-2 rounded-xl text-left transition-all ${
-                          voiceType === "male" ? 'border-primary' : 'border-border hover:border-primary'
-                        }`}
-                      >
+                      <button onClick={() => setVoiceType("male")} className={`p-4 bg-secondary border-2 rounded-xl text-left transition-all ${voiceType === "male" ? 'border-primary' : 'border-border hover:border-primary'}`}>
                         <div className="flex items-center space-x-3 mb-2">
                           <Users className={voiceType === "male" ? "text-primary-foreground" : "text-muted-foreground"} size={18} />
                           <span className={`text-sm font-bold ${voiceType === "male" ? 'text-foreground' : 'text-muted-foreground'}`}>
@@ -762,12 +678,7 @@ const CriarAgente = () => {
                         </div>
                         <p className="text-xs text-muted-foreground">Tom grave e profissional</p>
                       </button>
-                      <button
-                        onClick={() => setVoiceType("female")}
-                        className={`p-4 bg-secondary border-2 rounded-xl text-left transition-all ${
-                          voiceType === "female" ? 'border-primary' : 'border-border hover:border-primary'
-                        }`}
-                      >
+                      <button onClick={() => setVoiceType("female")} className={`p-4 bg-secondary border-2 rounded-xl text-left transition-all ${voiceType === "female" ? 'border-primary' : 'border-border hover:border-primary'}`}>
                         <div className="flex items-center space-x-3 mb-2">
                           <Users className={voiceType === "female" ? "text-primary-foreground" : "text-muted-foreground"} size={18} />
                           <span className={`text-sm font-bold ${voiceType === "female" ? 'text-foreground' : 'text-muted-foreground'}`}>
@@ -799,14 +710,7 @@ const CriarAgente = () => {
                     <Label className="block text-sm font-semibold text-foreground mb-2">Velocidade da Fala</Label>
                     <div className="flex items-center space-x-4">
                       <span className="text-xs text-muted-foreground">0.5x</span>
-                      <Slider 
-                        value={voiceSpeed}
-                        onValueChange={setVoiceSpeed}
-                        min={50}
-                        max={150}
-                        step={10}
-                        className="flex-1"
-                      />
+                      <Slider value={voiceSpeed} onValueChange={setVoiceSpeed} min={50} max={150} step={10} className="flex-1" />
                       <span className="px-3 py-1 bg-pastel-blue rounded-lg text-pastel-blue-fg font-bold text-xs">
                         {(voiceSpeed[0] / 100).toFixed(1)}x
                       </span>
@@ -817,14 +721,7 @@ const CriarAgente = () => {
                     <Label className="block text-sm font-semibold text-foreground mb-2">Tom da Voz</Label>
                     <div className="flex items-center space-x-4">
                       <span className="text-xs text-muted-foreground">Grave</span>
-                      <Slider 
-                        value={voiceTone}
-                        onValueChange={setVoiceTone}
-                        min={0}
-                        max={100}
-                        step={5}
-                        className="flex-1"
-                      />
+                      <Slider value={voiceTone} onValueChange={setVoiceTone} min={0} max={100} step={5} className="flex-1" />
                       <span className="text-xs text-muted-foreground">Agudo</span>
                     </div>
                   </div>
@@ -838,9 +735,9 @@ const CriarAgente = () => {
                     </div>
                     <div className="flex items-center space-x-2">
                       <div className="flex-1 flex items-center space-x-1">
-                        {[...Array(20)].map((_, i) => (
-                          <div key={i} className="flex-1 bg-primary/20 rounded-full" style={{ height: Math.random() * 20 + 10 + 'px' }}></div>
-                        ))}
+                        {[...Array(20)].map((_, i) => <div key={i} className="flex-1 bg-primary/20 rounded-full" style={{
+                        height: Math.random() * 20 + 10 + 'px'
+                      }}></div>)}
                       </div>
                     </div>
                   </div>
@@ -860,25 +757,13 @@ const CriarAgente = () => {
                   <div>
                     <Label className="block text-sm font-semibold text-foreground mb-3">Complexidade do Vocabulário</Label>
                     <div className="flex gap-3">
-                      <Button
-                        variant={vocabulary === "simple" ? "default" : "outline"}
-                        onClick={() => setVocabulary("simple")}
-                        className="flex-1 rounded-xl"
-                      >
+                      <Button variant={vocabulary === "simple" ? "default" : "outline"} onClick={() => setVocabulary("simple")} className="flex-1 rounded-xl">
                         Simples
                       </Button>
-                      <Button
-                        variant={vocabulary === "intermediate" ? "default" : "outline"}
-                        onClick={() => setVocabulary("intermediate")}
-                        className="flex-1 rounded-xl"
-                      >
+                      <Button variant={vocabulary === "intermediate" ? "default" : "outline"} onClick={() => setVocabulary("intermediate")} className="flex-1 rounded-xl">
                         Intermediário
                       </Button>
-                      <Button
-                        variant={vocabulary === "advanced" ? "default" : "outline"}
-                        onClick={() => setVocabulary("advanced")}
-                        className="flex-1 rounded-xl"
-                      >
+                      <Button variant={vocabulary === "advanced" ? "default" : "outline"} onClick={() => setVocabulary("advanced")} className="flex-1 rounded-xl">
                         Avançado
                       </Button>
                     </div>
@@ -939,7 +824,7 @@ const CriarAgente = () => {
                     <Label className="block text-sm font-semibold text-foreground mb-2">Exemplo de Tom Geral</Label>
                     <div className="p-4 bg-secondary rounded-xl border border-border">
                       <p className="text-sm text-foreground italic">
-                        "Qual a melhor estratégia para diversificar 3 portfólios?<br/>
+                        "Qual a melhor estratégia para diversificar 3 portfólios?<br />
                         Recomendo alocar recursos em: <strong>30% renda fixa</strong>, <strong>40% ações blue chip</strong> 
                         e <strong>30% fundos diversificados</strong>, considerando seu perfil de risco moderado."
                       </p>
@@ -1039,11 +924,7 @@ const CriarAgente = () => {
                         <button className="w-10 h-10 rounded-xl bg-background hover:bg-accent flex items-center justify-center transition-all duration-300 border border-border">
                           <Upload className="text-muted-foreground" size={18} />
                         </button>
-                        <input
-                          type="text"
-                          placeholder="Digite sua mensagem..."
-                          className="flex-1 px-4 py-3 bg-background border border-input rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-ring/20 transition-all duration-300"
-                        />
+                        <input type="text" placeholder="Digite sua mensagem..." className="flex-1 px-4 py-3 bg-background border border-input rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-ring/20 transition-all duration-300" />
                         <button className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center hover:bg-primary/80 transition-all duration-300">
                           <MessageSquare className="text-primary-foreground" size={18} />
                         </button>
@@ -1052,78 +933,7 @@ const CriarAgente = () => {
                   </div>
 
                   {/* Side Cards */}
-                  <div className="space-y-4">
-                    {/* Informações do Agente */}
-                    <div className="bg-secondary rounded-2xl border border-border p-5">
-                      <h4 className="text-sm font-bold text-foreground mb-4 flex items-center">
-                        <Info className="text-pastel-purple-fg mr-2" size={16} />
-                        Informações do Agente
-                      </h4>
-                      <div className="space-y-3">
-                        <div>
-                          <p className="text-xs text-muted-foreground mb-1">Nome</p>
-                          <p className="text-sm text-foreground font-medium">Assistente Financeiro Pro</p>
-                        </div>
-                        <div>
-                          <p className="text-xs text-muted-foreground mb-1">Função</p>
-                          <p className="text-sm text-foreground font-medium">Consultor Financeiro</p>
-                        </div>
-                        <div>
-                          <p className="text-xs text-muted-foreground mb-1">Especialização</p>
-                          <div className="flex flex-wrap gap-1 mt-1">
-                            <span className="px-2 py-1 bg-pastel-blue rounded text-pastel-blue-fg text-xs">Ações</span>
-                            <span className="px-2 py-1 bg-pastel-green rounded text-pastel-green-fg text-xs">Fundos</span>
-                          </div>
-                        </div>
-                        <div>
-                          <p className="text-xs text-muted-foreground mb-1">Tom de Voz</p>
-                          <p className="text-sm text-foreground font-medium">Profissional e Amigável</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Estatísticas */}
-                    <div className="bg-secondary rounded-2xl border border-border p-5">
-                      <h4 className="text-sm font-bold text-foreground mb-4 flex items-center">
-                        <TrendingUp className="text-pastel-blue-fg mr-2" size={16} />
-                        Estatísticas
-                      </h4>
-                      <div className="space-y-3">
-                        <div className="flex items-center justify-between">
-                          <span className="text-xs text-muted-foreground">Tempo de Resposta</span>
-                          <span className="text-sm text-foreground font-bold">1.2s</span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <span className="text-xs text-muted-foreground">Precisão</span>
-                          <span className="text-sm text-green-600 font-bold">98.5%</span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <span className="text-xs text-muted-foreground">Satisfação</span>
-                          <div className="flex items-center space-x-1">
-                            <Heart className="text-yellow-400 fill-yellow-400" size={14} />
-                            <span className="text-sm text-foreground font-bold">4.9</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Status do Agente */}
-                    <div className="bg-pastel-blue/50 rounded-2xl border border-pastel-blue p-5">
-                      <div className="flex items-center space-x-2 mb-3">
-                        <Sparkles className="text-pastel-blue-fg" size={16} />
-                        <h4 className="text-sm font-bold text-foreground">Status do Agente</h4>
-                      </div>
-                      <p className="text-xs text-muted-foreground mb-3">
-                        Seu agente está pronto para ser publicado!
-                      </p>
-                      <div className="flex items-center space-x-2">
-                        <div className="flex-1 bg-background rounded-full h-2">
-                          <div className="bg-pastel-blue-fg h-2 rounded-full" style={{ width: '100%' }}></div>
-                        </div>
-                        <span className="text-xs font-bold text-foreground">100%</span>
-                      </div>
-                    </div>
-                  </div>
+                  
                 </div>
               </div>
 
@@ -1176,30 +986,26 @@ const CriarAgente = () => {
                     <div className="p-4 rounded-xl bg-secondary border border-border">
                       <h5 className="text-xs font-semibold text-foreground mb-3">CAPACIDADES</h5>
                       <div className="flex flex-wrap gap-2">
-                        {selectedCapabilities.map((capId) => {
-                          const cap = capabilities.find(c => c.id === capId);
-                          if (!cap) return null;
-                          return (
-                            <span key={capId} className="px-2 py-1 rounded-full bg-muted text-xs font-medium text-foreground border border-border">
+                        {selectedCapabilities.map(capId => {
+                        const cap = capabilities.find(c => c.id === capId);
+                        if (!cap) return null;
+                        return <span key={capId} className="px-2 py-1 rounded-full bg-muted text-xs font-medium text-foreground border border-border">
                               {cap.label}
-                            </span>
-                          );
-                        })}
+                            </span>;
+                      })}
                       </div>
                     </div>
 
                     <div className="p-4 rounded-xl bg-secondary border border-border">
                       <h5 className="text-xs font-semibold text-foreground mb-3">PERSONALIDADE</h5>
                       <div className="flex flex-wrap gap-2">
-                        {selectedTraits.map((traitId) => {
-                          const trait = traits.find(t => t.id === traitId);
-                          if (!trait) return null;
-                          return (
-                            <span key={traitId} className="px-2 py-1 rounded-full bg-muted text-xs font-medium text-foreground border border-border">
+                        {selectedTraits.map(traitId => {
+                        const trait = traits.find(t => t.id === traitId);
+                        if (!trait) return null;
+                        return <span key={traitId} className="px-2 py-1 rounded-full bg-muted text-xs font-medium text-foreground border border-border">
                               {trait.label}
-                            </span>
-                          );
-                        })}
+                            </span>;
+                      })}
                       </div>
                     </div>
 
@@ -1212,7 +1018,9 @@ const CriarAgente = () => {
                             <span className="font-bold text-foreground">1,234</span>
                           </div>
                           <div className="w-full bg-muted rounded-full h-1.5">
-                            <div className="bg-pastel-blue-fg h-1.5 rounded-full" style={{ width: '78%' }}></div>
+                            <div className="bg-pastel-blue-fg h-1.5 rounded-full" style={{
+                            width: '78%'
+                          }}></div>
                           </div>
                         </div>
                         <div>
@@ -1221,7 +1029,9 @@ const CriarAgente = () => {
                             <span className="font-bold text-foreground">4.8</span>
                           </div>
                           <div className="w-full bg-muted rounded-full h-1.5">
-                            <div className="bg-pastel-green-fg h-1.5 rounded-full" style={{ width: '96%' }}></div>
+                            <div className="bg-pastel-green-fg h-1.5 rounded-full" style={{
+                            width: '96%'
+                          }}></div>
                           </div>
                         </div>
                         <div>
@@ -1230,7 +1040,9 @@ const CriarAgente = () => {
                             <span className="font-bold text-foreground">94%</span>
                           </div>
                           <div className="w-full bg-muted rounded-full h-1.5">
-                            <div className="bg-pastel-purple-fg h-1.5 rounded-full" style={{ width: '94%' }}></div>
+                            <div className="bg-pastel-purple-fg h-1.5 rounded-full" style={{
+                            width: '94%'
+                          }}></div>
                           </div>
                         </div>
                       </div>
@@ -1250,8 +1062,6 @@ const CriarAgente = () => {
           </div>
         </div>
       </main>
-    </div>
-  );
+    </div>;
 };
-
 export default CriarAgente;
