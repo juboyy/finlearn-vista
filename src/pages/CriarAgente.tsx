@@ -847,9 +847,9 @@ const CriarAgente = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 gap-6">
                   {/* Chat Preview */}
-                  <div className="lg:col-span-2">
+                  <div className="w-full">
                     <div className="bg-secondary rounded-2xl border border-border overflow-hidden">
                       <div className="bg-card border-b border-border p-4">
                         <div className="flex items-center space-x-3">
