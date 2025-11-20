@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Share2, Bookmark, Bell, ThumbsUp, Heart, MessageSquare, Users } from "lucide-react";
+import { ArrowLeft, Share2, Bookmark, Bell, ThumbsUp, Heart, UserPlus, Eye, MessageCircle, MessageSquare, Clock, Bold, Italic, Link2 as LinkIcon, Image as ImageIcon, MoreHorizontal, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import creditoRuralImage from "@/assets/credito-rural-2025.png";
 
@@ -484,128 +484,468 @@ export default function ArtigoCreditoRural() {
             </div>
           </article>
 
-          {/* Comments Section */}
-          <div className="bg-white rounded-xl border border-slate-200 p-8">
-            <h2 className="text-xl font-semibold text-slate-800 mb-6">Comentários (15)</h2>
+          {/* Author Section */}
+          <section className="bg-white rounded-xl border border-slate-200 p-6 mb-8">
+            <h3 className="text-lg font-semibold text-slate-800 mb-4">Autores</h3>
             
-            {/* Comment 1 */}
-            <div className="flex gap-4 mb-6">
-              <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" alt="User" className="w-10 h-10 rounded-full object-cover" />
-              <div className="flex-1">
-                <div className="bg-slate-50 rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <span className="font-medium text-slate-800">Maria Santos</span>
-                      <span className="text-xs text-slate-500">há 2 horas</span>
-                    </div>
-                  </div>
-                  <p className="text-slate-700 text-sm mb-3">Excelente análise! Gostaria de entender melhor os fatores que explicam a alta inadimplência no Nordeste. Seria apenas climático ou há outros componentes estruturais?</p>
-                  <div className="flex items-center gap-4">
-                    <button className="flex items-center gap-1 text-slate-600 hover:text-pastel-blue transition text-sm">
-                      <ThumbsUp className="w-4 h-4" />
-                      <span>12</span>
-                    </button>
-                    <button className="text-slate-600 hover:text-pastel-blue transition text-sm">Responder</button>
-                  </div>
-                </div>
-                
-                {/* Reply */}
-                <div className="ml-8 mt-4 flex gap-4">
-                  <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" alt="Author" className="w-8 h-8 rounded-full object-cover" />
+            <div className="space-y-4">
+              {/* Main Author */}
+              <div className="bg-[#D4C5E8] bg-opacity-30 rounded-xl p-6 border border-[#D4C5E8]">
+                <div className="flex items-start gap-6">
+                  <img 
+                    src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" 
+                    alt="Author" 
+                    className="w-20 h-20 rounded-full object-cover"
+                  />
                   <div className="flex-1">
-                    <div className="bg-slate-50 rounded-lg p-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="font-medium text-slate-800">Carlos Mendes</span>
-                        <span className="px-2 py-0.5 bg-pastel-blue text-slate-700 rounded text-xs font-medium">Autor</span>
-                        <span className="text-xs text-slate-500">há 1 hora</span>
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <h3 className="text-xl font-semibold text-slate-800">Carlos Mendes</h3>
+                        <span className="px-2 py-1 bg-[#B8D4E8] text-slate-700 rounded-full text-xs font-medium">Autor Principal</span>
                       </div>
-                      <p className="text-slate-700 text-sm mb-3">Maria, ótima pergunta! A alta inadimplência no Nordeste é multifatorial. Além dos desafios climáticos (seca prolongada), há questões estruturais como menor acesso a tecnologia, fragmentação fundiária e infraestrutura logística limitada. Estou preparando um artigo específico sobre isso.</p>
-                      <div className="flex items-center gap-4">
-                        <button className="flex items-center gap-1 text-slate-600 hover:text-pastel-blue transition text-sm">
-                          <ThumbsUp className="w-4 h-4" />
-                          <span>8</span>
-                        </button>
+                      <button className="px-4 py-2 bg-[#B8D4E8] text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                        <UserPlus size={14} className="inline mr-2" />
+                        Seguir
+                      </button>
+                    </div>
+                    <p className="text-sm text-slate-600 mb-3">
+                      Analista Sênior de Crédito com 12 anos de experiência no mercado financeiro. Especialista em crédito rural e análise de risco.
+                    </p>
+                    <div className="flex items-center gap-6 text-sm text-slate-500">
+                      <span><strong className="text-slate-700">47</strong> artigos</span>
+                      <span><strong className="text-slate-700">2.3k</strong> seguidores</span>
+                      <span><strong className="text-slate-700">342</strong> pontos</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Co-author 1 */}
+              <div className="bg-[#D4C5E8] bg-opacity-30 rounded-xl p-6 border border-[#D4C5E8]">
+                <div className="flex items-start gap-6">
+                  <img 
+                    src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" 
+                    alt="Co-author" 
+                    className="w-20 h-20 rounded-full object-cover"
+                  />
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <h3 className="text-xl font-semibold text-slate-800">Ana Rodrigues</h3>
+                        <span className="px-2 py-1 bg-[#C5E8D4] text-slate-700 rounded-full text-xs font-medium">Co-autora</span>
                       </div>
+                      <button className="px-4 py-2 bg-[#B8D4E8] text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                        <UserPlus size={14} className="inline mr-2" />
+                        Seguir
+                      </button>
+                    </div>
+                    <p className="text-sm text-slate-600 mb-3">
+                      Especialista em Commodities Agrícolas com foco em análise de mercado e estratégias de hedge. Consultora com 8 anos de experiência no agronegócio.
+                    </p>
+                    <div className="flex items-center gap-6 text-sm text-slate-500">
+                      <span><strong className="text-slate-700">32</strong> artigos</span>
+                      <span><strong className="text-slate-700">1.8k</strong> seguidores</span>
+                      <span><strong className="text-slate-700">278</strong> pontos</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Co-author 2 */}
+              <div className="bg-[#D4C5E8] bg-opacity-30 rounded-xl p-6 border border-[#D4C5E8]">
+                <div className="flex items-start gap-6">
+                  <img 
+                    src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg" 
+                    alt="Co-author" 
+                    className="w-20 h-20 rounded-full object-cover"
+                  />
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <h3 className="text-xl font-semibold text-slate-800">Roberto Silva</h3>
+                        <span className="px-2 py-1 bg-[#C5E8D4] text-slate-700 rounded-full text-xs font-medium">Co-autor</span>
+                      </div>
+                      <button className="px-4 py-2 bg-[#B8D4E8] text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                        <UserPlus size={14} className="inline mr-2" />
+                        Seguir
+                      </button>
+                    </div>
+                    <p className="text-sm text-slate-600 mb-3">
+                      Economista especializado em Mercado de Capitais e Financiamento Estruturado. Professor universitário e consultor com 15 anos de carreira.
+                    </p>
+                    <div className="flex items-center gap-6 text-sm text-slate-500">
+                      <span><strong className="text-slate-700">58</strong> artigos</span>
+                      <span><strong className="text-slate-700">3.1k</strong> seguidores</span>
+                      <span><strong className="text-slate-700">512</strong> pontos</span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+          </section>
 
-            {/* Comment 2 */}
-            <div className="flex gap-4 mb-6">
-              <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-9.jpg" alt="User" className="w-10 h-10 rounded-full object-cover" />
-              <div className="flex-1">
-                <div className="bg-slate-50 rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <span className="font-medium text-slate-800">Lucas Oliveira</span>
-                      <span className="text-xs text-slate-500">há 4 horas</span>
-                    </div>
+          {/* More from Author Section */}
+          <section className="bg-white rounded-xl border border-slate-200 p-6 mb-8">
+            <h3 className="text-lg font-semibold text-slate-800 mb-4">Mais artigos de Carlos Mendes</h3>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="border border-slate-200 rounded-lg p-4 hover:border-[#B8D4E8] hover:shadow-md transition cursor-pointer">
+                <span className="px-2 py-1 bg-[#C5E8D4] text-slate-700 rounded text-xs font-medium mb-2 inline-block">Análise</span>
+                <h4 className="font-medium text-slate-800 mb-2 hover:text-[#B8D4E8] transition">
+                  Impactos da Taxa Selic no Agronegócio Brasileiro
+                </h4>
+                <p className="text-sm text-slate-600 mb-3 line-clamp-2">
+                  Análise detalhada sobre como as variações da taxa básica de juros afetam o financiamento agrícola e as estratégias de hedge.
+                </p>
+                <div className="flex items-center gap-4 text-xs text-slate-500">
+                  <span><Eye size={12} className="inline mr-1" />1.2k</span>
+                  <span><MessageCircle size={12} className="inline mr-1" />28</span>
+                  <span><Heart size={12} className="inline mr-1" />67</span>
+                </div>
+              </div>
+
+              <div className="border border-slate-200 rounded-lg p-4 hover:border-[#C5E8D4] hover:shadow-md transition cursor-pointer">
+                <span className="px-2 py-1 bg-[#E8E0C5] text-slate-700 rounded text-xs font-medium mb-2 inline-block">Mercado</span>
+                <h4 className="font-medium text-slate-800 mb-2 hover:text-[#C5E8D4] transition">
+                  Commodities Agrícolas: Projeções para 2025
+                </h4>
+                <p className="text-sm text-slate-600 mb-3 line-clamp-2">
+                  Previsões fundamentadas sobre o comportamento dos principais produtos agrícolas no mercado internacional.
+                </p>
+                <div className="flex items-center gap-4 text-xs text-slate-500">
+                  <span><Eye size={12} className="inline mr-1" />987</span>
+                  <span><MessageCircle size={12} className="inline mr-1" />34</span>
+                  <span><Heart size={12} className="inline mr-1" />52</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Related Articles Section */}
+          <section className="bg-white rounded-xl border border-slate-200 p-6 mb-8">
+            <h3 className="text-lg font-semibold text-slate-800 mb-4">Artigos Relacionados</h3>
+            <div className="space-y-4">
+              <div className="flex gap-4 pb-4 border-b border-slate-200 hover:bg-slate-50 -mx-6 px-6 transition cursor-pointer">
+                <div className="w-24 h-24 bg-[#B8D4E8] rounded-lg flex-shrink-0"></div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="px-2 py-0.5 bg-[#C5E8D4] text-slate-700 rounded text-xs font-medium">Crédito Rural</span>
+                    <span className="text-xs text-slate-500">por Ana Rodrigues</span>
                   </div>
-                  <p className="text-slate-700 text-sm mb-3">O modelo de precificação proposto é muito interessante. Vocês já implementaram algo similar na prática? Gostaria de entender melhor como calibrar os spreads de forma dinâmica ao longo do ciclo agrícola.</p>
-                  <div className="flex items-center gap-4">
-                    <button className="flex items-center gap-1 text-slate-600 hover:text-pastel-blue transition text-sm">
-                      <ThumbsUp className="w-4 h-4" />
-                      <span>7</span>
-                    </button>
-                    <button className="text-slate-600 hover:text-pastel-blue transition text-sm">Responder</button>
+                  <h4 className="font-medium text-slate-800 mb-1 hover:text-[#B8D4E8] transition">
+                    Gestão de Garantias em Operações de Crédito Rural
+                  </h4>
+                  <p className="text-sm text-slate-600 mb-2 line-clamp-2">
+                    Estratégias eficientes para estruturação e monitoramento de garantias em operações agrícolas de médio e longo prazo.
+                  </p>
+                  <div className="flex items-center gap-4 text-xs text-slate-500">
+                    <span><Clock size={12} className="inline mr-1" />há 3 dias</span>
+                    <span><Eye size={12} className="inline mr-1" />856</span>
+                    <span><MessageCircle size={12} className="inline mr-1" />19</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex gap-4 pb-4 border-b border-slate-200 hover:bg-slate-50 -mx-6 px-6 transition cursor-pointer">
+                <div className="w-24 h-24 bg-[#C5E8D4] rounded-lg flex-shrink-0"></div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="px-2 py-0.5 bg-[#E8E0C5] text-slate-700 rounded text-xs font-medium">Análise</span>
+                    <span className="text-xs text-slate-500">por Roberto Santos</span>
+                  </div>
+                  <h4 className="font-medium text-slate-800 mb-1 hover:text-[#C5E8D4] transition">
+                    Tecnologia no Campo: Digitalização do Crédito Agrícola
+                  </h4>
+                  <p className="text-sm text-slate-600 mb-2 line-clamp-2">
+                    Como fintechs e bancos digitais estão transformando o acesso ao crédito para pequenos e médios produtores rurais.
+                  </p>
+                  <div className="flex items-center gap-4 text-xs text-slate-500">
+                    <span><Clock size={12} className="inline mr-1" />há 5 dias</span>
+                    <span><Eye size={12} className="inline mr-1" />1.1k</span>
+                    <span><MessageCircle size={12} className="inline mr-1" />45</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex gap-4 pb-4 hover:bg-slate-50 -mx-6 px-6 transition cursor-pointer">
+                <div className="w-24 h-24 bg-[#D4C5E8] rounded-lg flex-shrink-0"></div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="px-2 py-0.5 bg-[#E8C5D8] text-slate-700 rounded text-xs font-medium">Regulação</span>
+                    <span className="text-xs text-slate-500">por Fernanda Lima</span>
+                  </div>
+                  <h4 className="font-medium text-slate-800 mb-1 hover:text-[#D4C5E8] transition">
+                    Novas Regras do Banco Central para Crédito Rural
+                  </h4>
+                  <p className="text-sm text-slate-600 mb-2 line-clamp-2">
+                    Entenda as mudanças regulatórias recentes e seus impactos nas operações de crédito agrícola.
+                  </p>
+                  <div className="flex items-center gap-4 text-xs text-slate-500">
+                    <span><Clock size={12} className="inline mr-1" />há 1 semana</span>
+                    <span><Eye size={12} className="inline mr-1" />743</span>
+                    <span><MessageCircle size={12} className="inline mr-1" />31</span>
                   </div>
                 </div>
               </div>
             </div>
+          </section>
 
-            {/* Comment 3 */}
-            <div className="flex gap-4">
-              <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg" alt="User" className="w-10 h-10 rounded-full object-cover" />
-              <div className="flex-1">
-                <div className="bg-slate-50 rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <span className="font-medium text-slate-800">Fernanda Lima</span>
-                      <span className="text-xs text-slate-500">há 6 horas</span>
-                    </div>
-                  </div>
-                  <p className="text-slate-700 text-sm mb-3">Dados muito bem fundamentados! Seria interessante ver uma análise complementar sobre o impacto das mudanças climáticas nas projeções de longo prazo. As seguradoras estão cada vez mais conservadoras nesse aspecto.</p>
-                  <div className="flex items-center gap-4">
-                    <button className="flex items-center gap-1 text-slate-600 hover:text-pastel-blue transition text-sm">
-                      <ThumbsUp className="w-4 h-4" />
-                      <span>5</span>
-                    </button>
-                    <button className="text-slate-600 hover:text-pastel-blue transition text-sm">Responder</button>
-                  </div>
-                </div>
+          {/* Comments Section */}
+          <section className="bg-white rounded-xl border border-slate-200 p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-lg font-semibold text-slate-800">Comentários (24)</h3>
+              <div className="flex gap-2">
+                <button className="px-3 py-1.5 bg-[#B8D4E8] text-slate-700 rounded-lg text-sm font-medium">
+                  Mais Recentes
+                </button>
+                <button className="px-3 py-1.5 text-slate-600 hover:bg-slate-100 rounded-lg text-sm font-medium transition">
+                  Mais Relevantes
+                </button>
               </div>
             </div>
 
             {/* Add Comment */}
-            <div className="mt-8 pt-6 border-t border-slate-200">
-              <h3 className="font-semibold text-slate-800 mb-4">Adicionar Comentário</h3>
+            <div className="mb-6">
               <div className="flex gap-4">
-                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" alt="User" className="w-10 h-10 rounded-full object-cover" />
+                <img 
+                  src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" 
+                  alt="User" 
+                  className="w-10 h-10 rounded-full object-cover"
+                />
                 <div className="flex-1">
                   <textarea 
-                    className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pastel-blue resize-none" 
-                    rows={4} 
-                    placeholder="Compartilhe sua opinião ou faça uma pergunta..."
+                    placeholder="Adicione um comentário..." 
+                    rows={3}
+                    className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:border-[#B8D4E8] resize-none"
                   ></textarea>
-                  <div className="flex items-center justify-between mt-3">
-                    <div className="flex items-center gap-2">
-                      <button className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
-                        <span className="text-sm font-bold">B</span>
+                  <div className="flex items-center justify-between mt-2">
+                    <div className="flex gap-2">
+                      <button className="p-2 text-slate-400 hover:text-slate-600 transition">
+                        <Bold size={16} />
                       </button>
-                      <button className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
-                        <span className="text-sm italic">I</span>
+                      <button className="p-2 text-slate-400 hover:text-slate-600 transition">
+                        <Italic size={16} />
+                      </button>
+                      <button className="p-2 text-slate-400 hover:text-slate-600 transition">
+                        <LinkIcon size={16} />
+                      </button>
+                      <button className="p-2 text-slate-400 hover:text-slate-600 transition">
+                        <ImageIcon size={16} />
                       </button>
                     </div>
-                    <button className="px-6 py-2 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
-                      Publicar
+                    <button className="px-4 py-2 bg-[#B8D4E8] text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                      Comentar
                     </button>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+
+            {/* Comments List */}
+            <div className="space-y-6">
+              {/* Comment 1 */}
+              <div className="flex gap-4">
+                <img 
+                  src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" 
+                  alt="User" 
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+                <div className="flex-1">
+                  <div className="bg-slate-50 rounded-lg p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium text-slate-800">Maria Santos</span>
+                        <span className="text-xs text-slate-500">há 2 horas</span>
+                      </div>
+                      <button className="text-slate-400 hover:text-slate-600">
+                        <MoreHorizontal size={16} />
+                      </button>
+                    </div>
+                    <p className="text-slate-700 text-sm mb-3">
+                      Excelente análise, Carlos! A tabela de risco regional é particularmente útil. Você considera que as tendências de alta inadimplência no Nordeste estão relacionadas principalmente a fatores climáticos ou há questões estruturais mais profundas?
+                    </p>
+                    <div className="flex items-center gap-4">
+                      <button className="flex items-center gap-1 text-slate-600 hover:text-[#B8D4E8] transition text-sm">
+                        <ThumbsUp size={14} />
+                        <span>12</span>
+                      </button>
+                      <button className="text-slate-600 hover:text-[#B8D4E8] transition text-sm">
+                        Responder
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Reply */}
+                  <div className="ml-8 mt-4 flex gap-4">
+                    <img 
+                      src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" 
+                      alt="Author" 
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                    <div className="flex-1">
+                      <div className="bg-slate-50 rounded-lg p-4">
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            <span className="font-medium text-slate-800">Carlos Mendes</span>
+                            <span className="px-2 py-0.5 bg-[#B8D4E8] text-slate-700 rounded text-xs font-medium">Autor</span>
+                            <span className="text-xs text-slate-500">há 1 hora</span>
+                          </div>
+                        </div>
+                        <p className="text-slate-700 text-sm mb-3">
+                          Ótima pergunta, Maria! É uma combinação de ambos. Os fatores climáticos certamente têm peso significativo, mas há questões estruturais importantes como menor escala produtiva, infraestrutura logística limitada e menor acesso a tecnologia. Estou preparando um artigo específico sobre isso.
+                        </p>
+                        <div className="flex items-center gap-4">
+                          <button className="flex items-center gap-1 text-slate-600 hover:text-[#B8D4E8] transition text-sm">
+                            <ThumbsUp size={14} />
+                            <span>8</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Comment 2 */}
+              <div className="flex gap-4">
+                <img 
+                  src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg" 
+                  alt="User" 
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+                <div className="flex-1">
+                  <div className="bg-slate-50 rounded-lg p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium text-slate-800">Pedro Oliveira</span>
+                        <span className="text-xs text-slate-500">há 4 horas</span>
+                      </div>
+                      <button className="text-slate-400 hover:text-slate-600">
+                        <MoreHorizontal size={16} />
+                      </button>
+                    </div>
+                    <p className="text-slate-700 text-sm mb-3">
+                      O modelo de precificação proposto é muito interessante. Vocês têm dados sobre como as instituições financeiras estão reagindo aos novos spreads? Há evidências de que estão ajustando suas políticas?
+                    </p>
+                    <div className="flex items-center gap-4">
+                      <button className="flex items-center gap-1 text-slate-600 hover:text-[#B8D4E8] transition text-sm">
+                        <ThumbsUp size={14} />
+                        <span>7</span>
+                      </button>
+                      <button className="text-slate-600 hover:text-[#B8D4E8] transition text-sm">
+                        Responder
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Comment 3 */}
+              <div className="flex gap-4">
+                <img 
+                  src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-7.jpg" 
+                  alt="User" 
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+                <div className="flex-1">
+                  <div className="bg-slate-50 rounded-lg p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium text-slate-800">Julia Costa</span>
+                        <span className="text-xs text-slate-500">há 6 horas</span>
+                      </div>
+                      <button className="text-slate-400 hover:text-slate-600">
+                        <MoreHorizontal size={16} />
+                      </button>
+                    </div>
+                    <p className="text-slate-700 text-sm mb-3">
+                      Trabalho em uma cooperativa de crédito rural e este artigo vai direto para nosso material de referência. Os gráficos de evolução histórica são especialmente valiosos. Parabéns pelo trabalho!
+                    </p>
+                    <div className="flex items-center gap-4">
+                      <button className="flex items-center gap-1 text-slate-600 hover:text-[#B8D4E8] transition text-sm">
+                        <ThumbsUp size={14} />
+                        <span>15</span>
+                      </button>
+                      <button className="text-slate-600 hover:text-[#B8D4E8] transition text-sm">
+                        Responder
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Comment 4 */}
+              <div className="flex gap-4">
+                <img 
+                  src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg" 
+                  alt="User" 
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+                <div className="flex-1">
+                  <div className="bg-slate-50 rounded-lg p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium text-slate-800">Ricardo Almeida</span>
+                        <span className="text-xs text-slate-500">há 8 horas</span>
+                      </div>
+                      <button className="text-slate-400 hover:text-slate-600">
+                        <MoreHorizontal size={16} />
+                      </button>
+                    </div>
+                    <p className="text-slate-700 text-sm mb-3">
+                      A análise sobre seguro rural está perfeita. Esse é realmente um ponto crítico que muitos produtores ainda negligenciam. Vocês consideram fazer um artigo focado exclusivamente nesse tema?
+                    </p>
+                    <div className="flex items-center gap-4">
+                      <button className="flex items-center gap-1 text-slate-600 hover:text-[#B8D4E8] transition text-sm">
+                        <ThumbsUp size={14} />
+                        <span>9</span>
+                      </button>
+                      <button className="text-slate-600 hover:text-[#B8D4E8] transition text-sm">
+                        Responder
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Comment 5 */}
+              <div className="flex gap-4">
+                <img 
+                  src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-9.jpg" 
+                  alt="User" 
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+                <div className="flex-1">
+                  <div className="bg-slate-50 rounded-lg p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium text-slate-800">Fernanda Lima</span>
+                        <span className="text-xs text-slate-500">há 1 dia</span>
+                      </div>
+                      <button className="text-slate-400 hover:text-slate-600">
+                        <MoreHorizontal size={16} />
+                      </button>
+                    </div>
+                    <p className="text-slate-700 text-sm mb-3">
+                      Muito bom! Especialmente a parte sobre diversificação geográfica. Estamos implementando essa estratégia e os resultados preliminares são promissores. A correlação negativa entre regiões realmente ajuda a balancear o portfólio.
+                    </p>
+                    <div className="flex items-center gap-4">
+                      <button className="flex items-center gap-1 text-slate-600 hover:text-[#B8D4E8] transition text-sm">
+                        <ThumbsUp size={14} />
+                        <span>11</span>
+                      </button>
+                      <button className="text-slate-600 hover:text-[#B8D4E8] transition text-sm">
+                        Responder
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button className="w-full mt-6 px-4 py-3 border border-slate-200 text-slate-600 rounded-lg font-medium hover:bg-slate-50 transition">
+              Carregar mais comentários
+            </button>
+          </section>
         </div>
       </main>
     </div>
