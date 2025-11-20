@@ -28,7 +28,7 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Progress } from "@/components/ui/progress";
 import { useUserAgents } from "@/hooks/useUserAgents";
-import { SidebarFix } from "@/components/Dashboard/SidebarFix";
+import { SidebarMeusAgentes } from "@/components/Dashboard/SidebarMeusAgentes";
 
 export default function MeusAgentes() {
   const { agents, loading, toggleAgentStatus } = useUserAgents();
@@ -73,7 +73,7 @@ export default function MeusAgentes() {
 
   return (
     <div className="flex min-h-screen bg-background">
-      <SidebarFix />
+      <SidebarMeusAgentes />
       <div className="flex-1">
       {/* Header */}
       <header className="bg-card border-b border-border sticky top-0 z-40">
