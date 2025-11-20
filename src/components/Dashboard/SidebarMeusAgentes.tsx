@@ -1,11 +1,15 @@
-import { Home, Bot, Plus, TrendingUp, Settings, Users } from "lucide-react";
+import { Home, Newspaper, Bot, GraduationCap, Book, MessageCircle, Store, TrendingUp, Users, Settings } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: Home },
-  { name: "Meus Agentes", href: "/meus-agentes", icon: Bot },
-  { name: "Criar Agente", href: "/criar-agente", icon: Plus },
-  { name: "Agentes Disponíveis", href: "/agentes", icon: Users },
+  { name: "Conteúdo", href: "/conteudo", icon: Newspaper },
+  { name: "Agentes IA", href: "/agentes", icon: Bot },
+  { name: "Aprendizado", href: "/aprendizado", icon: GraduationCap },
+  { name: "Biblioteca", href: "/biblioteca", icon: Book },
+  { name: "Comunidade", href: "/comunidade", icon: MessageCircle },
+  { name: "Marketplace", href: "/marketplace", icon: Store },
+  { name: "Autores", href: "/autores", icon: Users },
   { name: "Analytics", href: "/analytics", icon: TrendingUp },
 ];
 
