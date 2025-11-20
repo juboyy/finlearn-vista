@@ -122,7 +122,7 @@ export function CriarAgentePersonalidade() {
                   Salvar Rascunho
                 </Button>
                 <Button className="rounded-lg bg-primary hover:bg-primary/80">
-                  Publicar Agente
+                  Ver Resumo
                 </Button>
               </div>
             </div>
