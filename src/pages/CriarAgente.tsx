@@ -643,7 +643,7 @@ const CriarAgente = () => {
                   return <button key={cap.id} onClick={() => toggleCapability(cap.id)} className={`p-4 bg-secondary rounded-xl border-2 cursor-pointer transition-all ${isSelected ? 'border-primary' : 'border-border hover:border-primary'}`}>
                         <div className="flex items-center justify-between mb-3">
                           <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${cap.color}`}>
-                            <Icon className={isSelected ? "text-primary" : "text-muted-foreground"} size={18} />
+                            <Icon className="text-muted-foreground" size={18} />
                           </div>
                           {isSelected ? <CheckCircle className="text-primary" size={20} /> : <Circle className="text-muted-foreground" size={20} />}
                         </div>
