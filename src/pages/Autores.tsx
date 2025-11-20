@@ -294,8 +294,8 @@ const Autores = () => {
                       <div className="text-xs text-slate-500">Último: há 2 dias</div>
                     </div>
                     <div className="col-span-2">
-                      <div className="text-sm font-semibold text-slate-700">87/100</div>
-                      <div className="text-xs text-slate-500">Excelente</div>
+                      <div className="text-sm font-semibold text-green-700">87/100</div>
+                      <div className="text-xs text-green-600">Excelente</div>
                     </div>
                     <div className="col-span-2">
                       <div className="text-sm text-slate-700">15/03/2023</div>
@@ -333,8 +333,8 @@ const Autores = () => {
                       <div className="text-xs text-slate-500">Último: há 1 dia</div>
                     </div>
                     <div className="col-span-2">
-                      <div className="text-sm font-semibold text-slate-700">62/100</div>
-                      <div className="text-xs text-slate-500">Bom</div>
+                      <div className="text-sm font-semibold text-yellow-700">62/100</div>
+                      <div className="text-xs text-yellow-600">Bom</div>
                     </div>
                     <div className="col-span-2">
                       <div className="text-sm text-slate-700">22/01/2023</div>
@@ -375,8 +375,8 @@ const Autores = () => {
                       <div className="text-xs text-slate-500">Último: há 3 horas</div>
                     </div>
                     <div className="col-span-2">
-                      <div className="text-sm font-semibold text-slate-700">93/100</div>
-                      <div className="text-xs text-slate-500">Excelente</div>
+                      <div className="text-sm font-semibold text-green-700">93/100</div>
+                      <div className="text-xs text-green-600">Excelente</div>
                     </div>
                     <div className="col-span-2">
                       <div className="text-sm text-slate-700">08/05/2022</div>
@@ -414,8 +414,8 @@ const Autores = () => {
                       <div className="text-xs text-slate-500">Último: há 1 semana</div>
                     </div>
                     <div className="col-span-2">
-                      <div className="text-sm font-semibold text-slate-700">45/100</div>
-                      <div className="text-xs text-slate-500">Regular</div>
+                      <div className="text-sm font-semibold text-red-700">45/100</div>
+                      <div className="text-xs text-red-600">Regular</div>
                     </div>
                     <div className="col-span-2">
                       <div className="text-sm text-slate-700">12/08/2023</div>
@@ -453,8 +453,8 @@ const Autores = () => {
                       <div className="text-xs text-slate-500">Último: há 4 dias</div>
                     </div>
                     <div className="col-span-2">
-                      <div className="text-sm font-semibold text-slate-700">78/100</div>
-                      <div className="text-xs text-slate-500">Muito bom</div>
+                      <div className="text-sm font-semibold text-green-700">78/100</div>
+                      <div className="text-xs text-green-600">Muito bom</div>
                     </div>
                     <div className="col-span-2">
                       <div className="text-sm text-slate-700">05/11/2023</div>
@@ -495,8 +495,8 @@ const Autores = () => {
                       <div className="text-xs text-slate-500">Último: hoje</div>
                     </div>
                     <div className="col-span-2">
-                      <div className="text-sm font-semibold text-slate-700">91/100</div>
-                      <div className="text-xs text-slate-500">Excelente</div>
+                      <div className="text-sm font-semibold text-green-700">91/100</div>
+                      <div className="text-xs text-green-600">Excelente</div>
                     </div>
                     <div className="col-span-2">
                       <div className="text-sm text-slate-700">18/02/2022</div>
@@ -534,8 +534,8 @@ const Autores = () => {
                       <div className="text-xs text-slate-500">Último: há 5 dias</div>
                     </div>
                     <div className="col-span-2">
-                      <div className="text-sm font-semibold text-slate-700">56/100</div>
-                      <div className="text-xs text-slate-500">Bom</div>
+                      <div className="text-sm font-semibold text-yellow-700">56/100</div>
+                      <div className="text-xs text-yellow-600">Bom</div>
                     </div>
                     <div className="col-span-2">
                       <div className="text-sm text-slate-700">30/09/2023</div>
@@ -573,8 +573,8 @@ const Autores = () => {
                       <div className="text-xs text-slate-500">Último: há 2 dias</div>
                     </div>
                     <div className="col-span-2">
-                      <div className="text-sm font-semibold text-slate-700">71/100</div>
-                      <div className="text-xs text-slate-500">Muito bom</div>
+                      <div className="text-sm font-semibold text-green-700">71/100</div>
+                      <div className="text-xs text-green-600">Muito bom</div>
                     </div>
                     <div className="col-span-2">
                       <div className="text-sm text-slate-700">14/06/2023</div>
@@ -612,8 +612,8 @@ const Autores = () => {
                       <div className="text-xs text-slate-500">Último: ontem</div>
                     </div>
                     <div className="col-span-2">
-                      <div className="text-sm font-semibold text-slate-700">68/100</div>
-                      <div className="text-xs text-slate-500">Bom</div>
+                      <div className="text-sm font-semibold text-yellow-700">68/100</div>
+                      <div className="text-xs text-yellow-600">Bom</div>
                     </div>
                     <div className="col-span-2">
                       <div className="text-sm text-slate-700">27/04/2023</div>
@@ -654,8 +654,8 @@ const Autores = () => {
                       <div className="text-xs text-slate-500">Último: há 1 semana</div>
                     </div>
                     <div className="col-span-2">
-                      <div className="text-sm font-semibold text-slate-700">84/100</div>
-                      <div className="text-xs text-slate-500">Muito bom</div>
+                      <div className="text-sm font-semibold text-green-700">84/100</div>
+                      <div className="text-xs text-green-600">Muito bom</div>
                     </div>
                     <div className="col-span-2">
                       <div className="text-sm text-slate-700">11/10/2023</div>
