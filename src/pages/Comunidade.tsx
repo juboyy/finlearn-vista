@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { MessageCircle, Users, Trophy, Star, TrendingUp, DollarSign, Scale, Briefcase, ChartLine, Bell, Plus, Pen, Flame, Clock, Eye, Heart, MessageSquare, Bookmark, Crown } from "lucide-react";
+import creditoRuralImage from "@/assets/credito-rural-2025.png";
 
 export default function Comunidade() {
   const [activeTab, setActiveTab] = useState<"discussoes" | "artigos">("discussoes");
@@ -407,6 +408,48 @@ export default function Comunidade() {
                     </div>
                   ) : (
                     <div className="space-y-6">
+                      <article className="border border-slate-200 rounded-lg overflow-hidden hover:border-pastel-blue hover:shadow-md transition cursor-pointer">
+                        <div className="h-48 overflow-hidden bg-slate-100">
+                          <img className="w-full h-full object-cover" src={creditoRuralImage} alt="Análise de Crédito Rural" />
+                        </div>
+                        <div className="p-5">
+                          <div className="flex items-center gap-2 mb-3">
+                            <span className="px-2 py-1 bg-pastel-blue text-slate-700 rounded text-xs font-medium">Análise de Mercado</span>
+                            <span className="text-xs text-slate-500">•</span>
+                            <span className="text-xs text-slate-500">5 min de leitura</span>
+                          </div>
+                          <h3 className="text-xl font-semibold text-slate-800 mb-2 hover:text-pastel-blue transition">Análise Profunda do Crédito Rural: Tendências, Riscos e Oportunidades para 2025</h3>
+                          <p className="text-sm text-slate-600 mb-4 line-clamp-2">Uma análise detalhada sobre o mercado de crédito rural brasileiro, incluindo projeções macroeconômicas, evolução do PIB agro e estratégias de gestão de portfólio para instituições.</p>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <div className="flex -space-x-2">
+                                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" alt="Author" className="w-8 h-8 rounded-full object-cover border-2 border-white" />
+                                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg" alt="Co-author" className="w-8 h-8 rounded-full object-cover border-2 border-white" />
+                                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg" alt="Co-author" className="w-8 h-8 rounded-full object-cover border-2 border-white" />
+                              </div>
+                              <div>
+                                <p className="text-sm font-medium text-slate-800">Carlos Mendes e co-autores</p>
+                                <p className="text-xs text-slate-500">há 15 min</p>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-4 text-xs text-slate-500">
+                              <span className="flex items-center gap-1">
+                                <Eye className="w-4 h-4" />
+                                342
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <Heart className="w-4 h-4" />
+                                42
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <MessageSquare className="w-4 h-4" />
+                                8
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </article>
+
                       <article className="border border-slate-200 rounded-lg overflow-hidden hover:border-pastel-green hover:shadow-md transition cursor-pointer">
                         <div className="h-48 overflow-hidden bg-slate-100">
                           <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/f073da7c83-b43f4f357022991e8f02.png" alt="Financial charts illustration" />
