@@ -486,7 +486,7 @@ const PerfilAutor = () => {
           </div>
 
           <section className="mt-8">
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-6 mb-6">
               <h2 className="text-2xl font-bold text-foreground">Portfólio de Conteúdo</h2>
               <div className="flex gap-2 p-1 bg-muted rounded-lg border border-border">
                 <button className="px-4 py-1.5 text-sm font-semibold text-primary-foreground bg-primary rounded-md">Todos</button>
