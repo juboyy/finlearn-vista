@@ -31,47 +31,48 @@ export function Biblioteca() {
       modifiedDate: "16/11/2024",
       modifiedRelative: "há 1 dia",
       createdDate: "16/11/2024",
-      createdTime: "19:20",
+      createdTime: "14:20",
       starred: false
     },
     {
       id: 3,
-      title: "Link - Análise Mercado B3",
-      description: "Relatório trimestral sobre performance das ações mais negociadas",
-      type: "Link",
+      title: "Análise Fundamentalista",
+      description: "Metodologia para análise de demonstrações financeiras e valuation",
+      type: "Nota",
       typeColor: "#8CC99B",
-      icon: "link",
+      icon: "file-lines",
       modifiedDate: "15/11/2024",
-      modifiedRelative: "há 2 dias",
-      createdDate: "12/11/2024",
-      createdTime: "14:15",
-      starred: true
+      modifiedRelative: "há 1 dia",
+      createdDate: "10/11/2024",
+      createdTime: "09:15",
+      starred: true,
+      showStarInTitle: true
     },
     {
       id: 4,
-      title: "Rascunho - Estudo ETFs",
-      description: "Comparativo entre diferentes ETFs de renda variável disponíveis no mercado brasileiro",
-      type: "Rascunho",
-      typeColor: "#C99BA6",
-      icon: "file-alt",
+      title: "Ideias para Carteira",
+      description: "",
+      type: "Áudio",
+      typeColor: "#A68CC9",
+      icon: "microphone",
+      audioProgress: 30,
+      audioDuration: "08:15",
       modifiedDate: "14/11/2024",
       modifiedRelative: "há 3 dias",
-      createdDate: "10/11/2024",
+      createdDate: "14/11/2024",
       createdTime: "16:45",
       starred: false
     },
     {
       id: 5,
-      title: "Podcast - Fundos Imobiliários",
-      description: "",
-      type: "Áudio",
-      typeColor: "#A68CC9",
-      icon: "microphone",
-      audioProgress: 100,
-      audioDuration: "45:12",
-      modifiedDate: "13/11/2024",
-      modifiedRelative: "há 4 dias",
-      createdDate: "13/11/2024",
+      title: "Links Importantes",
+      description: "Coleção de links para relatórios do mercado, sites de análise...",
+      type: "Links",
+      typeColor: "#C97B7B",
+      icon: "link",
+      modifiedDate: "12/11/2024",
+      modifiedRelative: "há 5 dias",
+      createdDate: "05/11/2024",
       createdTime: "11:00",
       starred: false
     },
@@ -96,10 +97,51 @@ export function Biblioteca() {
       type: "Nota",
       typeColor: "#A68CC9",
       icon: "file-alt",
-      modifiedDate: "08/11/2024",
-      modifiedRelative: "há 1 semana",
+      modifiedDate: "09/11/2024",
+      modifiedRelative: "há 8 dias",
       createdDate: "01/11/2024",
-      createdTime: "09:30",
+      createdTime: "13:30",
+      starred: false
+    },
+    {
+      id: 8,
+      title: "Palestra sobre NFTs",
+      description: "",
+      type: "Áudio",
+      typeColor: "#8CC99B",
+      icon: "microphone",
+      audioProgress: 55,
+      audioDuration: "45:20",
+      modifiedDate: "08/11/2024",
+      modifiedRelative: "há 9 dias",
+      createdDate: "08/11/2024",
+      createdTime: "15:00",
+      starred: false
+    },
+    {
+      id: 9,
+      title: "Glossário Financeiro",
+      description: "Termos e definições essenciais do mercado financeiro",
+      type: "Nota",
+      typeColor: "#C9B88C",
+      icon: "file-lines",
+      modifiedDate: "05/11/2024",
+      modifiedRelative: "há 12 dias",
+      createdDate: "28/10/2024",
+      createdTime: "10:00",
+      starred: false
+    },
+    {
+      id: 10,
+      title: "Rascunho - Análise Setorial",
+      description: "Análise preliminar do setor de tecnologia brasileiro",
+      type: "Rascunho",
+      typeColor: "#C99B8C",
+      icon: "file-alt",
+      modifiedDate: "03/11/2024",
+      modifiedRelative: "há 2 semanas",
+      createdDate: "03/11/2024",
+      createdTime: "17:30",
       starred: false
     }
   ];
@@ -121,6 +163,8 @@ export function Biblioteca() {
         return <LinkIcon className="h-5 w-5 text-slate-600" />;
       case "calendar-check":
         return <CalendarCheck className="h-5 w-5 text-slate-600" />;
+      case "file-lines":
+        return <FileText className="h-5 w-5 text-slate-600" />;
       default:
         return <FileText className="h-5 w-5 text-slate-600" />;
     }
@@ -134,6 +178,8 @@ export function Biblioteca() {
         return <LinkIcon className="h-3 w-3" />;
       case "calendar-check":
         return <CalendarCheck className="h-3 w-3" />;
+      case "file-lines":
+        return <FileText className="h-3 w-3" />;
       default:
         return <FileText className="h-3 w-3" />;
     }
