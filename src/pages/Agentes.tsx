@@ -171,7 +171,7 @@ export default function Agentes() {
   return (
     <div className="flex min-h-screen bg-background">
       <SidebarFix />
-      <div className="flex-1 ml-64">
+      <div className="flex-1">
         {chatAgent && (
           <AgentChat
             agentName={chatAgent.name}
