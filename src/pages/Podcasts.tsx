@@ -20,8 +20,8 @@ const Podcasts = () => {
                   <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                 </button>
                 <button className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
-                  <i className="fas fa-sliders-h mr-2"></i>
-                  Filtros
+                  <i className="fas fa-plus mr-2"></i>
+                  Criar Podcast
                 </button>
               </div>
             </div>
