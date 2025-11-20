@@ -195,10 +195,24 @@ export default function ArtigoCreditoRural() {
                     <p className="text-sm text-slate-500">Publicado em 15 de janeiro, 2025</p>
                   </div>
                 </div>
-                <button className="px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2">
-                  <Users className="w-4 h-4" />
-                  Convidar Co-autor
-                </button>
+                <div className="flex items-center gap-3">
+                  <button className="px-4 py-2 bg-[#B8D4E8] text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2">
+                    <UserPlus className="w-4 h-4" />
+                    Seguir
+                  </button>
+                  <button className="flex items-center gap-2 px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
+                    <ThumbsUp className="w-4 h-4" />
+                    <span>142</span>
+                  </button>
+                  <button className="flex items-center gap-2 px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
+                    <Heart className="w-4 h-4" />
+                    <span>89</span>
+                  </button>
+                  <button className="flex items-center gap-2 px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
+                    <Bookmark className="w-4 h-4" />
+                    <span>Salvar</span>
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -211,7 +225,7 @@ export default function ArtigoCreditoRural() {
             <div className="p-8 space-y-8">
               {/* Executive Summary */}
               <section>
-                <div className="bg-pastel-blue/30 border-l-4 border-pastel-blue rounded-lg p-6">
+                <div className="bg-[#B8D4E8] bg-opacity-30 rounded-lg p-6 border border-[#B8D4E8]">
                   <h3 className="text-lg font-semibold text-slate-800 mb-3">Sumário Executivo</h3>
                   <ul className="space-y-2 text-slate-700">
                     <li className="flex items-start gap-2">
@@ -408,10 +422,10 @@ export default function ArtigoCreditoRural() {
               {/* Recommendations */}
               <section>
                 <h2 className="text-2xl font-bold text-slate-800 mb-4">Recomendações Estratégicas</h2>
-                <div className="space-y-4">
-                  <div className="bg-white border-l-4 border-pastel-green rounded-lg p-6">
+                <div className="grid gap-4">
+                  <div className="bg-[#C5E8D4] bg-opacity-30 rounded-lg p-6 border border-[#C5E8D4]">
                     <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 bg-pastel-green rounded-lg flex items-center justify-center flex-shrink-0">
+                      <div className="w-10 h-10 bg-[#C5E8D4] rounded-lg flex items-center justify-center flex-shrink-0">
                         <CheckCircle2 className="w-5 h-5 text-slate-700" />
                       </div>
                       <div>
@@ -420,9 +434,9 @@ export default function ArtigoCreditoRural() {
                       </div>
                     </div>
                   </div>
-                  <div className="bg-white border-l-4 border-pastel-blue rounded-lg p-6">
+                  <div className="bg-[#B8D4E8] bg-opacity-30 rounded-lg p-6 border border-[#B8D4E8]">
                     <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 bg-pastel-blue rounded-lg flex items-center justify-center flex-shrink-0">
+                      <div className="w-10 h-10 bg-[#B8D4E8] rounded-lg flex items-center justify-center flex-shrink-0">
                         <TrendingUp className="w-5 h-5 text-slate-700" />
                       </div>
                       <div>
@@ -431,9 +445,9 @@ export default function ArtigoCreditoRural() {
                       </div>
                     </div>
                   </div>
-                  <div className="bg-white border-l-4 border-pastel-purple rounded-lg p-6">
+                  <div className="bg-[#D4C5E8] bg-opacity-30 rounded-lg p-6 border border-[#D4C5E8]">
                     <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 bg-pastel-purple rounded-lg flex items-center justify-center flex-shrink-0">
+                      <div className="w-10 h-10 bg-[#D4C5E8] rounded-lg flex items-center justify-center flex-shrink-0">
                         <Target className="w-5 h-5 text-slate-700" />
                       </div>
                       <div>
