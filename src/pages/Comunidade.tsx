@@ -36,34 +36,34 @@ export default function Comunidade() {
 
         <div className="p-8">
           <section className="grid grid-cols-4 gap-6 mb-8">
-            <div className="bg-white rounded-xl p-6 border border-slate-200">
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 bg-pastel-blue rounded-lg flex items-center justify-center">
-                  <MessageCircle className="text-slate-700 w-6 h-6" />
-                </div>
+            <div className="bg-white rounded-xl p-6 border border-slate-200 flex flex-col justify-between">
+              <div className="w-12 h-12 bg-pastel-blue rounded-lg flex items-center justify-center mb-auto">
+                <MessageCircle className="text-slate-700 w-6 h-6" />
               </div>
-              <h3 className="text-3xl font-bold text-slate-800 mb-1">1,247</h3>
-              <p className="text-sm text-slate-500">Discussões Ativas</p>
+              <div className="mt-4">
+                <h3 className="text-3xl font-bold text-slate-800 mb-1">1,247</h3>
+                <p className="text-sm text-slate-500">Discussões Ativas</p>
+              </div>
             </div>
 
-            <div className="bg-white rounded-xl p-6 border border-slate-200">
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center">
-                  <Users className="text-slate-700 w-6 h-6" />
-                </div>
+            <div className="bg-white rounded-xl p-6 border border-slate-200 flex flex-col justify-between">
+              <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center mb-auto">
+                <Users className="text-slate-700 w-6 h-6" />
               </div>
-              <h3 className="text-3xl font-bold text-slate-800 mb-1">8,562</h3>
-              <p className="text-sm text-slate-500">Membros Ativos</p>
+              <div className="mt-4">
+                <h3 className="text-3xl font-bold text-slate-800 mb-1">8,562</h3>
+                <p className="text-sm text-slate-500">Membros Ativos</p>
+              </div>
             </div>
 
-            <div className="bg-white rounded-xl p-6 border border-slate-200">
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 bg-pastel-yellow rounded-lg flex items-center justify-center">
-                  <Trophy className="text-slate-700 w-6 h-6" />
-                </div>
+            <div className="bg-white rounded-xl p-6 border border-slate-200 flex flex-col justify-between">
+              <div className="w-12 h-12 bg-pastel-yellow rounded-lg flex items-center justify-center mb-auto">
+                <Trophy className="text-slate-700 w-6 h-6" />
               </div>
-              <h3 className="text-3xl font-bold text-slate-800 mb-1">342</h3>
-              <p className="text-sm text-slate-500">Seus Pontos</p>
+              <div className="mt-4">
+                <h3 className="text-3xl font-bold text-slate-800 mb-1">342</h3>
+                <p className="text-sm text-slate-500">Seus Pontos</p>
+              </div>
             </div>
 
             <div className="bg-white rounded-xl p-6 border border-slate-200">
