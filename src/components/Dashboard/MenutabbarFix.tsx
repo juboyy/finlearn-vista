@@ -1,4 +1,5 @@
-import { BarChart3, Grid3x3, List } from "lucide-react";
+import { BarChart3, Grid3x3, List, ChevronLeft, ChevronRight } from "lucide-react";
+import { useRef } from "react";
 
 type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'documentos' | 'estudos';
 
@@ -8,10 +9,32 @@ interface MenutabbarFixProps {
 }
 
 export const MenutabbarFix = ({ activeTab, setActiveTab }: MenutabbarFixProps) => {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 200;
+      scrollContainerRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
     <div className="px-8 py-6 bg-slate-50 border-b border-slate-200 sticky top-[81px] z-10 bg-opacity-95 backdrop-blur-sm">
-      <div className="mb-4">
-        <div className="flex items-center gap-2 overflow-x-auto pb-2">
+      <div className="mb-4 relative">
+        <button 
+          onClick={() => scroll('left')}
+          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-white border border-slate-200 rounded-full flex items-center justify-center text-slate-600 hover:bg-slate-50 transition shadow-sm"
+        >
+          <ChevronLeft size={18} />
+        </button>
+        <div 
+          ref={scrollContainerRef}
+          className="flex items-center gap-2 overflow-x-auto scrollbar-hide px-10"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
           <button 
             onClick={() => setActiveTab('todos')}
             className={`px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm ${
@@ -103,6 +126,12 @@ export const MenutabbarFix = ({ activeTab, setActiveTab }: MenutabbarFixProps) =
             <span>Estudos Acadêmicos</span>
           </button>
         </div>
+        <button 
+          onClick={() => scroll('right')}
+          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-white border border-slate-200 rounded-full flex items-center justify-center text-slate-600 hover:bg-slate-50 transition shadow-sm"
+        >
+          <ChevronRight size={18} />
+        </button>
       </div>
       <div className="flex items-center gap-3">
         <div className="relative flex-1">

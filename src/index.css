@@ -182,4 +182,14 @@ All colors MUST be HSL.
     scrollbar-width: thin;
     scrollbar-color: hsl(0 0% 100%) transparent;
   }
+
+  /* Hide scrollbar for tabs navigation */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
