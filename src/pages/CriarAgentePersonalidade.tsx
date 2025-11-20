@@ -121,7 +121,10 @@ export function CriarAgentePersonalidade() {
                 <Button variant="outline" className="rounded-lg">
                   Salvar Rascunho
                 </Button>
-                <Button className="rounded-lg bg-primary hover:bg-primary/80">
+                <Button 
+                  className="rounded-lg bg-primary hover:bg-primary/80"
+                  onClick={() => navigate("/criar-agente/resumo")}
+                >
                   Ver Resumo
                 </Button>
               </div>
