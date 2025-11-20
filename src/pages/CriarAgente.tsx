@@ -214,7 +214,7 @@ const CriarAgente = () => {
                 </Button>
                 <Button className="rounded-xl bg-primary hover:bg-primary/80">
                   <Rocket className="h-4 w-4 mr-2" />
-                  Publicar Agente
+                  Próximo Step
                 </Button>
               </div>
             </div>
