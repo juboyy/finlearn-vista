@@ -408,7 +408,7 @@ export default function Comunidade() {
                     </div>
                   ) : (
                     <div className="space-y-6">
-                      <article className="border border-slate-200 rounded-lg overflow-hidden hover:border-pastel-blue hover:shadow-md transition cursor-pointer">
+                      <article onClick={() => window.location.href = '/artigo/credito-rural'} className="border border-slate-200 rounded-lg overflow-hidden hover:border-pastel-blue hover:shadow-md transition cursor-pointer">
                         <div className="h-48 overflow-hidden bg-slate-100">
                           <img className="w-full h-full object-cover" src={creditoRuralImage} alt="Análise de Crédito Rural" />
                         </div>
