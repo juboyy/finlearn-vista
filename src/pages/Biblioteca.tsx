@@ -108,9 +108,9 @@ export function Biblioteca() {
     { name: "Todas as Notas", count: 47, color: "#B8D4E8", active: true },
     { name: "Análise Técnica", count: 12, color: "#7FA8C9", active: false },
     { name: "Compliance", count: 8, color: "#A68CC9", active: false },
-    { name: "Regulamentação", count: 15, color: "#8CC99B", active: false },
-    { name: "Estratégias", count: 6, color: "#C9A68C", active: false },
-    { name: "Ideias", count: 6, color: "#C99BA6", active: false }
+    { name: "Criptomoedas", count: 15, color: "#8CC99B", active: false },
+    { name: "Mercado de Capitais", count: 9, color: "#C9B88C", active: false },
+    { name: "Rascunhos", count: 3, color: "#C99B8C", active: false }
   ];
 
   const getIconComponent = (iconName: string) => {
@@ -254,18 +254,79 @@ export function Biblioteca() {
               {/* Stats */}
               <section className="bg-white rounded-xl p-6 border border-slate-200">
                 <h2 className="text-lg font-semibold text-slate-800 mb-4">Estatísticas</h2>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#C5E8D4' }}>
+                        <StickyNote className="h-4 w-4 text-slate-700" />
+                      </div>
+                      <span className="text-sm text-slate-700">Total de Notas</span>
+                    </div>
+                    <span className="font-semibold text-slate-800">47</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#D4C5E8' }}>
+                        <Mic className="h-4 w-4 text-slate-700" />
+                      </div>
+                      <span className="text-sm text-slate-700">Gravações</span>
+                    </div>
+                    <span className="font-semibold text-slate-800">12</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#E8E0C5' }}>
+                        <Star className="h-4 w-4 text-slate-700" />
+                      </div>
+                      <span className="text-sm text-slate-700">Favoritos</span>
+                    </div>
+                    <span className="font-semibold text-slate-800">23</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#E8C5D8' }}>
+                        <LinkIcon className="h-4 w-4 text-slate-700" />
+                      </div>
+                      <span className="text-sm text-slate-700">Compartilhados</span>
+                    </div>
+                    <span className="font-semibold text-slate-800">5</span>
+                  </div>
+                </div>
+              </section>
+
+              {/* Recent Activity */}
+              <section className="bg-white rounded-xl p-6 border border-slate-200">
+                <h2 className="text-lg font-semibold text-slate-800 mb-4">Atividade Recente</h2>
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-slate-600">Total de Itens</span>
-                    <span className="text-sm font-semibold text-slate-800">47</span>
+                  <div className="flex items-start gap-3">
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-1" style={{ backgroundColor: '#C5E8D4' }}>
+                      <Plus className="h-3 w-3 text-slate-700" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm text-slate-800">Nova nota criada</p>
+                      <p className="text-xs text-slate-500">Estratégias de Hedge</p>
+                      <p className="text-xs text-slate-400">2 horas atrás</p>
+                    </div>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-slate-600">Favoritos</span>
-                    <span className="text-sm font-semibold text-slate-800">12</span>
+                  <div className="flex items-start gap-3">
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-1" style={{ backgroundColor: '#D4C5E8' }}>
+                      <Mic className="h-3 w-3 text-slate-700" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm text-slate-800">Gravação adicionada</p>
+                      <p className="text-xs text-slate-500">Reunião sobre DeFi</p>
+                      <p className="text-xs text-slate-400">1 dia atrás</p>
+                    </div>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-slate-600">Última Modificação</span>
-                    <span className="text-sm font-semibold text-slate-800">Hoje</span>
+                  <div className="flex items-start gap-3">
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-1" style={{ backgroundColor: '#B8D4E8' }}>
+                      <FileText className="h-3 w-3 text-slate-700" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm text-slate-800">Nota editada</p>
+                      <p className="text-xs text-slate-500">Análise SWOT - Banco XYZ</p>
+                      <p className="text-xs text-slate-400">2 dias atrás</p>
+                    </div>
                   </div>
                 </div>
               </section>
