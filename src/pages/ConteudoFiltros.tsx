@@ -4,14 +4,14 @@ import { Input } from "@/components/ui/input";
 import { Search, Bell, Bookmark, X, FileText, Headphones, Play, Star, Heart, MessageCircle, Crown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const getCategoryClasses = (categoryColor: string) => {
-  const classes = {
-    secondary: "text-secondary bg-secondary bg-opacity-10",
-    accent: "text-accent bg-accent bg-opacity-10",
-    success: "text-success bg-success bg-opacity-10",
-    primary: "text-primary bg-primary bg-opacity-10"
+const getCategoryBadgeStyle = (categoryColor: string) => {
+  const styles = {
+    secondary: { color: '#9b7ab7', backgroundColor: 'rgba(212, 181, 212, 0.15)' },
+    accent: { color: '#d9956b', backgroundColor: 'rgba(245, 198, 165, 0.15)' },
+    success: { color: '#7fb07f', backgroundColor: 'rgba(184, 212, 184, 0.15)' },
+    primary: { color: '#7a9bc2', backgroundColor: 'rgba(168, 197, 227, 0.15)' }
   };
-  return classes[categoryColor as keyof typeof classes] || classes.primary;
+  return styles[categoryColor as keyof typeof styles] || styles.primary;
 };
 
 const articles = [
@@ -251,13 +251,19 @@ export function ConteudoFiltros() {
                       </div>
                       <div className="col-span-3 p-6">
                         <div className="flex items-center gap-2 mb-3">
-                          <span className={`text-xs font-medium ${getCategoryClasses(article.categoryColor)} px-2 py-1 rounded`}>
+                          <span 
+                            className="text-xs font-medium px-2 py-1 rounded"
+                            style={getCategoryBadgeStyle(article.categoryColor)}
+                          >
                             {article.category}
                           </span>
                           <span className="text-xs text-gray-400">•</span>
                           <span className="text-xs text-gray-500">{article.readTime}</span>
                           {article.isPremium && (
-                            <span className="text-xs font-medium text-warning bg-warning bg-opacity-10 px-2 py-1 rounded">
+                            <span 
+                              className="text-xs font-medium px-2 py-1 rounded"
+                              style={{ color: '#c49a4b', backgroundColor: 'rgba(245, 217, 165, 0.15)' }}
+                            >
                               <Crown className="h-3 w-3 inline mr-1" />
                               Premium
                             </span>
