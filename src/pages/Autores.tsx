@@ -231,7 +231,7 @@ const Autores = () => {
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
-                    <button className="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg text-sm font-medium flex items-center gap-2">
+                    <button className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition flex items-center gap-2 font-medium">
                       <i className="fas fa-chart-bar"></i>
                       <span>Estatísticas</span>
                     </button>
