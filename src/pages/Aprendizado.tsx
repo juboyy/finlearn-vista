@@ -1,6 +1,6 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { MenutabbarFix } from "@/components/Dashboard/MenutabbarFix";
-import { Bell } from "lucide-react";
+import { Bell, Play, Clock, BookOpen, TrendingUp, Headphones, Calendar, Users, MessageCircle, Star, BookMarked, Video, Award, Heart, CheckCircle, PlayCircle, Trophy, ChartLine, Shield, Bitcoin, Gavel, PieChart, Repeat, Globe, Leaf } from "lucide-react";
 import { useState } from "react";
 
 type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'documentos' | 'estudos';
@@ -1100,12 +1100,790 @@ const Aprendizado = () => {
           )}
 
           {activeTab === 'cursos' && (
-            <div className="text-center py-16">
-              <div className="w-20 h-20 bg-pastel-green rounded-full flex items-center justify-center mx-auto mb-4">
-                <i className="fas fa-graduation-cap text-3xl text-slate-700"></i>
-              </div>
-              <h3 className="text-xl font-semibold text-slate-800 mb-2">Cursos</h3>
-              <p className="text-slate-600">Explore cursos completos de finanças e investimentos</p>
+            <div className="space-y-8">
+              {/* Hero Section */}
+              <section>
+                <div className="bg-pastel-purple rounded-xl border border-border overflow-hidden">
+                  <div className="grid grid-cols-2 gap-8">
+                    <div className="p-10 flex flex-col justify-center">
+                      <span className="inline-block px-3 py-1 bg-background text-foreground text-sm font-medium rounded-full mb-4 w-fit">Lançamento</span>
+                      <h2 className="text-3xl font-bold text-foreground mb-4">Domine o Mercado de Capitais em 2025</h2>
+                      <p className="text-muted-foreground mb-6">Curso completo com certificação internacional. Aprenda estratégias avançadas de investimento, análise de risco e gestão de portfólio com especialistas do mercado.</p>
+                      <div className="flex items-center gap-6 mb-6">
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <Video className="w-4 h-4" />
+                          <span>42 aulas</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <Clock className="w-4 h-4" />
+                          <span>28h de conteúdo</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <Certificate className="w-4 h-4" />
+                          <span>Certificado</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <button className="px-8 py-3 bg-foreground text-background rounded-lg font-semibold hover:opacity-80 transition">
+                          Inscrever-se Agora
+                        </button>
+                        <div className="flex flex-col">
+                          <span className="text-xs text-muted-foreground line-through">R$ 1.497,00</span>
+                          <span className="text-2xl font-bold text-foreground">R$ 997,00</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="h-96 bg-background overflow-hidden">
+                      <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/3929cb5102-dd5639ec44a1354faa46.png" alt="Financial professional analyzing data" />
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* User Statistics */}
+              <section>
+                <div className="grid grid-cols-5 gap-4">
+                  <div className="bg-card rounded-xl border border-border p-6 hover:shadow-lg transition">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-pastel-blue rounded-lg flex items-center justify-center">
+                        <CheckCircle className="text-foreground" size={24} />
+                      </div>
+                      <span className="text-xs text-green-600 font-medium">+2 este mês</span>
+                    </div>
+                    <p className="text-3xl font-bold text-foreground mb-1">12</p>
+                    <p className="text-sm text-muted-foreground">Cursos Concluídos</p>
+                  </div>
+
+                  <div className="bg-card rounded-xl border border-border p-6 hover:shadow-lg transition">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-pastel-yellow rounded-lg flex items-center justify-center">
+                        <PlayCircle className="text-foreground" size={24} />
+                      </div>
+                      <span className="text-xs text-blue-600 font-medium">Em progresso</span>
+                    </div>
+                    <p className="text-3xl font-bold text-foreground mb-1">5</p>
+                    <p className="text-sm text-muted-foreground">Cursos em Andamento</p>
+                  </div>
+
+                  <div className="bg-card rounded-xl border border-border p-6 hover:shadow-lg transition">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-pastel-purple rounded-lg flex items-center justify-center">
+                        <Clock className="text-foreground" size={24} />
+                      </div>
+                      <span className="text-xs text-purple-600 font-medium">342h total</span>
+                    </div>
+                    <p className="text-3xl font-bold text-foreground mb-1">127</p>
+                    <p className="text-sm text-muted-foreground">Horas Assistidas</p>
+                  </div>
+
+                  <div className="bg-card rounded-xl border border-border p-6 hover:shadow-lg transition">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center">
+                        <Certificate className="text-foreground" size={24} />
+                      </div>
+                      <span className="text-xs text-green-600 font-medium">Verificados</span>
+                    </div>
+                    <p className="text-3xl font-bold text-foreground mb-1">12</p>
+                    <p className="text-sm text-muted-foreground">Certificados Obtidos</p>
+                  </div>
+
+                  <div className="bg-card rounded-xl border border-border p-6 hover:shadow-lg transition">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-pastel-pink rounded-lg flex items-center justify-center">
+                        <Trophy className="text-foreground" size={24} />
+                      </div>
+                      <span className="text-xs text-yellow-600 font-medium">Top 5%</span>
+                    </div>
+                    <p className="text-3xl font-bold text-foreground mb-1">8.9</p>
+                    <p className="text-sm text-muted-foreground">Média de Desempenho</p>
+                  </div>
+                </div>
+
+                <div className="mt-6 bg-card rounded-xl border border-border p-6">
+                  <h3 className="font-semibold text-foreground mb-4">Cursos por Segmento</h3>
+                  <div className="space-y-4">
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 bg-pastel-blue rounded-lg flex items-center justify-center">
+                            <ChartLine className="text-foreground" size={20} />
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-foreground">Análise de Mercado</p>
+                            <p className="text-xs text-muted-foreground">4 cursos concluídos</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Certificate className="text-pastel-blue" size={16} />
+                          <span className="text-sm font-medium text-foreground">4</span>
+                        </div>
+                      </div>
+                      <div className="w-full bg-muted rounded-full h-2">
+                        <div className="bg-pastel-blue h-2 rounded-full" style={{ width: '80%' }}></div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 bg-pastel-green rounded-lg flex items-center justify-center">
+                            <Shield className="text-foreground" size={20} />
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-foreground">Gestão de Risco</p>
+                            <p className="text-xs text-muted-foreground">3 cursos concluídos</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Certificate className="text-pastel-green" size={16} />
+                          <span className="text-sm font-medium text-foreground">3</span>
+                        </div>
+                      </div>
+                      <div className="w-full bg-muted rounded-full h-2">
+                        <div className="bg-pastel-green h-2 rounded-full" style={{ width: '60%' }}></div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 bg-pastel-purple rounded-lg flex items-center justify-center">
+                            <Bitcoin className="text-foreground" size={20} />
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-foreground">Criptomoedas</p>
+                            <p className="text-xs text-muted-foreground">2 cursos concluídos</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Certificate className="text-pastel-purple" size={16} />
+                          <span className="text-sm font-medium text-foreground">2</span>
+                        </div>
+                      </div>
+                      <div className="w-full bg-muted rounded-full h-2">
+                        <div className="bg-pastel-purple h-2 rounded-full" style={{ width: '40%' }}></div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 bg-pastel-pink rounded-lg flex items-center justify-center">
+                            <Gavel className="text-foreground" size={20} />
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-foreground">Compliance</p>
+                            <p className="text-xs text-muted-foreground">2 cursos concluídos</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Certificate className="text-pastel-pink" size={16} />
+                          <span className="text-sm font-medium text-foreground">2</span>
+                        </div>
+                      </div>
+                      <div className="w-full bg-muted rounded-full h-2">
+                        <div className="bg-pastel-pink h-2 rounded-full" style={{ width: '40%' }}></div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 bg-pastel-peach rounded-lg flex items-center justify-center">
+                            <Repeat className="text-foreground" size={20} />
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-foreground">Derivativos</p>
+                            <p className="text-xs text-muted-foreground">1 curso concluído</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Certificate className="text-pastel-peach" size={16} />
+                          <span className="text-sm font-medium text-foreground">1</span>
+                        </div>
+                      </div>
+                      <div className="w-full bg-muted rounded-full h-2">
+                        <div className="bg-pastel-peach h-2 rounded-full" style={{ width: '20%' }}></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* Filter Section */}
+              <section>
+                <div className="bg-card rounded-xl border border-border p-6">
+                  <div className="grid grid-cols-5 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-2">Categoria</label>
+                      <select className="w-full px-4 py-2 border border-border rounded-lg text-sm text-foreground bg-background focus:outline-none focus:ring-2 focus:ring-pastel-blue">
+                        <option>Todas as categorias</option>
+                        <option>Análise Técnica</option>
+                        <option>Derivativos</option>
+                        <option>Compliance</option>
+                        <option>Criptomoedas</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-2">Nível</label>
+                      <select className="w-full px-4 py-2 border border-border rounded-lg text-sm text-foreground bg-background focus:outline-none focus:ring-2 focus:ring-pastel-blue">
+                        <option>Todos os níveis</option>
+                        <option>Iniciante</option>
+                        <option>Intermediário</option>
+                        <option>Avançado</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-2">Duração</label>
+                      <select className="w-full px-4 py-2 border border-border rounded-lg text-sm text-foreground bg-background focus:outline-none focus:ring-2 focus:ring-pastel-blue">
+                        <option>Qualquer duração</option>
+                        <option>Até 10h</option>
+                        <option>10h - 20h</option>
+                        <option>Mais de 20h</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-2">Preço</label>
+                      <select className="w-full px-4 py-2 border border-border rounded-lg text-sm text-foreground bg-background focus:outline-none focus:ring-2 focus:ring-pastel-blue">
+                        <option>Todos os preços</option>
+                        <option>Gratuito</option>
+                        <option>Até R$ 500</option>
+                        <option>R$ 500 - R$ 1000</option>
+                        <option>Acima de R$ 1000</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-2">Ordenar por</label>
+                      <select className="w-full px-4 py-2 border border-border rounded-lg text-sm text-foreground bg-background focus:outline-none focus:ring-2 focus:ring-pastel-blue">
+                        <option>Mais populares</option>
+                        <option>Mais recentes</option>
+                        <option>Melhor avaliados</option>
+                        <option>Menor preço</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* Featured Courses - Primeira linha com 3 cursos */}
+              <section>
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-semibold text-foreground">Cursos em Destaque</h2>
+                  <span className="text-sm text-muted-foreground">124 cursos disponíveis</span>
+                </div>
+                <div className="grid grid-cols-3 gap-6 mb-6">
+                  <div className="bg-card rounded-xl border border-border overflow-hidden hover:shadow-lg transition">
+                    <div className="relative">
+                      <div className="h-48 bg-pastel-blue overflow-hidden">
+                        <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/f689e1e456-5ddba08158dda1d273b0.png" alt="Cryptocurrency trading" />
+                      </div>
+                      <div className="absolute top-3 left-3 flex gap-2">
+                        <span className="px-3 py-1 bg-yellow-100 text-yellow-700 text-xs font-medium rounded-full">Bestseller</span>
+                      </div>
+                      <div className="absolute top-3 right-3">
+                        <button className="w-8 h-8 bg-background rounded-full flex items-center justify-center hover:bg-muted transition">
+                          <Heart className="text-muted-foreground" size={16} />
+                        </button>
+                      </div>
+                    </div>
+                    <div className="p-5">
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="px-2 py-1 bg-pastel-blue text-foreground text-xs rounded-full">Criptomoedas</span>
+                        <span className="text-xs text-muted-foreground">Intermediário</span>
+                      </div>
+                      <h3 className="font-semibold text-foreground mb-2 line-clamp-2">Criptomoedas e Blockchain: Do Básico ao Avançado</h3>
+                      <p className="text-sm text-muted-foreground mb-4 line-clamp-2">Domine o universo das criptomoedas, DeFi e NFTs com estratégias práticas de investimento.</p>
+                      <div className="flex items-center gap-2 mb-4">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/b24014b83d-0b455d5abe744d3f9416.png" alt="instructor" className="w-8 h-8 rounded-full object-cover" />
+                        <span className="text-sm text-muted-foreground">Prof. Carlos Mendes</span>
+                      </div>
+                      <div className="flex items-center justify-between mb-4 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-4">
+                          <div className="flex items-center gap-1">
+                            <Star className="text-yellow-500 fill-yellow-500" size={12} />
+                            <span className="font-medium">4.8</span>
+                            <span className="text-muted-foreground">(2.4k)</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Video size={12} />
+                            <span>32 aulas</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between pt-4 border-t border-border">
+                        <div className="flex flex-col">
+                          <span className="text-xs text-muted-foreground line-through">R$ 897,00</span>
+                          <span className="text-xl font-bold text-foreground">R$ 597,00</span>
+                        </div>
+                        <button className="px-4 py-2 bg-pastel-blue text-foreground rounded-lg font-medium hover:opacity-80 transition text-sm">
+                          Ver Curso
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-card rounded-xl border border-border overflow-hidden hover:shadow-lg transition">
+                    <div className="relative">
+                      <div className="h-48 bg-pastel-green overflow-hidden">
+                        <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/43ade140cc-54e09b01d95bfda73dc2.png" alt="Risk management" />
+                      </div>
+                      <div className="absolute top-3 right-3">
+                        <button className="w-8 h-8 bg-background rounded-full flex items-center justify-center hover:bg-muted transition">
+                          <Heart className="text-muted-foreground" size={16} />
+                        </button>
+                      </div>
+                    </div>
+                    <div className="p-5">
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="px-2 py-1 bg-pastel-green text-foreground text-xs rounded-full">Gestão de Risco</span>
+                        <span className="text-xs text-muted-foreground">Avançado</span>
+                      </div>
+                      <h3 className="font-semibold text-foreground mb-2 line-clamp-2">Gestão de Riscos Financeiros Avançada</h3>
+                      <p className="text-sm text-muted-foreground mb-4 line-clamp-2">Aprenda técnicas sofisticadas de identificação, mensuração e mitigação de riscos financeiros.</p>
+                      <div className="flex items-center gap-2 mb-4">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-2bbdc31a97c8479658e1.png" alt="instructor" className="w-8 h-8 rounded-full object-cover" />
+                        <span className="text-sm text-muted-foreground">Dra. Ana Santos</span>
+                      </div>
+                      <div className="flex items-center justify-between mb-4 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-4">
+                          <div className="flex items-center gap-1">
+                            <Star className="text-yellow-500 fill-yellow-500" size={12} />
+                            <span className="font-medium">4.9</span>
+                            <span className="text-muted-foreground">(1.8k)</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Video size={12} />
+                            <span>28 aulas</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between pt-4 border-t border-border">
+                        <div className="flex flex-col">
+                          <span className="text-xs text-muted-foreground line-through">R$ 1.297,00</span>
+                          <span className="text-xl font-bold text-foreground">R$ 897,00</span>
+                        </div>
+                        <button className="px-4 py-2 bg-pastel-green text-foreground rounded-lg font-medium hover:opacity-80 transition text-sm">
+                          Ver Curso
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-card rounded-xl border border-border overflow-hidden hover:shadow-lg transition">
+                    <div className="relative">
+                      <div className="h-48 bg-pastel-purple overflow-hidden">
+                        <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/3929cb5102-534943598219603fe6bd.png" alt="Technical analysis" />
+                      </div>
+                      <div className="absolute top-3 left-3 flex gap-2">
+                        <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">Novo</span>
+                      </div>
+                      <div className="absolute top-3 right-3">
+                        <button className="w-8 h-8 bg-background rounded-full flex items-center justify-center hover:bg-muted transition">
+                          <Heart className="text-muted-foreground" size={16} />
+                        </button>
+                      </div>
+                    </div>
+                    <div className="p-5">
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="px-2 py-1 bg-pastel-purple text-foreground text-xs rounded-full">Análise Técnica</span>
+                        <span className="text-xs text-muted-foreground">Intermediário</span>
+                      </div>
+                      <h3 className="font-semibold text-foreground mb-2 line-clamp-2">Análise Técnica Profissional: Padrões e Estratégias</h3>
+                      <p className="text-sm text-muted-foreground mb-4 line-clamp-2">Domine padrões gráficos, indicadores técnicos e desenvolva estratégias vencedoras de trading.</p>
+                      <div className="flex items-center gap-2 mb-4">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/b24014b83d-0b455d5abe744d3f9416.png" alt="instructor" className="w-8 h-8 rounded-full object-cover" />
+                        <span className="text-sm text-muted-foreground">Prof. Roberto Lima</span>
+                      </div>
+                      <div className="flex items-center justify-between mb-4 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-4">
+                          <div className="flex items-center gap-1">
+                            <Star className="text-yellow-500 fill-yellow-500" size={12} />
+                            <span className="font-medium">4.7</span>
+                            <span className="text-muted-foreground">(3.1k)</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Video size={12} />
+                            <span>38 aulas</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between pt-4 border-t border-border">
+                        <div className="flex flex-col">
+                          <span className="text-xs text-muted-foreground line-through">R$ 797,00</span>
+                          <span className="text-xl font-bold text-foreground">R$ 497,00</span>
+                        </div>
+                        <button className="px-4 py-2 bg-pastel-purple text-foreground rounded-lg font-medium hover:opacity-80 transition text-sm">
+                          Ver Curso
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Segunda linha com 3 cursos */}
+                <div className="grid grid-cols-3 gap-6">
+                  <div className="bg-card rounded-xl border border-border overflow-hidden hover:shadow-lg transition">
+                    <div className="relative">
+                      <div className="h-48 bg-pastel-pink overflow-hidden">
+                        <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/efca16cd3f-1beea736c47851f428f1.png" alt="Compliance" />
+                      </div>
+                      <div className="absolute top-3 right-3">
+                        <button className="w-8 h-8 bg-background rounded-full flex items-center justify-center hover:bg-muted transition">
+                          <Heart className="text-muted-foreground" size={16} />
+                        </button>
+                      </div>
+                    </div>
+                    <div className="p-5">
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="px-2 py-1 bg-pastel-pink text-foreground text-xs rounded-full">Compliance</span>
+                        <span className="text-xs text-muted-foreground">Avançado</span>
+                      </div>
+                      <h3 className="font-semibold text-foreground mb-2 line-clamp-2">Compliance Financeiro: Regulamentação e Prática</h3>
+                      <p className="text-sm text-muted-foreground mb-4 line-clamp-2">Entenda a regulamentação do mercado financeiro, prevenção à lavagem de dinheiro e ética profissional.</p>
+                      <div className="flex items-center gap-2 mb-4">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-db60e1b43d477718b599.png" alt="instructor" className="w-8 h-8 rounded-full object-cover" />
+                        <span className="text-sm text-muted-foreground">Dra. Marina Costa</span>
+                      </div>
+                      <div className="flex items-center justify-between mb-4 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-4">
+                          <div className="flex items-center gap-1">
+                            <Star className="text-yellow-500 fill-yellow-500" size={12} />
+                            <span className="font-medium">4.8</span>
+                            <span className="text-muted-foreground">(1.5k)</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Video size={12} />
+                            <span>24 aulas</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between pt-4 border-t border-border">
+                        <div className="flex flex-col">
+                          <span className="text-xs text-muted-foreground line-through">R$ 997,00</span>
+                          <span className="text-xl font-bold text-foreground">R$ 697,00</span>
+                        </div>
+                        <button className="px-4 py-2 bg-pastel-pink text-foreground rounded-lg font-medium hover:opacity-80 transition text-sm">
+                          Ver Curso
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-card rounded-xl border border-border overflow-hidden hover:shadow-lg transition">
+                    <div className="relative">
+                      <div className="h-48 bg-pastel-yellow overflow-hidden">
+                        <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/8627363c2b-a72824be4bec8ab72346.png" alt="Investments" />
+                      </div>
+                      <div className="absolute top-3 right-3">
+                        <button className="w-8 h-8 bg-background rounded-full flex items-center justify-center hover:bg-muted transition">
+                          <Heart className="text-muted-foreground" size={16} />
+                        </button>
+                      </div>
+                    </div>
+                    <div className="p-5">
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="px-2 py-1 bg-pastel-yellow text-foreground text-xs rounded-full">Investimentos</span>
+                        <span className="text-xs text-muted-foreground">Iniciante</span>
+                      </div>
+                      <h3 className="font-semibold text-foreground mb-2 line-clamp-2">Fundamentos de Investimentos para Iniciantes</h3>
+                      <p className="text-sm text-muted-foreground mb-4 line-clamp-2">Comece sua jornada no mercado financeiro com bases sólidas em renda fixa, variável e fundos.</p>
+                      <div className="flex items-center gap-2 mb-4">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/b24014b83d-0b455d5abe744d3f9416.png" alt="instructor" className="w-8 h-8 rounded-full object-cover" />
+                        <span className="text-sm text-muted-foreground">Prof. Fernando Silva</span>
+                      </div>
+                      <div className="flex items-center justify-between mb-4 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-4">
+                          <div className="flex items-center gap-1">
+                            <Star className="text-yellow-500 fill-yellow-500" size={12} />
+                            <span className="font-medium">4.9</span>
+                            <span className="text-muted-foreground">(4.2k)</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Video size={12} />
+                            <span>20 aulas</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between pt-4 border-t border-border">
+                        <div className="flex flex-col">
+                          <span className="text-xs text-muted-foreground line-through">R$ 497,00</span>
+                          <span className="text-xl font-bold text-foreground">R$ 297,00</span>
+                        </div>
+                        <button className="px-4 py-2 bg-pastel-yellow text-foreground rounded-lg font-medium hover:opacity-80 transition text-sm">
+                          Ver Curso
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-card rounded-xl border border-border overflow-hidden hover:shadow-lg transition">
+                    <div className="relative">
+                      <div className="h-48 bg-pastel-peach overflow-hidden">
+                        <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png" alt="Derivatives" />
+                      </div>
+                      <div className="absolute top-3 left-3 flex gap-2">
+                        <span className="px-3 py-1 bg-yellow-100 text-yellow-700 text-xs font-medium rounded-full">Bestseller</span>
+                      </div>
+                      <div className="absolute top-3 right-3">
+                        <button className="w-8 h-8 bg-background rounded-full flex items-center justify-center hover:bg-muted transition">
+                          <Heart className="text-muted-foreground" size={16} />
+                        </button>
+                      </div>
+                    </div>
+                    <div className="p-5">
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="px-2 py-1 bg-pastel-peach text-foreground text-xs rounded-full">Derivativos</span>
+                        <span className="text-xs text-muted-foreground">Avançado</span>
+                      </div>
+                      <h3 className="font-semibold text-foreground mb-2 line-clamp-2">Derivativos: Opções, Futuros e Estratégias</h3>
+                      <p className="text-sm text-muted-foreground mb-4 line-clamp-2">Domine o mercado de derivativos com estratégias avançadas de hedge e especulação.</p>
+                      <div className="flex items-center gap-2 mb-4">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-2bbdc31a97c8479658e1.png" alt="instructor" className="w-8 h-8 rounded-full object-cover" />
+                        <span className="text-sm text-muted-foreground">Prof. Paulo Andrade</span>
+                      </div>
+                      <div className="flex items-center justify-between mb-4 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-4">
+                          <div className="flex items-center gap-1">
+                            <Star className="text-yellow-500 fill-yellow-500" size={12} />
+                            <span className="font-medium">5.0</span>
+                            <span className="text-muted-foreground">(987)</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Video size={12} />
+                            <span>36 aulas</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between pt-4 border-t border-border">
+                        <div className="flex flex-col">
+                          <span className="text-xs text-muted-foreground line-through">R$ 1.497,00</span>
+                          <span className="text-xl font-bold text-foreground">R$ 997,00</span>
+                        </div>
+                        <button className="px-4 py-2 bg-pastel-peach text-foreground rounded-lg font-medium hover:opacity-80 transition text-sm">
+                          Ver Curso
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* Categories Section */}
+              <section>
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-semibold text-foreground">Explorar por Categoria</h2>
+                </div>
+                <div className="grid grid-cols-4 gap-4">
+                  <div className="bg-card rounded-xl border border-border p-6 hover:shadow-lg transition cursor-pointer">
+                    <div className="w-12 h-12 bg-pastel-blue rounded-lg flex items-center justify-center mb-4">
+                      <ChartLine className="text-foreground" size={24} />
+                    </div>
+                    <h3 className="font-semibold text-foreground mb-2">Análise de Mercado</h3>
+                    <p className="text-sm text-muted-foreground">24 cursos</p>
+                  </div>
+                  <div className="bg-card rounded-xl border border-border p-6 hover:shadow-lg transition cursor-pointer">
+                    <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center mb-4">
+                      <Shield className="text-foreground" size={24} />
+                    </div>
+                    <h3 className="font-semibold text-foreground mb-2">Gestão de Risco</h3>
+                    <p className="text-sm text-muted-foreground">18 cursos</p>
+                  </div>
+                  <div className="bg-card rounded-xl border border-border p-6 hover:shadow-lg transition cursor-pointer">
+                    <div className="w-12 h-12 bg-pastel-purple rounded-lg flex items-center justify-center mb-4">
+                      <Bitcoin className="text-foreground" size={24} />
+                    </div>
+                    <h3 className="font-semibold text-foreground mb-2">Criptomoedas</h3>
+                    <p className="text-sm text-muted-foreground">12 cursos</p>
+                  </div>
+                  <div className="bg-card rounded-xl border border-border p-6 hover:shadow-lg transition cursor-pointer">
+                    <div className="w-12 h-12 bg-pastel-pink rounded-lg flex items-center justify-center mb-4">
+                      <Gavel className="text-foreground" size={24} />
+                    </div>
+                    <h3 className="font-semibold text-foreground mb-2">Compliance</h3>
+                    <p className="text-sm text-muted-foreground">16 cursos</p>
+                  </div>
+                  <div className="bg-card rounded-xl border border-border p-6 hover:shadow-lg transition cursor-pointer">
+                    <div className="w-12 h-12 bg-pastel-yellow rounded-lg flex items-center justify-center mb-4">
+                      <PieChart className="text-foreground" size={24} />
+                    </div>
+                    <h3 className="font-semibold text-foreground mb-2">Investimentos</h3>
+                    <p className="text-sm text-muted-foreground">32 cursos</p>
+                  </div>
+                  <div className="bg-card rounded-xl border border-border p-6 hover:shadow-lg transition cursor-pointer">
+                    <div className="w-12 h-12 bg-pastel-peach rounded-lg flex items-center justify-center mb-4">
+                      <Repeat className="text-foreground" size={24} />
+                    </div>
+                    <h3 className="font-semibold text-foreground mb-2">Derivativos</h3>
+                    <p className="text-sm text-muted-foreground">14 cursos</p>
+                  </div>
+                  <div className="bg-card rounded-xl border border-border p-6 hover:shadow-lg transition cursor-pointer">
+                    <div className="w-12 h-12 bg-pastel-blue rounded-lg flex items-center justify-center mb-4">
+                      <Globe className="text-foreground" size={24} />
+                    </div>
+                    <h3 className="font-semibold text-foreground mb-2">Macroeconomia</h3>
+                    <p className="text-sm text-muted-foreground">10 cursos</p>
+                  </div>
+                  <div className="bg-card rounded-xl border border-border p-6 hover:shadow-lg transition cursor-pointer">
+                    <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center mb-4">
+                      <Leaf className="text-foreground" size={24} />
+                    </div>
+                    <h3 className="font-semibold text-foreground mb-2">ESG & Sustentabilidade</h3>
+                    <p className="text-sm text-muted-foreground">8 cursos</p>
+                  </div>
+                </div>
+              </section>
+
+              {/* Instructors Section */}
+              <section>
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-semibold text-foreground">Instrutores em Destaque</h2>
+                  <a href="#" className="text-sm text-muted-foreground hover:text-foreground font-medium">Ver todos</a>
+                </div>
+                <div className="grid grid-cols-4 gap-6">
+                  <div className="bg-card rounded-xl border border-border p-6 text-center hover:shadow-lg transition">
+                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/b24014b83d-0b455d5abe744d3f9416.png" alt="instructor" className="w-24 h-24 rounded-full object-cover mx-auto mb-4" />
+                    <h3 className="font-semibold text-foreground mb-1">Prof. Carlos Mendes</h3>
+                    <p className="text-sm text-muted-foreground mb-4">Especialista em Criptomoedas</p>
+                    <div className="flex items-center justify-center gap-4 text-sm text-muted-foreground mb-4">
+                      <div className="flex items-center gap-1">
+                        <Star className="text-yellow-500 fill-yellow-500" size={12} />
+                        <span>4.9</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Users size={12} />
+                        <span>12.4k</span>
+                      </div>
+                    </div>
+                    <button className="w-full px-4 py-2 bg-pastel-blue text-foreground rounded-lg text-sm font-medium hover:opacity-80 transition">
+                      Ver Perfil
+                    </button>
+                  </div>
+                  <div className="bg-card rounded-xl border border-border p-6 text-center hover:shadow-lg transition">
+                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-2bbdc31a97c8479658e1.png" alt="instructor" className="w-24 h-24 rounded-full object-cover mx-auto mb-4" />
+                    <h3 className="font-semibold text-foreground mb-1">Dra. Ana Santos</h3>
+                    <p className="text-sm text-muted-foreground mb-4">Expert em Gestão de Risco</p>
+                    <div className="flex items-center justify-center gap-4 text-sm text-muted-foreground mb-4">
+                      <div className="flex items-center gap-1">
+                        <Star className="text-yellow-500 fill-yellow-500" size={12} />
+                        <span>5.0</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Users size={12} />
+                        <span>8.7k</span>
+                      </div>
+                    </div>
+                    <button className="w-full px-4 py-2 bg-pastel-green text-foreground rounded-lg text-sm font-medium hover:opacity-80 transition">
+                      Ver Perfil
+                    </button>
+                  </div>
+                  <div className="bg-card rounded-xl border border-border p-6 text-center hover:shadow-lg transition">
+                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/b24014b83d-0b455d5abe744d3f9416.png" alt="instructor" className="w-24 h-24 rounded-full object-cover mx-auto mb-4" />
+                    <h3 className="font-semibold text-foreground mb-1">Prof. Roberto Lima</h3>
+                    <p className="text-sm text-muted-foreground mb-4">Especialista em Análise Técnica</p>
+                    <div className="flex items-center justify-center gap-4 text-sm text-muted-foreground mb-4">
+                      <div className="flex items-center gap-1">
+                        <Star className="text-yellow-500 fill-yellow-500" size={12} />
+                        <span>4.8</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Users size={12} />
+                        <span>15.2k</span>
+                      </div>
+                    </div>
+                    <button className="w-full px-4 py-2 bg-pastel-purple text-foreground rounded-lg text-sm font-medium hover:opacity-80 transition">
+                      Ver Perfil
+                    </button>
+                  </div>
+                  <div className="bg-card rounded-xl border border-border p-6 text-center hover:shadow-lg transition">
+                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-db60e1b43d477718b599.png" alt="instructor" className="w-24 h-24 rounded-full object-cover mx-auto mb-4" />
+                    <h3 className="font-semibold text-foreground mb-1">Dra. Marina Costa</h3>
+                    <p className="text-sm text-muted-foreground mb-4">Consultora de ESG</p>
+                    <div className="flex items-center justify-center gap-4 text-sm text-muted-foreground mb-4">
+                      <div className="flex items-center gap-1">
+                        <Star className="text-yellow-500 fill-yellow-500" size={12} />
+                        <span>4.9</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Users size={12} />
+                        <span>6.3k</span>
+                      </div>
+                    </div>
+                    <button className="w-full px-4 py-2 bg-pastel-pink text-foreground rounded-lg text-sm font-medium hover:opacity-80 transition">
+                      Ver Perfil
+                    </button>
+                  </div>
+                </div>
+              </section>
+
+              {/* Testimonials Section */}
+              <section>
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-semibold text-foreground">O Que Dizem Nossos Alunos</h2>
+                </div>
+                <div className="grid grid-cols-3 gap-6">
+                  <div className="bg-card rounded-xl border border-border p-6">
+                    <div className="flex items-center gap-1 mb-4">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="text-yellow-500 fill-yellow-500" size={14} />
+                      ))}
+                    </div>
+                    <p className="text-muted-foreground mb-4">O curso de Análise Técnica mudou completamente minha forma de operar no mercado. Conteúdo excepcional e professor muito didático.</p>
+                    <div className="flex items-center gap-3">
+                      <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" alt="student" className="w-10 h-10 rounded-full object-cover" />
+                      <div>
+                        <p className="text-sm font-medium text-foreground">Lucas Ferreira</p>
+                        <p className="text-xs text-muted-foreground">Trader Profissional</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-card rounded-xl border border-border p-6">
+                    <div className="flex items-center gap-1 mb-4">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="text-yellow-500 fill-yellow-500" size={14} />
+                      ))}
+                    </div>
+                    <p className="text-muted-foreground mb-4">Melhor investimento que fiz na minha carreira. Os cursos são completos e com certificação reconhecida pelo mercado.</p>
+                    <div className="flex items-center gap-3">
+                      <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" alt="student" className="w-10 h-10 rounded-full object-cover" />
+                      <div>
+                        <p className="text-sm font-medium text-foreground">Juliana Oliveira</p>
+                        <p className="text-xs text-muted-foreground">Analista de Investimentos</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-card rounded-xl border border-border p-6">
+                    <div className="flex items-center gap-1 mb-4">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="text-yellow-500 fill-yellow-500" size={14} />
+                      ))}
+                    </div>
+                    <p className="text-muted-foreground mb-4">Plataforma excelente com conteúdo atualizado. As aulas com avatares IA são inovadoras e facilitam muito o aprendizado.</p>
+                    <div className="flex items-center gap-3">
+                      <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg" alt="student" className="w-10 h-10 rounded-full object-cover" />
+                      <div>
+                        <p className="text-sm font-medium text-foreground">Rafael Santos</p>
+                        <p className="text-xs text-muted-foreground">Gestor de Fundos</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* CTA Section */}
+              <section>
+                <div className="bg-gradient-to-r from-pastel-blue to-pastel-purple rounded-xl p-12 text-center">
+                  <h2 className="text-3xl font-bold text-foreground mb-4">Pronto para Transformar sua Carreira?</h2>
+                  <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">Junte-se a mais de 50 mil profissionais que já transformaram suas carreiras com nossos cursos. Certificação reconhecida pelo mercado e acesso vitalício.</p>
+                  <div className="flex items-center justify-center gap-4">
+                    <button className="px-8 py-4 bg-background text-foreground rounded-lg font-semibold hover:opacity-90 transition shadow-lg">
+                      Explorar Todos os Cursos
+                    </button>
+                    <button className="px-8 py-4 bg-foreground text-background rounded-lg font-semibold hover:opacity-90 transition">
+                      Falar com Consultor
+                    </button>
+                  </div>
+                </div>
+              </section>
             </div>
           )}
 
