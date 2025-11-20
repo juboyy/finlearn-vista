@@ -1,6 +1,8 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 
 export default function Comunidade() {
+  const [activeTab, setActiveTab] = useState<"discussoes" | "artigos">("discussoes");
+
   return (
     <div className="flex h-screen overflow-hidden">
       <SidebarFix />
@@ -168,10 +170,24 @@ export default function Comunidade() {
               <div className="bg-white rounded-xl border border-slate-200">
                 <div className="border-b border-slate-200">
                   <div className="flex items-center gap-2 px-6 pt-6 pb-4">
-                    <button className="px-4 py-2 text-sm font-medium text-slate-800 bg-pastel-blue border border-pastel-blue rounded-lg">
+                    <button 
+                      onClick={() => setActiveTab("discussoes")}
+                      className={`px-4 py-2 text-sm font-medium rounded-lg transition ${
+                        activeTab === "discussoes" 
+                          ? "text-slate-800 bg-pastel-blue border border-pastel-blue" 
+                          : "text-slate-600 hover:bg-slate-100 border border-transparent"
+                      }`}
+                    >
                       Discussões
                     </button>
-                    <button className="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 border border-transparent rounded-lg transition">
+                    <button 
+                      onClick={() => setActiveTab("artigos")}
+                      className={`px-4 py-2 text-sm font-medium rounded-lg transition ${
+                        activeTab === "artigos" 
+                          ? "text-slate-800 bg-pastel-green border border-pastel-green" 
+                          : "text-slate-600 hover:bg-slate-100 border border-transparent"
+                      }`}
+                    >
                       Artigos
                     </button>
                     <button className="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 border border-transparent rounded-lg transition">
@@ -185,7 +201,9 @@ export default function Comunidade() {
 
                 <div className="p-6">
                   <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-lg font-semibold text-slate-800">Discussões em Destaque</h2>
+                    <h2 className="text-lg font-semibold text-slate-800">
+                      {activeTab === "discussoes" ? "Discussões em Destaque" : "Artigos em Destaque"}
+                    </h2>
                     <div className="flex gap-2">
                       <button className="px-3 py-1.5 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition">
                         <i className="fas fa-fire mr-1"></i>
@@ -382,11 +400,211 @@ export default function Comunidade() {
                               <i className="far fa-thumbs-up"></i>
                               29 curtidas
                             </span>
-                          </div>
-                        </div>
                       </div>
                     </div>
                   </div>
+                    </div>
+                  ) : (
+                    <div className="space-y-6">
+                      <article className="border border-slate-200 rounded-lg overflow-hidden hover:border-pastel-green hover:shadow-md transition cursor-pointer">
+                        <div className="h-48 overflow-hidden bg-slate-100">
+                          <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/f073da7c83-b43f4f357022991e8f02.png" alt="Financial charts illustration" />
+                        </div>
+                        <div className="p-5">
+                          <div className="flex items-center gap-2 mb-3">
+                            <span className="px-2 py-1 bg-pastel-green text-slate-700 rounded text-xs font-medium">Mercado de Capitais</span>
+                            <span className="text-xs text-slate-500">•</span>
+                            <span className="text-xs text-slate-500">12 min de leitura</span>
+                          </div>
+                          <h3 className="text-xl font-semibold text-slate-800 mb-2 hover:text-pastel-green transition">O Impacto das Taxas de Juros no Mercado de Renda Fixa Brasileiro</h3>
+                          <p className="text-sm text-slate-600 mb-4 line-clamp-2">Uma análise detalhada sobre como as mudanças na política monetária do Banco Central afetam os diferentes tipos de títulos de renda fixa e as estratégias de alocação para investidores institucionais.</p>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <div className="flex -space-x-2">
+                                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" alt="Author" className="w-8 h-8 rounded-full object-cover border-2 border-white" />
+                                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-7.jpg" alt="Co-author" className="w-8 h-8 rounded-full object-cover border-2 border-white" />
+                              </div>
+                              <div>
+                                <p className="text-sm font-medium text-slate-800">Dr. Ricardo Fernandes e co-autores</p>
+                                <p className="text-xs text-slate-500">há 3 horas</p>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-4 text-xs text-slate-500">
+                              <span className="flex items-center gap-1">
+                                <Eye className="w-4 h-4" />
+                                1.2k
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <Heart className="w-4 h-4" />
+                                87
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <MessageSquare className="w-4 h-4" />
+                                23
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </article>
+
+                      <article className="border border-slate-200 rounded-lg overflow-hidden hover:border-pastel-blue hover:shadow-md transition cursor-pointer">
+                        <div className="h-48 overflow-hidden bg-slate-100">
+                          <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/d640e901cd-5a67709867593e6faa85.png" alt="PIX and Open Finance illustration" />
+                        </div>
+                        <div className="p-5">
+                          <div className="flex items-center gap-2 mb-3">
+                            <span className="px-2 py-1 bg-pastel-blue text-slate-700 rounded text-xs font-medium">Meios de Pagamento</span>
+                            <span className="text-xs text-slate-500">•</span>
+                            <span className="text-xs text-slate-500">8 min de leitura</span>
+                          </div>
+                          <h3 className="text-xl font-semibold text-slate-800 mb-2 hover:text-pastel-blue transition">Open Finance e PIX: Transformação Digital no Sistema de Pagamentos</h3>
+                          <p className="text-sm text-slate-600 mb-4 line-clamp-2">Explorando as mudanças estruturais no ecossistema financeiro brasileiro com a implementação do Open Finance e a evolução contínua do PIX como instrumento de pagamento instantâneo.</p>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg" alt="Author" className="w-8 h-8 rounded-full object-cover" />
+                              <div>
+                                <p className="text-sm font-medium text-slate-800">Mariana Campos</p>
+                                <p className="text-xs text-slate-500">há 1 dia</p>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-4 text-xs text-slate-500">
+                              <span className="flex items-center gap-1">
+                                <Eye className="w-4 h-4" />
+                                2.4k
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <Heart className="w-4 h-4" />
+                                156
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <MessageSquare className="w-4 h-4" />
+                                42
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </article>
+
+                      <article className="border border-slate-200 rounded-lg overflow-hidden hover:border-pastel-purple hover:shadow-md transition cursor-pointer">
+                        <div className="h-48 overflow-hidden bg-slate-100">
+                          <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/dcfb61c7a5-734d33eff99c0e2388a8.png" alt="Compliance illustration" />
+                        </div>
+                        <div className="p-5">
+                          <div className="flex items-center gap-2 mb-3">
+                            <span className="px-2 py-1 bg-pastel-purple text-slate-700 rounded text-xs font-medium">Compliance</span>
+                            <span className="text-xs text-slate-500">•</span>
+                            <span className="text-xs text-slate-500">15 min de leitura</span>
+                          </div>
+                          <h3 className="text-xl font-semibold text-slate-800 mb-2 hover:text-pastel-purple transition">Novas Diretrizes de Prevenção à Lavagem de Dinheiro: Guia Prático</h3>
+                          <p className="text-sm text-slate-600 mb-4 line-clamp-2">Um guia completo sobre as atualizações regulatórias em PLD/FT, incluindo as melhores práticas para implementação de controles internos e sistemas de monitoramento transacional.</p>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <div className="flex -space-x-2">
+                                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg" alt="Author" className="w-8 h-8 rounded-full object-cover border-2 border-white" />
+                                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg" alt="Co-author" className="w-8 h-8 rounded-full object-cover border-2 border-white" />
+                              </div>
+                              <div>
+                                <p className="text-sm font-medium text-slate-800">Dr. Roberto Alves e co-autores</p>
+                                <p className="text-xs text-slate-500">há 2 dias</p>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-4 text-xs text-slate-500">
+                              <span className="flex items-center gap-1">
+                                <Eye className="w-4 h-4" />
+                                1.8k
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <Heart className="w-4 h-4" />
+                                124
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <MessageSquare className="w-4 h-4" />
+                                38
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </article>
+
+                      <article className="border border-slate-200 rounded-lg overflow-hidden hover:border-pastel-yellow hover:shadow-md transition cursor-pointer">
+                        <div className="h-48 overflow-hidden bg-slate-100">
+                          <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/c7c2e34325-9935efb9fd126e917007.png" alt="Risk assessment illustration" />
+                        </div>
+                        <div className="p-5">
+                          <div className="flex items-center gap-2 mb-3">
+                            <span className="px-2 py-1 bg-pastel-yellow text-slate-700 rounded text-xs font-medium">Gestão de Riscos</span>
+                            <span className="text-xs text-slate-500">•</span>
+                            <span className="text-xs text-slate-500">10 min de leitura</span>
+                          </div>
+                          <h3 className="text-xl font-semibold text-slate-800 mb-2 hover:text-pastel-yellow transition">Modelagem de Risco de Crédito: Técnicas Avançadas para o Mercado Atual</h3>
+                          <p className="text-sm text-slate-600 mb-4 line-clamp-2">Análise das metodologias mais recentes em modelagem de risco de crédito, incluindo machine learning aplicado à previsão de inadimplência e otimização de portfolios.</p>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg" alt="Author" className="w-8 h-8 rounded-full object-cover" />
+                              <div>
+                                <p className="text-sm font-medium text-slate-800">Felipe Monteiro</p>
+                                <p className="text-xs text-slate-500">há 3 dias</p>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-4 text-xs text-slate-500">
+                              <span className="flex items-center gap-1">
+                                <Eye className="w-4 h-4" />
+                                956
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <Heart className="w-4 h-4" />
+                                73
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <MessageSquare className="w-4 h-4" />
+                                19
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </article>
+
+                      <article className="border border-slate-200 rounded-lg overflow-hidden hover:border-pastel-pink hover:shadow-md transition cursor-pointer">
+                        <div className="h-48 overflow-hidden bg-slate-100">
+                          <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/850265aaa9-273e582e3db8766bcdb3.png" alt="ESG investing illustration" />
+                        </div>
+                        <div className="p-5">
+                          <div className="flex items-center gap-2 mb-3">
+                            <span className="px-2 py-1 bg-pastel-pink text-slate-700 rounded text-xs font-medium">ESG & Sustentabilidade</span>
+                            <span className="text-xs text-slate-500">•</span>
+                            <span className="text-xs text-slate-500">11 min de leitura</span>
+                          </div>
+                          <h3 className="text-xl font-semibold text-slate-800 mb-2 hover:text-pastel-pink transition">Investimentos ESG: Integrando Sustentabilidade nas Decisões Financeiras</h3>
+                          <p className="text-sm text-slate-600 mb-4 line-clamp-2">Como incorporar critérios ambientais, sociais e de governança nas estratégias de investimento, com foco em métricas de impacto e performance de longo prazo.</p>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" alt="Author" className="w-8 h-8 rounded-full object-cover" />
+                              <div>
+                                <p className="text-sm font-medium text-slate-800">Dra. Beatriz Lima</p>
+                                <p className="text-xs text-slate-500">há 4 dias</p>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-4 text-xs text-slate-500">
+                              <span className="flex items-center gap-1">
+                                <Eye className="w-4 h-4" />
+                                1.5k
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <Heart className="w-4 h-4" />
+                                98
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <MessageSquare className="w-4 h-4" />
+                                31
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </article>
+                    </div>
+                  )}
+                </div>
+              </div>
                 </div>
               </div>
             </section>
@@ -426,7 +644,9 @@ export default function Comunidade() {
                 <h3 className="font-semibold text-slate-800 mb-4">Tópicos Populares</h3>
                 <div className="flex flex-wrap gap-2">
                   <span className="px-3 py-1.5 bg-pastel-blue text-slate-700 rounded-full text-xs font-medium">#análise</span>
-                  <span className="px-3 py-1.5 bg-pastel-green text-slate-700 rounded-full text-xs font-medium">#cripto</span>
+                  <span className="px-3 py-1.5 bg-pastel-green text-slate-700 rounded-full text-xs font-medium">
+                    {activeTab === "discussoes" ? "#cripto" : "#pagamentos"}
+                  </span>
                   <span className="px-3 py-1.5 bg-pastel-purple text-slate-700 rounded-full text-xs font-medium">#regulação</span>
                   <span className="px-3 py-1.5 bg-pastel-yellow text-slate-700 rounded-full text-xs font-medium">#carreira</span>
                   <span className="px-3 py-1.5 bg-pastel-pink text-slate-700 rounded-full text-xs font-medium">#investimentos</span>
@@ -434,7 +654,45 @@ export default function Comunidade() {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-br from-pastel-blue to-pastel-purple rounded-xl p-6 text-slate-800">
+              {activeTab === "artigos" && (
+                <div className="bg-white rounded-xl p-6 border border-slate-200">
+                  <h3 className="font-semibold text-slate-800 mb-4">Autores Recomendados</h3>
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3">
+                      <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" alt="Author" className="w-10 h-10 rounded-full object-cover" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-slate-800 truncate">Dr. Ricardo Fernandes</p>
+                        <p className="text-xs text-slate-500">24 artigos</p>
+                      </div>
+                      <button className="px-3 py-1 bg-pastel-blue text-slate-700 rounded text-xs font-medium hover:bg-opacity-80 transition">
+                        Seguir
+                      </button>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg" alt="Author" className="w-10 h-10 rounded-full object-cover" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-slate-800 truncate">Mariana Campos</p>
+                        <p className="text-xs text-slate-500">18 artigos</p>
+                      </div>
+                      <button className="px-3 py-1 bg-pastel-blue text-slate-700 rounded text-xs font-medium hover:bg-opacity-80 transition">
+                        Seguir
+                      </button>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg" alt="Author" className="w-10 h-10 rounded-full object-cover" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-slate-800 truncate">Dr. Roberto Alves</p>
+                        <p className="text-xs text-slate-500">31 artigos</p>
+                      </div>
+                      <button className="px-3 py-1 bg-pastel-blue text-slate-700 rounded text-xs font-medium hover:bg-opacity-80 transition">
+                        Seguir
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <div className="bg-pastel-blue rounded-xl p-6 text-slate-800">
                 <div className="flex items-center gap-3 mb-3">
                   <i className="fas fa-crown text-2xl"></i>
                   <h3 className="font-semibold">Premium</h3>
