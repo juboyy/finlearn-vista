@@ -268,8 +268,8 @@ const Autores = () => {
                     Seguidores
                   </button>
                   <button className="px-6 py-2.5 bg-pastel-purple text-slate-700 rounded-lg font-medium flex items-center gap-2">
-                    <i className="fas fa-user-friends mr-2"></i>
-                    Todos Autores
+                    <i className="fas fa-compass mr-2"></i>
+                    Descobrir Novos
                   </button>
                 </div>
               </section>
