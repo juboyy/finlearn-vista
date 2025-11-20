@@ -7,10 +7,6 @@ import {
   Book,
   Store,
   MessageSquare,
-  Settings,
-  Bell,
-  Filter,
-  ChartLine,
 } from "lucide-react";
 
 const navigation = [
@@ -31,7 +27,7 @@ const Aprendizado = () => {
         <div className="p-6 border-b border-slate-200">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-pastel-blue rounded-lg flex items-center justify-center">
-              <ChartLine className="text-slate-700 w-5 h-5" />
+              <i className="fas fa-chart-line text-slate-700 text-lg"></i>
             </div>
             <span className="text-xl font-semibold text-slate-800">FinLearn</span>
           </div>
@@ -63,7 +59,7 @@ const Aprendizado = () => {
               <p className="text-xs text-slate-500 truncate">Premium</p>
             </div>
             <button className="text-slate-400 hover:text-slate-600">
-              <Settings className="w-5 h-5" />
+              <i className="fas fa-cog"></i>
             </button>
           </div>
         </div>
@@ -82,11 +78,11 @@ const Aprendizado = () => {
             </div>
             <div className="flex items-center gap-4">
               <button className="relative p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
-                <Bell className="w-5 h-5" />
+                <i className="fas fa-bell text-lg"></i>
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
               </button>
               <button className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
-                <Filter className="w-4 h-4 inline mr-2" />
+                <i className="fas fa-filter mr-2"></i>
                 Filtrar Conteúdo
               </button>
             </div>
