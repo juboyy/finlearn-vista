@@ -73,7 +73,10 @@ export default function Comunidade() {
                 </div>
               </div>
               <h3 className="text-3xl font-bold text-slate-800 mb-1">#12</h3>
-              <p className="text-sm text-slate-500">Seu Ranking</p>
+              <p className="text-sm text-slate-500 mb-4">Seu Ranking</p>
+              <button className="w-full px-4 py-2 bg-pastel-pink border border-pastel-pink text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
+                Ver Ranking
+              </button>
             </div>
           </section>
 
