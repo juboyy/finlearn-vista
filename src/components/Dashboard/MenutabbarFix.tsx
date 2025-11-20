@@ -1,4 +1,4 @@
-import { BarChart3 } from "lucide-react";
+import { BarChart3, Grid3x3, List } from "lucide-react";
 
 type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'documentos' | 'estudos';
 
@@ -113,6 +113,12 @@ export const MenutabbarFix = ({ activeTab, setActiveTab }: MenutabbarFixProps) =
             className="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pastel-blue"
           />
         </div>
+        <button className="p-3 bg-white border border-slate-200 text-slate-600 rounded-lg hover:bg-slate-50 transition">
+          <Grid3x3 size={20} />
+        </button>
+        <button className="p-3 bg-white border border-slate-200 text-slate-600 rounded-lg hover:bg-slate-50 transition">
+          <List size={20} />
+        </button>
         <button className="px-5 py-3 bg-white border border-slate-200 text-slate-700 rounded-lg font-medium hover:bg-slate-50 transition flex items-center gap-2 whitespace-nowrap">
           <i className="fas fa-filter"></i>
           <span>Filtro Avançado</span>
