@@ -476,7 +476,7 @@ export default function ArtigoCreditoRural() {
                         </ul>
                       </div>
                       <div>
-                        <ul className="space-y-1 text-slate-700">
+                        <ul className="space-y-1 text-slate-700 mt-5">
                           <li><strong>Spread<sub>regional</sub></strong> = 0,2% a 1,8%</li>
                           <li><strong>Spread<sub>modalidade</sub></strong> = 0,3% a 1,2%</li>
                         </ul>
