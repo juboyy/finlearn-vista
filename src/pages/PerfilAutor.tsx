@@ -257,6 +257,53 @@ const PerfilAutor = () => {
 
           <div className="grid grid-cols-12 gap-8">
             <div className="col-span-12 lg:col-span-8 space-y-8">
+              <div className="bg-gradient-to-r from-pastel-blue/30 to-pastel-purple/30 border border-border rounded-lg p-8">
+                <div className="flex items-center justify-between">
+                  <div className="flex-1">
+                    <div className="inline-block bg-pastel-green px-3 py-1 rounded-full text-xs font-bold text-pastel-dark-gray mb-3">
+                      Oferta Especial
+                    </div>
+                    <h3 className="text-2xl font-bold text-foreground mb-2">
+                      Tenha acesso completo ao conhecimento de Marina Santos
+                    </h3>
+                    <p className="text-muted-foreground mb-4">
+                      Mais de 3.200 profissionais já transformaram suas carreiras com nossos conteúdos exclusivos sobre PIX, Open Finance e Sistemas de Pagamento.
+                    </p>
+                    <div className="flex items-center gap-6 text-sm">
+                      <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 bg-pastel-blue rounded-full flex items-center justify-center">
+                          <i className="fa-solid fa-graduation-cap text-pastel-dark-gray text-xs"></i>
+                        </div>
+                        <span className="text-foreground font-medium">89 Cursos</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 bg-pastel-purple rounded-full flex items-center justify-center">
+                          <i className="fa-solid fa-file-alt text-pastel-dark-gray text-xs"></i>
+                        </div>
+                        <span className="text-foreground font-medium">156 Artigos</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 bg-pastel-green rounded-full flex items-center justify-center">
+                          <i className="fa-solid fa-certificate text-pastel-dark-gray text-xs"></i>
+                        </div>
+                        <span className="text-foreground font-medium">24 Certificações</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="ml-8 text-center">
+                    <div className="text-4xl font-extrabold text-pastel-dark-gray mb-2">4.9/5</div>
+                    <div className="flex gap-0.5 mb-2">
+                      <i className="fa-solid fa-star text-yellow-400"></i>
+                      <i className="fa-solid fa-star text-yellow-400"></i>
+                      <i className="fa-solid fa-star text-yellow-400"></i>
+                      <i className="fa-solid fa-star text-yellow-400"></i>
+                      <i className="fa-solid fa-star text-yellow-400"></i>
+                    </div>
+                    <p className="text-xs text-muted-foreground">Baseado em 1.234 avaliações</p>
+                  </div>
+                </div>
+              </div>
+
               <section>
                 <div className="flex items-center justify-between mb-6">
                   <div>
