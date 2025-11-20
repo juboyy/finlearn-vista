@@ -22,6 +22,7 @@ import Rankings from "./pages/Rankings";
 import Discussao from "./pages/Discussao";
 import ArtigoCreditoRural from "./pages/ArtigoCreditoRural";
 import Autores from "./pages/Autores";
+import PerfilAutor from "./pages/PerfilAutor";
 import NotFound from "./pages/NotFound";
 
 const App = () => {
@@ -59,6 +60,7 @@ const App = () => {
           <Route path="/discussao/:id" element={<Discussao />} />
           <Route path="/artigo/credito-rural" element={<ArtigoCreditoRural />} />
           <Route path="/autores" element={<Autores />} />
+          <Route path="/perfil-autor/:id" element={<PerfilAutor />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
