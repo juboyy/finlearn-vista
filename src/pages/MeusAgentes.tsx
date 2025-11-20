@@ -74,7 +74,7 @@ export default function MeusAgentes() {
   return (
     <div className="flex min-h-screen bg-background">
       <SidebarFix />
-      <div className="flex-1">
+      <div className="flex-1 ml-64">
       {/* Header */}
       <header className="bg-card border-b border-border sticky top-0 z-40">
         <div className="px-8 py-4 flex items-center justify-between">
