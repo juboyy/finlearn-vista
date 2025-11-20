@@ -50,7 +50,7 @@ const Rankings = () => {
             <div className="bg-card border border-border rounded-lg p-5 shadow-sm">
               <div className="flex items-center justify-between mb-3">
                 <div className="w-10 h-10 bg-primary-light rounded-md flex items-center justify-center">
-                  <TrendingUp className="text-muted-foreground" size={20} />
+                  <TrendingUp className="text-pastel-gray-dark" size={20} />
                 </div>
                 <span className="text-xs font-semibold text-success-foreground bg-success-light px-2 py-0.5 rounded-full flex items-center gap-1">
                   <ArrowUp size={12} /> 12
@@ -63,7 +63,7 @@ const Rankings = () => {
             <div className="bg-card border border-border rounded-lg p-5 shadow-sm">
               <div className="flex items-center justify-between mb-3">
                 <div className="w-10 h-10 bg-secondary-light rounded-md flex items-center justify-center">
-                  <Users className="text-muted-foreground" size={20} />
+                  <Users className="text-pastel-gray-dark" size={20} />
                 </div>
                 <span className="text-xs font-semibold text-success-foreground bg-success-light px-2 py-0.5 rounded-full">+8</span>
               </div>
@@ -74,7 +74,7 @@ const Rankings = () => {
             <div className="bg-card border border-border rounded-lg p-5 shadow-sm">
               <div className="flex items-center justify-between mb-3">
                 <div className="w-10 h-10 bg-accent-light rounded-md flex items-center justify-center">
-                  <Heart className="text-muted-foreground" size={20} />
+                  <Heart className="text-pastel-gray-dark" size={20} />
                 </div>
                 <span className="text-xs font-semibold text-success-foreground bg-success-light px-2 py-0.5 rounded-full">+23</span>
               </div>
@@ -85,7 +85,7 @@ const Rankings = () => {
             <div className="bg-card border border-border rounded-lg p-5 shadow-sm">
               <div className="flex items-center justify-between mb-3">
                 <div className="w-10 h-10 bg-success-light rounded-md flex items-center justify-center">
-                  <Trophy className="text-muted-foreground" size={20} />
+                  <Trophy className="text-pastel-gray-dark" size={20} />
                 </div>
                 <span className="text-xs font-semibold text-warning-foreground bg-warning-light px-2 py-0.5 rounded-full">Top 5%</span>
               </div>
