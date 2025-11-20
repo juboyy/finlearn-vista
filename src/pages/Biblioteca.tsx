@@ -249,17 +249,13 @@ export function Biblioteca() {
                         {folder.active ? (
                           <FolderOpen className="h-4 w-4 text-slate-600" />
                         ) : (
-                          <Folder className="h-4 w-4" style={{ color: folder.color }} />
+                          <Folder className="h-4 w-4 fill-current" style={{ color: folder.color }} />
                         )}
                       </div>
                       <span className={`text-sm ${folder.active ? 'font-medium' : 'text-slate-700'}`}>
                         {folder.name}
                       </span>
-                      <span
-                        className={`ml-auto text-xs px-2 py-1 rounded-full ${
-                          folder.active ? 'bg-white' : 'text-slate-500'
-                        }`}
-                      >
+                      <span className={`ml-auto text-xs ${folder.active ? '' : 'text-slate-500'}`}>
                         {folder.count}
                       </span>
                     </div>
