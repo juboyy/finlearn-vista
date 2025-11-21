@@ -116,16 +116,47 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
   const insertEmoji = (emoji: string) => {
     if (notesRef.current) {
       notesRef.current.focus();
-      document.execCommand('insertText', false, emoji);
+      const span = document.createElement('span');
+      span.style.color = noteColor;
+      span.textContent = emoji;
+      
+      const selection = window.getSelection();
+      if (selection && selection.rangeCount > 0) {
+        const range = selection.getRangeAt(0);
+        range.deleteContents();
+        range.insertNode(span);
+        range.setStartAfter(span);
+        range.collapse(true);
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
     }
   };
 
-  // Atualiza a cor do texto ao mudar noteColor
-  const handleColorChange = (color: string) => {
-    setNoteColor(color);
+  const handleNotesInput = () => {
+    // Aplicar cor ao texto digitado
     if (notesRef.current) {
-      notesRef.current.focus();
-      document.execCommand('foreColor', false, color);
+      const selection = window.getSelection();
+      if (selection && selection.rangeCount > 0) {
+        const range = selection.getRangeAt(0);
+        const container = range.startContainer;
+        
+        // Se for um nó de texto direto (sem cor), envolver em span
+        if (container.nodeType === Node.TEXT_NODE && container.parentElement === notesRef.current) {
+          const span = document.createElement('span');
+          span.style.color = noteColor;
+          const text = container.textContent || '';
+          span.textContent = text;
+          container.parentNode?.replaceChild(span, container);
+          
+          // Restaurar posição do cursor
+          const newRange = document.createRange();
+          newRange.setStart(span.firstChild || span, text.length);
+          newRange.collapse(true);
+          selection.removeAllRanges();
+          selection.addRange(newRange);
+        }
+      }
     }
   };
 
@@ -526,7 +557,7 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                         ].map(({ color, name }) => (
                           <button
                             key={color}
-                            onClick={() => handleColorChange(color)}
+                            onClick={() => setNoteColor(color)}
                             className={`w-8 h-8 rounded-lg transition-all hover:scale-110 ${
                               noteColor === color ? 'ring-2 ring-white ring-offset-2 ring-offset-slate-900' : ''
                             }`}
@@ -556,8 +587,9 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                     <div
                       ref={notesRef}
                       contentEditable
-                      className="flex-1 bg-slate-800 border border-slate-700 rounded-md p-3 overflow-y-auto resize-none focus:outline-none focus:ring-2 focus:ring-slate-600"
-                      style={{ minHeight: '200px', color: noteColor }}
+                      onInput={handleNotesInput}
+                      className="flex-1 bg-slate-800 border border-slate-700 rounded-md p-3 overflow-y-auto focus:outline-none focus:ring-2 focus:ring-slate-600"
+                      style={{ minHeight: '200px' }}
                       suppressContentEditableWarning
                       data-placeholder="Faça anotações durante a chamada..."
                     />
