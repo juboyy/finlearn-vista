@@ -67,7 +67,7 @@ export default function MinhasMetasNotificacoes() {
               </div>
 
               <div className="grid grid-cols-3 gap-4">
-                <div className="p-5 border-2 border-pastel-blue bg-pastel-blue bg-opacity-10 rounded-xl cursor-pointer hover:shadow-md transition">
+                <div className="p-5 border-2 border-pastel-blue bg-white rounded-xl cursor-pointer hover:shadow-md transition">
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 bg-pastel-blue rounded-lg flex items-center justify-center">
@@ -89,7 +89,7 @@ export default function MinhasMetasNotificacoes() {
                   </div>
                 </div>
 
-                <div className="p-5 border-2 border-pastel-green bg-pastel-green bg-opacity-10 rounded-xl cursor-pointer hover:shadow-md transition">
+                <div className="p-5 border-2 border-pastel-green bg-white rounded-xl cursor-pointer hover:shadow-md transition">
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center">
@@ -151,7 +151,7 @@ export default function MinhasMetasNotificacoes() {
               </div>
 
               <div className="grid grid-cols-2 gap-6">
-                <div className="p-5 bg-slate-50 rounded-xl">
+                <div className="p-5 bg-pastel-blue bg-opacity-10 rounded-xl">
                   <div className="flex items-center justify-between mb-4">
                     <label className="text-sm font-semibold text-slate-800">Resumo por E-mail</label>
                     <span className="px-2 py-1 bg-pastel-blue text-slate-700 rounded text-xs font-medium">Ativo</span>
@@ -167,7 +167,7 @@ export default function MinhasMetasNotificacoes() {
                   <p className="text-xs text-slate-500">Próximo envio: Amanhã às 8h00</p>
                 </div>
 
-                <div className="p-5 bg-slate-50 rounded-xl">
+                <div className="p-5 bg-pastel-blue bg-opacity-10 rounded-xl">
                   <div className="flex items-center justify-between mb-4">
                     <label className="text-sm font-semibold text-slate-800">Notificações Push</label>
                     <span className="px-2 py-1 bg-pastel-green text-slate-700 rounded text-xs font-medium">Ativo</span>
@@ -182,7 +182,7 @@ export default function MinhasMetasNotificacoes() {
                   <p className="text-xs text-slate-500">Últimas 24h: 8 notificações enviadas</p>
                 </div>
 
-                <div className="p-5 bg-slate-50 rounded-xl">
+                <div className="p-5 bg-pastel-blue bg-opacity-10 rounded-xl">
                   <div className="flex items-center justify-between mb-4">
                     <label className="text-sm font-semibold text-slate-800">Horário Silencioso</label>
                     <label className="relative inline-flex items-center cursor-pointer">
@@ -203,7 +203,7 @@ export default function MinhasMetasNotificacoes() {
                   <p className="text-xs text-slate-500">Não enviar notificações neste período</p>
                 </div>
 
-                <div className="p-5 bg-slate-50 rounded-xl">
+                <div className="p-5 bg-pastel-blue bg-opacity-10 rounded-xl">
                   <div className="flex items-center justify-between mb-4">
                     <label className="text-sm font-semibold text-slate-800">Finais de Semana</label>
                     <label className="relative inline-flex items-center cursor-pointer">
@@ -242,10 +242,10 @@ export default function MinhasMetasNotificacoes() {
 
               <div className="space-y-4">
                 {/* Novos Conteúdos */}
-                <div className="p-5 border-2 border-pastel-blue bg-pastel-blue bg-opacity-5 rounded-xl">
+                <div className="p-5 border-2 border-pastel-blue bg-white rounded-xl">
                   <div className="flex items-start justify-between">
                     <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 bg-pastel-blue rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                      <div className="w-10 h-10 bg-pastel-blue rounded-lg flex items-center justify-center flex-shrink-0">
                         <i className="fas fa-newspaper text-slate-700"></i>
                       </div>
                       <div className="flex-1">
@@ -272,10 +272,10 @@ export default function MinhasMetasNotificacoes() {
                 </div>
 
                 {/* Progresso de Metas */}
-                <div className="p-5 border-2 border-pastel-purple bg-pastel-purple bg-opacity-5 rounded-xl">
+                <div className="p-5 border-2 border-pastel-purple bg-white rounded-xl">
                   <div className="flex items-start justify-between">
                     <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 bg-pastel-purple rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                      <div className="w-10 h-10 bg-pastel-purple rounded-lg flex items-center justify-center flex-shrink-0">
                         <i className="fas fa-target text-slate-700"></i>
                       </div>
                       <div className="flex-1">
@@ -307,10 +307,10 @@ export default function MinhasMetasNotificacoes() {
                 </div>
 
                 {/* Recomendações IA */}
-                <div className="p-5 border-2 border-pastel-green bg-pastel-green bg-opacity-5 rounded-xl">
+                <div className="p-5 border-2 border-pastel-green bg-white rounded-xl">
                   <div className="flex items-start justify-between">
                     <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 bg-pastel-green rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                      <div className="w-10 h-10 bg-pastel-green rounded-lg flex items-center justify-center flex-shrink-0">
                         <i className="fas fa-robot text-slate-700"></i>
                       </div>
                       <div className="flex-1">
@@ -341,10 +341,10 @@ export default function MinhasMetasNotificacoes() {
                 </div>
 
                 {/* Comunidade & Interações */}
-                <div className="p-5 border-2 border-slate-200 rounded-xl">
+                <div className="p-5 border-2 border-slate-200 bg-white rounded-xl">
                   <div className="flex items-start justify-between">
                     <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 bg-pastel-yellow rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                      <div className="w-10 h-10 bg-pastel-yellow rounded-lg flex items-center justify-center flex-shrink-0">
                         <i className="fas fa-comments text-slate-700"></i>
                       </div>
                       <div className="flex-1">
@@ -371,10 +371,10 @@ export default function MinhasMetasNotificacoes() {
                 </div>
 
                 {/* Marketplace & Ofertas */}
-                <div className="p-5 border-2 border-slate-200 rounded-xl">
+                <div className="p-5 border-2 border-slate-200 bg-white rounded-xl">
                   <div className="flex items-start justify-between">
                     <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 bg-pastel-peach rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                      <div className="w-10 h-10 bg-pastel-peach rounded-lg flex items-center justify-center flex-shrink-0">
                         <i className="fas fa-store text-slate-700"></i>
                       </div>
                       <div className="flex-1">
@@ -401,10 +401,10 @@ export default function MinhasMetasNotificacoes() {
                 </div>
 
                 {/* Sistema & Atualizações */}
-                <div className="p-5 border-2 border-slate-200 rounded-xl">
+                <div className="p-5 border-2 border-slate-200 bg-white rounded-xl">
                   <div className="flex items-start justify-between">
                     <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 bg-pastel-pink rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                      <div className="w-10 h-10 bg-pastel-pink rounded-lg flex items-center justify-center flex-shrink-0">
                         <i className="fas fa-cog text-slate-700"></i>
                       </div>
                       <div className="flex-1">
@@ -451,7 +451,7 @@ export default function MinhasMetasNotificacoes() {
               </div>
 
               <div className="grid grid-cols-2 gap-6">
-                <div className="p-5 bg-slate-50 rounded-xl">
+                <div className="p-5 bg-pastel-blue bg-opacity-10 rounded-xl">
                   <div className="flex items-center gap-2 mb-4">
                     <i className="fas fa-envelope text-pastel-blue"></i>
                     <h3 className="text-sm font-semibold text-slate-800">E-mail</h3>
@@ -481,7 +481,7 @@ export default function MinhasMetasNotificacoes() {
                   </div>
                 </div>
 
-                <div className="p-5 bg-slate-50 rounded-xl">
+                <div className="p-5 bg-pastel-blue bg-opacity-10 rounded-xl">
                   <div className="flex items-center gap-2 mb-4">
                     <i className="fas fa-mobile-alt text-pastel-green"></i>
                     <h3 className="text-sm font-semibold text-slate-800">Push Notification</h3>
