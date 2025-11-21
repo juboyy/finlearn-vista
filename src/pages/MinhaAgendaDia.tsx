@@ -378,7 +378,7 @@ export default function MinhaAgendaDia() {
                       <p className="text-xs text-slate-900 mt-1">08:00 - 08:45 • Episódio: Juros e Inflação 2024</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="px-3 py-1 bg-pastel-rose bg-opacity-20 text-pastel-rose text-xs font-medium rounded-full">Estudo</span>
+                      <span className="px-3 py-1 bg-pastel-rose bg-opacity-20 text-slate-900 text-xs font-medium rounded-full">Estudo</span>
                       <button className="p-2 text-slate-400 hover:text-slate-600">
                         <i className="fas fa-ellipsis-v"></i>
                       </button>
@@ -396,7 +396,7 @@ export default function MinhaAgendaDia() {
                       <p className="text-xs text-slate-900 mt-1">09:30 - 10:30 • Sala de Reuniões 2</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="px-3 py-1 bg-pastel-blue bg-opacity-20 text-pastel-blue text-xs font-medium rounded-full">Reunião</span>
+                      <span className="px-3 py-1 bg-pastel-blue bg-opacity-20 text-slate-900 text-xs font-medium rounded-full">Reunião</span>
                       <button className="p-2 text-slate-400 hover:text-slate-600">
                         <i className="fas fa-ellipsis-v"></i>
                       </button>
@@ -414,7 +414,7 @@ export default function MinhaAgendaDia() {
                       <p className="text-xs text-slate-900 mt-1">11:00 - 12:00 • Capítulo 5: Renda Variável</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="px-3 py-1 bg-pastel-rose bg-opacity-20 text-pastel-rose text-xs font-medium rounded-full">Estudo</span>
+                      <span className="px-3 py-1 bg-pastel-rose bg-opacity-20 text-slate-900 text-xs font-medium rounded-full">Estudo</span>
                       <button className="p-2 text-slate-400 hover:text-slate-600">
                         <i className="fas fa-ellipsis-v"></i>
                       </button>
@@ -432,7 +432,7 @@ export default function MinhaAgendaDia() {
                       <p className="text-xs text-slate-900 mt-1">14:00 - 15:00 • Módulo 3: Prevenção à Lavagem</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="px-3 py-1 bg-pastel-purple bg-opacity-20 text-pastel-purple text-xs font-medium rounded-full">Treinamento</span>
+                      <span className="px-3 py-1 bg-pastel-purple bg-opacity-20 text-slate-900 text-xs font-medium rounded-full">Treinamento</span>
                       <button className="p-2 text-slate-400 hover:text-slate-600">
                         <i className="fas fa-ellipsis-v"></i>
                       </button>
@@ -450,7 +450,7 @@ export default function MinhaAgendaDia() {
                       <p className="text-xs text-slate-900 mt-1">15:30 - 16:15 • Curso: Gestão de Risco</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="px-3 py-1 bg-pastel-rose bg-opacity-20 text-pastel-rose text-xs font-medium rounded-full">Estudo</span>
+                      <span className="px-3 py-1 bg-pastel-rose bg-opacity-20 text-slate-900 text-xs font-medium rounded-full">Estudo</span>
                       <button className="p-2 text-slate-400 hover:text-slate-600">
                         <i className="fas fa-ellipsis-v"></i>
                       </button>
@@ -468,7 +468,7 @@ export default function MinhaAgendaDia() {
                       <p className="text-xs text-slate-900 mt-1">16:30 - 17:30 • Especialista: Dr. Carlos Mendes</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="px-3 py-1 bg-pastel-green bg-opacity-20 text-pastel-green text-xs font-medium rounded-full">Webinar</span>
+                      <span className="px-3 py-1 bg-pastel-green bg-opacity-20 text-slate-900 text-xs font-medium rounded-full">Webinar</span>
                       <button className="p-2 text-slate-400 hover:text-slate-600">
                         <i className="fas fa-ellipsis-v"></i>
                       </button>
@@ -486,7 +486,7 @@ export default function MinhaAgendaDia() {
                       <p className="text-xs text-slate-900 mt-1">18:00 - 18:30 • Episódio: IPOs e Ofertas Públicas</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="px-3 py-1 bg-pastel-rose bg-opacity-20 text-pastel-rose text-xs font-medium rounded-full">Estudo</span>
+                      <span className="px-3 py-1 bg-pastel-rose bg-opacity-20 text-slate-900 text-xs font-medium rounded-full">Estudo</span>
                       <button className="p-2 text-slate-400 hover:text-slate-600">
                         <i className="fas fa-ellipsis-v"></i>
                       </button>
@@ -504,7 +504,7 @@ export default function MinhaAgendaDia() {
                       <p className="text-xs text-slate-900 mt-1">19:00 - 19:45 • Tema: ESG e Finanças Sustentáveis</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="px-3 py-1 bg-pastel-rose bg-opacity-20 text-pastel-rose text-xs font-medium rounded-full">Estudo</span>
+                      <span className="px-3 py-1 bg-pastel-rose bg-opacity-20 text-slate-900 text-xs font-medium rounded-full">Estudo</span>
                       <button className="p-2 text-slate-400 hover:text-slate-600">
                         <i className="fas fa-ellipsis-v"></i>
                       </button>
