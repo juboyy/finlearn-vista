@@ -322,7 +322,7 @@ export const VideoCallModal = ({
                   variant="outline"
                   size="sm"
                   onClick={() => setShowInviteModal(true)}
-                  className="bg-slate-800/50 hover:bg-slate-700 border-slate-700 text-white"
+                  className="bg-pastel-purple/20 hover:bg-pastel-purple/30 border-pastel-purple/40 text-pastel-gray-dark hover:text-foreground transition-all"
                 >
                   <UserPlus size={16} className="mr-2" />
                   Convidar
