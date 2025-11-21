@@ -319,7 +319,7 @@ export default function MinhasMetasAreas() {
                   <ArrowLeft className="inline w-4 h-4 mr-2" />
                   Voltar
                 </button>
-                <button className="px-6 py-3 bg-pastel-purple text-slate-700 rounded-xl font-medium hover:bg-opacity-80 transition">
+                <button onClick={() => navigate('/minhas-metas/notificacoes')} className="px-6 py-3 bg-pastel-purple text-slate-700 rounded-xl font-medium hover:bg-opacity-80 transition">
                   Continuar
                   <ChevronRight className="inline w-4 h-4 ml-2" />
                 </button>
