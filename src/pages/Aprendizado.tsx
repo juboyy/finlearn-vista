@@ -1,9 +1,10 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { MenutabbarFix } from "@/components/Dashboard/MenutabbarFix";
 import { Bell, Play, Clock, BookOpen, TrendingUp, Headphones, Calendar, Users, MessageCircle, Star, BookMarked, Video, Award, Heart, CheckCircle, PlayCircle, Trophy, ChartLine, Shield, Bitcoin, Gavel, PieChart, Repeat, Globe, Leaf, Plus, BookOpenCheck, CreditCard, FileText, Bookmark, Quote, Download, Share2 } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ebookRiskManagementPink from "@/assets/ebook-risk-management-pink.png";
+import { AnalisesContent } from "./Analises";
 
 type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'documentos' | 'estudos';
 
@@ -12,12 +13,6 @@ const Aprendizado = () => {
   const [citationValue, setCitationValue] = useState(0);
   const [yearValue, setYearValue] = useState(2024);
   const navigate = useNavigate();
-  
-  useEffect(() => {
-    if (activeTab === 'analises') {
-      navigate('/analises');
-    }
-  }, [activeTab, navigate]);
   
   return (
     <div className="flex h-screen overflow-hidden">
@@ -48,6 +43,10 @@ const Aprendizado = () => {
         <MenutabbarFix activeTab={activeTab} setActiveTab={setActiveTab} />
 
         <div className="flex-1 p-8 pb-32">
+          {activeTab === 'analises' && (
+            <AnalisesContent />
+          )}
+          
           {activeTab === 'todos' && (
             <>
 
