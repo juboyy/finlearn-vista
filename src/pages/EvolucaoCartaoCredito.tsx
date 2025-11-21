@@ -94,6 +94,20 @@ export default function EvolucaoCartaoCredito() {
             {/* Table of Contents - Left Sidebar */}
             <aside className="col-span-3">
               <div className="bg-card rounded-xl border border-border p-6 sticky top-6">
+                {/* Progress Bar */}
+                <div className="mb-6 pb-6 border-b border-border">
+                  <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
+                    <span>Progresso de Leitura</span>
+                    <span>{Math.round((currentPage / totalPages) * 100)}%</span>
+                  </div>
+                  <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-[#D4C5E8] rounded-full transition-all"
+                      style={{ width: `${(currentPage / totalPages) * 100}%` }}
+                    ></div>
+                  </div>
+                </div>
+
                 <h2 className="text-base font-semibold text-foreground mb-4">Índice</h2>
                 <nav className="space-y-1 text-sm">
                   <a 
@@ -213,19 +227,6 @@ export default function EvolucaoCartaoCredito() {
                       <Lightbulb className="w-4 h-4" />
                       <span>Gerar Insights</span>
                     </button>
-                  </div>
-                </div>
-
-                <div className="mt-6 pt-6 border-t border-border">
-                  <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
-                    <span>Progresso de Leitura</span>
-                    <span>{Math.round((currentPage / totalPages) * 100)}%</span>
-                  </div>
-                  <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
-                    <div 
-                      className="h-full bg-[#D4C5E8] rounded-full transition-all"
-                      style={{ width: `${(currentPage / totalPages) * 100}%` }}
-                    ></div>
                   </div>
                 </div>
               </div>
