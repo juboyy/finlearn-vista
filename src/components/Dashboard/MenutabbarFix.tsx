@@ -1,5 +1,6 @@
 import { BarChart3, Grid3x3, List, ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'documentos' | 'estudos';
 
@@ -10,6 +11,7 @@ interface MenutabbarFixProps {
 
 export const MenutabbarFix = ({ activeTab, setActiveTab }: MenutabbarFixProps) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
@@ -117,7 +119,7 @@ export const MenutabbarFix = ({ activeTab, setActiveTab }: MenutabbarFixProps) =
             <span>Documentos</span>
           </button>
           <button 
-            onClick={() => setActiveTab('estudos')}
+            onClick={() => navigate('/estudos-academicos')}
             className={`px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm ${
               activeTab === 'estudos' ? 'bg-pastel-blue text-slate-800' : 'text-slate-600 hover:bg-slate-100'
             }`}
