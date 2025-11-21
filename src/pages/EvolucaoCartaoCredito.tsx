@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 export default function EvolucaoCartaoCredito() {
   const [currentPage, setCurrentPage] = useState(1);
   const [activeSection, setActiveSection] = useState("sumario-executivo");
+  const [scrollProgress, setScrollProgress] = useState(0);
   const totalPages = 7;
 
   const showPage = (pageNum: number) => {
@@ -16,9 +17,18 @@ export default function EvolucaoCartaoCredito() {
     }
   };
 
-  // Scroll spy to track active section
+  // Scroll spy to track active section and scroll progress
   useEffect(() => {
     const handleScroll = () => {
+      // Calculate scroll progress
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const scrollTop = window.scrollY;
+      const scrollableHeight = documentHeight - windowHeight;
+      const progress = scrollableHeight > 0 ? (scrollTop / scrollableHeight) * 100 : 0;
+      setScrollProgress(Math.min(Math.max(progress, 0), 100));
+
+      // Track active section
       const sections = [
         'sumario-executivo',
         'introducao',
@@ -98,12 +108,12 @@ export default function EvolucaoCartaoCredito() {
                 <div className="mb-6 pb-6 border-b border-border">
                   <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
                     <span>Progresso de Leitura</span>
-                    <span>{Math.round((currentPage / totalPages) * 100)}%</span>
+                    <span className="font-medium text-foreground">{Math.round(scrollProgress)}%</span>
                   </div>
                   <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
                     <div 
-                      className="h-full bg-[#D4C5E8] rounded-full transition-all"
-                      style={{ width: `${(currentPage / totalPages) * 100}%` }}
+                      className="h-full bg-gradient-to-r from-[#D4C5E8] to-[#B8D4E8] rounded-full transition-all duration-300 ease-out"
+                      style={{ width: `${scrollProgress}%` }}
                     ></div>
                   </div>
                 </div>
