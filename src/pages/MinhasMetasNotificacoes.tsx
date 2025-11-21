@@ -151,7 +151,7 @@ export default function MinhasMetasNotificacoes() {
               </div>
 
               <div className="grid grid-cols-2 gap-6">
-                <div className="p-5 bg-pastel-blue bg-opacity-10 rounded-xl">
+                <div className="p-5 bg-white rounded-xl border border-slate-200">
                   <div className="flex items-center justify-between mb-4">
                     <label className="text-sm font-semibold text-slate-800">Resumo por E-mail</label>
                     <span className="px-2 py-1 bg-pastel-blue text-slate-700 rounded text-xs font-medium">Ativo</span>
@@ -167,7 +167,7 @@ export default function MinhasMetasNotificacoes() {
                   <p className="text-xs text-slate-500">Próximo envio: Amanhã às 8h00</p>
                 </div>
 
-                <div className="p-5 bg-pastel-blue bg-opacity-10 rounded-xl">
+                <div className="p-5 bg-white rounded-xl border border-slate-200">
                   <div className="flex items-center justify-between mb-4">
                     <label className="text-sm font-semibold text-slate-800">Notificações Push</label>
                     <span className="px-2 py-1 bg-pastel-green text-slate-700 rounded text-xs font-medium">Ativo</span>
@@ -182,7 +182,7 @@ export default function MinhasMetasNotificacoes() {
                   <p className="text-xs text-slate-500">Últimas 24h: 8 notificações enviadas</p>
                 </div>
 
-                <div className="p-5 bg-pastel-blue bg-opacity-10 rounded-xl">
+                <div className="p-5 bg-white rounded-xl border border-slate-200">
                   <div className="flex items-center justify-between mb-4">
                     <label className="text-sm font-semibold text-slate-800">Horário Silencioso</label>
                     <label className="relative inline-flex items-center cursor-pointer">
@@ -203,7 +203,7 @@ export default function MinhasMetasNotificacoes() {
                   <p className="text-xs text-slate-500">Não enviar notificações neste período</p>
                 </div>
 
-                <div className="p-5 bg-pastel-blue bg-opacity-10 rounded-xl">
+                <div className="p-5 bg-white rounded-xl border border-slate-200">
                   <div className="flex items-center justify-between mb-4">
                     <label className="text-sm font-semibold text-slate-800">Finais de Semana</label>
                     <label className="relative inline-flex items-center cursor-pointer">
