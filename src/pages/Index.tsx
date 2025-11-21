@@ -9,6 +9,7 @@ import { LearningProgressChart } from "@/components/Dashboard/LearningProgressCh
 import { ContentDistributionChart } from "@/components/Dashboard/ContentDistributionChart";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Award, Clock, Flame, TrendingUp, Coins, Scale, Bot, Mic, Video, BookMarked, Bell, Plus, Clock as ClockIcon, Headphones, Play } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   return (
@@ -23,10 +24,12 @@ const Index = () => {
               <p className="text-sm text-muted-foreground mt-1">Terça-feira, 16 de Novembro de 2024</p>
             </div>
             <div className="flex items-center gap-4">
-              <button className="relative p-2 text-foreground hover:bg-muted rounded-lg transition-colors">
-                <Bell size={20} />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-              </button>
+              <Link to="/notificacoes">
+                <button className="relative p-2 text-foreground hover:bg-muted rounded-lg transition-colors">
+                  <Bell size={20} />
+                  <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                </button>
+              </Link>
               <Button className="bg-pastel-purple hover:bg-pastel-purple/80 text-foreground">
                 <Plus size={18} className="mr-2" />
                 Novo Conteúdo
