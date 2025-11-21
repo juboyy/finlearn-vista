@@ -68,7 +68,7 @@ export default function Notificacoes() {
                     : "text-slate-600 hover:text-slate-800 border-transparent hover:border-slate-200"
                 }`}
               >
-                <Lightbulb size={16} className="text-pastel-yellow" />
+                <Lightbulb size={16} className="text-pastel-pink" />
                 Insights
                 <span className="px-2 py-0.5 bg-slate-200 rounded-full text-xs">8</span>
               </button>
@@ -152,7 +152,7 @@ export default function Notificacoes() {
                 </div>
               </section>
 
-              <section className="bg-pastel-yellow rounded-xl border-2 border-pastel-yellow p-6">
+              <section className="bg-pastel-pink rounded-xl border-2 border-pastel-pink p-6">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-slate-400 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
                     <Lightbulb className="text-white" size={24} />
@@ -241,15 +241,15 @@ export default function Notificacoes() {
                     </div>
                   </div>
 
-                  <div className="bg-white rounded-xl border-2 border-pastel-yellow hover:shadow-md transition cursor-pointer">
+                  <div className="bg-white rounded-xl border-2 border-pastel-pink hover:shadow-md transition cursor-pointer">
                     <div className="p-4">
                       <div className="flex items-start gap-4">
-                        <div className="w-10 h-10 bg-pastel-yellow rounded-lg flex items-center justify-center flex-shrink-0">
+                        <div className="w-10 h-10 bg-pastel-pink rounded-lg flex items-center justify-center flex-shrink-0">
                           <Lightbulb className="text-slate-700" size={20} />
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-1">
-                            <span className="px-2 py-0.5 bg-pastel-yellow bg-opacity-30 rounded text-xs font-medium text-slate-700">Insight</span>
+                            <span className="px-2 py-0.5 bg-pastel-pink bg-opacity-30 rounded text-xs font-medium text-slate-700">Insight</span>
                             <span className="px-2 py-0.5 bg-slate-800 text-white rounded text-xs font-medium">IA</span>
                             <span className="text-xs text-slate-500">há 5 horas</span>
                           </div>
@@ -267,7 +267,7 @@ export default function Notificacoes() {
                           <button className="text-slate-400 hover:text-slate-600">
                             <MoreVertical size={18} />
                           </button>
-                          <button className="px-3 py-1.5 bg-pastel-yellow text-slate-700 rounded-lg text-xs font-medium hover:bg-opacity-80">
+                          <button className="px-3 py-1.5 bg-pastel-pink text-slate-700 rounded-lg text-xs font-medium hover:bg-opacity-80">
                             Inscrever-se
                           </button>
                         </div>
@@ -477,12 +477,12 @@ export default function Notificacoes() {
                   <div className="bg-white rounded-xl border border-slate-200 hover:shadow-md transition cursor-pointer opacity-75">
                     <div className="p-4">
                       <div className="flex items-start gap-4">
-                        <div className="w-10 h-10 bg-pastel-yellow rounded-lg flex items-center justify-center flex-shrink-0">
+                        <div className="w-10 h-10 bg-pastel-pink rounded-lg flex items-center justify-center flex-shrink-0">
                           <Brain className="text-slate-700" size={20} />
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-1">
-                            <span className="px-2 py-0.5 bg-pastel-yellow bg-opacity-30 rounded text-xs font-medium text-slate-700">Insight</span>
+                            <span className="px-2 py-0.5 bg-pastel-pink bg-opacity-30 rounded text-xs font-medium text-slate-700">Insight</span>
                             <span className="px-2 py-0.5 bg-slate-800 text-white rounded text-xs font-medium">IA</span>
                             <span className="text-xs text-slate-500">5 dias atrás</span>
                           </div>
@@ -526,7 +526,7 @@ export default function Notificacoes() {
 
                   <div className="flex items-center justify-between p-3 rounded-lg bg-slate-50">
                     <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-pastel-yellow rounded-full"></div>
+                      <div className="w-2 h-2 bg-pastel-pink rounded-full"></div>
                       <span className="text-sm text-slate-600">Insights</span>
                     </div>
                     <span className="text-sm font-semibold text-slate-800">8</span>
@@ -578,7 +578,7 @@ export default function Notificacoes() {
 
                   <button className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-slate-50 text-left">
                     <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 bg-pastel-yellow rounded"></div>
+                      <div className="w-3 h-3 bg-pastel-pink rounded"></div>
                       <span className="text-sm text-slate-700">Insights</span>
                     </div>
                     <span className="text-xs text-slate-500">28</span>
