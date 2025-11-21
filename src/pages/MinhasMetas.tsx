@@ -1,7 +1,9 @@
 import { Home, Newspaper, Bot, GraduationCap, Book, MessageCircle, Store, Users, TrendingUp, Target, Rocket, Flame, Crown, Sliders, Video, Podcast, BookOpen, ChevronRight, Info } from "lucide-react";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
+import { useNavigate } from "react-router-dom";
 
 export default function MinhasMetas() {
+  const navigate = useNavigate();
   return (
     <div className="flex h-screen overflow-hidden">
       <SidebarFix />
@@ -571,7 +573,7 @@ export default function MinhasMetas() {
                   <p className="text-xs text-slate-500 mt-1">Tipos Ativos</p>
                 </div>
                 <div className="h-12 w-px bg-slate-200"></div>
-                <button className="px-6 py-3 bg-pastel-purple text-slate-700 rounded-xl font-medium hover:bg-opacity-80 transition">
+                <button onClick={() => navigate('/minhas-metas/areas')} className="px-6 py-3 bg-pastel-purple text-slate-700 rounded-xl font-medium hover:bg-opacity-80 transition">
                   <ChevronRight className="inline w-4 h-4 mr-2" />
                   Próximo Passo
                 </button>
