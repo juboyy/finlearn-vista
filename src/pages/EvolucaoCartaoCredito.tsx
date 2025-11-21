@@ -102,7 +102,7 @@ export default function EvolucaoCartaoCredito() {
         <div className="flex-1 overflow-y-auto bg-muted/30">
           <div className="grid grid-cols-12 gap-6 px-8 py-8 max-w-[1600px] mx-auto">
             {/* Table of Contents - Left Sidebar */}
-            <aside className="col-span-3">
+            <aside className="col-span-3 self-start">
               <div className="bg-card rounded-xl border border-border p-6 sticky top-6 max-h-[calc(100vh-7rem)] overflow-y-auto">
                 {/* Progress Bar */}
                 <div className="mb-6 pb-6 border-b border-border">
