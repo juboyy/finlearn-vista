@@ -678,9 +678,9 @@ export default function MinhasMetas() {
                       <i className="fas fa-calendar-week text-pastel-blue text-2xl"></i>
                     </div>
                   </div>
-                  <p className="text-center text-2xl font-bold text-slate-800 mb-1">1 Semana</p>
-                  <p className="text-center text-xs text-slate-600">21 artigos lidos</p>
-                  <p className="text-center text-xs text-slate-600">3h de conteúdo</p>
+                  <p className="text-center text-2xl font-bold text-slate-900 mb-1">1 Semana</p>
+                  <p className="text-center text-xs font-bold text-slate-900">21 artigos lidos</p>
+                  <p className="text-center text-xs font-bold text-slate-900">3h de conteúdo</p>
                 </div>
 
                 <div className="p-5 rounded-xl border border-pastel-green" style={{backgroundColor: 'hsl(152 32% 65% / 0.5)'}}>
@@ -689,9 +689,9 @@ export default function MinhasMetas() {
                       <i className="fas fa-calendar-alt text-pastel-green text-2xl"></i>
                     </div>
                   </div>
-                  <p className="text-center text-2xl font-bold text-slate-800 mb-1">1 Mês</p>
-                  <p className="text-center text-xs text-slate-600">90 artigos lidos</p>
-                  <p className="text-center text-xs text-slate-600">30h de aprendizado</p>
+                  <p className="text-center text-2xl font-bold text-slate-900 mb-1">1 Mês</p>
+                  <p className="text-center text-xs font-bold text-slate-900">90 artigos lidos</p>
+                  <p className="text-center text-xs font-bold text-slate-900">30h de aprendizado</p>
                 </div>
 
                 <div className="p-5 rounded-xl border border-pastel-purple" style={{backgroundColor: 'hsl(270 32% 67% / 0.5)'}}>
@@ -700,9 +700,9 @@ export default function MinhasMetas() {
                       <i className="fas fa-calendar text-pastel-purple text-2xl"></i>
                     </div>
                   </div>
-                  <p className="text-center text-2xl font-bold text-slate-800 mb-1">3 Meses</p>
-                  <p className="text-center text-xs text-slate-600">270 artigos lidos</p>
-                  <p className="text-center text-xs text-slate-600">6 e-books completos</p>
+                  <p className="text-center text-2xl font-bold text-slate-900 mb-1">3 Meses</p>
+                  <p className="text-center text-xs font-bold text-slate-900">270 artigos lidos</p>
+                  <p className="text-center text-xs font-bold text-slate-900">6 e-books completos</p>
                 </div>
 
                 <div className="p-5 rounded-xl border border-pastel-yellow" style={{backgroundColor: 'hsl(44 35% 67% / 0.5)'}}>
@@ -711,9 +711,9 @@ export default function MinhasMetas() {
                       <i className="fas fa-star text-pastel-yellow text-2xl"></i>
                     </div>
                   </div>
-                  <p className="text-center text-2xl font-bold text-slate-800 mb-1">1 Ano</p>
-                  <p className="text-center text-xs text-slate-600">1.080 artigos</p>
-                  <p className="text-center text-xs text-slate-600">Expert certificado</p>
+                  <p className="text-center text-2xl font-bold text-slate-900 mb-1">1 Ano</p>
+                  <p className="text-center text-xs font-bold text-slate-900">1.080 artigos</p>
+                  <p className="text-center text-xs font-bold text-slate-900">Expert certificado</p>
                 </div>
               </div>
             </div>
