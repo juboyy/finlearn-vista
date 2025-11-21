@@ -22,7 +22,7 @@ export const MenutabbarFix = ({ activeTab, setActiveTab }: MenutabbarFixProps) =
   };
 
   return (
-    <div className="px-8 pt-0 pb-3 bg-slate-50 border-b border-slate-200 sticky top-[64px] z-10 bg-opacity-95 backdrop-blur-sm">
+    <div className="px-8 pt-4 pb-3 bg-slate-50 border-b border-slate-200 sticky top-[64px] z-10 bg-opacity-95 backdrop-blur-sm">
       <div className="mb-4 relative">
         <button 
           onClick={() => scroll('left')}
