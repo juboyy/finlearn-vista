@@ -172,7 +172,7 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
             </div>
 
             {/* Vídeo Local (Picture-in-Picture) */}
-            <div className="absolute bottom-24 right-6 w-72 h-52 bg-slate-900 rounded-2xl overflow-hidden border-2 border-slate-700/50 shadow-2xl backdrop-blur-sm">
+            <div className="absolute bottom-24 right-6 w-72 h-52 bg-slate-900 rounded-2xl overflow-hidden border-2 border-slate-700/50 shadow-2xl backdrop-blur-sm z-20">
               {isVideoOff ? (
                 <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-800 to-slate-900">
                   <div className="text-center">
