@@ -830,7 +830,525 @@ export default function MinhasMetas() {
                 </button>
               </div>
 
-              {/* ... keep existing code (6 detailed goal cards would go here) */}
+              <div className="grid grid-cols-2 gap-5">
+                {/* Meta 1 - Leitura de Artigos */}
+                <div className="p-5 border-2 border-pastel-blue rounded-xl bg-gradient-to-br from-white to-pastel-blue/5">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-pastel-blue rounded-lg flex items-center justify-center">
+                        <i className="fas fa-file-alt text-slate-700"></i>
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-bold text-slate-800">Leitura de Artigos</h3>
+                        <p className="text-xs text-slate-500">Meta diária e semanal</p>
+                      </div>
+                    </div>
+                    <span className="px-3 py-1 bg-pastel-blue text-slate-700 rounded-lg text-xs font-bold">57%</span>
+                  </div>
+                  <div className="space-y-3">
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs text-slate-600 font-medium">Meta Diária</span>
+                        <span className="text-xs font-bold text-slate-800">3 artigos/dia</span>
+                      </div>
+                      <div className="w-full bg-slate-100 rounded-full h-2">
+                        <div className="bg-pastel-blue h-2 rounded-full" style={{width: '67%'}}></div>
+                      </div>
+                      <p className="text-xs text-slate-500 mt-1">2 de 3 concluídos hoje</p>
+                    </div>
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs text-slate-600 font-medium">Meta Semanal</span>
+                        <span className="text-xs font-bold text-slate-800">21 artigos/semana</span>
+                      </div>
+                      <div className="w-full bg-slate-100 rounded-full h-2">
+                        <div className="bg-pastel-blue h-2 rounded-full" style={{width: '57%'}}></div>
+                      </div>
+                      <p className="text-xs text-slate-500 mt-1">12 de 21 concluídos esta semana</p>
+                    </div>
+                    <div className="pt-2 border-t border-slate-200">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-slate-600">Tempo médio de leitura</span>
+                        <span className="font-semibold text-slate-800">8 min/artigo</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Meta 2 - Vídeos & Webinars */}
+                <div className="p-5 border-2 border-pastel-pink rounded-xl bg-gradient-to-br from-white to-pastel-pink/5">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-pastel-pink rounded-lg flex items-center justify-center">
+                        <i className="fas fa-video text-slate-700"></i>
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-bold text-slate-800">Vídeos & Webinars</h3>
+                        <p className="text-xs text-slate-500">Meta semanal de tempo</p>
+                      </div>
+                    </div>
+                    <span className="px-3 py-1 bg-pastel-pink text-slate-700 rounded-lg text-xs font-bold">71%</span>
+                  </div>
+                  <div className="space-y-3">
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs text-slate-600 font-medium">Meta Semanal</span>
+                        <span className="text-xs font-bold text-slate-800">120 min/semana</span>
+                      </div>
+                      <div className="w-full bg-slate-100 rounded-full h-2">
+                        <div className="bg-pastel-pink h-2 rounded-full" style={{width: '71%'}}></div>
+                      </div>
+                      <p className="text-xs text-slate-500 mt-1">85 de 120 min esta semana</p>
+                    </div>
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs text-slate-600 font-medium">Webinars Assistidos</span>
+                        <span className="text-xs font-bold text-slate-800">2 webinars</span>
+                      </div>
+                      <div className="flex gap-2 mt-2">
+                        <div className="flex-1 p-2 bg-slate-50 rounded text-center">
+                          <p className="text-xs font-semibold text-slate-800">45 min</p>
+                          <p className="text-xs text-slate-500">Webinar 1</p>
+                        </div>
+                        <div className="flex-1 p-2 bg-slate-50 rounded text-center">
+                          <p className="text-xs font-semibold text-slate-800">40 min</p>
+                          <p className="text-xs text-slate-500">Webinar 2</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="pt-2 border-t border-slate-200">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-slate-600">Restante para meta</span>
+                        <span className="font-semibold text-slate-800">35 minutos</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Meta 3 - Podcasts */}
+                <div className="p-5 border-2 border-pastel-purple rounded-xl bg-gradient-to-br from-white to-pastel-purple/5">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-pastel-purple rounded-lg flex items-center justify-center">
+                        <i className="fas fa-podcast text-slate-700"></i>
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-bold text-slate-800">Podcasts</h3>
+                        <p className="text-xs text-slate-500">Meta semanal de escuta</p>
+                      </div>
+                    </div>
+                    <span className="px-3 py-1 bg-pastel-purple text-slate-700 rounded-lg text-xs font-bold">67%</span>
+                  </div>
+                  <div className="space-y-3">
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs text-slate-600 font-medium">Meta Semanal</span>
+                        <span className="text-xs font-bold text-slate-800">180 min/semana</span>
+                      </div>
+                      <div className="w-full bg-slate-100 rounded-full h-2">
+                        <div className="bg-pastel-purple h-2 rounded-full" style={{width: '67%'}}></div>
+                      </div>
+                      <p className="text-xs text-slate-500 mt-1">120 de 180 min esta semana</p>
+                    </div>
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs text-slate-600 font-medium">Episódios Ouvidos</span>
+                        <span className="text-xs font-bold text-slate-800">6 episódios</span>
+                      </div>
+                      <div className="grid grid-cols-3 gap-1.5 mt-2">
+                        <div className="p-1.5 bg-slate-50 rounded text-center">
+                          <p className="text-xs font-semibold text-slate-800">20min</p>
+                        </div>
+                        <div className="p-1.5 bg-slate-50 rounded text-center">
+                          <p className="text-xs font-semibold text-slate-800">18min</p>
+                        </div>
+                        <div className="p-1.5 bg-slate-50 rounded text-center">
+                          <p className="text-xs font-semibold text-slate-800">22min</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="pt-2 border-t border-slate-200">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-slate-600">Média por episódio</span>
+                        <span className="font-semibold text-slate-800">20 minutos</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Meta 4 - E-books */}
+                <div className="p-5 border-2 border-pastel-yellow rounded-xl bg-gradient-to-br from-white to-pastel-yellow/5">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-pastel-yellow rounded-lg flex items-center justify-center">
+                        <i className="fas fa-book text-slate-700"></i>
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-bold text-slate-800">E-books</h3>
+                        <p className="text-xs text-slate-500">Meta semanal de páginas</p>
+                      </div>
+                    </div>
+                    <span className="px-3 py-1 bg-pastel-yellow text-slate-700 rounded-lg text-xs font-bold">45%</span>
+                  </div>
+                  <div className="space-y-3">
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs text-slate-600 font-medium">Meta Semanal</span>
+                        <span className="text-xs font-bold text-slate-800">100 páginas/semana</span>
+                      </div>
+                      <div className="w-full bg-slate-100 rounded-full h-2">
+                        <div className="bg-pastel-yellow h-2 rounded-full" style={{width: '45%'}}></div>
+                      </div>
+                      <p className="text-xs text-slate-500 mt-1">45 de 100 páginas esta semana</p>
+                    </div>
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs text-slate-600 font-medium">E-book Atual</span>
+                        <span className="text-xs font-bold text-slate-800">Gestão de Riscos</span>
+                      </div>
+                      <div className="p-2 bg-slate-50 rounded mt-2">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-xs text-slate-600">Progresso do livro</span>
+                          <span className="text-xs font-semibold text-slate-800">45/250 pág</span>
+                        </div>
+                        <div className="w-full bg-slate-200 rounded-full h-1.5">
+                          <div className="bg-pastel-yellow h-1.5 rounded-full" style={{width: '18%'}}></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="pt-2 border-t border-slate-200">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-slate-600">Tempo estimado restante</span>
+                        <span className="font-semibold text-slate-800">3h 20min</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Meta 5 - Escrita de Artigos */}
+                <div className="p-5 border-2 border-pastel-green rounded-xl bg-gradient-to-br from-white to-pastel-green/5">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-pastel-green rounded-lg flex items-center justify-center">
+                        <i className="fas fa-pen text-slate-700"></i>
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-bold text-slate-800">Escrita de Artigos</h3>
+                        <p className="text-xs text-slate-500">Meta semanal de produção</p>
+                      </div>
+                    </div>
+                    <span className="px-3 py-1 bg-pastel-green text-slate-700 rounded-lg text-xs font-bold">0%</span>
+                  </div>
+                  <div className="space-y-3">
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs text-slate-600 font-medium">Meta Semanal</span>
+                        <span className="text-xs font-bold text-slate-800">1 artigo/semana</span>
+                      </div>
+                      <div className="w-full bg-slate-100 rounded-full h-2">
+                        <div className="bg-pastel-green h-2 rounded-full" style={{width: '0%'}}></div>
+                      </div>
+                      <p className="text-xs text-slate-500 mt-1">0 de 1 artigo esta semana</p>
+                    </div>
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs text-slate-600 font-medium">Status do Rascunho</span>
+                        <span className="text-xs font-bold text-slate-800">Não iniciado</span>
+                      </div>
+                      <div className="p-2 bg-slate-50 rounded mt-2">
+                        <p className="text-xs text-slate-600 text-center">Nenhum artigo em progresso</p>
+                        <button className="w-full mt-2 px-3 py-1.5 bg-pastel-green text-slate-700 rounded-lg text-xs font-medium hover:bg-opacity-80 transition">
+                          <i className="fas fa-plus mr-1"></i>
+                          Iniciar Novo Artigo
+                        </button>
+                      </div>
+                    </div>
+                    <div className="pt-2 border-t border-slate-200">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-slate-600">Artigos publicados no mês</span>
+                        <span className="font-semibold text-slate-800">2 artigos</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Meta 6 - Agente de IA */}
+                <div className="p-5 border-2 border-pastel-peach rounded-xl bg-gradient-to-br from-white to-pastel-peach/5">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-pastel-peach rounded-lg flex items-center justify-center">
+                        <i className="fas fa-robot text-slate-700"></i>
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-bold text-slate-800">Agente de IA</h3>
+                        <p className="text-xs text-slate-500">Meta semanal de interação</p>
+                      </div>
+                    </div>
+                    <span className="px-3 py-1 bg-pastel-peach text-slate-700 rounded-lg text-xs font-bold">67%</span>
+                  </div>
+                  <div className="space-y-3">
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs text-slate-600 font-medium">Meta Semanal</span>
+                        <span className="text-xs font-bold text-slate-800">60 min/semana</span>
+                      </div>
+                      <div className="w-full bg-slate-100 rounded-full h-2">
+                        <div className="bg-pastel-peach h-2 rounded-full" style={{width: '67%'}}></div>
+                      </div>
+                      <p className="text-xs text-slate-500 mt-1">40 de 60 min esta semana</p>
+                    </div>
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs text-slate-600 font-medium">Sessões Esta Semana</span>
+                        <span className="text-xs font-bold text-slate-800">8 sessões</span>
+                      </div>
+                      <div className="grid grid-cols-4 gap-1.5 mt-2">
+                        <div className="p-1.5 bg-slate-50 rounded text-center">
+                          <p className="text-xs font-semibold text-slate-800">5min</p>
+                        </div>
+                        <div className="p-1.5 bg-slate-50 rounded text-center">
+                          <p className="text-xs font-semibold text-slate-800">8min</p>
+                        </div>
+                        <div className="p-1.5 bg-slate-50 rounded text-center">
+                          <p className="text-xs font-semibold text-slate-800">4min</p>
+                        </div>
+                        <div className="p-1.5 bg-slate-50 rounded text-center">
+                          <p className="text-xs font-semibold text-slate-800">6min</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="pt-2 border-t border-slate-200">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-slate-600">Média por sessão</span>
+                        <span className="font-semibold text-slate-800">5 minutos</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Weekly Distribution */}
+          <section className="mb-8">
+            <div className="bg-white rounded-2xl border-2 border-slate-200 p-6">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 bg-pastel-blue rounded-lg flex items-center justify-center">
+                  <i className="fas fa-calendar-week text-slate-700"></i>
+                </div>
+                <div>
+                  <h2 className="text-lg font-semibold text-slate-800">Distribuição Semanal</h2>
+                  <p className="text-sm text-slate-500">Como suas metas estão distribuídas ao longo da semana</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-7 gap-3">
+                {/* Segunda-feira */}
+                <div className="p-4 rounded-xl border-2 border-pastel-blue bg-gradient-to-b from-white to-pastel-blue/5">
+                  <div className="text-center mb-3">
+                    <p className="text-xs font-bold text-slate-800 mb-1">SEG</p>
+                    <div className="w-8 h-8 mx-auto bg-pastel-blue rounded-full flex items-center justify-center">
+                      <span className="text-xs font-bold text-slate-700">15</span>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-1.5 h-1.5 bg-pastel-blue rounded-full"></div>
+                      <span className="text-xs text-slate-600">3 artigos</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-1.5 h-1.5 bg-pastel-pink rounded-full"></div>
+                      <span className="text-xs text-slate-600">20min vídeo</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-1.5 h-1.5 bg-pastel-purple rounded-full"></div>
+                      <span className="text-xs text-slate-600">30min podcast</span>
+                    </div>
+                  </div>
+                  <div className="mt-3 pt-2 border-t border-slate-200">
+                    <p className="text-xs font-semibold text-slate-800 text-center">~60min</p>
+                  </div>
+                </div>
+
+                {/* Terça-feira */}
+                <div className="p-4 rounded-xl border-2 border-pastel-green bg-gradient-to-b from-white to-pastel-green/5">
+                  <div className="text-center mb-3">
+                    <p className="text-xs font-bold text-slate-800 mb-1">TER</p>
+                    <div className="w-8 h-8 mx-auto bg-pastel-green rounded-full flex items-center justify-center">
+                      <span className="text-xs font-bold text-slate-700">16</span>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-1.5 h-1.5 bg-pastel-blue rounded-full"></div>
+                      <span className="text-xs text-slate-600">3 artigos</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-1.5 h-1.5 bg-pastel-yellow rounded-full"></div>
+                      <span className="text-xs text-slate-600">15pág ebook</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-1.5 h-1.5 bg-pastel-peach rounded-full"></div>
+                      <span className="text-xs text-slate-600">10min IA</span>
+                    </div>
+                  </div>
+                  <div className="mt-3 pt-2 border-t border-slate-200">
+                    <p className="text-xs font-semibold text-slate-800 text-center">~50min</p>
+                  </div>
+                </div>
+
+                {/* Quarta-feira */}
+                <div className="p-4 rounded-xl border-2 border-pastel-purple bg-gradient-to-b from-white to-pastel-purple/5">
+                  <div className="text-center mb-3">
+                    <p className="text-xs font-bold text-slate-800 mb-1">QUA</p>
+                    <div className="w-8 h-8 mx-auto bg-pastel-purple rounded-full flex items-center justify-center">
+                      <span className="text-xs font-bold text-slate-700">17</span>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-1.5 h-1.5 bg-pastel-blue rounded-full"></div>
+                      <span className="text-xs text-slate-600">3 artigos</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-1.5 h-1.5 bg-pastel-pink rounded-full"></div>
+                      <span className="text-xs text-slate-600">45min webinar</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-1.5 h-1.5 bg-pastel-purple rounded-full"></div>
+                      <span className="text-xs text-slate-600">25min podcast</span>
+                    </div>
+                  </div>
+                  <div className="mt-3 pt-2 border-t border-slate-200">
+                    <p className="text-xs font-semibold text-slate-800 text-center">~90min</p>
+                  </div>
+                </div>
+
+                {/* Quinta-feira */}
+                <div className="p-4 rounded-xl border-2 border-pastel-yellow bg-gradient-to-b from-white to-pastel-yellow/5">
+                  <div className="text-center mb-3">
+                    <p className="text-xs font-bold text-slate-800 mb-1">QUI</p>
+                    <div className="w-8 h-8 mx-auto bg-pastel-yellow rounded-full flex items-center justify-center">
+                      <span className="text-xs font-bold text-slate-700">18</span>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-1.5 h-1.5 bg-pastel-blue rounded-full"></div>
+                      <span className="text-xs text-slate-600">3 artigos</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-1.5 h-1.5 bg-pastel-yellow rounded-full"></div>
+                      <span className="text-xs text-slate-600">20pág ebook</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-1.5 h-1.5 bg-pastel-purple rounded-full"></div>
+                      <span className="text-xs text-slate-600">30min podcast</span>
+                    </div>
+                  </div>
+                  <div className="mt-3 pt-2 border-t border-slate-200">
+                    <p className="text-xs font-semibold text-slate-800 text-center">~75min</p>
+                  </div>
+                </div>
+
+                {/* Sexta-feira */}
+                <div className="p-4 rounded-xl border-2 border-pastel-pink bg-gradient-to-b from-white to-pastel-pink/5">
+                  <div className="text-center mb-3">
+                    <p className="text-xs font-bold text-slate-800 mb-1">SEX</p>
+                    <div className="w-8 h-8 mx-auto bg-pastel-pink rounded-full flex items-center justify-center">
+                      <span className="text-xs font-bold text-slate-700">19</span>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-1.5 h-1.5 bg-pastel-blue rounded-full"></div>
+                      <span className="text-xs text-slate-600">3 artigos</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-1.5 h-1.5 bg-pastel-pink rounded-full"></div>
+                      <span className="text-xs text-slate-600">30min vídeo</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-1.5 h-1.5 bg-pastel-green rounded-full"></div>
+                      <span className="text-xs text-slate-600">Escrever</span>
+                    </div>
+                  </div>
+                  <div className="mt-3 pt-2 border-t border-slate-200">
+                    <p className="text-xs font-semibold text-slate-800 text-center">~80min</p>
+                  </div>
+                </div>
+
+                {/* Sábado */}
+                <div className="p-4 rounded-xl border-2 border-slate-200 bg-gradient-to-b from-white to-slate-50">
+                  <div className="text-center mb-3">
+                    <p className="text-xs font-bold text-slate-800 mb-1">SAB</p>
+                    <div className="w-8 h-8 mx-auto bg-slate-100 rounded-full flex items-center justify-center">
+                      <span className="text-xs font-bold text-slate-700">20</span>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-1.5 h-1.5 bg-pastel-yellow rounded-full"></div>
+                      <span className="text-xs text-slate-600">10pág ebook</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-1.5 h-1.5 bg-pastel-purple rounded-full"></div>
+                      <span className="text-xs text-slate-600">35min podcast</span>
+                    </div>
+                  </div>
+                  <div className="mt-3 pt-2 border-t border-slate-200">
+                    <p className="text-xs font-semibold text-slate-800 text-center">~45min</p>
+                  </div>
+                </div>
+
+                {/* Domingo */}
+                <div className="p-4 rounded-xl border-2 border-slate-200 bg-gradient-to-b from-white to-slate-50">
+                  <div className="text-center mb-3">
+                    <p className="text-xs font-bold text-slate-800 mb-1">DOM</p>
+                    <div className="w-8 h-8 mx-auto bg-slate-100 rounded-full flex items-center justify-center">
+                      <span className="text-xs font-bold text-slate-700">21</span>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-1.5 h-1.5 bg-pastel-peach rounded-full"></div>
+                      <span className="text-xs text-slate-600">10min IA</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-1.5 h-1.5 bg-pastel-pink rounded-full"></div>
+                      <span className="text-xs text-slate-600">25min vídeo</span>
+                    </div>
+                  </div>
+                  <div className="mt-3 pt-2 border-t border-slate-200">
+                    <p className="text-xs font-semibold text-slate-800 text-center">~35min</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 p-4 bg-slate-50 rounded-xl">
+                <div className="grid grid-cols-4 gap-4">
+                  <div className="text-center">
+                    <p className="text-xs text-slate-600 mb-1">Tempo Total Semanal</p>
+                    <p className="text-lg font-bold text-slate-800">435 min</p>
+                    <p className="text-xs text-slate-500">~7h 15min</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-xs text-slate-600 mb-1">Média por Dia</p>
+                    <p className="text-lg font-bold text-slate-800">62 min</p>
+                    <p className="text-xs text-slate-500">~1h por dia</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-xs text-slate-600 mb-1">Dia Mais Intenso</p>
+                    <p className="text-lg font-bold text-slate-800">Quarta</p>
+                    <p className="text-xs text-slate-500">90 minutos</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-xs text-slate-600 mb-1">Dia Mais Leve</p>
+                    <p className="text-lg font-bold text-slate-800">Domingo</p>
+                    <p className="text-xs text-slate-500">35 minutos</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </section>
 
