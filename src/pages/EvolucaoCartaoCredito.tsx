@@ -99,130 +99,134 @@ export default function EvolucaoCartaoCredito() {
         </header>
 
         {/* Main Content */}
-        <div className="flex-1 overflow-y-auto bg-muted/30">
-          <div className="w-full max-w-[1600px] mx-auto px-8 py-8 grid grid-cols-12 gap-6">
-            {/* Table of Contents - Left Sidebar - Fixed */}
-            <aside className="col-span-3">
-              <div className="bg-card rounded-xl border border-border p-6 sticky top-6 max-h-[calc(100vh-7rem)] overflow-y-auto">
-                {/* Progress Bar */}
-                <div className="mb-6 pb-6 border-b border-border">
-                  <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
-                    <span>Progresso de Leitura</span>
-                    <span className="font-medium text-foreground">{Math.round(scrollProgress)}%</span>
-                  </div>
-                  <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
-                    <div 
-                      className="h-full bg-gradient-to-r from-[#D4C5E8] to-[#B8D4E8] rounded-full transition-all duration-300 ease-out"
-                      style={{ width: `${scrollProgress}%` }}
-                    ></div>
-                  </div>
+        <div className="flex-1 relative bg-muted/30">
+          {/* Table of Contents - Left Sidebar - FIXED */}
+          <aside className="fixed left-[calc(64px+2rem)] top-[calc(64px+1.5rem)] w-[280px] max-h-[calc(100vh-7rem)] overflow-y-auto z-10">
+            <div className="bg-card rounded-xl border border-border p-6">
+              {/* Progress Bar */}
+              <div className="mb-6 pb-6 border-b border-border">
+                <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
+                  <span>Progresso de Leitura</span>
+                  <span className="font-medium text-foreground">{Math.round(scrollProgress)}%</span>
                 </div>
-
-                <h2 className="text-base font-semibold text-foreground mb-4">Índice</h2>
-                <nav className="space-y-1 text-sm">
-                  <a 
-                    href="#sumario-executivo" 
-                    className={`block px-3 py-2 rounded-lg transition ${
-                      activeSection === 'sumario-executivo' 
-                        ? 'bg-[#D4C5E8] text-[#475569] font-medium' 
-                        : 'text-muted-foreground hover:bg-accent/10'
-                    }`}
-                  >
-                    1. Sumário Executivo
-                  </a>
-                  <a 
-                    href="#introducao" 
-                    className={`block px-3 py-2 rounded-lg transition ${
-                      activeSection === 'introducao' 
-                        ? 'bg-[#D4C5E8] text-[#475569] font-medium' 
-                        : 'text-muted-foreground hover:bg-accent/10'
-                    }`}
-                  >
-                    2. Introdução
-                  </a>
-                  <a 
-                    href="#panorama-historico" 
-                    className={`block px-3 py-2 rounded-lg transition ${
-                      activeSection === 'panorama-historico' 
-                        ? 'bg-[#D4C5E8] text-[#475569] font-medium' 
-                        : 'text-muted-foreground hover:bg-accent/10'
-                    }`}
-                  >
-                    3. Panorama Histórico
-                  </a>
-                  <a 
-                    href="#analise-mercado" 
-                    className={`block px-3 py-2 rounded-lg transition ${
-                      activeSection === 'analise-mercado' 
-                        ? 'bg-[#D4C5E8] text-[#475569] font-medium' 
-                        : 'text-muted-foreground hover:bg-accent/10'
-                    }`}
-                  >
-                    4. Análise de Mercado
-                  </a>
-                  <a 
-                    href="#tendencias" 
-                    className={`block px-3 py-2 rounded-lg transition ${
-                      activeSection === 'tendencias' 
-                        ? 'bg-[#D4C5E8] text-[#475569] font-medium' 
-                        : 'text-muted-foreground hover:bg-accent/10'
-                    }`}
-                  >
-                    5. Tendências e Projeções
-                  </a>
-                  <a 
-                    href="#impacto-digital" 
-                    className={`block px-3 py-2 rounded-lg transition ${
-                      activeSection === 'impacto-digital' 
-                        ? 'bg-[#D4C5E8] text-[#475569] font-medium' 
-                        : 'text-muted-foreground hover:bg-accent/10'
-                    }`}
-                  >
-                    6. Impacto da Digitalização
-                  </a>
-                  <a 
-                    href="#concorrencia" 
-                    className={`block px-3 py-2 rounded-lg transition ${
-                      activeSection === 'concorrencia' 
-                        ? 'bg-[#D4C5E8] text-[#475569] font-medium' 
-                        : 'text-muted-foreground hover:bg-accent/10'
-                    }`}
-                  >
-                    7. Análise Competitiva
-                  </a>
-                  <a 
-                    href="#regulacao" 
-                    className={`block px-3 py-2 rounded-lg transition ${
-                      activeSection === 'regulacao' 
-                        ? 'bg-[#D4C5E8] text-[#475569] font-medium' 
-                        : 'text-muted-foreground hover:bg-accent/10'
-                    }`}
-                  >
-                    8. Ambiente Regulatório
-                  </a>
-                  <a 
-                    href="#conclusoes" 
-                    className={`block px-3 py-2 rounded-lg transition ${
-                      activeSection === 'conclusoes' 
-                        ? 'bg-[#D4C5E8] text-[#475569] font-medium' 
-                        : 'text-muted-foreground hover:bg-accent/10'
-                    }`}
-                  >
-                    9. Conclusões
-                  </a>
-                  <a 
-                    href="#referencias" 
-                    className={`block px-3 py-2 rounded-lg transition ${
-                      activeSection === 'referencias' 
-                        ? 'bg-[#D4C5E8] text-[#475569] font-medium' 
-                        : 'text-muted-foreground hover:bg-accent/10'
-                    }`}
-                  >
-                    10. Referências
-                  </a>
-                </nav>
+                <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-gradient-to-r from-[#D4C5E8] to-[#B8D4E8] rounded-full transition-all duration-300 ease-out"
+                    style={{ width: `${scrollProgress}%` }}
+                  ></div>
+                </div>
               </div>
-            </aside>
+
+              <h2 className="text-base font-semibold text-foreground mb-4">Índice</h2>
+              <nav className="space-y-1 text-sm">
+                <a 
+                  href="#sumario-executivo" 
+                  className={`block px-3 py-2 rounded-lg transition ${
+                    activeSection === 'sumario-executivo' 
+                      ? 'bg-[#D4C5E8] text-[#475569] font-medium' 
+                      : 'text-muted-foreground hover:bg-accent/10'
+                  }`}
+                >
+                  1. Sumário Executivo
+                </a>
+                <a 
+                  href="#introducao" 
+                  className={`block px-3 py-2 rounded-lg transition ${
+                    activeSection === 'introducao' 
+                      ? 'bg-[#D4C5E8] text-[#475569] font-medium' 
+                      : 'text-muted-foreground hover:bg-accent/10'
+                  }`}
+                >
+                  2. Introdução
+                </a>
+                <a 
+                  href="#panorama-historico" 
+                  className={`block px-3 py-2 rounded-lg transition ${
+                    activeSection === 'panorama-historico' 
+                      ? 'bg-[#D4C5E8] text-[#475569] font-medium' 
+                      : 'text-muted-foreground hover:bg-accent/10'
+                  }`}
+                >
+                  3. Panorama Histórico
+                </a>
+                <a 
+                  href="#analise-mercado" 
+                  className={`block px-3 py-2 rounded-lg transition ${
+                    activeSection === 'analise-mercado' 
+                      ? 'bg-[#D4C5E8] text-[#475569] font-medium' 
+                      : 'text-muted-foreground hover:bg-accent/10'
+                  }`}
+                >
+                  4. Análise de Mercado
+                </a>
+                <a 
+                  href="#tendencias" 
+                  className={`block px-3 py-2 rounded-lg transition ${
+                    activeSection === 'tendencias' 
+                      ? 'bg-[#D4C5E8] text-[#475569] font-medium' 
+                      : 'text-muted-foreground hover:bg-accent/10'
+                  }`}
+                >
+                  5. Tendências e Projeções
+                </a>
+                <a 
+                  href="#impacto-digital" 
+                  className={`block px-3 py-2 rounded-lg transition ${
+                    activeSection === 'impacto-digital' 
+                      ? 'bg-[#D4C5E8] text-[#475569] font-medium' 
+                      : 'text-muted-foreground hover:bg-accent/10'
+                  }`}
+                >
+                  6. Impacto da Digitalização
+                </a>
+                <a 
+                  href="#concorrencia" 
+                  className={`block px-3 py-2 rounded-lg transition ${
+                    activeSection === 'concorrencia' 
+                      ? 'bg-[#D4C5E8] text-[#475569] font-medium' 
+                      : 'text-muted-foreground hover:bg-accent/10'
+                  }`}
+                >
+                  7. Análise Competitiva
+                </a>
+                <a 
+                  href="#regulacao" 
+                  className={`block px-3 py-2 rounded-lg transition ${
+                    activeSection === 'regulacao' 
+                      ? 'bg-[#D4C5E8] text-[#475569] font-medium' 
+                      : 'text-muted-foreground hover:bg-accent/10'
+                  }`}
+                >
+                  8. Ambiente Regulatório
+                </a>
+                <a 
+                  href="#conclusoes" 
+                  className={`block px-3 py-2 rounded-lg transition ${
+                    activeSection === 'conclusoes' 
+                      ? 'bg-[#D4C5E8] text-[#475569] font-medium' 
+                      : 'text-muted-foreground hover:bg-accent/10'
+                  }`}
+                >
+                  9. Conclusões
+                </a>
+                <a 
+                  href="#referencias" 
+                  className={`block px-3 py-2 rounded-lg transition ${
+                    activeSection === 'referencias' 
+                      ? 'bg-[#D4C5E8] text-[#475569] font-medium' 
+                      : 'text-muted-foreground hover:bg-accent/10'
+                  }`}
+                >
+                  10. Referências
+                </a>
+              </nav>
+            </div>
+          </aside>
+
+          <div className="overflow-y-auto">
+          <div className="w-full max-w-[1600px] mx-auto px-8 py-8 grid grid-cols-12 gap-6">
+            {/* Spacer for fixed sidebar */}
+            <div className="col-span-3"></div>
 
             {/* Main Article Content */}
             <article id="article-content" className="col-span-6 bg-card rounded-xl border border-border p-8">
@@ -968,6 +972,7 @@ export default function EvolucaoCartaoCredito() {
                 </div>
               </div>
             </aside>
+          </div>
           </div>
         </div>
       </div>
