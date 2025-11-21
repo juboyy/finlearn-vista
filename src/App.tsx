@@ -32,6 +32,7 @@ import Podcasts from "./pages/Podcasts";
 import Webinars from "./pages/Webinars";
 import EbookDetalhes from "./pages/EbookDetalhes";
 import MinhaConta from "./pages/MinhaConta";
+import Assinaturas from "./pages/Assinaturas";
 
 import NotFound from "./pages/NotFound";
 
@@ -80,6 +81,7 @@ const App = () => {
           <Route path="/webinars" element={<Webinars />} />
           <Route path="/ebook/:id" element={<EbookDetalhes />} />
           <Route path="/minha-conta" element={<MinhaConta />} />
+          <Route path="/assinaturas" element={<Assinaturas />} />
           
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
