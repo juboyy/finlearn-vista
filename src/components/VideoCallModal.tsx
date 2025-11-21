@@ -1023,6 +1023,44 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                             </div>
                           </div>
                         </div>
+
+                        <div className="flex items-start gap-3">
+                          <div className="w-1.5 h-1.5 bg-pastel-green rounded-full mt-2 flex-shrink-0"></div>
+                          <div className="flex-1">
+                            <p className="text-slate-300 text-sm leading-relaxed">
+                              Revisão das melhores práticas para integração de feedback dos usuários
+                            </p>
+                            <div className="flex gap-2 mt-2">
+                              <span className="px-2 py-0.5 bg-pastel-green/20 text-pastel-green border border-pastel-green/30 rounded text-xs">Processo</span>
+                              <span className="px-2 py-0.5 bg-pastel-blue/20 text-pastel-blue border border-pastel-blue/30 rounded text-xs">UX</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-start gap-3">
+                          <div className="w-1.5 h-1.5 bg-pastel-orange rounded-full mt-2 flex-shrink-0"></div>
+                          <div className="flex-1">
+                            <p className="text-slate-300 text-sm leading-relaxed">
+                              Planejamento de testes A/B para validar novas funcionalidades
+                            </p>
+                            <div className="flex gap-2 mt-2">
+                              <span className="px-2 py-0.5 bg-pastel-orange/20 text-pastel-orange border border-pastel-orange/30 rounded text-xs">Testes</span>
+                              <span className="px-2 py-0.5 bg-pastel-yellow/20 text-pastel-yellow border border-pastel-yellow/30 rounded text-xs">Validação</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-start gap-3">
+                          <div className="w-1.5 h-1.5 bg-pastel-rose rounded-full mt-2 flex-shrink-0"></div>
+                          <div className="flex-1">
+                            <p className="text-slate-300 text-sm leading-relaxed">
+                              Alinhamento sobre cronograma de implementação e marcos importantes
+                            </p>
+                            <div className="flex gap-2 mt-2">
+                              <span className="px-2 py-0.5 bg-pastel-rose/20 text-pastel-rose border border-pastel-rose/30 rounded text-xs">Planejamento</span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
 
                       <div className="pt-3 border-t border-slate-700/50">
