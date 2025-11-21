@@ -544,6 +544,20 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                       </div>
 
                       <div className="pt-4 border-t border-slate-800">
+                        <h4 className="text-white font-medium mb-3">Ferramentas</h4>
+                        <div className="space-y-2">
+                          <label className="flex items-center justify-between text-sm text-slate-300">
+                            <span>Resumo Inteligente</span>
+                            <input type="checkbox" defaultChecked className="text-pastel-blue" />
+                          </label>
+                          <label className="flex items-center justify-between text-sm text-slate-300">
+                            <span>Transcrição</span>
+                            <input type="checkbox" defaultChecked className="text-pastel-blue" />
+                          </label>
+                        </div>
+                      </div>
+
+                      <div className="pt-4 border-t border-slate-800">
                         <Button variant="outline" className="w-full border-slate-600 text-slate-600 hover:bg-slate-600 hover:text-white hover:border-white transition-all">
                           Estatísticas da chamada
                         </Button>
