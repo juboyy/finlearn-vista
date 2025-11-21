@@ -294,8 +294,63 @@ export default function CriarPaper() {
                       No contexto dos mercados emergentes, particularmente no Brasil, estudos empíricos têm demonstrado que as decisões de estrutura de capital são influenciadas por fatores institucionais específicos. A concentração acionária, característica marcante do mercado brasileiro, pode afetar significativamente as escolhas de financiamento das empresas (Procianoy & Schnorrenberger, 2004). Além disso, o desenvolvimento do mercado de capitais local e as condições macroeconômicas, incluindo taxas de juros e inflação, desempenham papel crucial nessas decisões estratégicas.
                     </p>
 
+                    <div className="bg-pastel-pink/20 border-l-4 border-pastel-pink p-4 rounded-r-lg mb-6">
+                      <div className="flex items-start gap-3">
+                        <i className="fas fa-quote-right text-slate-600 mt-1"></i>
+                        <div className="flex-1">
+                          <p className="text-sm font-medium text-slate-800 mb-3">Sugestões de citações</p>
+                          
+                          <div className="space-y-3">
+                            <div className="bg-white border border-slate-200 rounded-lg p-3 hover:shadow-sm transition cursor-pointer">
+                              <div className="flex items-start justify-between mb-2">
+                                <div className="flex-1">
+                                  <p className="text-xs font-semibold text-slate-800 mb-1">Capital Structure in Emerging Markets: Evidence from Latin America</p>
+                                  <p className="text-xs text-slate-500 mb-2">Terra, P. R. (2003) - Journal of Corporate Finance</p>
+                                  <p className="text-xs text-slate-600 italic leading-relaxed">
+                                    "Empresas em mercados emergentes latino-americanos apresentam níveis de endividamento significativamente inferiores aos observados em economias desenvolvidas, sugerindo que fatores institucionais desempenham papel determinante..."
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="flex gap-2 mt-2">
+                                <button className="px-2 py-1 bg-pastel-pink/30 text-slate-700 rounded text-xs font-medium hover:bg-pastel-pink/50 transition">
+                                  Adicionar citação
+                                </button>
+                                <button className="px-2 py-1 bg-slate-50 text-slate-600 rounded text-xs hover:bg-slate-100 transition">
+                                  Ver completo
+                                </button>
+                              </div>
+                            </div>
+
+                            <div className="bg-white border border-slate-200 rounded-lg p-3 hover:shadow-sm transition cursor-pointer">
+                              <div className="flex items-start justify-between mb-2">
+                                <div className="flex-1">
+                                  <p className="text-xs font-semibold text-slate-800 mb-1">Determinants of Capital Structure in Brazil: Panel Data Analysis</p>
+                                  <p className="text-xs text-slate-500 mb-2">Bastos, D. D., & Nakamura, W. T. (2009) - Revista de Administração</p>
+                                  <p className="text-xs text-slate-600 italic leading-relaxed">
+                                    "Os resultados indicam que rentabilidade, tamanho da firma e tangibilidade dos ativos são determinantes significativos da estrutura de capital no mercado brasileiro, com evidências que suportam tanto a teoria do pecking order quanto do trade-off..."
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="flex gap-2 mt-2">
+                                <button className="px-2 py-1 bg-pastel-pink/30 text-slate-700 rounded text-xs font-medium hover:bg-pastel-pink/50 transition">
+                                  Adicionar citação
+                                </button>
+                                <button className="px-2 py-1 bg-slate-50 text-slate-600 rounded text-xs hover:bg-slate-100 transition">
+                                  Ver completo
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <p className="text-slate-700 leading-relaxed mb-4">
+                      A evidência empírica sugere que variáveis específicas da firma, como tamanho, rentabilidade, oportunidades de crescimento e tangibilidade de ativos, exercem influência consistente sobre as decisões de estrutura de capital. Empresas maiores tendem a ter maior acesso ao mercado de capitais e, consequentemente, apresentam níveis de endividamento mais elevados. A rentabilidade, por sua vez, apresenta relação negativa com alavancagem, conforme previsto pela teoria do pecking order.
+                    </p>
+
                     <p className="text-slate-700 leading-relaxed mb-6">
-                      Estudos recentes têm explorado a dinâmica temporal da estrutura de capital, investigando como as empresas ajustam seus níveis de endividamento ao longo do tempo em resposta a choques econômicos e mudanças nas condições de mercado. A velocidade de ajuste em direção à estrutura de capital alvo tem sido objeto de intenso debate acadêmico, com evidências sugerindo que custos de ajustamento e fricções de mercado podem retardar esse processo de convergência
+                      Estudos recentes têm explorado a dinâmica temporal da estrutura de capital, investigando como as empresas ajustam seus níveis de endividamento ao longo do tempo em resposta a choques econômicos e mudanças nas condições de mercado. A velocidade de ajuste em direção à estrutura de capital alvo tem sido objeto de intenso debate acadêmico, com evidências sugerindo que custos de ajustamento e fricções de mercado podem retardar esse processo de convergência.
                     </p>
 
                     <div className="bg-gradient-to-r from-pastel-purple/20 to-pastel-blue/20 border border-pastel-purple rounded-xl p-5 mb-6">
