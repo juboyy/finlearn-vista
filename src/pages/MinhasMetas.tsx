@@ -138,10 +138,7 @@ export default function MinhasMetas() {
                     </TooltipContent>
                   </Tooltip>
                 </div>
-                <div className="flex items-center justify-center gap-2">
-                  <i className="fas fa-check-circle text-pastel-yellow text-2xl"></i>
-                  <p className="text-3xl font-bold text-slate-800 mb-1">8</p>
-                </div>
+                <p className="text-3xl font-bold text-slate-800 mb-1">8</p>
                 <p className="text-sm text-slate-600">Metas Definidas</p>
               </div>
             </div>
