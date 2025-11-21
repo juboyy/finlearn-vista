@@ -1,6 +1,7 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Bell, Search, Calendar as CalendarIcon, ChevronLeft, ChevronRight, Users, GraduationCap, Video, Book, CalendarCheck, Clock, CheckCircle, Trophy } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Plotly from 'plotly.js-dist';
 
 const monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 
@@ -50,6 +51,7 @@ const events: Record<string, Array<{ title: string; time: string; category: stri
 export default function MinhaAgenda() {
   const [currentDate, setCurrentDate] = useState(new Date(2024, 10, 21)); // November 21, 2024
   const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Activity Chart
@@ -281,7 +283,7 @@ export default function MinhaAgenda() {
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
               </button>
               <button 
-                onClick={() => setShowModal(true)}
+                onClick={() => navigate('/minha-agenda/dia')}
                 className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
               >
                 <i className="fas fa-calendar-days mr-2"></i>
