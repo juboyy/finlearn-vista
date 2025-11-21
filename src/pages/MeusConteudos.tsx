@@ -152,64 +152,6 @@ export default function MeusConteudos() {
 
         {/* Main Content */}
         <div className="flex-1 flex overflow-hidden">
-          {/* Left Sidebar */}
-          <aside className="w-64 bg-card border-r border-border flex-none hidden lg:flex flex-col overflow-y-auto">
-            <div className="p-6">
-              <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-4">
-                Biblioteca
-              </h3>
-              <div className="space-y-1">
-                <a href="#" className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-accent/10 rounded-md transition-colors group">
-                  <BookOpen className="w-5 h-5" />
-                  Meus Artigos
-                </a>
-                <a href="#" className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-accent/10 rounded-md transition-colors group">
-                  <Video className="w-5 h-5" />
-                  Vídeos Salvos
-                </a>
-                <a href="#" className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-accent/10 rounded-md transition-colors group">
-                  <PieChart className="w-5 h-5" />
-                  Relatórios
-                </a>
-              </div>
-
-              <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-4 mt-8">
-                Ferramentas
-              </h3>
-              <div className="space-y-1">
-                <a href="#" className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-accent/10 rounded-md transition-colors group">
-                  <Calculator className="w-5 h-5" />
-                  Calculadora de Taxas
-                </a>
-                <a href="#" className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-accent/10 rounded-md transition-colors group">
-                  <Search className="w-5 h-5" />
-                  Análise de Risco
-                </a>
-                <a href="#" className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-accent/10 rounded-md transition-colors group">
-                  <FileText className="w-5 h-5" />
-                  Gerador de Propostas
-                </a>
-              </div>
-            </div>
-
-            <div className="mt-auto p-6 border-t border-border">
-              <div className="bg-accent/10 rounded-xl p-4 border border-border">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-8 h-8 rounded-lg bg-primary text-primary-foreground flex items-center justify-center text-xs">
-                    <Crown className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-foreground">Plano Pro</p>
-                    <p className="text-xs text-muted-foreground">Acesso ilimitado</p>
-                  </div>
-                </div>
-                <button className="w-full py-2 text-xs font-medium text-foreground bg-card border border-border rounded-lg hover:bg-accent/10 transition-colors">
-                  Gerenciar Assinatura
-                </button>
-              </div>
-            </div>
-          </aside>
-
           {/* Main Content Area */}
           <main className="flex-1 overflow-y-auto bg-muted/30">
             <div className="max-w-[1400px] mx-auto px-8 py-8">
