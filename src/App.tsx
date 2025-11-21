@@ -45,6 +45,7 @@ import MinhaAgendaDia from "./pages/MinhaAgendaDia";
 import EstudosAcademicos from "./pages/EstudosAcademicos";
 import CriarPaper from "./pages/CriarPaper";
 import Analises from "./pages/Analises"; // Market analysis page
+import MeusConteudos from "./pages/MeusConteudos";
 
 import NotFound from "./pages/NotFound";
 
@@ -106,6 +107,7 @@ const App = () => {
           <Route path="/estudos-academicos" element={<EstudosAcademicos />} />
           <Route path="/criar-paper" element={<CriarPaper />} />
           <Route path="/analises" element={<Analises />} />
+          <Route path="/meus-conteudos" element={<MeusConteudos />} />
           
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
