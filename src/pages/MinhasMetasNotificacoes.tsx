@@ -451,9 +451,9 @@ export default function MinhasMetasNotificacoes() {
               </div>
 
               <div className="grid grid-cols-2 gap-6">
-                <div className="p-5 bg-pastel-blue bg-opacity-10 rounded-xl">
+                <div className="p-5 bg-white border border-slate-200 rounded-xl">
                   <div className="flex items-center gap-2 mb-4">
-                    <i className="fas fa-envelope text-pastel-blue"></i>
+                    <i className="fas fa-envelope text-slate-700"></i>
                     <h3 className="text-sm font-semibold text-slate-800">E-mail</h3>
                   </div>
                   <div className="bg-white rounded-lg border border-slate-200 p-4 text-xs">
@@ -481,9 +481,9 @@ export default function MinhasMetasNotificacoes() {
                   </div>
                 </div>
 
-                <div className="p-5 bg-pastel-blue bg-opacity-10 rounded-xl">
+                <div className="p-5 bg-white border border-slate-200 rounded-xl">
                   <div className="flex items-center gap-2 mb-4">
-                    <i className="fas fa-mobile-alt text-pastel-green"></i>
+                    <i className="fas fa-mobile-alt text-slate-700"></i>
                     <h3 className="text-sm font-semibold text-slate-800">Push Notification</h3>
                   </div>
                   <div className="bg-white rounded-lg border border-slate-200 p-4 shadow-lg">
