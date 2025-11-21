@@ -10,6 +10,7 @@ import Artigo from "./pages/Artigo";
 import ArtigoCompliance from "./pages/ArtigoCompliance";
 import Agentes from "./pages/Agentes";
 import MeusAgentes from "./pages/MeusAgentes";
+import MeusAgentesIA from "./pages/MeusAgentesIA";
 import CriarAgente from "./pages/CriarAgente";
 import { CriarAgentePersonalidade } from "./pages/CriarAgentePersonalidade";
 import { CriarAgenteResumo } from "./pages/CriarAgenteResumo";
@@ -75,6 +76,7 @@ const App = () => {
             <Route path="/artigo/compliance" element={<ArtigoCompliance />} />
             <Route path="/agentes" element={<Agentes />} />
             <Route path="/meus-agentes" element={<MeusAgentes />} />
+            <Route path="/meus-agentes-ia" element={<MeusAgentesIA />} />
             <Route path="/criar-agente" element={<CriarAgente />} />
           <Route path="/criar-agente/personalidade" element={<CriarAgentePersonalidade />} />
           <Route path="/criar-agente/resumo" element={<CriarAgenteResumo />} />
