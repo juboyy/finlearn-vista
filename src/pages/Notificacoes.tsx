@@ -24,7 +24,7 @@ export default function Notificacoes() {
                 <p className="text-sm text-slate-500 mt-1">Histórico completo de alertas, insights e lembretes</p>
               </div>
               <div className="flex items-center gap-3">
-                <Link to="/configuracoes">
+                <Link to="/nova-notificacao">
                   <button className="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition flex items-center gap-2">
                     <Settings size={18} />
                     Configurações

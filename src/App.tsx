@@ -35,6 +35,7 @@ import MinhaConta from "./pages/MinhaConta";
 import Assinaturas from "./pages/Assinaturas";
 import Configuracoes from "./pages/Configuracoes";
 import Notificacoes from "./pages/Notificacoes";
+import NovaNotificacao from "./pages/NovaNotificacao";
 
 import NotFound from "./pages/NotFound";
 
@@ -86,6 +87,7 @@ const App = () => {
           <Route path="/assinaturas" element={<Assinaturas />} />
           <Route path="/configuracoes" element={<Configuracoes />} />
           <Route path="/notificacoes" element={<Notificacoes />} />
+          <Route path="/nova-notificacao" element={<NovaNotificacao />} />
           
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
