@@ -16,9 +16,77 @@ import {
   AlertTriangle,
   ChartLine
 } from "lucide-react";
+import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts';
 
 const Analises = () => {
-  console.log('Analises page loaded');
+  const sectorData = [
+    { name: 'Financeiro', value: 5.8 },
+    { name: 'Tecnologia', value: 8.2 },
+    { name: 'Energia', value: -2.1 },
+    { name: 'Consumo', value: 3.4 },
+    { name: 'Saúde', value: 6.7 },
+    { name: 'Industrial', value: 1.9 },
+  ];
+
+  const volumeData = [
+    { name: 'Seg', value: 18.5 },
+    { name: 'Ter', value: 22.3 },
+    { name: 'Qua', value: 19.8 },
+    { name: 'Qui', value: 25.6 },
+    { name: 'Sex', value: 28.4 },
+    { name: 'Sáb', value: 15.2 },
+    { name: 'Dom', value: 12.8 },
+  ];
+
+  const selicData = [
+    { name: 'Fev', value: 13.75 },
+    { name: 'Mar', value: 13.75 },
+    { name: 'Abr', value: 13.25 },
+    { name: 'Mai', value: 12.75 },
+    { name: 'Jun', value: 12.25 },
+    { name: 'Jul', value: 11.75 },
+    { name: 'Ago', value: 11.25 },
+    { name: 'Set', value: 10.75 },
+    { name: 'Out', value: 10.75 },
+    { name: 'Nov', value: 10.75 },
+    { name: 'Dez', value: 10.75 },
+    { name: 'Jan', value: 10.75 },
+  ];
+
+  const inflationData = [
+    { name: 'Fev', value: 0.83 },
+    { name: 'Mar', value: 0.71 },
+    { name: 'Abr', value: 0.38 },
+    { name: 'Mai', value: 0.46 },
+    { name: 'Jun', value: 0.21 },
+    { name: 'Jul', value: 0.38 },
+    { name: 'Ago', value: -0.02 },
+    { name: 'Set', value: 0.26 },
+    { name: 'Out', value: 0.56 },
+    { name: 'Nov', value: 0.62 },
+    { name: 'Dez', value: 0.56 },
+    { name: 'Jan', value: 0.42 },
+  ];
+
+  const pixData = [
+    { name: '2020', value: 1.2 },
+    { name: '2021', value: 15.4 },
+    { name: '2022', value: 24.8 },
+    { name: '2023', value: 32.6 },
+    { name: '2024', value: 38.9 },
+    { name: '2025', value: 42.3 },
+  ];
+
+  const creditCardData = [
+    { name: '2018', value: 185 },
+    { name: '2019', value: 198 },
+    { name: '2020', value: 172 },
+    { name: '2021', value: 215 },
+    { name: '2022', value: 238 },
+    { name: '2023', value: 256 },
+    { name: '2024', value: 268 },
+    { name: '2025', value: 275 },
+  ];
   
   return (
     <div className="flex h-screen overflow-hidden">
@@ -231,9 +299,18 @@ const Analises = () => {
                   </div>
                   <button className="px-3 py-1.5 text-xs bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition">Ver Detalhes</button>
                 </div>
-                <div className="h-96 bg-slate-50 rounded-lg flex items-center justify-center">
-                  <p className="text-slate-500">Gráfico de Desempenho Setorial</p>
-                </div>
+                <ResponsiveContainer width="100%" height={400}>
+                  <BarChart data={sectorData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                    <XAxis dataKey="name" stroke="#64748b" style={{ fontSize: '12px' }} />
+                    <YAxis stroke="#64748b" style={{ fontSize: '12px' }} />
+                    <Tooltip 
+                      contentStyle={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px' }}
+                      labelStyle={{ color: '#1e293b', fontWeight: 600 }}
+                    />
+                    <Bar dataKey="value" fill="#C5E8D4" radius={[8, 8, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
               <div className="bg-white rounded-xl border border-slate-200 p-6">
                 <div className="flex items-center justify-between mb-6">
@@ -243,9 +320,24 @@ const Analises = () => {
                   </div>
                   <button className="px-3 py-1.5 text-xs bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition">Ver Detalhes</button>
                 </div>
-                <div className="h-96 bg-slate-50 rounded-lg flex items-center justify-center">
-                  <p className="text-slate-500">Gráfico de Volume</p>
-                </div>
+                <ResponsiveContainer width="100%" height={400}>
+                  <AreaChart data={volumeData}>
+                    <defs>
+                      <linearGradient id="colorVolume" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#B8D4E8" stopOpacity={0.3}/>
+                        <stop offset="95%" stopColor="#B8D4E8" stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                    <XAxis dataKey="name" stroke="#64748b" style={{ fontSize: '12px' }} />
+                    <YAxis stroke="#64748b" style={{ fontSize: '12px' }} />
+                    <Tooltip 
+                      contentStyle={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px' }}
+                      labelStyle={{ color: '#1e293b', fontWeight: 600 }}
+                    />
+                    <Area type="monotone" dataKey="value" stroke="#B8D4E8" strokeWidth={3} fillOpacity={1} fill="url(#colorVolume)" />
+                  </AreaChart>
+                </ResponsiveContainer>
               </div>
             </div>
           </section>
@@ -360,9 +452,18 @@ const Analises = () => {
                   </div>
                   <button className="px-3 py-1.5 text-xs bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition">Ver Detalhes</button>
                 </div>
-                <div className="h-80 bg-slate-50 rounded-lg flex items-center justify-center">
-                  <p className="text-slate-500">Gráfico Selic</p>
-                </div>
+                <ResponsiveContainer width="100%" height={350}>
+                  <LineChart data={selicData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                    <XAxis dataKey="name" stroke="#64748b" style={{ fontSize: '12px' }} />
+                    <YAxis stroke="#64748b" style={{ fontSize: '12px' }} />
+                    <Tooltip 
+                      contentStyle={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px' }}
+                      labelStyle={{ color: '#1e293b', fontWeight: 600 }}
+                    />
+                    <Line type="monotone" dataKey="value" stroke="#E8E0C5" strokeWidth={3} dot={{ fill: '#E8E0C5', r: 4 }} />
+                  </LineChart>
+                </ResponsiveContainer>
               </div>
               <div className="bg-white rounded-xl border border-slate-200 p-6">
                 <div className="flex items-center justify-between mb-6">
@@ -372,9 +473,18 @@ const Analises = () => {
                   </div>
                   <button className="px-3 py-1.5 text-xs bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition">Ver Detalhes</button>
                 </div>
-                <div className="h-80 bg-slate-50 rounded-lg flex items-center justify-center">
-                  <p className="text-slate-500">Gráfico IPCA</p>
-                </div>
+                <ResponsiveContainer width="100%" height={350}>
+                  <BarChart data={inflationData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                    <XAxis dataKey="name" stroke="#64748b" style={{ fontSize: '12px' }} />
+                    <YAxis stroke="#64748b" style={{ fontSize: '12px' }} />
+                    <Tooltip 
+                      contentStyle={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px' }}
+                      labelStyle={{ color: '#1e293b', fontWeight: 600 }}
+                    />
+                    <Bar dataKey="value" fill="#E8C5D8" radius={[8, 8, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
             </div>
           </section>
@@ -390,9 +500,24 @@ const Analises = () => {
                   </div>
                   <button className="px-3 py-1.5 text-xs bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition">Ver Detalhes</button>
                 </div>
-                <div className="h-96 bg-slate-50 rounded-lg flex items-center justify-center">
-                  <p className="text-slate-500">Gráfico PIX</p>
-                </div>
+                <ResponsiveContainer width="100%" height={400}>
+                  <AreaChart data={pixData}>
+                    <defs>
+                      <linearGradient id="colorPix" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#C5E8D4" stopOpacity={0.3}/>
+                        <stop offset="95%" stopColor="#C5E8D4" stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                    <XAxis dataKey="name" stroke="#64748b" style={{ fontSize: '12px' }} />
+                    <YAxis stroke="#64748b" style={{ fontSize: '12px' }} />
+                    <Tooltip 
+                      contentStyle={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px' }}
+                      labelStyle={{ color: '#1e293b', fontWeight: 600 }}
+                    />
+                    <Area type="monotone" dataKey="value" stroke="#C5E8D4" strokeWidth={3} fillOpacity={1} fill="url(#colorPix)" dot={{ fill: '#C5E8D4', r: 5 }} />
+                  </AreaChart>
+                </ResponsiveContainer>
               </div>
               <div className="bg-white rounded-xl border border-slate-200 p-6">
                 <div className="flex items-center justify-between mb-6">
@@ -402,9 +527,24 @@ const Analises = () => {
                   </div>
                   <button className="px-3 py-1.5 text-xs bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition">Ver Detalhes</button>
                 </div>
-                <div className="h-96 bg-slate-50 rounded-lg flex items-center justify-center">
-                  <p className="text-slate-500">Gráfico Cartão de Crédito</p>
-                </div>
+                <ResponsiveContainer width="100%" height={400}>
+                  <AreaChart data={creditCardData}>
+                    <defs>
+                      <linearGradient id="colorCard" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#D4C5E8" stopOpacity={0.3}/>
+                        <stop offset="95%" stopColor="#D4C5E8" stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                    <XAxis dataKey="name" stroke="#64748b" style={{ fontSize: '12px' }} />
+                    <YAxis stroke="#64748b" style={{ fontSize: '12px' }} />
+                    <Tooltip 
+                      contentStyle={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px' }}
+                      labelStyle={{ color: '#1e293b', fontWeight: 600 }}
+                    />
+                    <Area type="monotone" dataKey="value" stroke="#D4C5E8" strokeWidth={3} fillOpacity={1} fill="url(#colorCard)" dot={{ fill: '#D4C5E8', r: 5 }} />
+                  </AreaChart>
+                </ResponsiveContainer>
               </div>
             </div>
           </section>
