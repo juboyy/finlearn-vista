@@ -37,6 +37,19 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
   const streamRef = useRef<MediaStream | null>(null);
   const chatScrollRef = useRef<HTMLDivElement>(null);
 
+  // Dados do gráfico de créditos
+  const creditsChartData = useMemo(() => {
+    const minutes = Math.ceil(callDuration / 60);
+    const data = [];
+    for (let i = 0; i <= minutes; i++) {
+      data.push({
+        minuto: i,
+        creditos: i * 10
+      });
+    }
+    return data;
+  }, [callDuration]);
+
   useEffect(() => {
     if (open) {
       startCall();
@@ -805,17 +818,7 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                     <div className="h-64">
                       <ResponsiveContainer width="100%" height="100%">
                         <LineChart
-                          data={useMemo(() => {
-                            const minutes = Math.ceil(callDuration / 60);
-                            const data = [];
-                            for (let i = 0; i <= minutes; i++) {
-                              data.push({
-                                minuto: i,
-                                creditos: i * 10
-                              });
-                            }
-                            return data;
-                          }, [callDuration])}
+                          data={creditsChartData}
                           margin={{ top: 5, right: 5, left: 0, bottom: 5 }}
                         >
                           <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
