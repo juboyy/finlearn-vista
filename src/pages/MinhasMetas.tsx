@@ -132,8 +132,8 @@ export default function MinhasMetas() {
                 <h2 className="text-xl font-semibold text-slate-800">Escolha seus Objetivos</h2>
                 <p className="text-sm text-slate-500 mt-1">Selecione os tipos de conteúdo e defina suas metas</p>
               </div>
-              <button className="px-4 py-2 text-pastel-purple border-2 border-pastel-purple rounded-lg font-medium hover:bg-pastel-purple hover:bg-opacity-20 transition">
-                <i className="fas fa-magic mr-2"></i>
+              <button className="px-4 py-2 text-pastel-purple border-2 border-pastel-purple rounded-lg font-medium hover:bg-pastel-purple hover:text-white hover:border-white transition group">
+                <i className="fas fa-magic mr-2 group-hover:text-white"></i>
                 Sugestão Inteligente
               </button>
             </div>
