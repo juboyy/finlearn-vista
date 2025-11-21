@@ -866,7 +866,7 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                   </Button>
                   <Button 
                     variant="outline"
-                    className="flex-1 border-slate-600 text-slate-300 hover:bg-slate-800"
+                    className="flex-1 border-slate-600 text-slate-600 hover:bg-slate-600 hover:text-white hover:border-white transition-all"
                     onClick={() => setShowStatsModal(false)}
                   >
                     Fechar
