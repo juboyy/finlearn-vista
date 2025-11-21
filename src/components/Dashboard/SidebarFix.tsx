@@ -11,7 +11,7 @@ const navigation = [
   { name: "Biblioteca", href: "/biblioteca", icon: Book },
   { name: "Comunidade", href: "/comunidade", icon: MessageCircle },
   { name: "Marketplace", href: "/marketplace", icon: Store },
-  { name: "Autores", href: "/autores", icon: Users },
+  { name: "Creators", href: "/autores", icon: Users },
   { name: "Analytics", href: "/analytics", icon: TrendingUp },
 ];
 
