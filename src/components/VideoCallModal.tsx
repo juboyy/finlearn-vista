@@ -28,7 +28,7 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
   const [unreadCount, setUnreadCount] = useState(0);
   const [activeTab, setActiveTab] = useState<'chat' | 'notes' | 'settings'>('chat');
   const [notes, setNotes] = useState('');
-  const [noteColor, setNoteColor] = useState('#1e293b');
+  const [noteColor, setNoteColor] = useState('#ffffff');
   const localVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -500,16 +500,16 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                   <div className="flex-1 flex flex-col p-4">
                     {/* Color Picker */}
                     <div className="mb-3">
-                      <p className="text-white text-sm font-medium mb-2">Cor da nota</p>
+                      <p className="text-white text-sm font-medium mb-2">Cor da escrita</p>
                       <div className="flex gap-2">
                         {[
-                          { color: '#1e293b', name: 'Cinza' },
-                          { color: '#fee2e2', name: 'Rosa' },
-                          { color: '#dbeafe', name: 'Azul' },
-                          { color: '#d1fae5', name: 'Verde' },
-                          { color: '#fef3c7', name: 'Amarelo' },
-                          { color: '#e9d5ff', name: 'Roxo' },
-                          { color: '#fed7aa', name: 'Laranja' }
+                          { color: '#ffffff', name: 'Branco' },
+                          { color: '#ef4444', name: 'Vermelho' },
+                          { color: '#3b82f6', name: 'Azul' },
+                          { color: '#10b981', name: 'Verde' },
+                          { color: '#f59e0b', name: 'Amarelo' },
+                          { color: '#a855f7', name: 'Roxo' },
+                          { color: '#ec4899', name: 'Rosa' }
                         ].map(({ color, name }) => (
                           <button
                             key={color}
@@ -544,8 +544,8 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                       value={notes}
                       onChange={(e) => setNotes(e.target.value)}
                       placeholder="Faça anotações durante a chamada..."
-                      className="flex-1 border-slate-700 text-slate-900 resize-none"
-                      style={{ backgroundColor: noteColor }}
+                      className="flex-1 bg-slate-800 border-slate-700 resize-none"
+                      style={{ color: noteColor }}
                     />
                     <p className="text-xs text-slate-500 mt-2">
                       Suas notas serão salvas automaticamente
