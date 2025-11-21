@@ -346,8 +346,8 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                   </Button>
                 </div>
 
-                <Tabs defaultValue="chat" className="flex-1 flex flex-col">
-                  <TabsList className="w-full grid grid-cols-3 bg-slate-800/50 rounded-none border-b border-slate-800">
+                <Tabs defaultValue="chat" className="flex-1 flex flex-col min-h-0">
+                  <TabsList className="w-full grid grid-cols-3 bg-slate-800/50 rounded-none border-b border-slate-800 flex-shrink-0">
                     <TabsTrigger value="chat" className="data-[state=active]:bg-slate-700">
                       <MessageCircle size={16} className="mr-2" />
                       Chat
@@ -362,33 +362,31 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                     </TabsTrigger>
                   </TabsList>
 
-                  <TabsContent value="chat" className="flex-1 flex flex-col p-0 mt-0 overflow-hidden">
-                    <div className="flex-1 overflow-hidden">
-                      <ScrollArea className="h-full p-4">
-                        <div className="space-y-3">
-                          {chatMessages.length === 0 ? (
-                            <div className="text-center text-slate-500 py-8">
-                              <MessageCircle size={48} className="mx-auto mb-3 opacity-50" />
-                              <p>Nenhuma mensagem ainda</p>
-                              <p className="text-sm">Envie uma mensagem para começar</p>
-                            </div>
-                          ) : (
-                            chatMessages.map((msg, idx) => (
-                              <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                                <div className={`max-w-[80%] rounded-lg p-3 ${
-                                  msg.role === 'user' 
-                                    ? 'bg-pastel-blue text-slate-800' 
-                                    : 'bg-slate-800 text-white'
-                                }`}>
-                                  <p className="text-sm">{msg.message}</p>
-                                  <p className="text-xs opacity-60 mt-1">{msg.time}</p>
-                                </div>
+                  <TabsContent value="chat" className="flex-1 flex flex-col p-0 mt-0 min-h-0">
+                    <ScrollArea className="flex-1 p-4">
+                      <div className="space-y-3">
+                        {chatMessages.length === 0 ? (
+                          <div className="text-center text-slate-500 py-8">
+                            <MessageCircle size={48} className="mx-auto mb-3 opacity-50" />
+                            <p>Nenhuma mensagem ainda</p>
+                            <p className="text-sm">Envie uma mensagem para começar</p>
+                          </div>
+                        ) : (
+                          chatMessages.map((msg, idx) => (
+                            <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                              <div className={`max-w-[80%] rounded-lg p-3 ${
+                                msg.role === 'user' 
+                                  ? 'bg-pastel-blue text-slate-800' 
+                                  : 'bg-slate-800 text-white'
+                              }`}>
+                                <p className="text-sm">{msg.message}</p>
+                                <p className="text-xs opacity-60 mt-1">{msg.time}</p>
                               </div>
-                            ))
-                          )}
-                        </div>
-                      </ScrollArea>
-                    </div>
+                            </div>
+                          ))
+                        )}
+                      </div>
+                    </ScrollArea>
                     <div className="p-4 border-t border-slate-800 flex-shrink-0">
                       <div className="flex gap-2">
                         <Input
