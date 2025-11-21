@@ -28,6 +28,7 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
   const [unreadCount, setUnreadCount] = useState(0);
   const [activeTab, setActiveTab] = useState<'chat' | 'notes' | 'settings'>('chat');
   const [notes, setNotes] = useState('');
+  const [noteColor, setNoteColor] = useState('#1e293b');
   const localVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -109,6 +110,10 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
         time: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
       }]);
     }, 1000);
+  };
+
+  const insertEmoji = (emoji: string) => {
+    setNotes(prev => prev + emoji);
   };
 
   const startCall = async () => {
@@ -493,11 +498,54 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                 {/* Notes Tab */}
                 {activeTab === 'notes' && (
                   <div className="flex-1 flex flex-col p-4">
+                    {/* Color Picker */}
+                    <div className="mb-3">
+                      <p className="text-white text-sm font-medium mb-2">Cor da nota</p>
+                      <div className="flex gap-2">
+                        {[
+                          { color: '#1e293b', name: 'Cinza' },
+                          { color: '#fee2e2', name: 'Rosa' },
+                          { color: '#dbeafe', name: 'Azul' },
+                          { color: '#d1fae5', name: 'Verde' },
+                          { color: '#fef3c7', name: 'Amarelo' },
+                          { color: '#e9d5ff', name: 'Roxo' },
+                          { color: '#fed7aa', name: 'Laranja' }
+                        ].map(({ color, name }) => (
+                          <button
+                            key={color}
+                            onClick={() => setNoteColor(color)}
+                            className={`w-8 h-8 rounded-lg transition-all hover:scale-110 ${
+                              noteColor === color ? 'ring-2 ring-white ring-offset-2 ring-offset-slate-900' : ''
+                            }`}
+                            style={{ backgroundColor: color }}
+                            title={name}
+                          />
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Emoji Picker */}
+                    <div className="mb-3">
+                      <p className="text-white text-sm font-medium mb-2">Emojis</p>
+                      <div className="flex flex-wrap gap-1">
+                        {['😊', '👍', '❤️', '🎯', '⭐', '✅', '💡', '📝', '🔥', '💪', '🎉', '⚡', '📌', '🚀', '💼'].map((emoji) => (
+                          <button
+                            key={emoji}
+                            onClick={() => insertEmoji(emoji)}
+                            className="w-8 h-8 bg-slate-800 hover:bg-slate-700 rounded transition-all hover:scale-110 text-lg"
+                          >
+                            {emoji}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
                     <Textarea
                       value={notes}
                       onChange={(e) => setNotes(e.target.value)}
                       placeholder="Faça anotações durante a chamada..."
-                      className="flex-1 bg-slate-800 border-slate-700 text-white resize-none"
+                      className="flex-1 border-slate-700 text-slate-900 resize-none"
+                      style={{ backgroundColor: noteColor }}
                     />
                     <p className="text-xs text-slate-500 mt-2">
                       Suas notas serão salvas automaticamente
