@@ -95,8 +95,14 @@ export default function MinhasMetas() {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <button className="px-3 py-1.5 bg-pastel-blue text-slate-700 rounded-lg text-sm font-medium">Semana</button>
-                  <button className="px-3 py-1.5 text-slate-600 hover:bg-slate-100 rounded-lg text-sm font-medium">Mês</button>
+                  <button className="px-3 py-1.5 bg-pastel-blue text-slate-700 rounded-lg text-sm font-medium flex items-center gap-1.5">
+                    <i className="fas fa-calendar-week text-xs"></i>
+                    Semana
+                  </button>
+                  <button className="px-3 py-1.5 text-slate-600 hover:bg-slate-100 rounded-lg text-sm font-medium flex items-center gap-1.5">
+                    <i className="fas fa-calendar-alt text-xs"></i>
+                    Mês
+                  </button>
                 </div>
               </div>
 
@@ -246,9 +252,12 @@ export default function MinhasMetas() {
               <div className="grid grid-cols-2 gap-5">
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <div>
-                      <p className="text-sm font-semibold text-slate-800">Gestão de Riscos</p>
-                      <p className="text-xs text-slate-500">Área principal</p>
+                    <div className="flex items-center gap-2">
+                      <i className="fas fa-shield-alt text-pastel-green"></i>
+                      <div>
+                        <p className="text-sm font-semibold text-slate-800">Gestão de Riscos</p>
+                        <p className="text-xs text-slate-500">Área principal</p>
+                      </div>
                     </div>
                     <span className="px-2 py-1 bg-pastel-green text-slate-700 rounded text-xs font-medium">42%</span>
                   </div>
@@ -276,9 +285,12 @@ export default function MinhasMetas() {
 
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <div>
-                      <p className="text-sm font-semibold text-slate-800">Compliance</p>
-                      <p className="text-xs text-slate-500">Área secundária</p>
+                    <div className="flex items-center gap-2">
+                      <i className="fas fa-gavel text-pastel-blue"></i>
+                      <div>
+                        <p className="text-sm font-semibold text-slate-800">Compliance</p>
+                        <p className="text-xs text-slate-500">Área secundária</p>
+                      </div>
                     </div>
                     <span className="px-2 py-1 bg-pastel-blue text-slate-700 rounded text-xs font-medium">38%</span>
                   </div>
@@ -306,9 +318,12 @@ export default function MinhasMetas() {
 
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <div>
-                      <p className="text-sm font-semibold text-slate-800">Regulação Financeira</p>
-                      <p className="text-xs text-slate-500">Área de interesse</p>
+                    <div className="flex items-center gap-2">
+                      <i className="fas fa-landmark text-pastel-purple"></i>
+                      <div>
+                        <p className="text-sm font-semibold text-slate-800">Regulação Financeira</p>
+                        <p className="text-xs text-slate-500">Área de interesse</p>
+                      </div>
                     </div>
                     <span className="px-2 py-1 bg-pastel-purple text-slate-700 rounded text-xs font-medium">28%</span>
                   </div>
@@ -336,9 +351,12 @@ export default function MinhasMetas() {
 
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <div>
-                      <p className="text-sm font-semibold text-slate-800">Open Banking</p>
-                      <p className="text-xs text-slate-500">Área de interesse</p>
+                    <div className="flex items-center gap-2">
+                      <i className="fas fa-exchange-alt text-pastel-yellow"></i>
+                      <div>
+                        <p className="text-sm font-semibold text-slate-800">Open Banking</p>
+                        <p className="text-xs text-slate-500">Área de interesse</p>
+                      </div>
                     </div>
                     <span className="px-2 py-1 bg-pastel-yellow text-slate-700 rounded text-xs font-medium">15%</span>
                   </div>
@@ -383,7 +401,10 @@ export default function MinhasMetas() {
               <div className="grid grid-cols-3 gap-4">
                 <div className="p-4 bg-slate-50 rounded-xl">
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-sm font-semibold text-slate-800">Basileia III</span>
+                    <div className="flex items-center gap-2">
+                      <i className="fas fa-university text-pastel-blue text-xs"></i>
+                      <span className="text-sm font-semibold text-slate-800">Basileia III</span>
+                    </div>
                     <span className="text-xs font-bold text-slate-700">65%</span>
                   </div>
                   <div className="w-full bg-slate-200 rounded-full h-2 mb-2">
@@ -394,7 +415,10 @@ export default function MinhasMetas() {
 
                 <div className="p-4 bg-slate-50 rounded-xl">
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-sm font-semibold text-slate-800">Risco Operacional</span>
+                    <div className="flex items-center gap-2">
+                      <i className="fas fa-exclamation-triangle text-pastel-green text-xs"></i>
+                      <span className="text-sm font-semibold text-slate-800">Risco Operacional</span>
+                    </div>
                     <span className="text-xs font-bold text-slate-700">58%</span>
                   </div>
                   <div className="w-full bg-slate-200 rounded-full h-2 mb-2">
@@ -405,7 +429,10 @@ export default function MinhasMetas() {
 
                 <div className="p-4 bg-slate-50 rounded-xl">
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-sm font-semibold text-slate-800">LGPD</span>
+                    <div className="flex items-center gap-2">
+                      <i className="fas fa-shield-alt text-pastel-purple text-xs"></i>
+                      <span className="text-sm font-semibold text-slate-800">LGPD</span>
+                    </div>
                     <span className="text-xs font-bold text-slate-700">72%</span>
                   </div>
                   <div className="w-full bg-slate-200 rounded-full h-2 mb-2">
@@ -416,7 +443,10 @@ export default function MinhasMetas() {
 
                 <div className="p-4 bg-slate-50 rounded-xl">
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-sm font-semibold text-slate-800">APIs</span>
+                    <div className="flex items-center gap-2">
+                      <i className="fas fa-plug text-pastel-yellow text-xs"></i>
+                      <span className="text-sm font-semibold text-slate-800">APIs</span>
+                    </div>
                     <span className="text-xs font-bold text-slate-700">40%</span>
                   </div>
                   <div className="w-full bg-slate-200 rounded-full h-2 mb-2">
@@ -427,7 +457,10 @@ export default function MinhasMetas() {
 
                 <div className="p-4 bg-slate-50 rounded-xl">
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-sm font-semibold text-slate-800">BACEN</span>
+                    <div className="flex items-center gap-2">
+                      <i className="fas fa-building text-pastel-pink text-xs"></i>
+                      <span className="text-sm font-semibold text-slate-800">BACEN</span>
+                    </div>
                     <span className="text-xs font-bold text-slate-700">55%</span>
                   </div>
                   <div className="w-full bg-slate-200 rounded-full h-2 mb-2">
@@ -438,7 +471,10 @@ export default function MinhasMetas() {
 
                 <div className="p-4 bg-slate-50 rounded-xl">
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-sm font-semibold text-slate-800">Risco de Crédito</span>
+                    <div className="flex items-center gap-2">
+                      <i className="fas fa-credit-card text-pastel-peach text-xs"></i>
+                      <span className="text-sm font-semibold text-slate-800">Risco de Crédito</span>
+                    </div>
                     <span className="text-xs font-bold text-slate-700">48%</span>
                   </div>
                   <div className="w-full bg-slate-200 rounded-full h-2 mb-2">
@@ -495,15 +531,24 @@ export default function MinhasMetas() {
                   <p className="text-xs font-semibold text-slate-700 mb-2">Metas de Consumo</p>
                   <div className="space-y-2">
                     <div className="flex items-center justify-between p-2 bg-slate-50 rounded-lg">
-                      <span className="text-xs text-slate-600">Artigos/dia</span>
+                      <div className="flex items-center gap-2">
+                        <i className="fas fa-file-alt text-pastel-blue text-xs"></i>
+                        <span className="text-xs text-slate-600">Artigos/dia</span>
+                      </div>
                       <span className="text-xs font-semibold text-slate-800">3 artigos</span>
                     </div>
                     <div className="flex items-center justify-between p-2 bg-slate-50 rounded-lg">
-                      <span className="text-xs text-slate-600">Vídeos/semana</span>
+                      <div className="flex items-center gap-2">
+                        <i className="fas fa-video text-pastel-pink text-xs"></i>
+                        <span className="text-xs text-slate-600">Vídeos/semana</span>
+                      </div>
                       <span className="text-xs font-semibold text-slate-800">120 min</span>
                     </div>
                     <div className="flex items-center justify-between p-2 bg-slate-50 rounded-lg">
-                      <span className="text-xs text-slate-600">Podcasts/semana</span>
+                      <div className="flex items-center gap-2">
+                        <i className="fas fa-podcast text-pastel-purple text-xs"></i>
+                        <span className="text-xs text-slate-600">Podcasts/semana</span>
+                      </div>
                       <span className="text-xs font-semibold text-slate-800">180 min</span>
                     </div>
                   </div>
@@ -533,19 +578,31 @@ export default function MinhasMetas() {
                   <p className="text-xs font-semibold text-slate-700 mb-2">Áreas de Interesse</p>
                   <div className="space-y-2">
                     <div className="flex items-center justify-between p-2 bg-pastel-green bg-opacity-10 rounded-lg">
-                      <span className="text-xs text-slate-700 font-medium">Gestão de Riscos</span>
+                      <div className="flex items-center gap-2">
+                        <i className="fas fa-shield-alt text-pastel-green text-xs"></i>
+                        <span className="text-xs text-slate-700 font-medium">Gestão de Riscos</span>
+                      </div>
                       <span className="px-2 py-0.5 bg-pastel-green text-slate-700 rounded text-xs">Principal</span>
                     </div>
                     <div className="flex items-center justify-between p-2 bg-slate-50 rounded-lg">
-                      <span className="text-xs text-slate-700">Compliance</span>
+                      <div className="flex items-center gap-2">
+                        <i className="fas fa-gavel text-pastel-blue text-xs"></i>
+                        <span className="text-xs text-slate-700">Compliance</span>
+                      </div>
                       <i className="fas fa-check text-pastel-green text-xs"></i>
                     </div>
                     <div className="flex items-center justify-between p-2 bg-slate-50 rounded-lg">
-                      <span className="text-xs text-slate-700">Regulação Financeira</span>
+                      <div className="flex items-center gap-2">
+                        <i className="fas fa-landmark text-pastel-purple text-xs"></i>
+                        <span className="text-xs text-slate-700">Regulação Financeira</span>
+                      </div>
                       <i className="fas fa-check text-pastel-green text-xs"></i>
                     </div>
                     <div className="flex items-center justify-between p-2 bg-slate-50 rounded-lg">
-                      <span className="text-xs text-slate-700">Open Banking</span>
+                      <div className="flex items-center gap-2">
+                        <i className="fas fa-exchange-alt text-pastel-yellow text-xs"></i>
+                        <span className="text-xs text-slate-700">Open Banking</span>
+                      </div>
                       <i className="fas fa-check text-pastel-green text-xs"></i>
                     </div>
                   </div>
