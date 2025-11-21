@@ -353,7 +353,14 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
 
                 {/* Área de mensagens do chat */}
                 <div className="flex-1 min-h-0 overflow-hidden">
-                  <div ref={chatScrollRef} className="h-full overflow-y-auto pb-[68px]">
+                  <div 
+                    ref={chatScrollRef} 
+                    className="h-full overflow-y-auto pb-[68px] chat-scrollbar"
+                    style={{
+                      scrollbarWidth: 'thin',
+                      scrollbarColor: '#475569 #1e293b'
+                    }}
+                  >
                     <div className="p-4 space-y-3">
                       {chatMessages.length === 0 ? (
                         <div className="text-center text-slate-500 py-8">
