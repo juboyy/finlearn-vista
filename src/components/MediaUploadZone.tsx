@@ -86,8 +86,8 @@ export const MediaUploadZone = ({
   }, [onUpload, validateFile]);
 
   return (
-    <div className="bg-card rounded-xl border-2 border-border p-6">
-      <div className="flex items-center gap-3 mb-4">
+    <div className="bg-card rounded-xl border-2 border-border p-4">
+      <div className="flex items-center gap-2 mb-3">
         <div className={`w-12 h-12 bg-[hsl(var(${color}))] rounded-lg flex items-center justify-center border-2 border-border`}>
           {icon}
         </div>
@@ -102,7 +102,7 @@ export const MediaUploadZone = ({
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         className={`
-          block border-2 border-dashed rounded-lg p-8 text-center cursor-pointer
+          block border-2 border-dashed rounded-lg p-6 text-center cursor-pointer
           transition-all duration-200 outline-none
           ${isDragging 
             ? `border-[hsl(var(${color}))] bg-[hsl(var(${color}))]/20` 
@@ -116,8 +116,8 @@ export const MediaUploadZone = ({
           onChange={handleFileSelect}
           className="hidden"
         />
-        <Upload className={`w-10 h-10 mx-auto mb-3 transition-colors ${isDragging ? 'text-foreground' : 'text-muted-foreground'}`} />
-        <p className="text-sm font-medium text-foreground mb-1">
+        <Upload className={`w-8 h-8 mx-auto mb-2 transition-colors ${isDragging ? 'text-foreground' : 'text-muted-foreground'}`} />
+        <p className="text-sm font-medium text-foreground mb-0.5">
           {isDragging ? "Solte o arquivo aqui" : "Clique para fazer upload"}
         </p>
         <p className="text-xs text-muted-foreground">ou arraste e solte o arquivo aqui</p>
