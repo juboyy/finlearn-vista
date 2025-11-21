@@ -2767,10 +2767,16 @@ const Aprendizado = () => {
           {activeTab === 'analises' && (
             <div className="text-center py-16">
               <div className="w-20 h-20 bg-pastel-yellow rounded-full flex items-center justify-center mx-auto mb-4">
-                <i className="fas fa-chart-line text-3xl text-slate-700"></i>
+                <ChartLine className="text-3xl text-slate-700" size={48} />
               </div>
-              <h3 className="text-xl font-semibold text-slate-800 mb-2">Análises</h3>
-              <p className="text-slate-600">Análises detalhadas do mercado financeiro</p>
+              <h3 className="text-xl font-semibold text-slate-800 mb-2">Análises de Mercado</h3>
+              <p className="text-slate-600 mb-6">Análises detalhadas do mercado financeiro geradas por IA</p>
+              <button 
+                onClick={() => navigate('/analises')}
+                className="px-6 py-3 bg-pastel-yellow text-slate-800 rounded-lg font-medium hover:bg-opacity-80 transition"
+              >
+                Ver Todas as Análises
+              </button>
             </div>
           )}
 
