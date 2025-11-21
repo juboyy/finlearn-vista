@@ -66,7 +66,7 @@ export default function EvolucaoCartaoCredito() {
     <div className="flex min-h-screen w-full bg-background">
       <SidebarFix />
       
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col">
         {/* Header */}
         <header className="bg-card border-b border-border h-16 flex-none sticky top-0 z-20">
           <div className="h-full px-6 flex items-center justify-between">
