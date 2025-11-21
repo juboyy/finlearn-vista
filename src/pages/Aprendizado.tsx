@@ -3075,7 +3075,7 @@ const Aprendizado = () => {
                         <option>Mais Citado</option>
                         <option>Maior Impacto</option>
                       </select>
-                      <button className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2">
+                      <button onClick={() => navigate('/criar-paper')} className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2">
                         <i className="fas fa-pen-fancy"></i>
                         <span>Criar Paper</span>
                       </button>
