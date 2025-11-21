@@ -8,6 +8,7 @@ import { useState, useRef, useEffect } from "react";
 
 export default function MinhaConta() {
   const [activeSection, setActiveSection] = useState("perfil");
+  const mainRef = useRef<HTMLElement>(null);
   
   const perfilRef = useRef<HTMLElement>(null);
   const pessoalRef = useRef<HTMLElement>(null);
@@ -31,13 +32,15 @@ export default function MinhaConta() {
     };
 
     const ref = refs[section];
-    if (ref?.current) {
+    const mainElement = mainRef.current;
+    
+    if (ref?.current && mainElement) {
       const offset = 100;
-      const elementPosition = ref.current.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
+      const elementTop = ref.current.offsetTop;
+      const scrollPosition = elementTop - offset;
 
-      window.scrollTo({
-        top: offsetPosition,
+      mainElement.scrollTo({
+        top: scrollPosition,
         behavior: "smooth"
       });
       setActiveSection(section);
@@ -45,6 +48,9 @@ export default function MinhaConta() {
   };
 
   useEffect(() => {
+    const mainElement = mainRef.current;
+    if (!mainElement) return;
+
     const handleScroll = () => {
       const sections = [
         { id: "perfil", ref: perfilRef },
@@ -57,7 +63,7 @@ export default function MinhaConta() {
         { id: "perigo", ref: perigoRef },
       ];
 
-      const scrollPosition = window.scrollY + 150;
+      const scrollPosition = mainElement.scrollTop + 150;
 
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = sections[i];
@@ -71,15 +77,15 @@ export default function MinhaConta() {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    mainElement.addEventListener("scroll", handleScroll);
+    return () => mainElement.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <div className="flex h-screen overflow-hidden">
       <SidebarFix />
       
-      <main className="flex-1 overflow-y-auto">
+      <main ref={mainRef} className="flex-1 overflow-y-auto">
         <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
           <div className="px-8 py-4 flex items-center justify-between">
             <div>
