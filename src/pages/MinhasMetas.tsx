@@ -730,27 +730,27 @@ export default function MinhasMetas() {
             </div>
 
             <div className="grid grid-cols-5 gap-4 mb-6">
-              <div className="text-center p-4 bg-white rounded-xl">
+              <div className="text-center p-4 bg-white rounded-xl border-2 border-pastel-blue">
                 <i className="fas fa-newspaper text-pastel-blue text-2xl mb-2"></i>
                 <p className="text-2xl font-bold text-slate-800">5</p>
                 <p className="text-xs text-slate-600">Tipos de Conteúdo</p>
               </div>
-              <div className="text-center p-4 bg-white rounded-xl">
+              <div className="text-center p-4 bg-white rounded-xl border-2 border-pastel-green">
                 <i className="fas fa-tags text-pastel-green text-2xl mb-2"></i>
                 <p className="text-2xl font-bold text-slate-800">12</p>
                 <p className="text-xs text-slate-600">Tags Ativas</p>
               </div>
-              <div className="text-center p-4 bg-white rounded-xl">
+              <div className="text-center p-4 bg-white rounded-xl border-2 border-pastel-purple">
                 <i className="fas fa-bell text-pastel-purple text-2xl mb-2"></i>
                 <p className="text-2xl font-bold text-slate-800">3</p>
                 <p className="text-xs text-slate-600">Canais Ativos</p>
               </div>
-              <div className="text-center p-4 bg-white rounded-xl">
+              <div className="text-center p-4 bg-white rounded-xl border-2 border-pastel-yellow">
                 <i className="fas fa-target text-pastel-yellow text-2xl mb-2"></i>
                 <p className="text-2xl font-bold text-slate-800">8</p>
                 <p className="text-xs text-slate-600">Metas Definidas</p>
               </div>
-              <div className="text-center p-4 bg-white rounded-xl">
+              <div className="text-center p-4 bg-white rounded-xl border-2 border-pastel-pink">
                 <i className="fas fa-chart-line text-pastel-pink text-2xl mb-2"></i>
                 <p className="text-2xl font-bold text-slate-800">100%</p>
                 <p className="text-xs text-slate-600">Pronto</p>
@@ -758,11 +758,11 @@ export default function MinhasMetas() {
             </div>
 
             <div className="flex items-center justify-center gap-4">
-              <button onClick={() => navigate('/minhas-metas/notificacoes')} className="px-6 py-3 text-slate-600 bg-white border border-slate-200 rounded-xl font-medium hover:bg-slate-50 transition">
+              <button onClick={() => navigate('/minhas-metas/notificacoes')} className="px-6 py-3 bg-white text-slate-700 border-2 border-pastel-purple rounded-xl font-medium hover:bg-pastel-purple hover:bg-opacity-10 transition">
                 <ArrowLeft className="inline w-4 h-4 mr-2" />
                 Voltar para Editar
               </button>
-              <button onClick={() => navigate('/')} className="px-8 py-3 bg-pastel-purple text-slate-700 rounded-xl font-semibold hover:bg-opacity-80 transition shadow-lg">
+              <button onClick={() => navigate('/')} className="px-8 py-3 bg-white text-slate-700 border-2 border-pastel-purple rounded-xl font-semibold hover:bg-pastel-purple hover:bg-opacity-10 transition shadow-lg">
                 <i className="fas fa-check-circle mr-2"></i>
                 Confirmar e Começar
               </button>
