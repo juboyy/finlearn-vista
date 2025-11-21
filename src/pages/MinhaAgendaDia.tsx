@@ -20,16 +20,16 @@ export default function MinhaAgendaDia() {
               <p className="text-sm text-slate-500 mt-1">Terça-feira, 19 de Novembro de 2024</p>
             </div>
             <div className="flex items-center gap-4">
+              <button className="relative p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
+                <Bell size={20} />
+                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+              </button>
               <button 
                 onClick={() => setShowGoogleModal(true)}
                 className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 text-slate-700 rounded-lg font-medium hover:bg-slate-50 transition"
               >
                 <i className="fab fa-google text-pastel-blue"></i>
                 <span>Conectar Google Calendar</span>
-              </button>
-              <button className="relative p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
-                <Bell size={20} />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
               </button>
               <button 
                 onClick={() => setShowAddEventModal(true)}
