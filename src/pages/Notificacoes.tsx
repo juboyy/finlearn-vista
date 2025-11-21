@@ -645,7 +645,7 @@ export default function Notificacoes() {
                   <Settings size={18} className="text-slate-700" />
                   <h3 className="font-semibold text-slate-800">Preferências</h3>
                 </div>
-                <p className="text-sm text-slate-600 mb-4">Personalize como você recebe suas notificações</p>
+                <p className="text-sm text-white mb-4">Personalize como você recebe suas notificações</p>
                 <Link to="/configuracoes">
                   <button className="w-full px-4 py-2 bg-white text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-50 flex items-center justify-center gap-2">
                     Configurar
