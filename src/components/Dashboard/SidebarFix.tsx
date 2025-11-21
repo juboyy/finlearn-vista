@@ -74,10 +74,10 @@ export const SidebarFix = () => {
               <User size={16} />
               <span>Minha Conta</span>
             </Link>
-            <button className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sidebar-foreground/80 hover:bg-sidebar-accent transition-colors text-sm">
+            <Link to="/assinaturas" className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sidebar-foreground/80 hover:bg-sidebar-accent transition-colors text-sm">
               <CreditCard size={16} />
               <span>Assinaturas</span>
-            </button>
+            </Link>
             <button className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sidebar-foreground/80 hover:bg-sidebar-accent transition-colors text-sm">
               <Target size={16} />
               <span>Minhas Metas</span>
