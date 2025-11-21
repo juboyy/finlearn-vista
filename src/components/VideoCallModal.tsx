@@ -29,6 +29,7 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
   const localVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
+  const chatScrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (open) {
@@ -55,6 +56,13 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
       if (!open) setCallDuration(0);
     };
   }, [isConnected, open]);
+
+  // Auto-scroll para a última mensagem
+  useEffect(() => {
+    if (chatScrollRef.current) {
+      chatScrollRef.current.scrollTop = chatScrollRef.current.scrollHeight;
+    }
+  }, [chatMessages]);
 
   const formatDuration = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -363,7 +371,7 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                   </TabsList>
 
                   <TabsContent value="chat" className="flex-1 p-0 mt-0 min-h-0 overflow-hidden pb-20">
-                    <div className="h-full overflow-y-auto">
+                    <div ref={chatScrollRef} className="h-full overflow-y-auto">
                       <div className="p-4 space-y-3">
                         {chatMessages.length === 0 ? (
                           <div className="text-center text-slate-500 py-8">
