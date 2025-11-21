@@ -182,7 +182,7 @@ export default function CriarPaper() {
                       Este estudo investiga os determinantes da estrutura de capital em empresas brasileiras listadas na B3, analisando um painel de dados de 2015 a 2023. Utilizando modelos econométricos avançados, identificamos que fatores como rentabilidade, tamanho da empresa, tangibilidade de ativos e oportunidades de crescimento exercem influência significativa nas decisões de financiamento. Os resultados sugerem que empresas mais rentáveis tendem a utilizar menos endividamento, corroborando a teoria do pecking order.
                     </p>
                     
-                    <div className="bg-pastel-yellow bg-opacity-20 border-l-4 border-pastel-yellow p-4 rounded-r-lg mb-6">
+                    <div className="bg-pastel-yellow/20 border-l-4 border-pastel-yellow p-4 rounded-r-lg mb-6">
                       <div className="flex items-start gap-3">
                         <Lightbulb size={20} className="text-slate-600 mt-1 flex-shrink-0" />
                         <div>
@@ -205,7 +205,7 @@ export default function CriarPaper() {
                       A estrutura de capital representa uma das decisões financeiras mais relevantes para as corporações modernas. Desde os trabalhos seminais de Modigliani e Miller (1958), a literatura financeira tem buscado compreender os fatores que influenciam as escolhas de financiamento das empresas <span className="text-pastel-purple cursor-pointer hover:underline">[1]</span>.
                     </p>
                     
-                    <div className="bg-pastel-blue bg-opacity-20 border-l-4 border-pastel-blue p-4 rounded-r-lg mb-6">
+                    <div className="bg-pastel-blue/20 border-l-4 border-pastel-blue p-4 rounded-r-lg mb-6">
                       <div className="flex items-start gap-3">
                         <Sparkles size={20} className="text-slate-600 mt-1 flex-shrink-0" />
                         <div>
@@ -263,7 +263,7 @@ export default function CriarPaper() {
                       </div>
                     </div>
 
-                    <div className="bg-pastel-green bg-opacity-20 border-l-4 border-pastel-green p-4 rounded-r-lg mb-6">
+                    <div className="bg-pastel-green/20 border-l-4 border-pastel-green p-4 rounded-r-lg mb-6">
                       <div className="flex items-start gap-3">
                         <SpellCheck size={20} className="text-slate-600 mt-1 flex-shrink-0" />
                         <div>
@@ -298,7 +298,7 @@ export default function CriarPaper() {
                       Estudos recentes têm explorado a dinâmica temporal da estrutura de capital, investigando como as empresas ajustam seus níveis de endividamento ao longo do tempo em resposta a choques econômicos e mudanças nas condições de mercado. A velocidade de ajuste em direção à estrutura de capital alvo tem sido objeto de intenso debate acadêmico, com evidências sugerindo que custos de ajustamento e fricções de mercado podem retardar esse processo de convergência
                     </p>
 
-                    <div className="bg-gradient-to-r from-pastel-purple to-pastel-blue bg-opacity-20 border border-pastel-purple rounded-xl p-5 mb-6">
+                    <div className="bg-gradient-to-r from-pastel-purple/20 to-pastel-blue/20 border border-pastel-purple rounded-xl p-5 mb-6">
                       <div className="flex items-start gap-3 mb-4">
                         <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center flex-shrink-0">
                           <i className="fas fa-wand-magic-sparkles text-pastel-purple"></i>
@@ -320,7 +320,7 @@ export default function CriarPaper() {
                                 <span className="font-medium">Abordagem Metodológica:</span> "Para investigar empiricamente essas questões, este estudo utiliza uma amostra de 247 empresas não-financeiras listadas na B3 durante o período de 2015 a 2023, totalizando 2.223 observações firma-ano. Empregamos modelos de dados em painel com efeitos fixos de firma e tempo..."
                               </p>
                               <div className="flex items-center gap-2 mt-2">
-                                <span className="px-2 py-1 bg-pastel-blue bg-opacity-50 rounded text-xs text-slate-600">Metodologia</span>
+                                <span className="px-2 py-1 bg-pastel-blue/20 rounded text-xs text-slate-600">Metodologia</span>
                                 <span className="text-xs text-slate-500">~87 palavras</span>
                               </div>
                             </div>
@@ -337,7 +337,7 @@ export default function CriarPaper() {
                                 <span className="font-medium">Gap da Literatura:</span> "Apesar da extensa literatura sobre estrutura de capital, ainda existem lacunas importantes no entendimento das particularidades dos mercados emergentes. Especificamente, poucos estudos examinaram como a interação entre fatores macroeconômicos e características específicas das firmas afeta as decisões de financiamento no contexto brasileiro..."
                               </p>
                               <div className="flex items-center gap-2 mt-2">
-                                <span className="px-2 py-1 bg-pastel-green bg-opacity-50 rounded text-xs text-slate-600">Revisão Literatura</span>
+                                <span className="px-2 py-1 bg-pastel-green/20 rounded text-xs text-slate-600">Revisão Literatura</span>
                                 <span className="text-xs text-slate-500">~73 palavras</span>
                               </div>
                             </div>
@@ -354,7 +354,7 @@ export default function CriarPaper() {
                                 <span className="font-medium">Contribuição Teórica:</span> "Este trabalho contribui para a literatura de estrutura de capital em múltiplas dimensões. Primeiro, fornecemos evidências atualizadas sobre os determinantes da estrutura de capital em um mercado emergente relevante. Segundo, investigamos a velocidade de ajuste em direção à estrutura de capital alvo, considerando diferentes contextos econômicos..."
                               </p>
                               <div className="flex items-center gap-2 mt-2">
-                                <span className="px-2 py-1 bg-pastel-yellow bg-opacity-50 rounded text-xs text-slate-600">Contribuição</span>
+                                <span className="px-2 py-1 bg-pastel-yellow/20 rounded text-xs text-slate-600">Contribuição</span>
                                 <span className="text-xs text-slate-500">~79 palavras</span>
                               </div>
                             </div>
@@ -472,7 +472,7 @@ export default function CriarPaper() {
                     <option value="statistics">Estatística Aplicada</option>
                     <option value="methodology">Metodologia Científica</option>
                   </select>
-                  <div className="mt-2 p-2 bg-pastel-purple bg-opacity-40 rounded-lg border border-pastel-purple border-opacity-30">
+                  <div className="mt-2 p-2 bg-pastel-purple/20 rounded-lg border border-pastel-purple/30">
                     <p className="text-xs text-slate-700"><i className="fas fa-info-circle mr-1"></i> Agente atual: <span className="font-semibold">Finanças Corporativas</span></p>
                   </div>
                 </div>
