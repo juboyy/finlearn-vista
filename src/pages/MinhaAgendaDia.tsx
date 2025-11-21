@@ -97,7 +97,7 @@ export default function MinhaAgendaDia() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 bg-pastel-blue rounded-lg flex items-center justify-center">
-                        <CalendarCheck size={16} className="text-white" />
+                        <CalendarCheck size={16} className="text-slate-700" />
                       </div>
                       <span className="text-sm text-slate-700">Total de Eventos</span>
                     </div>
@@ -106,7 +106,7 @@ export default function MinhaAgendaDia() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 bg-pastel-green rounded-lg flex items-center justify-center">
-                        <Clock size={16} className="text-white" />
+                        <Clock size={16} className="text-slate-700" />
                       </div>
                       <span className="text-sm text-slate-700">Horas Agendadas</span>
                     </div>
@@ -115,7 +115,7 @@ export default function MinhaAgendaDia() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 bg-pastel-rose rounded-lg flex items-center justify-center">
-                        <BookOpen size={16} className="text-white" />
+                        <BookOpen size={16} className="text-slate-700" />
                       </div>
                       <span className="text-sm text-slate-700">Estudos</span>
                     </div>
@@ -124,7 +124,7 @@ export default function MinhaAgendaDia() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 bg-pastel-purple rounded-lg flex items-center justify-center">
-                        <Users size={16} className="text-white" />
+                        <Users size={16} className="text-slate-700" />
                       </div>
                       <span className="text-sm text-slate-700">Reuniões</span>
                     </div>
