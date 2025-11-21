@@ -4,7 +4,7 @@ import {
   Key, Fingerprint, Mail, Laptop, Tablet, LogOut, Calendar, CalendarDays,
   Sun, Moon, SunMoon, MoreVertical, Newspaper
 } from "lucide-react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export default function Configuracoes() {
   const [activeSection, setActiveSection] = useState("seguranca");
@@ -33,6 +33,50 @@ export default function Configuracoes() {
       targetRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
+
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '-20% 0px -70% 0px',
+      threshold: 0
+    };
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const sectionId = entry.target.getAttribute('data-section');
+          if (sectionId) {
+            setActiveSection(sectionId);
+          }
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    const refs = [
+      { ref: securityRef, id: 'seguranca' },
+      { ref: notificationsRef, id: 'notificacoes' },
+      { ref: sessionsRef, id: 'sessoes' },
+      { ref: remindersRef, id: 'lembretes' },
+      { ref: appearanceRef, id: 'aparencia' },
+      { ref: languageRef, id: 'idioma' }
+    ];
+
+    refs.forEach(({ ref }) => {
+      if (ref.current) {
+        observer.observe(ref.current);
+      }
+    });
+
+    return () => {
+      refs.forEach(({ ref }) => {
+        if (ref.current) {
+          observer.unobserve(ref.current);
+        }
+      });
+    };
+  }, []);
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -130,6 +174,7 @@ export default function Configuracoes() {
             <div className="col-span-3 space-y-6">
               <section 
                 ref={securityRef}
+                data-section="seguranca"
                 className="bg-white rounded-xl border border-slate-200 p-6"
               >
                 <div className="flex items-center gap-3 mb-6">
@@ -194,6 +239,7 @@ export default function Configuracoes() {
 
               <section 
                 ref={notificationsRef}
+                data-section="notificacoes"
                 className="bg-white rounded-xl border border-slate-200 p-6"
               >
                 <div className="flex items-center justify-between mb-6">
@@ -301,6 +347,7 @@ export default function Configuracoes() {
 
               <section 
                 ref={sessionsRef}
+                data-section="sessoes"
                 className="bg-white rounded-xl border border-slate-200 p-6"
               >
                 <div className="flex items-center gap-3 mb-6">
@@ -377,6 +424,7 @@ export default function Configuracoes() {
 
               <section 
                 ref={remindersRef}
+                data-section="lembretes"
                 className="bg-white rounded-xl border border-slate-200 p-6"
               >
                 <div className="flex items-center justify-between mb-6">
@@ -463,6 +511,7 @@ export default function Configuracoes() {
 
               <section 
                 ref={appearanceRef}
+                data-section="aparencia"
                 className="bg-white rounded-xl border border-slate-200 p-6"
               >
                 <div className="flex items-center gap-3 mb-6">
@@ -498,6 +547,7 @@ export default function Configuracoes() {
 
               <section 
                 ref={languageRef}
+                data-section="idioma"
                 className="bg-white rounded-xl border border-slate-200 p-6"
               >
                 <div className="flex items-center gap-3 mb-6">
