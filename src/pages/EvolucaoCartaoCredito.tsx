@@ -1,8 +1,7 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Star, Bookmark, Share2, Download, ChevronLeft, ChevronRight, Eye, Clock, BookOpen, Search, Lightbulb, Wand2 } from "lucide-react";
+import { ArrowLeft, Star, Bookmark, Share2, Download, ChevronLeft, ChevronRight, Eye, Clock, BookOpen, Search, Lightbulb, Wand2, TrendingUp, PieChart, BarChart3 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import Plot from 'react-plotly.js';
 
 export default function EvolucaoCartaoCredito() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -217,29 +216,12 @@ export default function EvolucaoCartaoCredito() {
                         <div className="flex items-center justify-between mb-4">
                           <h4 className="font-semibold text-foreground">Volume Transacionado Mensal (R$ Bilhões)</h4>
                         </div>
-                        <Plot
-                          data={[{
-                            type: 'scatter',
-                            mode: 'lines+markers',
-                            x: ['2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
-                            y: [185, 198, 172, 215, 238, 256, 268, 275],
-                            line: { color: '#D4C5E8', width: 3 },
-                            marker: { size: 10, color: '#D4C5E8', line: { color: '#8B7BA8', width: 2 } },
-                            fill: 'tozeroy',
-                            fillcolor: 'rgba(212, 197, 232, 0.2)'
-                          }]}
-                          layout={{
-                            xaxis: { title: 'Ano', showgrid: false },
-                            yaxis: { title: 'Volume (R$ Bilhões)', showgrid: true, gridcolor: '#f1f5f9' },
-                            margin: { t: 20, r: 20, b: 60, l: 60 },
-                            plot_bgcolor: '#ffffff',
-                            paper_bgcolor: '#ffffff',
-                            showlegend: false,
-                            height: 350
-                          }}
-                          config={{ responsive: true, displayModeBar: false, displaylogo: false }}
-                          className="w-full"
-                        />
+                        <div className="w-full h-[350px] bg-gradient-to-br from-[#D4C5E8]/10 to-[#B8D4E8]/10 rounded-lg flex items-center justify-center border border-border/50">
+                          <div className="text-center">
+                            <TrendingUp className="w-12 h-12 text-[#D4C5E8] mx-auto mb-3" />
+                            <p className="text-sm text-muted-foreground">Gráfico: Volume cresceu de R$ 185bi (2018) para R$ 275bi (2025)</p>
+                          </div>
+                        </div>
                       </div>
 
                       <p className="text-muted-foreground leading-relaxed mb-4">
@@ -287,28 +269,12 @@ export default function EvolucaoCartaoCredito() {
                         <div className="flex items-center justify-between mb-4">
                           <h4 className="font-semibold text-foreground">Distribuição por Bandeiras 2025</h4>
                         </div>
-                        <Plot
-                          data={[{
-                            type: 'pie',
-                            labels: ['Visa', 'Mastercard', 'Elo', 'Amex', 'Outros'],
-                            values: [52, 38, 6, 2, 2],
-                            marker: {
-                              colors: ['#D4C5E8', '#B8D4E8', '#C5E8D4', '#E8E0C5', '#E8D4C5']
-                            },
-                            textinfo: 'label+percent',
-                            textposition: 'outside'
-                          }]}
-                          layout={{
-                            margin: { t: 20, r: 20, b: 20, l: 20 },
-                            plot_bgcolor: '#ffffff',
-                            paper_bgcolor: '#ffffff',
-                            showlegend: true,
-                            legend: { orientation: 'h', y: -0.1 },
-                            height: 350
-                          }}
-                          config={{ responsive: true, displayModeBar: false, displaylogo: false }}
-                          className="w-full"
-                        />
+                        <div className="w-full h-[350px] bg-gradient-to-br from-[#B8D4E8]/10 to-[#C5E8D4]/10 rounded-lg flex items-center justify-center border border-border/50">
+                          <div className="text-center">
+                            <PieChart className="w-12 h-12 text-[#B8D4E8] mx-auto mb-3" />
+                            <p className="text-sm text-muted-foreground">Distribuição: Visa 52%, Mastercard 38%, Elo 6%, Outros 4%</p>
+                          </div>
+                        </div>
                       </div>
 
                       <p className="text-muted-foreground leading-relaxed mb-6">
@@ -368,30 +334,12 @@ export default function EvolucaoCartaoCredito() {
                         <div className="flex items-center justify-between mb-4">
                           <h4 className="font-semibold text-foreground">Evolução do Ticket Médio (R$)</h4>
                         </div>
-                        <Plot
-                          data={[{
-                            type: 'bar',
-                            x: ['2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
-                            y: [156, 162, 158, 172, 183, 192, 198, 204],
-                            marker: {
-                              color: '#C5E8D4',
-                              line: { color: '#8FB8A3', width: 2 }
-                            },
-                            text: ['R$ 156', 'R$ 162', 'R$ 158', 'R$ 172', 'R$ 183', 'R$ 192', 'R$ 198', 'R$ 204'],
-                            textposition: 'outside'
-                          }]}
-                          layout={{
-                            xaxis: { title: 'Ano', showgrid: false },
-                            yaxis: { title: 'Ticket Médio (R$)', showgrid: true, gridcolor: '#f1f5f9' },
-                            margin: { t: 40, r: 20, b: 60, l: 60 },
-                            plot_bgcolor: '#ffffff',
-                            paper_bgcolor: '#ffffff',
-                            showlegend: false,
-                            height: 300
-                          }}
-                          config={{ responsive: true, displayModeBar: false, displaylogo: false }}
-                          className="w-full"
-                        />
+                        <div className="w-full h-[300px] bg-gradient-to-br from-[#C5E8D4]/10 to-[#E8E0C5]/10 rounded-lg flex items-center justify-center border border-border/50">
+                          <div className="text-center">
+                            <BarChart3 className="w-12 h-12 text-[#C5E8D4] mx-auto mb-3" />
+                            <p className="text-sm text-muted-foreground">Ticket médio cresceu de R$ 156 (2018) para R$ 204 (2025)</p>
+                          </div>
+                        </div>
                       </div>
 
                       <h3 className="text-xl font-semibold text-foreground mb-3 mt-8">4.3 Modalidades de Crédito</h3>
@@ -452,29 +400,12 @@ export default function EvolucaoCartaoCredito() {
                         <div className="flex items-center justify-between mb-4">
                           <h4 className="font-semibold text-foreground">Penetração de Cartões Digitais (%)</h4>
                         </div>
-                        <Plot
-                          data={[{
-                            type: 'scatter',
-                            mode: 'lines+markers',
-                            x: ['2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
-                            y: [15, 22, 31, 42, 51, 58, 63, 67],
-                            line: { color: '#B8D4E8', width: 3 },
-                            marker: { size: 10, color: '#B8D4E8' },
-                            fill: 'tozeroy',
-                            fillcolor: 'rgba(184, 212, 232, 0.2)'
-                          }]}
-                          layout={{
-                            xaxis: { title: 'Ano', showgrid: false },
-                            yaxis: { title: 'Penetração (%)', showgrid: true, gridcolor: '#f1f5f9', range: [0, 100] },
-                            margin: { t: 20, r: 20, b: 60, l: 60 },
-                            plot_bgcolor: '#ffffff',
-                            paper_bgcolor: '#ffffff',
-                            showlegend: false,
-                            height: 350
-                          }}
-                          config={{ responsive: true, displayModeBar: false, displaylogo: false }}
-                          className="w-full"
-                        />
+                        <div className="w-full h-[350px] bg-gradient-to-br from-[#B8D4E8]/10 to-[#D4C5E8]/10 rounded-lg flex items-center justify-center border border-border/50">
+                          <div className="text-center">
+                            <TrendingUp className="w-12 h-12 text-[#B8D4E8] mx-auto mb-3" />
+                            <p className="text-sm text-muted-foreground">Penetração cresceu de 15% (2018) para 67% (2025)</p>
+                          </div>
+                        </div>
                       </div>
 
                       <p className="text-muted-foreground leading-relaxed mb-4">
@@ -722,66 +653,12 @@ export default function EvolucaoCartaoCredito() {
                           <i className="fas fa-chart-line text-[#C5E8D4]"></i>
                           Impacto do Open Finance no Mercado de Cartões
                         </h4>
-                        <Plot
-                          data={[{
-                            type: 'scatter',
-                            mode: 'lines+markers',
-                            name: 'Aprovação de Crédito',
-                            x: ['2021', '2022', '2023', '2024', '2025'],
-                            y: [42, 51, 58, 64, 68],
-                            line: { color: '#C5E8D4', width: 3 }
-                          }]}
-                          layout={{
-                            xaxis: { showgrid: false },
-                            yaxis: { title: 'Taxa de Aprovação (%)', showgrid: true, gridcolor: '#f1f5f9' },
-                            margin: { t: 20, r: 20, b: 60, l: 60 },
-                            plot_bgcolor: '#ffffff',
-                            paper_bgcolor: '#ffffff',
-                            showlegend: false,
-                            height: 300
-                          }}
-                          config={{ responsive: true, displayModeBar: false, displaylogo: false }}
-                          className="w-full"
-                        />
-                      </div>
-                    </div>
-                  </>
-                )}
-
-                {currentPage === 7 && (
-                  <>
-                    <div id="conclusoes" className="mb-12">
-                      <h2 className="text-2xl font-bold text-foreground mb-4">9. Conclusões</h2>
-                      <h3 className="text-xl font-semibold text-foreground mb-3">9.1 Síntese dos Principais Achados</h3>
-                      <p className="text-muted-foreground leading-relaxed mb-6">
-                        O mercado brasileiro de cartões de crédito demonstrou notável capacidade de adaptação e inovação no período 2018-2025. A coexistência de players tradicionais e disruptores criou ambiente competitivo saudável que beneficia consumidores através de melhores produtos, menores custos e experiências superiores. O marco regulatório moderno estabelecido pelo Banco Central fornece base sólida para desenvolvimento sustentável do setor.
-                      </p>
-
-                      <div className="bg-card rounded-lg border border-border p-6 mb-6">
-                        <h4 className="font-semibold text-foreground mb-4">Projeção de Crescimento 2026-2030</h4>
-                        <Plot
-                          data={[{
-                            type: 'scatter',
-                            mode: 'lines+markers',
-                            x: ['2025', '2026', '2027', '2028', '2029', '2030'],
-                            y: [275, 286, 298, 310, 323, 336],
-                            line: { color: '#D4C5E8', width: 3 },
-                            marker: { size: 8 },
-                            fill: 'tozeroy',
-                            fillcolor: 'rgba(212, 197, 232, 0.2)'
-                          }]}
-                          layout={{
-                            xaxis: { title: 'Ano', showgrid: false },
-                            yaxis: { title: 'Volume (R$ Bilhões)', showgrid: true, gridcolor: '#f1f5f9' },
-                            margin: { t: 20, r: 20, b: 60, l: 60 },
-                            plot_bgcolor: '#ffffff',
-                            paper_bgcolor: '#ffffff',
-                            showlegend: false,
-                            height: 300
-                          }}
-                          config={{ responsive: true, displayModeBar: false, displaylogo: false }}
-                          className="w-full"
-                        />
+                        <div className="w-full h-[300px] bg-gradient-to-br from-[#C5E8D4]/10 to-[#B8D4E8]/10 rounded-lg flex items-center justify-center border border-border/50">
+                          <div className="text-center">
+                            <TrendingUp className="w-12 h-12 text-[#C5E8D4] mx-auto mb-3" />
+                            <p className="text-sm text-muted-foreground">Taxa de aprovação cresceu de 42% (2021) para 68% (2025)</p>
+                          </div>
+                        </div>
                       </div>
 
                       <h3 className="text-xl font-semibold text-foreground mb-3 mt-8">9.2 Recomendações Estratégicas</h3>
