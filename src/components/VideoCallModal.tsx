@@ -4,8 +4,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Video, Mic, MicOff, VideoOff, Phone, Monitor, Minimize2, Maximize2, MessageCircle, FileText, Settings, Send, ChevronLeft, ChevronRight, X, Activity, TrendingUp, Target, Lightbulb, Key, BarChart3, Clock, Coins } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import { toast } from "sonner";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 interface VideoCallModalProps {
   open: boolean;
@@ -793,6 +794,65 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                         <p className="text-slate-400 text-xs">Taxa: 10 créditos/minuto</p>
                       </div>
                     </div>
+                  </div>
+
+                  {/* Gráfico de Evolução de Créditos */}
+                  <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
+                    <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
+                      <TrendingUp size={18} className="text-pastel-yellow" />
+                      Evolução de Créditos
+                    </h3>
+                    <div className="h-64">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <LineChart
+                          data={useMemo(() => {
+                            const minutes = Math.ceil(callDuration / 60);
+                            const data = [];
+                            for (let i = 0; i <= minutes; i++) {
+                              data.push({
+                                minuto: i,
+                                creditos: i * 10
+                              });
+                            }
+                            return data;
+                          }, [callDuration])}
+                          margin={{ top: 5, right: 5, left: 0, bottom: 5 }}
+                        >
+                          <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                          <XAxis 
+                            dataKey="minuto" 
+                            stroke="#94a3b8"
+                            tick={{ fill: '#94a3b8', fontSize: 12 }}
+                            label={{ value: 'Minutos', position: 'insideBottom', offset: -5, fill: '#94a3b8' }}
+                          />
+                          <YAxis 
+                            stroke="#94a3b8"
+                            tick={{ fill: '#94a3b8', fontSize: 12 }}
+                            label={{ value: 'Créditos', angle: -90, position: 'insideLeft', fill: '#94a3b8' }}
+                          />
+                          <Tooltip 
+                            contentStyle={{ 
+                              backgroundColor: '#1e293b', 
+                              border: '1px solid #475569',
+                              borderRadius: '8px',
+                              color: '#fff'
+                            }}
+                            labelStyle={{ color: '#94a3b8' }}
+                          />
+                          <Line 
+                            type="monotone" 
+                            dataKey="creditos" 
+                            stroke="#fbbf24" 
+                            strokeWidth={3}
+                            dot={{ fill: '#fbbf24', r: 4 }}
+                            activeDot={{ r: 6 }}
+                          />
+                        </LineChart>
+                      </ResponsiveContainer>
+                    </div>
+                    <p className="text-slate-400 text-xs mt-3">
+                      Taxa de consumo: 10 créditos por minuto de chamada
+                    </p>
                   </div>
 
                   {/* Palavras-chave e Tópicos */}
