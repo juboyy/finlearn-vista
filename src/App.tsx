@@ -44,7 +44,7 @@ import MinhaAgenda from "./pages/MinhaAgenda";
 import MinhaAgendaDia from "./pages/MinhaAgendaDia";
 import EstudosAcademicos from "./pages/EstudosAcademicos";
 import CriarPaper from "./pages/CriarPaper";
-import Analises from "./pages/Analises";
+import Analises from "./pages/Analises"; // Market analysis page
 
 import NotFound from "./pages/NotFound";
 
