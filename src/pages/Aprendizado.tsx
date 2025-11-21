@@ -2057,10 +2057,16 @@ const Aprendizado = () => {
 
           {activeTab === 'avatar-ia' && <div className="text-center py-16">
               <div className="w-20 h-20 bg-pastel-purple rounded-full flex items-center justify-center mx-auto mb-4">
-                <i className="fas fa-robot text-3xl text-slate-700"></i>
+                <Bot className="text-slate-700" size={48} />
               </div>
               <h3 className="text-xl font-semibold text-slate-800 mb-2">Avatar IA</h3>
-              <p className="text-slate-600">Aprenda com avatares de inteligência artificial</p>
+              <p className="text-slate-600 mb-6">Aprenda com avatares de inteligência artificial</p>
+              <button 
+                onClick={() => navigate('/meus-agentes-ia')}
+                className="px-6 py-3 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
+              >
+                Ver Meus Agentes IA
+              </button>
             </div>}
 
           {activeTab === 'ebooks' && <>
