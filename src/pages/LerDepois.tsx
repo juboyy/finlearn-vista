@@ -162,17 +162,17 @@ export default function LerDepois() {
   const getTypeColor = (type: string) => {
     switch (type) {
       case 'article':
-        return 'bg-pastel-blue/30';
+        return 'bg-pastel-blue/50';
       case 'video':
-        return 'bg-pastel-purple/30';
+        return 'bg-pastel-purple/50';
       case 'blog':
-        return 'bg-pastel-green/30';
+        return 'bg-pastel-green/50';
       case 'pdf':
-        return 'bg-pastel-peach/30';
+        return 'bg-pastel-peach/50';
       case 'podcast':
-        return 'bg-pastel-pink/30';
+        return 'bg-pastel-pink/50';
       default:
-        return 'bg-pastel-blue/30';
+        return 'bg-pastel-blue/50';
     }
   };
 
@@ -180,28 +180,28 @@ export default function LerDepois() {
     switch (priority) {
       case 'urgent':
         return (
-          <span className="inline-flex items-center gap-2 px-3 py-1 bg-pastel-rose/30 text-pastel-gray-dark rounded-full text-xs font-medium border border-pastel-rose/40">
+          <span className="inline-flex items-center gap-2 px-3 py-1 bg-pastel-rose/50 text-pastel-gray-dark rounded-full text-xs font-medium border border-pastel-rose/60">
             <Circle className="fill-current" size={6} />
             Urgente
           </span>
         );
       case 'high':
         return (
-          <span className="inline-flex items-center gap-2 px-3 py-1 bg-pastel-peach/30 text-pastel-gray-dark rounded-full text-xs font-medium border border-pastel-peach/40">
+          <span className="inline-flex items-center gap-2 px-3 py-1 bg-pastel-peach/50 text-pastel-gray-dark rounded-full text-xs font-medium border border-pastel-peach/60">
             <Circle className="fill-current" size={6} />
             Alta
           </span>
         );
       case 'medium':
         return (
-          <span className="inline-flex items-center gap-2 px-3 py-1 bg-pastel-yellow/30 text-pastel-gray-dark rounded-full text-xs font-medium border border-pastel-yellow/40">
+          <span className="inline-flex items-center gap-2 px-3 py-1 bg-pastel-yellow/50 text-pastel-gray-dark rounded-full text-xs font-medium border border-pastel-yellow/60">
             <Circle className="fill-current" size={6} />
             Média
           </span>
         );
       case 'low':
         return (
-          <span className="inline-flex items-center gap-2 px-3 py-1 bg-pastel-blue/30 text-pastel-gray-dark rounded-full text-xs font-medium border border-pastel-blue/40">
+          <span className="inline-flex items-center gap-2 px-3 py-1 bg-pastel-blue/50 text-pastel-gray-dark rounded-full text-xs font-medium border border-pastel-blue/60">
             <Circle className="fill-current" size={6} />
             Baixa
           </span>
@@ -277,7 +277,7 @@ export default function LerDepois() {
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-pastel-yellow/30 rounded-lg flex items-center justify-center border border-pastel-yellow/40">
+                      <div className="w-8 h-8 bg-pastel-yellow/50 rounded-lg flex items-center justify-center border border-pastel-yellow/60">
                         <Bookmark className="text-pastel-gray-dark" size={14} />
                       </div>
                       <span className="text-sm text-muted-foreground">Total Salvos</span>
@@ -286,7 +286,7 @@ export default function LerDepois() {
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-pastel-green/30 rounded-lg flex items-center justify-center border border-pastel-green/40">
+                      <div className="w-8 h-8 bg-pastel-green/50 rounded-lg flex items-center justify-center border border-pastel-green/60">
                         <Check className="text-pastel-gray-dark" size={14} />
                       </div>
                       <span className="text-sm text-muted-foreground">Já Lidos</span>
@@ -295,7 +295,7 @@ export default function LerDepois() {
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-pastel-rose/30 rounded-lg flex items-center justify-center border border-pastel-rose/40">
+                      <div className="w-8 h-8 bg-pastel-rose/50 rounded-lg flex items-center justify-center border border-pastel-rose/60">
                         <Clock className="text-pastel-gray-dark" size={14} />
                       </div>
                       <span className="text-sm text-muted-foreground">Pendentes</span>
@@ -304,7 +304,7 @@ export default function LerDepois() {
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-pastel-purple/30 rounded-lg flex items-center justify-center border border-pastel-purple/40">
+                      <div className="w-8 h-8 bg-pastel-purple/50 rounded-lg flex items-center justify-center border border-pastel-purple/60">
                         <Star className="text-pastel-gray-dark" size={14} />
                       </div>
                       <span className="text-sm text-muted-foreground">Alta Prioridade</span>
@@ -354,7 +354,7 @@ export default function LerDepois() {
                 <h2 className="text-lg font-semibold text-foreground mb-4">Tipo de Conteúdo</h2>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 p-2 rounded-lg hover:bg-muted cursor-pointer transition">
-                    <div className="w-8 h-8 bg-pastel-blue/30 rounded-lg flex items-center justify-center border border-pastel-blue/40">
+                    <div className="w-8 h-8 bg-pastel-blue/50 rounded-lg flex items-center justify-center border border-pastel-blue/60">
                       <Newspaper className="text-pastel-gray-dark" size={14} />
                     </div>
                     <div className="flex-1">
@@ -363,7 +363,7 @@ export default function LerDepois() {
                     </div>
                   </div>
                   <div className="flex items-center gap-2 p-2 rounded-lg hover:bg-muted cursor-pointer transition">
-                    <div className="w-8 h-8 bg-pastel-purple/30 rounded-lg flex items-center justify-center border border-pastel-purple/40">
+                    <div className="w-8 h-8 bg-pastel-purple/50 rounded-lg flex items-center justify-center border border-pastel-purple/60">
                       <Video className="text-pastel-gray-dark" size={14} />
                     </div>
                     <div className="flex-1">
@@ -372,7 +372,7 @@ export default function LerDepois() {
                     </div>
                   </div>
                   <div className="flex items-center gap-2 p-2 rounded-lg hover:bg-muted cursor-pointer transition">
-                    <div className="w-8 h-8 bg-pastel-green/30 rounded-lg flex items-center justify-center border border-pastel-green/40">
+                    <div className="w-8 h-8 bg-pastel-green/50 rounded-lg flex items-center justify-center border border-pastel-green/60">
                       <FileText className="text-pastel-gray-dark" size={14} />
                     </div>
                     <div className="flex-1">
@@ -381,7 +381,7 @@ export default function LerDepois() {
                     </div>
                   </div>
                   <div className="flex items-center gap-2 p-2 rounded-lg hover:bg-muted cursor-pointer transition">
-                    <div className="w-8 h-8 bg-pastel-peach/30 rounded-lg flex items-center justify-center border border-pastel-peach/40">
+                    <div className="w-8 h-8 bg-pastel-peach/50 rounded-lg flex items-center justify-center border border-pastel-peach/60">
                       <FileType className="text-pastel-gray-dark" size={14} />
                     </div>
                     <div className="flex-1">
@@ -390,7 +390,7 @@ export default function LerDepois() {
                     </div>
                   </div>
                   <div className="flex items-center gap-2 p-2 rounded-lg hover:bg-muted cursor-pointer transition">
-                    <div className="w-8 h-8 bg-pastel-pink/30 rounded-lg flex items-center justify-center border border-pastel-pink/40">
+                    <div className="w-8 h-8 bg-pastel-pink/50 rounded-lg flex items-center justify-center border border-pastel-pink/60">
                       <Mic className="text-pastel-gray-dark" size={14} />
                     </div>
                     <div className="flex-1">
@@ -419,7 +419,7 @@ export default function LerDepois() {
                   </div>
                   <div className="flex items-center justify-between p-2 rounded-lg hover:bg-muted cursor-pointer transition">
                     <span className="text-sm text-muted-foreground">Mais de 30 dias</span>
-                    <span className="text-xs bg-pastel-rose/30 text-pastel-gray-dark px-2 py-0.5 rounded-full border border-pastel-rose/40">36</span>
+                    <span className="text-xs bg-pastel-rose/50 text-pastel-gray-dark px-2 py-0.5 rounded-full border border-pastel-rose/60">36</span>
                   </div>
                 </div>
               </section>
@@ -511,7 +511,7 @@ export default function LerDepois() {
                   >
                     <div className="grid grid-cols-12 gap-4 px-6 py-4 items-center">
                       <div className="col-span-5 flex items-center gap-4">
-                        <div className={`w-10 h-10 ${getTypeColor(item.type)} rounded-lg flex items-center justify-center flex-shrink-0 border ${getTypeColor(item.type).replace('/30', '/40')}`}>
+                        <div className={`w-10 h-10 ${getTypeColor(item.type)} rounded-lg flex items-center justify-center flex-shrink-0 border ${getTypeColor(item.type).replace('/50', '/60')}`}>
                           {getTypeIcon(item.type)}
                         </div>
                         <div className="min-w-0 flex-1">
@@ -542,7 +542,7 @@ export default function LerDepois() {
                             Pendente
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-2 px-3 py-1 bg-pastel-green/30 text-pastel-gray-dark rounded-full text-xs font-medium border border-pastel-green/40">
+                          <span className="inline-flex items-center gap-2 px-3 py-1 bg-pastel-green/50 text-pastel-gray-dark rounded-full text-xs font-medium border border-pastel-green/60">
                             <Check size={12} />
                             Concluído
                           </span>
