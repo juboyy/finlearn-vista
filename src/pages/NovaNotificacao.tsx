@@ -288,10 +288,10 @@ export default function NovaNotificacao() {
 
                 <div className="space-y-3">
                   {/* Web */}
-                  <div className="p-4 rounded-lg border-2 border-pastel-blue bg-pastel-blue bg-opacity-10">
+                  <div className="p-4 rounded-lg border-2 border-slate-200 bg-white">
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
+                        <div className="w-10 h-10 bg-pastel-blue rounded-lg flex items-center justify-center">
                           <Globe className="text-slate-700" size={20} />
                         </div>
                         <div>
@@ -317,10 +317,10 @@ export default function NovaNotificacao() {
                   </div>
 
                   {/* Email */}
-                  <div className="p-4 rounded-lg border-2 border-pastel-green bg-pastel-green bg-opacity-10">
+                  <div className="p-4 rounded-lg border-2 border-slate-200 bg-white">
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
+                        <div className="w-10 h-10 bg-pastel-green rounded-lg flex items-center justify-center">
                           <Mail className="text-slate-700" size={20} />
                         </div>
                         <div>
@@ -344,10 +344,10 @@ export default function NovaNotificacao() {
                   </div>
 
                   {/* WhatsApp */}
-                  <div className="p-4 rounded-lg border-2 border-pastel-green bg-pastel-green bg-opacity-10">
+                  <div className="p-4 rounded-lg border-2 border-slate-200 bg-white">
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
+                        <div className="w-10 h-10 bg-pastel-green rounded-lg flex items-center justify-center">
                           <MessageSquare className="text-slate-700" size={20} />
                         </div>
                         <div>
@@ -373,10 +373,10 @@ export default function NovaNotificacao() {
                   </div>
 
                   {/* Mobile App */}
-                  <div className="p-4 rounded-lg border border-slate-200">
+                  <div className="p-4 rounded-lg border-2 border-slate-200 bg-white">
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center">
+                        <div className="w-10 h-10 bg-pastel-purple rounded-lg flex items-center justify-center">
                           <Smartphone className="text-slate-700" size={20} />
                         </div>
                         <div>
