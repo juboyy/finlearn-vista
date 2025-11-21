@@ -923,10 +923,10 @@ export const VideoCallModal = ({
               {/* Footer Actions */}
               <div className="p-6 border-t border-slate-800 bg-slate-900/50">
               <div className="flex gap-3 justify-end">
-                <Button className="w-[40%] bg-pastel-blue hover:bg-pastel-blue/80 text-slate-900">
+                <Button className="w-[10%] bg-pastel-blue hover:bg-pastel-blue/80 text-slate-900">
                   Exportar Relatório
                 </Button>
-                <Button variant="outline" className="w-[40%] border-slate-600 text-slate-600 hover:bg-slate-600 hover:text-white hover:border-white transition-all" onClick={() => setShowStatsModal(false)}>
+                <Button variant="outline" className="w-[10%] border-slate-600 text-slate-600 hover:bg-slate-600 hover:text-white hover:border-white transition-all" onClick={() => setShowStatsModal(false)}>
                   Fechar
                  </Button>
               </div>
