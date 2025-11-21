@@ -43,6 +43,7 @@ import MinhasMetasNotificacoes from "./pages/MinhasMetasNotificacoes";
 import MinhaAgenda from "./pages/MinhaAgenda";
 import MinhaAgendaDia from "./pages/MinhaAgendaDia";
 import EstudosAcademicos from "./pages/EstudosAcademicos";
+import CriarPaper from "./pages/CriarPaper";
 
 import NotFound from "./pages/NotFound";
 
@@ -102,6 +103,7 @@ const App = () => {
           <Route path="/minha-agenda" element={<MinhaAgenda />} />
           <Route path="/minha-agenda/dia" element={<MinhaAgendaDia />} />
           <Route path="/estudos-academicos" element={<EstudosAcademicos />} />
+          <Route path="/criar-paper" element={<CriarPaper />} />
           
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
