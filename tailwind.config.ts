@@ -126,8 +126,6 @@ export default {
           yellow: "hsl(var(--pastel-yellow))",
           peach: "hsl(var(--pastel-peach))",
           orange: "hsl(var(--pastel-orange))",
-          sky: "hsl(var(--pastel-sky))",
-          gray: "hsl(var(--pastel-gray))",
           "gray-dark": "hsl(var(--pastel-gray-dark))",
         },
         sidebar: {
