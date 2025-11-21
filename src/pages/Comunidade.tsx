@@ -231,7 +231,7 @@ export default function Comunidade() {
 
                   {activeTab === "discussoes" ? (
                     <div className="space-y-4">
-                      <div className="p-4 rounded-lg border border-slate-200 hover:border-pastel-blue hover:shadow-md transition cursor-pointer" onClick={() => window.location.href = '/discussao/1'}>
+                      <div className="p-4 rounded-lg border border-slate-200 hover:border-pastel-blue hover:shadow-md transition cursor-pointer" onClick={() => navigate('/discussao/1')}>
                         <div className="flex items-start gap-4">
                           <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" alt="User" className="w-10 h-10 rounded-full object-cover flex-shrink-0" />
                           <div className="flex-1 min-w-0">
@@ -418,7 +418,7 @@ export default function Comunidade() {
                     </div>
                   ) : (
                     <div className="space-y-6">
-                      <article onClick={() => window.location.href = '/artigo/credito-rural'} className="border border-slate-200 rounded-lg overflow-hidden hover:border-pastel-blue hover:shadow-md transition cursor-pointer">
+                      <article onClick={() => navigate('/artigo/credito-rural')} className="border border-slate-200 rounded-lg overflow-hidden hover:border-pastel-blue hover:shadow-md transition cursor-pointer">
                         <div className="h-48 overflow-hidden bg-slate-100">
                           <img className="w-full h-full object-cover" src={creditoRuralImage} alt="Análise de Crédito Rural" />
                         </div>
