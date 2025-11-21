@@ -308,7 +308,7 @@ const Analises = () => {
                       contentStyle={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px' }}
                       labelStyle={{ color: '#1e293b', fontWeight: 600 }}
                     />
-                    <Bar dataKey="value" fill="#C5E8D4" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="value" fill="#8BBAA5" radius={[8, 8, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -324,8 +324,8 @@ const Analises = () => {
                   <AreaChart data={volumeData}>
                     <defs>
                       <linearGradient id="colorVolume" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#B8D4E8" stopOpacity={0.3}/>
-                        <stop offset="95%" stopColor="#B8D4E8" stopOpacity={0}/>
+                        <stop offset="5%" stopColor="#7FA8BF" stopOpacity={0.4}/>
+                        <stop offset="95%" stopColor="#7FA8BF" stopOpacity={0}/>
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
@@ -335,7 +335,7 @@ const Analises = () => {
                       contentStyle={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px' }}
                       labelStyle={{ color: '#1e293b', fontWeight: 600 }}
                     />
-                    <Area type="monotone" dataKey="value" stroke="#B8D4E8" strokeWidth={3} fillOpacity={1} fill="url(#colorVolume)" />
+                    <Area type="monotone" dataKey="value" stroke="#7FA8BF" strokeWidth={3} fillOpacity={1} fill="url(#colorVolume)" />
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
@@ -461,7 +461,7 @@ const Analises = () => {
                       contentStyle={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px' }}
                       labelStyle={{ color: '#1e293b', fontWeight: 600 }}
                     />
-                    <Line type="monotone" dataKey="value" stroke="#E8E0C5" strokeWidth={3} dot={{ fill: '#E8E0C5', r: 4 }} />
+                    <Line type="monotone" dataKey="value" stroke="#C4B88A" strokeWidth={3} dot={{ fill: '#C4B88A', r: 4 }} />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
@@ -482,7 +482,7 @@ const Analises = () => {
                       contentStyle={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px' }}
                       labelStyle={{ color: '#1e293b', fontWeight: 600 }}
                     />
-                    <Bar dataKey="value" fill="#E8C5D8" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="value" fill="#C48BA5" radius={[8, 8, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -504,8 +504,8 @@ const Analises = () => {
                   <AreaChart data={pixData}>
                     <defs>
                       <linearGradient id="colorPix" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#C5E8D4" stopOpacity={0.3}/>
-                        <stop offset="95%" stopColor="#C5E8D4" stopOpacity={0}/>
+                        <stop offset="5%" stopColor="#8BBAA5" stopOpacity={0.4}/>
+                        <stop offset="95%" stopColor="#8BBAA5" stopOpacity={0}/>
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
@@ -515,7 +515,7 @@ const Analises = () => {
                       contentStyle={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px' }}
                       labelStyle={{ color: '#1e293b', fontWeight: 600 }}
                     />
-                    <Area type="monotone" dataKey="value" stroke="#C5E8D4" strokeWidth={3} fillOpacity={1} fill="url(#colorPix)" dot={{ fill: '#C5E8D4', r: 5 }} />
+                    <Area type="monotone" dataKey="value" stroke="#8BBAA5" strokeWidth={3} fillOpacity={1} fill="url(#colorPix)" dot={{ fill: '#8BBAA5', r: 5 }} />
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
@@ -531,8 +531,8 @@ const Analises = () => {
                   <AreaChart data={creditCardData}>
                     <defs>
                       <linearGradient id="colorCard" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#D4C5E8" stopOpacity={0.3}/>
-                        <stop offset="95%" stopColor="#D4C5E8" stopOpacity={0}/>
+                        <stop offset="5%" stopColor="#9A8BBF" stopOpacity={0.4}/>
+                        <stop offset="95%" stopColor="#9A8BBF" stopOpacity={0}/>
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
@@ -542,7 +542,7 @@ const Analises = () => {
                       contentStyle={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px' }}
                       labelStyle={{ color: '#1e293b', fontWeight: 600 }}
                     />
-                    <Area type="monotone" dataKey="value" stroke="#D4C5E8" strokeWidth={3} fillOpacity={1} fill="url(#colorCard)" dot={{ fill: '#D4C5E8', r: 5 }} />
+                    <Area type="monotone" dataKey="value" stroke="#9A8BBF" strokeWidth={3} fillOpacity={1} fill="url(#colorCard)" dot={{ fill: '#9A8BBF', r: 5 }} />
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
