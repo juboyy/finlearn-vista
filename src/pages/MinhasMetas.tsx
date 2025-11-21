@@ -672,7 +672,7 @@ export default function MinhasMetas() {
               </div>
 
               <div className="grid grid-cols-4 gap-4">
-                <div className="p-5 bg-pastel-blue bg-opacity-20 rounded-xl border border-pastel-blue">
+                <div className="p-5 rounded-xl border border-pastel-blue" style={{backgroundColor: 'hsl(206 35% 65% / 0.5)'}}>
                   <div className="flex items-center justify-center mb-3">
                     <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-sm">
                       <i className="fas fa-calendar-week text-pastel-blue text-2xl"></i>
@@ -683,7 +683,7 @@ export default function MinhasMetas() {
                   <p className="text-center text-xs text-slate-600">3h de conteúdo</p>
                 </div>
 
-                <div className="p-5 bg-pastel-green bg-opacity-20 rounded-xl border border-pastel-green">
+                <div className="p-5 rounded-xl border border-pastel-green" style={{backgroundColor: 'hsl(152 32% 65% / 0.5)'}}>
                   <div className="flex items-center justify-center mb-3">
                     <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-sm">
                       <i className="fas fa-calendar-alt text-pastel-green text-2xl"></i>
@@ -694,7 +694,7 @@ export default function MinhasMetas() {
                   <p className="text-center text-xs text-slate-600">30h de aprendizado</p>
                 </div>
 
-                <div className="p-5 bg-pastel-purple bg-opacity-20 rounded-xl border border-pastel-purple">
+                <div className="p-5 rounded-xl border border-pastel-purple" style={{backgroundColor: 'hsl(270 32% 67% / 0.5)'}}>
                   <div className="flex items-center justify-center mb-3">
                     <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-sm">
                       <i className="fas fa-calendar text-pastel-purple text-2xl"></i>
@@ -705,7 +705,7 @@ export default function MinhasMetas() {
                   <p className="text-center text-xs text-slate-600">6 e-books completos</p>
                 </div>
 
-                <div className="p-5 bg-pastel-yellow bg-opacity-20 rounded-xl border border-pastel-yellow">
+                <div className="p-5 rounded-xl border border-pastel-yellow" style={{backgroundColor: 'hsl(44 35% 67% / 0.5)'}}>
                   <div className="flex items-center justify-center mb-3">
                     <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-sm">
                       <i className="fas fa-star text-pastel-yellow text-2xl"></i>
