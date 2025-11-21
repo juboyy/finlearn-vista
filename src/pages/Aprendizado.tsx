@@ -3260,6 +3260,165 @@ const Aprendizado = () => {
                   </div>
                 </section>
               </div>
+
+              <section className="mb-8">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-semibold text-slate-800">Coleções Recomendadas</h2>
+                  <a href="#" className="text-sm text-slate-600 hover:text-slate-800 font-medium">Explorar mais</a>
+                </div>
+                <div className="grid grid-cols-3 gap-6">
+                  <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
+                    <div className="w-12 h-12 bg-pastel-blue rounded-lg flex items-center justify-center mb-4">
+                      <i className="fas fa-landmark text-slate-700 text-xl"></i>
+                    </div>
+                    <h3 className="text-lg font-semibold text-slate-800 mb-2">Finanças Sustentáveis</h3>
+                    <p className="text-sm text-slate-600 mb-4">Pesquisas sobre ESG, investimentos verdes e finanças climáticas</p>
+                    <div className="flex items-center justify-between text-sm text-slate-500 mb-4">
+                      <span><i className="fas fa-file-alt mr-1"></i>124 artigos</span>
+                      <span><i className="fas fa-users mr-1"></i>4.2k seguidores</span>
+                    </div>
+                    <button className="w-full px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                      Explorar Coleção
+                    </button>
+                  </div>
+                  <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
+                    <div className="w-12 h-12 bg-pastel-purple rounded-lg flex items-center justify-center mb-4">
+                      <i className="fas fa-robot text-slate-700 text-xl"></i>
+                    </div>
+                    <h3 className="text-lg font-semibold text-slate-800 mb-2">IA em Finanças</h3>
+                    <p className="text-sm text-slate-600 mb-4">Machine learning, deep learning e aplicações em trading e análise de risco</p>
+                    <div className="flex items-center justify-between text-sm text-slate-500 mb-4">
+                      <span><i className="fas fa-file-alt mr-1"></i>63 artigos</span>
+                      <span><i className="fas fa-users mr-1"></i>2.8k seguidores</span>
+                    </div>
+                    <button className="w-full px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                      Explorar Coleção
+                    </button>
+                  </div>
+                  <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
+                    <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center mb-4">
+                      <i className="fas fa-coins text-slate-700 text-xl"></i>
+                    </div>
+                    <h3 className="text-lg font-semibold text-slate-800 mb-2">Criptoeconomia</h3>
+                    <p className="text-sm text-slate-600 mb-4">Estudos sobre blockchain, criptomoedas, DeFi e tokenização de ativos</p>
+                    <div className="flex items-center justify-between text-sm text-slate-500 mb-4">
+                      <span><i className="fas fa-file-alt mr-1"></i>89 artigos</span>
+                      <span><i className="fas fa-users mr-1"></i>3.4k seguidores</span>
+                    </div>
+                    <button className="w-full px-4 py-2 bg-pastel-green text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                      Explorar Coleção
+                    </button>
+                  </div>
+                </div>
+              </section>
+
+              <section className="mb-8">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-semibold text-slate-800">Autores Mais Citados</h2>
+                  <a href="#" className="text-sm text-slate-600 hover:text-slate-800 font-medium">Ver ranking completo</a>
+                </div>
+                <div className="grid grid-cols-4 gap-6">
+                  <div className="bg-white rounded-xl border border-slate-200 p-6 text-center hover:shadow-lg transition">
+                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-2bbdc31a97c8479658e1.png" alt="Dr. Maria Santos" className="w-20 h-20 rounded-full mx-auto mb-4 object-cover" />
+                    <h3 className="font-semibold text-slate-800 mb-1">Dr. Maria Santos</h3>
+                    <p className="text-xs text-slate-500 mb-3">MIT Sloan School</p>
+                    <div className="flex items-center justify-center gap-4 text-xs text-slate-600 mb-4">
+                      <span><i className="fas fa-file-alt mr-1"></i>127</span>
+                      <span><i className="fas fa-quote-right mr-1"></i>8.9k</span>
+                    </div>
+                    <button className="w-full px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
+                      Seguir
+                    </button>
+                  </div>
+                  <div className="bg-white rounded-xl border border-slate-200 p-6 text-center hover:shadow-lg transition">
+                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/b24014b83d-0b455d5abe744d3f9416.png" alt="Prof. John Chen" className="w-20 h-20 rounded-full mx-auto mb-4 object-cover" />
+                    <h3 className="font-semibold text-slate-800 mb-1">Prof. John Chen</h3>
+                    <p className="text-xs text-slate-500 mb-3">Stanford GSB</p>
+                    <div className="flex items-center justify-center gap-4 text-xs text-slate-600 mb-4">
+                      <span><i className="fas fa-file-alt mr-1"></i>94</span>
+                      <span><i className="fas fa-quote-right mr-1"></i>7.2k</span>
+                    </div>
+                    <button className="w-full px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
+                      Seguir
+                    </button>
+                  </div>
+                  <div className="bg-white rounded-xl border border-slate-200 p-6 text-center hover:shadow-lg transition">
+                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-db60e1b43d477718b599.png" alt="Dr. Anna Weber" className="w-20 h-20 rounded-full mx-auto mb-4 object-cover" />
+                    <h3 className="font-semibold text-slate-800 mb-1">Dr. Anna Weber</h3>
+                    <p className="text-xs text-slate-500 mb-3">LSE Economics</p>
+                    <div className="flex items-center justify-center gap-4 text-xs text-slate-600 mb-4">
+                      <span><i className="fas fa-file-alt mr-1"></i>156</span>
+                      <span><i className="fas fa-quote-right mr-1"></i>11.3k</span>
+                    </div>
+                    <button className="w-full px-4 py-2 bg-slate-200 text-slate-700 rounded-lg text-sm font-medium">
+                      Seguindo
+                    </button>
+                  </div>
+                  <div className="bg-white rounded-xl border border-slate-200 p-6 text-center hover:shadow-lg transition">
+                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg" alt="Prof. Roberto Lima" className="w-20 h-20 rounded-full mx-auto mb-4 object-cover" />
+                    <h3 className="font-semibold text-slate-800 mb-1">Prof. Roberto Lima</h3>
+                    <p className="text-xs text-slate-500 mb-3">FGV EAESP</p>
+                    <div className="flex items-center justify-center gap-4 text-xs text-slate-600 mb-4">
+                      <span><i className="fas fa-file-alt mr-1"></i>83</span>
+                      <span><i className="fas fa-quote-right mr-1"></i>5.6k</span>
+                    </div>
+                    <button className="w-full px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
+                      Seguir
+                    </button>
+                  </div>
+                </div>
+              </section>
+
+              <section>
+                <h2 className="text-xl font-semibold text-slate-800 mb-6">Ferramentas de Pesquisa</h2>
+                <div className="grid grid-cols-3 gap-6">
+                  <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="w-12 h-12 bg-pastel-yellow rounded-lg flex items-center justify-center">
+                        <i className="fas fa-search-plus text-slate-700 text-xl"></i>
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-slate-800">Busca Semântica</h3>
+                        <p className="text-xs text-slate-500">Powered by IA</p>
+                      </div>
+                    </div>
+                    <p className="text-sm text-slate-600 mb-4">Encontre papers relacionados por conceitos e significado, não apenas palavras-chave</p>
+                    <button className="w-full px-4 py-2 bg-pastel-yellow text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
+                      Experimentar
+                    </button>
+                  </div>
+                  <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="w-12 h-12 bg-pastel-peach rounded-lg flex items-center justify-center">
+                        <i className="fas fa-project-diagram text-slate-700 text-xl"></i>
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-slate-800">Mapa de Citações</h3>
+                        <p className="text-xs text-slate-500">Visualização interativa</p>
+                      </div>
+                    </div>
+                    <p className="text-sm text-slate-600 mb-4">Explore conexões entre papers e identifique trabalhos fundamentais na área</p>
+                    <button className="w-full px-4 py-2 bg-pastel-peach text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
+                      Ver Mapa
+                    </button>
+                  </div>
+                  <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="w-12 h-12 bg-pastel-pink rounded-lg flex items-center justify-center">
+                        <i className="fas fa-brain text-slate-700 text-xl"></i>
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-slate-800">Resumo por IA</h3>
+                        <p className="text-xs text-slate-500">Compreensão rápida</p>
+                      </div>
+                    </div>
+                    <p className="text-sm text-slate-600 mb-4">Gere resumos automáticos e identifique insights principais de qualquer paper</p>
+                    <button className="w-full px-4 py-2 bg-pastel-pink text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
+                      Ativar IA
+                    </button>
+                  </div>
+                </div>
+              </section>
             </>
           )}
 
