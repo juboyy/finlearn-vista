@@ -80,7 +80,9 @@ export default function MinhasMetasNotificacoes() {
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input type="checkbox" defaultChecked className="sr-only peer" />
-                      <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer-checked:after:translate-x-5 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pastel-blue"></div>
+                      <div className="w-11 h-6 bg-slate-200 rounded-full peer-focus:outline-none peer-checked:bg-pastel-blue relative">
+                        <div className="absolute top-0.5 left-0.5 bg-white rounded-full h-5 w-5 transition-transform peer-checked:translate-x-5"></div>
+                      </div>
                     </label>
                   </div>
                   <p className="text-xs text-slate-600 leading-relaxed mb-3">Receba resumos diários ou semanais dos novos conteúdos nas suas áreas de interesse.</p>
@@ -102,7 +104,9 @@ export default function MinhasMetasNotificacoes() {
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input type="checkbox" defaultChecked className="sr-only peer" />
-                      <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer-checked:after:translate-x-5 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pastel-green"></div>
+                      <div className="w-11 h-6 bg-slate-200 rounded-full peer-focus:outline-none peer-checked:bg-pastel-green relative">
+                        <div className="absolute top-0.5 left-0.5 bg-white rounded-full h-5 w-5 transition-transform peer-checked:translate-x-5"></div>
+                      </div>
                     </label>
                   </div>
                   <p className="text-xs text-slate-600 leading-relaxed mb-3">Alertas instantâneos no navegador e dispositivos móveis sobre conteúdos importantes.</p>
@@ -124,7 +128,9 @@ export default function MinhasMetasNotificacoes() {
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input type="checkbox" className="sr-only peer" />
-                      <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer-checked:after:translate-x-5 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pastel-green"></div>
+                      <div className="w-11 h-6 bg-slate-200 rounded-full peer-focus:outline-none peer-checked:bg-pastel-green relative">
+                        <div className="absolute top-0.5 left-0.5 bg-white rounded-full h-5 w-5 transition-transform peer-checked:translate-x-5"></div>
+                      </div>
                     </label>
                   </div>
                   <p className="text-xs text-slate-600 leading-relaxed mb-3">Receba resumos e alertas importantes diretamente no seu WhatsApp.</p>
@@ -187,7 +193,9 @@ export default function MinhasMetasNotificacoes() {
                     <label className="text-sm font-semibold text-slate-800">Horário Silencioso</label>
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input type="checkbox" defaultChecked className="sr-only peer" />
-                      <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer-checked:after:translate-x-5 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pastel-purple"></div>
+                      <div className="w-11 h-6 bg-slate-200 rounded-full peer-focus:outline-none peer-checked:bg-pastel-purple relative">
+                        <div className="absolute top-0.5 left-0.5 bg-white rounded-full h-5 w-5 transition-transform peer-checked:translate-x-5"></div>
+                      </div>
                     </label>
                   </div>
                   <div className="grid grid-cols-2 gap-3 mb-3">
@@ -208,7 +216,9 @@ export default function MinhasMetasNotificacoes() {
                     <label className="text-sm font-semibold text-slate-800">Finais de Semana</label>
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input type="checkbox" className="sr-only peer" />
-                      <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer-checked:after:translate-x-5 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pastel-purple"></div>
+                      <div className="w-11 h-6 bg-slate-200 rounded-full peer-focus:outline-none peer-checked:bg-pastel-purple relative">
+                        <div className="absolute top-0.5 left-0.5 bg-white rounded-full h-5 w-5 transition-transform peer-checked:translate-x-5"></div>
+                      </div>
                     </label>
                   </div>
                   <p className="text-xs text-slate-600 mb-3">Pausar notificações aos sábados e domingos</p>
@@ -266,7 +276,9 @@ export default function MinhasMetasNotificacoes() {
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer flex-shrink-0">
                       <input type="checkbox" defaultChecked className="sr-only peer" />
-                      <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer-checked:after:translate-x-5 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pastel-blue"></div>
+                      <div className="w-11 h-6 bg-slate-200 rounded-full peer-focus:outline-none peer-checked:bg-pastel-blue relative">
+                        <div className="absolute top-0.5 left-0.5 bg-white rounded-full h-5 w-5 transition-transform peer-checked:translate-x-5"></div>
+                      </div>
                     </label>
                   </div>
                 </div>
@@ -301,7 +313,9 @@ export default function MinhasMetasNotificacoes() {
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer flex-shrink-0">
                       <input type="checkbox" defaultChecked className="sr-only peer" />
-                      <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer-checked:after:translate-x-5 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pastel-purple"></div>
+                      <div className="w-11 h-6 bg-slate-200 rounded-full peer-focus:outline-none peer-checked:bg-pastel-purple relative">
+                        <div className="absolute top-0.5 left-0.5 bg-white rounded-full h-5 w-5 transition-transform peer-checked:translate-x-5"></div>
+                      </div>
                     </label>
                   </div>
                 </div>
@@ -335,7 +349,9 @@ export default function MinhasMetasNotificacoes() {
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer flex-shrink-0">
                       <input type="checkbox" defaultChecked className="sr-only peer" />
-                      <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer-checked:after:translate-x-5 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pastel-green"></div>
+                      <div className="w-11 h-6 bg-slate-200 rounded-full peer-focus:outline-none peer-checked:bg-pastel-green relative">
+                        <div className="absolute top-0.5 left-0.5 bg-white rounded-full h-5 w-5 transition-transform peer-checked:translate-x-5"></div>
+                      </div>
                     </label>
                   </div>
                 </div>
@@ -365,7 +381,9 @@ export default function MinhasMetasNotificacoes() {
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer flex-shrink-0">
                       <input type="checkbox" className="sr-only peer" />
-                      <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer-checked:after:translate-x-5 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pastel-yellow"></div>
+                      <div className="w-11 h-6 bg-slate-200 rounded-full peer-focus:outline-none peer-checked:bg-pastel-yellow relative">
+                        <div className="absolute top-0.5 left-0.5 bg-white rounded-full h-5 w-5 transition-transform peer-checked:translate-x-5"></div>
+                      </div>
                     </label>
                   </div>
                 </div>
@@ -395,7 +413,9 @@ export default function MinhasMetasNotificacoes() {
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer flex-shrink-0">
                       <input type="checkbox" className="sr-only peer" />
-                      <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer-checked:after:translate-x-5 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pastel-peach"></div>
+                      <div className="w-11 h-6 bg-slate-200 rounded-full peer-focus:outline-none peer-checked:bg-pastel-peach relative">
+                        <div className="absolute top-0.5 left-0.5 bg-white rounded-full h-5 w-5 transition-transform peer-checked:translate-x-5"></div>
+                      </div>
                     </label>
                   </div>
                 </div>
@@ -429,7 +449,9 @@ export default function MinhasMetasNotificacoes() {
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer flex-shrink-0">
                       <input type="checkbox" defaultChecked disabled className="sr-only peer" />
-                      <div className="w-11 h-6 bg-pastel-pink peer-focus:outline-none rounded-full peer-checked:after:translate-x-5 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pastel-pink opacity-50"></div>
+                      <div className="w-11 h-6 bg-pastel-pink rounded-full peer-focus:outline-none peer-checked:bg-pastel-pink opacity-50 relative">
+                        <div className="absolute top-0.5 left-0.5 bg-white rounded-full h-5 w-5 transition-transform peer-checked:translate-x-5"></div>
+                      </div>
                     </label>
                   </div>
                 </div>
