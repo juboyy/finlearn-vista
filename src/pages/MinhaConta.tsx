@@ -4,10 +4,76 @@ import {
   Award, CheckCircle, CreditCard, Rocket, Shield, Eye, TrendingUp, 
   Download, FileText, AlertTriangle, XCircle, X, Bell, User
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export default function MinhaConta() {
   const [activeSection, setActiveSection] = useState("perfil");
+  
+  const perfilRef = useRef<HTMLElement>(null);
+  const pessoalRef = useRef<HTMLElement>(null);
+  const profissionalRef = useRef<HTMLElement>(null);
+  const statusRef = useRef<HTMLElement>(null);
+  const assinaturaRef = useRef<HTMLElement>(null);
+  const privacidadeRef = useRef<HTMLElement>(null);
+  const documentosRef = useRef<HTMLElement>(null);
+  const perigoRef = useRef<HTMLElement>(null);
+
+  const scrollToSection = (section: string) => {
+    const refs: { [key: string]: React.RefObject<HTMLElement> } = {
+      perfil: perfilRef,
+      pessoal: pessoalRef,
+      profissional: profissionalRef,
+      status: statusRef,
+      assinatura: assinaturaRef,
+      privacidade: privacidadeRef,
+      documentos: documentosRef,
+      perigo: perigoRef,
+    };
+
+    const ref = refs[section];
+    if (ref?.current) {
+      const offset = 100;
+      const elementPosition = ref.current.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+      setActiveSection(section);
+    }
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = [
+        { id: "perfil", ref: perfilRef },
+        { id: "pessoal", ref: pessoalRef },
+        { id: "profissional", ref: profissionalRef },
+        { id: "status", ref: statusRef },
+        { id: "assinatura", ref: assinaturaRef },
+        { id: "privacidade", ref: privacidadeRef },
+        { id: "documentos", ref: documentosRef },
+        { id: "perigo", ref: perigoRef },
+      ];
+
+      const scrollPosition = window.scrollY + 150;
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i];
+        if (section.ref.current) {
+          const sectionTop = section.ref.current.offsetTop;
+          if (scrollPosition >= sectionTop) {
+            setActiveSection(section.id);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -34,47 +100,67 @@ export default function MinhaConta() {
             <div className="col-span-1 bg-white rounded-xl border border-slate-200 p-4 h-fit sticky top-24">
               <nav className="space-y-1">
                 <button 
-                  onClick={() => setActiveSection("perfil")}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left ${
+                  onClick={() => scrollToSection("perfil")}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-all ${
                     activeSection === "perfil" 
                       ? "bg-pastel-blue text-slate-800 font-medium" 
-                      : "text-slate-600 hover:bg-slate-100 transition"
+                      : "text-slate-600 hover:bg-slate-100"
                   }`}
                 >
                   <User size={20} />
                   <span>Perfil</span>
                 </button>
                 <button 
-                  onClick={() => setActiveSection("profissional")}
-                  className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-100 transition text-left"
+                  onClick={() => scrollToSection("profissional")}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-all ${
+                    activeSection === "profissional" 
+                      ? "bg-pastel-blue text-slate-800 font-medium" 
+                      : "text-slate-600 hover:bg-slate-100"
+                  }`}
                 >
                   <Briefcase size={20} />
                   <span>Profissional</span>
                 </button>
                 <button 
-                  onClick={() => setActiveSection("assinatura")}
-                  className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-100 transition text-left"
+                  onClick={() => scrollToSection("assinatura")}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-all ${
+                    activeSection === "assinatura" 
+                      ? "bg-pastel-blue text-slate-800 font-medium" 
+                      : "text-slate-600 hover:bg-slate-100"
+                  }`}
                 >
                   <CreditCard size={20} />
                   <span>Assinatura</span>
                 </button>
                 <button 
-                  onClick={() => setActiveSection("privacidade")}
-                  className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-100 transition text-left"
+                  onClick={() => scrollToSection("privacidade")}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-all ${
+                    activeSection === "privacidade" 
+                      ? "bg-pastel-blue text-slate-800 font-medium" 
+                      : "text-slate-600 hover:bg-slate-100"
+                  }`}
                 >
                   <Shield size={20} />
                   <span>Privacidade</span>
                 </button>
                 <button 
-                  onClick={() => setActiveSection("documentos")}
-                  className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-100 transition text-left"
+                  onClick={() => scrollToSection("documentos")}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-all ${
+                    activeSection === "documentos" 
+                      ? "bg-pastel-blue text-slate-800 font-medium" 
+                      : "text-slate-600 hover:bg-slate-100"
+                  }`}
                 >
                   <FileText size={20} />
                   <span>Documentos</span>
                 </button>
                 <button 
-                  onClick={() => setActiveSection("perigo")}
-                  className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-100 transition text-left"
+                  onClick={() => scrollToSection("perigo")}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-all ${
+                    activeSection === "perigo" 
+                      ? "bg-pastel-blue text-slate-800 font-medium" 
+                      : "text-slate-600 hover:bg-slate-100"
+                  }`}
                 >
                   <AlertTriangle size={20} />
                   <span>Zona de Perigo</span>
@@ -83,7 +169,7 @@ export default function MinhaConta() {
             </div>
 
             <div className="col-span-3 space-y-6">
-              <section className="bg-white rounded-xl border border-slate-200 p-6">
+              <section ref={perfilRef} className="bg-white rounded-xl border border-slate-200 p-6 scroll-mt-24">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-pastel-blue rounded-lg flex items-center justify-center">
                     <Camera className="text-slate-700" size={24} />
@@ -120,7 +206,7 @@ export default function MinhaConta() {
                 </div>
               </section>
 
-              <section className="bg-white rounded-xl border border-slate-200 p-6">
+              <section ref={pessoalRef} className="bg-white rounded-xl border border-slate-200 p-6 scroll-mt-24">
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
                     <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center">
@@ -200,7 +286,7 @@ export default function MinhaConta() {
                 </div>
               </section>
 
-              <section className="bg-white rounded-xl border border-slate-200 p-6">
+              <section ref={profissionalRef} className="bg-white rounded-xl border border-slate-200 p-6 scroll-mt-24">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-pastel-purple rounded-lg flex items-center justify-center">
                     <Briefcase className="text-slate-700" size={24} />
@@ -270,7 +356,7 @@ export default function MinhaConta() {
                 </div>
               </section>
 
-              <section className="bg-white rounded-xl border border-slate-200 p-6">
+              <section ref={statusRef} className="bg-white rounded-xl border border-slate-200 p-6 scroll-mt-24">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-pastel-yellow rounded-lg flex items-center justify-center">
                     <Star className="text-slate-700" size={24} />
@@ -342,7 +428,7 @@ export default function MinhaConta() {
                 </div>
               </section>
 
-              <section className="bg-white rounded-xl border border-slate-200 p-6">
+              <section ref={assinaturaRef} className="bg-white rounded-xl border border-slate-200 p-6 scroll-mt-24">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-pastel-peach rounded-lg flex items-center justify-center">
                     <CreditCard className="text-slate-700" size={24} />
@@ -426,7 +512,7 @@ export default function MinhaConta() {
                 </div>
               </section>
 
-              <section className="bg-white rounded-xl border border-slate-200 p-6">
+              <section ref={privacidadeRef} className="bg-white rounded-xl border border-slate-200 p-6 scroll-mt-24">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-pastel-pink rounded-lg flex items-center justify-center">
                     <Shield className="text-slate-700" size={24} />
@@ -487,7 +573,7 @@ export default function MinhaConta() {
                 </div>
               </section>
 
-              <section className="bg-white rounded-xl border border-slate-200 p-6">
+              <section ref={documentosRef} className="bg-white rounded-xl border border-slate-200 p-6 scroll-mt-24">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center">
                     <FileText className="text-slate-700" size={24} />
@@ -569,7 +655,7 @@ export default function MinhaConta() {
                 </button>
               </section>
 
-              <section className="bg-white rounded-xl border-2 border-red-200 p-6">
+              <section ref={perigoRef} className="bg-white rounded-xl border-2 border-red-200 p-6 scroll-mt-24">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
                     <AlertTriangle className="text-red-600" size={24} />
