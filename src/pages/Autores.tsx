@@ -2,13 +2,10 @@ import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Bell, Search, Plus, Users, Newspaper, Star, ChevronLeft, ChevronRight, X, UserCheck } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 const Autores = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
-
-  return (
-    <div className="flex h-screen overflow-hidden">
+  return <div className="flex h-screen overflow-hidden">
       <SidebarFix />
       
       <main className="flex-1 overflow-y-auto">
@@ -20,21 +17,14 @@ const Autores = () => {
             </div>
             <div className="flex items-center gap-4">
               <div className="relative">
-                <input 
-                  type="text" 
-                  placeholder="Buscar autores..." 
-                  className="w-80 pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pastel-blue focus:border-transparent"
-                />
+                <input type="text" placeholder="Buscar autores..." className="w-80 pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pastel-blue focus:border-transparent" />
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={16} />
               </div>
               <button className="relative p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
                 <Bell size={20} />
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
               </button>
-              <button 
-                onClick={() => setIsModalOpen(true)}
-                className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
-              >
+              <button onClick={() => setIsModalOpen(true)} className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
                 <Plus size={16} className="inline mr-2" />
                 Seguir Autor
               </button>
@@ -231,10 +221,7 @@ const Autores = () => {
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
-                    <button 
-                      onClick={() => navigate('/estatisticas')}
-                      className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition flex items-center gap-2 font-medium"
-                    >
+                    <button onClick={() => navigate('/estatisticas')} className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition flex items-center gap-2 font-medium">
                       <i className="fas fa-chart-bar"></i>
                       <span>Estatísticas</span>
                     </button>
@@ -260,17 +247,11 @@ const Autores = () => {
                     <i className="fas fa-user-check mr-2"></i>
                     Seguindo
                   </button>
-                  <button 
-                    onClick={() => navigate('/seguidores')}
-                    className="px-6 py-2.5 bg-pastel-green text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
-                  >
+                  <button onClick={() => navigate('/seguidores')} className="px-6 py-2.5 bg-pastel-green text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
                     <i className="fas fa-users mr-2"></i>
                     Seguidores
                   </button>
-                  <button 
-                    onClick={() => navigate('/descobrir-novos')}
-                    className="px-6 py-2.5 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2"
-                  >
+                  <button onClick={() => navigate('/descobrir-novos')} className="px-6 py-2.5 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2">
                     <i className="fas fa-compass mr-2"></i>
                     Descobrir Novos
                   </button>
@@ -280,7 +261,7 @@ const Autores = () => {
               <section className="bg-white rounded-xl border border-slate-200 overflow-hidden">
                 <div className="border-b border-slate-200 bg-slate-50">
                   <div className="grid grid-cols-12 gap-4 px-6 py-3 text-xs font-medium text-slate-600 uppercase tracking-wider">
-                    <div className="col-span-4">Autor</div>
+                    <div className="col-span-4">CREATOR</div>
                     <div className="col-span-2">Publicações</div>
                     <div className="col-span-2">Social Selling</div>
                     <div className="col-span-2">Seguindo desde</div>
@@ -288,10 +269,7 @@ const Autores = () => {
                   </div>
                 </div>
 
-                <div 
-                  onClick={() => navigate('/perfil-autor/ana-costa')}
-                  className="border-b border-slate-100 hover:bg-slate-50 transition-colors cursor-pointer"
-                >
+                <div onClick={() => navigate('/perfil-autor/ana-costa')} className="border-b border-slate-100 hover:bg-slate-50 transition-colors cursor-pointer">
                   <div className="grid grid-cols-12 gap-4 px-6 py-4 items-center">
                     <div className="col-span-4 flex items-center gap-4">
                       <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" alt="Ana Costa" className="w-12 h-12 rounded-full object-cover flex-shrink-0" />
@@ -714,9 +692,8 @@ const Autores = () => {
         </div>
       </main>
 
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={() => setIsModalOpen(false)}>
-          <div className="bg-white rounded-xl p-8 max-w-md w-full mx-4" onClick={(e) => e.stopPropagation()}>
+      {isModalOpen && <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={() => setIsModalOpen(false)}>
+          <div className="bg-white rounded-xl p-8 max-w-md w-full mx-4" onClick={e => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-xl font-semibold text-slate-800">Seguir Novo Autor</h3>
               <button onClick={() => setIsModalOpen(false)} className="p-2 text-slate-400 hover:text-slate-600 rounded-lg transition">
@@ -756,10 +733,7 @@ const Autores = () => {
               </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
-  );
+        </div>}
+    </div>;
 };
-
 export default Autores;
