@@ -1,121 +1,108 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { ArrowLeft, Plus, Filter, ArrowDownWideNarrow, BookOpen, Video, PieChart, Calculator, Search, FileText, Bell, Crown, Podcast, Newspaper, TrendingUp, Users as UsersIcon, Book, GraduationCap, Bot, FileCheck, FlaskConical, Eye, Pen, MoreVertical } from "lucide-react";
 import { Link } from "react-router-dom";
-
 export default function MeusConteudos() {
-  const contentItems = [
-    {
-      type: "Podcast",
-      icon: <Podcast className="w-5 h-5" />,
-      bgColor: "bg-[#D8BFD8]",
-      title: "Regulação do Open Finance no Brasil",
-      subtitle: "Episódio #42 • 45min",
-      status: "Publicado",
-      statusColor: "bg-[#98D8C8]",
-      statusDot: "bg-[#6FA997]",
-      date: "15 Out 2024",
-      views: "2.4k"
-    },
-    {
-      type: "Artigo",
-      icon: <Newspaper className="w-5 h-5" />,
-      bgColor: "bg-[#B8C5D6]",
-      title: "Tendências de Pagamentos Digitais 2025",
-      subtitle: "8min de leitura",
-      status: "Rascunho",
-      statusColor: "bg-[#F4E4A6]",
-      statusDot: "bg-[#D4C186]",
-      date: "18 Out 2024",
-      views: "-"
-    },
-    {
-      type: "Análise",
-      icon: <TrendingUp className="w-5 h-5" />,
-      bgColor: "bg-[#B8D8B8]",
-      title: "Projeção Trimestral: Mercado de Capitais Q4",
-      subtitle: "Relatório completo • 24 páginas",
-      status: "Em Revisão",
-      statusColor: "bg-[#B8D4E8]",
-      statusDot: "bg-[#88A8C8]",
-      date: "20 Out 2024",
-      views: "-"
-    },
-    {
-      type: "Webinar",
-      icon: <Video className="w-5 h-5" />,
-      bgColor: "bg-[#F4C8D8]",
-      title: "Estratégias de Investimento para 2025",
-      subtitle: "Transmissão ao vivo • 1h30min",
-      status: "Publicado",
-      statusColor: "bg-[#98D8C8]",
-      statusDot: "bg-[#6FA997]",
-      date: "10 Out 2024",
-      views: "5.8k"
-    },
-    {
-      type: "E-book",
-      icon: <Book className="w-5 h-5" />,
-      bgColor: "bg-[#A8A8B8]",
-      title: "Guia Completo: Mercado de Meios de Pagamento",
-      subtitle: "120 páginas • PDF",
-      status: "Concluído",
-      statusColor: "bg-[#D8B8D8]",
-      statusDot: "bg-[#B898B8]",
-      date: "22 Out 2024",
-      views: "-"
-    },
-    {
-      type: "Curso",
-      icon: <GraduationCap className="w-5 h-5" />,
-      bgColor: "bg-[#B8C5D6]",
-      title: "Fundamentos de Análise de Crédito",
-      subtitle: "12 módulos • 8h de conteúdo",
-      status: "Rascunho",
-      statusColor: "bg-[#F4E4A6]",
-      statusDot: "bg-[#D4C186]",
-      date: "25 Out 2024",
-      views: "-"
-    },
-    {
-      type: "Avatar IA",
-      icon: <Bot className="w-5 h-5" />,
-      bgColor: "bg-[#A8C8D8]",
-      title: "Resumo Semanal do Mercado Financeiro",
-      subtitle: "Vídeo gerado • 5min",
-      status: "Publicado",
-      statusColor: "bg-[#98D8C8]",
-      statusDot: "bg-[#6FA997]",
-      date: "21 Out 2024",
-      views: "3.2k"
-    },
-    {
-      type: "Documento",
-      icon: <FileCheck className="w-5 h-5" />,
-      bgColor: "bg-[#B8C5D6]",
-      title: "Relatório Anual de Compliance 2024",
-      subtitle: "PDF • 86 páginas",
-      status: "Em Revisão",
-      statusColor: "bg-[#B8D4E8]",
-      statusDot: "bg-[#88A8C8]",
-      date: "19 Out 2024",
-      views: "-"
-    },
-    {
-      type: "Estudo",
-      icon: <FlaskConical className="w-5 h-5" />,
-      bgColor: "bg-[#F4C8A8]",
-      title: "Impacto da LGPD no Setor Financeiro",
-      subtitle: "Pesquisa acadêmica • 42 páginas",
-      status: "Concluído",
-      statusColor: "bg-[#D8B8D8]",
-      statusDot: "bg-[#B898B8]",
-      date: "17 Out 2024",
-      views: "-"
-    }
-  ];
-
-  return (
-    <div className="flex min-h-screen w-full bg-background">
+  const contentItems = [{
+    type: "Podcast",
+    icon: <Podcast className="w-5 h-5" />,
+    bgColor: "bg-[#D8BFD8]",
+    title: "Regulação do Open Finance no Brasil",
+    subtitle: "Episódio #42 • 45min",
+    status: "Publicado",
+    statusColor: "bg-[#98D8C8]",
+    statusDot: "bg-[#6FA997]",
+    date: "15 Out 2024",
+    views: "2.4k"
+  }, {
+    type: "Artigo",
+    icon: <Newspaper className="w-5 h-5" />,
+    bgColor: "bg-[#B8C5D6]",
+    title: "Tendências de Pagamentos Digitais 2025",
+    subtitle: "8min de leitura",
+    status: "Rascunho",
+    statusColor: "bg-[#F4E4A6]",
+    statusDot: "bg-[#D4C186]",
+    date: "18 Out 2024",
+    views: "-"
+  }, {
+    type: "Análise",
+    icon: <TrendingUp className="w-5 h-5" />,
+    bgColor: "bg-[#B8D8B8]",
+    title: "Projeção Trimestral: Mercado de Capitais Q4",
+    subtitle: "Relatório completo • 24 páginas",
+    status: "Em Revisão",
+    statusColor: "bg-[#B8D4E8]",
+    statusDot: "bg-[#88A8C8]",
+    date: "20 Out 2024",
+    views: "-"
+  }, {
+    type: "Webinar",
+    icon: <Video className="w-5 h-5" />,
+    bgColor: "bg-[#F4C8D8]",
+    title: "Estratégias de Investimento para 2025",
+    subtitle: "Transmissão ao vivo • 1h30min",
+    status: "Publicado",
+    statusColor: "bg-[#98D8C8]",
+    statusDot: "bg-[#6FA997]",
+    date: "10 Out 2024",
+    views: "5.8k"
+  }, {
+    type: "E-book",
+    icon: <Book className="w-5 h-5" />,
+    bgColor: "bg-[#A8A8B8]",
+    title: "Guia Completo: Mercado de Meios de Pagamento",
+    subtitle: "120 páginas • PDF",
+    status: "Concluído",
+    statusColor: "bg-[#D8B8D8]",
+    statusDot: "bg-[#B898B8]",
+    date: "22 Out 2024",
+    views: "-"
+  }, {
+    type: "Curso",
+    icon: <GraduationCap className="w-5 h-5" />,
+    bgColor: "bg-[#B8C5D6]",
+    title: "Fundamentos de Análise de Crédito",
+    subtitle: "12 módulos • 8h de conteúdo",
+    status: "Rascunho",
+    statusColor: "bg-[#F4E4A6]",
+    statusDot: "bg-[#D4C186]",
+    date: "25 Out 2024",
+    views: "-"
+  }, {
+    type: "Avatar IA",
+    icon: <Bot className="w-5 h-5" />,
+    bgColor: "bg-[#A8C8D8]",
+    title: "Resumo Semanal do Mercado Financeiro",
+    subtitle: "Vídeo gerado • 5min",
+    status: "Publicado",
+    statusColor: "bg-[#98D8C8]",
+    statusDot: "bg-[#6FA997]",
+    date: "21 Out 2024",
+    views: "3.2k"
+  }, {
+    type: "Documento",
+    icon: <FileCheck className="w-5 h-5" />,
+    bgColor: "bg-[#B8C5D6]",
+    title: "Relatório Anual de Compliance 2024",
+    subtitle: "PDF • 86 páginas",
+    status: "Em Revisão",
+    statusColor: "bg-[#B8D4E8]",
+    statusDot: "bg-[#88A8C8]",
+    date: "19 Out 2024",
+    views: "-"
+  }, {
+    type: "Estudo",
+    icon: <FlaskConical className="w-5 h-5" />,
+    bgColor: "bg-[#F4C8A8]",
+    title: "Impacto da LGPD no Setor Financeiro",
+    subtitle: "Pesquisa acadêmica • 42 páginas",
+    status: "Concluído",
+    statusColor: "bg-[#D8B8D8]",
+    statusDot: "bg-[#B898B8]",
+    date: "17 Out 2024",
+    views: "-"
+  }];
+  return <div className="flex min-h-screen w-full bg-background">
       <SidebarFix />
       
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -149,8 +136,8 @@ export default function MeusConteudos() {
           <main className="flex-1 overflow-y-auto bg-muted/30">
             <div className="max-w-[1400px] mx-auto px-8 py-8">
               <div className="mb-8">
-                <h1 className="text-2xl font-bold text-foreground mb-2">Meus Conteúdos</h1>
-                <p className="text-muted-foreground">Gerencie todos os materiais criados para sua audiência</p>
+                
+                
               </div>
 
               <div className="flex gap-6 mb-6">
@@ -209,8 +196,7 @@ export default function MeusConteudos() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-border">
-                      {contentItems.map((item, index) => (
-                        <tr key={index} className="hover:bg-accent/5 transition-colors group">
+                      {contentItems.map((item, index) => <tr key={index} className="hover:bg-accent/5 transition-colors group">
                           <td className="px-6 py-4">
                             <input type="checkbox" className="w-4 h-4 rounded border-border" />
                           </td>
@@ -255,8 +241,7 @@ export default function MeusConteudos() {
                               </button>
                             </div>
                           </td>
-                        </tr>
-                      ))}
+                        </tr>)}
                     </tbody>
                   </table>
                 </div>
@@ -300,6 +285,5 @@ export default function MeusConteudos() {
           </main>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 }
