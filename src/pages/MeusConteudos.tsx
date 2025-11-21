@@ -128,10 +128,12 @@ export default function MeusConteudos() {
                 <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-card"></span>
               </button>
               
-              <button className="bg-primary hover:bg-primary/90 text-primary-foreground px-5 py-2.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 shadow-sm">
-                <Plus className="w-4 h-4" />
-                Criar Novo
-              </button>
+              <Link to="/criar-conteudo">
+                <button className="bg-primary hover:bg-primary/90 text-primary-foreground px-5 py-2.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 shadow-sm">
+                  <Plus className="w-4 h-4" />
+                  Criar Novo
+                </button>
+              </Link>
             </div>
           </div>
         </header>
