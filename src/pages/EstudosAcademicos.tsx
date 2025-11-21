@@ -472,6 +472,43 @@ export default function EstudosAcademicos() {
                     </button>
                   </div>
                 </article>
+
+                {/* Paper 5 */}
+                <article className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-1 bg-pastel-peach text-slate-700 text-xs rounded-full font-medium">Q2 Journal</span>
+                      <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full font-medium">Acesso Aberto</span>
+                    </div>
+                    <button className="text-slate-400 hover:text-slate-600">
+                      <Bookmark size={20} />
+                    </button>
+                  </div>
+                  <h3 className="text-lg font-semibold text-slate-800 mb-2 hover:text-pastel-purple cursor-pointer">Behavioral Biases in Credit Risk Assessment: Evidence from Brazilian Banks</h3>
+                  <p className="text-sm text-slate-600 mb-3">Investigação sobre vieses comportamentais na avaliação de risco de crédito em bancos brasileiros, utilizando dados de 500 mil operações de crédito...</p>
+                  <div className="flex items-center gap-4 text-xs text-slate-500 mb-4">
+                    <span><i className="fas fa-user mr-1"></i>Oliveira, P. & Mendes, A.</span>
+                    <span><i className="fas fa-calendar mr-1"></i>2023</span>
+                    <span><i className="fas fa-quote-right mr-1"></i>145 citações</span>
+                    <span><i className="fas fa-book mr-1"></i>Journal of Banking & Finance</span>
+                  </div>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">Behavioral Finance</span>
+                    <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">Credit Risk</span>
+                    <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">Brazilian Market</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <button className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
+                      <Download size={16} className="inline mr-2" />Download PDF
+                    </button>
+                    <button className="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-200 transition">
+                      Ver Detalhes
+                    </button>
+                    <button className="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-200 transition">
+                      <Share2 size={16} />
+                    </button>
+                  </div>
+                </article>
               </div>
             </section>
           </div>
