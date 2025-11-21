@@ -289,8 +289,8 @@ const EbookDetalhes = () => {
                         <span className="text-sm text-muted-foreground w-12">
                           {item.stars} <i className="fas fa-star text-yellow-500 text-xs"></i>
                         </span>
-                        <div className="flex-1 h-3 bg-slate-200 rounded-full overflow-hidden">
-                          <div className="h-full bg-yellow-500 rounded-full transition-all duration-300" style={{ width: `${item.percentage}%` }}></div>
+                        <div className="flex-1 h-2.5 bg-slate-100 rounded-full overflow-hidden">
+                          <div className="h-full bg-pastel-yellow rounded-full transition-all duration-300" style={{ width: `${item.percentage}%` }}></div>
                         </div>
                         <span className="text-sm text-muted-foreground w-12 text-right">{item.count}</span>
                       </div>
