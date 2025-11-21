@@ -2782,21 +2782,6 @@ const Aprendizado = () => {
             </div>
           )}
 
-          {activeTab === 'estudos' && (
-            <div className="text-center py-16">
-              <div className="w-20 h-20 bg-pastel-purple rounded-full flex items-center justify-center mx-auto mb-4">
-                <i className="fas fa-flask text-3xl text-slate-700"></i>
-              </div>
-              <h3 className="text-xl font-semibold text-slate-800 mb-4">Estudos Acadêmicos</h3>
-              <p className="text-slate-600 mb-6">Pesquisas e estudos acadêmicos sobre finanças</p>
-              <button 
-                onClick={() => navigate('/estudos-academicos')}
-                className="px-6 py-3 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
-              >
-                Acessar Pesquisa Acadêmica
-              </button>
-            </div>
-          )}
         </div>
       </main>
     </div>
