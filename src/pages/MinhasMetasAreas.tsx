@@ -245,7 +245,7 @@ export default function MinhasMetasAreas() {
               <div className="grid grid-cols-2 gap-6">
                 <div className="p-5 bg-slate-50 rounded-xl">
                   <label className="block text-sm font-semibold text-slate-800 mb-3">Nível de Profundidade</label>
-                  <select className="w-full px-4 py-3 border border-slate-200 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pastel-purple">
+                  <select className="w-full px-4 py-3 pr-10 border border-slate-200 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pastel-purple appearance-none bg-white bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iOCIgdmlld0JveD0iMCAwIDEyIDgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xIDEuNUw2IDYuNUwxMSAxLjUiIHN0cm9rZT0iIzY0NzQ4QiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+Cg==')] bg-[length:12px] bg-[right_1rem_center] bg-no-repeat">
                     <option>Básico - Introdutório</option>
                     <option selected>Intermediário - Prático</option>
                     <option>Avançado - Especializado</option>
@@ -255,7 +255,7 @@ export default function MinhasMetasAreas() {
 
                 <div className="p-5 bg-slate-50 rounded-xl">
                   <label className="block text-sm font-semibold text-slate-800 mb-3">Idioma Preferencial</label>
-                  <select className="w-full px-4 py-3 border border-slate-200 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pastel-purple">
+                  <select className="w-full px-4 py-3 pr-10 border border-slate-200 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pastel-purple appearance-none bg-white bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iOCIgdmlld0JveD0iMCAwIDEyIDgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xIDEuNUw2IDYuNUwxMSAxLjUiIHN0cm9rZT0iIzY0NzQ4QiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+Cg==')] bg-[length:12px] bg-[right_1rem_center] bg-no-repeat">
                     <option selected>Português (BR)</option>
                     <option>Inglês</option>
                     <option>Espanhol</option>
@@ -265,7 +265,7 @@ export default function MinhasMetasAreas() {
 
                 <div className="p-5 bg-slate-50 rounded-xl">
                   <label className="block text-sm font-semibold text-slate-800 mb-3">Formato Prioritário</label>
-                  <select className="w-full px-4 py-3 border border-slate-200 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pastel-purple">
+                  <select className="w-full px-4 py-3 pr-10 border border-slate-200 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pastel-purple appearance-none bg-white bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iOCIgdmlld0JveD0iMCAwIDEyIDgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xIDEuNUw2IDYuNUwxMSAxLjUiIHN0cm9rZT0iIzY0NzQ4QiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+Cg==')] bg-[length:12px] bg-[right_1rem_center] bg-no-repeat">
                     <option>Artigos e textos</option>
                     <option>Vídeos e webinars</option>
                     <option>Podcasts e áudios</option>
@@ -275,7 +275,7 @@ export default function MinhasMetasAreas() {
 
                 <div className="p-5 bg-slate-50 rounded-xl">
                   <label className="block text-sm font-semibold text-slate-800 mb-3">Duração Preferida</label>
-                  <select className="w-full px-4 py-3 border border-slate-200 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pastel-purple">
+                  <select className="w-full px-4 py-3 pr-10 border border-slate-200 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pastel-purple appearance-none bg-white bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iOCIgdmlld0JveD0iMCAwIDEyIDgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xIDEuNUw2IDYuNUwxMSAxLjUiIHN0cm9rZT0iIzY0NzQ4QiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+Cg==')] bg-[length:12px] bg-[right_1rem_center] bg-no-repeat">
                     <option>Rápido (até 5 min)</option>
                     <option selected>Médio (5-15 min)</option>
                     <option>Longo (15-30 min)</option>
@@ -289,7 +289,7 @@ export default function MinhasMetasAreas() {
                   <Lightbulb className="text-slate-700 w-5 h-5 mt-1 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-slate-800 mb-1">Dica de Personalização</p>
-                    <p className="text-xs text-slate-600 leading-relaxed">Suas preferências ajudam nosso algoritmo a recomendar o conteúdo mais relevante para você. Você pode ajustar essas configurações a qualquer momento.</p>
+                    <p className="text-xs text-white leading-relaxed">Suas preferências ajudam nosso algoritmo a recomendar o conteúdo mais relevante para você. Você pode ajustar essas configurações a qualquer momento.</p>
                   </div>
                 </div>
               </div>
