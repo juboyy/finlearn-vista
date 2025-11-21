@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { MenutabbarFix } from "@/components/Dashboard/MenutabbarFix";
 import { 
   Bell, 
   Download, 
@@ -21,11 +20,7 @@ import {
 } from "lucide-react";
 import Plot from 'react-plotly.js';
 
-type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'documentos' | 'estudos';
-
 const Analises = () => {
-  const [activeTab, setActiveTab] = useState<TabType>('analises');
-
   return (
     <div className="flex h-screen overflow-hidden">
       <SidebarFix />
