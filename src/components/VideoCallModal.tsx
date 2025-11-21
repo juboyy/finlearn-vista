@@ -157,8 +157,34 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
           selection.addRange(newRange);
         }
       }
+      
+      // Salvar automaticamente no localStorage
+      saveNotesToLocal();
     }
   };
+
+  const saveNotesToLocal = () => {
+    if (notesRef.current) {
+      const content = notesRef.current.innerHTML;
+      localStorage.setItem(`video-call-notes-${agentName}`, content);
+    }
+  };
+
+  const loadNotesFromLocal = () => {
+    if (notesRef.current) {
+      const savedContent = localStorage.getItem(`video-call-notes-${agentName}`);
+      if (savedContent) {
+        notesRef.current.innerHTML = savedContent;
+      }
+    }
+  };
+
+  // Carregar notas salvas quando o modal abre
+  useEffect(() => {
+    if (open && activeTab === 'notes') {
+      loadNotesFromLocal();
+    }
+  }, [open, activeTab]);
 
   const startCall = async () => {
     try {
@@ -603,7 +629,7 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                       }
                     `}</style>
                     <p className="text-xs text-slate-500 mt-2">
-                      Suas notas serão salvas automaticamente
+                      Suas notas são salvas automaticamente e preservadas entre sessões
                     </p>
                   </div>
                 )}
