@@ -224,16 +224,16 @@ export default function MinhaAgendaDia() {
                       <div className="absolute top-[40px] left-3 right-3 h-[75px] bg-pastel-rose rounded-lg px-4 py-3 shadow-sm border border-slate-200 cursor-pointer hover:shadow-md transition flex items-center">
                         <div className="flex items-center gap-3 w-full">
                           <div className="flex-shrink-0">
-                            <i className="fas fa-podcast text-slate-600 text-sm"></i>
+                            <i className="fas fa-podcast text-slate-700 text-sm"></i>
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-0.5">
-                              <span className="text-xs font-semibold text-slate-600">08:00 - 08:45</span>
+                              <span className="text-xs font-semibold text-slate-900">08:00 - 08:45</span>
                             </div>
-                            <h4 className="text-sm font-semibold text-slate-700 mb-0.5 leading-tight">Podcast: Análise Macroeconômica</h4>
-                            <p className="text-xs text-slate-600 leading-tight">Episódio: Juros e Inflação 2024</p>
+                            <h4 className="text-sm font-semibold text-slate-900 mb-0.5 leading-tight">Podcast: Análise Macroeconômica</h4>
+                            <p className="text-xs text-slate-900 leading-tight">Episódio: Juros e Inflação 2024</p>
                           </div>
-                          <i className="fas fa-headphones text-slate-600 text-sm flex-shrink-0"></i>
+                          <i className="fas fa-headphones text-slate-700 text-sm flex-shrink-0"></i>
                         </div>
                       </div>
 
@@ -241,16 +241,16 @@ export default function MinhaAgendaDia() {
                       <div className="absolute top-[180px] left-3 right-3 h-[75px] bg-pastel-blue rounded-lg px-4 py-3 shadow-sm border border-slate-200 cursor-pointer hover:shadow-md transition flex items-center">
                         <div className="flex items-center gap-3 w-full">
                           <div className="flex-shrink-0">
-                            <i className="fas fa-users text-slate-600 text-sm"></i>
+                            <i className="fas fa-users text-slate-700 text-sm"></i>
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-0.5">
-                              <span className="text-xs font-semibold text-slate-600">09:30 - 10:30</span>
+                              <span className="text-xs font-semibold text-slate-900">09:30 - 10:30</span>
                             </div>
-                            <h4 className="text-sm font-semibold text-slate-700 mb-0.5 leading-tight">Reunião: Revisão de Portfólio</h4>
-                            <p className="text-xs text-slate-600 leading-tight">Sala de Reuniões 2</p>
+                            <h4 className="text-sm font-semibold text-slate-900 mb-0.5 leading-tight">Reunião: Revisão de Portfólio</h4>
+                            <p className="text-xs text-slate-900 leading-tight">Sala de Reuniões 2</p>
                           </div>
-                          <i className="fas fa-video text-slate-600 text-sm flex-shrink-0"></i>
+                          <i className="fas fa-video text-slate-700 text-sm flex-shrink-0"></i>
                         </div>
                       </div>
 
@@ -258,16 +258,16 @@ export default function MinhaAgendaDia() {
                       <div className="absolute top-[280px] left-3 right-3 h-[75px] bg-pastel-rose rounded-lg px-4 py-3 shadow-sm border border-slate-200 cursor-pointer hover:shadow-md transition flex items-center">
                         <div className="flex items-center gap-3 w-full">
                           <div className="flex-shrink-0">
-                            <i className="fas fa-book-open text-slate-600 text-sm"></i>
+                            <i className="fas fa-book-open text-slate-700 text-sm"></i>
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-0.5">
-                              <span className="text-xs font-semibold text-slate-600">11:00 - 12:00</span>
+                              <span className="text-xs font-semibold text-slate-900">11:00 - 12:00</span>
                             </div>
-                            <h4 className="text-sm font-semibold text-slate-700 mb-0.5 leading-tight">Estudo: Fundos de Investimento</h4>
-                            <p className="text-xs text-slate-600 leading-tight">Capítulo 5: Renda Variável</p>
+                            <h4 className="text-sm font-semibold text-slate-900 mb-0.5 leading-tight">Estudo: Fundos de Investimento</h4>
+                            <p className="text-xs text-slate-900 leading-tight">Capítulo 5: Renda Variável</p>
                           </div>
-                          <i className="fas fa-bookmark text-slate-600 text-sm flex-shrink-0"></i>
+                          <i className="fas fa-bookmark text-slate-700 text-sm flex-shrink-0"></i>
                         </div>
                       </div>
 
@@ -275,16 +275,16 @@ export default function MinhaAgendaDia() {
                       <div className="absolute top-[460px] left-3 right-3 h-[75px] bg-pastel-purple rounded-lg px-4 py-3 shadow-sm border border-slate-200 cursor-pointer hover:shadow-md transition flex items-center">
                         <div className="flex items-center gap-3 w-full">
                           <div className="flex-shrink-0">
-                            <i className="fas fa-graduation-cap text-slate-600 text-sm"></i>
+                            <i className="fas fa-graduation-cap text-slate-700 text-sm"></i>
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-0.5">
-                              <span className="text-xs font-semibold text-slate-600">14:00 - 15:00</span>
+                              <span className="text-xs font-semibold text-slate-900">14:00 - 15:00</span>
                             </div>
-                            <h4 className="text-sm font-semibold text-slate-700 mb-0.5 leading-tight">Treinamento: Compliance Bancário</h4>
-                            <p className="text-xs text-slate-600 leading-tight">Módulo 3: Prevenção à Lavagem</p>
+                            <h4 className="text-sm font-semibold text-slate-900 mb-0.5 leading-tight">Treinamento: Compliance Bancário</h4>
+                            <p className="text-xs text-slate-900 leading-tight">Módulo 3: Prevenção à Lavagem</p>
                           </div>
-                          <i className="fas fa-certificate text-slate-600 text-sm flex-shrink-0"></i>
+                          <i className="fas fa-certificate text-slate-700 text-sm flex-shrink-0"></i>
                         </div>
                       </div>
 
@@ -292,16 +292,16 @@ export default function MinhaAgendaDia() {
                       <div className="absolute top-[560px] left-3 right-3 h-[75px] bg-pastel-rose rounded-lg px-4 py-3 shadow-sm border border-slate-200 cursor-pointer hover:shadow-md transition flex items-center">
                         <div className="flex items-center gap-3 w-full">
                           <div className="flex-shrink-0">
-                            <i className="fas fa-video text-slate-600 text-sm"></i>
+                            <i className="fas fa-video text-slate-700 text-sm"></i>
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-0.5">
-                              <span className="text-xs font-semibold text-slate-600">15:30 - 16:15</span>
+                              <span className="text-xs font-semibold text-slate-900">15:30 - 16:15</span>
                             </div>
-                            <h4 className="text-sm font-semibold text-slate-700 mb-0.5 leading-tight">Vídeo: Análise de Crédito</h4>
-                            <p className="text-xs text-slate-600 leading-tight">Curso: Gestão de Risco</p>
+                            <h4 className="text-sm font-semibold text-slate-900 mb-0.5 leading-tight">Vídeo: Análise de Crédito</h4>
+                            <p className="text-xs text-slate-900 leading-tight">Curso: Gestão de Risco</p>
                           </div>
-                          <i className="fas fa-play-circle text-slate-600 text-sm flex-shrink-0"></i>
+                          <i className="fas fa-play-circle text-slate-700 text-sm flex-shrink-0"></i>
                         </div>
                       </div>
 
@@ -309,16 +309,16 @@ export default function MinhaAgendaDia() {
                       <div className="absolute top-[660px] left-3 right-3 h-[75px] bg-pastel-green rounded-lg px-4 py-3 shadow-sm border border-slate-200 cursor-pointer hover:shadow-md transition flex items-center">
                         <div className="flex items-center gap-3 w-full">
                           <div className="flex-shrink-0">
-                            <i className="fas fa-desktop text-slate-600 text-sm"></i>
+                            <i className="fas fa-desktop text-slate-700 text-sm"></i>
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-0.5">
-                              <span className="text-xs font-semibold text-slate-600">16:30 - 17:30</span>
+                              <span className="text-xs font-semibold text-slate-900">16:30 - 17:30</span>
                             </div>
-                            <h4 className="text-sm font-semibold text-slate-700 mb-0.5 leading-tight">Webinar: Tendências do Mercado</h4>
-                            <p className="text-xs text-slate-600 leading-tight">Especialista: Dr. Carlos Mendes</p>
+                            <h4 className="text-sm font-semibold text-slate-900 mb-0.5 leading-tight">Webinar: Tendências do Mercado</h4>
+                            <p className="text-xs text-slate-900 leading-tight">Especialista: Dr. Carlos Mendes</p>
                           </div>
-                          <i className="fas fa-signal text-slate-600 text-sm flex-shrink-0"></i>
+                          <i className="fas fa-signal text-slate-700 text-sm flex-shrink-0"></i>
                         </div>
                       </div>
 
@@ -326,16 +326,16 @@ export default function MinhaAgendaDia() {
                       <div className="absolute top-[760px] left-3 right-3 h-[75px] bg-pastel-rose rounded-lg px-4 py-3 shadow-sm border border-slate-200 cursor-pointer hover:shadow-md transition flex items-center">
                         <div className="flex items-center gap-3 w-full">
                           <div className="flex-shrink-0">
-                            <i className="fas fa-podcast text-slate-600 text-sm"></i>
+                            <i className="fas fa-podcast text-slate-700 text-sm"></i>
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-0.5">
-                              <span className="text-xs font-semibold text-slate-600">18:00 - 18:30</span>
+                              <span className="text-xs font-semibold text-slate-900">18:00 - 18:30</span>
                             </div>
-                            <h4 className="text-sm font-semibold text-slate-700 mb-0.5 leading-tight">Podcast: Mercado de Capitais</h4>
-                            <p className="text-xs text-slate-600 leading-tight">Episódio: IPOs e Ofertas Públicas</p>
+                            <h4 className="text-sm font-semibold text-slate-900 mb-0.5 leading-tight">Podcast: Mercado de Capitais</h4>
+                            <p className="text-xs text-slate-900 leading-tight">Episódio: IPOs e Ofertas Públicas</p>
                           </div>
-                          <i className="fas fa-headphones text-slate-600 text-sm flex-shrink-0"></i>
+                          <i className="fas fa-headphones text-slate-700 text-sm flex-shrink-0"></i>
                         </div>
                       </div>
 
@@ -343,16 +343,16 @@ export default function MinhaAgendaDia() {
                       <div className="absolute top-[860px] left-3 right-3 h-[75px] bg-pastel-rose rounded-lg px-4 py-3 shadow-sm border border-slate-200 cursor-pointer hover:shadow-md transition flex items-center">
                         <div className="flex items-center gap-3 w-full">
                           <div className="flex-shrink-0">
-                            <i className="fas fa-book-open text-slate-600 text-sm"></i>
+                            <i className="fas fa-book-open text-slate-700 text-sm"></i>
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-0.5">
-                              <span className="text-xs font-semibold text-slate-600">19:00 - 19:45</span>
+                              <span className="text-xs font-semibold text-slate-900">19:00 - 19:45</span>
                             </div>
-                            <h4 className="text-sm font-semibold text-slate-700 mb-0.5 leading-tight">Leitura: Artigo Técnico</h4>
-                            <p className="text-xs text-slate-600 leading-tight">Tema: ESG e Finanças Sustentáveis</p>
+                            <h4 className="text-sm font-semibold text-slate-900 mb-0.5 leading-tight">Leitura: Artigo Técnico</h4>
+                            <p className="text-xs text-slate-900 leading-tight">Tema: ESG e Finanças Sustentáveis</p>
                           </div>
-                          <i className="fas fa-file-alt text-slate-600 text-sm flex-shrink-0"></i>
+                          <i className="fas fa-file-alt text-slate-700 text-sm flex-shrink-0"></i>
                         </div>
                       </div>
 
@@ -371,11 +371,11 @@ export default function MinhaAgendaDia() {
                   <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-pastel-rose hover:bg-slate-50 transition cursor-pointer">
                     <div className="w-1 h-16 bg-pastel-rose rounded-full"></div>
                     <div className="w-12 h-12 bg-pastel-rose rounded-lg flex items-center justify-center flex-shrink-0">
-                      <i className="fas fa-podcast text-slate-600"></i>
+                      <i className="fas fa-podcast text-slate-700"></i>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-semibold text-slate-800">Podcast: Análise Macroeconômica</h4>
-                      <p className="text-xs text-slate-500 mt-1">08:00 - 08:45 • Episódio: Juros e Inflação 2024</p>
+                      <h4 className="text-sm font-semibold text-slate-900">Podcast: Análise Macroeconômica</h4>
+                      <p className="text-xs text-slate-900 mt-1">08:00 - 08:45 • Episódio: Juros e Inflação 2024</p>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="px-3 py-1 bg-pastel-rose bg-opacity-20 text-pastel-rose text-xs font-medium rounded-full">Estudo</span>
@@ -389,11 +389,11 @@ export default function MinhaAgendaDia() {
                   <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-pastel-blue hover:bg-slate-50 transition cursor-pointer">
                     <div className="w-1 h-16 bg-pastel-blue rounded-full"></div>
                     <div className="w-12 h-12 bg-pastel-blue rounded-lg flex items-center justify-center flex-shrink-0">
-                      <i className="fas fa-users text-slate-600"></i>
+                      <i className="fas fa-users text-slate-700"></i>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-semibold text-slate-800">Reunião: Revisão de Portfólio</h4>
-                      <p className="text-xs text-slate-500 mt-1">09:30 - 10:30 • Sala de Reuniões 2</p>
+                      <h4 className="text-sm font-semibold text-slate-900">Reunião: Revisão de Portfólio</h4>
+                      <p className="text-xs text-slate-900 mt-1">09:30 - 10:30 • Sala de Reuniões 2</p>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="px-3 py-1 bg-pastel-blue bg-opacity-20 text-pastel-blue text-xs font-medium rounded-full">Reunião</span>
@@ -407,11 +407,11 @@ export default function MinhaAgendaDia() {
                   <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-pastel-rose hover:bg-slate-50 transition cursor-pointer">
                     <div className="w-1 h-16 bg-pastel-rose rounded-full"></div>
                     <div className="w-12 h-12 bg-pastel-rose rounded-lg flex items-center justify-center flex-shrink-0">
-                      <i className="fas fa-book-open text-slate-600"></i>
+                      <i className="fas fa-book-open text-slate-700"></i>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-semibold text-slate-800">Estudo: Fundos de Investimento</h4>
-                      <p className="text-xs text-slate-500 mt-1">11:00 - 12:00 • Capítulo 5: Renda Variável</p>
+                      <h4 className="text-sm font-semibold text-slate-900">Estudo: Fundos de Investimento</h4>
+                      <p className="text-xs text-slate-900 mt-1">11:00 - 12:00 • Capítulo 5: Renda Variável</p>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="px-3 py-1 bg-pastel-rose bg-opacity-20 text-pastel-rose text-xs font-medium rounded-full">Estudo</span>
@@ -425,11 +425,11 @@ export default function MinhaAgendaDia() {
                   <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-pastel-purple hover:bg-slate-50 transition cursor-pointer">
                     <div className="w-1 h-16 bg-pastel-purple rounded-full"></div>
                     <div className="w-12 h-12 bg-pastel-purple rounded-lg flex items-center justify-center flex-shrink-0">
-                      <i className="fas fa-graduation-cap text-slate-600"></i>
+                      <i className="fas fa-graduation-cap text-slate-700"></i>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-semibold text-slate-800">Treinamento: Compliance Bancário</h4>
-                      <p className="text-xs text-slate-500 mt-1">14:00 - 15:00 • Módulo 3: Prevenção à Lavagem</p>
+                      <h4 className="text-sm font-semibold text-slate-900">Treinamento: Compliance Bancário</h4>
+                      <p className="text-xs text-slate-900 mt-1">14:00 - 15:00 • Módulo 3: Prevenção à Lavagem</p>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="px-3 py-1 bg-pastel-purple bg-opacity-20 text-pastel-purple text-xs font-medium rounded-full">Treinamento</span>
@@ -443,11 +443,11 @@ export default function MinhaAgendaDia() {
                   <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-pastel-rose hover:bg-slate-50 transition cursor-pointer">
                     <div className="w-1 h-16 bg-pastel-rose rounded-full"></div>
                     <div className="w-12 h-12 bg-pastel-rose rounded-lg flex items-center justify-center flex-shrink-0">
-                      <i className="fas fa-video text-slate-600"></i>
+                      <i className="fas fa-video text-slate-700"></i>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-semibold text-slate-800">Vídeo: Análise de Crédito</h4>
-                      <p className="text-xs text-slate-500 mt-1">15:30 - 16:15 • Curso: Gestão de Risco</p>
+                      <h4 className="text-sm font-semibold text-slate-900">Vídeo: Análise de Crédito</h4>
+                      <p className="text-xs text-slate-900 mt-1">15:30 - 16:15 • Curso: Gestão de Risco</p>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="px-3 py-1 bg-pastel-rose bg-opacity-20 text-pastel-rose text-xs font-medium rounded-full">Estudo</span>
@@ -461,11 +461,11 @@ export default function MinhaAgendaDia() {
                   <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-pastel-green hover:bg-slate-50 transition cursor-pointer">
                     <div className="w-1 h-16 bg-pastel-green rounded-full"></div>
                     <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center flex-shrink-0">
-                      <i className="fas fa-desktop text-slate-600"></i>
+                      <i className="fas fa-desktop text-slate-700"></i>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-semibold text-slate-800">Webinar: Tendências do Mercado</h4>
-                      <p className="text-xs text-slate-500 mt-1">16:30 - 17:30 • Especialista: Dr. Carlos Mendes</p>
+                      <h4 className="text-sm font-semibold text-slate-900">Webinar: Tendências do Mercado</h4>
+                      <p className="text-xs text-slate-900 mt-1">16:30 - 17:30 • Especialista: Dr. Carlos Mendes</p>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="px-3 py-1 bg-pastel-green bg-opacity-20 text-pastel-green text-xs font-medium rounded-full">Webinar</span>
@@ -479,11 +479,11 @@ export default function MinhaAgendaDia() {
                   <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-pastel-rose hover:bg-slate-50 transition cursor-pointer">
                     <div className="w-1 h-16 bg-pastel-rose rounded-full"></div>
                     <div className="w-12 h-12 bg-pastel-rose rounded-lg flex items-center justify-center flex-shrink-0">
-                      <i className="fas fa-podcast text-slate-600"></i>
+                      <i className="fas fa-podcast text-slate-700"></i>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-semibold text-slate-800">Podcast: Mercado de Capitais</h4>
-                      <p className="text-xs text-slate-500 mt-1">18:00 - 18:30 • Episódio: IPOs e Ofertas Públicas</p>
+                      <h4 className="text-sm font-semibold text-slate-900">Podcast: Mercado de Capitais</h4>
+                      <p className="text-xs text-slate-900 mt-1">18:00 - 18:30 • Episódio: IPOs e Ofertas Públicas</p>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="px-3 py-1 bg-pastel-rose bg-opacity-20 text-pastel-rose text-xs font-medium rounded-full">Estudo</span>
@@ -497,11 +497,11 @@ export default function MinhaAgendaDia() {
                   <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-pastel-rose hover:bg-slate-50 transition cursor-pointer">
                     <div className="w-1 h-16 bg-pastel-rose rounded-full"></div>
                     <div className="w-12 h-12 bg-pastel-rose rounded-lg flex items-center justify-center flex-shrink-0">
-                      <i className="fas fa-book-open text-slate-600"></i>
+                      <i className="fas fa-book-open text-slate-700"></i>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-semibold text-slate-800">Leitura: Artigo Técnico</h4>
-                      <p className="text-xs text-slate-500 mt-1">19:00 - 19:45 • Tema: ESG e Finanças Sustentáveis</p>
+                      <h4 className="text-sm font-semibold text-slate-900">Leitura: Artigo Técnico</h4>
+                      <p className="text-xs text-slate-900 mt-1">19:00 - 19:45 • Tema: ESG e Finanças Sustentáveis</p>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="px-3 py-1 bg-pastel-rose bg-opacity-20 text-pastel-rose text-xs font-medium rounded-full">Estudo</span>
