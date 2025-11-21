@@ -130,36 +130,28 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
         selection.removeAllRanges();
         selection.addRange(range);
       }
+      saveNotesToLocal();
     }
   };
 
   const handleNotesInput = () => {
-    // Aplicar cor ao texto digitado
-    if (notesRef.current) {
-      const selection = window.getSelection();
-      if (selection && selection.rangeCount > 0) {
-        const range = selection.getRangeAt(0);
-        const container = range.startContainer;
-        
-        // Se for um nó de texto direto (sem cor), envolver em span
-        if (container.nodeType === Node.TEXT_NODE && container.parentElement === notesRef.current) {
-          const span = document.createElement('span');
-          span.style.color = noteColor;
-          const text = container.textContent || '';
-          span.textContent = text;
-          container.parentNode?.replaceChild(span, container);
-          
-          // Restaurar posição do cursor
-          const newRange = document.createRange();
-          newRange.setStart(span.firstChild || span, text.length);
-          newRange.collapse(true);
-          selection.removeAllRanges();
-          selection.addRange(newRange);
-        }
+    saveNotesToLocal();
+  };
+
+  const handleNotesKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    // Aplicar cor ao texto que será digitado
+    setTimeout(() => {
+      if (notesRef.current) {
+        document.execCommand('foreColor', false, noteColor);
       }
-      
-      // Salvar automaticamente no localStorage
-      saveNotesToLocal();
+    }, 0);
+  };
+
+  const handleColorChange = (color: string) => {
+    setNoteColor(color);
+    if (notesRef.current) {
+      notesRef.current.focus();
+      document.execCommand('foreColor', false, color);
     }
   };
 
@@ -583,7 +575,7 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                         ].map(({ color, name }) => (
                           <button
                             key={color}
-                            onClick={() => setNoteColor(color)}
+                            onClick={() => handleColorChange(color)}
                             className={`w-8 h-8 rounded-lg transition-all hover:scale-110 ${
                               noteColor === color ? 'ring-2 ring-white ring-offset-2 ring-offset-slate-900' : ''
                             }`}
@@ -614,6 +606,7 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                       ref={notesRef}
                       contentEditable
                       onInput={handleNotesInput}
+                      onKeyDown={handleNotesKeyDown}
                       className="flex-1 bg-slate-800 border border-slate-700 rounded-md p-3 overflow-y-auto focus:outline-none focus:ring-2 focus:ring-slate-600"
                       style={{ minHeight: '200px' }}
                       suppressContentEditableWarning
