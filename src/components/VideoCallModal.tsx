@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Video, Mic, MicOff, VideoOff, Phone, Monitor } from "lucide-react";
+import { Video, Mic, MicOff, VideoOff, Phone, Monitor, Minimize2, Maximize2 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { toast } from "sonner";
 
@@ -16,6 +16,7 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
   const [isVideoOff, setIsVideoOff] = useState(false);
   const [isConnecting, setIsConnecting] = useState(true);
   const [isConnected, setIsConnected] = useState(false);
+  const [isLocalVideoMinimized, setIsLocalVideoMinimized] = useState(false);
   const localVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -172,30 +173,48 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
             </div>
 
             {/* Vídeo Local (Picture-in-Picture) */}
-            <div className="absolute bottom-24 right-6 w-72 h-52 bg-slate-900 rounded-2xl overflow-hidden border-2 border-slate-700/50 shadow-2xl backdrop-blur-sm z-20">
-              {isVideoOff ? (
-                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-800 to-slate-900">
-                  <div className="text-center">
-                    <div className="w-16 h-16 rounded-full bg-slate-700 flex items-center justify-center mb-3 mx-auto">
-                      <VideoOff className="text-slate-400" size={28} />
+            {isLocalVideoMinimized ? (
+              <button
+                onClick={() => setIsLocalVideoMinimized(false)}
+                className="absolute bottom-24 right-6 w-16 h-16 bg-slate-800 hover:bg-slate-700 rounded-full border-2 border-slate-700/50 shadow-2xl backdrop-blur-sm z-20 flex items-center justify-center transition-all group"
+                title="Expandir vídeo local"
+              >
+                <Maximize2 className="text-slate-300 group-hover:text-white" size={24} />
+                <div className="absolute -top-2 -right-2 w-4 h-4 bg-green-500 rounded-full border-2 border-slate-900"></div>
+              </button>
+            ) : (
+              <div className="absolute bottom-24 right-6 w-72 h-52 bg-slate-900 rounded-2xl overflow-hidden border-2 border-slate-700/50 shadow-2xl backdrop-blur-sm z-20">
+                {isVideoOff ? (
+                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-800 to-slate-900">
+                    <div className="text-center">
+                      <div className="w-16 h-16 rounded-full bg-slate-700 flex items-center justify-center mb-3 mx-auto">
+                        <VideoOff className="text-slate-400" size={28} />
+                      </div>
+                      <p className="text-slate-400 text-sm font-medium">Câmera desligada</p>
                     </div>
-                    <p className="text-slate-400 text-sm font-medium">Câmera desligada</p>
                   </div>
+                ) : (
+                  <video
+                    ref={localVideoRef}
+                    autoPlay
+                    playsInline
+                    muted
+                    className="w-full h-full object-cover mirror"
+                    style={{ transform: 'scaleX(-1)' }}
+                  />
+                )}
+                <div className="absolute top-3 left-3 px-2 py-1 bg-slate-900/80 backdrop-blur-sm rounded-lg">
+                  <p className="text-white text-xs font-medium">Você</p>
                 </div>
-              ) : (
-                <video
-                  ref={localVideoRef}
-                  autoPlay
-                  playsInline
-                  muted
-                  className="w-full h-full object-cover mirror"
-                  style={{ transform: 'scaleX(-1)' }}
-                />
-              )}
-              <div className="absolute top-3 left-3 px-2 py-1 bg-slate-900/80 backdrop-blur-sm rounded-lg">
-                <p className="text-white text-xs font-medium">Você</p>
+                <button
+                  onClick={() => setIsLocalVideoMinimized(true)}
+                  className="absolute top-3 right-3 w-8 h-8 bg-slate-900/80 hover:bg-slate-800 backdrop-blur-sm rounded-lg flex items-center justify-center transition-all group"
+                  title="Minimizar vídeo local"
+                >
+                  <Minimize2 className="text-slate-400 group-hover:text-white" size={16} />
+                </button>
               </div>
-            </div>
+            )}
           </div>
 
           {/* Controles */}
