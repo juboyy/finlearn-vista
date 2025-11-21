@@ -153,7 +153,7 @@ export default function CriarConteudo() {
 
                   {/* Option 2: Cursos */}
                   <button className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
-                    <div className="w-12 h-12 rounded-lg bg-[hsl(var(--muted))] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
+                    <div className="w-12 h-12 rounded-lg bg-[hsl(var(--pastel-yellow))] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
                       <GraduationCap className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
