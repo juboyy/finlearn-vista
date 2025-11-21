@@ -331,7 +331,7 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
           </div>
 
           {/* Sidebar lateral */}
-          <div className={`${isSidebarOpen ? 'w-96' : 'w-0'} transition-all duration-300 bg-slate-900 border-l border-slate-800 flex flex-col overflow-hidden`}>
+          <div className={`${isSidebarOpen ? 'w-96' : 'w-0'} transition-all duration-300 bg-slate-900 border-l border-slate-800 flex flex-col overflow-hidden relative`}>
             {isSidebarOpen && (
               <>
                 <div className="p-4 border-b border-slate-800 flex items-center justify-between">
@@ -362,8 +362,8 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                     </TabsTrigger>
                   </TabsList>
 
-                  <TabsContent value="chat" className="flex-1 flex flex-col p-0 mt-0 min-h-0">
-                    <ScrollArea className="flex-1 p-4">
+                  <TabsContent value="chat" className="flex-1 p-0 mt-0 min-h-0 pb-20">
+                    <ScrollArea className="h-full p-4">
                       <div className="space-y-3">
                         {chatMessages.length === 0 ? (
                           <div className="text-center text-slate-500 py-8">
@@ -387,24 +387,6 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                         )}
                       </div>
                     </ScrollArea>
-                    <div className="p-4 border-t border-slate-800 flex-shrink-0">
-                      <div className="flex gap-2">
-                        <Input
-                          value={messageInput}
-                          onChange={(e) => setMessageInput(e.target.value)}
-                          onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                          placeholder="Digite uma mensagem..."
-                          className="flex-1 bg-slate-800 border-slate-700 text-white"
-                        />
-                        <Button
-                          onClick={handleSendMessage}
-                          size="icon"
-                          className="bg-pastel-blue hover:bg-pastel-blue/80 text-slate-800"
-                        >
-                          <Send size={18} />
-                        </Button>
-                      </div>
-                    </div>
                   </TabsContent>
 
                   <TabsContent value="notes" className="flex-1 flex flex-col p-4 mt-0">
@@ -463,6 +445,26 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                     </div>
                   </TabsContent>
                 </Tabs>
+
+                {/* Input do chat fixo no fundo */}
+                <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-slate-800 bg-slate-900 flex-shrink-0">
+                  <div className="flex gap-2">
+                    <Input
+                      value={messageInput}
+                      onChange={(e) => setMessageInput(e.target.value)}
+                      onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                      placeholder="Digite uma mensagem..."
+                      className="flex-1 bg-slate-800 border-slate-700 text-white"
+                    />
+                    <Button
+                      onClick={handleSendMessage}
+                      size="icon"
+                      className="bg-pastel-blue hover:bg-pastel-blue/80 text-slate-800"
+                    >
+                      <Send size={18} />
+                    </Button>
+                  </div>
+                </div>
               </>
             )}
           </div>
