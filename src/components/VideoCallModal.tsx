@@ -371,7 +371,7 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                   </TabsList>
 
                   <TabsContent value="chat" className="flex-1 p-0 min-h-0 overflow-hidden">
-                    <div ref={chatScrollRef} className="h-full overflow-y-auto pb-5">
+                    <div ref={chatScrollRef} className="h-full overflow-y-auto pb-[72px]">
                       <div className="p-4 space-y-3">
                         {chatMessages.length === 0 ? (
                           <div className="text-center text-slate-500 py-8">
@@ -455,7 +455,7 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                 </Tabs>
 
                 {/* Input do chat fixo no fundo */}
-                <div className="absolute bottom-0 left-0 right-0 p-3 border-t border-slate-800 bg-slate-900 flex-shrink-0">
+                <div className="absolute bottom-0 left-0 right-0 p-3 border-t border-slate-800 bg-slate-900/95 backdrop-blur-sm flex-shrink-0">
                   <div className="flex gap-2">
                     <Input
                       value={messageInput}
