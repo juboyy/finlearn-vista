@@ -1,13 +1,20 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function MinhasMetas() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex h-screen overflow-hidden">
-      <SidebarFix />
+    <TooltipProvider>
+      <div className="flex h-screen overflow-hidden">
+        <SidebarFix />
       
       <main className="flex-1 overflow-y-auto">
         <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
@@ -38,9 +45,23 @@ export default function MinhasMetas() {
               <div className="bg-white rounded-2xl border-2 border-pastel-blue p-6">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-12 h-12 bg-pastel-blue rounded-lg flex items-center justify-center">
-                    <i className="fas fa-newspaper text-slate-700 text-xl"></i>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <i className="fas fa-newspaper text-slate-700 text-xl cursor-help"></i>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Artigos, Vídeos, Podcasts, E-books e Webinars</p>
+                      </TooltipContent>
+                    </Tooltip>
                   </div>
-                  <span className="px-2 py-1 bg-pastel-blue text-slate-700 rounded text-xs font-medium">Ativo</span>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span className="px-2 py-1 bg-pastel-blue text-slate-700 rounded text-xs font-medium cursor-help">Ativo</span>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Configuração ativa e funcionando</p>
+                    </TooltipContent>
+                  </Tooltip>
                 </div>
                 <p className="text-3xl font-bold text-slate-800 mb-1">5</p>
                 <p className="text-sm text-slate-600">Tipos de Conteúdo</p>
@@ -49,9 +70,23 @@ export default function MinhasMetas() {
               <div className="bg-white rounded-2xl border-2 border-pastel-green p-6">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center">
-                    <i className="fas fa-tags text-slate-700 text-xl"></i>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <i className="fas fa-tags text-slate-700 text-xl cursor-help"></i>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Tags específicas do seu interesse profissional</p>
+                      </TooltipContent>
+                    </Tooltip>
                   </div>
-                  <span className="px-2 py-1 bg-pastel-green text-slate-700 rounded text-xs font-medium">Ativo</span>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span className="px-2 py-1 bg-pastel-green text-slate-700 rounded text-xs font-medium cursor-help">Ativo</span>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Recebendo conteúdo filtrado por tags</p>
+                    </TooltipContent>
+                  </Tooltip>
                 </div>
                 <p className="text-3xl font-bold text-slate-800 mb-1">12</p>
                 <p className="text-sm text-slate-600">Tags Selecionadas</p>
@@ -60,9 +95,23 @@ export default function MinhasMetas() {
               <div className="bg-white rounded-2xl border-2 border-pastel-purple p-6">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-12 h-12 bg-pastel-purple rounded-lg flex items-center justify-center">
-                    <i className="fas fa-bell text-slate-700 text-xl"></i>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <i className="fas fa-bell text-slate-700 text-xl cursor-help"></i>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>E-mail, Push e WhatsApp</p>
+                      </TooltipContent>
+                    </Tooltip>
                   </div>
-                  <span className="px-2 py-1 bg-pastel-purple text-slate-700 rounded text-xs font-medium">Ativo</span>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span className="px-2 py-1 bg-pastel-purple text-slate-700 rounded text-xs font-medium cursor-help">Ativo</span>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Você receberá notificações nos canais ativos</p>
+                    </TooltipContent>
+                  </Tooltip>
                 </div>
                 <p className="text-3xl font-bold text-slate-800 mb-1">3</p>
                 <p className="text-sm text-slate-600">Canais de Notificação</p>
@@ -71,9 +120,23 @@ export default function MinhasMetas() {
               <div className="bg-white rounded-2xl border-2 border-pastel-yellow p-6">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-12 h-12 bg-pastel-yellow rounded-lg flex items-center justify-center">
-                    <i className="fas fa-target text-slate-700 text-xl"></i>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <i className="fas fa-target text-slate-700 text-xl cursor-help"></i>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Objetivos de aprendizado semanais e mensais</p>
+                      </TooltipContent>
+                    </Tooltip>
                   </div>
-                  <span className="px-2 py-1 bg-pastel-yellow text-slate-700 rounded text-xs font-medium">Configurado</span>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span className="px-2 py-1 bg-pastel-yellow text-slate-700 rounded text-xs font-medium cursor-help">Configurado</span>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Metas prontas para acompanhamento</p>
+                    </TooltipContent>
+                  </Tooltip>
                 </div>
                 <p className="text-3xl font-bold text-slate-800 mb-1">8</p>
                 <p className="text-sm text-slate-600">Metas Definidas</p>
@@ -253,13 +316,27 @@ export default function MinhasMetas() {
                 <div>
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
-                      <i className="fas fa-shield-alt text-pastel-green"></i>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <i className="fas fa-shield-alt text-pastel-green cursor-help"></i>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Gestão e mitigação de riscos financeiros</p>
+                        </TooltipContent>
+                      </Tooltip>
                       <div>
                         <p className="text-sm font-semibold text-slate-800">Gestão de Riscos</p>
                         <p className="text-xs text-slate-500">Área principal</p>
                       </div>
                     </div>
-                    <span className="px-2 py-1 bg-pastel-green text-slate-700 rounded text-xs font-medium">42%</span>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <span className="px-2 py-1 bg-pastel-green text-slate-700 rounded text-xs font-medium cursor-help">42%</span>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Progresso geral da área no mês</p>
+                      </TooltipContent>
+                    </Tooltip>
                   </div>
                   <div className="space-y-2">
                     <div>
@@ -286,13 +363,27 @@ export default function MinhasMetas() {
                 <div>
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
-                      <i className="fas fa-gavel text-pastel-blue"></i>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <i className="fas fa-gavel text-pastel-blue cursor-help"></i>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Conformidade regulatória e normativa</p>
+                        </TooltipContent>
+                      </Tooltip>
                       <div>
                         <p className="text-sm font-semibold text-slate-800">Compliance</p>
                         <p className="text-xs text-slate-500">Área secundária</p>
                       </div>
                     </div>
-                    <span className="px-2 py-1 bg-pastel-blue text-slate-700 rounded text-xs font-medium">38%</span>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <span className="px-2 py-1 bg-pastel-blue text-slate-700 rounded text-xs font-medium cursor-help">38%</span>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Progresso geral da área no mês</p>
+                      </TooltipContent>
+                    </Tooltip>
                   </div>
                   <div className="space-y-2">
                     <div>
@@ -319,13 +410,27 @@ export default function MinhasMetas() {
                 <div>
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
-                      <i className="fas fa-landmark text-pastel-purple"></i>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <i className="fas fa-landmark text-pastel-purple cursor-help"></i>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Normas e regulações do setor financeiro</p>
+                        </TooltipContent>
+                      </Tooltip>
                       <div>
                         <p className="text-sm font-semibold text-slate-800">Regulação Financeira</p>
                         <p className="text-xs text-slate-500">Área de interesse</p>
                       </div>
                     </div>
-                    <span className="px-2 py-1 bg-pastel-purple text-slate-700 rounded text-xs font-medium">28%</span>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <span className="px-2 py-1 bg-pastel-purple text-slate-700 rounded text-xs font-medium cursor-help">28%</span>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Progresso geral da área no mês</p>
+                      </TooltipContent>
+                    </Tooltip>
                   </div>
                   <div className="space-y-2">
                     <div>
@@ -352,13 +457,27 @@ export default function MinhasMetas() {
                 <div>
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
-                      <i className="fas fa-exchange-alt text-pastel-yellow"></i>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <i className="fas fa-exchange-alt text-pastel-yellow cursor-help"></i>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Sistema de compartilhamento de dados financeiros</p>
+                        </TooltipContent>
+                      </Tooltip>
                       <div>
                         <p className="text-sm font-semibold text-slate-800">Open Banking</p>
                         <p className="text-xs text-slate-500">Área de interesse</p>
                       </div>
                     </div>
-                    <span className="px-2 py-1 bg-pastel-yellow text-slate-700 rounded text-xs font-medium">15%</span>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <span className="px-2 py-1 bg-pastel-yellow text-slate-700 rounded text-xs font-medium cursor-help">15%</span>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Progresso geral da área no mês</p>
+                      </TooltipContent>
+                    </Tooltip>
                   </div>
                   <div className="space-y-2">
                     <div>
@@ -828,5 +947,6 @@ export default function MinhasMetas() {
         </div>
       </main>
     </div>
+    </TooltipProvider>
   );
 }
