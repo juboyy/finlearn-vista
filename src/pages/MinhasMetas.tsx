@@ -1,9 +1,10 @@
-import { Home, Newspaper, Bot, GraduationCap, Book, MessageCircle, Store, Users, TrendingUp, Target, Rocket, Flame, Crown, Sliders, Video, Podcast, BookOpen, ChevronRight, Info } from "lucide-react";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
+import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export default function MinhasMetas() {
   const navigate = useNavigate();
+
   return (
     <div className="flex h-screen overflow-hidden">
       <SidebarFix />
@@ -11,575 +12,241 @@ export default function MinhasMetas() {
       <main className="flex-1 overflow-y-auto">
         <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
           <div className="px-8 py-4">
-            <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-2xl font-semibold text-slate-800">Configurar Metas de Aprendizado</h1>
-                <p className="text-sm text-slate-500 mt-1">Configure seus objetivos de forma simples e intuitiva</p>
+                <h1 className="text-2xl font-semibold text-slate-800">Resumo de Configuração</h1>
+                <p className="text-sm text-slate-500 mt-1">Revise todas as suas configurações antes de finalizar</p>
               </div>
               <div className="flex items-center gap-3">
-                <button className="px-4 py-2 text-slate-600 border border-slate-200 rounded-lg font-medium hover:bg-slate-50 transition">
-                  <i className="fas fa-undo mr-2"></i>
-                  Cancelar
+                <button onClick={() => navigate('/minhas-metas/notificacoes')} className="px-4 py-2 text-slate-600 border border-slate-200 rounded-lg font-medium hover:bg-slate-50 transition">
+                  <ArrowLeft className="inline w-4 h-4 mr-2" />
+                  Voltar
                 </button>
-                <button className="px-6 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
-                  <i className="fas fa-check mr-2"></i>
-                  Salvar Configurações
+                <button onClick={() => navigate('/minhas-metas/configuracao')} className="px-6 py-2 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                  <i className="fas fa-edit mr-2"></i>
+                  Configurar Metas
                 </button>
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-pastel-blue rounded-full">
-                <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center text-xs font-semibold text-slate-700">1</div>
-                <span className="text-sm font-medium text-slate-700">Tipo de Conteúdo</span>
-              </div>
-              <div className="h-0.5 w-8 bg-slate-200"></div>
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 rounded-full">
-                <div className="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-xs font-semibold text-slate-500">2</div>
-                <span className="text-sm text-slate-500">Áreas & Tags</span>
-              </div>
-              <div className="h-0.5 w-8 bg-slate-200"></div>
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 rounded-full">
-                <div className="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-xs font-semibold text-slate-500">3</div>
-                <span className="text-sm text-slate-500">Notificações</span>
               </div>
             </div>
           </div>
         </header>
 
         <div className="p-8 max-w-7xl mx-auto">
-          <section className="mb-12">
-            <div>
-              <h2 className="text-xl font-semibold text-slate-800">Configuração Rápida</h2>
-              <p className="text-sm text-slate-500 mt-1">Escolha um modelo pré-definido ou personalize suas metas</p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
-              <div className="bg-white rounded-2xl border-2 border-slate-200 p-6 text-left hover:shadow-lg hover:border-pastel-blue transition-all cursor-pointer group">
-                <div className="flex flex-col justify-between h-full">
-                  <div>
-                    <div className="w-12 h-12 bg-pastel-blue rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                      <Rocket className="text-slate-700 w-5 h-5" />
-                    </div>
-                    <h3 className="font-semibold text-slate-800 text-lg mb-2">Iniciante</h3>
-                    <p className="text-sm text-slate-500">2h/semana de estudo</p>
-                  </div>
-                  <div className="mt-4 pt-4 border-t border-slate-100">
-                    <div className="flex items-center gap-2 text-xs text-slate-600">
-                      <i className="fas fa-check-circle text-pastel-blue"></i>
-                      <span>Ideal para começar</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-white rounded-2xl border-2 border-slate-200 p-6 text-left hover:shadow-lg hover:border-pastel-green transition-all cursor-pointer group">
-                <div className="flex flex-col justify-between h-full">
-                  <div>
-                    <div className="w-12 h-12 bg-pastel-green rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                      <Flame className="text-slate-700 w-5 h-5" />
-                    </div>
-                    <h3 className="font-semibold text-slate-800 text-lg mb-2">Intermediário</h3>
-                    <p className="text-sm text-slate-500">5h/semana de estudo</p>
-                  </div>
-                  <div className="mt-4 pt-4 border-t border-slate-100">
-                    <div className="flex items-center gap-2 text-xs text-slate-600">
-                      <i className="fas fa-check-circle text-pastel-green"></i>
-                      <span>Crescimento consistente</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-white rounded-2xl border-2 border-slate-200 p-6 text-left hover:shadow-lg hover:border-pastel-purple transition-all cursor-pointer group">
-                <div className="flex flex-col justify-between h-full">
-                  <div>
-                    <div className="w-12 h-12 bg-pastel-purple rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                      <Crown className="text-slate-700 w-5 h-5" />
-                    </div>
-                    <h3 className="font-semibold text-slate-800 text-lg mb-2">Avançado</h3>
-                    <p className="text-sm text-slate-500">10h/semana de estudo</p>
-                  </div>
-                  <div className="mt-4 pt-4 border-t border-slate-100">
-                    <div className="flex items-center gap-2 text-xs text-slate-600">
-                      <i className="fas fa-check-circle text-pastel-purple"></i>
-                      <span>Máximo desempenho</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-white rounded-2xl border-2 border-pastel-yellow p-6 text-left hover:shadow-lg transition-all cursor-pointer">
-                <div className="flex flex-col justify-between h-full">
-                  <div>
-                    <div className="w-12 h-12 bg-pastel-yellow rounded-xl flex items-center justify-center mb-4">
-                      <Sliders className="text-slate-700 w-5 h-5" />
-                    </div>
-                    <h3 className="font-semibold text-slate-800 text-lg mb-2">Personalizado</h3>
-                    <p className="text-sm text-slate-500">Configure manualmente</p>
-                  </div>
-                  <div className="mt-4 pt-4 border-t border-slate-100">
-                    <div className="flex items-center gap-2 text-xs text-slate-600">
-                      <i className="fas fa-check-circle text-pastel-yellow"></i>
-                      <span>Totalmente flexível</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
 
           <section className="mb-8">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h2 className="text-xl font-semibold text-slate-800">Escolha seus Objetivos</h2>
-                <p className="text-sm text-slate-500 mt-1">Selecione os tipos de conteúdo e defina suas metas</p>
+            <div className="grid grid-cols-4 gap-4">
+              <div className="bg-white rounded-2xl border-2 border-pastel-blue p-6">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="w-12 h-12 bg-pastel-blue rounded-lg flex items-center justify-center">
+                    <i className="fas fa-newspaper text-slate-700 text-xl"></i>
+                  </div>
+                  <span className="px-2 py-1 bg-pastel-blue text-slate-700 rounded text-xs font-medium">Ativo</span>
+                </div>
+                <p className="text-3xl font-bold text-slate-800 mb-1">5</p>
+                <p className="text-sm text-slate-600">Tipos de Conteúdo</p>
               </div>
-              <button className="px-4 py-2 text-pastel-purple border-2 border-pastel-purple rounded-lg font-medium hover:bg-pastel-purple hover:text-white hover:border-white transition group">
-                <i className="fas fa-magic mr-2 group-hover:text-white"></i>
-                Sugestão Inteligente
-              </button>
+
+              <div className="bg-white rounded-2xl border-2 border-pastel-green p-6">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center">
+                    <i className="fas fa-tags text-slate-700 text-xl"></i>
+                  </div>
+                  <span className="px-2 py-1 bg-pastel-green text-slate-700 rounded text-xs font-medium">Ativo</span>
+                </div>
+                <p className="text-3xl font-bold text-slate-800 mb-1">12</p>
+                <p className="text-sm text-slate-600">Tags Selecionadas</p>
+              </div>
+
+              <div className="bg-white rounded-2xl border-2 border-pastel-purple p-6">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="w-12 h-12 bg-pastel-purple rounded-lg flex items-center justify-center">
+                    <i className="fas fa-bell text-slate-700 text-xl"></i>
+                  </div>
+                  <span className="px-2 py-1 bg-pastel-purple text-slate-700 rounded text-xs font-medium">Ativo</span>
+                </div>
+                <p className="text-3xl font-bold text-slate-800 mb-1">3</p>
+                <p className="text-sm text-slate-600">Canais de Notificação</p>
+              </div>
+
+              <div className="bg-white rounded-2xl border-2 border-pastel-yellow p-6">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="w-12 h-12 bg-pastel-yellow rounded-lg flex items-center justify-center">
+                    <i className="fas fa-target text-slate-700 text-xl"></i>
+                  </div>
+                  <span className="px-2 py-1 bg-pastel-yellow text-slate-700 rounded text-xs font-medium">Configurado</span>
+                </div>
+                <p className="text-3xl font-bold text-slate-800 mb-1">8</p>
+                <p className="text-sm text-slate-600">Metas Definidas</p>
+              </div>
             </div>
+          </section>
 
-            <div className="grid grid-cols-2 gap-6">
-              {/* Leitura de Artigos */}
-              <div className="bg-white rounded-2xl border-2 border-pastel-blue p-6 hover:shadow-lg transition-all">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-pastel-blue rounded-xl flex items-center justify-center">
-                      <Newspaper className="text-slate-700 w-5 h-5" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-slate-800">Leitura de Artigos</h3>
-                      <p className="text-xs text-slate-500">Mantenha-se atualizado</p>
-                    </div>
+
+          <section className="mb-8">
+            <div className="bg-white rounded-2xl border-2 border-slate-200 p-6">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-pastel-blue rounded-lg flex items-center justify-center">
+                    <i className="fas fa-chart-line text-slate-700"></i>
                   </div>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input type="checkbox" defaultChecked className="sr-only peer" />
-                    <div className="w-14 h-7 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-[1.75rem] after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-pastel-blue"></div>
-                  </label>
-                </div>
-
-                <div className="space-y-4">
-                  <div className="p-4 bg-slate-50 rounded-xl">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-sm font-medium text-slate-700">Meta Diária</span>
-                      <span className="text-xs text-slate-500">Por dia</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <input type="number" defaultValue="3" className="w-20 px-3 py-2 border border-slate-200 rounded-lg text-center text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-pastel-blue" />
-                      <select className="flex-1 px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pastel-blue">
-                        <option>artigos completos</option>
-                        <option>minutos de leitura</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="p-4 bg-slate-50 rounded-xl">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-sm font-medium text-slate-700">Meta Semanal</span>
-                      <span className="text-xs text-slate-500">Por semana</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <input type="number" defaultValue="15" className="w-20 px-3 py-2 border border-slate-200 rounded-lg text-center text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-pastel-blue" />
-                      <select className="flex-1 px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pastel-blue">
-                        <option>artigos completos</option>
-                        <option>minutos de leitura</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="p-4 bg-slate-50 rounded-xl">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-sm font-medium text-slate-700">Meta Mensal</span>
-                      <span className="text-xs text-slate-500">Por mês</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <input type="number" defaultValue="60" className="w-20 px-3 py-2 border border-slate-200 rounded-lg text-center text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-pastel-blue" />
-                      <select className="flex-1 px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pastel-blue">
-                        <option>artigos completos</option>
-                        <option>minutos de leitura</option>
-                      </select>
-                    </div>
+                  <div>
+                    <h2 className="text-lg font-semibold text-slate-800">Progresso das Metas</h2>
+                    <p className="text-sm text-slate-500">Acompanhamento semanal e mensal</p>
                   </div>
                 </div>
-
-                <div className="mt-4 pt-4 border-t border-slate-200">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-slate-600">Tempo estimado semanal:</span>
-                    <span className="font-semibold text-slate-800">~2h 30min</span>
-                  </div>
+                <div className="flex items-center gap-2">
+                  <button className="px-3 py-1.5 bg-pastel-blue text-slate-700 rounded-lg text-sm font-medium">Semana</button>
+                  <button className="px-3 py-1.5 text-slate-600 hover:bg-slate-100 rounded-lg text-sm font-medium">Mês</button>
                 </div>
               </div>
 
-              {/* Assistir Vídeos */}
-              <div className="bg-white rounded-2xl border-2 border-pastel-green p-6 hover:shadow-lg transition-all">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-pastel-green rounded-xl flex items-center justify-center">
-                      <Video className="text-slate-700 w-5 h-5" />
+              <div className="space-y-5">
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-pastel-blue rounded-lg flex items-center justify-center">
+                        <i className="fas fa-file-alt text-slate-700 text-sm"></i>
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-slate-800">Leitura de Artigos</p>
+                        <p className="text-xs text-slate-500">12 de 21 artigos esta semana</p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-slate-800">Assistir Vídeos</h3>
-                      <p className="text-xs text-slate-500">Aprenda visualmente</p>
+                    <div className="text-right">
+                      <p className="text-sm font-bold text-slate-800">57%</p>
+                      <p className="text-xs text-slate-500">Faltam 9</p>
                     </div>
                   </div>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input type="checkbox" defaultChecked className="sr-only peer" />
-                    <div className="w-14 h-7 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-[1.75rem] after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-pastel-green"></div>
-                  </label>
-                </div>
-
-                <div className="space-y-4">
-                  <div className="p-4 bg-slate-50 rounded-xl">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-sm font-medium text-slate-700">Meta Diária</span>
-                      <span className="text-xs text-slate-500">Por dia</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <input type="number" defaultValue="30" className="w-20 px-3 py-2 border border-slate-200 rounded-lg text-center text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-pastel-green" />
-                      <select className="flex-1 px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pastel-green">
-                        <option>minutos de vídeo</option>
-                        <option>vídeos completos</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="p-4 bg-slate-50 rounded-xl">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-sm font-medium text-slate-700">Meta Semanal</span>
-                      <span className="text-xs text-slate-500">Por semana</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <input type="number" defaultValue="180" className="w-20 px-3 py-2 border border-slate-200 rounded-lg text-center text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-pastel-green" />
-                      <select className="flex-1 px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pastel-green">
-                        <option>minutos de vídeo</option>
-                        <option>vídeos completos</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="p-4 bg-slate-50 rounded-xl">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-sm font-medium text-slate-700">Meta Mensal</span>
-                      <span className="text-xs text-slate-500">Por mês</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <input type="number" defaultValue="720" className="w-20 px-3 py-2 border border-slate-200 rounded-lg text-center text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-pastel-green" />
-                      <select className="flex-1 px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pastel-green">
-                        <option>minutos de vídeo</option>
-                        <option>vídeos completos</option>
-                      </select>
-                    </div>
+                  <div className="w-full bg-slate-100 rounded-full h-3">
+                    <div className="bg-pastel-blue h-3 rounded-full transition-all duration-500" style={{width: '57%'}}></div>
                   </div>
                 </div>
 
-                <div className="mt-4 pt-4 border-t border-slate-200">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-slate-600">Tempo estimado semanal:</span>
-                    <span className="font-semibold text-slate-800">~3h 00min</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Ouvir Podcasts */}
-              <div className="bg-white rounded-2xl border-2 border-pastel-purple p-6 hover:shadow-lg transition-all">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-pastel-purple rounded-xl flex items-center justify-center">
-                      <Podcast className="text-slate-700 w-5 h-5" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-slate-800">Ouvir Podcasts</h3>
-                      <p className="text-xs text-slate-500">Aprenda em movimento</p>
-                    </div>
-                  </div>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input type="checkbox" defaultChecked className="sr-only peer" />
-                    <div className="w-14 h-7 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-[1.75rem] after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-pastel-purple"></div>
-                  </label>
-                </div>
-
-                <div className="space-y-4">
-                  <div className="p-4 bg-slate-50 rounded-xl">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-sm font-medium text-slate-700">Meta Diária</span>
-                      <span className="text-xs text-slate-500">Por dia</span>
-                    </div>
+                <div>
+                  <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-3">
-                      <input type="number" defaultValue="20" className="w-20 px-3 py-2 border border-slate-200 rounded-lg text-center text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-pastel-purple" />
-                      <select className="flex-1 px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pastel-purple">
-                        <option>minutos de áudio</option>
-                        <option>episódios completos</option>
-                      </select>
+                      <div className="w-8 h-8 bg-pastel-pink rounded-lg flex items-center justify-center">
+                        <i className="fas fa-video text-slate-700 text-sm"></i>
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-slate-800">Vídeos & Webinars</p>
+                        <p className="text-xs text-slate-500">85 de 120 minutos esta semana</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-bold text-slate-800">71%</p>
+                      <p className="text-xs text-slate-500">Faltam 35min</p>
                     </div>
                   </div>
-
-                  <div className="p-4 bg-slate-50 rounded-xl">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-sm font-medium text-slate-700">Meta Semanal</span>
-                      <span className="text-xs text-slate-500">Por semana</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <input type="number" defaultValue="120" className="w-20 px-3 py-2 border border-slate-200 rounded-lg text-center text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-pastel-purple" />
-                      <select className="flex-1 px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pastel-purple">
-                        <option>minutos de áudio</option>
-                        <option>episódios completos</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="p-4 bg-slate-50 rounded-xl">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-sm font-medium text-slate-700">Meta Mensal</span>
-                      <span className="text-xs text-slate-500">Por mês</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <input type="number" defaultValue="480" className="w-20 px-3 py-2 border border-slate-200 rounded-lg text-center text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-pastel-purple" />
-                      <select className="flex-1 px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pastel-purple">
-                        <option>minutos de áudio</option>
-                        <option>episódios completos</option>
-                      </select>
-                    </div>
+                  <div className="w-full bg-slate-100 rounded-full h-3">
+                    <div className="bg-pastel-pink h-3 rounded-full transition-all duration-500" style={{width: '71%'}}></div>
                   </div>
                 </div>
 
-                <div className="mt-4 pt-4 border-t border-slate-200">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-slate-600">Tempo estimado semanal:</span>
-                    <span className="font-semibold text-slate-800">~2h 00min</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Ler E-books */}
-              <div className="bg-white rounded-2xl border-2 border-pastel-yellow p-6 hover:shadow-lg transition-all">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-pastel-yellow rounded-xl flex items-center justify-center">
-                      <BookOpen className="text-slate-700 w-5 h-5" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-slate-800">Ler E-books</h3>
-                      <p className="text-xs text-slate-500">Aprofunde conhecimento</p>
-                    </div>
-                  </div>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input type="checkbox" className="sr-only peer" />
-                    <div className="w-14 h-7 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-[1.75rem] after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-pastel-yellow"></div>
-                  </label>
-                </div>
-
-                <div className="space-y-4">
-                  <div className="p-4 bg-slate-50 rounded-xl">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-sm font-medium text-slate-700">Meta Diária</span>
-                      <span className="text-xs text-slate-500">Por dia</span>
-                    </div>
+                <div>
+                  <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-3">
-                      <input type="number" defaultValue="15" className="w-20 px-3 py-2 border border-slate-200 rounded-lg text-center text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-pastel-yellow" />
-                      <select className="flex-1 px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pastel-yellow">
-                        <option>minutos de leitura</option>
-                        <option>páginas</option>
-                      </select>
+                      <div className="w-8 h-8 bg-pastel-purple rounded-lg flex items-center justify-center">
+                        <i className="fas fa-podcast text-slate-700 text-sm"></i>
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-slate-800">Podcasts</p>
+                        <p className="text-xs text-slate-500">120 de 180 minutos esta semana</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-bold text-slate-800">67%</p>
+                      <p className="text-xs text-slate-500">Faltam 60min</p>
                     </div>
                   </div>
-
-                  <div className="p-4 bg-slate-50 rounded-xl">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-sm font-medium text-slate-700">Meta Semanal</span>
-                      <span className="text-xs text-slate-500">Por semana</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <input type="number" defaultValue="90" className="w-20 px-3 py-2 border border-slate-200 rounded-lg text-center text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-pastel-yellow" />
-                      <select className="flex-1 px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pastel-yellow">
-                        <option>minutos de leitura</option>
-                        <option>páginas</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="p-4 bg-slate-50 rounded-xl">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-sm font-medium text-slate-700">Meta Mensal</span>
-                      <span className="text-xs text-slate-500">Por mês</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <input type="number" defaultValue="2" className="w-20 px-3 py-2 border border-slate-200 rounded-lg text-center text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-pastel-yellow" />
-                      <select className="flex-1 px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pastel-yellow">
-                        <option>e-books completos</option>
-                        <option>páginas</option>
-                      </select>
-                    </div>
+                  <div className="w-full bg-slate-100 rounded-full h-3">
+                    <div className="bg-pastel-purple h-3 rounded-full transition-all duration-500" style={{width: '67%'}}></div>
                   </div>
                 </div>
 
-                <div className="mt-4 pt-4 border-t border-slate-200">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-slate-600">Tempo estimado semanal:</span>
-                    <span className="font-semibold text-slate-800">~1h 30min</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Agente IA */}
-              <div className="bg-white rounded-2xl border-2 border-pastel-pink p-6 hover:shadow-lg transition-all">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-pastel-pink rounded-xl flex items-center justify-center">
-                      <Bot className="text-slate-700 w-5 h-5" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-slate-800">Agente IA</h3>
-                      <p className="text-xs text-slate-500">Tire dúvidas e explore</p>
-                    </div>
-                  </div>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input type="checkbox" defaultChecked className="sr-only peer" />
-                    <div className="w-14 h-7 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-[1.75rem] after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-pastel-pink"></div>
-                  </label>
-                </div>
-
-                <div className="space-y-4">
-                  <div className="p-4 bg-slate-50 rounded-xl">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-sm font-medium text-slate-700">Meta Diária</span>
-                      <span className="text-xs text-slate-500">Por dia</span>
-                    </div>
+                <div>
+                  <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-3">
-                      <input type="number" defaultValue="10" className="w-20 px-3 py-2 border border-slate-200 rounded-lg text-center text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-pastel-pink" />
-                      <select className="flex-1 px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pastel-pink">
-                        <option>minutos de conversa</option>
-                        <option>interações</option>
-                      </select>
+                      <div className="w-8 h-8 bg-pastel-yellow rounded-lg flex items-center justify-center">
+                        <i className="fas fa-book text-slate-700 text-sm"></i>
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-slate-800">E-books</p>
+                        <p className="text-xs text-slate-500">45 de 100 páginas esta semana</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-bold text-slate-800">45%</p>
+                      <p className="text-xs text-slate-500">Faltam 55 pág.</p>
                     </div>
                   </div>
-
-                  <div className="p-4 bg-slate-50 rounded-xl">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-sm font-medium text-slate-700">Meta Semanal</span>
-                      <span className="text-xs text-slate-500">Por semana</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <input type="number" defaultValue="60" className="w-20 px-3 py-2 border border-slate-200 rounded-lg text-center text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-pastel-pink" />
-                      <select className="flex-1 px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pastel-pink">
-                        <option>minutos de conversa</option>
-                        <option>interações</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="p-4 bg-slate-50 rounded-xl">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-sm font-medium text-slate-700">Meta Mensal</span>
-                      <span className="text-xs text-slate-500">Por mês</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <input type="number" defaultValue="240" className="w-20 px-3 py-2 border border-slate-200 rounded-lg text-center text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-pastel-pink" />
-                      <select className="flex-1 px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pastel-pink">
-                        <option>minutos de conversa</option>
-                        <option>interações</option>
-                      </select>
-                    </div>
+                  <div className="w-full bg-slate-100 rounded-full h-3">
+                    <div className="bg-pastel-yellow h-3 rounded-full transition-all duration-500" style={{width: '45%'}}></div>
                   </div>
                 </div>
 
-                <div className="mt-4 pt-4 border-t border-slate-200">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-slate-600">Tempo estimado semanal:</span>
-                    <span className="font-semibold text-slate-800">~1h 00min</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Webinars ao Vivo */}
-              <div className="bg-white rounded-2xl border-2 border-pastel-peach p-6 hover:shadow-lg transition-all">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-pastel-peach rounded-xl flex items-center justify-center">
-                      <i className="fas fa-chalkboard-teacher text-slate-700"></i>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-slate-800">Webinars ao Vivo</h3>
-                      <p className="text-xs text-slate-500">Participe e interaja</p>
-                    </div>
-                  </div>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input type="checkbox" defaultChecked className="sr-only peer" />
-                    <div className="w-14 h-7 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-[1.75rem] after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-pastel-peach"></div>
-                  </label>
-                </div>
-
-                <div className="space-y-4">
-                  <div className="p-4 bg-slate-50 rounded-xl">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-sm font-medium text-slate-700">Meta Semanal</span>
-                      <span className="text-xs text-slate-500">Por semana</span>
-                    </div>
+                <div>
+                  <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-3">
-                      <input type="number" defaultValue="1" className="w-20 px-3 py-2 border border-slate-200 rounded-lg text-center text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-pastel-peach" />
-                      <select className="flex-1 px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pastel-peach">
-                        <option>webinars completos</option>
-                        <option>horas de participação</option>
-                      </select>
+                      <div className="w-8 h-8 bg-pastel-green rounded-lg flex items-center justify-center">
+                        <i className="fas fa-pen text-slate-700 text-sm"></i>
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-slate-800">Escrita de Artigos</p>
+                        <p className="text-xs text-slate-500">0 de 1 artigo esta semana</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-bold text-slate-800">0%</p>
+                      <p className="text-xs text-slate-500">Falta 1</p>
                     </div>
                   </div>
-
-                  <div className="p-4 bg-slate-50 rounded-xl">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-sm font-medium text-slate-700">Meta Mensal</span>
-                      <span className="text-xs text-slate-500">Por mês</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <input type="number" defaultValue="4" className="w-20 px-3 py-2 border border-slate-200 rounded-lg text-center text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-pastel-peach" />
-                      <select className="flex-1 px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pastel-peach">
-                        <option>webinars completos</option>
-                        <option>horas de participação</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="p-4 bg-pastel-peach bg-opacity-20 rounded-xl border border-pastel-peach">
-                    <div className="flex items-center gap-2">
-                      <Info className="text-slate-600 w-4 h-4 flex-shrink-0" />
-                      <p className="text-xs text-slate-600">Webinars são eventos ao vivo. Você receberá lembretes antes de cada sessão.</p>
-                    </div>
+                  <div className="w-full bg-slate-100 rounded-full h-3">
+                    <div className="bg-pastel-green h-3 rounded-full transition-all duration-500" style={{width: '0%'}}></div>
                   </div>
                 </div>
 
-                <div className="mt-4 pt-4 border-t border-slate-200">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-slate-600">Tempo estimado semanal:</span>
-                    <span className="font-semibold text-slate-800">~1h 30min</span>
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-pastel-peach rounded-lg flex items-center justify-center">
+                        <i className="fas fa-robot text-slate-700 text-sm"></i>
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-slate-800">Agente de IA</p>
+                        <p className="text-xs text-slate-500">40 de 60 minutos esta semana</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-bold text-slate-800">67%</p>
+                      <p className="text-xs text-slate-500">Faltam 20min</p>
+                    </div>
+                  </div>
+                  <div className="w-full bg-slate-100 rounded-full h-3">
+                    <div className="bg-pastel-peach h-3 rounded-full transition-all duration-500" style={{width: '67%'}}></div>
                   </div>
                 </div>
               </div>
             </div>
           </section>
 
-          <section className="bg-white rounded-2xl border-2 border-slate-200 p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-lg font-semibold text-slate-800 mb-1">Resumo Semanal</h3>
-                <p className="text-sm text-slate-500">Baseado nas metas ativas selecionadas</p>
-              </div>
-              <div className="flex items-center gap-6">
-                <div className="text-center">
-                  <p className="text-3xl font-bold text-slate-800">11h</p>
-                  <p className="text-xs text-slate-500 mt-1">Tempo Total</p>
+
+          <section className="mb-8">
+            <div className="bg-white rounded-2xl border-2 border-slate-200 p-6">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 bg-pastel-green rounded-lg flex items-center justify-center">
+                  <i className="fas fa-layer-group text-slate-700"></i>
                 </div>
-                <div className="h-12 w-px bg-slate-200"></div>
-                <div className="text-center">
-                  <p className="text-3xl font-bold text-slate-800">5</p>
-                  <p className="text-xs text-slate-500 mt-1">Tipos Ativos</p>
+                <div>
+                  <h2 className="text-lg font-semibold text-slate-800">Progresso por Área</h2>
+                  <p className="text-sm text-slate-500">Distribuição de conteúdo por segmento</p>
                 </div>
-                <div className="h-12 w-px bg-slate-200"></div>
-                <button onClick={() => navigate('/minhas-metas/areas')} className="px-6 py-3 bg-pastel-purple text-slate-700 rounded-xl font-medium hover:bg-opacity-80 transition">
-                  <ChevronRight className="inline w-4 h-4 mr-2" />
-                  Próximo Passo
-                </button>
               </div>
+
             </div>
           </section>
+
+
         </div>
       </main>
     </div>
