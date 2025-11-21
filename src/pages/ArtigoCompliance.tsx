@@ -489,7 +489,14 @@ export default function ArtigoCompliance() {
         <div className="fixed inset-0 z-50 animate-fade-in overflow-y-auto bg-background/95 backdrop-blur-md">
           <div className="relative min-h-screen flex items-start justify-center py-8 animate-scale-in">
             <div className="max-w-4xl mx-auto px-6 w-full">
-              <div className="bg-card rounded-3xl shadow-2xl p-10">
+              <div className="bg-card rounded-3xl shadow-2xl p-10 relative">
+                <button 
+                  onClick={() => setShowPaywall(false)}
+                  className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full hover:bg-muted transition-colors"
+                  aria-label="Fechar"
+                >
+                  <X className="text-muted-foreground" size={24} />
+                </button>
                 <div className="text-center mb-8">
                   <div className="inline-flex items-center justify-center w-20 h-20 bg-primary/20 rounded-full mb-6">
                     <Crown className="text-primary" size={36} />
