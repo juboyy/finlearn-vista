@@ -23,8 +23,8 @@ export default function MinhasMetas() {
                   Voltar
                 </button>
                 <button onClick={() => navigate('/minhas-metas/configuracao')} className="px-6 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
-                  <i className="fas fa-check mr-2"></i>
-                  Confirmar e Ativar
+                  <i className="fas fa-sliders-h mr-2"></i>
+                  Configurar
                 </button>
               </div>
             </div>
