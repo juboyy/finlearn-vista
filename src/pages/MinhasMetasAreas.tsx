@@ -289,7 +289,7 @@ export default function MinhasMetasAreas() {
                   <Lightbulb className="text-slate-700 w-5 h-5 mt-1 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-slate-800 mb-1">Dica de Personalização</p>
-                    <p className="text-xs text-white leading-relaxed">Suas preferências ajudam nosso algoritmo a recomendar o conteúdo mais relevante para você. Você pode ajustar essas configurações a qualquer momento.</p>
+                    <p className="text-xs text-slate-800 leading-relaxed">Suas preferências ajudam nosso algoritmo a recomendar o conteúdo mais relevante para você. Você pode ajustar essas configurações a qualquer momento.</p>
                   </div>
                 </div>
               </div>
