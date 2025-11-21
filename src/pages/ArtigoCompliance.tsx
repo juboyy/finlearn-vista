@@ -504,22 +504,22 @@ export default function ArtigoCompliance() {
 
                 <div className="grid grid-cols-3 gap-4 mb-8">
                   <div className="text-center p-6 bg-muted rounded-xl">
-                    <div className="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center mx-auto mb-3">
-                      <Infinity className="text-accent" size={24} />
+                    <div className="w-12 h-12 bg-pastel-blue/80 rounded-lg flex items-center justify-center mx-auto mb-3">
+                      <Infinity className="text-slate-700" size={24} />
                     </div>
                     <h4 className="font-semibold text-foreground mb-1">Acesso Ilimitado</h4>
                     <p className="text-sm text-muted-foreground">Todos os artigos, webinars e cursos</p>
                   </div>
                   <div className="text-center p-6 bg-muted rounded-xl">
-                    <div className="w-12 h-12 bg-secondary/20 rounded-lg flex items-center justify-center mx-auto mb-3">
-                      <Bot className="text-secondary" size={24} />
+                    <div className="w-12 h-12 bg-pastel-purple/80 rounded-lg flex items-center justify-center mx-auto mb-3">
+                      <Bot className="text-slate-700" size={24} />
                     </div>
                     <h4 className="font-semibold text-foreground mb-1">Assistente IA</h4>
                     <p className="text-sm text-muted-foreground">Suporte especializado 24/7</p>
                   </div>
                   <div className="text-center p-6 bg-muted rounded-xl">
-                    <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mx-auto mb-3">
-                      <Award className="text-primary" size={24} />
+                    <div className="w-12 h-12 bg-pastel-green/80 rounded-lg flex items-center justify-center mx-auto mb-3">
+                      <Award className="text-slate-700" size={24} />
                     </div>
                     <h4 className="font-semibold text-foreground mb-1">Certificados</h4>
                     <p className="text-sm text-muted-foreground">Reconhecimento profissional</p>
