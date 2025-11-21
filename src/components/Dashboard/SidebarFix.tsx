@@ -86,10 +86,10 @@ export const SidebarFix = () => {
               <Bookmark size={16} />
               <span>Itens Salvos</span>
             </button>
-            <button className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sidebar-foreground/80 hover:bg-sidebar-accent transition-colors text-sm">
+            <Link to="/configuracoes" className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sidebar-foreground/80 hover:bg-sidebar-accent transition-colors text-sm">
               <Settings size={16} />
               <span>Configurações</span>
-            </button>
+            </Link>
           </div>
         )}
       </div>
