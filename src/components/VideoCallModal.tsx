@@ -362,9 +362,9 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                     </TabsTrigger>
                   </TabsList>
 
-                  <TabsContent value="chat" className="flex-1 p-0 mt-0 min-h-0 pb-20">
-                    <ScrollArea className="h-full p-4">
-                      <div className="space-y-3">
+                  <TabsContent value="chat" className="flex-1 p-0 mt-0 min-h-0 overflow-hidden pb-20">
+                    <div className="h-full overflow-y-auto">
+                      <div className="p-4 space-y-3">
                         {chatMessages.length === 0 ? (
                           <div className="text-center text-slate-500 py-8">
                             <MessageCircle size={48} className="mx-auto mb-3 opacity-50" />
@@ -386,7 +386,7 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                           ))
                         )}
                       </div>
-                    </ScrollArea>
+                    </div>
                   </TabsContent>
 
                   <TabsContent value="notes" className="flex-1 flex flex-col p-4 mt-0">
