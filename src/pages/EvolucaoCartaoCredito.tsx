@@ -99,11 +99,11 @@ export default function EvolucaoCartaoCredito() {
         </header>
 
         {/* Main Content */}
-        <div className="flex-1 flex bg-muted/30">
+        <div className="flex-1 overflow-y-auto bg-muted/30">
           <div className="w-full max-w-[1600px] mx-auto px-8 py-8 flex gap-6">
             {/* Table of Contents - Left Sidebar - Fixed */}
             <aside className="w-[280px] flex-shrink-0">
-              <div className="bg-card rounded-xl border border-border p-6 sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto">
+              <div className="bg-card rounded-xl border border-border p-6 sticky top-6 max-h-[calc(100vh-7rem)] overflow-y-auto">
                 {/* Progress Bar */}
                 <div className="mb-6 pb-6 border-b border-border">
                   <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
@@ -225,7 +225,7 @@ export default function EvolucaoCartaoCredito() {
             </aside>
 
             {/* Main Article Content */}
-            <article id="article-content" className="flex-1 bg-card rounded-xl border border-border p-8 overflow-y-auto max-h-[calc(100vh-7rem)]">
+            <article id="article-content" className="flex-1 bg-card rounded-xl border border-border p-8">
               {/* Article Metadata */}
               <div className="mb-8 pb-6 border-b border-border">
                 <div className="flex items-center gap-3 mb-4">
@@ -901,7 +901,7 @@ export default function EvolucaoCartaoCredito() {
 
             {/* Right Sidebar */}
             <aside className="w-[280px] flex-shrink-0">
-              <div className="sticky top-24 space-y-6 max-h-[calc(100vh-7rem)] overflow-y-auto">
+              <div className="space-y-6">
                 {/* AI Tools */}
                 <div className="bg-card rounded-xl border border-border p-6">
                   <h3 className="text-sm font-semibold text-foreground mb-4">Ferramentas IA</h3>
