@@ -15,6 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { VideoCallModal } from "@/components/VideoCallModal";
 type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'documentos' | 'estudos';
 
 const agents = [
@@ -158,7 +159,14 @@ const Aprendizado = () => {
   const [yearValue, setYearValue] = useState(2024);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterSpecialty, setFilterSpecialty] = useState("Todas especialidades");
+  const [videoCallOpen, setVideoCallOpen] = useState(false);
+  const [selectedAgent, setSelectedAgent] = useState<{ name: string; avatar: string } | null>(null);
   const navigate = useNavigate();
+
+  const handleVideoCall = (agentName: string, agentAvatar: string) => {
+    setSelectedAgent({ name: agentName, avatar: agentAvatar });
+    setVideoCallOpen(true);
+  };
   const sectorData = [{
     name: 'Financeiro',
     value: 5.8
@@ -2368,6 +2376,7 @@ const Aprendizado = () => {
                           <TableCell>
                             <div className="flex items-center gap-2">
                               <button
+                                onClick={() => handleVideoCall(agent.name, agent.avatar)}
                                 className="p-2 bg-pastel-purple hover:bg-opacity-80 text-slate-700 rounded-lg transition"
                                 title="Conversar por Vídeo"
                               >
@@ -4593,6 +4602,15 @@ const Aprendizado = () => {
 
         </div>
       </main>
+
+      {selectedAgent && (
+        <VideoCallModal
+          open={videoCallOpen}
+          onOpenChange={setVideoCallOpen}
+          agentName={selectedAgent.name}
+          agentAvatar={selectedAgent.avatar}
+        />
+      )}
     </div>;
 };
 export default Aprendizado;
