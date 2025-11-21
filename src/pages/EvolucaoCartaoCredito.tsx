@@ -760,14 +760,13 @@ export default function EvolucaoCartaoCredito() {
                 <button
                   onClick={() => showPage(currentPage - 1)}
                   disabled={currentPage === 1}
-                  className={`px-4 py-2 text-sm font-medium rounded-lg transition flex items-center gap-2 ${
+                  className={`w-10 h-10 rounded-lg transition flex items-center justify-center ${
                     currentPage === 1 
                       ? 'bg-muted text-muted-foreground cursor-not-allowed' 
                       : 'bg-[#D4C5E8] text-[#475569] hover:bg-[#D4C5E8]/80'
                   }`}
                 >
-                  <ChevronLeft className="w-4 h-4" />
-                  Página Anterior
+                  <ChevronLeft className="w-5 h-5" />
                 </button>
 
                 <div className="flex items-center gap-2">
@@ -789,14 +788,13 @@ export default function EvolucaoCartaoCredito() {
                 <button
                   onClick={() => showPage(currentPage + 1)}
                   disabled={currentPage === totalPages}
-                  className={`px-4 py-2 text-sm font-medium rounded-lg transition flex items-center gap-2 ${
+                  className={`w-10 h-10 rounded-lg transition flex items-center justify-center ${
                     currentPage === totalPages
                       ? 'bg-muted text-muted-foreground cursor-not-allowed'
                       : 'bg-[#D4C5E8] text-[#475569] hover:bg-[#D4C5E8]/80'
                   }`}
                 >
-                  Próxima Página
-                  <ChevronRight className="w-4 h-4" />
+                  <ChevronRight className="w-5 h-5" />
                 </button>
               </div>
             </article>
