@@ -26,7 +26,7 @@ const Autores = () => {
               </button>
               <button onClick={() => setIsModalOpen(true)} className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
                 <Plus size={16} className="inline mr-2" />
-                Seguir Autor
+                Seguir Creator
               </button>
             </div>
           </div>
