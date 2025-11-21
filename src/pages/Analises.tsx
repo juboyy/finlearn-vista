@@ -18,6 +18,8 @@ import {
 } from "lucide-react";
 
 const Analises = () => {
+  console.log('Analises page loaded');
+  
   return (
     <div className="flex h-screen overflow-hidden">
       <SidebarFix />
