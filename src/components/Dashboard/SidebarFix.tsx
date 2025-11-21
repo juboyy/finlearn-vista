@@ -1,4 +1,4 @@
-import { Home, Newspaper, Bot, GraduationCap, Book, MessageCircle, Store, TrendingUp, Users, Settings, ChevronDown, User, CreditCard } from "lucide-react";
+import { Home, Newspaper, Bot, GraduationCap, Book, MessageCircle, Store, TrendingUp, Users, Settings, ChevronDown, User, CreditCard, Target, Bookmark } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -77,6 +77,14 @@ export const SidebarFix = () => {
             <button className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sidebar-foreground/80 hover:bg-sidebar-accent transition-colors text-sm">
               <CreditCard size={16} />
               <span>Assinaturas</span>
+            </button>
+            <button className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sidebar-foreground/80 hover:bg-sidebar-accent transition-colors text-sm">
+              <Target size={16} />
+              <span>Minhas Metas</span>
+            </button>
+            <button className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sidebar-foreground/80 hover:bg-sidebar-accent transition-colors text-sm">
+              <Bookmark size={16} />
+              <span>Itens Salvos</span>
             </button>
             <button className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sidebar-foreground/80 hover:bg-sidebar-accent transition-colors text-sm">
               <Settings size={16} />
