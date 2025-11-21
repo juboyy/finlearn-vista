@@ -922,7 +922,7 @@ export default function MinhasMetas() {
                 <p className="text-xs text-slate-600">Canais Ativos</p>
               </div>
               <div className="text-center p-4 bg-white rounded-xl border-2 border-pastel-yellow">
-                <i className="fas fa-target text-pastel-yellow text-2xl mb-2"></i>
+                <i className="fas fa-bullseye text-pastel-yellow text-2xl mb-2"></i>
                 <p className="text-2xl font-bold text-slate-800">8</p>
                 <p className="text-xs text-slate-600">Metas Definidas</p>
               </div>
