@@ -1,9 +1,10 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { MenutabbarFix } from "@/components/Dashboard/MenutabbarFix";
-import { Bell, Play, Clock, BookOpen, TrendingUp, Headphones, Calendar, Users, MessageCircle, Star, BookMarked, Video, Award, Heart, CheckCircle, PlayCircle, Trophy, ChartLine, Shield, Bitcoin, Gavel, PieChart, Repeat, Globe, Leaf, Plus, BookOpenCheck, CreditCard, FileText, Bookmark, Quote, Download, Share2 } from "lucide-react";
+import { Bell, Play, Clock, BookOpen, TrendingUp, Headphones, Calendar, Users, MessageCircle, Star, BookMarked, Video, Award, Heart, CheckCircle, PlayCircle, Trophy, ChartLine, Shield, Bitcoin, Gavel, PieChart, Repeat, Globe, Leaf, Plus, BookOpenCheck, CreditCard, FileText, Bookmark, Quote, Download, Share2, Bot, Eye, Percent, DollarSign, Lightbulb, AlertTriangle } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ebookRiskManagementPink from "@/assets/ebook-risk-management-pink.png";
+import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts';
 
 type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'documentos' | 'estudos';
 
@@ -12,6 +13,75 @@ const Aprendizado = () => {
   const [citationValue, setCitationValue] = useState(0);
   const [yearValue, setYearValue] = useState(2024);
   const navigate = useNavigate();
+
+  const sectorData = [
+    { name: 'Financeiro', value: 5.8 },
+    { name: 'Tecnologia', value: 8.2 },
+    { name: 'Energia', value: -2.1 },
+    { name: 'Consumo', value: 3.4 },
+    { name: 'Saúde', value: 6.7 },
+    { name: 'Industrial', value: 1.9 },
+  ];
+
+  const volumeData = [
+    { name: 'Seg', value: 18.5 },
+    { name: 'Ter', value: 22.3 },
+    { name: 'Qua', value: 19.8 },
+    { name: 'Qui', value: 25.6 },
+    { name: 'Sex', value: 28.4 },
+    { name: 'Sáb', value: 15.2 },
+    { name: 'Dom', value: 12.8 },
+  ];
+
+  const selicData = [
+    { name: 'Fev', value: 13.75 },
+    { name: 'Mar', value: 13.75 },
+    { name: 'Abr', value: 13.25 },
+    { name: 'Mai', value: 12.75 },
+    { name: 'Jun', value: 12.25 },
+    { name: 'Jul', value: 11.75 },
+    { name: 'Ago', value: 11.25 },
+    { name: 'Set', value: 10.75 },
+    { name: 'Out', value: 10.75 },
+    { name: 'Nov', value: 10.75 },
+    { name: 'Dez', value: 10.75 },
+    { name: 'Jan', value: 10.75 },
+  ];
+
+  const inflationData = [
+    { name: 'Fev', value: 0.83 },
+    { name: 'Mar', value: 0.71 },
+    { name: 'Abr', value: 0.38 },
+    { name: 'Mai', value: 0.46 },
+    { name: 'Jun', value: 0.21 },
+    { name: 'Jul', value: 0.38 },
+    { name: 'Ago', value: -0.02 },
+    { name: 'Set', value: 0.26 },
+    { name: 'Out', value: 0.56 },
+    { name: 'Nov', value: 0.62 },
+    { name: 'Dez', value: 0.56 },
+    { name: 'Jan', value: 0.42 },
+  ];
+
+  const pixData = [
+    { name: '2020', value: 1.2 },
+    { name: '2021', value: 15.4 },
+    { name: '2022', value: 24.8 },
+    { name: '2023', value: 32.6 },
+    { name: '2024', value: 38.9 },
+    { name: '2025', value: 42.3 },
+  ];
+
+  const creditCardData = [
+    { name: '2018', value: 185 },
+    { name: '2019', value: 198 },
+    { name: '2020', value: 172 },
+    { name: '2021', value: 215 },
+    { name: '2022', value: 238 },
+    { name: '2023', value: 256 },
+    { name: '2024', value: 268 },
+    { name: '2025', value: 275 },
+  ];
   
   return (
     <div className="flex h-screen overflow-hidden">
@@ -3426,6 +3496,576 @@ const Aprendizado = () => {
                     <button className="w-full px-4 py-2 bg-pastel-pink text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
                       Ativar IA
                     </button>
+                  </div>
+                </div>
+              </section>
+            </>
+          )}
+
+          {activeTab === 'analises' && (
+            <>
+              <section className="mb-8">
+                <div className="bg-pastel-purple/80 rounded-xl border border-slate-200 p-8">
+                  <div className="grid grid-cols-2 gap-8 items-center">
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-2">
+                          <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
+                            <Bot className="text-slate-700" size={20} />
+                          </div>
+                          <div className="flex flex-col">
+                            <span className="text-sm font-medium text-slate-700">Análise Gerada por IA</span>
+                            <span className="text-xs text-slate-600">Agente: Análise de Macro Economia</span>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <button title="Favoritar" className="p-2 text-slate-600 hover:text-yellow-500 transition">
+                            <Star size={20} />
+                          </button>
+                          <button title="Salvar" className="p-2 text-slate-600 hover:text-blue-500 transition">
+                            <Bookmark size={20} />
+                          </button>
+                        </div>
+                      </div>
+                      <h2 className="text-3xl font-bold text-slate-800 mb-4">Panorama do Mercado Brasileiro</h2>
+                      <p className="text-slate-700 mb-6">Análise completa dos principais indicadores econômicos, tendências de mercado e oportunidades nos setores de renda fixa, renda variável e meios de pagamento.</p>
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2 text-sm text-slate-700">
+                          <Clock size={16} />
+                          <span>Atualizado há 2 horas</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-slate-700">
+                          <Eye size={16} />
+                          <span>1.2k visualizações</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="h-64 bg-white rounded-xl overflow-hidden">
+                      <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/7fcb40b8c2-0d96ecc5a72548820724.png" alt="illustration of financial market analysis dashboard with charts graphs and data visualization" className="w-full h-full object-cover" />
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section className="mb-8">
+                <h2 className="text-xl font-semibold text-slate-800 mb-6">Visão Geral do Mercado</h2>
+                <div className="grid grid-cols-4 gap-4">
+                  <div className="bg-white rounded-xl border border-slate-200 p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-pastel-green/80 rounded-lg flex items-center justify-center">
+                        <TrendingUp className="text-slate-700" size={24} />
+                      </div>
+                      <span className="text-xs text-green-600 font-medium">+2.4%</span>
+                    </div>
+                    <p className="text-3xl font-bold text-slate-800 mb-1">118.245</p>
+                    <p className="text-sm text-slate-600">Ibovespa</p>
+                  </div>
+                  <div className="bg-white rounded-xl border border-slate-200 p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-pastel-blue/80 rounded-lg flex items-center justify-center">
+                        <Percent className="text-slate-700" size={24} />
+                      </div>
+                      <span className="text-xs text-blue-600 font-medium">-0.25%</span>
+                    </div>
+                    <p className="text-3xl font-bold text-slate-800 mb-1">10.75%</p>
+                    <p className="text-sm text-slate-600">Taxa Selic</p>
+                  </div>
+                  <div className="bg-white rounded-xl border border-slate-200 p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-pastel-yellow/80 rounded-lg flex items-center justify-center">
+                        <DollarSign className="text-slate-700" size={24} />
+                      </div>
+                      <span className="text-xs text-red-600 font-medium">+0.8%</span>
+                    </div>
+                    <p className="text-3xl font-bold text-slate-800 mb-1">R$ 5.12</p>
+                    <p className="text-sm text-slate-600">Dólar USD</p>
+                  </div>
+                  <div className="bg-white rounded-xl border border-slate-200 p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-pastel-pink/80 rounded-lg flex items-center justify-center">
+                        <PieChart className="text-slate-700" size={24} />
+                      </div>
+                      <span className="text-xs text-purple-600 font-medium">+5.2%</span>
+                    </div>
+                    <p className="text-3xl font-bold text-slate-800 mb-1">4.89%</p>
+                    <p className="text-sm text-slate-600">IPCA (ano)</p>
+                  </div>
+                </div>
+              </section>
+
+              <section className="mb-8">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-semibold text-slate-800">Análises em Destaque</h2>
+                  <div className="flex items-center gap-2">
+                    <button className="px-4 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-lg transition">Todas</button>
+                    <button className="px-4 py-2 text-sm bg-pastel-blue/80 text-slate-700 rounded-lg font-medium">Renda Fixa</button>
+                    <button className="px-4 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-lg transition">Renda Variável</button>
+                    <button className="px-4 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-lg transition">Fundos</button>
+                  </div>
+                </div>
+                <div className="grid grid-cols-3 gap-6">
+                  <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
+                    <div className="h-48 bg-pastel-blue/80 overflow-hidden">
+                      <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/27d7c99831-964c4d3004b99cb9421c.png" alt="illustration of fixed income bonds and treasury securities" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="p-6">
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                          <span className="px-2 py-1 bg-pastel-blue/80 text-slate-700 text-xs rounded-full">Renda Fixa</span>
+                          <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Alta Confiança</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <button title="Favoritar" className="p-2 text-slate-400 hover:text-yellow-500 transition"><Star size={16} /></button>
+                          <button title="Salvar" className="p-2 text-slate-400 hover:text-blue-500 transition"><Bookmark size={16} /></button>
+                        </div>
+                      </div>
+                      <h3 className="font-semibold text-slate-800 mb-2">Títulos Públicos: Oportunidades em 2025</h3>
+                      <p className="text-sm text-slate-600 mb-4">Análise detalhada sobre a curva de juros e as melhores estratégias para alocação em títulos do Tesouro Direto.</p>
+                      <div className="flex items-center justify-between text-sm text-slate-600 mb-4">
+                        <div className="flex items-center gap-2"><Bot size={16} /><span>Agente IA: Renda Fixa</span></div>
+                        <span>há 3 horas</span>
+                      </div>
+                      <button className="w-full px-4 py-2 bg-pastel-blue/80 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">Ver Análise Completa</button>
+                    </div>
+                  </div>
+                  <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
+                    <div className="h-48 bg-pastel-green/80 overflow-hidden">
+                      <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/15c1b70a0a-1efcc7f9f1aafe24a989.png" alt="illustration of payment processing systems with credit cards" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="p-6">
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                          <span className="px-2 py-1 bg-pastel-green/80 text-slate-700 text-xs rounded-full">Meios de Pagamento</span>
+                          <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">Tendência</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <button title="Favoritar" className="p-2 text-slate-400 hover:text-yellow-500 transition"><Star size={16} /></button>
+                          <button title="Salvar" className="p-2 text-slate-400 hover:text-blue-500 transition"><Bookmark size={16} /></button>
+                        </div>
+                      </div>
+                      <h3 className="font-semibold text-slate-800 mb-2">Pix: Impacto no Mercado de Meios de Pagamento</h3>
+                      <p className="text-sm text-slate-600 mb-4">Como o crescimento do Pix está transformando o ecossistema de pagamentos e criando novas oportunidades.</p>
+                      <div className="flex items-center justify-between text-sm text-slate-600 mb-4">
+                        <div className="flex items-center gap-2"><Bot size={16} /><span>Agente IA: Pagamentos</span></div>
+                        <span>há 5 horas</span>
+                      </div>
+                      <button className="w-full px-4 py-2 bg-pastel-green/80 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">Ver Análise Completa</button>
+                    </div>
+                  </div>
+                  <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
+                    <div className="h-48 bg-pastel-purple/80 overflow-hidden">
+                      <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/df884dff45-9688d032fd8d112bc1ec.png" alt="illustration of stock market trading with bull and bear symbols" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="p-6">
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                          <span className="px-2 py-1 bg-pastel-purple/80 text-slate-700 text-xs rounded-full">Renda Variável</span>
+                          <span className="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full">Popular</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <button title="Favoritar" className="p-2 text-slate-400 hover:text-yellow-500 transition"><Star size={16} /></button>
+                          <button title="Salvar" className="p-2 text-slate-400 hover:text-blue-500 transition"><Bookmark size={16} /></button>
+                        </div>
+                      </div>
+                      <h3 className="font-semibold text-slate-800 mb-2">Setores em Alta na B3 e Novos IPOs em 2026</h3>
+                      <p className="text-sm text-slate-600 mb-4">Análise dos setores com melhor desempenho e perspectivas para o próximo trimestre na bolsa brasileira.</p>
+                      <div className="flex items-center justify-between text-sm text-slate-600 mb-4">
+                        <div className="flex items-center gap-2"><Bot size={16} /><span>Agente IA: Ações</span></div>
+                        <span>há 1 dia</span>
+                      </div>
+                      <button className="w-full px-4 py-2 bg-pastel-purple/80 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">Ver Análise Completa</button>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section className="mb-8">
+                <h2 className="text-xl font-semibold text-slate-800 mb-6">Análise por Setor</h2>
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="bg-white rounded-xl border border-slate-200 p-6">
+                    <div className="flex items-center justify-between mb-6">
+                      <div>
+                        <h3 className="font-semibold text-slate-800 mb-1">Desempenho Setorial - Último Mês</h3>
+                        <p className="text-sm text-slate-500">Variação percentual por setor</p>
+                      </div>
+                      <button className="px-3 py-1.5 text-xs bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition">Ver Detalhes</button>
+                    </div>
+                    <ResponsiveContainer width="100%" height={400}>
+                      <BarChart data={sectorData}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                        <XAxis dataKey="name" stroke="#64748b" style={{ fontSize: '12px' }} />
+                        <YAxis stroke="#64748b" style={{ fontSize: '12px' }} />
+                        <Tooltip 
+                          contentStyle={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px' }}
+                          labelStyle={{ color: '#1e293b', fontWeight: 600 }}
+                        />
+                        <Bar dataKey="value" fill="#8BBAA5" radius={[8, 8, 0, 0]} />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                  <div className="bg-white rounded-xl border border-slate-200 p-6">
+                    <div className="flex items-center justify-between mb-6">
+                      <div>
+                        <h3 className="font-semibold text-slate-800 mb-1">Volume de Negociação</h3>
+                        <p className="text-sm text-slate-500">Últimos 7 dias (em bilhões)</p>
+                      </div>
+                      <button className="px-3 py-1.5 text-xs bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition">Ver Detalhes</button>
+                    </div>
+                    <ResponsiveContainer width="100%" height={400}>
+                      <AreaChart data={volumeData}>
+                        <defs>
+                          <linearGradient id="colorVolume" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor="#7FA8BF" stopOpacity={0.4}/>
+                            <stop offset="95%" stopColor="#7FA8BF" stopOpacity={0}/>
+                          </linearGradient>
+                        </defs>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                        <XAxis dataKey="name" stroke="#64748b" style={{ fontSize: '12px' }} />
+                        <YAxis stroke="#64748b" style={{ fontSize: '12px' }} />
+                        <Tooltip 
+                          contentStyle={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px' }}
+                          labelStyle={{ color: '#1e293b', fontWeight: 600 }}
+                        />
+                        <Area type="monotone" dataKey="value" stroke="#7FA8BF" strokeWidth={3} fillOpacity={1} fill="url(#colorVolume)" />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+              </section>
+
+              <section className="mb-8">
+                <h2 className="text-xl font-semibold text-slate-800 mb-6">Análises Detalhadas</h2>
+                <div className="space-y-4">
+                  <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
+                    <div className="flex gap-6">
+                      <div className="w-48 h-32 bg-pastel-yellow/80 rounded-lg flex-shrink-0 overflow-hidden">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/e767b1e35f-e1497fa60b2545ea746a.png" alt="illustration of banking sector" className="w-full h-full object-cover" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-start justify-between mb-3">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-2">
+                              <span className="px-2 py-1 bg-pastel-yellow/80 text-slate-700 text-xs rounded-full">Setor Bancário</span>
+                              <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Recomendação: Compra</span>
+                            </div>
+                            <h3 className="text-lg font-semibold text-slate-800 mb-2">Bancos Digitais: Crescimento Sustentável</h3>
+                            <p className="text-sm text-slate-600 mb-3">Análise profunda sobre o crescimento dos bancos digitais no Brasil e seu impacto no sistema financeiro tradicional. Perspectivas de rentabilidade e market share.</p>
+                          </div>
+                          <div className="flex items-center gap-2 ml-4">
+                            <button title="Favoritar" className="p-2 text-slate-400 hover:text-yellow-500 transition"><Star size={16} /></button>
+                            <button title="Salvar" className="p-2 text-slate-400 hover:text-blue-500 transition"><Bookmark size={16} /></button>
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-4 text-sm text-slate-600">
+                            <div className="flex items-center gap-2"><Bot size={16} /><span>Agente IA: Setor Financeiro</span></div>
+                            <div className="flex items-center gap-2"><Clock size={16} /><span>há 6 horas</span></div>
+                            <div className="flex items-center gap-2"><Eye size={16} /><span>842 visualizações</span></div>
+                          </div>
+                          <button className="px-4 py-2 bg-pastel-yellow/80 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition text-sm">Ler Mais</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
+                    <div className="flex gap-6">
+                      <div className="w-48 h-32 bg-pastel-pink/80 rounded-lg flex-shrink-0 overflow-hidden">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/ba28b58ea8-8cb1869b77ea31def56f.png" alt="illustration of real estate investment" className="w-full h-full object-cover" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-start justify-between mb-3">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-2">
+                              <span className="px-2 py-1 bg-pastel-pink/80 text-slate-700 text-xs rounded-full">Fundos Imobiliários</span>
+                              <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">Recomendação: Manter</span>
+                            </div>
+                            <h3 className="text-lg font-semibold text-slate-800 mb-2">FIIs: Dividendos e Valorização</h3>
+                            <p className="text-sm text-slate-600 mb-3">Panorama completo dos fundos imobiliários brasileiros, análise de dividend yield, vacância e tendências do mercado imobiliário corporativo.</p>
+                          </div>
+                          <div className="flex items-center gap-2 ml-4">
+                            <button title="Favoritar" className="p-2 text-slate-400 hover:text-yellow-500 transition"><Star size={16} /></button>
+                            <button title="Salvar" className="p-2 text-slate-400 hover:text-blue-500 transition"><Bookmark size={16} /></button>
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-4 text-sm text-slate-600">
+                            <div className="flex items-center gap-2"><Bot size={16} /><span>Agente IA: Imobiliário</span></div>
+                            <div className="flex items-center gap-2"><Clock size={16} /><span>há 8 horas</span></div>
+                            <div className="flex items-center gap-2"><Eye size={16} /><span>1.1k visualizações</span></div>
+                          </div>
+                          <button className="px-4 py-2 bg-pastel-pink/80 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition text-sm">Ler Mais</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
+                    <div className="flex gap-6">
+                      <div className="w-48 h-32 bg-pastel-peach/80 rounded-lg flex-shrink-0 overflow-hidden">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/ee21125d96-93cb76472c018e2b9a5f.png" alt="illustration of commodities trading" className="w-full h-full object-cover" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-start justify-between mb-3">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-2">
+                              <span className="px-2 py-1 bg-pastel-peach/80 text-slate-700 text-xs rounded-full">Commodities</span>
+                              <span className="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full">Recomendação: Atenção</span>
+                            </div>
+                            <h3 className="text-lg font-semibold text-slate-800 mb-2">Commodities: Volatilidade e Oportunidades</h3>
+                            <p className="text-sm text-slate-600 mb-3">Análise do mercado de commodities agrícolas e minerais, impacto das políticas internacionais e projeções para exportações brasileiras.</p>
+                          </div>
+                          <div className="flex items-center gap-2 ml-4">
+                            <button title="Favoritar" className="p-2 text-slate-400 hover:text-yellow-500 transition"><Star size={16} /></button>
+                            <button title="Salvar" className="p-2 text-slate-400 hover:text-blue-500 transition"><Bookmark size={16} /></button>
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-4 text-sm text-slate-600">
+                            <div className="flex items-center gap-2"><Bot size={16} /><span>Agente IA: Commodities</span></div>
+                            <div className="flex items-center gap-2"><Clock size={16} /><span>há 12 horas</span></div>
+                            <div className="flex items-center gap-2"><Eye size={16} /><span>673 visualizações</span></div>
+                          </div>
+                          <button className="px-4 py-2 bg-pastel-peach/80 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition text-sm">Ler Mais</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section className="mb-8">
+                <h2 className="text-xl font-semibold text-slate-800 mb-6">Indicadores Macroeconômicos</h2>
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="bg-white rounded-xl border border-slate-200 p-6">
+                    <div className="flex items-center justify-between mb-6">
+                      <div>
+                        <h3 className="font-semibold text-slate-800 mb-1">Evolução da Taxa Selic</h3>
+                        <p className="text-sm text-slate-500">Últimos 12 meses (%)</p>
+                      </div>
+                      <button className="px-3 py-1.5 text-xs bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition">Ver Detalhes</button>
+                    </div>
+                    <ResponsiveContainer width="100%" height={350}>
+                      <LineChart data={selicData}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                        <XAxis dataKey="name" stroke="#64748b" style={{ fontSize: '12px' }} />
+                        <YAxis stroke="#64748b" style={{ fontSize: '12px' }} />
+                        <Tooltip 
+                          contentStyle={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px' }}
+                          labelStyle={{ color: '#1e293b', fontWeight: 600 }}
+                        />
+                        <Line type="monotone" dataKey="value" stroke="#C4B88A" strokeWidth={3} dot={{ fill: '#C4B88A', r: 4 }} />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </div>
+                  <div className="bg-white rounded-xl border border-slate-200 p-6">
+                    <div className="flex items-center justify-between mb-6">
+                      <div>
+                        <h3 className="font-semibold text-slate-800 mb-1">Inflação Acumulada</h3>
+                        <p className="text-sm text-slate-500">IPCA - Últimos 12 meses (%)</p>
+                      </div>
+                      <button className="px-3 py-1.5 text-xs bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition">Ver Detalhes</button>
+                    </div>
+                    <ResponsiveContainer width="100%" height={350}>
+                      <BarChart data={inflationData}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                        <XAxis dataKey="name" stroke="#64748b" style={{ fontSize: '12px' }} />
+                        <YAxis stroke="#64748b" style={{ fontSize: '12px' }} domain={[-0.1, 'auto']} />
+                        <Tooltip 
+                          contentStyle={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px' }}
+                          labelStyle={{ color: '#1e293b', fontWeight: 600 }}
+                        />
+                        <Bar dataKey="value" fill="#C48BA5" radius={[8, 8, 0, 0]} />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+              </section>
+
+              <section className="mb-8">
+                <h2 className="text-xl font-semibold text-slate-800 mb-6">Evolução dos Meios de Pagamento</h2>
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="bg-white rounded-xl border border-slate-200 p-6">
+                    <div className="flex items-center justify-between mb-6">
+                      <div>
+                        <h3 className="font-semibold text-slate-800 mb-1">Evolução do PIX</h3>
+                        <p className="text-sm text-slate-500">Transações mensais (em bilhões)</p>
+                      </div>
+                      <button className="px-3 py-1.5 text-xs bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition">Ver Detalhes</button>
+                    </div>
+                    <ResponsiveContainer width="100%" height={400}>
+                      <AreaChart data={pixData}>
+                        <defs>
+                          <linearGradient id="colorPix" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor="#8BBAA5" stopOpacity={0.4}/>
+                            <stop offset="95%" stopColor="#8BBAA5" stopOpacity={0}/>
+                          </linearGradient>
+                        </defs>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                        <XAxis dataKey="name" stroke="#64748b" style={{ fontSize: '12px' }} />
+                        <YAxis stroke="#64748b" style={{ fontSize: '12px' }} />
+                        <Tooltip 
+                          contentStyle={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px' }}
+                          labelStyle={{ color: '#1e293b', fontWeight: 600 }}
+                        />
+                        <Area type="monotone" dataKey="value" stroke="#8BBAA5" strokeWidth={3} fillOpacity={1} fill="url(#colorPix)" dot={{ fill: '#8BBAA5', r: 5 }} />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  </div>
+                  <div className="bg-white rounded-xl border border-slate-200 p-6">
+                    <div className="flex items-center justify-between mb-6">
+                      <div>
+                        <h3 className="font-semibold text-slate-800 mb-1">Evolução do Cartão de Crédito</h3>
+                        <p className="text-sm text-slate-500">Volume transacionado (R$ bilhões/mês)</p>
+                      </div>
+                      <button className="px-3 py-1.5 text-xs bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition">Ver Detalhes</button>
+                    </div>
+                    <ResponsiveContainer width="100%" height={400}>
+                      <AreaChart data={creditCardData}>
+                        <defs>
+                          <linearGradient id="colorCard" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor="#9A8BBF" stopOpacity={0.4}/>
+                            <stop offset="95%" stopColor="#9A8BBF" stopOpacity={0}/>
+                          </linearGradient>
+                        </defs>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                        <XAxis dataKey="name" stroke="#64748b" style={{ fontSize: '12px' }} />
+                        <YAxis stroke="#64748b" style={{ fontSize: '12px' }} />
+                        <Tooltip 
+                          contentStyle={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px' }}
+                          labelStyle={{ color: '#1e293b', fontWeight: 600 }}
+                        />
+                        <Area type="monotone" dataKey="value" stroke="#9A8BBF" strokeWidth={3} fillOpacity={1} fill="url(#colorCard)" dot={{ fill: '#9A8BBF', r: 5 }} />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+              </section>
+
+              <section className="mb-8">
+                <h2 className="text-xl font-semibold text-slate-800 mb-6">Insights da IA</h2>
+                <div className="grid grid-cols-3 gap-6">
+                  <div className="bg-white rounded-xl border border-slate-200 p-6">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 bg-pastel-blue/80 rounded-lg flex items-center justify-center">
+                        <Lightbulb className="text-slate-700" size={20} />
+                      </div>
+                      <span className="text-sm font-medium text-slate-700">Oportunidade Identificada</span>
+                    </div>
+                    <h3 className="font-semibold text-slate-800 mb-2">Títulos Prefixados</h3>
+                    <p className="text-sm text-slate-600 mb-4">Com a expectativa de queda na Selic, títulos prefixados longos apresentam boa relação risco-retorno.</p>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-slate-500">Confiança: 87%</span>
+                      <button className="text-pastel-blue hover:text-slate-800 font-medium">Ver Detalhes →</button>
+                    </div>
+                  </div>
+                  <div className="bg-white rounded-xl border border-slate-200 p-6">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 bg-pastel-yellow/80 rounded-lg flex items-center justify-center">
+                        <AlertTriangle className="text-slate-700" size={20} />
+                      </div>
+                      <span className="text-sm font-medium text-slate-700">Alerta de Risco</span>
+                    </div>
+                    <h3 className="font-semibold text-slate-800 mb-2">Volatilidade Cambial</h3>
+                    <p className="text-sm text-slate-600 mb-4">Aumento da volatilidade cambial devido a incertezas políticas internacionais. Considere hedge.</p>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-slate-500">Confiança: 92%</span>
+                      <button className="text-pastel-yellow hover:text-slate-800 font-medium">Ver Detalhes →</button>
+                    </div>
+                  </div>
+                  <div className="bg-white rounded-xl border border-slate-200 p-6">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 bg-pastel-green/80 rounded-lg flex items-center justify-center">
+                        <ChartLine className="text-slate-700" size={20} />
+                      </div>
+                      <span className="text-sm font-medium text-slate-700">Tendência Positiva</span>
+                    </div>
+                    <h3 className="font-semibold text-slate-800 mb-2">Setor de Tecnologia</h3>
+                    <p className="text-sm text-slate-600 mb-4">Empresas de tecnologia financeira mostram crescimento consistente e bons fundamentos.</p>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-slate-500">Confiança: 84%</span>
+                      <button className="text-pastel-green hover:text-slate-800 font-medium">Ver Detalhes →</button>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section className="mb-8">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-semibold text-slate-800">Relatórios Recentes</h2>
+                  <a href="#" className="text-sm text-slate-600 hover:text-slate-800 font-medium">Ver todos relatórios</a>
+                </div>
+                <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+                  <div className="p-6 border-b border-slate-200">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 bg-pastel-purple/80 rounded-lg flex items-center justify-center">
+                          <FileText className="text-slate-700" size={24} />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-slate-800">Relatório Mensal - Janeiro 2025</h3>
+                          <p className="text-sm text-slate-500">Análise completa do mercado financeiro brasileiro</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <span className="text-sm text-slate-500">42 páginas</span>
+                        <button className="px-4 py-2 bg-pastel-purple/80 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition text-sm">
+                          <Download size={16} className="inline mr-2" />Baixar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-6 border-b border-slate-200">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 bg-pastel-blue/80 rounded-lg flex items-center justify-center">
+                          <FileText className="text-slate-700" size={24} />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-slate-800">Análise Setorial - Tecnologia</h3>
+                          <p className="text-sm text-slate-500">Panorama do setor de tecnologia e fintechs</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <span className="text-sm text-slate-500">28 páginas</span>
+                        <button className="px-4 py-2 bg-pastel-blue/80 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition text-sm">
+                          <Download size={16} className="inline mr-2" />Baixar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-6">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 bg-pastel-green/80 rounded-lg flex items-center justify-center">
+                          <FileText className="text-slate-700" size={24} />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-slate-800">Projeções Macroeconômicas 2025</h3>
+                          <p className="text-sm text-slate-500">Expectativas para PIB, inflação e taxa de juros</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <span className="text-sm text-slate-500">35 páginas</span>
+                        <button className="px-4 py-2 bg-pastel-green/80 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition text-sm">
+                          <Download size={16} className="inline mr-2" />Baixar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section>
+                <div className="bg-pastel-blue/80 rounded-xl p-12 text-center">
+                  <div className="max-w-3xl mx-auto">
+                    <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6">
+                      <Bot className="text-slate-700" size={32} />
+                    </div>
+                    <h2 className="text-3xl font-bold text-slate-800 mb-4">Análises Personalizadas com IA</h2>
+                    <p className="text-slate-600 mb-8">Nossos agentes de IA geram análises customizadas baseadas no seu perfil de investimento e objetivos financeiros.</p>
+                    <div className="flex items-center justify-center gap-4">
+                      <button className="px-8 py-4 bg-white text-slate-800 rounded-lg font-semibold hover:bg-slate-50 transition shadow-lg">Criar Análise Personalizada</button>
+                      <button className="px-8 py-4 bg-slate-800 text-white rounded-lg font-semibold hover:bg-slate-700 transition">Falar com Especialista</button>
+                    </div>
                   </div>
                 </div>
               </section>
