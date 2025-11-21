@@ -49,6 +49,7 @@ import MeusConteudos from "./pages/MeusConteudos";
 import CriarConteudo from "./pages/CriarConteudo";
 import NovoDocumento from "./pages/NovoDocumento";
 import EvolucaoCartaoCredito from "./pages/EvolucaoCartaoCredito";
+import LerDepois from "./pages/LerDepois";
 
 import NotFound from "./pages/NotFound";
 
@@ -114,6 +115,7 @@ const App = () => {
            <Route path="/criar-conteudo" element={<CriarConteudo />} />
            <Route path="/novo-documento" element={<NovoDocumento />} />
            <Route path="/evolucao-cartao-credito" element={<EvolucaoCartaoCredito />} />
+           <Route path="/ler-depois" element={<LerDepois />} />
           
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
