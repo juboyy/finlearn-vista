@@ -39,6 +39,7 @@ import NovaNotificacao from "./pages/NovaNotificacao";
 import MinhasMetas from "./pages/MinhasMetas";
 import MinhasMetasAreas from "./pages/MinhasMetasAreas";
 import MinhasMetasNotificacoes from "./pages/MinhasMetasNotificacoes";
+import MinhasMetasResumo from "./pages/MinhasMetasResumo";
 
 import NotFound from "./pages/NotFound";
 
@@ -94,6 +95,7 @@ const App = () => {
           <Route path="/minhas-metas" element={<MinhasMetas />} />
           <Route path="/minhas-metas/areas" element={<MinhasMetasAreas />} />
           <Route path="/minhas-metas/notificacoes" element={<MinhasMetasNotificacoes />} />
+          <Route path="/minhas-metas/resumo" element={<MinhasMetasResumo />} />
           
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

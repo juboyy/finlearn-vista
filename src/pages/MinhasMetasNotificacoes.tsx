@@ -22,7 +22,7 @@ export default function MinhasMetasNotificacoes() {
                   <ArrowLeft className="inline w-4 h-4 mr-2" />
                   Voltar
                 </button>
-                <button onClick={() => navigate('/')} className="px-6 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                <button onClick={() => navigate('/minhas-metas/resumo')} className="px-6 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
                   <i className="fas fa-check mr-2"></i>
                   Salvar e Finalizar
                 </button>
@@ -544,7 +544,7 @@ export default function MinhasMetasNotificacoes() {
                   <ArrowLeft className="inline w-4 h-4 mr-2" />
                   Voltar
                 </button>
-                <button onClick={() => navigate('/')} className="px-6 py-3 bg-pastel-purple text-slate-700 rounded-xl font-medium hover:bg-opacity-80 transition shadow-sm">
+                <button onClick={() => navigate('/minhas-metas/resumo')} className="px-6 py-3 bg-pastel-purple text-slate-700 rounded-xl font-medium hover:bg-opacity-80 transition shadow-sm">
                   <i className="fas fa-check mr-2"></i>
                   Salvar e Começar
                 </button>
