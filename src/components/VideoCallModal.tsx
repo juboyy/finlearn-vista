@@ -29,6 +29,7 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
   const [activeTab, setActiveTab] = useState<'chat' | 'notes' | 'settings'>('chat');
   const [notes, setNotes] = useState('');
   const [noteColor, setNoteColor] = useState('#ffffff');
+  const notesRef = useRef<HTMLDivElement>(null);
   const localVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -113,7 +114,41 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
   };
 
   const insertEmoji = (emoji: string) => {
-    setNotes(prev => prev + emoji);
+    if (notesRef.current) {
+      const selection = window.getSelection();
+      if (selection && selection.rangeCount > 0) {
+        const range = selection.getRangeAt(0);
+        const span = document.createElement('span');
+        span.style.color = noteColor;
+        span.textContent = emoji;
+        range.insertNode(span);
+        range.collapse(false);
+      }
+    }
+  };
+
+  const handleNotesInput = (e: React.FormEvent<HTMLDivElement>) => {
+    // Aplicar cor ao texto digitado
+    const selection = window.getSelection();
+    if (selection && selection.rangeCount > 0) {
+      const range = selection.getRangeAt(0);
+      const textNode = range.startContainer;
+      
+      // Se o texto foi digitado em um nó de texto sem cor, envolve em span
+      if (textNode.nodeType === Node.TEXT_NODE && textNode.parentElement === notesRef.current) {
+        const span = document.createElement('span');
+        span.style.color = noteColor;
+        span.textContent = textNode.textContent || '';
+        textNode.parentNode?.replaceChild(span, textNode);
+        
+        // Restaurar o cursor
+        const newRange = document.createRange();
+        newRange.setStart(span.firstChild || span, span.textContent?.length || 0);
+        newRange.collapse(true);
+        selection.removeAllRanges();
+        selection.addRange(newRange);
+      }
+    }
   };
 
   const startCall = async () => {
@@ -540,13 +575,21 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                       </div>
                     </div>
 
-                    <Textarea
-                      value={notes}
-                      onChange={(e) => setNotes(e.target.value)}
-                      placeholder="Faça anotações durante a chamada..."
-                      className="flex-1 bg-slate-800 border-slate-700 resize-none"
-                      style={{ color: noteColor }}
+                    <div
+                      ref={notesRef}
+                      contentEditable
+                      onInput={handleNotesInput}
+                      className="flex-1 bg-slate-800 border border-slate-700 rounded-md p-3 overflow-y-auto resize-none focus:outline-none focus:ring-2 focus:ring-slate-600"
+                      style={{ color: noteColor, minHeight: '200px' }}
+                      suppressContentEditableWarning
+                      data-placeholder="Faça anotações durante a chamada..."
                     />
+                    <style>{`
+                      [data-placeholder]:empty:before {
+                        content: attr(data-placeholder);
+                        color: #64748b;
+                      }
+                    `}</style>
                     <p className="text-xs text-slate-500 mt-2">
                       Suas notas serão salvas automaticamente
                     </p>
