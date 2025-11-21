@@ -102,8 +102,8 @@ export const MediaUploadZone = ({
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         className={`
-          border-2 border-dashed rounded-lg p-8 text-center cursor-pointer
-          transition-all duration-200
+          block border-2 border-dashed rounded-lg p-8 text-center cursor-pointer
+          transition-all duration-200 outline-none
           ${isDragging 
             ? `border-[hsl(var(${color}))] bg-[hsl(var(${color}))]/20` 
             : 'border-border hover:border-[hsl(var(${color}))] hover:bg-[hsl(var(${color}))]/20'
