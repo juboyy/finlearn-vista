@@ -135,17 +135,10 @@ export default function MeusConteudos() {
                 <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-card"></span>
               </button>
               
-              <div className="flex items-center gap-3 pl-4 border-l border-border">
-                <div className="text-right hidden sm:block">
-                  <p className="text-sm font-semibold text-foreground">João Silva</p>
-                  <p className="text-xs text-muted-foreground">Premium</p>
-                </div>
-                <img 
-                  src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" 
-                  alt="User" 
-                  className="w-9 h-9 rounded-full object-cover border border-border"
-                />
-              </div>
+              <button className="bg-primary hover:bg-primary/90 text-primary-foreground px-5 py-2.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 shadow-sm">
+                <Plus className="w-4 h-4" />
+                Criar Novo
+              </button>
             </div>
           </div>
         </header>
@@ -155,15 +148,9 @@ export default function MeusConteudos() {
           {/* Main Content Area */}
           <main className="flex-1 overflow-y-auto bg-muted/30">
             <div className="max-w-[1400px] mx-auto px-8 py-8">
-              <div className="flex justify-between items-center mb-8">
-                <div>
-                  <h1 className="text-2xl font-bold text-foreground mb-2">Meus Conteúdos</h1>
-                  <p className="text-muted-foreground">Gerencie todos os materiais criados para sua audiência</p>
-                </div>
-                <button className="bg-primary hover:bg-primary/90 text-primary-foreground px-5 py-2.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 shadow-sm">
-                  <Plus className="w-4 h-4" />
-                  Criar Novo
-                </button>
+              <div className="mb-8">
+                <h1 className="text-2xl font-bold text-foreground mb-2">Meus Conteúdos</h1>
+                <p className="text-muted-foreground">Gerencie todos os materiais criados para sua audiência</p>
               </div>
 
               <div className="flex gap-6 mb-6">
