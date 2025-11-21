@@ -121,9 +121,9 @@ export default function EvolucaoCartaoCredito() {
               <nav className="space-y-1 text-sm">
                 <a 
                   href="#sumario-executivo" 
-                  className={`block px-3 py-2 rounded-lg transition ${
+                  className={`block px-3 py-2 rounded-lg transition-all duration-300 ${
                     activeSection === 'sumario-executivo' 
-                      ? 'bg-[#D4C5E8] text-[#475569] font-medium' 
+                      ? 'bg-[#D4C5E8] text-[#475569] font-medium animate-fade-in' 
                       : 'text-muted-foreground hover:bg-accent/10'
                   }`}
                 >
@@ -131,9 +131,9 @@ export default function EvolucaoCartaoCredito() {
                 </a>
                 <a 
                   href="#introducao" 
-                  className={`block px-3 py-2 rounded-lg transition ${
+                  className={`block px-3 py-2 rounded-lg transition-all duration-300 ${
                     activeSection === 'introducao' 
-                      ? 'bg-[#D4C5E8] text-[#475569] font-medium' 
+                      ? 'bg-[#D4C5E8] text-[#475569] font-medium animate-fade-in' 
                       : 'text-muted-foreground hover:bg-accent/10'
                   }`}
                 >
@@ -141,9 +141,9 @@ export default function EvolucaoCartaoCredito() {
                 </a>
                 <a 
                   href="#panorama-historico" 
-                  className={`block px-3 py-2 rounded-lg transition ${
+                  className={`block px-3 py-2 rounded-lg transition-all duration-300 ${
                     activeSection === 'panorama-historico' 
-                      ? 'bg-[#D4C5E8] text-[#475569] font-medium' 
+                      ? 'bg-[#D4C5E8] text-[#475569] font-medium animate-fade-in' 
                       : 'text-muted-foreground hover:bg-accent/10'
                   }`}
                 >
@@ -151,9 +151,9 @@ export default function EvolucaoCartaoCredito() {
                 </a>
                 <a 
                   href="#analise-mercado" 
-                  className={`block px-3 py-2 rounded-lg transition ${
+                  className={`block px-3 py-2 rounded-lg transition-all duration-300 ${
                     activeSection === 'analise-mercado' 
-                      ? 'bg-[#D4C5E8] text-[#475569] font-medium' 
+                      ? 'bg-[#D4C5E8] text-[#475569] font-medium animate-fade-in' 
                       : 'text-muted-foreground hover:bg-accent/10'
                   }`}
                 >
@@ -161,9 +161,9 @@ export default function EvolucaoCartaoCredito() {
                 </a>
                 <a 
                   href="#tendencias" 
-                  className={`block px-3 py-2 rounded-lg transition ${
+                  className={`block px-3 py-2 rounded-lg transition-all duration-300 ${
                     activeSection === 'tendencias' 
-                      ? 'bg-[#D4C5E8] text-[#475569] font-medium' 
+                      ? 'bg-[#D4C5E8] text-[#475569] font-medium animate-fade-in' 
                       : 'text-muted-foreground hover:bg-accent/10'
                   }`}
                 >
@@ -171,9 +171,9 @@ export default function EvolucaoCartaoCredito() {
                 </a>
                 <a 
                   href="#impacto-digital" 
-                  className={`block px-3 py-2 rounded-lg transition ${
+                  className={`block px-3 py-2 rounded-lg transition-all duration-300 ${
                     activeSection === 'impacto-digital' 
-                      ? 'bg-[#D4C5E8] text-[#475569] font-medium' 
+                      ? 'bg-[#D4C5E8] text-[#475569] font-medium animate-fade-in' 
                       : 'text-muted-foreground hover:bg-accent/10'
                   }`}
                 >
@@ -181,9 +181,9 @@ export default function EvolucaoCartaoCredito() {
                 </a>
                 <a 
                   href="#concorrencia" 
-                  className={`block px-3 py-2 rounded-lg transition ${
+                  className={`block px-3 py-2 rounded-lg transition-all duration-300 ${
                     activeSection === 'concorrencia' 
-                      ? 'bg-[#D4C5E8] text-[#475569] font-medium' 
+                      ? 'bg-[#D4C5E8] text-[#475569] font-medium animate-fade-in' 
                       : 'text-muted-foreground hover:bg-accent/10'
                   }`}
                 >
@@ -191,9 +191,9 @@ export default function EvolucaoCartaoCredito() {
                 </a>
                 <a 
                   href="#regulacao" 
-                  className={`block px-3 py-2 rounded-lg transition ${
+                  className={`block px-3 py-2 rounded-lg transition-all duration-300 ${
                     activeSection === 'regulacao' 
-                      ? 'bg-[#D4C5E8] text-[#475569] font-medium' 
+                      ? 'bg-[#D4C5E8] text-[#475569] font-medium animate-fade-in' 
                       : 'text-muted-foreground hover:bg-accent/10'
                   }`}
                 >
@@ -201,9 +201,9 @@ export default function EvolucaoCartaoCredito() {
                 </a>
                 <a 
                   href="#conclusoes" 
-                  className={`block px-3 py-2 rounded-lg transition ${
+                  className={`block px-3 py-2 rounded-lg transition-all duration-300 ${
                     activeSection === 'conclusoes' 
-                      ? 'bg-[#D4C5E8] text-[#475569] font-medium' 
+                      ? 'bg-[#D4C5E8] text-[#475569] font-medium animate-fade-in' 
                       : 'text-muted-foreground hover:bg-accent/10'
                   }`}
                 >
@@ -211,9 +211,9 @@ export default function EvolucaoCartaoCredito() {
                 </a>
                 <a 
                   href="#referencias" 
-                  className={`block px-3 py-2 rounded-lg transition ${
+                  className={`block px-3 py-2 rounded-lg transition-all duration-300 ${
                     activeSection === 'referencias' 
-                      ? 'bg-[#D4C5E8] text-[#475569] font-medium' 
+                      ? 'bg-[#D4C5E8] text-[#475569] font-medium animate-fade-in' 
                       : 'text-muted-foreground hover:bg-accent/10'
                   }`}
                 >
