@@ -1,5 +1,6 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { MenutabbarFix } from "@/components/Dashboard/MenutabbarFix";
+import { HistoricoDocumentos } from "@/components/Dashboard/HistoricoDocumentos";
 import { Bell, Play, Clock, BookOpen, TrendingUp, Headphones, Calendar, Users, MessageCircle, Star, BookMarked, Video, Award, Heart, CheckCircle, PlayCircle, Trophy, ChartLine, Shield, Bitcoin, Gavel, PieChart, Repeat, Globe, Leaf, Plus, BookOpenCheck, CreditCard, FileText, Bookmark, Quote, Download, Share2, Bot, Eye, Percent, DollarSign, Lightbulb, AlertTriangle, Coins, Mic, Search, ChevronLeft, ChevronRight, Circle } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -3336,13 +3337,7 @@ const Aprendizado = () => {
 
           {activeTab === 'analises'}
 
-          {activeTab === 'documentos' && <div className="text-center py-16">
-              <div className="w-20 h-20 bg-pastel-green rounded-full flex items-center justify-between mx-auto mb-4">
-                <i className="fas fa-file-alt text-3xl text-slate-700"></i>
-              </div>
-              <h3 className="text-xl font-semibold text-slate-800 mb-2">Documentos</h3>
-              <p className="text-slate-600">Acesse documentos técnicos e regulamentações</p>
-            </div>}
+          {activeTab === 'documentos' && <HistoricoDocumentos />}
 
           {activeTab === 'estudos' && <>
               <div className="grid grid-cols-4 gap-6 mb-8">
