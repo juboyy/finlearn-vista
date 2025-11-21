@@ -297,6 +297,106 @@ export default function CriarPaper() {
                     <p className="text-slate-700 leading-relaxed mb-6">
                       Estudos recentes têm explorado a dinâmica temporal da estrutura de capital, investigando como as empresas ajustam seus níveis de endividamento ao longo do tempo em resposta a choques econômicos e mudanças nas condições de mercado. A velocidade de ajuste em direção à estrutura de capital alvo tem sido objeto de intenso debate acadêmico, com evidências sugerindo que custos de ajustamento e fricções de mercado podem retardar esse processo de convergência
                     </p>
+
+                    <div className="bg-gradient-to-r from-pastel-purple to-pastel-blue bg-opacity-20 border border-pastel-purple rounded-xl p-5 mb-6">
+                      <div className="flex items-start gap-3 mb-4">
+                        <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center flex-shrink-0">
+                          <i className="fas fa-wand-magic-sparkles text-pastel-purple"></i>
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="text-sm font-semibold text-slate-800 mb-1">Sugestões de Continuação da IA</h4>
+                          <p className="text-xs text-slate-600">Selecione uma opção ou dite sua própria ideia</p>
+                        </div>
+                      </div>
+
+                      <div className="space-y-3 mb-4">
+                        <button className="w-full text-left p-4 bg-white border-2 border-slate-200 rounded-lg hover:border-pastel-purple hover:shadow-sm transition group">
+                          <div className="flex items-start gap-3">
+                            <div className="w-8 h-8 bg-pastel-blue rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition">
+                              <span className="text-sm font-bold text-slate-700">1</span>
+                            </div>
+                            <div className="flex-1">
+                              <p className="text-sm text-slate-700 leading-relaxed">
+                                <span className="font-medium">Abordagem Metodológica:</span> "Para investigar empiricamente essas questões, este estudo utiliza uma amostra de 247 empresas não-financeiras listadas na B3 durante o período de 2015 a 2023, totalizando 2.223 observações firma-ano. Empregamos modelos de dados em painel com efeitos fixos de firma e tempo..."
+                              </p>
+                              <div className="flex items-center gap-2 mt-2">
+                                <span className="px-2 py-1 bg-pastel-blue bg-opacity-50 rounded text-xs text-slate-600">Metodologia</span>
+                                <span className="text-xs text-slate-500">~87 palavras</span>
+                              </div>
+                            </div>
+                          </div>
+                        </button>
+
+                        <button className="w-full text-left p-4 bg-white border-2 border-slate-200 rounded-lg hover:border-pastel-purple hover:shadow-sm transition group">
+                          <div className="flex items-start gap-3">
+                            <div className="w-8 h-8 bg-pastel-green rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition">
+                              <span className="text-sm font-bold text-slate-700">2</span>
+                            </div>
+                            <div className="flex-1">
+                              <p className="text-sm text-slate-700 leading-relaxed">
+                                <span className="font-medium">Gap da Literatura:</span> "Apesar da extensa literatura sobre estrutura de capital, ainda existem lacunas importantes no entendimento das particularidades dos mercados emergentes. Especificamente, poucos estudos examinaram como a interação entre fatores macroeconômicos e características específicas das firmas afeta as decisões de financiamento no contexto brasileiro..."
+                              </p>
+                              <div className="flex items-center gap-2 mt-2">
+                                <span className="px-2 py-1 bg-pastel-green bg-opacity-50 rounded text-xs text-slate-600">Revisão Literatura</span>
+                                <span className="text-xs text-slate-500">~73 palavras</span>
+                              </div>
+                            </div>
+                          </div>
+                        </button>
+
+                        <button className="w-full text-left p-4 bg-white border-2 border-slate-200 rounded-lg hover:border-pastel-purple hover:shadow-sm transition group">
+                          <div className="flex items-start gap-3">
+                            <div className="w-8 h-8 bg-pastel-yellow rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition">
+                              <span className="text-sm font-bold text-slate-700">3</span>
+                            </div>
+                            <div className="flex-1">
+                              <p className="text-sm text-slate-700 leading-relaxed">
+                                <span className="font-medium">Contribuição Teórica:</span> "Este trabalho contribui para a literatura de estrutura de capital em múltiplas dimensões. Primeiro, fornecemos evidências atualizadas sobre os determinantes da estrutura de capital em um mercado emergente relevante. Segundo, investigamos a velocidade de ajuste em direção à estrutura de capital alvo, considerando diferentes contextos econômicos..."
+                              </p>
+                              <div className="flex items-center gap-2 mt-2">
+                                <span className="px-2 py-1 bg-pastel-yellow bg-opacity-50 rounded text-xs text-slate-600">Contribuição</span>
+                                <span className="text-xs text-slate-500">~79 palavras</span>
+                              </div>
+                            </div>
+                          </div>
+                        </button>
+                      </div>
+
+                      <div className="border-t border-slate-200 pt-4">
+                        <div className="bg-white rounded-lg border-2 border-slate-200 p-3">
+                          <div className="flex items-center gap-3">
+                            <button 
+                              onClick={handleVoiceInput}
+                              className={`w-12 h-12 rounded-lg flex items-center justify-center hover:bg-opacity-80 transition flex-shrink-0 group ${
+                                isRecording ? 'bg-pastel-pink animate-pulse' : 'bg-pastel-purple'
+                              }`}
+                            >
+                              <i className={`text-slate-700 text-lg group-hover:scale-110 transition ${
+                                isRecording ? 'fas fa-stop' : 'fas fa-microphone'
+                              }`}></i>
+                            </button>
+                            <div className="flex-1">
+                              <input 
+                                type="text" 
+                                placeholder="Ou dite sua própria sugestão de continuação..." 
+                                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-pastel-purple"
+                              />
+                            </div>
+                            <button className="px-4 py-2 bg-slate-700 text-white rounded-lg text-sm font-medium hover:bg-slate-800 transition">
+                              Gerar
+                            </button>
+                          </div>
+                          <p className="text-xs text-slate-500 mt-2 ml-15">
+                            <i className="fas fa-info-circle mr-1"></i>
+                            Clique no microfone e dite sua ideia, ou digite diretamente
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <p className="text-slate-700 leading-relaxed">
+                      [Texto continua em construção...]
+                    </p>
                   </div>
                 </div>
               </section>
