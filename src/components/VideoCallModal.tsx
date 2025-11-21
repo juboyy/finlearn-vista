@@ -1,6 +1,10 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Video, Mic, MicOff, VideoOff, Phone, Monitor, Minimize2, Maximize2 } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Video, Mic, MicOff, VideoOff, Phone, Monitor, Minimize2, Maximize2, MessageCircle, FileText, Settings, Send, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { toast } from "sonner";
 
@@ -17,6 +21,11 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
   const [isConnecting, setIsConnecting] = useState(true);
   const [isConnected, setIsConnected] = useState(false);
   const [isLocalVideoMinimized, setIsLocalVideoMinimized] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [chatMessages, setChatMessages] = useState<Array<{role: 'user' | 'agent', message: string, time: string}>>([]);
+  const [messageInput, setMessageInput] = useState('');
+  const [notes, setNotes] = useState('');
+  const [callDuration, setCallDuration] = useState(0);
   const localVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -32,6 +41,42 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
       endCall();
     };
   }, [open]);
+
+  // Cronômetro da chamada
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isConnected && open) {
+      interval = setInterval(() => {
+        setCallDuration(prev => prev + 1);
+      }, 1000);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+      if (!open) setCallDuration(0);
+    };
+  }, [isConnected, open]);
+
+  const formatDuration = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  const handleSendMessage = () => {
+    if (!messageInput.trim()) return;
+    const time = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    setChatMessages(prev => [...prev, { role: 'user', message: messageInput, time }]);
+    setMessageInput('');
+    
+    // Simula resposta do agente
+    setTimeout(() => {
+      setChatMessages(prev => [...prev, { 
+        role: 'agent', 
+        message: 'Entendi sua mensagem. Como posso ajudá-lo?', 
+        time: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+      }]);
+    }, 1000);
+  };
 
   const startCall = async () => {
     try {
@@ -104,35 +149,39 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-6xl h-[90vh] p-0 bg-slate-950 border-slate-800">
+      <DialogContent className="max-w-[95vw] h-[90vh] p-0 bg-slate-950 border-slate-800">
         <DialogDescription className="sr-only">
           Chamada de vídeo com {agentName}
         </DialogDescription>
-        <div className="h-full flex flex-col">
-          <DialogHeader className="px-6 py-4 bg-gradient-to-b from-slate-900/80 to-transparent absolute top-0 left-0 right-0 z-10">
-            <DialogTitle className="text-white flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-pastel-purple/50">
-                <img src={agentAvatar} alt={agentName} className="w-full h-full object-cover" />
-              </div>
-              <div>
-                <p className="text-lg font-semibold">{agentName}</p>
-                {isConnecting && (
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-pastel-yellow rounded-full animate-pulse"></div>
-                    <p className="text-sm text-slate-300">Conectando...</p>
+        <div className="h-full flex">
+          {/* Área de vídeo */}
+          <div className="flex-1 flex flex-col relative">
+            <DialogHeader className="px-6 py-4 bg-gradient-to-b from-slate-900/80 to-transparent absolute top-0 left-0 right-0 z-10">
+              <DialogTitle className="text-white flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-pastel-purple/50">
+                    <img src={agentAvatar} alt={agentName} className="w-full h-full object-cover" />
                   </div>
-                )}
-                {isConnected && (
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <p className="text-sm text-green-400">Conectado</p>
+                  <div>
+                    <p className="text-lg font-semibold">{agentName}</p>
+                    {isConnecting && (
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-pastel-yellow rounded-full animate-pulse"></div>
+                        <p className="text-sm text-slate-300">Conectando...</p>
+                      </div>
+                    )}
+                    {isConnected && (
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <p className="text-sm text-green-400">Conectado • {formatDuration(callDuration)}</p>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-            </DialogTitle>
-          </DialogHeader>
+                </div>
+              </DialogTitle>
+            </DialogHeader>
 
-          <div className="flex-1 relative bg-slate-950">
+            <div className="flex-1 relative bg-slate-950">
             {/* Vídeo do Agente IA (Principal) */}
             <div className="absolute inset-0 flex items-center justify-center">
               {isConnecting ? (
@@ -217,8 +266,8 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
             )}
           </div>
 
-          {/* Controles */}
-          <div className="px-8 py-6 bg-gradient-to-t from-slate-900/95 to-slate-900/80 backdrop-blur-md absolute bottom-0 left-0 right-0">
+            {/* Controles */}
+            <div className="px-8 py-6 bg-gradient-to-t from-slate-900/95 to-slate-900/80 backdrop-blur-md absolute bottom-0 left-0 right-0">
             <div className="flex items-center justify-center gap-4 mb-4">
               <Button
                 variant="outline"
@@ -278,7 +327,156 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                 <span>10 créditos/min</span>
               </div>
             </div>
+            </div>
           </div>
+
+          {/* Sidebar lateral */}
+          <div className={`${isSidebarOpen ? 'w-96' : 'w-0'} transition-all duration-300 bg-slate-900 border-l border-slate-800 flex flex-col overflow-hidden`}>
+            {isSidebarOpen && (
+              <>
+                <div className="p-4 border-b border-slate-800 flex items-center justify-between">
+                  <h3 className="text-white font-semibold">Painel</h3>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setIsSidebarOpen(false)}
+                    className="text-slate-400 hover:text-white"
+                  >
+                    <ChevronRight size={20} />
+                  </Button>
+                </div>
+
+                <Tabs defaultValue="chat" className="flex-1 flex flex-col">
+                  <TabsList className="w-full grid grid-cols-3 bg-slate-800/50 rounded-none border-b border-slate-800">
+                    <TabsTrigger value="chat" className="data-[state=active]:bg-slate-700">
+                      <MessageCircle size={16} className="mr-2" />
+                      Chat
+                    </TabsTrigger>
+                    <TabsTrigger value="notes" className="data-[state=active]:bg-slate-700">
+                      <FileText size={16} className="mr-2" />
+                      Notas
+                    </TabsTrigger>
+                    <TabsTrigger value="settings" className="data-[state=active]:bg-slate-700">
+                      <Settings size={16} className="mr-2" />
+                      Opções
+                    </TabsTrigger>
+                  </TabsList>
+
+                  <TabsContent value="chat" className="flex-1 flex flex-col p-0 mt-0">
+                    <ScrollArea className="flex-1 p-4">
+                      <div className="space-y-3">
+                        {chatMessages.length === 0 ? (
+                          <div className="text-center text-slate-500 py-8">
+                            <MessageCircle size={48} className="mx-auto mb-3 opacity-50" />
+                            <p>Nenhuma mensagem ainda</p>
+                            <p className="text-sm">Envie uma mensagem para começar</p>
+                          </div>
+                        ) : (
+                          chatMessages.map((msg, idx) => (
+                            <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                              <div className={`max-w-[80%] rounded-lg p-3 ${
+                                msg.role === 'user' 
+                                  ? 'bg-pastel-blue text-slate-800' 
+                                  : 'bg-slate-800 text-white'
+                              }`}>
+                                <p className="text-sm">{msg.message}</p>
+                                <p className="text-xs opacity-60 mt-1">{msg.time}</p>
+                              </div>
+                            </div>
+                          ))
+                        )}
+                      </div>
+                    </ScrollArea>
+                    <div className="p-4 border-t border-slate-800">
+                      <div className="flex gap-2">
+                        <Input
+                          value={messageInput}
+                          onChange={(e) => setMessageInput(e.target.value)}
+                          onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                          placeholder="Digite uma mensagem..."
+                          className="flex-1 bg-slate-800 border-slate-700 text-white"
+                        />
+                        <Button
+                          onClick={handleSendMessage}
+                          size="icon"
+                          className="bg-pastel-blue hover:bg-pastel-blue/80 text-slate-800"
+                        >
+                          <Send size={18} />
+                        </Button>
+                      </div>
+                    </div>
+                  </TabsContent>
+
+                  <TabsContent value="notes" className="flex-1 flex flex-col p-4 mt-0">
+                    <Textarea
+                      value={notes}
+                      onChange={(e) => setNotes(e.target.value)}
+                      placeholder="Faça anotações durante a chamada..."
+                      className="flex-1 bg-slate-800 border-slate-700 text-white resize-none"
+                    />
+                    <p className="text-xs text-slate-500 mt-2">
+                      Suas notas serão salvas automaticamente
+                    </p>
+                  </TabsContent>
+
+                  <TabsContent value="settings" className="flex-1 p-4 mt-0">
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="text-white font-medium mb-3">Qualidade de Vídeo</h4>
+                        <div className="space-y-2">
+                          <label className="flex items-center gap-2 text-sm text-slate-300">
+                            <input type="radio" name="quality" defaultChecked className="text-pastel-blue" />
+                            Alta (720p)
+                          </label>
+                          <label className="flex items-center gap-2 text-sm text-slate-300">
+                            <input type="radio" name="quality" className="text-pastel-blue" />
+                            Média (480p)
+                          </label>
+                          <label className="flex items-center gap-2 text-sm text-slate-300">
+                            <input type="radio" name="quality" className="text-pastel-blue" />
+                            Baixa (360p)
+                          </label>
+                        </div>
+                      </div>
+
+                      <div className="pt-4 border-t border-slate-800">
+                        <h4 className="text-white font-medium mb-3">Gravação</h4>
+                        <label className="flex items-center justify-between text-sm text-slate-300">
+                          <span>Gravar chamada</span>
+                          <input type="checkbox" className="text-pastel-blue" />
+                        </label>
+                      </div>
+
+                      <div className="pt-4 border-t border-slate-800">
+                        <h4 className="text-white font-medium mb-3">Notificações</h4>
+                        <label className="flex items-center justify-between text-sm text-slate-300">
+                          <span>Sons de notificação</span>
+                          <input type="checkbox" defaultChecked className="text-pastel-blue" />
+                        </label>
+                      </div>
+
+                      <div className="pt-4 border-t border-slate-800">
+                        <Button variant="outline" className="w-full border-slate-700 text-slate-300 hover:bg-slate-800">
+                          Estatísticas da chamada
+                        </Button>
+                      </div>
+                    </div>
+                  </TabsContent>
+                </Tabs>
+              </>
+            )}
+          </div>
+
+          {/* Botão para abrir sidebar quando fechada */}
+          {!isSidebarOpen && (
+            <Button
+              onClick={() => setIsSidebarOpen(true)}
+              className="absolute top-1/2 right-4 -translate-y-1/2 bg-slate-800 hover:bg-slate-700 text-white rounded-full w-12 h-12 p-0 shadow-xl"
+              title="Abrir painel"
+            >
+              <ChevronLeft size={24} />
+            </Button>
+          )}
         </div>
       </DialogContent>
     </Dialog>
