@@ -223,9 +223,13 @@ export default function MinhaAgendaDia() {
                       {/* Event 1 - 08:00 */}
                       <div className="absolute top-[40px] left-3 right-3 h-[75px] bg-pastel-rose rounded-lg px-4 py-3 shadow-sm border border-slate-200 cursor-pointer hover:shadow-md transition flex items-center">
                         <div className="flex items-center gap-3 w-full">
-                          <i className="fas fa-podcast text-slate-600 text-sm flex-shrink-0"></i>
+                          <div className="flex-shrink-0">
+                            <i className="fas fa-podcast text-slate-600 text-sm"></i>
+                          </div>
                           <div className="flex-1 min-w-0">
-                            <span className="text-xs font-semibold text-slate-600 block mb-0.5">08:00 - 08:45</span>
+                            <div className="flex items-center gap-2 mb-0.5">
+                              <span className="text-xs font-semibold text-slate-600">08:00 - 08:45</span>
+                            </div>
                             <h4 className="text-sm font-semibold text-slate-700 mb-0.5 leading-tight">Podcast: Análise Macroeconômica</h4>
                             <p className="text-xs text-slate-600 leading-tight">Episódio: Juros e Inflação 2024</p>
                           </div>
@@ -236,9 +240,13 @@ export default function MinhaAgendaDia() {
                       {/* Event 2 - 09:30 */}
                       <div className="absolute top-[180px] left-3 right-3 h-[75px] bg-pastel-blue rounded-lg px-4 py-3 shadow-sm border border-slate-200 cursor-pointer hover:shadow-md transition flex items-center">
                         <div className="flex items-center gap-3 w-full">
-                          <i className="fas fa-users text-slate-600 text-sm flex-shrink-0"></i>
+                          <div className="flex-shrink-0">
+                            <i className="fas fa-users text-slate-600 text-sm"></i>
+                          </div>
                           <div className="flex-1 min-w-0">
-                            <span className="text-xs font-semibold text-slate-600 block mb-0.5">09:30 - 10:30</span>
+                            <div className="flex items-center gap-2 mb-0.5">
+                              <span className="text-xs font-semibold text-slate-600">09:30 - 10:30</span>
+                            </div>
                             <h4 className="text-sm font-semibold text-slate-700 mb-0.5 leading-tight">Reunião: Revisão de Portfólio</h4>
                             <p className="text-xs text-slate-600 leading-tight">Sala de Reuniões 2</p>
                           </div>
@@ -249,9 +257,13 @@ export default function MinhaAgendaDia() {
                       {/* Event 3 - 11:00 */}
                       <div className="absolute top-[280px] left-3 right-3 h-[75px] bg-pastel-rose rounded-lg px-4 py-3 shadow-sm border border-slate-200 cursor-pointer hover:shadow-md transition flex items-center">
                         <div className="flex items-center gap-3 w-full">
-                          <i className="fas fa-book-open text-slate-600 text-sm flex-shrink-0"></i>
+                          <div className="flex-shrink-0">
+                            <i className="fas fa-book-open text-slate-600 text-sm"></i>
+                          </div>
                           <div className="flex-1 min-w-0">
-                            <span className="text-xs font-semibold text-slate-600 block mb-0.5">11:00 - 12:00</span>
+                            <div className="flex items-center gap-2 mb-0.5">
+                              <span className="text-xs font-semibold text-slate-600">11:00 - 12:00</span>
+                            </div>
                             <h4 className="text-sm font-semibold text-slate-700 mb-0.5 leading-tight">Estudo: Fundos de Investimento</h4>
                             <p className="text-xs text-slate-600 leading-tight">Capítulo 5: Renda Variável</p>
                           </div>
@@ -262,9 +274,13 @@ export default function MinhaAgendaDia() {
                       {/* Event 4 - 14:00 */}
                       <div className="absolute top-[460px] left-3 right-3 h-[75px] bg-pastel-purple rounded-lg px-4 py-3 shadow-sm border border-slate-200 cursor-pointer hover:shadow-md transition flex items-center">
                         <div className="flex items-center gap-3 w-full">
-                          <i className="fas fa-graduation-cap text-slate-600 text-sm flex-shrink-0"></i>
+                          <div className="flex-shrink-0">
+                            <i className="fas fa-graduation-cap text-slate-600 text-sm"></i>
+                          </div>
                           <div className="flex-1 min-w-0">
-                            <span className="text-xs font-semibold text-slate-600 block mb-0.5">14:00 - 15:00</span>
+                            <div className="flex items-center gap-2 mb-0.5">
+                              <span className="text-xs font-semibold text-slate-600">14:00 - 15:00</span>
+                            </div>
                             <h4 className="text-sm font-semibold text-slate-700 mb-0.5 leading-tight">Treinamento: Compliance Bancário</h4>
                             <p className="text-xs text-slate-600 leading-tight">Módulo 3: Prevenção à Lavagem</p>
                           </div>
@@ -275,9 +291,13 @@ export default function MinhaAgendaDia() {
                       {/* Event 5 - 15:30 */}
                       <div className="absolute top-[560px] left-3 right-3 h-[75px] bg-pastel-rose rounded-lg px-4 py-3 shadow-sm border border-slate-200 cursor-pointer hover:shadow-md transition flex items-center">
                         <div className="flex items-center gap-3 w-full">
-                          <i className="fas fa-video text-slate-600 text-sm flex-shrink-0"></i>
+                          <div className="flex-shrink-0">
+                            <i className="fas fa-video text-slate-600 text-sm"></i>
+                          </div>
                           <div className="flex-1 min-w-0">
-                            <span className="text-xs font-semibold text-slate-600 block mb-0.5">15:30 - 16:15</span>
+                            <div className="flex items-center gap-2 mb-0.5">
+                              <span className="text-xs font-semibold text-slate-600">15:30 - 16:15</span>
+                            </div>
                             <h4 className="text-sm font-semibold text-slate-700 mb-0.5 leading-tight">Vídeo: Análise de Crédito</h4>
                             <p className="text-xs text-slate-600 leading-tight">Curso: Gestão de Risco</p>
                           </div>
@@ -288,9 +308,13 @@ export default function MinhaAgendaDia() {
                       {/* Event 6 - 16:30 */}
                       <div className="absolute top-[660px] left-3 right-3 h-[75px] bg-pastel-green rounded-lg px-4 py-3 shadow-sm border border-slate-200 cursor-pointer hover:shadow-md transition flex items-center">
                         <div className="flex items-center gap-3 w-full">
-                          <i className="fas fa-desktop text-slate-600 text-sm flex-shrink-0"></i>
+                          <div className="flex-shrink-0">
+                            <i className="fas fa-desktop text-slate-600 text-sm"></i>
+                          </div>
                           <div className="flex-1 min-w-0">
-                            <span className="text-xs font-semibold text-slate-600 block mb-0.5">16:30 - 17:30</span>
+                            <div className="flex items-center gap-2 mb-0.5">
+                              <span className="text-xs font-semibold text-slate-600">16:30 - 17:30</span>
+                            </div>
                             <h4 className="text-sm font-semibold text-slate-700 mb-0.5 leading-tight">Webinar: Tendências do Mercado</h4>
                             <p className="text-xs text-slate-600 leading-tight">Especialista: Dr. Carlos Mendes</p>
                           </div>
@@ -301,9 +325,13 @@ export default function MinhaAgendaDia() {
                       {/* Event 7 - 18:00 */}
                       <div className="absolute top-[760px] left-3 right-3 h-[75px] bg-pastel-rose rounded-lg px-4 py-3 shadow-sm border border-slate-200 cursor-pointer hover:shadow-md transition flex items-center">
                         <div className="flex items-center gap-3 w-full">
-                          <i className="fas fa-podcast text-slate-600 text-sm flex-shrink-0"></i>
+                          <div className="flex-shrink-0">
+                            <i className="fas fa-podcast text-slate-600 text-sm"></i>
+                          </div>
                           <div className="flex-1 min-w-0">
-                            <span className="text-xs font-semibold text-slate-600 block mb-0.5">18:00 - 18:30</span>
+                            <div className="flex items-center gap-2 mb-0.5">
+                              <span className="text-xs font-semibold text-slate-600">18:00 - 18:30</span>
+                            </div>
                             <h4 className="text-sm font-semibold text-slate-700 mb-0.5 leading-tight">Podcast: Mercado de Capitais</h4>
                             <p className="text-xs text-slate-600 leading-tight">Episódio: IPOs e Ofertas Públicas</p>
                           </div>
@@ -314,15 +342,22 @@ export default function MinhaAgendaDia() {
                       {/* Event 8 - 19:00 */}
                       <div className="absolute top-[860px] left-3 right-3 h-[75px] bg-pastel-rose rounded-lg px-4 py-3 shadow-sm border border-slate-200 cursor-pointer hover:shadow-md transition flex items-center">
                         <div className="flex items-center gap-3 w-full">
-                          <i className="fas fa-book-open text-slate-600 text-sm flex-shrink-0"></i>
+                          <div className="flex-shrink-0">
+                            <i className="fas fa-book-open text-slate-600 text-sm"></i>
+                          </div>
                           <div className="flex-1 min-w-0">
-                            <span className="text-xs font-semibold text-slate-600 block mb-0.5">19:00 - 19:45</span>
+                            <div className="flex items-center gap-2 mb-0.5">
+                              <span className="text-xs font-semibold text-slate-600">19:00 - 19:45</span>
+                            </div>
                             <h4 className="text-sm font-semibold text-slate-700 mb-0.5 leading-tight">Leitura: Artigo Técnico</h4>
                             <p className="text-xs text-slate-600 leading-tight">Tema: ESG e Finanças Sustentáveis</p>
                           </div>
                           <i className="fas fa-file-alt text-slate-600 text-sm flex-shrink-0"></i>
                         </div>
                       </div>
+
+                      <div className="h-20 border-b border-slate-100"></div>
+                      <div className="h-20"></div>
                     </div>
                   </div>
                 </div>
@@ -332,33 +367,149 @@ export default function MinhaAgendaDia() {
               <section className="bg-white rounded-xl p-6 border border-slate-200">
                 <h2 className="text-lg font-semibold text-slate-800 mb-4">Lista de Atividades</h2>
                 <div className="space-y-3">
-                  {[
-                    { time: '08:00 - 08:45', title: 'Podcast: Análise Macroeconômica', location: 'Episódio: Juros e Inflação 2024', color: 'pastel-rose', icon: 'fa-podcast', category: 'Estudo' },
-                    { time: '09:30 - 10:30', title: 'Reunião: Revisão de Portfólio', location: 'Sala de Reuniões 2', color: 'pastel-blue', icon: 'fa-users', category: 'Reunião' },
-                    { time: '11:00 - 12:00', title: 'Estudo: Fundos de Investimento', location: 'Capítulo 5: Renda Variável', color: 'pastel-rose', icon: 'fa-book-open', category: 'Estudo' },
-                    { time: '14:00 - 15:00', title: 'Treinamento: Compliance Bancário', location: 'Módulo 3: Prevenção à Lavagem', color: 'pastel-purple', icon: 'fa-graduation-cap', category: 'Treinamento' },
-                    { time: '15:30 - 16:15', title: 'Vídeo: Análise de Crédito', location: 'Curso: Gestão de Risco', color: 'pastel-rose', icon: 'fa-video', category: 'Estudo' },
-                    { time: '16:30 - 17:30', title: 'Webinar: Tendências do Mercado', location: 'Especialista: Dr. Carlos Mendes', color: 'pastel-green', icon: 'fa-desktop', category: 'Webinar' },
-                    { time: '18:00 - 18:30', title: 'Podcast: Mercado de Capitais', location: 'Episódio: IPOs e Ofertas Públicas', color: 'pastel-rose', icon: 'fa-podcast', category: 'Estudo' },
-                    { time: '19:00 - 19:45', title: 'Leitura: Artigo Técnico', location: 'Tema: ESG e Finanças Sustentáveis', color: 'pastel-rose', icon: 'fa-book-open', category: 'Estudo' },
-                  ].map((event, index) => (
-                    <div key={index} className={`flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-${event.color} hover:bg-slate-50 transition cursor-pointer`}>
-                      <div className={`w-1 h-16 bg-${event.color} rounded-full`}></div>
-                      <div className={`w-12 h-12 bg-${event.color} rounded-lg flex items-center justify-center flex-shrink-0`}>
-                        <i className={`fas ${event.icon} text-slate-600`}></i>
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="text-sm font-semibold text-slate-800">{event.title}</h4>
-                        <p className="text-xs text-slate-500 mt-1">{event.time} • {event.location}</p>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className={`px-3 py-1 bg-${event.color} bg-opacity-20 text-${event.color} text-xs font-medium rounded-full`}>{event.category}</span>
-                        <button className="p-2 text-slate-400 hover:text-slate-600">
-                          <i className="fas fa-ellipsis-v"></i>
-                        </button>
-                      </div>
+                  {/* Event 1 */}
+                  <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-pastel-rose hover:bg-slate-50 transition cursor-pointer">
+                    <div className="w-1 h-16 bg-pastel-rose rounded-full"></div>
+                    <div className="w-12 h-12 bg-pastel-rose rounded-lg flex items-center justify-center flex-shrink-0">
+                      <i className="fas fa-podcast text-slate-600"></i>
                     </div>
-                  ))}
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-sm font-semibold text-slate-800">Podcast: Análise Macroeconômica</h4>
+                      <p className="text-xs text-slate-500 mt-1">08:00 - 08:45 • Episódio: Juros e Inflação 2024</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="px-3 py-1 bg-pastel-rose bg-opacity-20 text-pastel-rose text-xs font-medium rounded-full">Estudo</span>
+                      <button className="p-2 text-slate-400 hover:text-slate-600">
+                        <i className="fas fa-ellipsis-v"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Event 2 */}
+                  <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-pastel-blue hover:bg-slate-50 transition cursor-pointer">
+                    <div className="w-1 h-16 bg-pastel-blue rounded-full"></div>
+                    <div className="w-12 h-12 bg-pastel-blue rounded-lg flex items-center justify-center flex-shrink-0">
+                      <i className="fas fa-users text-slate-600"></i>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-sm font-semibold text-slate-800">Reunião: Revisão de Portfólio</h4>
+                      <p className="text-xs text-slate-500 mt-1">09:30 - 10:30 • Sala de Reuniões 2</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="px-3 py-1 bg-pastel-blue bg-opacity-20 text-pastel-blue text-xs font-medium rounded-full">Reunião</span>
+                      <button className="p-2 text-slate-400 hover:text-slate-600">
+                        <i className="fas fa-ellipsis-v"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Event 3 */}
+                  <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-pastel-rose hover:bg-slate-50 transition cursor-pointer">
+                    <div className="w-1 h-16 bg-pastel-rose rounded-full"></div>
+                    <div className="w-12 h-12 bg-pastel-rose rounded-lg flex items-center justify-center flex-shrink-0">
+                      <i className="fas fa-book-open text-slate-600"></i>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-sm font-semibold text-slate-800">Estudo: Fundos de Investimento</h4>
+                      <p className="text-xs text-slate-500 mt-1">11:00 - 12:00 • Capítulo 5: Renda Variável</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="px-3 py-1 bg-pastel-rose bg-opacity-20 text-pastel-rose text-xs font-medium rounded-full">Estudo</span>
+                      <button className="p-2 text-slate-400 hover:text-slate-600">
+                        <i className="fas fa-ellipsis-v"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Event 4 */}
+                  <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-pastel-purple hover:bg-slate-50 transition cursor-pointer">
+                    <div className="w-1 h-16 bg-pastel-purple rounded-full"></div>
+                    <div className="w-12 h-12 bg-pastel-purple rounded-lg flex items-center justify-center flex-shrink-0">
+                      <i className="fas fa-graduation-cap text-slate-600"></i>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-sm font-semibold text-slate-800">Treinamento: Compliance Bancário</h4>
+                      <p className="text-xs text-slate-500 mt-1">14:00 - 15:00 • Módulo 3: Prevenção à Lavagem</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="px-3 py-1 bg-pastel-purple bg-opacity-20 text-pastel-purple text-xs font-medium rounded-full">Treinamento</span>
+                      <button className="p-2 text-slate-400 hover:text-slate-600">
+                        <i className="fas fa-ellipsis-v"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Event 5 */}
+                  <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-pastel-rose hover:bg-slate-50 transition cursor-pointer">
+                    <div className="w-1 h-16 bg-pastel-rose rounded-full"></div>
+                    <div className="w-12 h-12 bg-pastel-rose rounded-lg flex items-center justify-center flex-shrink-0">
+                      <i className="fas fa-video text-slate-600"></i>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-sm font-semibold text-slate-800">Vídeo: Análise de Crédito</h4>
+                      <p className="text-xs text-slate-500 mt-1">15:30 - 16:15 • Curso: Gestão de Risco</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="px-3 py-1 bg-pastel-rose bg-opacity-20 text-pastel-rose text-xs font-medium rounded-full">Estudo</span>
+                      <button className="p-2 text-slate-400 hover:text-slate-600">
+                        <i className="fas fa-ellipsis-v"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Event 6 */}
+                  <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-pastel-green hover:bg-slate-50 transition cursor-pointer">
+                    <div className="w-1 h-16 bg-pastel-green rounded-full"></div>
+                    <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center flex-shrink-0">
+                      <i className="fas fa-desktop text-slate-600"></i>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-sm font-semibold text-slate-800">Webinar: Tendências do Mercado</h4>
+                      <p className="text-xs text-slate-500 mt-1">16:30 - 17:30 • Especialista: Dr. Carlos Mendes</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="px-3 py-1 bg-pastel-green bg-opacity-20 text-pastel-green text-xs font-medium rounded-full">Webinar</span>
+                      <button className="p-2 text-slate-400 hover:text-slate-600">
+                        <i className="fas fa-ellipsis-v"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Event 7 */}
+                  <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-pastel-rose hover:bg-slate-50 transition cursor-pointer">
+                    <div className="w-1 h-16 bg-pastel-rose rounded-full"></div>
+                    <div className="w-12 h-12 bg-pastel-rose rounded-lg flex items-center justify-center flex-shrink-0">
+                      <i className="fas fa-podcast text-slate-600"></i>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-sm font-semibold text-slate-800">Podcast: Mercado de Capitais</h4>
+                      <p className="text-xs text-slate-500 mt-1">18:00 - 18:30 • Episódio: IPOs e Ofertas Públicas</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="px-3 py-1 bg-pastel-rose bg-opacity-20 text-pastel-rose text-xs font-medium rounded-full">Estudo</span>
+                      <button className="p-2 text-slate-400 hover:text-slate-600">
+                        <i className="fas fa-ellipsis-v"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Event 8 */}
+                  <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-pastel-rose hover:bg-slate-50 transition cursor-pointer">
+                    <div className="w-1 h-16 bg-pastel-rose rounded-full"></div>
+                    <div className="w-12 h-12 bg-pastel-rose rounded-lg flex items-center justify-center flex-shrink-0">
+                      <i className="fas fa-book-open text-slate-600"></i>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-sm font-semibold text-slate-800">Leitura: Artigo Técnico</h4>
+                      <p className="text-xs text-slate-500 mt-1">19:00 - 19:45 • Tema: ESG e Finanças Sustentáveis</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="px-3 py-1 bg-pastel-rose bg-opacity-20 text-pastel-rose text-xs font-medium rounded-full">Estudo</span>
+                      <button className="p-2 text-slate-400 hover:text-slate-600">
+                        <i className="fas fa-ellipsis-v"></i>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </section>
             </div>

@@ -121,6 +121,7 @@ export default {
           indigo: "hsl(var(--pastel-indigo))",
           purple: "hsl(var(--pastel-purple))",
           pink: "hsl(var(--pastel-pink))",
+          rose: "hsl(var(--pastel-rose))",
           green: "hsl(var(--pastel-green))",
           yellow: "hsl(var(--pastel-yellow))",
           peach: "hsl(var(--pastel-peach))",
