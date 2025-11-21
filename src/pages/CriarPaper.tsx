@@ -449,9 +449,141 @@ export default function CriarPaper() {
                       </div>
                     </div>
 
-                    <p className="text-slate-700 leading-relaxed">
-                      [Texto continua em construção...]
+                    <h2 className="text-2xl font-bold text-slate-800 mb-4 mt-8">3. Metodologia</h2>
+                    
+                    <h3 className="text-xl font-semibold text-slate-800 mb-3">3.1 Amostra e Coleta de Dados</h3>
+                    <p className="text-slate-700 leading-relaxed mb-4">
+                      A amostra deste estudo compreende 247 empresas não-financeiras listadas na B3 (Brasil, Bolsa, Balcão) durante o período de 2015 a 2023, totalizando 2.223 observações firma-ano. Foram excluídas instituições financeiras devido às suas características específicas de estrutura de capital e regulamentação prudencial diferenciada. Adicionalmente, empresas com dados incompletos ou inconsistentes para as variáveis de interesse foram removidas da amostra final.
                     </p>
+                    <p className="text-slate-700 leading-relaxed mb-6">
+                      Os dados financeiros foram coletados da base Economatica, enquanto informações sobre governança corporativa e características institucionais foram obtidas dos relatórios de referência disponibilizados pelas companhias. A amostra abrange empresas de diversos setores econômicos, proporcionando heterogeneidade suficiente para análise robusta dos determinantes da estrutura de capital.
+                    </p>
+
+                    <div className="bg-slate-50 border border-slate-200 rounded-lg p-5 mb-6">
+                      <h4 className="text-sm font-semibold text-slate-800 mb-3">Tabela 1: Composição Setorial da Amostra</h4>
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-sm">
+                          <thead>
+                            <tr className="border-b border-slate-200">
+                              <th className="text-left py-2 px-3 text-slate-700 font-medium">Setor</th>
+                              <th className="text-right py-2 px-3 text-slate-700 font-medium">N° Empresas</th>
+                              <th className="text-right py-2 px-3 text-slate-700 font-medium">% da Amostra</th>
+                            </tr>
+                          </thead>
+                          <tbody className="text-slate-600">
+                            <tr className="border-b border-slate-100">
+                              <td className="py-2 px-3">Indústria</td>
+                              <td className="text-right py-2 px-3">89</td>
+                              <td className="text-right py-2 px-3">36,0%</td>
+                            </tr>
+                            <tr className="border-b border-slate-100">
+                              <td className="py-2 px-3">Energia</td>
+                              <td className="text-right py-2 px-3">42</td>
+                              <td className="text-right py-2 px-3">17,0%</td>
+                            </tr>
+                            <tr className="border-b border-slate-100">
+                              <td className="py-2 px-3">Varejo</td>
+                              <td className="text-right py-2 px-3">38</td>
+                              <td className="text-right py-2 px-3">15,4%</td>
+                            </tr>
+                            <tr className="border-b border-slate-100">
+                              <td className="py-2 px-3">Construção</td>
+                              <td className="text-right py-2 px-3">31</td>
+                              <td className="text-right py-2 px-3">12,6%</td>
+                            </tr>
+                            <tr className="border-b border-slate-100">
+                              <td className="py-2 px-3">Telecomunicações</td>
+                              <td className="text-right py-2 px-3">24</td>
+                              <td className="text-right py-2 px-3">9,7%</td>
+                            </tr>
+                            <tr>
+                              <td className="py-2 px-3">Outros</td>
+                              <td className="text-right py-2 px-3">23</td>
+                              <td className="text-right py-2 px-3">9,3%</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <p className="text-xs text-slate-500 mt-3">Fonte: Elaboração própria</p>
+                    </div>
+
+                    <h3 className="text-xl font-semibold text-slate-800 mb-3">3.2 Variáveis do Estudo</h3>
+                    
+                    <h4 className="text-base font-semibold text-slate-700 mb-2">Variável Dependente</h4>
+                    <p className="text-slate-700 leading-relaxed mb-4">
+                      A variável dependente principal é a <strong>Alavancagem (LEV)</strong>, mensurada como a razão entre o total de passivos onerosos e o ativo total da empresa. Alternativamente, utilizamos a alavancagem contábil de longo prazo (dívida de longo prazo sobre ativo total) e a alavancagem de mercado (dívida total sobre valor de mercado da firma) para análises de robustez.
+                    </p>
+
+                    <h4 className="text-base font-semibold text-slate-700 mb-2">Variáveis Independentes</h4>
+                    <div className="space-y-3 mb-6">
+                      <div className="bg-pastel-blue/20 border-l-4 border-pastel-blue p-4 rounded-r-lg">
+                        <p className="text-sm font-semibold text-slate-800 mb-1">Rentabilidade (ROA)</p>
+                        <p className="text-sm text-slate-600">Lucro operacional sobre ativo total. Espera-se relação negativa com alavancagem, conforme previsto pela pecking order theory.</p>
+                      </div>
+                      
+                      <div className="bg-pastel-green/20 border-l-4 border-pastel-green p-4 rounded-r-lg">
+                        <p className="text-sm font-semibold text-slate-800 mb-1">Tamanho (SIZE)</p>
+                        <p className="text-sm text-slate-600">Logaritmo natural do ativo total. Empresas maiores tendem a apresentar maior endividamento devido a economias de escala e menor risco de falência.</p>
+                      </div>
+                      
+                      <div className="bg-pastel-yellow/20 border-l-4 border-pastel-yellow p-4 rounded-r-lg">
+                        <p className="text-sm font-semibold text-slate-800 mb-1">Tangibilidade (TANG)</p>
+                        <p className="text-sm text-slate-600">Ativo imobilizado sobre ativo total. Ativos tangíveis servem como colateral, facilitando acesso ao crédito e reduzindo custos de agência.</p>
+                      </div>
+                      
+                      <div className="bg-pastel-purple/20 border-l-4 border-pastel-purple p-4 rounded-r-lg">
+                        <p className="text-sm font-semibold text-slate-800 mb-1">Oportunidades de Crescimento (MTB)</p>
+                        <p className="text-sm text-slate-600">Market-to-book ratio. Empresas com maiores oportunidades de crescimento tendem a utilizar menos dívida para evitar problemas de sub-investimento.</p>
+                      </div>
+                      
+                      <div className="bg-pastel-pink/20 border-l-4 border-pastel-pink p-4 rounded-r-lg">
+                        <p className="text-sm font-semibold text-slate-800 mb-1">Liquidez (LIQ)</p>
+                        <p className="text-sm text-slate-600">Ativo circulante sobre passivo circulante. Maior liquidez reduz necessidade de financiamento externo.</p>
+                      </div>
+                    </div>
+
+                    <h3 className="text-xl font-semibold text-slate-800 mb-3">3.3 Modelos Econométricos</h3>
+                    <p className="text-slate-700 leading-relaxed mb-4">
+                      Para investigar os determinantes da estrutura de capital, estimamos modelos de dados em painel com efeitos fixos de firma e tempo. A especificação básica do modelo é dada por:
+                    </p>
+
+                    <div className="bg-slate-50 border border-slate-200 rounded-lg p-6 mb-6">
+                      <div className="text-center font-mono text-sm text-slate-700">
+                        <p className="mb-2">LEV<sub>it</sub> = β<sub>0</sub> + β<sub>1</sub>ROA<sub>it</sub> + β<sub>2</sub>SIZE<sub>it</sub> + β<sub>3</sub>TANG<sub>it</sub> + β<sub>4</sub>MTB<sub>it</sub> + β<sub>5</sub>LIQ<sub>it</sub> + α<sub>i</sub> + γ<sub>t</sub> + ε<sub>it</sub></p>
+                      </div>
+                      <p className="text-xs text-slate-500 mt-4">
+                        Onde LEV<sub>it</sub> representa a alavancagem da empresa <em>i</em> no período <em>t</em>, α<sub>i</sub> captura efeitos fixos de firma, γ<sub>t</sub> captura efeitos fixos de tempo, e ε<sub>it</sub> é o termo de erro.
+                      </p>
+                    </div>
+
+                    <p className="text-slate-700 leading-relaxed mb-4">
+                      Adicionalmente, estimamos um modelo dinâmico de ajuste parcial para investigar a velocidade com que as empresas convergem para sua estrutura de capital alvo:
+                    </p>
+
+                    <div className="bg-slate-50 border border-slate-200 rounded-lg p-6 mb-6">
+                      <div className="text-center font-mono text-sm text-slate-700">
+                        <p className="mb-2">LEV<sub>it</sub> - LEV<sub>it-1</sub> = λ(LEV*<sub>it</sub> - LEV<sub>it-1</sub>) + ε<sub>it</sub></p>
+                      </div>
+                      <p className="text-xs text-slate-500 mt-4">
+                        Onde λ representa a velocidade de ajuste, LEV*<sub>it</sub> é a alavancagem alvo, e LEV<sub>it-1</sub> é a alavancagem defasada.
+                      </p>
+                    </div>
+
+                    <p className="text-slate-700 leading-relaxed mb-6">
+                      Para controlar a endogeneidade potencial decorrente da simultaneidade e variáveis omitidas, empregamos o método dos Momentos Generalizados em Sistema (System-GMM) proposto por Blundell e Bond (1998). Este método utiliza transformações em diferenças e níveis das variáveis instrumentais, sendo particularmente adequado para painéis com dimensão temporal moderada e potencial persistência na variável dependente.
+                    </p>
+
+                    <div className="bg-pastel-blue/20 border-l-4 border-pastel-blue p-4 rounded-r-lg mb-6">
+                      <div className="flex items-start gap-3">
+                        <Calculator size={20} className="text-slate-600 mt-1 flex-shrink-0" />
+                        <div>
+                          <p className="text-sm font-medium text-slate-800 mb-1">Testes de Robustez</p>
+                          <p className="text-sm text-slate-600">
+                            Para validar os resultados, realizamos: (i) teste de Sargan/Hansen para validade dos instrumentos; (ii) teste de autocorrelação de Arellano-Bond; (iii) estimações alternativas com diferentes proxies de alavancagem; (iv) análise de subamostras por setor e tamanho da empresa.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </section>
