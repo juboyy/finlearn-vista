@@ -980,6 +980,166 @@ export default function EvolucaoCartaoCredito() {
                         </div>
                       </div>
                     </div>
+
+                    {/* Outros Relatórios Recomendados */}
+                    <div className="mb-12 pt-8 border-t border-border">
+                      <h2 className="text-2xl font-bold text-foreground mb-6">Outros Relatórios de Análise Recomendados</h2>
+                      <div className="grid grid-cols-1 gap-4">
+                        <Link to="/artigos/pix-impacto-mercado" className="group bg-gradient-to-br from-[#D4C5E8]/20 to-[#D4C5E8]/10 rounded-xl border border-border p-6 hover:border-[#D4C5E8] hover:shadow-lg transition-all duration-300">
+                          <div className="flex items-start gap-4">
+                            <div className="w-14 h-14 bg-[#D4C5E8] rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                              <TrendingUp className="w-7 h-7 text-[#475569]" />
+                            </div>
+                            <div className="flex-1">
+                              <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-[#D4C5E8] transition-colors">Impacto do Pix no Mercado Brasileiro de Pagamentos</h3>
+                              <p className="text-sm text-muted-foreground mb-3">Análise completa sobre como o Pix transformou o ecossistema de pagamentos instantâneos e seu impacto nas taxas de transação e adoção digital.</p>
+                              <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                                <span className="flex items-center gap-1">
+                                  <Clock className="w-3 h-3" />
+                                  32 min
+                                </span>
+                                <span className="flex items-center gap-1">
+                                  <Eye className="w-3 h-3" />
+                                  2.4k visualizações
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </Link>
+
+                        <Link to="/artigos/open-banking-revolucao" className="group bg-gradient-to-br from-[#B8D4E8]/20 to-[#B8D4E8]/10 rounded-xl border border-border p-6 hover:border-[#B8D4E8] hover:shadow-lg transition-all duration-300">
+                          <div className="flex items-start gap-4">
+                            <div className="w-14 h-14 bg-[#B8D4E8] rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                              <BarChart3 className="w-7 h-7 text-[#475569]" />
+                            </div>
+                            <div className="flex-1">
+                              <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-[#B8D4E8] transition-colors">Open Banking: A Revolução do Compartilhamento de Dados Financeiros</h3>
+                              <p className="text-sm text-muted-foreground mb-3">Estudo detalhado sobre a implementação do Open Banking no Brasil, casos de uso, desafios de segurança e oportunidades para fintechs e bancos tradicionais.</p>
+                              <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                                <span className="flex items-center gap-1">
+                                  <Clock className="w-3 h-3" />
+                                  26 min
+                                </span>
+                                <span className="flex items-center gap-1">
+                                  <Eye className="w-3 h-3" />
+                                  1.9k visualizações
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </Link>
+
+                        <Link to="/artigos/fintechs-brasil-2025" className="group bg-gradient-to-br from-[#C5E8D4]/20 to-[#C5E8D4]/10 rounded-xl border border-border p-6 hover:border-[#C5E8D4] hover:shadow-lg transition-all duration-300">
+                          <div className="flex items-start gap-4">
+                            <div className="w-14 h-14 bg-[#C5E8D4] rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                              <PieChart className="w-7 h-7 text-[#475569]" />
+                            </div>
+                            <div className="flex-1">
+                              <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-[#C5E8D4] transition-colors">Panorama das Fintechs Brasileiras: Crescimento e Consolidação 2025</h3>
+                              <p className="text-sm text-muted-foreground mb-3">Mapeamento do ecossistema fintech brasileiro, análise de funding, tendências de M&A e projeções de market share para os próximos 5 anos.</p>
+                              <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                                <span className="flex items-center gap-1">
+                                  <Clock className="w-3 h-3" />
+                                  38 min
+                                </span>
+                                <span className="flex items-center gap-1">
+                                  <Eye className="w-3 h-3" />
+                                  3.1k visualizações
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </Link>
+
+                        <Link to="/artigos/credito-digital-inclusao" className="group bg-gradient-to-br from-[#E8E0C5]/20 to-[#E8E0C5]/10 rounded-xl border border-border p-6 hover:border-[#E8E0C5] hover:shadow-lg transition-all duration-300">
+                          <div className="flex items-start gap-4">
+                            <div className="w-14 h-14 bg-[#E8E0C5] rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                              <BarChart3 className="w-7 h-7 text-[#475569]" />
+                            </div>
+                            <div className="flex-1">
+                              <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-[#E8E0C5] transition-colors">Crédito Digital e Inclusão Financeira no Brasil</h3>
+                              <p className="text-sm text-muted-foreground mb-3">Análise sobre como as plataformas digitais estão democratizando o acesso ao crédito, com foco em modelos de credit scoring alternativos e impacto social.</p>
+                              <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                                <span className="flex items-center gap-1">
+                                  <Clock className="w-3 h-3" />
+                                  29 min
+                                </span>
+                                <span className="flex items-center gap-1">
+                                  <Eye className="w-3 h-3" />
+                                  2.7k visualizações
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </Link>
+
+                        <Link to="/artigos/biometria-seguranca-pagamentos" className="group bg-gradient-to-br from-[#D4C5E8]/20 to-[#B8D4E8]/10 rounded-xl border border-border p-6 hover:border-[#D4C5E8] hover:shadow-lg transition-all duration-300">
+                          <div className="flex items-start gap-4">
+                            <div className="w-14 h-14 bg-gradient-to-br from-[#D4C5E8] to-[#B8D4E8] rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                              <i className="fas fa-fingerprint text-2xl text-[#475569]"></i>
+                            </div>
+                            <div className="flex-1">
+                              <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-[#D4C5E8] transition-colors">Biometria e Segurança em Meios de Pagamento Digitais</h3>
+                              <p className="text-sm text-muted-foreground mb-3">Estudo sobre tecnologias de autenticação biométrica, prevenção de fraudes e o futuro da segurança em transações digitais no Brasil.</p>
+                              <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                                <span className="flex items-center gap-1">
+                                  <Clock className="w-3 h-3" />
+                                  24 min
+                                </span>
+                                <span className="flex items-center gap-1">
+                                  <Eye className="w-3 h-3" />
+                                  1.6k visualizações
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </Link>
+
+                        <Link to="/artigos/criptomoedas-cbdc-brasil" className="group bg-gradient-to-br from-[#C5E8D4]/20 to-[#B8D4E8]/10 rounded-xl border border-border p-6 hover:border-[#C5E8D4] hover:shadow-lg transition-all duration-300">
+                          <div className="flex items-start gap-4">
+                            <div className="w-14 h-14 bg-gradient-to-br from-[#C5E8D4] to-[#B8D4E8] rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                              <i className="fas fa-coins text-2xl text-[#475569]"></i>
+                            </div>
+                            <div className="flex-1">
+                              <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-[#C5E8D4] transition-colors">Criptomoedas e CBDC: O Futuro do Dinheiro no Brasil</h3>
+                              <p className="text-sm text-muted-foreground mb-3">Análise sobre o desenvolvimento do Real Digital (CBDC brasileiro), integração com blockchain e impactos no sistema financeiro tradicional.</p>
+                              <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                                <span className="flex items-center gap-1">
+                                  <Clock className="w-3 h-3" />
+                                  35 min
+                                </span>
+                                <span className="flex items-center gap-1">
+                                  <Eye className="w-3 h-3" />
+                                  2.2k visualizações
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </Link>
+
+                        <Link to="/artigos/embedded-finance-tendencias" className="group bg-gradient-to-br from-[#E8E0C5]/20 to-[#D4C5E8]/10 rounded-xl border border-border p-6 hover:border-[#E8E0C5] hover:shadow-lg transition-all duration-300">
+                          <div className="flex items-start gap-4">
+                            <div className="w-14 h-14 bg-gradient-to-br from-[#E8E0C5] to-[#D4C5E8] rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                              <i className="fas fa-puzzle-piece text-2xl text-[#475569]"></i>
+                            </div>
+                            <div className="flex-1">
+                              <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-[#E8E0C5] transition-colors">Embedded Finance: Serviços Financeiros Integrados em Plataformas</h3>
+                              <p className="text-sm text-muted-foreground mb-3">Exploração do mercado de embedded finance no Brasil, cases de sucesso e oportunidades para integração de serviços bancários em ecossistemas não-financeiros.</p>
+                              <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                                <span className="flex items-center gap-1">
+                                  <Clock className="w-3 h-3" />
+                                  31 min
+                                </span>
+                                <span className="flex items-center gap-1">
+                                  <Eye className="w-3 h-3" />
+                                  1.8k visualizações
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </Link>
+                      </div>
+                    </div>
                   </>
                 )}
               </section>
