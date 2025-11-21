@@ -1,8 +1,48 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { ArrowLeft, Upload, Mic, Video, Camera, Play, Trash2, Copy, Edit, Plus, Save, Eye, Share2, X, Paperclip, Image as ImageIcon, FileText, Link as LinkIcon, Bold, Italic, Underline, List, ListOrdered, Lightbulb, ChartLine, Book, SpellCheck } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { MediaUploadZone } from "@/components/MediaUploadZone";
+import { UploadedMediaItem } from "@/components/UploadedMediaItem";
+import { useToast } from "@/hooks/use-toast";
 
 export default function NovoDocumento() {
+  const [audioFiles, setAudioFiles] = useState<File[]>([]);
+  const [videoFiles, setVideoFiles] = useState<File[]>([]);
+  const { toast } = useToast();
+
+  const handleAudioUpload = (file: File) => {
+    setAudioFiles(prev => [...prev, file]);
+    toast({
+      title: "Áudio adicionado",
+      description: `${file.name} foi adicionado com sucesso.`,
+    });
+  };
+
+  const handleVideoUpload = (file: File) => {
+    setVideoFiles(prev => [...prev, file]);
+    toast({
+      title: "Vídeo adicionado",
+      description: `${file.name} foi adicionado com sucesso.`,
+    });
+  };
+
+  const handleRemoveAudio = (index: number) => {
+    setAudioFiles(prev => prev.filter((_, i) => i !== index));
+    toast({
+      title: "Áudio removido",
+      description: "O arquivo foi removido com sucesso.",
+    });
+  };
+
+  const handleRemoveVideo = (index: number) => {
+    setVideoFiles(prev => prev.filter((_, i) => i !== index));
+    toast({
+      title: "Vídeo removido",
+      description: "O arquivo foi removido com sucesso.",
+    });
+  };
+
   return (
     <div className="flex min-h-screen w-full bg-background">
       <SidebarFix />
@@ -232,110 +272,53 @@ export default function NovoDocumento() {
                 <h2 className="text-2xl font-bold text-foreground mb-6">Adicionar Mídia</h2>
                 
                 <div className="grid grid-cols-2 gap-6 mb-6">
-                  <div className="bg-card rounded-xl border-2 border-border p-6">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-12 h-12 bg-[hsl(var(--pastel-purple))] rounded-lg flex items-center justify-center border-2 border-border">
-                        <Mic className="text-[hsl(var(--pastel-gray-dark))] w-5 h-5" />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-foreground">Adicionar Áudio</h3>
-                        <p className="text-xs text-muted-foreground">MP3, WAV, até 50MB</p>
-                      </div>
-                    </div>
-                    
-                    <div className="border-2 border-dashed border-border rounded-lg p-8 text-center mb-4 hover:border-[hsl(var(--pastel-purple))] hover:bg-[hsl(var(--pastel-purple))]/20 transition cursor-pointer">
-                      <Upload className="w-10 h-10 text-muted-foreground mx-auto mb-3" />
-                      <p className="text-sm font-medium text-foreground mb-1">Clique para fazer upload</p>
-                      <p className="text-xs text-muted-foreground">ou arraste e solte o arquivo aqui</p>
-                    </div>
+                  <MediaUploadZone
+                    type="audio"
+                    accept=".mp3,.wav,.m4a,.aac,audio/*"
+                    maxSize={50}
+                    icon={<Mic className="text-[hsl(var(--pastel-gray-dark))] w-5 h-5" />}
+                    title="Adicionar Áudio"
+                    subtitle="MP3, WAV, até 50MB"
+                    color="--pastel-purple"
+                    onUpload={handleAudioUpload}
+                  />
 
-                    <div className="flex items-center gap-2">
-                      <button className="flex-1 px-4 py-2 bg-[hsl(var(--pastel-purple))] text-[hsl(var(--pastel-gray-dark))] rounded-lg font-medium hover:bg-opacity-70 transition text-sm border-2 border-border flex items-center justify-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-red-500"></div>
-                        Gravar Áudio
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="bg-card rounded-xl border-2 border-border p-6">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-12 h-12 bg-[hsl(var(--pastel-pink))] rounded-lg flex items-center justify-center border-2 border-border">
-                        <Video className="text-[hsl(var(--pastel-gray-dark))] w-5 h-5" />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-foreground">Adicionar Vídeo</h3>
-                        <p className="text-xs text-muted-foreground">MP4, MOV, até 200MB</p>
-                      </div>
-                    </div>
-                    
-                    <div className="border-2 border-dashed border-border rounded-lg p-8 text-center mb-4 hover:border-[hsl(var(--pastel-pink))] hover:bg-[hsl(var(--pastel-pink))]/20 transition cursor-pointer">
-                      <Upload className="w-10 h-10 text-muted-foreground mx-auto mb-3" />
-                      <p className="text-sm font-medium text-foreground mb-1">Clique para fazer upload</p>
-                      <p className="text-xs text-muted-foreground">ou arraste e solte o arquivo aqui</p>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <button className="flex-1 px-4 py-2 bg-[hsl(var(--pastel-pink))] text-[hsl(var(--pastel-gray-dark))] rounded-lg font-medium hover:bg-opacity-70 transition text-sm border-2 border-border flex items-center justify-center gap-2">
-                        <Camera className="w-4 h-4" />
-                        Gravar Vídeo
-                      </button>
-                    </div>
-                  </div>
+                  <MediaUploadZone
+                    type="video"
+                    accept=".mp4,.mov,.avi,.webm,video/*"
+                    maxSize={200}
+                    icon={<Video className="text-[hsl(var(--pastel-gray-dark))] w-5 h-5" />}
+                    title="Adicionar Vídeo"
+                    subtitle="MP4, MOV, até 200MB"
+                    color="--pastel-pink"
+                    onUpload={handleVideoUpload}
+                  />
                 </div>
 
-                <div className="space-y-4">
-                  <div className="bg-card rounded-xl border-2 border-border p-4">
-                    <div className="flex items-center gap-4">
-                      <div className="w-16 h-16 bg-[hsl(var(--pastel-purple))] rounded-lg flex items-center justify-center border-2 border-border flex-shrink-0">
-                        <i className="fas fa-music text-[hsl(var(--pastel-gray-dark))] text-2xl"></i>
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-semibold text-foreground truncate">apresentacao-mercado-financeiro.mp3</h4>
-                        <p className="text-xs text-muted-foreground">3.2 MB • 4:35 min</p>
-                        <div className="mt-2 flex items-center gap-2">
-                          <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
-                            <div className="h-full bg-[hsl(var(--pastel-purple))] rounded-full" style={{ width: '45%' }}></div>
-                          </div>
-                          <span className="text-xs text-muted-foreground font-medium">45%</span>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <button className="w-8 h-8 bg-muted hover:bg-muted/80 rounded-lg flex items-center justify-center transition">
-                          <Play className="text-foreground w-4 h-4" />
-                        </button>
-                        <button className="w-8 h-8 bg-muted hover:bg-muted/80 rounded-lg flex items-center justify-center transition">
-                          <Trash2 className="text-foreground w-4 h-4" />
-                        </button>
-                      </div>
-                    </div>
+                {(audioFiles.length > 0 || videoFiles.length > 0) && (
+                  <div className="space-y-4">
+                    {audioFiles.map((file, index) => (
+                      <UploadedMediaItem
+                        key={`audio-${index}`}
+                        file={file}
+                        type="audio"
+                        color="--pastel-purple"
+                        icon={<i className="fas fa-music"></i>}
+                        onRemove={() => handleRemoveAudio(index)}
+                      />
+                    ))}
+                    {videoFiles.map((file, index) => (
+                      <UploadedMediaItem
+                        key={`video-${index}`}
+                        file={file}
+                        type="video"
+                        color="--pastel-pink"
+                        icon={<Video className="w-6 h-6" />}
+                        onRemove={() => handleRemoveVideo(index)}
+                      />
+                    ))}
                   </div>
-
-                  <div className="bg-card rounded-xl border-2 border-border p-4">
-                    <div className="flex items-center gap-4">
-                      <div className="w-16 h-16 bg-[hsl(var(--pastel-pink))] rounded-lg flex items-center justify-center border-2 border-border flex-shrink-0 overflow-hidden">
-                        <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/ff41e4caec-1b18587179ee85a084be.png" alt="financial market video thumbnail" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-semibold text-foreground truncate">analise-tecnica-acoes.mp4</h4>
-                        <p className="text-xs text-muted-foreground">15.8 MB • 8:22 min</p>
-                        <div className="mt-2 flex items-center gap-2">
-                          <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
-                            <div className="h-full bg-[hsl(var(--pastel-pink))] rounded-full" style={{ width: '100%' }}></div>
-                          </div>
-                          <span className="text-xs text-muted-foreground font-medium">100%</span>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <button className="w-8 h-8 bg-muted hover:bg-muted/80 rounded-lg flex items-center justify-center transition">
-                          <Play className="text-foreground w-4 h-4" />
-                        </button>
-                        <button className="w-8 h-8 bg-muted hover:bg-muted/80 rounded-lg flex items-center justify-center transition">
-                          <Trash2 className="text-foreground w-4 h-4" />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                )}
               </section>
 
               {/* Transcription Section */}
