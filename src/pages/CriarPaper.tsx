@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Save, Eye, Send, Bold, Italic, Underline, Heading, List, ListOrdered, Quote, SquareRoot, Table, BarChart, Image, Bookmark, X, Plus, Edit, Lightbulb, Magic, SpellCheck } from "lucide-react";
+import { ArrowLeft, Save, Eye, Send, Bold, Italic, Underline, Heading, List, ListOrdered, Quote, Calculator, Table, BarChart, Image, Bookmark, X, Plus, Edit, Lightbulb, Sparkles, SpellCheck, Copy } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
