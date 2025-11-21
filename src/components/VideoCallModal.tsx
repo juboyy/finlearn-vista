@@ -149,11 +149,11 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[95vw] h-[90vh] p-0 bg-slate-950 border-slate-800">
+      <DialogContent className="max-w-[95vw] h-[90vh] p-0 bg-slate-950 border-slate-800 overflow-hidden">
         <DialogDescription className="sr-only">
           Chamada de vídeo com {agentName}
         </DialogDescription>
-        <div className="h-full flex">
+        <div className="h-full flex overflow-hidden">
           {/* Área de vídeo */}
           <div className="flex-1 flex flex-col relative">
             <DialogHeader className="px-6 py-4 bg-gradient-to-b from-slate-900/80 to-transparent absolute top-0 left-0 right-0 z-10">
@@ -331,7 +331,7 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
           </div>
 
           {/* Sidebar lateral */}
-          <div className={`${isSidebarOpen ? 'w-96' : 'w-0'} transition-all duration-300 bg-slate-900 border-l border-slate-800 flex flex-col overflow-hidden relative`}>
+          <div className={`${isSidebarOpen ? 'w-96' : 'w-0'} transition-all duration-300 bg-slate-900 border-l border-slate-800 flex flex-col overflow-hidden relative flex-shrink-0`}>
             {isSidebarOpen && (
               <>
                 <div className="p-4 border-b border-slate-800 flex items-center justify-between">
