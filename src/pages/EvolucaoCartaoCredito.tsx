@@ -68,7 +68,7 @@ export default function EvolucaoCartaoCredito() {
       
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
-        <header className="bg-card border-b border-border h-16 flex-none">
+        <header className="bg-card border-b border-border h-16 flex-none sticky top-0 z-20">
           <div className="h-full px-6 flex items-center justify-between">
             <div className="flex items-center gap-4">
               <Link to="/aprendizado" className="text-muted-foreground hover:text-foreground transition-colors">
