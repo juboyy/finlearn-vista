@@ -23,6 +23,8 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
   const [chatMessages, setChatMessages] = useState<Array<{role: 'user' | 'agent', message: string, time: string}>>([]);
   const [messageInput, setMessageInput] = useState('');
   const [callDuration, setCallDuration] = useState(0);
+  const [isAtBottom, setIsAtBottom] = useState(true);
+  const [unreadCount, setUnreadCount] = useState(0);
   const localVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -56,10 +58,33 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
 
   // Auto-scroll para a última mensagem
   useEffect(() => {
+    if (chatScrollRef.current && isAtBottom) {
+      chatScrollRef.current.scrollTop = chatScrollRef.current.scrollHeight;
+      setUnreadCount(0);
+    } else if (!isAtBottom) {
+      setUnreadCount(prev => prev + 1);
+    }
+  }, [chatMessages, isAtBottom]);
+
+  // Detectar se está no fundo do scroll
+  const handleScroll = () => {
+    if (chatScrollRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = chatScrollRef.current;
+      const atBottom = scrollHeight - scrollTop - clientHeight < 50;
+      setIsAtBottom(atBottom);
+      if (atBottom) {
+        setUnreadCount(0);
+      }
+    }
+  };
+
+  const scrollToBottom = () => {
     if (chatScrollRef.current) {
       chatScrollRef.current.scrollTop = chatScrollRef.current.scrollHeight;
+      setIsAtBottom(true);
+      setUnreadCount(0);
     }
-  }, [chatMessages]);
+  };
 
   const formatDuration = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -352,10 +377,11 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                 </div>
 
                 {/* Área de mensagens do chat */}
-                <div className="flex-1 min-h-0 overflow-hidden">
+                <div className="flex-1 min-h-0 overflow-hidden relative">
                   <div 
                     ref={chatScrollRef} 
                     className="h-full overflow-y-auto pb-[68px] chat-scrollbar"
+                    onScroll={handleScroll}
                     style={{
                       scrollbarWidth: 'thin',
                       scrollbarColor: '#475569 #1e293b'
@@ -384,6 +410,17 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                       )}
                     </div>
                   </div>
+
+                  {/* Indicador de novas mensagens */}
+                  {!isAtBottom && unreadCount > 0 && (
+                    <button
+                      onClick={scrollToBottom}
+                      className="absolute bottom-20 left-1/2 -translate-x-1/2 bg-pastel-blue text-slate-800 px-4 py-2 rounded-full shadow-lg hover:bg-pastel-blue/80 transition-all animate-fade-in flex items-center gap-2 font-medium"
+                    >
+                      <MessageCircle size={16} />
+                      {unreadCount} nova{unreadCount > 1 ? 's' : ''} mensagem{unreadCount > 1 ? 'ns' : ''}
+                    </button>
+                  )}
                 </div>
 
                 {/* Input do chat fixo no fundo */}
