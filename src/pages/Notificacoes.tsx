@@ -278,12 +278,12 @@ export default function Notificacoes() {
                   <div className="bg-white rounded-xl border border-slate-200 hover:shadow-md transition cursor-pointer">
                     <div className="p-4">
                       <div className="flex items-start gap-4">
-                        <div className="w-10 h-10 bg-pastel-pink rounded-lg flex items-center justify-center flex-shrink-0">
+                        <div className="w-10 h-10 bg-pastel-yellow rounded-lg flex items-center justify-center flex-shrink-0">
                           <Gavel className="text-slate-700" size={20} />
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-1">
-                            <span className="px-2 py-0.5 bg-pastel-pink bg-opacity-30 rounded text-xs font-medium text-slate-700">Regulamentação</span>
+                            <span className="px-2 py-0.5 bg-pastel-yellow bg-opacity-30 rounded text-xs font-medium text-slate-700">Regulamentação</span>
                             <span className="px-2 py-0.5 bg-red-100 text-red-700 rounded text-xs font-medium">Alta prioridade</span>
                             <span className="text-xs text-slate-500">há 6 horas</span>
                           </div>
@@ -594,7 +594,7 @@ export default function Notificacoes() {
 
                   <button className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-slate-50 text-left">
                     <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 bg-pastel-pink rounded"></div>
+                      <div className="w-3 h-3 bg-pastel-yellow rounded"></div>
                       <span className="text-sm text-slate-700">Regulamentações</span>
                     </div>
                     <span className="text-xs text-slate-500">18</span>
