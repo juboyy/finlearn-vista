@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 export default function NovoDocumento() {
   const [audioFiles, setAudioFiles] = useState<File[]>([]);
   const [videoFiles, setVideoFiles] = useState<File[]>([]);
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
   const { toast } = useToast();
 
   const handleAudioUpload = (file: File) => {
@@ -27,6 +28,14 @@ export default function NovoDocumento() {
     });
   };
 
+  const handleImageUpload = (file: File) => {
+    setImageFiles(prev => [...prev, file]);
+    toast({
+      title: "Imagem adicionada",
+      description: `${file.name} foi adicionada com sucesso.`,
+    });
+  };
+
   const handleRemoveAudio = (index: number) => {
     setAudioFiles(prev => prev.filter((_, i) => i !== index));
     toast({
@@ -39,6 +48,14 @@ export default function NovoDocumento() {
     setVideoFiles(prev => prev.filter((_, i) => i !== index));
     toast({
       title: "Vídeo removido",
+      description: "O arquivo foi removido com sucesso.",
+    });
+  };
+
+  const handleRemoveImage = (index: number) => {
+    setImageFiles(prev => prev.filter((_, i) => i !== index));
+    toast({
+      title: "Imagem removida",
       description: "O arquivo foi removido com sucesso.",
     });
   };
@@ -271,7 +288,7 @@ export default function NovoDocumento() {
               <section className="mb-8">
                 <h2 className="text-2xl font-bold text-foreground mb-6">Adicionar Mídia</h2>
                 
-                <div className="grid grid-cols-2 gap-6 mb-6">
+                <div className="grid grid-cols-3 gap-6 mb-6">
                   <MediaUploadZone
                     type="audio"
                     accept=".mp3,.wav,.m4a,.aac,audio/*"
@@ -293,9 +310,20 @@ export default function NovoDocumento() {
                     color="--pastel-pink"
                     onUpload={handleVideoUpload}
                   />
+
+                  <MediaUploadZone
+                    type="video"
+                    accept=".jpg,.jpeg,.png,.gif,.webp,image/*"
+                    maxSize={10}
+                    icon={<ImageIcon className="text-[hsl(var(--pastel-gray-dark))] w-5 h-5" />}
+                    title="Adicionar Imagem"
+                    subtitle="JPG, PNG, até 10MB"
+                    color="--pastel-blue"
+                    onUpload={handleImageUpload}
+                  />
                 </div>
 
-                {(audioFiles.length > 0 || videoFiles.length > 0) && (
+                {(audioFiles.length > 0 || videoFiles.length > 0 || imageFiles.length > 0) && (
                   <div className="space-y-4">
                     {audioFiles.map((file, index) => (
                       <UploadedMediaItem
@@ -315,6 +343,17 @@ export default function NovoDocumento() {
                         color="--pastel-pink"
                         icon={<Video className="w-6 h-6" />}
                         onRemove={() => handleRemoveVideo(index)}
+                      />
+                    ))}
+                    {imageFiles.map((file, index) => (
+                      <UploadedMediaItem
+                        key={`image-${index}`}
+                        file={file}
+                        type="video"
+                        color="--pastel-blue"
+                        icon={<ImageIcon className="w-6 h-6" />}
+                        thumbnail={URL.createObjectURL(file)}
+                        onRemove={() => handleRemoveImage(index)}
                       />
                     ))}
                   </div>
