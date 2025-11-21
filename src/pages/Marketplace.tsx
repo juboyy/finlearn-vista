@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import {
   Bell,
@@ -10,6 +11,8 @@ import {
 } from "lucide-react";
 
 const Marketplace = () => {
+  const navigate = useNavigate();
+  
   return (
     <div className="flex h-screen overflow-hidden">
       <SidebarFix />
@@ -110,7 +113,7 @@ const Marketplace = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
-                  <button className="px-6 py-3 bg-slate-800 text-white rounded-lg font-medium hover:bg-slate-700 transition">
+                  <button onClick={() => navigate('/ebook/1')} className="px-6 py-3 bg-slate-800 text-white rounded-lg font-medium hover:bg-slate-700 transition">
                     Ver Curso
                   </button>
                   <div className="text-slate-700">
@@ -340,7 +343,7 @@ const Marketplace = () => {
                       <div>
                         <span className="text-2xl font-bold text-slate-800">R$ 79</span>
                       </div>
-                      <button className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition">
+                      <button onClick={() => navigate('/ebook/1')} className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition">
                         Ver Detalhes
                       </button>
                     </div>
@@ -389,7 +392,7 @@ const Marketplace = () => {
                       <div>
                         <span className="text-2xl font-bold text-slate-800">R$ 247</span>
                       </div>
-                      <button className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition">
+                      <button onClick={() => navigate('/ebook/2')} className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition">
                         Ver Detalhes
                       </button>
                     </div>
@@ -438,7 +441,7 @@ const Marketplace = () => {
                       <div>
                         <span className="text-2xl font-bold text-slate-800">R$ 49</span>
                       </div>
-                      <button className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition">
+                      <button onClick={() => navigate('/ebook/3')} className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition">
                         Ver Detalhes
                       </button>
                     </div>
@@ -491,7 +494,7 @@ const Marketplace = () => {
                         <span className="text-2xl font-bold text-slate-800">R$ 179</span>
                         <span className="text-slate-400 line-through ml-2 text-sm">R$ 299</span>
                       </div>
-                      <button className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition">
+                      <button onClick={() => navigate('/ebook/4')} className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition">
                         Ver Detalhes
                       </button>
                     </div>
@@ -540,7 +543,7 @@ const Marketplace = () => {
                       <div>
                         <span className="text-2xl font-bold text-slate-800">R$ 129</span>
                       </div>
-                      <button className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition">
+                      <button onClick={() => navigate('/ebook/5')} className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition">
                         Ver Detalhes
                       </button>
                     </div>
@@ -589,7 +592,7 @@ const Marketplace = () => {
                       <div>
                         <span className="text-2xl font-bold text-slate-800">R$ 197</span>
                       </div>
-                      <button className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition">
+                      <button onClick={() => navigate('/ebook/6')} className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition">
                         Ver Detalhes
                       </button>
                     </div>
