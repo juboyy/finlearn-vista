@@ -964,27 +964,6 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-
-              {/* Footer Actions */}
-              <div className="p-6 border-t border-slate-800 bg-slate-900/50">
-                <div className="flex gap-3">
-                  <Button 
-                    className="flex-1 bg-pastel-blue hover:bg-pastel-blue/80 text-slate-900"
-                  >
-                    Exportar Relatório
-                  </Button>
-                  <Button 
-                    variant="outline"
-                    className="flex-1 border-slate-600 text-slate-600 hover:bg-slate-600 hover:text-white hover:border-white transition-all"
-                    onClick={() => setShowStatsModal(false)}
-                  >
-                    Fechar
-                  </Button>
-                      </div>
-                    </div>
-                  </div>
 
                   {/* Notas Automáticas da Reunião */}
                   <div className="bg-gradient-to-br from-slate-800/80 to-slate-800/40 border border-slate-700 rounded-xl p-5">
@@ -1054,6 +1033,27 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                     </div>
                   </div>
                 </div>
+              </div>
+
+              {/* Footer Actions */}
+              <div className="p-6 border-t border-slate-800 bg-slate-900/50">
+                <div className="flex gap-3">
+                  <Button 
+                    className="flex-1 bg-pastel-blue hover:bg-pastel-blue/80 text-slate-900"
+                  >
+                    Exportar Relatório
+                  </Button>
+                  <Button 
+                    variant="outline"
+                    className="flex-1 border-slate-600 text-slate-600 hover:bg-slate-600 hover:text-white hover:border-white transition-all"
+                    onClick={() => setShowStatsModal(false)}
+                  >
+                    Fechar
+                   </Button>
+                </div>
+              </div>
+            </div>
+          </div>
         )}
       </DialogContent>
     </Dialog>
