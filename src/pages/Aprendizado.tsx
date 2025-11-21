@@ -4012,7 +4012,12 @@ const Aprendizado = () => {
                         <h3 className="font-semibold text-slate-800 mb-1">Evolução do Cartão de Crédito</h3>
                         <p className="text-sm text-slate-500">Volume transacionado (R$ bilhões/mês)</p>
                       </div>
-                      <button className="px-3 py-1.5 text-xs bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition">Ver Detalhes</button>
+                      <button 
+                        onClick={() => navigate('/evolucao-cartao-credito')}
+                        className="px-3 py-1.5 text-xs bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition"
+                      >
+                        Ver Detalhes
+                      </button>
                     </div>
                     <ResponsiveContainer width="100%" height={400}>
                       <AreaChart data={creditCardData}>
