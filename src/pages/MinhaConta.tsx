@@ -6,10 +6,25 @@ import {
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
 
 export default function MinhaConta() {
   const [activeSection, setActiveSection] = useState("perfil");
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
   const mainRef = useRef<HTMLElement>(null);
+  const { toast } = useToast();
   
   const perfilRef = useRef<HTMLElement>(null);
   const pessoalRef = useRef<HTMLElement>(null);
@@ -36,6 +51,40 @@ export default function MinhaConta() {
       if (scrollRef) (scrollRef as React.MutableRefObject<HTMLElement | null>).current = element;
       if (fadeRef) (fadeRef as React.MutableRefObject<HTMLElement | null>).current = element;
     };
+
+  const handleDeleteAccount = () => {
+    if (!passwordConfirmation.trim()) {
+      toast({
+        variant: "destructive",
+        title: "Senha necessária",
+        description: "Por favor, digite sua senha para confirmar a exclusão da conta.",
+      });
+      return;
+    }
+
+    setIsDeleting(true);
+
+    // Simular validação de senha e exclusão
+    setTimeout(() => {
+      setIsDeleting(false);
+      setIsDeleteModalOpen(false);
+      setPasswordConfirmation("");
+      
+      toast({
+        variant: "destructive",
+        title: "Conta excluída",
+        description: "Sua conta foi permanentemente excluída do sistema.",
+      });
+      
+      // Aqui você implementaria a lógica real de exclusão
+      // Por exemplo: signOut e redirect para home
+    }, 2000);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+    setPasswordConfirmation("");
+  };
 
   const scrollToSection = (section: string) => {
     const refs: { [key: string]: React.RefObject<HTMLElement> } = {
@@ -733,7 +782,10 @@ export default function MinhaConta() {
                             </li>
                           </ul>
                         </div>
-                        <button className="px-4 py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition text-sm">
+                        <button 
+                          onClick={() => setIsDeleteModalOpen(true)}
+                          className="px-4 py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition text-sm"
+                        >
                           Excluir Conta Permanentemente
                         </button>
                       </div>
@@ -745,6 +797,78 @@ export default function MinhaConta() {
           </div>
         </div>
       </main>
+
+      <Dialog open={isDeleteModalOpen} onOpenChange={handleCloseDeleteModal}>
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle className="text-red-600 flex items-center gap-2">
+              <AlertTriangle size={24} />
+              Excluir Conta Permanentemente
+            </DialogTitle>
+            <DialogDescription className="pt-4 space-y-3">
+              <p className="font-semibold text-slate-800">Esta ação não pode ser desfeita!</p>
+              <p className="text-sm text-slate-600">
+                Ao confirmar, todos os seus dados serão permanentemente excluídos, incluindo:
+              </p>
+              <ul className="text-xs text-slate-600 space-y-1 pl-4">
+                <li className="flex items-start gap-2">
+                  <XCircle className="text-red-500 flex-shrink-0 mt-0.5" size={14} />
+                  <span>Dados pessoais e profissionais</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <XCircle className="text-red-500 flex-shrink-0 mt-0.5" size={14} />
+                  <span>Histórico de cursos e progresso</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <XCircle className="text-red-500 flex-shrink-0 mt-0.5" size={14} />
+                  <span>Certificados emitidos</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <XCircle className="text-red-500 flex-shrink-0 mt-0.5" size={14} />
+                  <span>Interações na comunidade</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <XCircle className="text-red-500 flex-shrink-0 mt-0.5" size={14} />
+                  <span>Assinatura e histórico de pagamentos</span>
+                </li>
+              </ul>
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="py-4">
+            <Label htmlFor="password-confirm" className="text-sm font-medium text-slate-700">
+              Digite sua senha para confirmar
+            </Label>
+            <Input
+              id="password-confirm"
+              type="password"
+              placeholder="Sua senha"
+              value={passwordConfirmation}
+              onChange={(e) => setPasswordConfirmation(e.target.value)}
+              className="mt-2"
+              disabled={isDeleting}
+            />
+          </div>
+
+          <DialogFooter className="flex gap-2 sm:gap-2">
+            <button
+              onClick={handleCloseDeleteModal}
+              disabled={isDeleting}
+              className="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Cancelar
+            </button>
+            <button
+              onClick={handleDeleteAccount}
+              disabled={isDeleting || !passwordConfirmation.trim()}
+              className="px-4 py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isDeleting ? "Excluindo..." : "Confirmar Exclusão"}
+            </button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
     </div>
   );
 }
