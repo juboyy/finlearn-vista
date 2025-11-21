@@ -2,12 +2,62 @@ import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { ArrowLeft, Star, Bookmark, Share2, Download, ChevronLeft, ChevronRight, Eye, Clock, BookOpen, Search, Lightbulb, Wand2, TrendingUp, PieChart, BarChart3 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { LineChart, Line, BarChart, Bar, PieChart as RechartsPieChart, Pie, Cell, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
 export default function EvolucaoCartaoCredito() {
   const [currentPage, setCurrentPage] = useState(1);
   const [activeSection, setActiveSection] = useState("sumario-executivo");
   const [scrollProgress, setScrollProgress] = useState(0);
   const totalPages = 7;
+
+  // Dados para gráficos
+  const volumeData = [
+    { ano: '2018', valor: 185 },
+    { ano: '2019', valor: 198 },
+    { ano: '2020', valor: 172 },
+    { ano: '2021', valor: 215 },
+    { ano: '2022', valor: 238 },
+    { ano: '2023', valor: 256 },
+    { ano: '2024', valor: 268 },
+    { ano: '2025', valor: 275 }
+  ];
+
+  const bandeirasData = [
+    { name: 'Visa', value: 52, color: '#D4C5E8' },
+    { name: 'Mastercard', value: 38, color: '#B8D4E8' },
+    { name: 'Elo', value: 6, color: '#C5E8D4' },
+    { name: 'Outros', value: 4, color: '#E8E0C5' }
+  ];
+
+  const ticketMedioData = [
+    { ano: '2018', valor: 156 },
+    { ano: '2019', valor: 165 },
+    { ano: '2020', valor: 151 },
+    { ano: '2021', valor: 173 },
+    { ano: '2022', valor: 186 },
+    { ano: '2023', valor: 195 },
+    { ano: '2024', valor: 201 },
+    { ano: '2025', valor: 204 }
+  ];
+
+  const digitaisData = [
+    { ano: '2018', valor: 15 },
+    { ano: '2019', valor: 22 },
+    { ano: '2020', valor: 35 },
+    { ano: '2021', valor: 45 },
+    { ano: '2022', valor: 54 },
+    { ano: '2023', valor: 60 },
+    { ano: '2024', valor: 65 },
+    { ano: '2025', valor: 67 }
+  ];
+
+  const openFinanceData = [
+    { ano: '2021', valor: 42 },
+    { ano: '2022', valor: 51 },
+    { ano: '2023', valor: 58 },
+    { ano: '2024', valor: 64 },
+    { ano: '2025', valor: 68 }
+  ];
 
   const showPage = (pageNum: number) => {
     if (pageNum >= 1 && pageNum <= totalPages) {
@@ -320,12 +370,28 @@ export default function EvolucaoCartaoCredito() {
                         <div className="flex items-center justify-between mb-4">
                           <h4 className="font-semibold text-foreground">Volume Transacionado Mensal (R$ Bilhões)</h4>
                         </div>
-                        <div className="w-full h-[350px] bg-gradient-to-br from-[#D4C5E8]/10 to-[#B8D4E8]/10 rounded-lg flex items-center justify-center border border-border/50">
-                          <div className="text-center">
-                            <TrendingUp className="w-12 h-12 text-[#D4C5E8] mx-auto mb-3" />
-                            <p className="text-sm text-muted-foreground">Gráfico: Volume cresceu de R$ 185bi (2018) para R$ 275bi (2025)</p>
-                          </div>
-                        </div>
+                        <ResponsiveContainer width="100%" height={350}>
+                          <LineChart data={volumeData}>
+                            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                            <XAxis dataKey="ano" stroke="hsl(var(--muted-foreground))" />
+                            <YAxis stroke="hsl(var(--muted-foreground))" />
+                            <Tooltip 
+                              contentStyle={{ 
+                                backgroundColor: 'hsl(var(--card))', 
+                                border: '1px solid hsl(var(--border))',
+                                borderRadius: '8px'
+                              }}
+                            />
+                            <Line 
+                              type="monotone" 
+                              dataKey="valor" 
+                              stroke="#D4C5E8" 
+                              strokeWidth={3}
+                              dot={{ fill: '#D4C5E8', r: 5 }}
+                              activeDot={{ r: 7 }}
+                            />
+                          </LineChart>
+                        </ResponsiveContainer>
                       </div>
 
                       <p className="text-muted-foreground leading-relaxed mb-4">
@@ -373,12 +439,25 @@ export default function EvolucaoCartaoCredito() {
                         <div className="flex items-center justify-between mb-4">
                           <h4 className="font-semibold text-foreground">Distribuição por Bandeiras 2025</h4>
                         </div>
-                        <div className="w-full h-[350px] bg-gradient-to-br from-[#B8D4E8]/10 to-[#C5E8D4]/10 rounded-lg flex items-center justify-center border border-border/50">
-                          <div className="text-center">
-                            <PieChart className="w-12 h-12 text-[#B8D4E8] mx-auto mb-3" />
-                            <p className="text-sm text-muted-foreground">Distribuição: Visa 52%, Mastercard 38%, Elo 6%, Outros 4%</p>
-                          </div>
-                        </div>
+                        <ResponsiveContainer width="100%" height={350}>
+                          <RechartsPieChart>
+                            <Pie
+                              data={bandeirasData}
+                              cx="50%"
+                              cy="50%"
+                              labelLine={false}
+                              label={({ name, value }) => `${name}: ${value}%`}
+                              outerRadius={120}
+                              fill="#8884d8"
+                              dataKey="value"
+                            >
+                              {bandeirasData.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={entry.color} />
+                              ))}
+                            </Pie>
+                            <Tooltip />
+                          </RechartsPieChart>
+                        </ResponsiveContainer>
                       </div>
 
                       <p className="text-muted-foreground leading-relaxed mb-6">
@@ -438,12 +517,21 @@ export default function EvolucaoCartaoCredito() {
                         <div className="flex items-center justify-between mb-4">
                           <h4 className="font-semibold text-foreground">Evolução do Ticket Médio (R$)</h4>
                         </div>
-                        <div className="w-full h-[300px] bg-gradient-to-br from-[#C5E8D4]/10 to-[#E8E0C5]/10 rounded-lg flex items-center justify-center border border-border/50">
-                          <div className="text-center">
-                            <BarChart3 className="w-12 h-12 text-[#C5E8D4] mx-auto mb-3" />
-                            <p className="text-sm text-muted-foreground">Ticket médio cresceu de R$ 156 (2018) para R$ 204 (2025)</p>
-                          </div>
-                        </div>
+                        <ResponsiveContainer width="100%" height={300}>
+                          <BarChart data={ticketMedioData}>
+                            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                            <XAxis dataKey="ano" stroke="hsl(var(--muted-foreground))" />
+                            <YAxis stroke="hsl(var(--muted-foreground))" />
+                            <Tooltip 
+                              contentStyle={{ 
+                                backgroundColor: 'hsl(var(--card))', 
+                                border: '1px solid hsl(var(--border))',
+                                borderRadius: '8px'
+                              }}
+                            />
+                            <Bar dataKey="valor" fill="#C5E8D4" radius={[8, 8, 0, 0]} />
+                          </BarChart>
+                        </ResponsiveContainer>
                       </div>
 
                       <h3 className="text-xl font-semibold text-foreground mb-3 mt-8">4.3 Modalidades de Crédito</h3>
@@ -504,12 +592,34 @@ export default function EvolucaoCartaoCredito() {
                         <div className="flex items-center justify-between mb-4">
                           <h4 className="font-semibold text-foreground">Penetração de Cartões Digitais (%)</h4>
                         </div>
-                        <div className="w-full h-[350px] bg-gradient-to-br from-[#B8D4E8]/10 to-[#D4C5E8]/10 rounded-lg flex items-center justify-center border border-border/50">
-                          <div className="text-center">
-                            <TrendingUp className="w-12 h-12 text-[#B8D4E8] mx-auto mb-3" />
-                            <p className="text-sm text-muted-foreground">Penetração cresceu de 15% (2018) para 67% (2025)</p>
-                          </div>
-                        </div>
+                        <ResponsiveContainer width="100%" height={350}>
+                          <AreaChart data={digitaisData}>
+                            <defs>
+                              <linearGradient id="colorDigitais" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="5%" stopColor="#B8D4E8" stopOpacity={0.8}/>
+                                <stop offset="95%" stopColor="#B8D4E8" stopOpacity={0.1}/>
+                              </linearGradient>
+                            </defs>
+                            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                            <XAxis dataKey="ano" stroke="hsl(var(--muted-foreground))" />
+                            <YAxis stroke="hsl(var(--muted-foreground))" />
+                            <Tooltip 
+                              contentStyle={{ 
+                                backgroundColor: 'hsl(var(--card))', 
+                                border: '1px solid hsl(var(--border))',
+                                borderRadius: '8px'
+                              }}
+                            />
+                            <Area 
+                              type="monotone" 
+                              dataKey="valor" 
+                              stroke="#B8D4E8" 
+                              strokeWidth={2}
+                              fillOpacity={1} 
+                              fill="url(#colorDigitais)" 
+                            />
+                          </AreaChart>
+                        </ResponsiveContainer>
                       </div>
 
                       <p className="text-muted-foreground leading-relaxed mb-4">
@@ -757,12 +867,27 @@ export default function EvolucaoCartaoCredito() {
                           <i className="fas fa-chart-line text-[#C5E8D4]"></i>
                           Impacto do Open Finance no Mercado de Cartões
                         </h4>
-                        <div className="w-full h-[300px] bg-gradient-to-br from-[#C5E8D4]/10 to-[#B8D4E8]/10 rounded-lg flex items-center justify-center border border-border/50">
-                          <div className="text-center">
-                            <TrendingUp className="w-12 h-12 text-[#C5E8D4] mx-auto mb-3" />
-                            <p className="text-sm text-muted-foreground">Taxa de aprovação cresceu de 42% (2021) para 68% (2025)</p>
-                          </div>
-                        </div>
+                        <ResponsiveContainer width="100%" height={300}>
+                          <LineChart data={openFinanceData}>
+                            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                            <XAxis dataKey="ano" stroke="hsl(var(--muted-foreground))" />
+                            <YAxis stroke="hsl(var(--muted-foreground))" label={{ value: 'Taxa de Aprovação (%)', angle: -90, position: 'insideLeft' }} />
+                            <Tooltip 
+                              contentStyle={{ 
+                                backgroundColor: 'hsl(var(--card))', 
+                                border: '1px solid hsl(var(--border))',
+                                borderRadius: '8px'
+                              }}
+                            />
+                            <Line 
+                              type="monotone" 
+                              dataKey="valor" 
+                              stroke="#C5E8D4" 
+                              strokeWidth={3}
+                              dot={{ fill: '#C5E8D4', r: 6 }}
+                            />
+                          </LineChart>
+                        </ResponsiveContainer>
                       </div>
 
                       <h3 className="text-xl font-semibold text-foreground mb-3 mt-8">9.2 Recomendações Estratégicas</h3>
