@@ -3067,7 +3067,7 @@ const Aprendizado = () => {
                       <h2 className="text-xl font-semibold text-slate-800">Resultados</h2>
                       <span className="text-sm text-slate-500">847 artigos encontrados</span>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-3">
                       <span className="text-sm text-slate-600">Ordenar por:</span>
                       <select className="px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-pastel-purple">
                         <option>Mais Relevante</option>
@@ -3075,6 +3075,10 @@ const Aprendizado = () => {
                         <option>Mais Citado</option>
                         <option>Maior Impacto</option>
                       </select>
+                      <button className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2">
+                        <i className="fas fa-pen-fancy"></i>
+                        <span>Criar Paper</span>
+                      </button>
                     </div>
                   </div>
 
