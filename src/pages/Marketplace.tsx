@@ -328,7 +328,7 @@ const Marketplace = () => {
                       <span className="text-xs text-slate-500">Carlos Mendes</span>
                     </div>
                     <h3 className="font-semibold text-slate-800 mb-2 line-clamp-2 h-12">
-                      Guia Completo de Análise de Ações
+                      Guia Completo dos Cartões de Crédito
                     </h3>
                     <div className="flex items-center gap-2 mb-3">
                       <div className="flex items-center gap-1 text-xs">
