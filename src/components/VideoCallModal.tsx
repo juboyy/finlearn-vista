@@ -370,7 +370,7 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                     </TabsTrigger>
                   </TabsList>
 
-                  <TabsContent value="chat" className="flex-1 p-0 mt-0 min-h-0 overflow-hidden pb-20">
+                  <TabsContent value="chat" className="flex-1 p-0 mt-0 min-h-0 overflow-hidden pb-32">
                     <div ref={chatScrollRef} className="h-full overflow-y-auto">
                       <div className="p-4 space-y-3">
                         {chatMessages.length === 0 ? (
