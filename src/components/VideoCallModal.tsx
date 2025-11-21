@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Video, Mic, MicOff, VideoOff, Phone, Monitor, Minimize2, Maximize2, MessageCircle, FileText, Settings, Send, ChevronLeft, ChevronRight, X, Activity, TrendingUp, Target, Lightbulb, Key, BarChart3, Clock, Coins } from "lucide-react";
+import { Video, Mic, MicOff, VideoOff, Phone, Monitor, Minimize2, Maximize2, MessageCircle, FileText, Settings, Send, ChevronLeft, ChevronRight, X, Activity, TrendingUp, Target, Lightbulb, Key, BarChart3, Clock, Coins, UserPlus, Copy, Mail, Users } from "lucide-react";
 import { useState, useRef, useEffect, useMemo } from "react";
 import { toast } from "sonner";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
@@ -39,6 +39,16 @@ export const VideoCallModal = ({
   const [noteColor, setNoteColor] = useState('#ffffff');
   const notesRef = useRef<HTMLDivElement>(null);
   const [showStatsModal, setShowStatsModal] = useState(false);
+  const [showInviteModal, setShowInviteModal] = useState(false);
+  const [inviteEmail, setInviteEmail] = useState('');
+  const [participants, setParticipants] = useState<Array<{
+    id: string;
+    name: string;
+    avatar: string;
+    status: 'connected' | 'pending';
+  }>>([
+    { id: '1', name: 'Você', avatar: '', status: 'connected' }
+  ]);
   const localVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -265,6 +275,23 @@ export const VideoCallModal = ({
     endCall();
     onOpenChange(false);
   };
+
+  const handleCopyInviteLink = () => {
+    const inviteLink = `${window.location.origin}/join-call/${Math.random().toString(36).substr(2, 9)}`;
+    navigator.clipboard.writeText(inviteLink);
+    toast.success('Link copiado para área de transferência');
+  };
+
+  const handleSendInvite = () => {
+    if (!inviteEmail.trim()) {
+      toast.error('Digite um email válido');
+      return;
+    }
+    // Simula envio de convite
+    toast.success(`Convite enviado para ${inviteEmail}`);
+    setInviteEmail('');
+    setShowInviteModal(false);
+  };
   return <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[95vw] h-[90vh] p-0 bg-slate-950 border-slate-800 overflow-hidden">
         <DialogDescription className="sr-only">
@@ -291,6 +318,15 @@ export const VideoCallModal = ({
                       </div>}
                   </div>
                 </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowInviteModal(true)}
+                  className="bg-slate-800/50 hover:bg-slate-700 border-slate-700 text-white"
+                >
+                  <UserPlus size={16} className="mr-2" />
+                  Convidar
+                </Button>
               </DialogTitle>
             </DialogHeader>
 
@@ -412,6 +448,36 @@ export const VideoCallModal = ({
                       <Settings size={16} />
                       Config
                     </button>
+                  </div>
+
+                  {/* Participants Section */}
+                  <div className="mt-4 pt-4 border-t border-slate-800">
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className="text-white text-sm font-medium flex items-center gap-2">
+                        <Users size={16} />
+                        Participantes ({participants.length})
+                      </h4>
+                    </div>
+                    <div className="space-y-2">
+                      {participants.map((participant) => (
+                        <div key={participant.id} className="flex items-center gap-2 p-2 bg-slate-800/50 rounded-lg">
+                          <div className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center">
+                            {participant.avatar ? (
+                              <img src={participant.avatar} alt={participant.name} className="w-full h-full rounded-full object-cover" />
+                            ) : (
+                              <span className="text-white text-sm">{participant.name[0]}</span>
+                            )}
+                          </div>
+                          <div className="flex-1">
+                            <p className="text-white text-sm font-medium">{participant.name}</p>
+                            <div className="flex items-center gap-1">
+                              <div className={`w-1.5 h-1.5 rounded-full ${participant.status === 'connected' ? 'bg-green-500' : 'bg-slate-500'}`}></div>
+                              <p className="text-slate-400 text-xs">{participant.status === 'connected' ? 'Conectado' : 'Pendente'}</p>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
@@ -584,6 +650,70 @@ export const VideoCallModal = ({
               <ChevronLeft size={24} />
             </Button>}
         </div>
+
+        {/* Modal de Convite */}
+        {showInviteModal && (
+          <div className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setShowInviteModal(false)}>
+            <div className="bg-slate-900 border-2 border-slate-700 rounded-2xl shadow-2xl w-full max-w-md p-6" onClick={e => e.stopPropagation()}>
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h2 className="text-xl font-bold text-white mb-1">Convidar Pessoas</h2>
+                  <p className="text-slate-400 text-sm">Adicione participantes à chamada</p>
+                </div>
+                <button onClick={() => setShowInviteModal(false)} className="text-slate-400 hover:text-white transition-colors p-2 hover:bg-slate-800 rounded-lg">
+                  <X size={20} />
+                </button>
+              </div>
+
+              <div className="space-y-4">
+                {/* Compartilhar Link */}
+                <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-4">
+                  <h3 className="text-white font-medium mb-3 flex items-center gap-2">
+                    <Copy size={16} className="text-pastel-blue" />
+                    Compartilhar Link
+                  </h3>
+                  <p className="text-slate-400 text-sm mb-3">
+                    Copie o link e compartilhe com quem você deseja convidar
+                  </p>
+                  <Button
+                    onClick={handleCopyInviteLink}
+                    className="w-full bg-pastel-blue hover:bg-pastel-blue/80 text-slate-900"
+                  >
+                    <Copy size={16} className="mr-2" />
+                    Copiar Link de Convite
+                  </Button>
+                </div>
+
+                {/* Enviar por Email */}
+                <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-4">
+                  <h3 className="text-white font-medium mb-3 flex items-center gap-2">
+                    <Mail size={16} className="text-pastel-purple" />
+                    Enviar por Email
+                  </h3>
+                  <p className="text-slate-400 text-sm mb-3">
+                    Digite o email da pessoa que você deseja convidar
+                  </p>
+                  <div className="flex gap-2">
+                    <Input
+                      type="email"
+                      value={inviteEmail}
+                      onChange={(e) => setInviteEmail(e.target.value)}
+                      placeholder="email@exemplo.com"
+                      className="flex-1 bg-slate-800 border-slate-700 text-white"
+                      onKeyPress={(e) => e.key === 'Enter' && handleSendInvite()}
+                    />
+                    <Button
+                      onClick={handleSendInvite}
+                      className="bg-pastel-purple hover:bg-pastel-purple/80 text-slate-900"
+                    >
+                      <Send size={16} />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Modal de Estatísticas */}
         {showStatsModal && <div className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setShowStatsModal(false)}>
