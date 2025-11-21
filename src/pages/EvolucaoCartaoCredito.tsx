@@ -99,11 +99,11 @@ export default function EvolucaoCartaoCredito() {
         </header>
 
         {/* Main Content */}
-        <div className="flex-1 overflow-y-auto bg-muted/30">
-          <div className="grid grid-cols-12 gap-6 px-8 py-8 max-w-[1600px] mx-auto">
-            {/* Table of Contents - Left Sidebar */}
-            <aside className="col-span-3 self-start">
-              <div className="bg-card rounded-xl border border-border p-6 sticky top-6 max-h-[calc(100vh-7rem)] overflow-y-auto">
+        <div className="flex-1 flex bg-muted/30">
+          <div className="w-full max-w-[1600px] mx-auto px-8 py-8 flex gap-6">
+            {/* Table of Contents - Left Sidebar - Fixed */}
+            <aside className="w-[280px] flex-shrink-0">
+              <div className="bg-card rounded-xl border border-border p-6 sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto">
                 {/* Progress Bar */}
                 <div className="mb-6 pb-6 border-b border-border">
                   <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
@@ -225,7 +225,7 @@ export default function EvolucaoCartaoCredito() {
             </aside>
 
             {/* Main Article Content */}
-            <article id="article-content" className="col-span-6 bg-card rounded-xl border border-border p-8">
+            <article id="article-content" className="flex-1 bg-card rounded-xl border border-border p-8 overflow-y-auto max-h-[calc(100vh-7rem)]">
               {/* Article Metadata */}
               <div className="mb-8 pb-6 border-b border-border">
                 <div className="flex items-center gap-3 mb-4">
@@ -900,8 +900,8 @@ export default function EvolucaoCartaoCredito() {
             </article>
 
             {/* Right Sidebar */}
-            <aside className="col-span-3">
-              <div className="sticky top-6 space-y-6">
+            <aside className="w-[280px] flex-shrink-0">
+              <div className="sticky top-24 space-y-6 max-h-[calc(100vh-7rem)] overflow-y-auto">
                 {/* AI Tools */}
                 <div className="bg-card rounded-xl border border-border p-6">
                   <h3 className="text-sm font-semibold text-foreground mb-4">Ferramentas IA</h3>
