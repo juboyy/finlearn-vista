@@ -1,7 +1,13 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
+import { MenutabbarFix } from "@/components/Dashboard/MenutabbarFix";
 import { ArrowLeft, Plus, Filter, ArrowDownWideNarrow, BookOpen, Video, PieChart, Calculator, Search, FileText, Bell, Crown, Podcast, Newspaper, TrendingUp, Users as UsersIcon, Book, GraduationCap, Bot, FileCheck, FlaskConical, Eye, Pen, MoreVertical } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'documentos' | 'estudos';
+
 export default function MeusConteudos() {
+  const [activeTab, setActiveTab] = useState<TabType>('todos');
+  
   const contentItems = [{
     type: "Podcast",
     icon: <Podcast className="w-5 h-5" />,
@@ -129,6 +135,9 @@ export default function MeusConteudos() {
             </div>
           </div>
         </header>
+
+        {/* MenutabbarFix */}
+        <MenutabbarFix activeTab={activeTab} setActiveTab={setActiveTab} />
 
         {/* Main Content */}
         <div className="flex-1 flex overflow-hidden">
