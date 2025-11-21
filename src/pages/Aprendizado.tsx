@@ -5,86 +5,172 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ebookRiskManagementPink from "@/assets/ebook-risk-management-pink.png";
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts';
-
 type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'documentos' | 'estudos';
-
 const Aprendizado = () => {
   const [activeTab, setActiveTab] = useState<TabType>('todos');
   const [citationValue, setCitationValue] = useState(0);
   const [yearValue, setYearValue] = useState(2024);
   const navigate = useNavigate();
-
-  const sectorData = [
-    { name: 'Financeiro', value: 5.8 },
-    { name: 'Tecnologia', value: 8.2 },
-    { name: 'Energia', value: -2.1 },
-    { name: 'Consumo', value: 3.4 },
-    { name: 'Saúde', value: 6.7 },
-    { name: 'Industrial', value: 1.9 },
-  ];
-
-  const volumeData = [
-    { name: 'Seg', value: 18.5 },
-    { name: 'Ter', value: 22.3 },
-    { name: 'Qua', value: 19.8 },
-    { name: 'Qui', value: 25.6 },
-    { name: 'Sex', value: 28.4 },
-    { name: 'Sáb', value: 15.2 },
-    { name: 'Dom', value: 12.8 },
-  ];
-
-  const selicData = [
-    { name: 'Fev', value: 13.75 },
-    { name: 'Mar', value: 13.75 },
-    { name: 'Abr', value: 13.25 },
-    { name: 'Mai', value: 12.75 },
-    { name: 'Jun', value: 12.25 },
-    { name: 'Jul', value: 11.75 },
-    { name: 'Ago', value: 11.25 },
-    { name: 'Set', value: 10.75 },
-    { name: 'Out', value: 10.75 },
-    { name: 'Nov', value: 10.75 },
-    { name: 'Dez', value: 10.75 },
-    { name: 'Jan', value: 10.75 },
-  ];
-
-  const inflationData = [
-    { name: 'Fev', value: 0.83 },
-    { name: 'Mar', value: 0.71 },
-    { name: 'Abr', value: 0.38 },
-    { name: 'Mai', value: 0.46 },
-    { name: 'Jun', value: 0.21 },
-    { name: 'Jul', value: 0.38 },
-    { name: 'Ago', value: -0.02 },
-    { name: 'Set', value: 0.26 },
-    { name: 'Out', value: 0.56 },
-    { name: 'Nov', value: 0.62 },
-    { name: 'Dez', value: 0.56 },
-    { name: 'Jan', value: 0.42 },
-  ];
-
-  const pixData = [
-    { name: '2020', value: 1.2 },
-    { name: '2021', value: 15.4 },
-    { name: '2022', value: 24.8 },
-    { name: '2023', value: 32.6 },
-    { name: '2024', value: 38.9 },
-    { name: '2025', value: 42.3 },
-  ];
-
-  const creditCardData = [
-    { name: '2018', value: 185 },
-    { name: '2019', value: 198 },
-    { name: '2020', value: 172 },
-    { name: '2021', value: 215 },
-    { name: '2022', value: 238 },
-    { name: '2023', value: 256 },
-    { name: '2024', value: 268 },
-    { name: '2025', value: 275 },
-  ];
-  
-  return (
-    <div className="flex h-screen overflow-hidden">
+  const sectorData = [{
+    name: 'Financeiro',
+    value: 5.8
+  }, {
+    name: 'Tecnologia',
+    value: 8.2
+  }, {
+    name: 'Energia',
+    value: -2.1
+  }, {
+    name: 'Consumo',
+    value: 3.4
+  }, {
+    name: 'Saúde',
+    value: 6.7
+  }, {
+    name: 'Industrial',
+    value: 1.9
+  }];
+  const volumeData = [{
+    name: 'Seg',
+    value: 18.5
+  }, {
+    name: 'Ter',
+    value: 22.3
+  }, {
+    name: 'Qua',
+    value: 19.8
+  }, {
+    name: 'Qui',
+    value: 25.6
+  }, {
+    name: 'Sex',
+    value: 28.4
+  }, {
+    name: 'Sáb',
+    value: 15.2
+  }, {
+    name: 'Dom',
+    value: 12.8
+  }];
+  const selicData = [{
+    name: 'Fev',
+    value: 13.75
+  }, {
+    name: 'Mar',
+    value: 13.75
+  }, {
+    name: 'Abr',
+    value: 13.25
+  }, {
+    name: 'Mai',
+    value: 12.75
+  }, {
+    name: 'Jun',
+    value: 12.25
+  }, {
+    name: 'Jul',
+    value: 11.75
+  }, {
+    name: 'Ago',
+    value: 11.25
+  }, {
+    name: 'Set',
+    value: 10.75
+  }, {
+    name: 'Out',
+    value: 10.75
+  }, {
+    name: 'Nov',
+    value: 10.75
+  }, {
+    name: 'Dez',
+    value: 10.75
+  }, {
+    name: 'Jan',
+    value: 10.75
+  }];
+  const inflationData = [{
+    name: 'Fev',
+    value: 0.83
+  }, {
+    name: 'Mar',
+    value: 0.71
+  }, {
+    name: 'Abr',
+    value: 0.38
+  }, {
+    name: 'Mai',
+    value: 0.46
+  }, {
+    name: 'Jun',
+    value: 0.21
+  }, {
+    name: 'Jul',
+    value: 0.38
+  }, {
+    name: 'Ago',
+    value: -0.02
+  }, {
+    name: 'Set',
+    value: 0.26
+  }, {
+    name: 'Out',
+    value: 0.56
+  }, {
+    name: 'Nov',
+    value: 0.62
+  }, {
+    name: 'Dez',
+    value: 0.56
+  }, {
+    name: 'Jan',
+    value: 0.42
+  }];
+  const pixData = [{
+    name: '2020',
+    value: 1.2
+  }, {
+    name: '2021',
+    value: 15.4
+  }, {
+    name: '2022',
+    value: 24.8
+  }, {
+    name: '2023',
+    value: 32.6
+  }, {
+    name: '2024',
+    value: 38.9
+  }, {
+    name: '2025',
+    value: 42.3
+  }];
+  const creditCardData = [{
+    name: '2018',
+    value: 185
+  }, {
+    name: '2019',
+    value: 198
+  }, {
+    name: '2020',
+    value: 172
+  }, {
+    name: '2021',
+    value: 215
+  }, {
+    name: '2022',
+    value: 238
+  }, {
+    name: '2023',
+    value: 256
+  }, {
+    name: '2024',
+    value: 268
+  }, {
+    name: '2025',
+    value: 275
+  }];
+  return <div className="flex h-screen overflow-hidden">
       <SidebarFix />
       
       <main className="flex-1 overflow-y-auto flex flex-col">
@@ -112,8 +198,7 @@ const Aprendizado = () => {
         <MenutabbarFix activeTab={activeTab} setActiveTab={setActiveTab} />
 
         <div className="flex-1 p-8 pb-32">
-          {activeTab === 'todos' && (
-            <>
+          {activeTab === 'todos' && <>
 
               <div className="grid grid-cols-3 gap-6 mb-8">
             <section className="col-span-2 bg-white rounded-xl border border-slate-200 overflow-hidden">
@@ -250,8 +335,8 @@ const Aprendizado = () => {
                     <div className="flex items-center gap-2">
                       <div className="w-full bg-slate-200 rounded-full h-1.5">
                         <div className="bg-pastel-purple h-1.5 rounded-full" style={{
-                        width: "50%"
-                      }}></div>
+                          width: "50%"
+                        }}></div>
                       </div>
                       <span className="text-xs text-slate-500 font-medium">50%</span>
                     </div>
@@ -280,8 +365,8 @@ const Aprendizado = () => {
                     <div className="flex items-center gap-2">
                       <div className="w-full bg-slate-200 rounded-full h-1.5">
                         <div className="bg-pastel-green h-1.5 rounded-full" style={{
-                        width: "71%"
-                      }}></div>
+                          width: "71%"
+                        }}></div>
                       </div>
                       <span className="text-xs text-slate-500 font-medium">32:15 / 45:00</span>
                     </div>
@@ -304,8 +389,8 @@ const Aprendizado = () => {
                     </div>
                     <div className="w-full bg-slate-200 rounded-full h-2">
                       <div className="bg-pastel-blue h-2 rounded-full" style={{
-                      width: "80%"
-                    }}></div>
+                        width: "80%"
+                      }}></div>
                     </div>
                   </div>
 
@@ -316,8 +401,8 @@ const Aprendizado = () => {
                     </div>
                     <div className="w-full bg-slate-200 rounded-full h-2">
                       <div className="bg-pastel-purple h-2 rounded-full" style={{
-                      width: "50%"
-                    }}></div>
+                        width: "50%"
+                      }}></div>
                     </div>
                   </div>
 
@@ -328,8 +413,8 @@ const Aprendizado = () => {
                     </div>
                     <div className="w-full bg-slate-200 rounded-full h-2">
                       <div className="bg-pastel-green h-2 rounded-full" style={{
-                      width: "30%"
-                    }}></div>
+                        width: "30%"
+                      }}></div>
                     </div>
                   </div>
                 </div>
@@ -847,11 +932,9 @@ const Aprendizado = () => {
               </div>
             </div>
           </section>
-            </>
-          )}
+            </>}
 
-          {activeTab === 'podcasts' && (
-            <>
+          {activeTab === 'podcasts' && <>
               <section className="mb-8">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-xl font-semibold text-slate-800">Continue Ouvindo</h2>
@@ -870,7 +953,9 @@ const Aprendizado = () => {
                           <span className="text-xs text-slate-500">28 min restantes</span>
                         </div>
                         <div className="w-full bg-slate-200 rounded-full h-1 mb-2">
-                          <div className="bg-pastel-blue h-1 rounded-full" style={{ width: '65%' }}></div>
+                          <div className="bg-pastel-blue h-1 rounded-full" style={{
+                        width: '65%'
+                      }}></div>
                         </div>
                         <button className="text-slate-600 hover:text-slate-800">
                           <i className="fas fa-play-circle text-2xl"></i>
@@ -890,7 +975,9 @@ const Aprendizado = () => {
                           <span className="text-xs text-slate-500">15 min restantes</span>
                         </div>
                         <div className="w-full bg-slate-200 rounded-full h-1 mb-2">
-                          <div className="bg-pastel-green h-1 rounded-full" style={{ width: '82%' }}></div>
+                          <div className="bg-pastel-green h-1 rounded-full" style={{
+                        width: '82%'
+                      }}></div>
                         </div>
                         <button className="text-slate-600 hover:text-slate-800">
                           <i className="fas fa-play-circle text-2xl"></i>
@@ -910,7 +997,9 @@ const Aprendizado = () => {
                           <span className="text-xs text-slate-500">22 min restantes</span>
                         </div>
                         <div className="w-full bg-slate-200 rounded-full h-1 mb-2">
-                          <div className="bg-pastel-purple h-1 rounded-full" style={{ width: '45%' }}></div>
+                          <div className="bg-pastel-purple h-1 rounded-full" style={{
+                        width: '45%'
+                      }}></div>
                         </div>
                         <button className="text-slate-600 hover:text-slate-800">
                           <i className="fas fa-play-circle text-2xl"></i>
@@ -1171,11 +1260,9 @@ const Aprendizado = () => {
                   </div>
                 </div>
               </section>
-            </>
-          )}
+            </>}
 
-          {activeTab === 'cursos' && (
-            <div className="space-y-8">
+          {activeTab === 'cursos' && <div className="space-y-8">
               {/* Hero Section */}
               <section>
                 <div className="bg-pastel-purple rounded-xl border border-border overflow-hidden">
@@ -1294,7 +1381,9 @@ const Aprendizado = () => {
                         </div>
                       </div>
                       <div className="w-full bg-muted rounded-full h-2">
-                        <div className="bg-pastel-blue h-2 rounded-full" style={{ width: '80%' }}></div>
+                        <div className="bg-pastel-blue h-2 rounded-full" style={{
+                      width: '80%'
+                    }}></div>
                       </div>
                     </div>
 
@@ -1315,7 +1404,9 @@ const Aprendizado = () => {
                         </div>
                       </div>
                       <div className="w-full bg-muted rounded-full h-2">
-                        <div className="bg-pastel-green h-2 rounded-full" style={{ width: '60%' }}></div>
+                        <div className="bg-pastel-green h-2 rounded-full" style={{
+                      width: '60%'
+                    }}></div>
                       </div>
                     </div>
 
@@ -1336,7 +1427,9 @@ const Aprendizado = () => {
                         </div>
                       </div>
                       <div className="w-full bg-muted rounded-full h-2">
-                        <div className="bg-pastel-purple h-2 rounded-full" style={{ width: '40%' }}></div>
+                        <div className="bg-pastel-purple h-2 rounded-full" style={{
+                      width: '40%'
+                    }}></div>
                       </div>
                     </div>
 
@@ -1357,7 +1450,9 @@ const Aprendizado = () => {
                         </div>
                       </div>
                       <div className="w-full bg-muted rounded-full h-2">
-                        <div className="bg-pastel-pink h-2 rounded-full" style={{ width: '40%' }}></div>
+                        <div className="bg-pastel-pink h-2 rounded-full" style={{
+                      width: '40%'
+                    }}></div>
                       </div>
                     </div>
 
@@ -1378,7 +1473,9 @@ const Aprendizado = () => {
                         </div>
                       </div>
                       <div className="w-full bg-muted rounded-full h-2">
-                        <div className="bg-pastel-peach h-2 rounded-full" style={{ width: '20%' }}></div>
+                        <div className="bg-pastel-peach h-2 rounded-full" style={{
+                      width: '20%'
+                    }}></div>
                       </div>
                     </div>
                   </div>
@@ -1898,9 +1995,7 @@ const Aprendizado = () => {
                 <div className="grid grid-cols-3 gap-6">
                   <div className="bg-card rounded-xl border border-border p-6">
                     <div className="flex items-center gap-1 mb-4">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="text-yellow-500 fill-yellow-500" size={14} />
-                      ))}
+                      {[...Array(5)].map((_, i) => <Star key={i} className="text-yellow-500 fill-yellow-500" size={14} />)}
                     </div>
                     <p className="text-muted-foreground mb-4">O curso de Análise Técnica mudou completamente minha forma de operar no mercado. Conteúdo excepcional e professor muito didático.</p>
                     <div className="flex items-center gap-3">
@@ -1913,9 +2008,7 @@ const Aprendizado = () => {
                   </div>
                   <div className="bg-card rounded-xl border border-border p-6">
                     <div className="flex items-center gap-1 mb-4">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="text-yellow-500 fill-yellow-500" size={14} />
-                      ))}
+                      {[...Array(5)].map((_, i) => <Star key={i} className="text-yellow-500 fill-yellow-500" size={14} />)}
                     </div>
                     <p className="text-muted-foreground mb-4">Melhor investimento que fiz na minha carreira. Os cursos são completos e com certificação reconhecida pelo mercado.</p>
                     <div className="flex items-center gap-3">
@@ -1928,9 +2021,7 @@ const Aprendizado = () => {
                   </div>
                   <div className="bg-card rounded-xl border border-border p-6">
                     <div className="flex items-center gap-1 mb-4">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="text-yellow-500 fill-yellow-500" size={14} />
-                      ))}
+                      {[...Array(5)].map((_, i) => <Star key={i} className="text-yellow-500 fill-yellow-500" size={14} />)}
                     </div>
                     <p className="text-muted-foreground mb-4">Plataforma excelente com conteúdo atualizado. As aulas com avatares IA são inovadoras e facilitam muito o aprendizado.</p>
                     <div className="flex items-center gap-3">
@@ -1959,21 +2050,17 @@ const Aprendizado = () => {
                   </div>
                 </div>
               </section>
-            </div>
-          )}
+            </div>}
 
-          {activeTab === 'avatar-ia' && (
-            <div className="text-center py-16">
+          {activeTab === 'avatar-ia' && <div className="text-center py-16">
               <div className="w-20 h-20 bg-pastel-purple rounded-full flex items-center justify-center mx-auto mb-4">
                 <i className="fas fa-robot text-3xl text-slate-700"></i>
               </div>
               <h3 className="text-xl font-semibold text-slate-800 mb-2">Avatar IA</h3>
               <p className="text-slate-600">Aprenda com avatares de inteligência artificial</p>
-            </div>
-          )}
+            </div>}
 
-          {activeTab === 'ebooks' && (
-            <>
+          {activeTab === 'ebooks' && <>
               {/* Stats Overview */}
               <section className="grid grid-cols-4 gap-6 mb-8">
                 <div className="bg-white rounded-xl p-6 border border-border">
@@ -2039,7 +2126,9 @@ const Aprendizado = () => {
                         <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/de72874cc5-bcb1610580017fd3cfe5.png" alt="Pastel drawing of stock market analysis book cover" />
                       </div>
                       <div className="absolute bottom-0 left-0 right-0 bg-slate-100 h-2.5">
-                        <div className="h-full bg-emerald-600 relative" style={{ width: '68%' }}>
+                        <div className="h-full bg-emerald-600 relative" style={{
+                      width: '68%'
+                    }}>
                           <span className="absolute -top-8 right-0 text-xs font-semibold text-white bg-slate-800 px-2 py-1 rounded shadow-lg">68%</span>
                         </div>
                       </div>
@@ -2061,7 +2150,9 @@ const Aprendizado = () => {
                         <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/de72874cc5-2efb8363a6121e6b0540.png" alt="Pastel drawing of fixed income investment book" />
                       </div>
                       <div className="absolute bottom-0 left-0 right-0 bg-slate-100 h-2.5">
-                        <div className="h-full bg-emerald-600 relative" style={{ width: '42%' }}>
+                        <div className="h-full bg-emerald-600 relative" style={{
+                      width: '42%'
+                    }}>
                           <span className="absolute -top-8 right-0 text-xs font-semibold text-white bg-slate-800 px-2 py-1 rounded shadow-lg">42%</span>
                         </div>
                       </div>
@@ -2083,7 +2174,9 @@ const Aprendizado = () => {
                         <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/de72874cc5-43745d045cd52ba18a30.png" alt="Pastel drawing of financial compliance book cover" />
                       </div>
                       <div className="absolute bottom-0 left-0 right-0 bg-slate-100 h-2.5">
-                        <div className="h-full bg-emerald-600 relative" style={{ width: '85%' }}>
+                        <div className="h-full bg-emerald-600 relative" style={{
+                      width: '85%'
+                    }}>
                           <span className="absolute -top-8 right-0 text-xs font-semibold text-white bg-slate-800 px-2 py-1 rounded shadow-lg">85%</span>
                         </div>
                       </div>
@@ -2105,7 +2198,9 @@ const Aprendizado = () => {
                         <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/e7b331f4e1-9ee7cde295eba8fd33f7.png" alt="Pastel drawing of derivatives book" />
                       </div>
                       <div className="absolute bottom-0 left-0 right-0 bg-slate-100 h-2.5">
-                        <div className="h-full bg-emerald-700 relative" style={{ width: '23%' }}>
+                        <div className="h-full bg-emerald-700 relative" style={{
+                      width: '23%'
+                    }}>
                           <span className="absolute -top-8 right-0 text-xs font-semibold text-white bg-slate-800 px-2 py-1 rounded shadow-lg">23%</span>
                         </div>
                       </div>
@@ -2127,7 +2222,9 @@ const Aprendizado = () => {
                         <img className="w-full h-full object-cover" src={ebookRiskManagementPink} alt="Pastel drawing of risk management book" />
                       </div>
                       <div className="absolute bottom-0 left-0 right-0 bg-slate-100 h-2.5">
-                        <div className="h-full bg-emerald-700 relative" style={{ width: '56%' }}>
+                        <div className="h-full bg-emerald-700 relative" style={{
+                      width: '56%'
+                    }}>
                           <span className="absolute -top-8 right-0 text-xs font-semibold text-white bg-slate-800 px-2 py-1 rounded shadow-lg">56%</span>
                         </div>
                       </div>
@@ -2394,10 +2491,7 @@ const Aprendizado = () => {
                         <div>
                           <span className="text-2xl font-bold text-foreground">R$ 149</span>
                         </div>
-                        <button 
-                          onClick={() => navigate('/ebook/1')}
-                          className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition"
-                        >
+                        <button onClick={() => navigate('/ebook/1')} className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition">
                           Ver Mais
                         </button>
                       </div>
@@ -2430,10 +2524,7 @@ const Aprendizado = () => {
                         <div>
                           <span className="text-2xl font-bold text-foreground">R$ 189</span>
                         </div>
-                        <button 
-                          onClick={() => navigate('/ebook/2')}
-                          className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition"
-                        >
+                        <button onClick={() => navigate('/ebook/2')} className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition">
                           Ver Mais
                         </button>
                       </div>
@@ -2468,10 +2559,7 @@ const Aprendizado = () => {
                           <span className="text-2xl font-bold text-foreground">R$ 112</span>
                           <span className="text-slate-400 line-through ml-2 text-sm">R$ 149</span>
                         </div>
-                        <button 
-                          onClick={() => navigate('/ebook/3')}
-                          className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition"
-                        >
+                        <button onClick={() => navigate('/ebook/3')} className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition">
                           Ver Mais
                         </button>
                       </div>
@@ -2504,10 +2592,7 @@ const Aprendizado = () => {
                         <div>
                           <span className="text-2xl font-bold text-foreground">R$ 99</span>
                         </div>
-                        <button 
-                          onClick={() => navigate('/ebook/4')}
-                          className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition"
-                        >
+                        <button onClick={() => navigate('/ebook/4')} className="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg font-medium hover:bg-slate-700 transition">
                           Ver Mais
                         </button>
                       </div>
@@ -2531,11 +2616,9 @@ const Aprendizado = () => {
                   </div>
                 </div>
               </section>
-            </>
-          )}
+            </>}
 
-          {activeTab === 'webinars' && (
-            <>
+          {activeTab === 'webinars' && <>
               {/* Live Webinars Section */}
               <section className="mb-8">
                 <div className="flex items-center justify-between mb-6">
@@ -2821,47 +2904,27 @@ const Aprendizado = () => {
                   </div>
                 </div>
               </section>
-            </>
-          )}
+            </>}
 
-          {activeTab === 'artigos' && (
-            <div className="text-center py-16">
+          {activeTab === 'artigos' && <div className="text-center py-16">
               <div className="w-20 h-20 bg-pastel-peach rounded-full flex items-center justify-center mx-auto mb-4">
                 <i className="fas fa-newspaper text-3xl text-slate-700"></i>
               </div>
               <h3 className="text-xl font-semibold text-slate-800 mb-2">Artigos</h3>
               <p className="text-slate-600">Leia artigos aprofundados sobre o mercado financeiro</p>
-            </div>
-          )}
+            </div>}
 
-          {activeTab === 'analises' && (
-            <div className="text-center py-16">
-              <div className="w-20 h-20 bg-pastel-yellow rounded-full flex items-center justify-center mx-auto mb-4">
-                <ChartLine className="text-3xl text-slate-700" size={48} />
-              </div>
-              <h3 className="text-xl font-semibold text-slate-800 mb-2">Análises de Mercado</h3>
-              <p className="text-slate-600 mb-6">Análises detalhadas do mercado financeiro geradas por IA</p>
-              <button 
-                onClick={() => navigate('/analises')}
-                className="px-6 py-3 bg-pastel-yellow text-slate-800 rounded-lg font-medium hover:bg-opacity-80 transition"
-              >
-                Ver Todas as Análises
-              </button>
-            </div>
-          )}
+          {activeTab === 'analises'}
 
-          {activeTab === 'documentos' && (
-            <div className="text-center py-16">
+          {activeTab === 'documentos' && <div className="text-center py-16">
               <div className="w-20 h-20 bg-pastel-green rounded-full flex items-center justify-between mx-auto mb-4">
                 <i className="fas fa-file-alt text-3xl text-slate-700"></i>
               </div>
               <h3 className="text-xl font-semibold text-slate-800 mb-2">Documentos</h3>
               <p className="text-slate-600">Acesse documentos técnicos e regulamentações</p>
-            </div>
-          )}
+            </div>}
 
-          {activeTab === 'estudos' && (
-            <>
+          {activeTab === 'estudos' && <>
               <div className="grid grid-cols-4 gap-6 mb-8">
                 <section className="col-span-4 grid grid-cols-4 gap-6">
                   <div className="bg-white rounded-xl border border-slate-200 p-6">
@@ -2992,14 +3055,7 @@ const Aprendizado = () => {
                       <div>
                         <label className="text-sm font-medium text-slate-700 mb-3 block">Número de Citações</label>
                         <div className="px-2">
-                          <input 
-                            type="range" 
-                            min="0" 
-                            max="1000" 
-                            value={citationValue} 
-                            onChange={(e) => setCitationValue(parseInt(e.target.value))}
-                            className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-pastel-purple" 
-                          />
+                          <input type="range" min="0" max="1000" value={citationValue} onChange={e => setCitationValue(parseInt(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-pastel-purple" />
                           <div className="flex justify-between text-xs text-slate-500 mt-2">
                             <span>0</span>
                             <span>{citationValue === 0 ? 'Todas' : `${citationValue}+`}</span>
@@ -3067,14 +3123,7 @@ const Aprendizado = () => {
                       <div>
                         <label className="text-sm font-medium text-slate-700 mb-3 block">Ano de Publicação</label>
                         <div className="px-2">
-                          <input 
-                            type="range" 
-                            min="2000" 
-                            max="2024" 
-                            value={yearValue} 
-                            onChange={(e) => setYearValue(parseInt(e.target.value))}
-                            className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-pastel-purple" 
-                          />
+                          <input type="range" min="2000" max="2024" value={yearValue} onChange={e => setYearValue(parseInt(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-pastel-purple" />
                           <div className="flex justify-between text-xs text-slate-500 mt-2">
                             <span>2000</span>
                             <span>{yearValue}</span>
@@ -3499,11 +3548,9 @@ const Aprendizado = () => {
                   </div>
                 </div>
               </section>
-            </>
-          )}
+            </>}
 
-          {activeTab === 'analises' && (
-            <>
+          {activeTab === 'analises' && <>
               <section className="mb-8">
                 <div className="bg-pastel-purple/80 rounded-xl border border-slate-200 p-8">
                   <div className="grid grid-cols-2 gap-8 items-center">
@@ -3693,12 +3740,20 @@ const Aprendizado = () => {
                     <ResponsiveContainer width="100%" height={400}>
                       <BarChart data={sectorData}>
                         <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                        <XAxis dataKey="name" stroke="#64748b" style={{ fontSize: '12px' }} />
-                        <YAxis stroke="#64748b" style={{ fontSize: '12px' }} />
-                        <Tooltip 
-                          contentStyle={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px' }}
-                          labelStyle={{ color: '#1e293b', fontWeight: 600 }}
-                        />
+                        <XAxis dataKey="name" stroke="#64748b" style={{
+                      fontSize: '12px'
+                    }} />
+                        <YAxis stroke="#64748b" style={{
+                      fontSize: '12px'
+                    }} />
+                        <Tooltip contentStyle={{
+                      background: 'white',
+                      border: '1px solid #e2e8f0',
+                      borderRadius: '8px'
+                    }} labelStyle={{
+                      color: '#1e293b',
+                      fontWeight: 600
+                    }} />
                         <Bar dataKey="value" fill="#8BBAA5" radius={[8, 8, 0, 0]} />
                       </BarChart>
                     </ResponsiveContainer>
@@ -3715,17 +3770,25 @@ const Aprendizado = () => {
                       <AreaChart data={volumeData}>
                         <defs>
                           <linearGradient id="colorVolume" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#7FA8BF" stopOpacity={0.4}/>
-                            <stop offset="95%" stopColor="#7FA8BF" stopOpacity={0}/>
+                            <stop offset="5%" stopColor="#7FA8BF" stopOpacity={0.4} />
+                            <stop offset="95%" stopColor="#7FA8BF" stopOpacity={0} />
                           </linearGradient>
                         </defs>
                         <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                        <XAxis dataKey="name" stroke="#64748b" style={{ fontSize: '12px' }} />
-                        <YAxis stroke="#64748b" style={{ fontSize: '12px' }} />
-                        <Tooltip 
-                          contentStyle={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px' }}
-                          labelStyle={{ color: '#1e293b', fontWeight: 600 }}
-                        />
+                        <XAxis dataKey="name" stroke="#64748b" style={{
+                      fontSize: '12px'
+                    }} />
+                        <YAxis stroke="#64748b" style={{
+                      fontSize: '12px'
+                    }} />
+                        <Tooltip contentStyle={{
+                      background: 'white',
+                      border: '1px solid #e2e8f0',
+                      borderRadius: '8px'
+                    }} labelStyle={{
+                      color: '#1e293b',
+                      fontWeight: 600
+                    }} />
                         <Area type="monotone" dataKey="value" stroke="#7FA8BF" strokeWidth={3} fillOpacity={1} fill="url(#colorVolume)" />
                       </AreaChart>
                     </ResponsiveContainer>
@@ -3846,13 +3909,24 @@ const Aprendizado = () => {
                     <ResponsiveContainer width="100%" height={350}>
                       <LineChart data={selicData}>
                         <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                        <XAxis dataKey="name" stroke="#64748b" style={{ fontSize: '12px' }} />
-                        <YAxis stroke="#64748b" style={{ fontSize: '12px' }} />
-                        <Tooltip 
-                          contentStyle={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px' }}
-                          labelStyle={{ color: '#1e293b', fontWeight: 600 }}
-                        />
-                        <Line type="monotone" dataKey="value" stroke="#C4B88A" strokeWidth={3} dot={{ fill: '#C4B88A', r: 4 }} />
+                        <XAxis dataKey="name" stroke="#64748b" style={{
+                      fontSize: '12px'
+                    }} />
+                        <YAxis stroke="#64748b" style={{
+                      fontSize: '12px'
+                    }} />
+                        <Tooltip contentStyle={{
+                      background: 'white',
+                      border: '1px solid #e2e8f0',
+                      borderRadius: '8px'
+                    }} labelStyle={{
+                      color: '#1e293b',
+                      fontWeight: 600
+                    }} />
+                        <Line type="monotone" dataKey="value" stroke="#C4B88A" strokeWidth={3} dot={{
+                      fill: '#C4B88A',
+                      r: 4
+                    }} />
                       </LineChart>
                     </ResponsiveContainer>
                   </div>
@@ -3867,12 +3941,20 @@ const Aprendizado = () => {
                     <ResponsiveContainer width="100%" height={350}>
                       <BarChart data={inflationData}>
                         <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                        <XAxis dataKey="name" stroke="#64748b" style={{ fontSize: '12px' }} />
-                        <YAxis stroke="#64748b" style={{ fontSize: '12px' }} domain={[-0.1, 'auto']} />
-                        <Tooltip 
-                          contentStyle={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px' }}
-                          labelStyle={{ color: '#1e293b', fontWeight: 600 }}
-                        />
+                        <XAxis dataKey="name" stroke="#64748b" style={{
+                      fontSize: '12px'
+                    }} />
+                        <YAxis stroke="#64748b" style={{
+                      fontSize: '12px'
+                    }} domain={[-0.1, 'auto']} />
+                        <Tooltip contentStyle={{
+                      background: 'white',
+                      border: '1px solid #e2e8f0',
+                      borderRadius: '8px'
+                    }} labelStyle={{
+                      color: '#1e293b',
+                      fontWeight: 600
+                    }} />
                         <Bar dataKey="value" fill="#C48BA5" radius={[8, 8, 0, 0]} />
                       </BarChart>
                     </ResponsiveContainer>
@@ -3895,18 +3977,29 @@ const Aprendizado = () => {
                       <AreaChart data={pixData}>
                         <defs>
                           <linearGradient id="colorPix" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#8BBAA5" stopOpacity={0.4}/>
-                            <stop offset="95%" stopColor="#8BBAA5" stopOpacity={0}/>
+                            <stop offset="5%" stopColor="#8BBAA5" stopOpacity={0.4} />
+                            <stop offset="95%" stopColor="#8BBAA5" stopOpacity={0} />
                           </linearGradient>
                         </defs>
                         <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                        <XAxis dataKey="name" stroke="#64748b" style={{ fontSize: '12px' }} />
-                        <YAxis stroke="#64748b" style={{ fontSize: '12px' }} />
-                        <Tooltip 
-                          contentStyle={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px' }}
-                          labelStyle={{ color: '#1e293b', fontWeight: 600 }}
-                        />
-                        <Area type="monotone" dataKey="value" stroke="#8BBAA5" strokeWidth={3} fillOpacity={1} fill="url(#colorPix)" dot={{ fill: '#8BBAA5', r: 5 }} />
+                        <XAxis dataKey="name" stroke="#64748b" style={{
+                      fontSize: '12px'
+                    }} />
+                        <YAxis stroke="#64748b" style={{
+                      fontSize: '12px'
+                    }} />
+                        <Tooltip contentStyle={{
+                      background: 'white',
+                      border: '1px solid #e2e8f0',
+                      borderRadius: '8px'
+                    }} labelStyle={{
+                      color: '#1e293b',
+                      fontWeight: 600
+                    }} />
+                        <Area type="monotone" dataKey="value" stroke="#8BBAA5" strokeWidth={3} fillOpacity={1} fill="url(#colorPix)" dot={{
+                      fill: '#8BBAA5',
+                      r: 5
+                    }} />
                       </AreaChart>
                     </ResponsiveContainer>
                   </div>
@@ -3922,18 +4015,29 @@ const Aprendizado = () => {
                       <AreaChart data={creditCardData}>
                         <defs>
                           <linearGradient id="colorCard" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#9A8BBF" stopOpacity={0.4}/>
-                            <stop offset="95%" stopColor="#9A8BBF" stopOpacity={0}/>
+                            <stop offset="5%" stopColor="#9A8BBF" stopOpacity={0.4} />
+                            <stop offset="95%" stopColor="#9A8BBF" stopOpacity={0} />
                           </linearGradient>
                         </defs>
                         <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                        <XAxis dataKey="name" stroke="#64748b" style={{ fontSize: '12px' }} />
-                        <YAxis stroke="#64748b" style={{ fontSize: '12px' }} />
-                        <Tooltip 
-                          contentStyle={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px' }}
-                          labelStyle={{ color: '#1e293b', fontWeight: 600 }}
-                        />
-                        <Area type="monotone" dataKey="value" stroke="#9A8BBF" strokeWidth={3} fillOpacity={1} fill="url(#colorCard)" dot={{ fill: '#9A8BBF', r: 5 }} />
+                        <XAxis dataKey="name" stroke="#64748b" style={{
+                      fontSize: '12px'
+                    }} />
+                        <YAxis stroke="#64748b" style={{
+                      fontSize: '12px'
+                    }} />
+                        <Tooltip contentStyle={{
+                      background: 'white',
+                      border: '1px solid #e2e8f0',
+                      borderRadius: '8px'
+                    }} labelStyle={{
+                      color: '#1e293b',
+                      fontWeight: 600
+                    }} />
+                        <Area type="monotone" dataKey="value" stroke="#9A8BBF" strokeWidth={3} fillOpacity={1} fill="url(#colorCard)" dot={{
+                      fill: '#9A8BBF',
+                      r: 5
+                    }} />
                       </AreaChart>
                     </ResponsiveContainer>
                   </div>
@@ -4069,12 +4173,10 @@ const Aprendizado = () => {
                   </div>
                 </div>
               </section>
-            </>
-          )}
+            </>}
 
         </div>
       </main>
-    </div>
-  );
+    </div>;
 };
 export default Aprendizado;
