@@ -115,39 +115,17 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
 
   const insertEmoji = (emoji: string) => {
     if (notesRef.current) {
-      const selection = window.getSelection();
-      if (selection && selection.rangeCount > 0) {
-        const range = selection.getRangeAt(0);
-        const span = document.createElement('span');
-        span.style.color = noteColor;
-        span.textContent = emoji;
-        range.insertNode(span);
-        range.collapse(false);
-      }
+      notesRef.current.focus();
+      document.execCommand('insertText', false, emoji);
     }
   };
 
-  const handleNotesInput = (e: React.FormEvent<HTMLDivElement>) => {
-    // Aplicar cor ao texto digitado
-    const selection = window.getSelection();
-    if (selection && selection.rangeCount > 0) {
-      const range = selection.getRangeAt(0);
-      const textNode = range.startContainer;
-      
-      // Se o texto foi digitado em um nó de texto sem cor, envolve em span
-      if (textNode.nodeType === Node.TEXT_NODE && textNode.parentElement === notesRef.current) {
-        const span = document.createElement('span');
-        span.style.color = noteColor;
-        span.textContent = textNode.textContent || '';
-        textNode.parentNode?.replaceChild(span, textNode);
-        
-        // Restaurar o cursor
-        const newRange = document.createRange();
-        newRange.setStart(span.firstChild || span, span.textContent?.length || 0);
-        newRange.collapse(true);
-        selection.removeAllRanges();
-        selection.addRange(newRange);
-      }
+  // Atualiza a cor do texto ao mudar noteColor
+  const handleColorChange = (color: string) => {
+    setNoteColor(color);
+    if (notesRef.current) {
+      notesRef.current.focus();
+      document.execCommand('foreColor', false, color);
     }
   };
 
@@ -548,7 +526,7 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                         ].map(({ color, name }) => (
                           <button
                             key={color}
-                            onClick={() => setNoteColor(color)}
+                            onClick={() => handleColorChange(color)}
                             className={`w-8 h-8 rounded-lg transition-all hover:scale-110 ${
                               noteColor === color ? 'ring-2 ring-white ring-offset-2 ring-offset-slate-900' : ''
                             }`}
@@ -578,9 +556,8 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                     <div
                       ref={notesRef}
                       contentEditable
-                      onInput={handleNotesInput}
                       className="flex-1 bg-slate-800 border border-slate-700 rounded-md p-3 overflow-y-auto resize-none focus:outline-none focus:ring-2 focus:ring-slate-600"
-                      style={{ color: noteColor, minHeight: '200px' }}
+                      style={{ minHeight: '200px', color: noteColor }}
                       suppressContentEditableWarning
                       data-placeholder="Faça anotações durante a chamada..."
                     />
@@ -588,6 +565,9 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                       [data-placeholder]:empty:before {
                         content: attr(data-placeholder);
                         color: #64748b;
+                      }
+                      [contenteditable] * {
+                        display: inline;
                       }
                     `}</style>
                     <p className="text-xs text-slate-500 mt-2">
