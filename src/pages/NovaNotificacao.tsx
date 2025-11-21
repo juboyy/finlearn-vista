@@ -685,18 +685,27 @@ export default function NovaNotificacao() {
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-lg bg-pastel-green bg-opacity-20 border border-pastel-green">
-                    <div className="text-xs text-slate-500 mb-2">WHATSAPP</div>
-                    <div className="bg-white p-3 rounded-lg shadow-sm">
-                      <div className="flex items-center gap-1.5 mb-1">
-                        <svg className="w-3 h-3 text-slate-600" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"/></svg>
-                        <p className="text-xs font-semibold text-slate-800">FinLearn</p>
+                  <div className="p-4 rounded-lg bg-white border-2 border-pastel-green">
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="w-6 h-6 bg-pastel-green rounded-md flex items-center justify-center">
+                        <MessageSquare size={14} className="text-slate-700" />
                       </div>
-                      <p className="text-xs text-slate-700 mb-2">Alertas de Mercado Diários</p>
-                      <p className="text-xs text-slate-600">Análise completa disponível</p>
-                      <div className="flex items-center gap-1 mt-2">
-                        <svg className="w-3 h-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
-                        <p className="text-xs text-blue-600">Acessar agora</p>
+                      <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">WhatsApp</span>
+                    </div>
+                    <div className="bg-gradient-to-br from-pastel-green/10 to-pastel-green/5 p-4 rounded-lg border border-pastel-green/30">
+                      <div className="flex items-start gap-3 mb-3">
+                        <div className="w-8 h-8 bg-pastel-blue rounded-lg flex items-center justify-center flex-shrink-0">
+                          <svg className="w-4 h-4 text-slate-700" fill="currentColor" viewBox="0 0 20 20"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/></svg>
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-xs font-medium text-slate-500 mb-0.5">FinLearn</p>
+                          <p className="text-sm font-semibold text-slate-800 mb-1">Alertas de Mercado Diários</p>
+                          <p className="text-xs text-slate-600">Análise completa disponível</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1.5 px-3 py-2 bg-white rounded-md border border-pastel-green/40 hover:border-pastel-green transition-colors cursor-pointer">
+                        <svg className="w-3.5 h-3.5 text-pastel-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+                        <span className="text-xs font-medium text-slate-700">Acessar agora</span>
                       </div>
                     </div>
                   </div>
