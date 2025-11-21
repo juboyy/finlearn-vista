@@ -1286,7 +1286,7 @@ export default function MinhasMetas() {
                       <span className="text-xs font-bold text-slate-700">20</span>
                     </div>
                   </div>
-                  <div className="space-y-2">
+                  <div className="space-y-2 min-h-[60px]">
                     <div className="flex items-center gap-1.5">
                       <div className="w-1.5 h-1.5 bg-pastel-yellow rounded-full"></div>
                       <span className="text-xs text-slate-600">10pág ebook</span>
@@ -1294,6 +1294,10 @@ export default function MinhasMetas() {
                     <div className="flex items-center gap-1.5">
                       <div className="w-1.5 h-1.5 bg-pastel-purple rounded-full"></div>
                       <span className="text-xs text-slate-600">35min podcast</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 invisible">
+                      <div className="w-1.5 h-1.5 bg-transparent rounded-full"></div>
+                      <span className="text-xs text-slate-600">-</span>
                     </div>
                   </div>
                   <div className="mt-3 pt-2 border-t border-slate-200">
@@ -1309,7 +1313,7 @@ export default function MinhasMetas() {
                       <span className="text-xs font-bold text-slate-700">21</span>
                     </div>
                   </div>
-                  <div className="space-y-2">
+                  <div className="space-y-2 min-h-[60px]">
                     <div className="flex items-center gap-1.5">
                       <div className="w-1.5 h-1.5 bg-pastel-peach rounded-full"></div>
                       <span className="text-xs text-slate-600">10min IA</span>
@@ -1317,6 +1321,10 @@ export default function MinhasMetas() {
                     <div className="flex items-center gap-1.5">
                       <div className="w-1.5 h-1.5 bg-pastel-pink rounded-full"></div>
                       <span className="text-xs text-slate-600">25min vídeo</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 invisible">
+                      <div className="w-1.5 h-1.5 bg-transparent rounded-full"></div>
+                      <span className="text-xs text-slate-600">-</span>
                     </div>
                   </div>
                   <div className="mt-3 pt-2 border-t border-slate-200">
