@@ -101,7 +101,7 @@ export default function EvolucaoCartaoCredito() {
         {/* Main Content */}
         <div className="flex-1 relative bg-muted/30">
           {/* Table of Contents - Left Sidebar - FIXED */}
-          <aside className="fixed left-[calc(256px+2rem)] top-[calc(64px+1.5rem)] w-[280px] max-h-[calc(100vh-7rem)] overflow-y-auto z-10">
+          <aside className="fixed left-[calc(256px+2rem)] top-[calc(64px+2rem)] w-[322px] max-h-[calc(100vh-8rem)] overflow-y-auto z-10">
             <div className="bg-card rounded-xl border border-border p-6">
               {/* Progress Bar */}
               <div className="mb-6 pb-6 border-b border-border">
