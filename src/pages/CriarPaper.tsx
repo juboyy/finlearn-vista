@@ -182,7 +182,7 @@ export default function CriarPaper() {
                       Este estudo investiga os determinantes da estrutura de capital em empresas brasileiras listadas na B3, analisando um painel de dados de 2015 a 2023. Utilizando modelos econométricos avançados, identificamos que fatores como rentabilidade, tamanho da empresa, tangibilidade de ativos e oportunidades de crescimento exercem influência significativa nas decisões de financiamento. Os resultados sugerem que empresas mais rentáveis tendem a utilizar menos endividamento, corroborando a teoria do pecking order.
                     </p>
                     
-                    <div className="bg-pastel-yellow bg-opacity-30 border-l-4 border-pastel-yellow p-4 rounded-r-lg mb-6">
+                    <div className="bg-pastel-yellow bg-opacity-20 border-l-4 border-pastel-yellow p-4 rounded-r-lg mb-6">
                       <div className="flex items-start gap-3">
                         <Lightbulb size={20} className="text-slate-600 mt-1 flex-shrink-0" />
                         <div>
@@ -205,7 +205,7 @@ export default function CriarPaper() {
                       A estrutura de capital representa uma das decisões financeiras mais relevantes para as corporações modernas. Desde os trabalhos seminais de Modigliani e Miller (1958), a literatura financeira tem buscado compreender os fatores que influenciam as escolhas de financiamento das empresas <span className="text-pastel-purple cursor-pointer hover:underline">[1]</span>.
                     </p>
                     
-                    <div className="bg-pastel-blue bg-opacity-30 border-l-4 border-pastel-blue p-4 rounded-r-lg mb-6">
+                    <div className="bg-pastel-blue bg-opacity-20 border-l-4 border-pastel-blue p-4 rounded-r-lg mb-6">
                       <div className="flex items-start gap-3">
                         <Sparkles size={20} className="text-slate-600 mt-1 flex-shrink-0" />
                         <div>
@@ -263,7 +263,7 @@ export default function CriarPaper() {
                       </div>
                     </div>
 
-                    <div className="bg-pastel-green bg-opacity-30 border-l-4 border-pastel-green p-4 rounded-r-lg mb-6">
+                    <div className="bg-pastel-green bg-opacity-20 border-l-4 border-pastel-green p-4 rounded-r-lg mb-6">
                       <div className="flex items-start gap-3">
                         <SpellCheck size={20} className="text-slate-600 mt-1 flex-shrink-0" />
                         <div>
