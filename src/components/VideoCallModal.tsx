@@ -1,10 +1,8 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Video, Mic, MicOff, VideoOff, Phone, Monitor, Minimize2, Maximize2, MessageCircle, FileText, Settings, Send, ChevronLeft, ChevronRight } from "lucide-react";
+import { Video, Mic, MicOff, VideoOff, Phone, Monitor, Minimize2, Maximize2, MessageCircle, Send, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { toast } from "sonner";
 
@@ -24,7 +22,6 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [chatMessages, setChatMessages] = useState<Array<{role: 'user' | 'agent', message: string, time: string}>>([]);
   const [messageInput, setMessageInput] = useState('');
-  const [notes, setNotes] = useState('');
   const [callDuration, setCallDuration] = useState(0);
   const localVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
@@ -343,7 +340,7 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
             {isSidebarOpen && (
               <>
                 <div className="p-4 border-b border-slate-800 flex items-center justify-between">
-                  <h3 className="text-white font-semibold">Painel</h3>
+                  <h3 className="text-white font-semibold">Chat</h3>
                   <Button
                     variant="ghost"
                     size="sm"
@@ -354,105 +351,33 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                   </Button>
                 </div>
 
-                <Tabs defaultValue="chat" className="flex-1 flex flex-col min-h-0">
-                  <TabsList className="w-full grid grid-cols-3 bg-slate-800/50 rounded-none border-b border-slate-800 flex-shrink-0">
-                    <TabsTrigger value="chat" className="data-[state=active]:bg-slate-700">
-                      <MessageCircle size={16} className="mr-2" />
-                      Chat
-                    </TabsTrigger>
-                    <TabsTrigger value="notes" className="data-[state=active]:bg-slate-700">
-                      <FileText size={16} className="mr-2" />
-                      Notas
-                    </TabsTrigger>
-                    <TabsTrigger value="settings" className="data-[state=active]:bg-slate-700">
-                      <Settings size={16} className="mr-2" />
-                      Opções
-                    </TabsTrigger>
-                  </TabsList>
-
-                  <TabsContent value="chat" className="flex-1 p-0 min-h-0 overflow-hidden">
-                    <div ref={chatScrollRef} className="h-full overflow-y-auto pb-[68px]">
-                      <div className="p-4 space-y-3">
-                        {chatMessages.length === 0 ? (
-                          <div className="text-center text-slate-500 py-8">
-                            <MessageCircle size={48} className="mx-auto mb-3 opacity-50" />
-                            <p>Nenhuma mensagem ainda</p>
-                            <p className="text-sm">Envie uma mensagem para começar</p>
-                          </div>
-                        ) : (
-                          chatMessages.map((msg, idx) => (
-                            <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                              <div className={`max-w-[80%] rounded-lg p-3 ${
-                                msg.role === 'user' 
-                                  ? 'bg-pastel-blue text-slate-800' 
-                                  : 'bg-slate-800 text-white'
-                              }`}>
-                                <p className="text-sm">{msg.message}</p>
-                                <p className="text-xs opacity-60 mt-1">{msg.time}</p>
-                              </div>
-                            </div>
-                          ))
-                        )}
-                      </div>
-                    </div>
-                  </TabsContent>
-
-                  <TabsContent value="notes" className="flex-1 flex flex-col p-4 mt-0">
-                    <Textarea
-                      value={notes}
-                      onChange={(e) => setNotes(e.target.value)}
-                      placeholder="Faça anotações durante a chamada..."
-                      className="flex-1 bg-slate-800 border-slate-700 text-white resize-none"
-                    />
-                    <p className="text-xs text-slate-500 mt-2">
-                      Suas notas serão salvas automaticamente
-                    </p>
-                  </TabsContent>
-
-                  <TabsContent value="settings" className="flex-1 p-4 mt-0">
-                    <div className="space-y-4">
-                      <div>
-                        <h4 className="text-white font-medium mb-3">Qualidade de Vídeo</h4>
-                        <div className="space-y-2">
-                          <label className="flex items-center gap-2 text-sm text-slate-300">
-                            <input type="radio" name="quality" defaultChecked className="text-pastel-blue" />
-                            Alta (720p)
-                          </label>
-                          <label className="flex items-center gap-2 text-sm text-slate-300">
-                            <input type="radio" name="quality" className="text-pastel-blue" />
-                            Média (480p)
-                          </label>
-                          <label className="flex items-center gap-2 text-sm text-slate-300">
-                            <input type="radio" name="quality" className="text-pastel-blue" />
-                            Baixa (360p)
-                          </label>
+                {/* Área de mensagens do chat */}
+                <div className="flex-1 min-h-0 overflow-hidden">
+                  <div ref={chatScrollRef} className="h-full overflow-y-auto pb-[68px]">
+                    <div className="p-4 space-y-3">
+                      {chatMessages.length === 0 ? (
+                        <div className="text-center text-slate-500 py-8">
+                          <MessageCircle size={48} className="mx-auto mb-3 opacity-50" />
+                          <p>Nenhuma mensagem ainda</p>
+                          <p className="text-sm">Envie uma mensagem para começar</p>
                         </div>
-                      </div>
-
-                      <div className="pt-4 border-t border-slate-800">
-                        <h4 className="text-white font-medium mb-3">Gravação</h4>
-                        <label className="flex items-center justify-between text-sm text-slate-300">
-                          <span>Gravar chamada</span>
-                          <input type="checkbox" className="text-pastel-blue" />
-                        </label>
-                      </div>
-
-                      <div className="pt-4 border-t border-slate-800">
-                        <h4 className="text-white font-medium mb-3">Notificações</h4>
-                        <label className="flex items-center justify-between text-sm text-slate-300">
-                          <span>Sons de notificação</span>
-                          <input type="checkbox" defaultChecked className="text-pastel-blue" />
-                        </label>
-                      </div>
-
-                      <div className="pt-4 border-t border-slate-800">
-                        <Button variant="outline" className="w-full border-slate-700 text-slate-300 hover:bg-slate-800">
-                          Estatísticas da chamada
-                        </Button>
-                      </div>
+                      ) : (
+                        chatMessages.map((msg, idx) => (
+                          <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                            <div className={`max-w-[80%] rounded-lg p-3 ${
+                              msg.role === 'user' 
+                                ? 'bg-pastel-blue text-slate-800' 
+                                : 'bg-slate-800 text-white'
+                            }`}>
+                              <p className="text-sm">{msg.message}</p>
+                              <p className="text-xs opacity-60 mt-1">{msg.time}</p>
+                            </div>
+                          </div>
+                        ))
+                      )}
                     </div>
-                  </TabsContent>
-                </Tabs>
+                  </div>
+                </div>
 
                 {/* Input do chat fixo no fundo */}
                 <div className="absolute bottom-0 left-0 right-0 p-3 border-t border-slate-800 bg-slate-900/95 backdrop-blur-sm flex-shrink-0">
