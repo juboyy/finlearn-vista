@@ -880,6 +880,74 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                       ))}
                     </div>
                   </div>
+
+                  {/* Notas Automáticas da Reunião */}
+                  <div className="bg-gradient-to-br from-slate-800/80 to-slate-800/40 border border-slate-700 rounded-xl p-5">
+                    <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
+                      <FileText size={18} className="text-pastel-purple" />
+                      Notas Automáticas
+                    </h3>
+                    <div className="space-y-4">
+                      <div className="space-y-3">
+                        <div className="flex items-start gap-3">
+                          <div className="w-1.5 h-1.5 bg-pastel-purple rounded-full mt-2 flex-shrink-0"></div>
+                          <div className="flex-1">
+                            <p className="text-slate-300 text-sm leading-relaxed">
+                              Discussão iniciada sobre implementação de novos recursos de aprendizado adaptativo
+                            </p>
+                            <div className="flex gap-2 mt-2">
+                              <span className="px-2 py-0.5 bg-pastel-purple/20 text-pastel-purple border border-pastel-purple/30 rounded text-xs">Alta prioridade</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-start gap-3">
+                          <div className="w-1.5 h-1.5 bg-pastel-blue rounded-full mt-2 flex-shrink-0"></div>
+                          <div className="flex-1">
+                            <p className="text-slate-300 text-sm leading-relaxed">
+                              Revisão das métricas de engajamento e satisfação dos usuários com IA
+                            </p>
+                            <div className="flex gap-2 mt-2">
+                              <span className="px-2 py-0.5 bg-pastel-blue/20 text-pastel-blue border border-pastel-blue/30 rounded text-xs">Análise</span>
+                              <span className="px-2 py-0.5 bg-pastel-green/20 text-pastel-green border border-pastel-green/30 rounded text-xs">Dados</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-start gap-3">
+                          <div className="w-1.5 h-1.5 bg-pastel-yellow rounded-full mt-2 flex-shrink-0"></div>
+                          <div className="flex-1">
+                            <p className="text-slate-300 text-sm leading-relaxed">
+                              Definidas próximas ações para otimização do sistema de recomendações
+                            </p>
+                            <div className="flex gap-2 mt-2">
+                              <span className="px-2 py-0.5 bg-pastel-yellow/20 text-pastel-yellow border border-pastel-yellow/30 rounded text-xs">Ação</span>
+                              <span className="px-2 py-0.5 bg-pastel-orange/20 text-pastel-orange border border-pastel-orange/30 rounded text-xs">Otimização</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-start gap-3">
+                          <div className="w-1.5 h-1.5 bg-pastel-pink rounded-full mt-2 flex-shrink-0"></div>
+                          <div className="flex-1">
+                            <p className="text-slate-300 text-sm leading-relaxed">
+                              Exploração de novos modelos de IA para melhorar respostas contextuais
+                            </p>
+                            <div className="flex gap-2 mt-2">
+                              <span className="px-2 py-0.5 bg-pastel-pink/20 text-pastel-pink border border-pastel-pink/30 rounded text-xs">Pesquisa</span>
+                              <span className="px-2 py-0.5 bg-pastel-rose/20 text-pastel-rose border border-pastel-rose/30 rounded text-xs">IA</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="pt-3 border-t border-slate-700/50">
+                        <p className="text-slate-500 text-xs">
+                          Notas geradas automaticamente durante a chamada
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Right Column */}
