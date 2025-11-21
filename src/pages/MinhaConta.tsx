@@ -5,6 +5,7 @@ import {
   Download, FileText, AlertTriangle, XCircle, X, Bell, User
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
+import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
 
 export default function MinhaConta() {
   const [activeSection, setActiveSection] = useState("perfil");
@@ -18,6 +19,23 @@ export default function MinhaConta() {
   const privacidadeRef = useRef<HTMLElement>(null);
   const documentosRef = useRef<HTMLElement>(null);
   const perigoRef = useRef<HTMLElement>(null);
+
+  // Fade-in animations
+  const fadePerfilRef = useFadeInOnScroll<HTMLElement>();
+  const fadePessoalRef = useFadeInOnScroll<HTMLElement>();
+  const fadeProfissionalRef = useFadeInOnScroll<HTMLElement>();
+  const fadeStatusRef = useFadeInOnScroll<HTMLElement>();
+  const fadeAssinaturaRef = useFadeInOnScroll<HTMLElement>();
+  const fadePrivacidadeRef = useFadeInOnScroll<HTMLElement>();
+  const fadeDocumentosRef = useFadeInOnScroll<HTMLElement>();
+  const fadePerigoRef = useFadeInOnScroll<HTMLElement>();
+
+  // Combine refs for each section
+  const combineRefs = (scrollRef: React.RefObject<HTMLElement>, fadeRef: React.RefObject<HTMLElement>) => 
+    (element: HTMLElement | null) => {
+      if (scrollRef) (scrollRef as React.MutableRefObject<HTMLElement | null>).current = element;
+      if (fadeRef) (fadeRef as React.MutableRefObject<HTMLElement | null>).current = element;
+    };
 
   const scrollToSection = (section: string) => {
     const refs: { [key: string]: React.RefObject<HTMLElement> } = {
@@ -175,7 +193,7 @@ export default function MinhaConta() {
             </div>
 
             <div className="col-span-3 space-y-6">
-              <section ref={perfilRef} className="bg-white rounded-xl border border-slate-200 p-6 scroll-mt-24">
+              <section ref={combineRefs(perfilRef, fadePerfilRef)} className="bg-white rounded-xl border border-slate-200 p-6 scroll-mt-24 opacity-0">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-pastel-blue rounded-lg flex items-center justify-center">
                     <Camera className="text-slate-700" size={24} />
@@ -212,7 +230,7 @@ export default function MinhaConta() {
                 </div>
               </section>
 
-              <section ref={pessoalRef} className="bg-white rounded-xl border border-slate-200 p-6 scroll-mt-24">
+              <section ref={combineRefs(pessoalRef, fadePessoalRef)} className="bg-white rounded-xl border border-slate-200 p-6 scroll-mt-24 opacity-0">
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
                     <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center">
@@ -292,7 +310,7 @@ export default function MinhaConta() {
                 </div>
               </section>
 
-              <section ref={profissionalRef} className="bg-white rounded-xl border border-slate-200 p-6 scroll-mt-24">
+              <section ref={combineRefs(profissionalRef, fadeProfissionalRef)} className="bg-white rounded-xl border border-slate-200 p-6 scroll-mt-24 opacity-0">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-pastel-purple rounded-lg flex items-center justify-center">
                     <Briefcase className="text-slate-700" size={24} />
@@ -362,7 +380,7 @@ export default function MinhaConta() {
                 </div>
               </section>
 
-              <section ref={statusRef} className="bg-white rounded-xl border border-slate-200 p-6 scroll-mt-24">
+              <section ref={combineRefs(statusRef, fadeStatusRef)} className="bg-white rounded-xl border border-slate-200 p-6 scroll-mt-24 opacity-0">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-pastel-yellow rounded-lg flex items-center justify-center">
                     <Star className="text-slate-700" size={24} />
@@ -434,7 +452,7 @@ export default function MinhaConta() {
                 </div>
               </section>
 
-              <section ref={assinaturaRef} className="bg-white rounded-xl border border-slate-200 p-6 scroll-mt-24">
+              <section ref={combineRefs(assinaturaRef, fadeAssinaturaRef)} className="bg-white rounded-xl border border-slate-200 p-6 scroll-mt-24 opacity-0">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-pastel-peach rounded-lg flex items-center justify-center">
                     <CreditCard className="text-slate-700" size={24} />
@@ -518,7 +536,7 @@ export default function MinhaConta() {
                 </div>
               </section>
 
-              <section ref={privacidadeRef} className="bg-white rounded-xl border border-slate-200 p-6 scroll-mt-24">
+              <section ref={combineRefs(privacidadeRef, fadePrivacidadeRef)} className="bg-white rounded-xl border border-slate-200 p-6 scroll-mt-24 opacity-0">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-pastel-pink rounded-lg flex items-center justify-center">
                     <Shield className="text-slate-700" size={24} />
@@ -579,7 +597,7 @@ export default function MinhaConta() {
                 </div>
               </section>
 
-              <section ref={documentosRef} className="bg-white rounded-xl border border-slate-200 p-6 scroll-mt-24">
+              <section ref={combineRefs(documentosRef, fadeDocumentosRef)} className="bg-white rounded-xl border border-slate-200 p-6 scroll-mt-24 opacity-0">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center">
                     <FileText className="text-slate-700" size={24} />
@@ -661,7 +679,7 @@ export default function MinhaConta() {
                 </button>
               </section>
 
-              <section ref={perigoRef} className="bg-white rounded-xl border-2 border-red-200 p-6 scroll-mt-24">
+              <section ref={combineRefs(perigoRef, fadePerigoRef)} className="bg-white rounded-xl border-2 border-red-200 p-6 scroll-mt-24 opacity-0">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
                     <AlertTriangle className="text-red-600" size={24} />
