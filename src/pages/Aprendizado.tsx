@@ -4,7 +4,6 @@ import { Bell, Play, Clock, BookOpen, TrendingUp, Headphones, Calendar, Users, M
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ebookRiskManagementPink from "@/assets/ebook-risk-management-pink.png";
-import { AnalisesContent } from "./Analises";
 
 type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'documentos' | 'estudos';
 
@@ -43,14 +42,8 @@ const Aprendizado = () => {
         <MenutabbarFix activeTab={activeTab} setActiveTab={setActiveTab} />
 
         <div className="flex-1 p-8 pb-32">
-          {activeTab === 'analises' && (
-            <div key="analises" className="animate-fade-in">
-              <AnalisesContent />
-            </div>
-          )}
-          
           {activeTab === 'todos' && (
-            <div key="todos" className="animate-fade-in">
+            <>
 
               <div className="grid grid-cols-3 gap-6 mb-8">
             <section className="col-span-2 bg-white rounded-xl border border-slate-200 overflow-hidden">
@@ -784,11 +777,11 @@ const Aprendizado = () => {
               </div>
             </div>
           </section>
-            </div>
+            </>
           )}
 
           {activeTab === 'podcasts' && (
-            <div key="podcasts" className="animate-fade-in">
+            <>
               <section className="mb-8">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-xl font-semibold text-slate-800">Continue Ouvindo</h2>
@@ -1108,11 +1101,11 @@ const Aprendizado = () => {
                   </div>
                 </div>
               </section>
-            </div>
+            </>
           )}
 
           {activeTab === 'cursos' && (
-            <div key="cursos" className="animate-fade-in space-y-8">
+            <div className="space-y-8">
               {/* Hero Section */}
               <section>
                 <div className="bg-pastel-purple rounded-xl border border-border overflow-hidden">
@@ -1900,7 +1893,7 @@ const Aprendizado = () => {
           )}
 
           {activeTab === 'avatar-ia' && (
-            <div key="avatar-ia" className="animate-fade-in text-center py-16">
+            <div className="text-center py-16">
               <div className="w-20 h-20 bg-pastel-purple rounded-full flex items-center justify-center mx-auto mb-4">
                 <i className="fas fa-robot text-3xl text-slate-700"></i>
               </div>
@@ -1910,7 +1903,7 @@ const Aprendizado = () => {
           )}
 
           {activeTab === 'ebooks' && (
-            <div key="ebooks" className="animate-fade-in">
+            <>
               {/* Stats Overview */}
               <section className="grid grid-cols-4 gap-6 mb-8">
                 <div className="bg-white rounded-xl p-6 border border-border">
@@ -2468,11 +2461,11 @@ const Aprendizado = () => {
                   </div>
                 </div>
               </section>
-            </div>
+            </>
           )}
 
           {activeTab === 'webinars' && (
-            <div key="webinars" className="animate-fade-in">
+            <>
               {/* Live Webinars Section */}
               <section className="mb-8">
                 <div className="flex items-center justify-between mb-6">
@@ -2758,11 +2751,11 @@ const Aprendizado = () => {
                   </div>
                 </div>
               </section>
-            </div>
+            </>
           )}
 
           {activeTab === 'artigos' && (
-            <div key="artigos" className="animate-fade-in text-center py-16">
+            <div className="text-center py-16">
               <div className="w-20 h-20 bg-pastel-peach rounded-full flex items-center justify-center mx-auto mb-4">
                 <i className="fas fa-newspaper text-3xl text-slate-700"></i>
               </div>
@@ -2771,10 +2764,18 @@ const Aprendizado = () => {
             </div>
           )}
 
-          {activeTab === 'analises' && null}
+          {activeTab === 'analises' && (
+            <div className="text-center py-16">
+              <div className="w-20 h-20 bg-pastel-yellow rounded-full flex items-center justify-center mx-auto mb-4">
+                <i className="fas fa-chart-line text-3xl text-slate-700"></i>
+              </div>
+              <h3 className="text-xl font-semibold text-slate-800 mb-2">Análises</h3>
+              <p className="text-slate-600">Análises detalhadas do mercado financeiro</p>
+            </div>
+          )}
 
           {activeTab === 'documentos' && (
-            <div key="documentos" className="animate-fade-in text-center py-16">
+            <div className="text-center py-16">
               <div className="w-20 h-20 bg-pastel-green rounded-full flex items-center justify-between mx-auto mb-4">
                 <i className="fas fa-file-alt text-3xl text-slate-700"></i>
               </div>
@@ -2784,7 +2785,7 @@ const Aprendizado = () => {
           )}
 
           {activeTab === 'estudos' && (
-            <div key="estudos" className="animate-fade-in">
+            <>
               <div className="grid grid-cols-4 gap-6 mb-8">
                 <section className="col-span-4 grid grid-cols-4 gap-6">
                   <div className="bg-white rounded-xl border border-slate-200 p-6">
@@ -3422,7 +3423,7 @@ const Aprendizado = () => {
                   </div>
                 </div>
               </section>
-            </div>
+            </>
           )}
 
         </div>
