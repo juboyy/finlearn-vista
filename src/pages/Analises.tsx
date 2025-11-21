@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { 
   Bell, 
@@ -12,13 +11,11 @@ import {
   Bot,
   Eye,
   Clock,
-  ChartBar,
   FileText,
   Lightbulb,
   AlertTriangle,
   ChartLine
 } from "lucide-react";
-import Plot from 'react-plotly.js';
 
 const Analises = () => {
   return (
@@ -232,27 +229,9 @@ const Analises = () => {
                   </div>
                   <button className="px-3 py-1.5 text-xs bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition">Ver Detalhes</button>
                 </div>
-                <Plot
-                  data={[{
-                    type: 'bar',
-                    x: ['Financeiro', 'Tecnologia', 'Energia', 'Consumo', 'Saúde', 'Industrial'],
-                    y: [5.8, 8.2, -2.1, 3.4, 6.7, 1.9],
-                    marker: {
-                      color: ['#C5E8D4', '#C5E8D4', '#E8C5D8', '#C5E8D4', '#C5E8D4', '#C5E8D4']
-                    }
-                  }]}
-                  layout={{
-                    xaxis: { title: '' },
-                    yaxis: { title: 'Variação (%)' },
-                    margin: { t: 20, r: 20, b: 60, l: 60 },
-                    plot_bgcolor: '#F8FAFC',
-                    paper_bgcolor: '#F8FAFC',
-                    showlegend: false,
-                    height: 400
-                  }}
-                  config={{ responsive: true, displayModeBar: false, displaylogo: false }}
-                  className="w-full"
-                />
+                <div className="h-96 bg-slate-50 rounded-lg flex items-center justify-center">
+                  <p className="text-slate-500">Gráfico de Desempenho Setorial</p>
+                </div>
               </div>
               <div className="bg-white rounded-xl border border-slate-200 p-6">
                 <div className="flex items-center justify-between mb-6">
@@ -262,28 +241,9 @@ const Analises = () => {
                   </div>
                   <button className="px-3 py-1.5 text-xs bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition">Ver Detalhes</button>
                 </div>
-                <Plot
-                  data={[{
-                    type: 'scatter',
-                    mode: 'lines',
-                    x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
-                    y: [18.5, 22.3, 19.8, 25.6, 28.4, 15.2, 12.8],
-                    line: { color: '#B8D4E8', width: 3 },
-                    fill: 'tozeroy',
-                    fillcolor: 'rgba(184, 212, 232, 0.3)'
-                  }]}
-                  layout={{
-                    xaxis: { title: '' },
-                    yaxis: { title: 'Volume (R$ Bi)' },
-                    margin: { t: 20, r: 20, b: 60, l: 60 },
-                    plot_bgcolor: '#F8FAFC',
-                    paper_bgcolor: '#F8FAFC',
-                    showlegend: false,
-                    height: 400
-                  }}
-                  config={{ responsive: true, displayModeBar: false, displaylogo: false }}
-                  className="w-full"
-                />
+                <div className="h-96 bg-slate-50 rounded-lg flex items-center justify-center">
+                  <p className="text-slate-500">Gráfico de Volume</p>
+                </div>
               </div>
             </div>
           </section>
@@ -398,26 +358,9 @@ const Analises = () => {
                   </div>
                   <button className="px-3 py-1.5 text-xs bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition">Ver Detalhes</button>
                 </div>
-                <Plot
-                  data={[{
-                    type: 'scatter',
-                    mode: 'lines',
-                    x: ['Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez', 'Jan'],
-                    y: [13.75, 13.75, 13.25, 12.75, 12.25, 11.75, 11.25, 10.75, 10.75, 10.75, 10.75, 10.75],
-                    line: { color: '#E8E0C5', width: 3 }
-                  }]}
-                  layout={{
-                    xaxis: { title: '' },
-                    yaxis: { title: 'Taxa (%)' },
-                    margin: { t: 20, r: 20, b: 60, l: 60 },
-                    plot_bgcolor: '#F8FAFC',
-                    paper_bgcolor: '#F8FAFC',
-                    showlegend: false,
-                    height: 350
-                  }}
-                  config={{ responsive: true, displayModeBar: false, displaylogo: false }}
-                  className="w-full"
-                />
+                <div className="h-80 bg-slate-50 rounded-lg flex items-center justify-center">
+                  <p className="text-slate-500">Gráfico Selic</p>
+                </div>
               </div>
               <div className="bg-white rounded-xl border border-slate-200 p-6">
                 <div className="flex items-center justify-between mb-6">
@@ -427,25 +370,9 @@ const Analises = () => {
                   </div>
                   <button className="px-3 py-1.5 text-xs bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition">Ver Detalhes</button>
                 </div>
-                <Plot
-                  data={[{
-                    type: 'bar',
-                    x: ['Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez', 'Jan'],
-                    y: [0.83, 0.71, 0.38, 0.46, 0.21, 0.38, -0.02, 0.26, 0.56, 0.62, 0.56, 0.42],
-                    marker: { color: '#E8C5D8' }
-                  }]}
-                  layout={{
-                    xaxis: { title: '' },
-                    yaxis: { title: 'Variação (%)' },
-                    margin: { t: 20, r: 20, b: 60, l: 60 },
-                    plot_bgcolor: '#F8FAFC',
-                    paper_bgcolor: '#F8FAFC',
-                    showlegend: false,
-                    height: 350
-                  }}
-                  config={{ responsive: true, displayModeBar: false, displaylogo: false }}
-                  className="w-full"
-                />
+                <div className="h-80 bg-slate-50 rounded-lg flex items-center justify-center">
+                  <p className="text-slate-500">Gráfico IPCA</p>
+                </div>
               </div>
             </div>
           </section>
@@ -461,29 +388,9 @@ const Analises = () => {
                   </div>
                   <button className="px-3 py-1.5 text-xs bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition">Ver Detalhes</button>
                 </div>
-                <Plot
-                  data={[{
-                    type: 'scatter',
-                    mode: 'lines+markers',
-                    x: ['2020', '2021', '2022', '2023', '2024', '2025'],
-                    y: [1.2, 15.4, 24.8, 32.6, 38.9, 42.3],
-                    line: { color: '#C5E8D4', width: 3 },
-                    marker: { size: 8, color: '#C5E8D4' },
-                    fill: 'tozeroy',
-                    fillcolor: 'rgba(197, 232, 212, 0.3)'
-                  }]}
-                  layout={{
-                    xaxis: { title: 'Ano' },
-                    yaxis: { title: 'Transações (Bi/mês)' },
-                    margin: { t: 20, r: 20, b: 60, l: 60 },
-                    plot_bgcolor: '#F8FAFC',
-                    paper_bgcolor: '#F8FAFC',
-                    showlegend: false,
-                    height: 400
-                  }}
-                  config={{ responsive: true, displayModeBar: false, displaylogo: false }}
-                  className="w-full"
-                />
+                <div className="h-96 bg-slate-50 rounded-lg flex items-center justify-center">
+                  <p className="text-slate-500">Gráfico PIX</p>
+                </div>
               </div>
               <div className="bg-white rounded-xl border border-slate-200 p-6">
                 <div className="flex items-center justify-between mb-6">
@@ -493,29 +400,9 @@ const Analises = () => {
                   </div>
                   <button className="px-3 py-1.5 text-xs bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition">Ver Detalhes</button>
                 </div>
-                <Plot
-                  data={[{
-                    type: 'scatter',
-                    mode: 'lines+markers',
-                    x: ['2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
-                    y: [185, 198, 172, 215, 238, 256, 268, 275],
-                    line: { color: '#D4C5E8', width: 3 },
-                    marker: { size: 8, color: '#D4C5E8' },
-                    fill: 'tozeroy',
-                    fillcolor: 'rgba(212, 197, 232, 0.3)'
-                  }]}
-                  layout={{
-                    xaxis: { title: 'Ano' },
-                    yaxis: { title: 'Volume (R$ Bi/mês)' },
-                    margin: { t: 20, r: 20, b: 60, l: 60 },
-                    plot_bgcolor: '#F8FAFC',
-                    paper_bgcolor: '#F8FAFC',
-                    showlegend: false,
-                    height: 400
-                  }}
-                  config={{ responsive: true, displayModeBar: false, displaylogo: false }}
-                  className="w-full"
-                />
+                <div className="h-96 bg-slate-50 rounded-lg flex items-center justify-center">
+                  <p className="text-slate-500">Gráfico Cartão de Crédito</p>
+                </div>
               </div>
             </div>
           </section>
