@@ -1,5 +1,6 @@
 import { Home, Newspaper, Bot, GraduationCap, Book, MessageCircle, Store, TrendingUp, Users, Settings, ChevronDown, User, CreditCard } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 
 const navigation = [
@@ -69,10 +70,10 @@ export const SidebarFix = () => {
         
         {settingsOpen && (
           <div className="px-4 pb-4 space-y-1">
-            <button className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sidebar-foreground/80 hover:bg-sidebar-accent transition-colors text-sm">
+            <Link to="/minha-conta" className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sidebar-foreground/80 hover:bg-sidebar-accent transition-colors text-sm">
               <User size={16} />
               <span>Minha Conta</span>
-            </button>
+            </Link>
             <button className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sidebar-foreground/80 hover:bg-sidebar-accent transition-colors text-sm">
               <CreditCard size={16} />
               <span>Assinaturas</span>
