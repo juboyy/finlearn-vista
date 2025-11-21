@@ -78,10 +78,10 @@ export const SidebarFix = () => {
               <CreditCard size={16} />
               <span>Assinaturas</span>
             </Link>
-            <button className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sidebar-foreground/80 hover:bg-sidebar-accent transition-colors text-sm">
+            <Link to="/minhas-metas" className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sidebar-foreground/80 hover:bg-sidebar-accent transition-colors text-sm">
               <Target size={16} />
               <span>Minhas Metas</span>
-            </button>
+            </Link>
             <button className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sidebar-foreground/80 hover:bg-sidebar-accent transition-colors text-sm">
               <Bookmark size={16} />
               <span>Itens Salvos</span>
