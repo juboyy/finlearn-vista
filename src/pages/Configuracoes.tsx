@@ -4,18 +4,35 @@ import {
   Key, Fingerprint, Mail, Laptop, Tablet, LogOut, Calendar, CalendarDays,
   Sun, Moon, SunMoon, MoreVertical, Newspaper
 } from "lucide-react";
-import { useState } from "react";
-import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
+import { useState, useRef } from "react";
 
 export default function Configuracoes() {
   const [activeSection, setActiveSection] = useState("seguranca");
   
-  const fadeSecurityRef = useFadeInOnScroll<HTMLElement>();
-  const fadeNotificationsRef = useFadeInOnScroll<HTMLElement>();
-  const fadeSessionsRef = useFadeInOnScroll<HTMLElement>();
-  const fadeRemindersRef = useFadeInOnScroll<HTMLElement>();
-  const fadeAppearanceRef = useFadeInOnScroll<HTMLElement>();
-  const fadeLanguageRef = useFadeInOnScroll<HTMLElement>();
+  const securityRef = useRef<HTMLElement>(null);
+  const notificationsRef = useRef<HTMLElement>(null);
+  const sessionsRef = useRef<HTMLElement>(null);
+  const remindersRef = useRef<HTMLElement>(null);
+  const appearanceRef = useRef<HTMLElement>(null);
+  const languageRef = useRef<HTMLElement>(null);
+
+  const scrollToSection = (section: string) => {
+    setActiveSection(section);
+    
+    const refs = {
+      seguranca: securityRef,
+      notificacoes: notificationsRef,
+      sessoes: sessionsRef,
+      lembretes: remindersRef,
+      aparencia: appearanceRef,
+      idioma: languageRef,
+    };
+
+    const targetRef = refs[section as keyof typeof refs];
+    if (targetRef?.current) {
+      targetRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -42,7 +59,7 @@ export default function Configuracoes() {
             <div className="col-span-1 bg-white rounded-xl border border-slate-200 p-4 h-fit sticky top-24">
               <nav className="space-y-1">
                 <button 
-                  onClick={() => setActiveSection("seguranca")}
+                  onClick={() => scrollToSection("seguranca")}
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left ${
                     activeSection === "seguranca" 
                       ? "bg-pastel-blue text-slate-800 font-medium" 
@@ -53,36 +70,56 @@ export default function Configuracoes() {
                   <span>Segurança</span>
                 </button>
                 <button 
-                  onClick={() => setActiveSection("notificacoes")}
-                  className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-100 transition text-left"
+                  onClick={() => scrollToSection("notificacoes")}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left ${
+                    activeSection === "notificacoes" 
+                      ? "bg-pastel-blue text-slate-800 font-medium" 
+                      : "text-slate-600 hover:bg-slate-100 transition"
+                  }`}
                 >
                   <Bell size={20} />
                   <span>Notificações</span>
                 </button>
                 <button 
-                  onClick={() => setActiveSection("sessoes")}
-                  className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-100 transition text-left"
+                  onClick={() => scrollToSection("sessoes")}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left ${
+                    activeSection === "sessoes" 
+                      ? "bg-pastel-blue text-slate-800 font-medium" 
+                      : "text-slate-600 hover:bg-slate-100 transition"
+                  }`}
                 >
                   <Monitor size={20} />
                   <span>Sessões</span>
                 </button>
                 <button 
-                  onClick={() => setActiveSection("lembretes")}
-                  className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-100 transition text-left"
+                  onClick={() => scrollToSection("lembretes")}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left ${
+                    activeSection === "lembretes" 
+                      ? "bg-pastel-blue text-slate-800 font-medium" 
+                      : "text-slate-600 hover:bg-slate-100 transition"
+                  }`}
                 >
                   <Clock size={20} />
                   <span>Lembretes</span>
                 </button>
                 <button 
-                  onClick={() => setActiveSection("aparencia")}
-                  className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-100 transition text-left"
+                  onClick={() => scrollToSection("aparencia")}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left ${
+                    activeSection === "aparencia" 
+                      ? "bg-pastel-blue text-slate-800 font-medium" 
+                      : "text-slate-600 hover:bg-slate-100 transition"
+                  }`}
                 >
                   <Palette size={20} />
                   <span>Aparência</span>
                 </button>
                 <button 
-                  onClick={() => setActiveSection("idioma")}
-                  className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-100 transition text-left"
+                  onClick={() => scrollToSection("idioma")}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left ${
+                    activeSection === "idioma" 
+                      ? "bg-pastel-blue text-slate-800 font-medium" 
+                      : "text-slate-600 hover:bg-slate-100 transition"
+                  }`}
                 >
                   <Languages size={20} />
                   <span>Idioma</span>
@@ -91,7 +128,10 @@ export default function Configuracoes() {
             </div>
 
             <div className="col-span-3 space-y-6">
-              <section ref={fadeSecurityRef} className="bg-white rounded-xl border border-slate-200 p-6 opacity-0">
+              <section 
+                ref={securityRef}
+                className="bg-white rounded-xl border border-slate-200 p-6"
+              >
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-pastel-blue rounded-lg flex items-center justify-center">
                     <Shield className="text-slate-700" size={24} />
@@ -152,7 +192,10 @@ export default function Configuracoes() {
                 </div>
               </section>
 
-              <section ref={fadeNotificationsRef} className="bg-white rounded-xl border border-slate-200 p-6 opacity-0">
+              <section 
+                ref={notificationsRef}
+                className="bg-white rounded-xl border border-slate-200 p-6"
+              >
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
                     <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center">
@@ -256,7 +299,10 @@ export default function Configuracoes() {
                 </div>
               </section>
 
-              <section ref={fadeSessionsRef} className="bg-white rounded-xl border border-slate-200 p-6 opacity-0">
+              <section 
+                ref={sessionsRef}
+                className="bg-white rounded-xl border border-slate-200 p-6"
+              >
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-pastel-purple rounded-lg flex items-center justify-center">
                     <Monitor className="text-slate-700" size={24} />
@@ -329,7 +375,10 @@ export default function Configuracoes() {
                 </button>
               </section>
 
-              <section ref={fadeRemindersRef} className="bg-white rounded-xl border border-slate-200 p-6 opacity-0">
+              <section 
+                ref={remindersRef}
+                className="bg-white rounded-xl border border-slate-200 p-6"
+              >
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
                     <div className="w-12 h-12 bg-pastel-yellow rounded-lg flex items-center justify-center">
@@ -412,7 +461,10 @@ export default function Configuracoes() {
                 </div>
               </section>
 
-              <section ref={fadeAppearanceRef} className="bg-white rounded-xl border border-slate-200 p-6 opacity-0">
+              <section 
+                ref={appearanceRef}
+                className="bg-white rounded-xl border border-slate-200 p-6"
+              >
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-pastel-pink rounded-lg flex items-center justify-center">
                     <Palette className="text-slate-700" size={24} />
@@ -444,7 +496,10 @@ export default function Configuracoes() {
                 </div>
               </section>
 
-              <section ref={fadeLanguageRef} className="bg-white rounded-xl border border-slate-200 p-6 opacity-0">
+              <section 
+                ref={languageRef}
+                className="bg-white rounded-xl border border-slate-200 p-6"
+              >
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-pastel-peach rounded-lg flex items-center justify-center">
                     <Languages className="text-slate-700" size={24} />
