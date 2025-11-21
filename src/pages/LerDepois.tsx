@@ -4,14 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 interface ReadLaterItem {
   id: string;
   title: string;
@@ -23,125 +16,111 @@ interface ReadLaterItem {
   priority: 'urgent' | 'high' | 'medium' | 'low';
   status: 'pending' | 'completed';
 }
-
-const mockItems: ReadLaterItem[] = [
-  {
-    id: '1',
-    title: 'Novas Diretrizes CVM para Fundos de Investimento',
-    type: 'article',
-    duration: '12 min',
-    source: 'Valor Econômico',
-    savedDate: '17/11/2024',
-    savedDateRelative: 'há 1 hora',
-    priority: 'urgent',
-    status: 'pending'
-  },
-  {
-    id: '2',
-    title: 'Webinar: Gestão de Risco em Cartões de Crédito',
-    type: 'video',
-    duration: '45 min',
-    source: 'FinLearn Academy',
-    savedDate: '16/11/2024',
-    savedDateRelative: 'há 1 dia',
-    priority: 'high',
-    status: 'pending'
-  },
-  {
-    id: '3',
-    title: 'Análise: Tendências do Mercado de Pagamentos',
-    type: 'blog',
-    duration: '8 min',
-    source: 'InfoMoney',
-    savedDate: '15/11/2024',
-    savedDateRelative: 'há 2 dias',
-    priority: 'high',
-    status: 'completed'
-  },
-  {
-    id: '4',
-    title: 'Relatório: Open Finance no Brasil 2024',
-    type: 'pdf',
-    duration: '42 páginas',
-    source: 'Banco Central',
-    savedDate: '14/11/2024',
-    savedDateRelative: 'há 3 dias',
-    priority: 'medium',
-    status: 'pending'
-  },
-  {
-    id: '5',
-    title: 'Estratégias de Compliance para Instituições Financeiras',
-    type: 'article',
-    duration: '15 min',
-    source: 'Valor Econômico',
-    savedDate: '10/11/2024',
-    savedDateRelative: 'há 7 dias',
-    priority: 'medium',
-    status: 'pending'
-  },
-  {
-    id: '6',
-    title: 'Como Analisar Demonstrações Financeiras',
-    type: 'video',
-    duration: '28 min',
-    source: 'FinLearn Academy',
-    savedDate: '08/11/2024',
-    savedDateRelative: 'há 9 dias',
-    priority: 'low',
-    status: 'completed'
-  },
-  {
-    id: '7',
-    title: 'Inovações em Meios de Pagamento Digital',
-    type: 'blog',
-    duration: '10 min',
-    source: 'InfoMoney',
-    savedDate: '05/11/2024',
-    savedDateRelative: 'há 12 dias',
-    priority: 'medium',
-    status: 'pending'
-  },
-  {
-    id: '8',
-    title: 'Podcast: Futuro dos Investimentos no Brasil',
-    type: 'podcast',
-    duration: '52 min',
-    source: 'FinCast',
-    savedDate: '01/11/2024',
-    savedDateRelative: 'há 16 dias',
-    priority: 'low',
-    status: 'pending'
-  },
-  {
-    id: '9',
-    title: 'Análise Técnica: Padrões de Candlestick',
-    type: 'article',
-    duration: '18 min',
-    source: 'Valor Econômico',
-    savedDate: '28/10/2024',
-    savedDateRelative: 'há 20 dias',
-    priority: 'urgent',
-    status: 'pending'
-  },
-  {
-    id: '10',
-    title: 'Guia Completo: Prevenção à Lavagem de Dinheiro',
-    type: 'pdf',
-    duration: '68 páginas',
-    source: 'COAF',
-    savedDate: '15/10/2024',
-    savedDateRelative: 'há 33 dias',
-    priority: 'high',
-    status: 'completed'
-  }
-];
-
+const mockItems: ReadLaterItem[] = [{
+  id: '1',
+  title: 'Novas Diretrizes CVM para Fundos de Investimento',
+  type: 'article',
+  duration: '12 min',
+  source: 'Valor Econômico',
+  savedDate: '17/11/2024',
+  savedDateRelative: 'há 1 hora',
+  priority: 'urgent',
+  status: 'pending'
+}, {
+  id: '2',
+  title: 'Webinar: Gestão de Risco em Cartões de Crédito',
+  type: 'video',
+  duration: '45 min',
+  source: 'FinLearn Academy',
+  savedDate: '16/11/2024',
+  savedDateRelative: 'há 1 dia',
+  priority: 'high',
+  status: 'pending'
+}, {
+  id: '3',
+  title: 'Análise: Tendências do Mercado de Pagamentos',
+  type: 'blog',
+  duration: '8 min',
+  source: 'InfoMoney',
+  savedDate: '15/11/2024',
+  savedDateRelative: 'há 2 dias',
+  priority: 'high',
+  status: 'completed'
+}, {
+  id: '4',
+  title: 'Relatório: Open Finance no Brasil 2024',
+  type: 'pdf',
+  duration: '42 páginas',
+  source: 'Banco Central',
+  savedDate: '14/11/2024',
+  savedDateRelative: 'há 3 dias',
+  priority: 'medium',
+  status: 'pending'
+}, {
+  id: '5',
+  title: 'Estratégias de Compliance para Instituições Financeiras',
+  type: 'article',
+  duration: '15 min',
+  source: 'Valor Econômico',
+  savedDate: '10/11/2024',
+  savedDateRelative: 'há 7 dias',
+  priority: 'medium',
+  status: 'pending'
+}, {
+  id: '6',
+  title: 'Como Analisar Demonstrações Financeiras',
+  type: 'video',
+  duration: '28 min',
+  source: 'FinLearn Academy',
+  savedDate: '08/11/2024',
+  savedDateRelative: 'há 9 dias',
+  priority: 'low',
+  status: 'completed'
+}, {
+  id: '7',
+  title: 'Inovações em Meios de Pagamento Digital',
+  type: 'blog',
+  duration: '10 min',
+  source: 'InfoMoney',
+  savedDate: '05/11/2024',
+  savedDateRelative: 'há 12 dias',
+  priority: 'medium',
+  status: 'pending'
+}, {
+  id: '8',
+  title: 'Podcast: Futuro dos Investimentos no Brasil',
+  type: 'podcast',
+  duration: '52 min',
+  source: 'FinCast',
+  savedDate: '01/11/2024',
+  savedDateRelative: 'há 16 dias',
+  priority: 'low',
+  status: 'pending'
+}, {
+  id: '9',
+  title: 'Análise Técnica: Padrões de Candlestick',
+  type: 'article',
+  duration: '18 min',
+  source: 'Valor Econômico',
+  savedDate: '28/10/2024',
+  savedDateRelative: 'há 20 dias',
+  priority: 'urgent',
+  status: 'pending'
+}, {
+  id: '10',
+  title: 'Guia Completo: Prevenção à Lavagem de Dinheiro',
+  type: 'pdf',
+  duration: '68 páginas',
+  source: 'COAF',
+  savedDate: '15/10/2024',
+  savedDateRelative: 'há 33 dias',
+  priority: 'high',
+  status: 'completed'
+}];
 export default function LerDepois() {
   const navigate = useNavigate();
   const [items, setItems] = useState<ReadLaterItem[]>(mockItems);
   const [filterStatus, setFilterStatus] = useState<'all' | 'completed' | 'pending'>('all');
-
   const getTypeIcon = (type: string) => {
     switch (type) {
       case 'article':
@@ -158,7 +137,6 @@ export default function LerDepois() {
         return <FileText className="text-pastel-gray-dark" size={20} />;
     }
   };
-
   const getTypeColor = (type: string) => {
     switch (type) {
       case 'article':
@@ -175,57 +153,43 @@ export default function LerDepois() {
         return 'bg-pastel-blue/70';
     }
   };
-
   const getPriorityBadge = (priority: string) => {
     switch (priority) {
       case 'urgent':
-        return (
-          <span className="inline-flex items-center gap-2 px-3 py-1 bg-pastel-rose/70 text-pastel-gray-dark rounded-full text-xs font-medium border border-pastel-rose/80">
+        return <span className="inline-flex items-center gap-2 px-3 py-1 bg-pastel-rose/70 text-pastel-gray-dark rounded-full text-xs font-medium border border-pastel-rose/80">
             <Circle className="fill-current" size={6} />
             Urgente
-          </span>
-        );
+          </span>;
       case 'high':
-        return (
-          <span className="inline-flex items-center gap-2 px-3 py-1 bg-pastel-peach/70 text-pastel-gray-dark rounded-full text-xs font-medium border border-pastel-peach/80">
+        return <span className="inline-flex items-center gap-2 px-3 py-1 bg-pastel-peach/70 text-pastel-gray-dark rounded-full text-xs font-medium border border-pastel-peach/80">
             <Circle className="fill-current" size={6} />
             Alta
-          </span>
-        );
+          </span>;
       case 'medium':
-        return (
-          <span className="inline-flex items-center gap-2 px-3 py-1 bg-pastel-yellow/70 text-pastel-gray-dark rounded-full text-xs font-medium border border-pastel-yellow/80">
+        return <span className="inline-flex items-center gap-2 px-3 py-1 bg-pastel-yellow/70 text-pastel-gray-dark rounded-full text-xs font-medium border border-pastel-yellow/80">
             <Circle className="fill-current" size={6} />
             Média
-          </span>
-        );
+          </span>;
       case 'low':
-        return (
-          <span className="inline-flex items-center gap-2 px-3 py-1 bg-pastel-blue/70 text-pastel-gray-dark rounded-full text-xs font-medium border border-pastel-blue/80">
+        return <span className="inline-flex items-center gap-2 px-3 py-1 bg-pastel-blue/70 text-pastel-gray-dark rounded-full text-xs font-medium border border-pastel-blue/80">
             <Circle className="fill-current" size={6} />
             Baixa
-          </span>
-        );
+          </span>;
       default:
         return null;
     }
   };
-
   const toggleItemStatus = (id: string) => {
-    setItems(items.map(item => 
-      item.id === id 
-        ? { ...item, status: item.status === 'pending' ? 'completed' : 'pending' as 'pending' | 'completed' }
-        : item
-    ));
+    setItems(items.map(item => item.id === id ? {
+      ...item,
+      status: item.status === 'pending' ? 'completed' : 'pending' as 'pending' | 'completed'
+    } : item));
   };
-
   const filteredItems = items.filter(item => {
     if (filterStatus === 'all') return true;
     return item.status === filterStatus;
   });
-
-  return (
-    <div className="flex h-screen overflow-hidden bg-background">
+  return <div className="flex h-screen overflow-hidden bg-background">
       <SidebarFix />
       
       <main className="flex-1 overflow-y-auto">
@@ -233,26 +197,17 @@ export default function LerDepois() {
         <header className="bg-card border-b border-border sticky top-0 z-10">
           <div className="px-8 py-4 flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => navigate(-1)}
-                className="text-muted-foreground hover:text-foreground"
-              >
+              <Button variant="ghost" size="icon" onClick={() => navigate(-1)} className="text-muted-foreground hover:text-foreground">
                 <ArrowLeft size={20} />
               </Button>
               <div>
-                <h1 className="text-2xl font-semibold text-foreground">Ler Depois</h1>
+                <h1 className="text-2xl font-semibold text-foreground">Ler/ Assistir Depois</h1>
                 <p className="text-sm text-muted-foreground mt-1">Conteúdos salvos para leitura futura</p>
               </div>
             </div>
             <div className="flex items-center gap-4">
               <div className="relative">
-                <Input
-                  type="text"
-                  placeholder="Buscar conteúdo..."
-                  className="w-80 pl-10"
-                />
+                <Input type="text" placeholder="Buscar conteúdo..." className="w-80 pl-10" />
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={16} />
               </div>
               <Button variant="ghost" size="icon" className="relative">
@@ -448,39 +403,15 @@ export default function LerDepois() {
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
-                    <Button
-                      onClick={() => setFilterStatus('all')}
-                      className={`${
-                        filterStatus === 'all'
-                          ? 'bg-pastel-green/30 hover:bg-pastel-green/40 text-pastel-gray-dark border border-pastel-green/40'
-                          : 'bg-transparent text-muted-foreground hover:bg-muted border-transparent'
-                      }`}
-                      variant="outline"
-                    >
+                    <Button onClick={() => setFilterStatus('all')} className={`${filterStatus === 'all' ? 'bg-pastel-green/30 hover:bg-pastel-green/40 text-pastel-gray-dark border border-pastel-green/40' : 'bg-transparent text-muted-foreground hover:bg-muted border-transparent'}`} variant="outline">
                       <Layers size={16} className="mr-2" />
                       Todos
                     </Button>
-                    <Button
-                      onClick={() => setFilterStatus('completed')}
-                      className={`${
-                        filterStatus === 'completed'
-                          ? 'bg-pastel-green/30 hover:bg-pastel-green/40 text-pastel-gray-dark border border-pastel-green/40'
-                          : 'bg-transparent text-muted-foreground hover:bg-muted border-transparent'
-                      }`}
-                      variant="outline"
-                    >
+                    <Button onClick={() => setFilterStatus('completed')} className={`${filterStatus === 'completed' ? 'bg-pastel-green/30 hover:bg-pastel-green/40 text-pastel-gray-dark border border-pastel-green/40' : 'bg-transparent text-muted-foreground hover:bg-muted border-transparent'}`} variant="outline">
                       <CheckCircle size={16} className="mr-2" />
                       Lidos
                     </Button>
-                    <Button
-                      onClick={() => setFilterStatus('pending')}
-                      className={`${
-                        filterStatus === 'pending'
-                          ? 'bg-pastel-green/30 hover:bg-pastel-green/40 text-pastel-gray-dark border border-pastel-green/40'
-                          : 'bg-transparent text-muted-foreground hover:bg-muted border-transparent'
-                      }`}
-                      variant="outline"
-                    >
+                    <Button onClick={() => setFilterStatus('pending')} className={`${filterStatus === 'pending' ? 'bg-pastel-green/30 hover:bg-pastel-green/40 text-pastel-gray-dark border border-pastel-green/40' : 'bg-transparent text-muted-foreground hover:bg-muted border-transparent'}`} variant="outline">
                       <Clock size={16} className="mr-2" />
                       Pendentes
                     </Button>
@@ -502,13 +433,7 @@ export default function LerDepois() {
                 </div>
 
                 {/* Table Body */}
-                {filteredItems.map((item, index) => (
-                  <div
-                    key={item.id}
-                    className={`${
-                      index !== filteredItems.length - 1 ? 'border-b border-border' : ''
-                    } hover:bg-muted/30 transition-colors cursor-pointer`}
-                  >
+                {filteredItems.map((item, index) => <div key={item.id} className={`${index !== filteredItems.length - 1 ? 'border-b border-border' : ''} hover:bg-muted/30 transition-colors cursor-pointer`}>
                     <div className="grid grid-cols-12 gap-4 px-6 py-4 items-center">
                       <div className="col-span-5 flex items-center gap-4">
                         <div className={`w-10 h-10 ${getTypeColor(item.type)} rounded-lg flex items-center justify-center flex-shrink-0 border ${getTypeColor(item.type).replace('/70', '/80')}`}>
@@ -518,10 +443,7 @@ export default function LerDepois() {
                           <h3 className="font-semibold text-foreground truncate">{item.title}</h3>
                           <div className="flex items-center gap-3 mt-1">
                             <span className="text-xs text-muted-foreground">
-                              {item.type === 'article' ? 'Artigo' : 
-                               item.type === 'video' ? 'Vídeo' :
-                               item.type === 'blog' ? 'Blog' :
-                               item.type === 'pdf' ? 'PDF' : 'Podcast'} • {item.duration}
+                              {item.type === 'article' ? 'Artigo' : item.type === 'video' ? 'Vídeo' : item.type === 'blog' ? 'Blog' : item.type === 'pdf' ? 'PDF' : 'Podcast'} • {item.duration}
                             </span>
                             <span className="text-xs text-muted-foreground">•</span>
                             <span className="text-xs text-muted-foreground">{item.source}</span>
@@ -536,44 +458,27 @@ export default function LerDepois() {
                         {getPriorityBadge(item.priority)}
                       </div>
                       <div className="col-span-2">
-                        {item.status === 'pending' ? (
-                          <span className="inline-flex items-center gap-2 px-3 py-1 bg-muted text-pastel-gray-dark rounded-full text-xs font-medium border border-border">
+                        {item.status === 'pending' ? <span className="inline-flex items-center gap-2 px-3 py-1 bg-muted text-pastel-gray-dark rounded-full text-xs font-medium border border-border">
                             <Clock size={12} />
                             Pendente
-                          </span>
-                        ) : (
-                          <span className="inline-flex items-center gap-2 px-3 py-1 bg-pastel-green/70 text-pastel-gray-dark rounded-full text-xs font-medium border border-pastel-green/80">
+                          </span> : <span className="inline-flex items-center gap-2 px-3 py-1 bg-pastel-green/70 text-pastel-gray-dark rounded-full text-xs font-medium border border-pastel-green/80">
                             <Check size={12} />
                             Concluído
-                          </span>
-                        )}
+                          </span>}
                       </div>
                       <div className="col-span-1 flex items-center justify-end gap-2">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            toggleItemStatus(item.id);
-                          }}
-                          className={`p-2 transition-colors ${
-                            item.status === 'completed'
-                              ? 'text-pastel-green hover:text-pastel-green/80'
-                              : 'text-muted-foreground hover:text-pastel-green'
-                          }`}
-                          title={item.status === 'completed' ? 'Concluído' : 'Marcar como concluído'}
-                        >
-                          {item.status === 'completed' ? (
-                            <CheckCircle size={18} className="fill-current" />
-                          ) : (
-                            <CheckCircle size={18} />
-                          )}
+                        <button onClick={e => {
+                      e.stopPropagation();
+                      toggleItemStatus(item.id);
+                    }} className={`p-2 transition-colors ${item.status === 'completed' ? 'text-pastel-green hover:text-pastel-green/80' : 'text-muted-foreground hover:text-pastel-green'}`} title={item.status === 'completed' ? 'Concluído' : 'Marcar como concluído'}>
+                          {item.status === 'completed' ? <CheckCircle size={18} className="fill-current" /> : <CheckCircle size={18} />}
                         </button>
                         <button className="p-2 text-muted-foreground hover:text-foreground transition-colors">
                           <MoreHorizontal size={18} />
                         </button>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  </div>)}
               </section>
 
               {/* Paginação */}
@@ -608,6 +513,5 @@ export default function LerDepois() {
           </div>
         </div>
       </main>
-    </div>
-  );
+    </div>;
 }
