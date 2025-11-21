@@ -509,7 +509,7 @@ export default function Notificacoes() {
             </div>
 
             <div className="col-span-1 space-y-6">
-              <section className="bg-white rounded-xl border border-slate-200 p-6 sticky top-24">
+              <section className="bg-white rounded-xl border border-slate-200 p-6">
                 <div className="flex items-center gap-2 mb-4">
                   <ChartPie size={18} className="text-slate-600" />
                   <h3 className="font-semibold text-slate-800">Resumo</h3>
