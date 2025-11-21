@@ -122,7 +122,7 @@ export default function MinhasMetas() {
                   <div className="w-12 h-12 bg-pastel-yellow rounded-lg flex items-center justify-center">
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <i className="fas fa-target text-slate-700 text-xl cursor-help"></i>
+                        <i className="fas fa-bullseye text-slate-700 text-xl cursor-help"></i>
                       </TooltipTrigger>
                       <TooltipContent>
                         <p>Objetivos de aprendizado semanais e mensais</p>
