@@ -1,6 +1,8 @@
-import { Star, Bookmark, Eye, Clock, ChevronRight } from "lucide-react";
+import { SidebarFix } from "@/components/Dashboard/SidebarFix";
+import { Bell, Download, Star, Bookmark, Eye, Clock, ChevronRight } from "lucide-react";
 import Plot from "react-plotly.js";
 
+// Componente de conteúdo para ser usado dentro do Hub de Aprendizado
 export const AnalisesContent = () => {
   return (
     <div>
@@ -715,3 +717,39 @@ export const AnalisesContent = () => {
     </div>
   );
 };
+
+// Página completa de Análises
+const Analises = () => {
+  return (
+    <div className="flex h-screen overflow-hidden">
+      <SidebarFix />
+      
+      <main className="flex-1 overflow-y-auto">
+        <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
+          <div className="px-8 py-4 flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-semibold text-slate-800">Análises de Mercado</h1>
+              <p className="text-sm text-slate-500 mt-1">Insights gerados por IA sobre diversos setores do mercado financeiro</p>
+            </div>
+            <div className="flex items-center gap-4">
+              <button className="relative p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
+                <Bell size={20} />
+                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+              </button>
+              <button className="px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                <Download size={16} className="inline mr-2" />
+                Exportar Relatório
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <div className="p-8">
+          <AnalisesContent />
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default Analises;
