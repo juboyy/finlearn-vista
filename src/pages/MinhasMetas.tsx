@@ -720,7 +720,7 @@ export default function MinhasMetas() {
           </section>
 
           {/* Final Confirmation */}
-          <section className="bg-pastel-purple bg-opacity-50 rounded-2xl border-2 border-pastel-purple p-8">
+          <section className="rounded-2xl border-2 border-pastel-purple p-8" style={{backgroundColor: 'hsl(270 32% 67% / 0.5)'}}>
             <div className="text-center mb-6">
               <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-full shadow-lg mb-4">
                 <i className="fas fa-check-circle text-pastel-purple text-4xl"></i>
