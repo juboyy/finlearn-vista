@@ -1,8 +1,9 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Video, Mic, MicOff, VideoOff, Phone, Monitor, Minimize2, Maximize2, MessageCircle, Send, ChevronLeft, ChevronRight } from "lucide-react";
+import { Video, Mic, MicOff, VideoOff, Phone, Monitor, Minimize2, Maximize2, MessageCircle, FileText, Settings, Send, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { toast } from "sonner";
 
@@ -25,6 +26,8 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
   const [callDuration, setCallDuration] = useState(0);
   const [isAtBottom, setIsAtBottom] = useState(true);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [activeTab, setActiveTab] = useState<'chat' | 'notes' | 'settings'>('chat');
+  const [notes, setNotes] = useState('');
   const localVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -364,20 +367,62 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
           <div className={`${isSidebarOpen ? 'w-96' : 'w-0'} transition-all duration-300 bg-slate-900 border-l border-slate-800 flex flex-col overflow-hidden relative flex-shrink-0`}>
             {isSidebarOpen && (
               <>
-                <div className="p-4 border-b border-slate-800 flex items-center justify-between">
-                  <h3 className="text-white font-semibold">Chat</h3>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setIsSidebarOpen(false)}
-                    className="text-slate-400 hover:text-white"
-                  >
-                    <ChevronRight size={20} />
-                  </Button>
+                <div className="p-4 border-b border-slate-800">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-white font-semibold">Painel</h3>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setIsSidebarOpen(false)}
+                      className="text-slate-400 hover:text-white"
+                    >
+                      <ChevronRight size={20} />
+                    </Button>
+                  </div>
+
+                  {/* Tabs Navigation */}
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setActiveTab('chat')}
+                      className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                        activeTab === 'chat'
+                          ? 'bg-slate-700 text-white'
+                          : 'bg-slate-800/50 text-slate-400 hover:bg-slate-700/50 hover:text-white'
+                      }`}
+                    >
+                      <MessageCircle size={16} />
+                      Chat
+                    </button>
+                    <button
+                      onClick={() => setActiveTab('notes')}
+                      className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                        activeTab === 'notes'
+                          ? 'bg-slate-700 text-white'
+                          : 'bg-slate-800/50 text-slate-400 hover:bg-slate-700/50 hover:text-white'
+                      }`}
+                    >
+                      <FileText size={16} />
+                      Notas
+                    </button>
+                    <button
+                      onClick={() => setActiveTab('settings')}
+                      className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                        activeTab === 'settings'
+                          ? 'bg-slate-700 text-white'
+                          : 'bg-slate-800/50 text-slate-400 hover:bg-slate-700/50 hover:text-white'
+                      }`}
+                    >
+                      <Settings size={16} />
+                      Config
+                    </button>
+                  </div>
                 </div>
 
-                {/* Área de mensagens do chat */}
-                <div className="flex-1 min-h-0 overflow-hidden relative">
+                {/* Chat Tab */}
+                {activeTab === 'chat' && (
+                  <>
+                    {/* Área de mensagens do chat */}
+                    <div className="flex-1 min-h-0 overflow-hidden relative">
                   <div 
                     ref={chatScrollRef} 
                     className="h-full overflow-y-auto pb-[68px] chat-scrollbar"
@@ -420,28 +465,92 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                       <MessageCircle size={16} />
                       {unreadCount} nova{unreadCount > 1 ? 's' : ''} mensagem{unreadCount > 1 ? 'ns' : ''}
                     </button>
-                  )}
-                </div>
+                      )}
+                    </div>
 
-                {/* Input do chat fixo no fundo */}
-                <div className="absolute bottom-0 left-0 right-0 p-3 border-t border-slate-800 bg-slate-900/95 backdrop-blur-sm flex-shrink-0">
-                  <div className="flex gap-2">
-                    <Input
-                      value={messageInput}
-                      onChange={(e) => setMessageInput(e.target.value)}
-                      onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                      placeholder="Digite uma mensagem..."
-                      className="flex-1 bg-slate-800 border-slate-700 text-white"
+                    {/* Input do chat fixo no fundo */}
+                    <div className="absolute bottom-0 left-0 right-0 p-3 border-t border-slate-800 bg-slate-900/95 backdrop-blur-sm flex-shrink-0">
+                      <div className="flex gap-2">
+                        <Input
+                          value={messageInput}
+                          onChange={(e) => setMessageInput(e.target.value)}
+                          onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                          placeholder="Digite uma mensagem..."
+                          className="flex-1 bg-slate-800 border-slate-700 text-white"
+                        />
+                        <Button
+                          onClick={handleSendMessage}
+                          size="icon"
+                          className="bg-pastel-blue hover:bg-pastel-blue/80 text-slate-800"
+                        >
+                          <Send size={18} />
+                        </Button>
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                {/* Notes Tab */}
+                {activeTab === 'notes' && (
+                  <div className="flex-1 flex flex-col p-4">
+                    <Textarea
+                      value={notes}
+                      onChange={(e) => setNotes(e.target.value)}
+                      placeholder="Faça anotações durante a chamada..."
+                      className="flex-1 bg-slate-800 border-slate-700 text-white resize-none"
                     />
-                    <Button
-                      onClick={handleSendMessage}
-                      size="icon"
-                      className="bg-pastel-blue hover:bg-pastel-blue/80 text-slate-800"
-                    >
-                      <Send size={18} />
-                    </Button>
+                    <p className="text-xs text-slate-500 mt-2">
+                      Suas notas serão salvas automaticamente
+                    </p>
                   </div>
-                </div>
+                )}
+
+                {/* Settings Tab */}
+                {activeTab === 'settings' && (
+                  <div className="flex-1 p-4 overflow-y-auto">
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="text-white font-medium mb-3">Qualidade de Vídeo</h4>
+                        <div className="space-y-2">
+                          <label className="flex items-center gap-2 text-sm text-slate-300">
+                            <input type="radio" name="quality" defaultChecked className="text-pastel-blue" />
+                            Alta (720p)
+                          </label>
+                          <label className="flex items-center gap-2 text-sm text-slate-300">
+                            <input type="radio" name="quality" className="text-pastel-blue" />
+                            Média (480p)
+                          </label>
+                          <label className="flex items-center gap-2 text-sm text-slate-300">
+                            <input type="radio" name="quality" className="text-pastel-blue" />
+                            Baixa (360p)
+                          </label>
+                        </div>
+                      </div>
+
+                      <div className="pt-4 border-t border-slate-800">
+                        <h4 className="text-white font-medium mb-3">Gravação</h4>
+                        <label className="flex items-center justify-between text-sm text-slate-300">
+                          <span>Gravar chamada</span>
+                          <input type="checkbox" className="text-pastel-blue" />
+                        </label>
+                      </div>
+
+                      <div className="pt-4 border-t border-slate-800">
+                        <h4 className="text-white font-medium mb-3">Notificações</h4>
+                        <label className="flex items-center justify-between text-sm text-slate-300">
+                          <span>Sons de notificação</span>
+                          <input type="checkbox" defaultChecked className="text-pastel-blue" />
+                        </label>
+                      </div>
+
+                      <div className="pt-4 border-t border-slate-800">
+                        <Button variant="outline" className="w-full border-slate-700 text-slate-300 hover:bg-slate-800">
+                          Estatísticas da chamada
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </>
             )}
           </div>
