@@ -51,17 +51,17 @@ All colors MUST be HSL.
     --radius: 0.75rem;
 
     /* Pastel Colors - Dark Pastels (Soft) */
-    --pastel-blue: 206 38% 82%;
-    --pastel-indigo: 239 35% 82%;
-    --pastel-purple: 270 35% 82%;
-    --pastel-pink: 322 35% 82%;
-    --pastel-green: 152 35% 80%;
-    --pastel-yellow: 44 38% 82%;
-    --pastel-peach: 24 36% 82%;
-    --pastel-orange: 30 38% 82%;
+    --pastel-blue: 206 35% 58%;
+    --pastel-indigo: 239 32% 58%;
+    --pastel-purple: 270 32% 60%;
+    --pastel-pink: 322 32% 62%;
+    --pastel-green: 152 32% 58%;
+    --pastel-yellow: 44 35% 60%;
+    --pastel-peach: 24 33% 62%;
+    --pastel-orange: 30 35% 60%;
     
     /* Pastel Gray Dark for Icons */
-    --pastel-gray-dark: 220 12% 45%;
+    --pastel-gray-dark: 220 12% 35%;
 
     /* Slider specific */
     --slider-thumb: 206 50% 65%;
@@ -118,17 +118,17 @@ All colors MUST be HSL.
     --input: 220 15% 25%;
     --ring: 206 49% 70%;
 
-    --pastel-blue: 206 30% 85%;
-    --pastel-indigo: 239 35% 85%;
-    --pastel-purple: 270 35% 85%;
-    --pastel-pink: 322 42% 85%;
-    --pastel-green: 152 45% 85%;
-    --pastel-yellow: 44 46% 85%;
-    --pastel-peach: 24 46% 85%;
-    --pastel-orange: 30 46% 85%;
+    --pastel-blue: 206 32% 62%;
+    --pastel-indigo: 239 32% 62%;
+    --pastel-purple: 270 32% 64%;
+    --pastel-pink: 322 35% 66%;
+    --pastel-green: 152 35% 62%;
+    --pastel-yellow: 44 38% 64%;
+    --pastel-peach: 24 36% 66%;
+    --pastel-orange: 30 38% 64%;
     
     /* Pastel Gray Dark for Icons */
-    --pastel-gray-dark: 220 12% 50%;
+    --pastel-gray-dark: 220 12% 38%;
 
     /* Slider specific */
     --slider-thumb: 206 45% 70%;
