@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Video, Mic, MicOff, VideoOff, Phone, Monitor, Minimize2, Maximize2, MessageCircle, FileText, Settings, Send, ChevronLeft, ChevronRight, X } from "lucide-react";
+import { Video, Mic, MicOff, VideoOff, Phone, Monitor, Minimize2, Maximize2, MessageCircle, FileText, Settings, Send, ChevronLeft, ChevronRight, X, Activity, TrendingUp, Target, Lightbulb, Key, BarChart3, Clock, Coins } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { toast } from "sonner";
 
@@ -711,7 +711,7 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
         {/* Modal de Estatísticas */}
         {showStatsModal && (
           <div className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setShowStatsModal(false)}>
-            <div className="bg-slate-900 border-2 border-slate-700 rounded-2xl shadow-2xl w-full max-w-4xl max-h-[85vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+            <div className="bg-slate-900 border-2 border-slate-700 rounded-2xl shadow-2xl w-full max-w-[95vw] max-h-[85vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
               {/* Header */}
               <div className="p-6 border-b border-slate-800 bg-gradient-to-r from-pastel-purple/20 to-pastel-blue/20">
                 <div className="flex items-center justify-between">
@@ -728,137 +728,185 @@ export const VideoCallModal = ({ open, onOpenChange, agentName, agentAvatar }: V
                 </div>
               </div>
 
-              {/* Content */}
-              <div className="p-6 space-y-6">
-                {/* Métricas Principais */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="bg-gradient-to-br from-pastel-purple/20 to-pastel-purple/5 border border-pastel-purple/30 rounded-xl p-4">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="w-10 h-10 bg-pastel-purple/30 rounded-lg flex items-center justify-center">
-                        <Video size={20} className="text-pastel-purple" />
-                      </div>
-                      <div>
-                        <p className="text-slate-400 text-xs">Duração</p>
-                        <p className="text-white text-2xl font-bold">{formatDuration(callDuration)}</p>
-                      </div>
-                    </div>
-                    <div className="mt-3 pt-3 border-t border-pastel-purple/20">
-                      <p className="text-slate-400 text-xs">Tempo médio por sessão: 8:45</p>
-                    </div>
-                  </div>
-
-                  <div className="bg-gradient-to-br from-pastel-blue/20 to-pastel-blue/5 border border-pastel-blue/30 rounded-xl p-4">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="w-10 h-10 bg-pastel-blue/30 rounded-lg flex items-center justify-center">
-                        <MessageCircle size={20} className="text-pastel-blue" />
-                      </div>
-                      <div>
-                        <p className="text-slate-400 text-xs">Mensagens</p>
-                        <p className="text-white text-2xl font-bold">{chatMessages.length}</p>
-                      </div>
-                    </div>
-                    <div className="mt-3 pt-3 border-t border-pastel-blue/20">
-                      <p className="text-slate-400 text-xs">Você: {chatMessages.filter(m => m.role === 'user').length} | IA: {chatMessages.filter(m => m.role === 'agent').length}</p>
-                    </div>
-                  </div>
-
-                  <div className="bg-gradient-to-br from-pastel-green/20 to-pastel-green/5 border border-pastel-green/30 rounded-xl p-4">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="w-10 h-10 bg-pastel-green/30 rounded-lg flex items-center justify-center">
-                        <span className="text-pastel-green text-xl">📶</span>
-                      </div>
-                      <div>
-                        <p className="text-slate-400 text-xs">Qualidade</p>
-                        <p className="text-white text-2xl font-bold">Alta</p>
-                      </div>
-                    </div>
-                    <div className="mt-3 pt-3 border-t border-pastel-green/20">
-                      <p className="text-slate-400 text-xs">Latência média: 45ms</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Análise de Interação */}
-                <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
-                  <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
-                    <span className="text-xl">💬</span> Análise de Interação
-                  </h3>
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-slate-300 text-sm">Taxa de resposta da IA</span>
-                      <div className="flex items-center gap-2">
-                        <div className="w-32 h-2 bg-slate-700 rounded-full overflow-hidden">
-                          <div className="h-full bg-gradient-to-r from-pastel-purple to-pastel-blue w-[95%]"></div>
+              {/* Content - Two Columns Layout */}
+              <div className="p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Left Column */}
+                <div className="space-y-6">
+                  {/* Métricas Principais */}
+                  <div className="space-y-4">
+                    <div className="bg-gradient-to-br from-pastel-purple/20 to-pastel-purple/5 border border-pastel-purple/30 rounded-xl p-4">
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="w-10 h-10 bg-pastel-purple/30 rounded-lg flex items-center justify-center">
+                          <Clock size={20} className="text-pastel-purple" />
                         </div>
-                        <span className="text-white text-sm font-medium">95%</span>
+                        <div>
+                          <p className="text-slate-400 text-xs">Duração</p>
+                          <p className="text-white text-2xl font-bold">{formatDuration(callDuration)}</p>
+                        </div>
+                      </div>
+                      <div className="mt-3 pt-3 border-t border-pastel-purple/20">
+                        <p className="text-slate-400 text-xs">Tempo médio por sessão: 8:45</p>
                       </div>
                     </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-slate-300 text-sm">Clareza da comunicação</span>
-                      <div className="flex items-center gap-2">
-                        <div className="w-32 h-2 bg-slate-700 rounded-full overflow-hidden">
-                          <div className="h-full bg-gradient-to-r from-pastel-green to-pastel-yellow w-[88%]"></div>
+
+                    <div className="bg-gradient-to-br from-pastel-blue/20 to-pastel-blue/5 border border-pastel-blue/30 rounded-xl p-4">
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="w-10 h-10 bg-pastel-blue/30 rounded-lg flex items-center justify-center">
+                          <MessageCircle size={20} className="text-pastel-blue" />
                         </div>
-                        <span className="text-white text-sm font-medium">88%</span>
+                        <div>
+                          <p className="text-slate-400 text-xs">Mensagens</p>
+                          <p className="text-white text-2xl font-bold">{chatMessages.length}</p>
+                        </div>
+                      </div>
+                      <div className="mt-3 pt-3 border-t border-pastel-blue/20">
+                        <p className="text-slate-400 text-xs">Você: {chatMessages.filter(m => m.role === 'user').length} | IA: {chatMessages.filter(m => m.role === 'agent').length}</p>
                       </div>
                     </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-slate-300 text-sm">Engajamento</span>
-                      <div className="flex items-center gap-2">
-                        <div className="w-32 h-2 bg-slate-700 rounded-full overflow-hidden">
-                          <div className="h-full bg-gradient-to-r from-pastel-pink to-pastel-rose w-[92%]"></div>
+
+                    <div className="bg-gradient-to-br from-pastel-green/20 to-pastel-green/5 border border-pastel-green/30 rounded-xl p-4">
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="w-10 h-10 bg-pastel-green/30 rounded-lg flex items-center justify-center">
+                          <Activity size={20} className="text-pastel-green" />
                         </div>
-                        <span className="text-white text-sm font-medium">92%</span>
+                        <div>
+                          <p className="text-slate-400 text-xs">Qualidade</p>
+                          <p className="text-white text-2xl font-bold">Alta</p>
+                        </div>
                       </div>
+                      <div className="mt-3 pt-3 border-t border-pastel-green/20">
+                        <p className="text-slate-400 text-xs">Latência média: 45ms</p>
+                      </div>
+                    </div>
+
+                    <div className="bg-gradient-to-br from-pastel-yellow/20 to-pastel-yellow/5 border border-pastel-yellow/30 rounded-xl p-4">
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="w-10 h-10 bg-pastel-yellow/30 rounded-lg flex items-center justify-center">
+                          <Coins size={20} className="text-pastel-yellow" />
+                        </div>
+                        <div>
+                          <p className="text-slate-400 text-xs">Créditos Gastos</p>
+                          <p className="text-white text-2xl font-bold">{Math.round((callDuration / 60) * 10)}</p>
+                        </div>
+                      </div>
+                      <div className="mt-3 pt-3 border-t border-pastel-yellow/20">
+                        <p className="text-slate-400 text-xs">Taxa: 10 créditos/minuto</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Palavras-chave e Tópicos */}
+                  <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
+                    <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
+                      <Key size={18} className="text-pastel-blue" />
+                      Tópicos Principais
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {['Aprendizado', 'IA', 'Colaboração', 'Inovação', 'Produtividade', 'Análise', 'Estratégia'].map((topic, idx) => (
+                        <span 
+                          key={topic}
+                          className="px-3 py-1.5 rounded-full text-sm font-medium border"
+                          style={{
+                            backgroundColor: `hsl(${idx * 50}, 70%, 20%)`,
+                            borderColor: `hsl(${idx * 50}, 70%, 40%)`,
+                            color: `hsl(${idx * 50}, 70%, 80%)`
+                          }}
+                        >
+                          {topic}
+                        </span>
+                      ))}
                     </div>
                   </div>
                 </div>
 
-                {/* Palavras-chave e Tópicos */}
-                <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
-                  <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
-                    <span className="text-xl">🔑</span> Tópicos Principais
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {['Aprendizado', 'IA', 'Colaboração', 'Inovação', 'Produtividade', 'Análise', 'Estratégia'].map((topic, idx) => (
-                      <span 
-                        key={topic}
-                        className="px-3 py-1.5 rounded-full text-sm font-medium border"
-                        style={{
-                          backgroundColor: `hsl(${idx * 50}, 70%, 20%)`,
-                          borderColor: `hsl(${idx * 50}, 70%, 40%)`,
-                          color: `hsl(${idx * 50}, 70%, 80%)`
-                        }}
-                      >
-                        {topic}
-                      </span>
-                    ))}
+                {/* Right Column */}
+                <div className="space-y-6">
+                  {/* Análise de Interação */}
+                  <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
+                    <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
+                      <BarChart3 size={18} className="text-pastel-purple" />
+                      Análise de Interação
+                    </h3>
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-slate-300 text-sm">Taxa de resposta da IA</span>
+                        <div className="flex items-center gap-2">
+                          <div className="w-32 h-2 bg-slate-700 rounded-full overflow-hidden">
+                            <div className="h-full bg-gradient-to-r from-pastel-purple to-pastel-blue w-[95%]"></div>
+                          </div>
+                          <span className="text-white text-sm font-medium">95%</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-slate-300 text-sm">Clareza da comunicação</span>
+                        <div className="flex items-center gap-2">
+                          <div className="w-32 h-2 bg-slate-700 rounded-full overflow-hidden">
+                            <div className="h-full bg-gradient-to-r from-pastel-green to-pastel-yellow w-[88%]"></div>
+                          </div>
+                          <span className="text-white text-sm font-medium">88%</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-slate-300 text-sm">Engajamento</span>
+                        <div className="flex items-center gap-2">
+                          <div className="w-32 h-2 bg-slate-700 rounded-full overflow-hidden">
+                            <div className="h-full bg-gradient-to-r from-pastel-pink to-pastel-rose w-[92%]"></div>
+                          </div>
+                          <span className="text-white text-sm font-medium">92%</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Insights e Sugestões */}
+                  <div className="bg-gradient-to-br from-pastel-yellow/10 to-pastel-orange/5 border border-pastel-yellow/30 rounded-xl p-5">
+                    <h3 className="text-white font-semibold mb-3 flex items-center gap-2">
+                      <Lightbulb size={18} className="text-pastel-yellow" />
+                      Insights da Sessão
+                    </h3>
+                    <ul className="space-y-2">
+                      <li className="flex items-start gap-2 text-slate-300 text-sm">
+                        <Target size={16} className="text-pastel-yellow mt-0.5 flex-shrink-0" />
+                        <span>Excelente engajamento durante toda a chamada</span>
+                      </li>
+                      <li className="flex items-start gap-2 text-slate-300 text-sm">
+                        <Target size={16} className="text-pastel-yellow mt-0.5 flex-shrink-0" />
+                        <span>Comunicação clara e objetiva identificada</span>
+                      </li>
+                      <li className="flex items-start gap-2 text-slate-300 text-sm">
+                        <Target size={16} className="text-pastel-yellow mt-0.5 flex-shrink-0" />
+                        <span>Média de {callDuration > 0 ? Math.round(chatMessages.length / (callDuration / 60)) : 0} mensagens por minuto</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  {/* Performance Metrics */}
+                  <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
+                    <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
+                      <TrendingUp size={18} className="text-pastel-green" />
+                      Performance
+                    </h3>
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between py-2 border-b border-slate-700/50">
+                        <span className="text-slate-300 text-sm">Tempo de resposta médio</span>
+                        <span className="text-white font-medium">1.2s</span>
+                      </div>
+                      <div className="flex items-center justify-between py-2 border-b border-slate-700/50">
+                        <span className="text-slate-300 text-sm">Taxa de sucesso</span>
+                        <span className="text-pastel-green font-medium">98%</span>
+                      </div>
+                      <div className="flex items-center justify-between py-2">
+                        <span className="text-slate-300 text-sm">Satisfação estimada</span>
+                        <span className="text-pastel-blue font-medium">Excelente</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
+              </div>
 
-                {/* Insights e Sugestões */}
-                <div className="bg-gradient-to-br from-pastel-yellow/10 to-pastel-orange/5 border border-pastel-yellow/30 rounded-xl p-5">
-                  <h3 className="text-white font-semibold mb-3 flex items-center gap-2">
-                    <span className="text-xl">💡</span> Insights da Sessão
-                  </h3>
-                  <ul className="space-y-2">
-                    <li className="flex items-start gap-2 text-slate-300 text-sm">
-                      <span className="text-pastel-yellow mt-0.5">✓</span>
-                      <span>Excelente engajamento durante toda a chamada</span>
-                    </li>
-                    <li className="flex items-start gap-2 text-slate-300 text-sm">
-                      <span className="text-pastel-yellow mt-0.5">✓</span>
-                      <span>Comunicação clara e objetiva identificada</span>
-                    </li>
-                    <li className="flex items-start gap-2 text-slate-300 text-sm">
-                      <span className="text-pastel-yellow mt-0.5">✓</span>
-                      <span>Média de {Math.round(chatMessages.length / (callDuration / 60))} mensagens por minuto</span>
-                    </li>
-                  </ul>
-                </div>
-
-                {/* Ações */}
-                <div className="flex gap-3 pt-4">
+              {/* Footer Actions */}
+              <div className="p-6 border-t border-slate-800 bg-slate-900/50">
+                <div className="flex gap-3">
                   <Button 
                     className="flex-1 bg-pastel-blue hover:bg-pastel-blue/80 text-slate-900"
                   >
