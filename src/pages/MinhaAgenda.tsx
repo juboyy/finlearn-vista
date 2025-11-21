@@ -86,11 +86,12 @@ export default function MinhaAgenda() {
       labels: ['Reuniões', 'Treinamentos', 'Webinars', 'Estudos', 'Eventos'],
       values: [12, 8, 5, 15, 3],
       type: 'pie',
+      hole: 0.4,
       marker: {
         colors: ['#7FA8C9', '#A68CC9', '#8CC99B', '#C9B88C', '#C99B8C']
       },
-      textinfo: 'label+percent',
-      textposition: 'inside'
+      textinfo: 'none',
+      hoverinfo: 'label+percent'
     }];
 
     const categoryLayout = {
