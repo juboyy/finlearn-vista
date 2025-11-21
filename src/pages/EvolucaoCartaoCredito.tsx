@@ -221,24 +221,6 @@ export default function EvolucaoCartaoCredito() {
                     10. Referências
                   </a>
                 </nav>
-
-                <div className="mt-6 pt-6 border-t border-border">
-                  <h3 className="text-sm font-semibold text-foreground mb-3">Ferramentas IA</h3>
-                  <div className="space-y-2">
-                    <button className="w-full px-3 py-2 bg-[#B8D4E8] text-[#475569] text-sm rounded-lg hover:bg-[#B8D4E8]/80 transition flex items-center gap-2">
-                      <Wand2 className="w-4 h-4" />
-                      <span>Resumir Página</span>
-                    </button>
-                    <button className="w-full px-3 py-2 bg-[#C5E8D4] text-[#475569] text-sm rounded-lg hover:bg-[#C5E8D4]/80 transition flex items-center gap-2">
-                      <Search className="w-4 h-4" />
-                      <span>Buscar Específico</span>
-                    </button>
-                    <button className="w-full px-3 py-2 bg-[#E8E0C5] text-[#475569] text-sm rounded-lg hover:bg-[#E8E0C5]/80 transition flex items-center gap-2">
-                      <Lightbulb className="w-4 h-4" />
-                      <span>Gerar Insights</span>
-                    </button>
-                  </div>
-                </div>
               </div>
             </aside>
 
@@ -920,6 +902,25 @@ export default function EvolucaoCartaoCredito() {
             {/* Right Sidebar */}
             <aside className="col-span-3">
               <div className="sticky top-6 space-y-6">
+                {/* AI Tools */}
+                <div className="bg-card rounded-xl border border-border p-6">
+                  <h3 className="text-sm font-semibold text-foreground mb-4">Ferramentas IA</h3>
+                  <div className="space-y-2">
+                    <button className="w-full px-3 py-2 bg-[#B8D4E8] text-[#475569] text-sm rounded-lg hover:bg-[#B8D4E8]/80 transition flex items-center gap-2">
+                      <Wand2 className="w-4 h-4" />
+                      <span>Resumir Página</span>
+                    </button>
+                    <button className="w-full px-3 py-2 bg-[#C5E8D4] text-[#475569] text-sm rounded-lg hover:bg-[#C5E8D4]/80 transition flex items-center gap-2">
+                      <Search className="w-4 h-4" />
+                      <span>Buscar Específico</span>
+                    </button>
+                    <button className="w-full px-3 py-2 bg-[#E8E0C5] text-[#475569] text-sm rounded-lg hover:bg-[#E8E0C5]/80 transition flex items-center gap-2">
+                      <Lightbulb className="w-4 h-4" />
+                      <span>Gerar Insights</span>
+                    </button>
+                  </div>
+                </div>
+
                 {/* Related Content */}
                 <div className="bg-card rounded-xl border border-border p-6">
                   <h3 className="text-sm font-semibold text-foreground mb-4">Conteúdos Relacionados</h3>
