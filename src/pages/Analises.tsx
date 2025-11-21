@@ -477,7 +477,7 @@ const Analises = () => {
                   <BarChart data={inflationData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
                     <XAxis dataKey="name" stroke="#64748b" style={{ fontSize: '12px' }} />
-                    <YAxis stroke="#64748b" style={{ fontSize: '12px' }} />
+                    <YAxis stroke="#64748b" style={{ fontSize: '12px' }} domain={[-0.1, 'auto']} />
                     <Tooltip 
                       contentStyle={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px' }}
                       labelStyle={{ color: '#1e293b', fontWeight: 600 }}
