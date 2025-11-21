@@ -1,7 +1,7 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { MenutabbarFix } from "@/components/Dashboard/MenutabbarFix";
 import { Bell, Play, Clock, BookOpen, TrendingUp, Headphones, Calendar, Users, MessageCircle, Star, BookMarked, Video, Award, Heart, CheckCircle, PlayCircle, Trophy, ChartLine, Shield, Bitcoin, Gavel, PieChart, Repeat, Globe, Leaf, Plus, BookOpenCheck, CreditCard, FileText, Bookmark, Quote, Download, Share2 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ebookRiskManagementPink from "@/assets/ebook-risk-management-pink.png";
 
@@ -12,6 +12,12 @@ const Aprendizado = () => {
   const [citationValue, setCitationValue] = useState(0);
   const [yearValue, setYearValue] = useState(2024);
   const navigate = useNavigate();
+  
+  useEffect(() => {
+    if (activeTab === 'analises') {
+      navigate('/analises');
+    }
+  }, [activeTab, navigate]);
   
   return (
     <div className="flex h-screen overflow-hidden">
@@ -2764,15 +2770,7 @@ const Aprendizado = () => {
             </div>
           )}
 
-          {activeTab === 'analises' && (
-            <div className="text-center py-16">
-              <div className="w-20 h-20 bg-pastel-yellow rounded-full flex items-center justify-center mx-auto mb-4">
-                <i className="fas fa-chart-line text-3xl text-slate-700"></i>
-              </div>
-              <h3 className="text-xl font-semibold text-slate-800 mb-2">Análises</h3>
-              <p className="text-slate-600">Análises detalhadas do mercado financeiro</p>
-            </div>
-          )}
+          {activeTab === 'analises' && null}
 
           {activeTab === 'documentos' && (
             <div className="text-center py-16">
