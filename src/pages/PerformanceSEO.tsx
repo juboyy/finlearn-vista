@@ -227,13 +227,20 @@ const PerformanceSEO = () => {
                       innerRadius={40}
                       fill="#8884d8"
                       dataKey="value"
-                      label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
                     >
                       {categoryData.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={pieColors[index % pieColors.length]} />
                       ))}
                     </Pie>
-                    <Tooltip />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'white', 
+                        border: '1px solid #e5e7eb', 
+                        borderRadius: '8px', 
+                        fontSize: '12px',
+                        padding: '8px 12px'
+                      }} 
+                    />
                     <Legend verticalAlign="bottom" height={36} iconType="circle" wrapperStyle={{ fontSize: '10px' }} />
                   </PieChart>
                 </ResponsiveContainer>
@@ -326,13 +333,20 @@ const PerformanceSEO = () => {
                       outerRadius={100}
                       fill="#8884d8"
                       dataKey="value"
-                      label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                     >
                       {trafficData.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={pieColors[index % pieColors.length]} />
                       ))}
                     </Pie>
-                    <Tooltip />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'white', 
+                        border: '1px solid #e5e7eb', 
+                        borderRadius: '8px', 
+                        fontSize: '12px',
+                        padding: '8px 12px'
+                      }} 
+                    />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
@@ -429,13 +443,20 @@ const PerformanceSEO = () => {
                       outerRadius={80}
                       fill="#8884d8"
                       dataKey="value"
-                      label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                     >
                       {deviceData.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={pieColors[index % pieColors.length]} />
                       ))}
                     </Pie>
-                    <Tooltip />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'white', 
+                        border: '1px solid #e5e7eb', 
+                        borderRadius: '8px', 
+                        fontSize: '12px',
+                        padding: '8px 12px'
+                      }} 
+                    />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
