@@ -1,9 +1,12 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { Undo, Save, Send, Bell, Filter, Clock, Mail, Smartphone, Monitor, MessageSquare, Plus, X, Download, ChartLine, Newspaper, Book, Mic, MessageCircle } from "lucide-react";
+import { Undo, Save, Send, Bell, Filter, Clock, Mail, Smartphone, Monitor, MessageSquare, Plus, X, Download, ChartLine, Newspaper, Book, Mic, MessageCircle, ArrowLeft } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useNavigate } from "react-router-dom";
 
 export default function NewsletterSettings() {
+  const navigate = useNavigate();
+
   return (
     <div className="flex h-screen overflow-hidden bg-slate-50">
       <SidebarFix />
@@ -11,9 +14,17 @@ export default function NewsletterSettings() {
       <main className="flex-1 overflow-y-auto">
         <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
           <div className="px-8 py-4 flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-semibold text-slate-800">Configurações de Newsletter</h1>
-              <p className="text-sm text-slate-500 mt-1">Personalize sua experiência de recebimento e leitura de newsletters</p>
+            <div className="flex items-center gap-4">
+              <button 
+                onClick={() => navigate(-1)}
+                className="w-10 h-10 flex items-center justify-center rounded-lg bg-slate-100 hover:bg-slate-200 transition text-slate-700"
+              >
+                <ArrowLeft size={20} />
+              </button>
+              <div>
+                <h1 className="text-2xl font-semibold text-slate-800">Configurações de Newsletter</h1>
+                <p className="text-sm text-slate-500 mt-1">Personalize sua experiência de recebimento e leitura de newsletters</p>
+              </div>
             </div>
             <div className="flex items-center gap-3">
               <button className="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition">
