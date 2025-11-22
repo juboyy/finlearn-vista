@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Calendar as CalendarIcon, Clock, FileText, Folder, Filter, X, Video, Mic, FileBarChart, BookOpen, MonitorPlay, File, CreditCard, Zap, Bitcoin, Scale, Smartphone, ShieldCheck, Calculator, Laptop, Settings, Megaphone, User, ChevronDown, Mail, MessageSquare, MessageCircle, Image, Hash, Send } from "lucide-react";
+import { ArrowLeft, Calendar as CalendarIcon, Clock, FileText, Folder, Filter, X, Video, Mic, FileBarChart, BookOpen, MonitorPlay, File, CreditCard, Zap, Bitcoin, Scale, Smartphone, ShieldCheck, Calculator, Laptop, Settings, Megaphone, User, ChevronDown, Mail, MessageSquare, MessageCircle, Image, Hash, Send, DollarSign, Gift } from "lucide-react";
 import { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -95,7 +95,8 @@ export default function AgendarPublicacao() {
       authorId: "maria-silva",
       folder: "compliance",
       theme: "regulacao",
-      area: "compliance"
+      area: "compliance",
+      isPaid: false
     },
     {
       id: 2,
@@ -106,7 +107,8 @@ export default function AgendarPublicacao() {
       authorId: "joao-santos",
       folder: "market",
       theme: "pix",
-      area: "operacoes"
+      area: "operacoes",
+      isPaid: true
     },
     {
       id: 3,
@@ -117,7 +119,8 @@ export default function AgendarPublicacao() {
       authorId: "ana-costa",
       folder: "market",
       theme: "open-banking",
-      area: "tecnologia"
+      area: "tecnologia",
+      isPaid: true
     },
     {
       id: 4,
@@ -128,7 +131,8 @@ export default function AgendarPublicacao() {
       authorId: "pedro-oliveira",
       folder: "compliance",
       theme: "gestao-risco",
-      area: "compliance"
+      area: "compliance",
+      isPaid: true
     },
     {
       id: 5,
@@ -139,7 +143,8 @@ export default function AgendarPublicacao() {
       authorId: "carla-souza",
       folder: "guides",
       theme: "regulacao",
-      area: "juridico"
+      area: "juridico",
+      isPaid: false
     },
     {
       id: 6,
@@ -150,7 +155,8 @@ export default function AgendarPublicacao() {
       authorId: "roberto-lima",
       folder: "reports",
       theme: "open-banking",
-      area: "tecnologia"
+      area: "tecnologia",
+      isPaid: true
     },
     {
       id: 7,
@@ -161,7 +167,8 @@ export default function AgendarPublicacao() {
       authorId: "julia-mendes",
       folder: "guides",
       theme: "fintechs",
-      area: "tecnologia"
+      area: "tecnologia",
+      isPaid: false
     },
     {
       id: 8,
@@ -172,7 +179,8 @@ export default function AgendarPublicacao() {
       authorId: "carlos-silva",
       folder: "reports",
       theme: "pix",
-      area: "operacoes"
+      area: "operacoes",
+      isPaid: true
     },
     {
       id: 9,
@@ -183,7 +191,8 @@ export default function AgendarPublicacao() {
       authorId: "fernando-costa",
       folder: "compliance",
       theme: "regulacao",
-      area: "juridico"
+      area: "juridico",
+      isPaid: false
     },
     {
       id: 10,
@@ -194,7 +203,8 @@ export default function AgendarPublicacao() {
       authorId: "patricia-lima",
       folder: "reports",
       theme: "gestao-risco",
-      area: "contabilidade"
+      area: "contabilidade",
+      isPaid: true
     },
     {
       id: 11,
@@ -205,7 +215,8 @@ export default function AgendarPublicacao() {
       authorId: "ana-costa",
       folder: "market",
       theme: "open-banking",
-      area: "marketing"
+      area: "marketing",
+      isPaid: false
     },
     {
       id: 12,
@@ -216,7 +227,8 @@ export default function AgendarPublicacao() {
       authorId: "joao-santos",
       folder: "market",
       theme: "criptomoedas",
-      area: "tecnologia"
+      area: "tecnologia",
+      isPaid: true
     }
   ];
 
@@ -507,12 +519,33 @@ export default function AgendarPublicacao() {
                             {content.type} • {content.author} • {new Date(content.createdDate).toLocaleDateString('pt-BR')}
                           </p>
                         </div>
-                        <span
-                          className="text-xs px-2 py-1 rounded text-slate-700 flex-shrink-0"
-                          style={{ backgroundColor: '#E8E0C5' }}
-                        >
-                          {content.type}
-                        </span>
+                        <div className="flex items-center gap-2">
+                          <span
+                            className={`text-xs px-2 py-1 rounded flex items-center gap-1 ${
+                              content.isPaid 
+                                ? 'bg-amber-100 text-amber-700' 
+                                : 'bg-emerald-100 text-emerald-700'
+                            }`}
+                          >
+                            {content.isPaid ? (
+                              <>
+                                <DollarSign size={12} />
+                                Pago
+                              </>
+                            ) : (
+                              <>
+                                <Gift size={12} />
+                                Gratuito
+                              </>
+                            )}
+                          </span>
+                          <span
+                            className="text-xs px-2 py-1 rounded text-slate-700 flex-shrink-0"
+                            style={{ backgroundColor: '#E8E0C5' }}
+                          >
+                            {content.type}
+                          </span>
+                        </div>
                       </div>
                     </label>
                   </div>
