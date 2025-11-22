@@ -1,6 +1,7 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { MenutabbarFix } from "@/components/Dashboard/MenutabbarFix";
 import { HistoricoDocumentos } from "@/components/Dashboard/HistoricoDocumentos";
+import { RelatoriosPendentes } from "@/components/Dashboard/RelatoriosPendentes";
 import { Bell, Play, Clock, BookOpen, TrendingUp, Headphones, Calendar, Users, MessageCircle, Star, BookMarked, Video, Award, Heart, CheckCircle, PlayCircle, Trophy, ChartLine, Shield, Bitcoin, Gavel, PieChart, Repeat, Globe, Leaf, Plus, BookOpenCheck, CreditCard, FileText, Bookmark, Quote, Download, Share2, Bot, Eye, Percent, DollarSign, Lightbulb, AlertTriangle, Coins, Mic, Search, ChevronLeft, ChevronRight, Circle } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -3340,6 +3341,8 @@ const Aprendizado = () => {
             </div>}
 
           {activeTab === 'analises'}
+
+          {activeTab === 'relatorios' && <RelatoriosPendentes />}
 
           {activeTab === 'documentos' && !showHistorico && (
             <div className="text-center py-16">
