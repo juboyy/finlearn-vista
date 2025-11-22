@@ -357,7 +357,11 @@ export default function Newsletter() {
           <section className="mb-8">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-lg font-semibold text-slate-800">Suas Assinaturas</h2>
-              <button className="px-4 py-2 rounded-lg text-sm font-medium text-slate-700 hover:opacity-80 transition" style={{ backgroundColor: 'hsl(var(--pastel-green) / 0.5)' }}>
+              <button 
+                onClick={() => navigate('/minhas-assinaturas')}
+                className="px-4 py-2 rounded-lg text-sm font-medium text-slate-700 hover:opacity-80 transition" 
+                style={{ backgroundColor: 'hsl(var(--pastel-green) / 0.5)' }}
+              >
                 <SlidersHorizontal className="inline mr-2" size={16} />
                 Gerenciar
               </button>
