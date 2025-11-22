@@ -31,7 +31,10 @@ export default function Configuracoes() {
 
     const targetRef = refs[section as keyof typeof refs];
     if (targetRef?.current) {
-      targetRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const titleElement = targetRef.current.querySelector('h2');
+      if (titleElement) {
+        titleElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
   };
 
