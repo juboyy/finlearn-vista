@@ -53,6 +53,7 @@ import EvolucaoCartaoCredito from "./pages/EvolucaoCartaoCredito";
 import LerDepois from "./pages/LerDepois";
 import Newsletter from "./pages/Newsletter";
 import NewsletterAnalytics from "./pages/NewsletterAnalytics";
+import NewsletterSettings from "./pages/NewsletterSettings";
 
 import NotFound from "./pages/NotFound";
 
@@ -121,6 +122,7 @@ const App = () => {
             <Route path="/ler-depois" element={<LerDepois />} />
             <Route path="/newsletter" element={<Newsletter />} />
             <Route path="/newsletter-analytics" element={<NewsletterAnalytics />} />
+            <Route path="/newsletter-settings" element={<NewsletterSettings />} />
           
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
