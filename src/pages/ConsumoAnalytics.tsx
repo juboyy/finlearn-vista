@@ -483,48 +483,48 @@ const ConsumoAnalytics = () => {
                   </div>
                 </div>
               </div>
-              <div className="h-[360px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart 
-                    data={metasPorCategoriaData} 
-                    layout="horizontal"
-                    margin={{ top: 20, right: 40, left: 10, bottom: 20 }}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                    <XAxis 
-                      type="number" 
-                      tick={{ fill: '#6b7280', fontSize: 12 }} 
-                    />
-                    <YAxis 
-                      dataKey="categoria" 
-                      type="category" 
-                      tick={{ fill: '#6b7280', fontSize: 12 }} 
-                      width={80}
-                    />
-                    <Tooltip 
-                      contentStyle={{ 
-                        backgroundColor: 'white', 
-                        border: '1px solid #e5e7eb', 
-                        borderRadius: '8px', 
-                        fontSize: '13px',
-                        padding: '10px'
-                      }}
-                    />
-                    <Legend 
-                      wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }}
-                    />
-                    <Bar 
-                      dataKey="meta" 
-                      fill="#C9AF89" 
-                      name="Meta"
-                    />
-                    <Bar 
-                      dataKey="realizado" 
-                      fill="#8AAACF" 
-                      name="Realizado"
-                    />
-                  </BarChart>
-                </ResponsiveContainer>
+              <div className="space-y-4">
+                {metasPorCategoriaData.map((item, index) => (
+                  <div key={index} className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-slate-700">{item.categoria}</span>
+                      <div className="flex items-center gap-4 text-xs text-slate-500">
+                        <span>Meta: {item.meta}</span>
+                        <span>Realizado: {item.realizado}</span>
+                      </div>
+                    </div>
+                    <div className="space-y-1.5">
+                      <div className="flex items-center gap-2">
+                        <div className="w-16 text-xs text-slate-500">Meta</div>
+                        <div className="flex-1 bg-slate-100 rounded-full h-7 relative overflow-hidden">
+                          <div 
+                            className="h-full rounded-full flex items-center justify-end pr-3 text-xs font-medium text-slate-700 transition-all duration-500"
+                            style={{ 
+                              width: `${(item.meta / 25) * 100}%`,
+                              backgroundColor: '#C9AF89'
+                            }}
+                          >
+                            {item.meta}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-16 text-xs text-slate-500">Realizado</div>
+                        <div className="flex-1 bg-slate-100 rounded-full h-7 relative overflow-hidden">
+                          <div 
+                            className="h-full rounded-full flex items-center justify-end pr-3 text-xs font-medium text-slate-700 transition-all duration-500"
+                            style={{ 
+                              width: `${(item.realizado / 25) * 100}%`,
+                              backgroundColor: '#8AAACF'
+                            }}
+                          >
+                            {item.realizado}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </section>
           </div>
