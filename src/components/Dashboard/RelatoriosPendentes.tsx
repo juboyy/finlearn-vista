@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Search, Bell, Plus, Filter, Layers, Unlock, Crown, Bookmark, FileText, CheckCircle, Building, ThumbsUp, MoreHorizontal, FileCheck, Star } from "lucide-react";
 import { Circle } from "lucide-react";
+import relatorioAnaliseDados from "@/assets/relatorio-analise-dados.png";
 
 export const RelatoriosPendentes = () => {
   const [viewType, setViewType] = useState("list");
@@ -252,6 +253,18 @@ export const RelatoriosPendentes = () => {
       accessType: "premium",
       rating: 4.9,
       image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/893c0ad640-4d33c43cd08bfc73ce6a.png",
+    },
+    {
+      id: 7,
+      title: "Business Intelligence e Análise de Dados Financeiros",
+      category: "Análise Setorial",
+      categoryColor: "bg-[#7FA8C9]",
+      publisher: "BCG",
+      pages: 164,
+      price: "R$ 329",
+      accessType: "premium",
+      rating: 4.8,
+      image: relatorioAnaliseDados,
     },
   ];
 
