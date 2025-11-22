@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Plus, Search, Filter, Mail, Calendar, Eye, CheckCircle, XCircle, Percent, Users, TrendingUp, Send, Edit, Trash2, MoreVertical, FileText, Clock } from "lucide-react";
+import { ArrowLeft, Plus, Search, Filter, Mail, Calendar, Eye, CheckCircle, XCircle, Percent, Users, TrendingUp, Send, Edit, Trash2, MoreVertical, FileText, Clock, DollarSign } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -251,6 +251,7 @@ export default function CriarNewsletter() {
                   className="px-4 py-2 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
                   style={{ backgroundColor: '#C5E8D4' }}
                 >
+                  <DollarSign size={18} className="inline mr-2" />
                   Financeiro
                 </button>
                 <button
