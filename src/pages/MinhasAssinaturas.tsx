@@ -160,7 +160,7 @@ export default function MinhasAssinaturas() {
       frequency: "Quinzenal",
       price: "Gratuita",
       isPaid: false,
-      status: "Ativa",
+      status: "Cancelada",
       renewal: "—",
       daysUntilRenewal: "",
       icon: Leaf
@@ -380,7 +380,11 @@ export default function MinhasAssinaturas() {
                           {sub.isPaid && <p className="text-xs text-slate-500">/mês</p>}
                         </td>
                         <td className="px-6 py-4">
-                          <span className="px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-medium">
+                          <span className={`px-2 py-1 rounded text-xs font-medium ${
+                            sub.status === "Cancelada" 
+                              ? "bg-red-100 text-red-700" 
+                              : "bg-green-100 text-green-700"
+                          }`}>
                             {sub.status}
                           </span>
                         </td>
