@@ -441,9 +441,9 @@ export const RelatoriosPendentes = () => {
         <section className="bg-white rounded-xl border border-slate-200 overflow-hidden">
           <div className="border-b border-slate-200 bg-slate-50">
             <div className="grid grid-cols-12 gap-4 px-6 py-3 text-xs font-medium text-slate-600 uppercase tracking-wider">
-              <div className="col-span-6">Relatório</div>
+              <div className="col-span-5">Relatório</div>
               <div className="col-span-2">Categoria</div>
-              <div className="col-span-1">Páginas</div>
+              <div className="col-span-2">Páginas</div>
               <div className="col-span-2">Acesso</div>
               <div className="col-span-1 text-right">Ações</div>
             </div>
@@ -455,7 +455,7 @@ export const RelatoriosPendentes = () => {
               className="border-b border-slate-100 hover:bg-slate-50 transition-colors cursor-pointer"
             >
               <div className="grid grid-cols-12 gap-4 px-6 py-4 items-center">
-                <div className="col-span-6 flex items-center gap-4">
+                <div className="col-span-5 flex items-center gap-4">
                   <div className={`w-10 h-10 ${report.iconColor} rounded-lg flex items-center justify-center flex-shrink-0`}>
                     <FileText className="text-slate-600 w-5 h-5" />
                   </div>
@@ -480,7 +480,7 @@ export const RelatoriosPendentes = () => {
                     {report.category}
                   </span>
                 </div>
-                <div className="col-span-1">
+                <div className="col-span-2">
                   <div className="flex items-center gap-2">
                     <i className="fas fa-file-pdf text-slate-400 text-sm"></i>
                     <span className="text-sm font-medium text-slate-700">{report.pages}</span>
