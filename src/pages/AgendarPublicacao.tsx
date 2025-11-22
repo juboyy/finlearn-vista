@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Calendar as CalendarIcon, Clock, FileText, Folder, Filter, X, Video, Mic, FileBarChart, BookOpen, MonitorPlay, File, CreditCard, Zap, Bitcoin, Scale, Smartphone, ShieldCheck, Calculator, Laptop, Settings, Megaphone, User, ChevronDown } from "lucide-react";
+import { ArrowLeft, Calendar as CalendarIcon, Clock, FileText, Folder, Filter, X, Video, Mic, FileBarChart, BookOpen, MonitorPlay, File, CreditCard, Zap, Bitcoin, Scale, Smartphone, ShieldCheck, Calculator, Laptop, Settings, Megaphone, User, ChevronDown, Mail, MessageSquare, MessageCircle, Image } from "lucide-react";
 import { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -24,6 +24,15 @@ export default function AgendarPublicacao() {
   const [selectedTheme, setSelectedTheme] = useState<string>("all");
   const [selectedArea, setSelectedArea] = useState<string>("all");
   const [selectedAuthor, setSelectedAuthor] = useState<string>("all");
+  const [selectedChannels, setSelectedChannels] = useState<string[]>(["email"]);
+
+  const deliveryChannels = [
+    { id: "email", label: "Email", icon: Mail, color: "#B8D4E8" },
+    { id: "sms", label: "SMS", icon: MessageSquare, color: "#C5E8D4" },
+    { id: "whatsapp", label: "WhatsApp", icon: MessageCircle, color: "#D4C5E8" },
+    { id: "rcs", label: "RCS", icon: Smartphone, color: "#E8E0C5" },
+    { id: "mms", label: "MMS", icon: Image, color: "#E8C5D4" },
+  ];
 
   const folders = [
     { id: "all", name: "Todos os Materiais", count: 8, color: "#B8D4E8" },
@@ -229,14 +238,15 @@ export default function AgendarPublicacao() {
   };
 
   const handleScheduleSubmit = () => {
-    if (!scheduleDate || selectedContent.length === 0) {
+    if (!scheduleDate || selectedContent.length === 0 || selectedChannels.length === 0) {
       return;
     }
     console.log("Agendamento:", {
       newsletterId,
       date: scheduleDate,
       time: scheduleTime,
-      content: selectedContent
+      content: selectedContent,
+      channels: selectedChannels
     });
     navigate('/criar-newsletter');
   };
@@ -314,6 +324,45 @@ export default function AgendarPublicacao() {
                   />
                 </div>
               </div>
+            </div>
+
+            {/* Delivery Channels Selection */}
+            <div className="bg-white rounded-xl border border-slate-200 p-6">
+              <h2 className="text-lg font-semibold text-slate-800 mb-4">Canais de Envio</h2>
+              <p className="text-sm text-slate-500 mb-4">Selecione os canais pelos quais deseja enviar o conteúdo</p>
+              <div className="grid grid-cols-5 gap-3">
+                {deliveryChannels.map((channel) => {
+                  const Icon = channel.icon;
+                  const isSelected = selectedChannels.includes(channel.id);
+                  
+                  return (
+                    <button
+                      key={channel.id}
+                      onClick={() => {
+                        if (isSelected) {
+                          setSelectedChannels(selectedChannels.filter(id => id !== channel.id));
+                        } else {
+                          setSelectedChannels([...selectedChannels, channel.id]);
+                        }
+                      }}
+                      className={`p-4 rounded-lg border-2 transition-all flex flex-col items-center gap-2 ${
+                        isSelected 
+                          ? 'border-slate-400 shadow-sm' 
+                          : 'border-slate-200 hover:border-slate-300'
+                      }`}
+                      style={isSelected ? { backgroundColor: channel.color } : {}}
+                    >
+                      <Icon size={24} className={isSelected ? 'text-slate-700' : 'text-slate-400'} />
+                      <span className={`text-sm font-medium ${isSelected ? 'text-slate-800' : 'text-slate-600'}`}>
+                        {channel.label}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+              {selectedChannels.length === 0 && (
+                <p className="text-sm text-orange-600 mt-3">Selecione pelo menos um canal de envio</p>
+              )}
             </div>
 
             {/* Content Selection */}
@@ -499,6 +548,13 @@ export default function AgendarPublicacao() {
                       <strong>Data de envio:</strong> {format(scheduleDate, "PPP", { locale: ptBR })} às {scheduleTime}
                     </p>
                   )}
+                  {selectedChannels.length > 0 && (
+                    <p>
+                      <strong>Canais de envio:</strong> {selectedChannels.map(id => 
+                        deliveryChannels.find(ch => ch.id === id)?.label
+                      ).join(", ")}
+                    </p>
+                  )}
                   {selectedContent.length === 0 && (
                     <p className="text-slate-600 italic">Nenhum conteúdo selecionado ainda</p>
                   )}
@@ -516,7 +572,7 @@ export default function AgendarPublicacao() {
                 Cancelar
               </Button>
               <Button
-                disabled={!scheduleDate || selectedContent.length === 0}
+                disabled={!scheduleDate || selectedContent.length === 0 || selectedChannels.length === 0}
                 onClick={handleScheduleSubmit}
                 className="text-slate-700 hover:opacity-90 px-6"
                 style={{ backgroundColor: '#C5E8D4' }}
