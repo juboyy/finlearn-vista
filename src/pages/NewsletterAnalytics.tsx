@@ -1,7 +1,8 @@
 // Newsletter Analytics Page
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { BarChart3, Download, MailOpen, Percent, Clock, CheckCheck, Heart, ChartLine, CreditCard, Scale, Globe, Lightbulb, Trophy, Flame, Bookmark } from "lucide-react";
+import { BarChart3, Download, MailOpen, Percent, Clock, CheckCheck, Heart, ChartLine, CreditCard, Scale, Globe, Lightbulb, Trophy, Flame, Bookmark, ArrowLeft } from "lucide-react";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 declare global {
   interface Window {
@@ -10,6 +11,8 @@ declare global {
 }
 
 export default function NewsletterAnalytics() {
+  const navigate = useNavigate();
+  
   useEffect(() => {
     if (!window.Plotly) {
       const script = document.createElement('script');
@@ -74,7 +77,7 @@ export default function NewsletterAnalytics() {
         plot_bgcolor: 'rgba(0,0,0,0)'
       }, { responsive: true, displayModeBar: false });
 
-      // Category Chart
+      // Category Chart - Donut with hover only
       const categoryData = [{
         type: 'pie',
         labels: ['Economia Global', 'Mercado de Capitais', 'Payments', 'Compliance', 'Banking', 'Inovação'],
@@ -82,8 +85,9 @@ export default function NewsletterAnalytics() {
         marker: {
           colors: ['#E8E0C5', '#B8D4E8', '#D4C5E8', '#C5E8D4', '#E8D4C5', '#E8C5D8']
         },
-        textinfo: 'label+percent',
-        textposition: 'inside'
+        textinfo: 'none',
+        hovertemplate: '<b>%{label}</b><br>%{value} newsletters<br>%{percent}<extra></extra>',
+        hole: 0.4
       }];
 
       window.Plotly.newPlot('category-chart', categoryData, {
@@ -225,9 +229,17 @@ export default function NewsletterAnalytics() {
       <main className="flex-1 overflow-y-auto">
         <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
           <div className="px-8 py-4 flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-semibold text-slate-800">Newsletter Analytics</h1>
-              <p className="text-sm text-slate-500 mt-1">Análise completa do seu comportamento de leitura e engajamento</p>
+            <div className="flex items-center gap-4">
+              <button 
+                onClick={() => navigate('/newsletter')}
+                className="w-10 h-10 border border-slate-200 text-slate-700 rounded-lg font-medium hover:bg-slate-50 transition flex items-center justify-center"
+              >
+                <ArrowLeft size={18} />
+              </button>
+              <div>
+                <h1 className="text-2xl font-semibold text-slate-800">Newsletter Analytics</h1>
+                <p className="text-sm text-slate-500 mt-1">Análise completa do seu comportamento de leitura e engajamento</p>
+              </div>
             </div>
             <div className="flex items-center gap-3">
               <select className="text-sm text-slate-600 border border-slate-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pastel-blue">
