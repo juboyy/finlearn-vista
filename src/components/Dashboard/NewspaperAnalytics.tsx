@@ -285,12 +285,13 @@ export const NewspaperAnalytics = () => {
     ];
     
     const monthlyLayout = {
-      margin: { l: 40, r: 20, t: 20, b: 40 },
+      margin: { l: 50, r: 10, t: 10, b: 40 },
       xaxis: { gridcolor: '#f1f5f9' },
       yaxis: { gridcolor: '#f1f5f9', title: 'Artigos Lidos' },
       plot_bgcolor: '#ffffff',
       paper_bgcolor: '#ffffff',
-      barmode: 'group'
+      barmode: 'group',
+      autosize: true
     };
     
     Plotly.newPlot('monthly-comparison-chart', monthlyData, monthlyLayout, {displayModeBar: false});
