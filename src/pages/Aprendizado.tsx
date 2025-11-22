@@ -3,7 +3,6 @@ import { MenutabbarFix } from "@/components/Dashboard/MenutabbarFix";
 import { HistoricoDocumentos } from "@/components/Dashboard/HistoricoDocumentos";
 import { RelatoriosPendentes } from "@/components/Dashboard/RelatoriosPendentes";
 import { NewspapersNaoLidas } from "@/components/Dashboard/NewspapersNaoLidas";
-import { NewspaperAnalytics } from "@/components/Dashboard/NewspaperAnalytics";
 import { Bell, Play, Clock, BookOpen, TrendingUp, Headphones, Calendar, Users, MessageCircle, Star, BookMarked, Video, Award, Heart, CheckCircle, PlayCircle, Trophy, ChartLine, Shield, Bitcoin, Gavel, PieChart, Repeat, Globe, Leaf, Plus, BookOpenCheck, CreditCard, FileText, Bookmark, Quote, Download, Share2, Bot, Eye, Percent, DollarSign, Lightbulb, AlertTriangle, Coins, Mic, Search, ChevronLeft, ChevronRight, Circle } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -166,7 +165,6 @@ const Aprendizado = () => {
   const [videoCallOpen, setVideoCallOpen] = useState(false);
   const [selectedAgent, setSelectedAgent] = useState<{ name: string; avatar: string } | null>(null);
   const [showHistorico, setShowHistorico] = useState(false);
-  const [showAnalytics, setShowAnalytics] = useState(false);
   const navigate = useNavigate();
 
   const handleVideoCall = (agentName: string, agentAvatar: string) => {
@@ -367,18 +365,10 @@ const Aprendizado = () => {
           setActiveTab={(tab) => {
             setActiveTab(tab);
             setShowHistorico(false);
-            setShowAnalytics(false);
           }}
           onHistoricoClick={() => {
             if (activeTab === 'documentos') {
               setShowHistorico(!showHistorico);
-              setShowAnalytics(false);
-            }
-          }}
-          onAnalyticsClick={() => {
-            if (activeTab === 'documentos') {
-              setShowAnalytics(!showAnalytics);
-              setShowHistorico(false);
             }
           }}
         />
@@ -4624,11 +4614,9 @@ const Aprendizado = () => {
           </div>
         ) : null}
 
-        {activeTab === 'documentos' && showAnalytics && <NewspaperAnalytics />}
+        {activeTab === 'documentos' && !showHistorico && <NewspapersNaoLidas />}
 
-        {activeTab === 'documentos' && !showHistorico && !showAnalytics && <NewspapersNaoLidas />}
-
-        {activeTab === 'documentos' && showHistorico && !showAnalytics && <HistoricoDocumentos />}
+        {activeTab === 'documentos' && showHistorico && <HistoricoDocumentos />}
       </main>
 
       {selectedAgent && (

@@ -5,13 +5,11 @@ interface MenutabbarFixProps {
   activeTab: TabType;
   setActiveTab: (tab: TabType) => void;
   onHistoricoClick?: () => void;
-  onAnalyticsClick?: () => void;
 }
 export const MenutabbarFix = ({
   activeTab,
   setActiveTab,
-  onHistoricoClick,
-  onAnalyticsClick
+  onHistoricoClick
 }: MenutabbarFixProps) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const scroll = (direction: 'left' | 'right') => {
@@ -96,10 +94,7 @@ export const MenutabbarFix = ({
           <i className="fas fa-filter"></i>
           <span>Filtro Avançado</span>
         </button>
-        <button 
-          onClick={onAnalyticsClick}
-          className="px-5 py-3 bg-pastel-green text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2 whitespace-nowrap"
-        >
+        <button className="px-5 py-3 bg-pastel-green text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2 whitespace-nowrap">
           <BarChart3 size={18} />
           <span>Analytics</span>
         </button>
