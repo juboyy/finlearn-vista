@@ -269,40 +269,85 @@ const PerformanceSEO = () => {
             ))}
           </section>
 
-          {/* Top Performing Articles */}
-          <section className="bg-white rounded-xl p-6 border border-slate-200 mb-8">
-            <h2 className="text-lg font-semibold text-slate-800 mb-6">Top 5 Artigos do Mês</h2>
-            <div className="space-y-4">
-              {[
-                { rank: 1, title: 'Tendências do Mercado de Capitais Brasileiro em 2024', views: '12.4K', clicks: '2.1K', seo: 85, geo: 80, position: '2.3', color: 'border-pastel-blue', bgColor: 'bg-pastel-blue' },
-                { rank: 2, title: 'Análise Fundamentalista: Guia Completo para Investidores', views: '10.8K', clicks: '1.9K', seo: 88, geo: 82, position: '1.8', color: 'border-pastel-green', bgColor: 'bg-pastel-green' },
-                { rank: 3, title: 'Regulamentação Financeira: Mudanças para 2024', views: '9.2K', clicks: '1.6K', seo: 81, geo: 77, position: '3.5', color: 'border-pastel-purple', bgColor: 'bg-pastel-purple' },
-                { rank: 4, title: 'Estratégias de Diversificação de Portfólio', views: '8.6K', clicks: '1.5K', seo: 79, geo: 75, position: '4.2', color: 'border-pastel-yellow', bgColor: 'bg-pastel-yellow' },
-                { rank: 5, title: 'Meios de Pagamento Digital: Evolução e Tendências', views: '7.9K', clicks: '1.3K', seo: 83, geo: 79, position: '3.8', color: 'border-pastel-pink', bgColor: 'bg-pastel-pink' }
-              ].map((article) => (
-                <div key={article.rank} className={`flex items-center justify-between p-4 bg-slate-50 rounded-lg border-l-4 ${article.color}`}>
-                  <div className="flex items-center gap-4 flex-1">
-                    <div className={`w-12 h-12 ${article.bgColor} rounded-lg flex items-center justify-center text-lg font-bold text-[hsl(var(--pastel-gray-dark))]`}>
-                      {article.rank}
+          {/* Top Performing Articles and Trending Topics */}
+          <div className="grid grid-cols-2 gap-6 mb-8">
+            <section className="bg-white rounded-xl p-6 border border-slate-200">
+              <h2 className="text-lg font-semibold text-slate-800 mb-6">Top 5 Artigos do Mês</h2>
+              <div className="space-y-4">
+                {[
+                  { rank: 1, title: 'Tendências do Mercado de Capitais Brasileiro em 2024', views: '12.4K', clicks: '2.1K', seo: 85, geo: 80, position: '2.3', bgColor: 'bg-pastel-blue' },
+                  { rank: 2, title: 'Análise Fundamentalista: Guia Completo para Investidores', views: '10.8K', clicks: '1.9K', seo: 88, geo: 82, position: '1.8', bgColor: 'bg-pastel-green' },
+                  { rank: 3, title: 'Regulamentação Financeira: Mudanças para 2024', views: '9.2K', clicks: '1.6K', seo: 81, geo: 77, position: '3.5', bgColor: 'bg-pastel-purple' },
+                  { rank: 4, title: 'Estratégias de Diversificação de Portfólio', views: '8.6K', clicks: '1.5K', seo: 79, geo: 75, position: '4.2', bgColor: 'bg-pastel-yellow' },
+                  { rank: 5, title: 'Meios de Pagamento Digital: Evolução e Tendências', views: '7.9K', clicks: '1.3K', seo: 83, geo: 79, position: '3.8', bgColor: 'bg-pastel-pink' }
+                ].map((article) => (
+                  <div key={article.rank} className="flex items-center justify-between p-4 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors">
+                    <div className="flex items-center gap-4 flex-1">
+                      <div className={`w-12 h-12 ${article.bgColor} rounded-lg flex items-center justify-center text-lg font-bold text-[hsl(var(--pastel-gray-dark))]`}>
+                        {article.rank}
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-sm font-semibold text-slate-800 mb-1">{article.title}</h3>
+                        <div className="flex items-center gap-4 text-xs text-slate-600">
+                          <span><i className="fas fa-eye mr-1"></i>{article.views} visualizações</span>
+                          <span><i className="fas fa-mouse-pointer mr-1"></i>{article.clicks} cliques</span>
+                          <span><i className="fas fa-trophy mr-1"></i>SEO: {article.seo}</span>
+                          <span><i className="fas fa-map-marker-alt mr-1"></i>GEO: {article.geo}</span>
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <h3 className="text-sm font-semibold text-slate-800 mb-1">{article.title}</h3>
-                      <div className="flex items-center gap-4 text-xs text-slate-600">
-                        <span><i className="fas fa-eye mr-1"></i>{article.views} visualizações</span>
-                        <span><i className="fas fa-mouse-pointer mr-1"></i>{article.clicks} cliques</span>
-                        <span><i className="fas fa-trophy mr-1"></i>SEO: {article.seo}</span>
-                        <span><i className="fas fa-map-marker-alt mr-1"></i>GEO: {article.geo}</span>
+                    <div className="text-right">
+                      <div className="text-xl font-bold text-slate-800">{article.position}</div>
+                      <div className="text-xs text-slate-500">Posição</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section className="bg-white rounded-xl p-6 border border-slate-200">
+              <h2 className="text-lg font-semibold text-slate-800 mb-6">Categorias em Alta</h2>
+              <div className="space-y-5">
+                {[
+                  { category: 'Mercado de Capitais', growth: '+42%', articles: 18, avgPosition: 3.2, icon: 'fa-chart-line', color: 'bg-pastel-blue', textColor: 'text-blue-600' },
+                  { category: 'Compliance e Regulação', growth: '+38%', articles: 15, avgPosition: 2.8, icon: 'fa-balance-scale', color: 'bg-pastel-purple', textColor: 'text-purple-600' },
+                  { category: 'Open Finance', growth: '+35%', articles: 12, avgPosition: 3.5, icon: 'fa-coins', color: 'bg-pastel-green', textColor: 'text-green-600' },
+                  { category: 'Meios de Pagamento', growth: '+28%', articles: 10, avgPosition: 4.1, icon: 'fa-credit-card', color: 'bg-pastel-yellow', textColor: 'text-yellow-600' },
+                  { category: 'Educação Financeira', growth: '+22%', articles: 8, avgPosition: 4.8, icon: 'fa-graduation-cap', color: 'bg-pastel-pink', textColor: 'text-pink-600' }
+                ].map((cat, idx) => (
+                  <div key={idx} className="p-4 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors">
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center gap-3">
+                        <div className={`w-10 h-10 ${cat.color} rounded-lg flex items-center justify-center`}>
+                          <i className={`fas ${cat.icon} text-[hsl(var(--pastel-gray-dark))]`}></i>
+                        </div>
+                        <div>
+                          <h3 className="text-sm font-semibold text-slate-800">{cat.category}</h3>
+                          <p className="text-xs text-slate-500">{cat.articles} artigos publicados</p>
+                        </div>
+                      </div>
+                      <span className={`text-xs font-bold ${cat.textColor} bg-${cat.textColor.split('-')[1]}-50 px-2 py-1 rounded`}>
+                        {cat.growth}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-4 text-slate-600">
+                        <span><i className="fas fa-ranking-star mr-1"></i>Pos. média: {cat.avgPosition}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <div className="w-16 bg-slate-200 rounded-full h-1.5">
+                          <div 
+                            className={`${cat.color} h-1.5 rounded-full`} 
+                            style={{ width: `${100 - (cat.avgPosition / 10) * 100}%` }}
+                          ></div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-xl font-bold text-slate-800">{article.position}</div>
-                    <div className="text-xs text-slate-500">Posição</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
+                ))}
+              </div>
+            </section>
+          </div>
 
           {/* Keywords and Traffic */}
           <div className="grid grid-cols-2 gap-6 mb-8">
