@@ -58,6 +58,7 @@ import RecursosAdicionais from "./pages/RecursosAdicionais";
 import Analytics from "./pages/Analytics";
 import PerfilAnalytics from "./pages/PerfilAnalytics";
 import ConsumoAnalytics from "./pages/ConsumoAnalytics";
+import PerformanceSEO from "./pages/PerformanceSEO";
 
 import NotFound from "./pages/NotFound";
 
@@ -131,6 +132,7 @@ const App = () => {
             <Route path="/analytics" element={<Analytics />} />
             <Route path="/perfil-analytics" element={<PerfilAnalytics />} />
             <Route path="/consumo-analytics" element={<ConsumoAnalytics />} />
+            <Route path="/performance-seo" element={<PerformanceSEO />} />
           
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
