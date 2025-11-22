@@ -289,18 +289,22 @@ export default function Agentes() {
                     O que vamos fazer hoje?
                   </label>
                   <div className="relative">
-                    <Input
-                      type="text"
+                    <textarea
                       placeholder="Digite sua pergunta ou objetivo..."
                       value={promptText}
                       onChange={(e) => setPromptText(e.target.value)}
-                      onKeyDown={(e) => e.key === 'Enter' && handleStartChat()}
-                      className="pr-12"
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                          e.preventDefault();
+                          handleStartChat();
+                        }
+                      }}
+                      className="w-full min-h-[140px] p-4 pr-14 bg-background border border-border rounded-lg text-sm resize-none focus:outline-none focus:ring-2 focus:ring-[hsl(206,35%,75%)]"
                     />
                     <button
                       onClick={handleStartChat}
                       disabled={!selectedAgent || !promptText}
-                      className={`absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-lg transition ${
+                      className={`absolute right-3 bottom-3 p-2 rounded-lg transition ${
                         selectedAgent && promptText
                           ? 'bg-[hsl(206,35%,75%)] text-[hsl(220,15%,30%)] hover:bg-[hsl(206,35%,65%)]'
                           : 'bg-muted text-muted-foreground cursor-not-allowed'
@@ -310,7 +314,7 @@ export default function Agentes() {
                     </button>
                   </div>
                   <p className="text-xs text-muted-foreground mt-2">
-                    Pressione Enter ou clique no ícone para iniciar a conversa
+                    Pressione Shift + Enter para nova linha ou Enter para iniciar
                   </p>
                 </div>
 
