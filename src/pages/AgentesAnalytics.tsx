@@ -87,7 +87,7 @@ const AgentesAnalytics = () => {
               <div className="flex items-center gap-4">
                 <button
                   onClick={() => navigate('/analytics')}
-                  className="w-10 h-10 rounded-lg border border-slate-200 bg-white flex items-center justify-center text-[hsl(var(--pastel-gray-dark))] hover:bg-slate-50 hover:text-slate-700 transition-colors shadow-sm"
+                  className="w-10 h-10 rounded-lg border border-slate-200 bg-white flex items-center justify-center text-slate-600 hover:bg-slate-50 hover:text-slate-700 transition-colors shadow-sm"
                 >
                   <i className="fa-solid fa-arrow-left"></i>
                 </button>
