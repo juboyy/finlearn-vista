@@ -368,8 +368,8 @@ export const HistoricoDocumentos = () => {
             <div className="grid grid-cols-12 gap-4 px-6 py-3 text-xs font-medium text-slate-600 uppercase tracking-wider">
               <div className="col-span-5">Artigo</div>
               <div className="col-span-2">Categoria</div>
-              <div className="col-span-2">Lido em</div>
               <div className="col-span-2">Fonte</div>
+              <div className="col-span-2">Lido em</div>
               <div className="col-span-1 text-right">Ações</div>
             </div>
           </div>
@@ -408,16 +408,16 @@ export const HistoricoDocumentos = () => {
                   </span>
                 </div>
                 <div className="col-span-2">
-                  <div className="text-sm text-slate-700">{article.readDate}</div>
-                  <div className="text-xs text-slate-500">{article.readAgo}</div>
-                </div>
-                <div className="col-span-2">
                   <div className="flex items-center gap-2">
                     <div className="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center">
                       <Globe className="text-slate-600 w-3 h-3" />
                     </div>
                     <span className="text-sm text-slate-700">{article.source}</span>
                   </div>
+                </div>
+                <div className="col-span-2">
+                  <div className="text-sm text-slate-700">{article.readDate}</div>
+                  <div className="text-xs text-slate-500">{article.readAgo}</div>
                 </div>
                 <div className="col-span-1 flex items-center justify-end gap-2">
                   <button className={`p-2 transition-colors ${article.saved ? "text-yellow-600 hover:text-yellow-700" : "text-slate-400 hover:text-yellow-600"}`}>
