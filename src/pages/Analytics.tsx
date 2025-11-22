@@ -73,7 +73,7 @@ const Analytics = () => {
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
               {[
                 { icon: 'fa-robot', label: 'AI Agents', color: 'bg-pastel-purple', path: null },
-                { icon: 'fa-chart-area', label: 'Consumo', color: 'bg-pastel-green', path: null },
+                { icon: 'fa-chart-area', label: 'Consumo', color: 'bg-pastel-green', path: '/consumo-analytics' },
                 { icon: 'fa-gauge-high', label: 'Performance', color: 'bg-pastel-blue', path: null },
                 { icon: 'fa-file-lines', label: 'Conteúdo', color: 'bg-pastel-peach', path: null },
                 { icon: 'fa-user-circle', label: 'Perfil', color: 'bg-pastel-pink', path: '/perfil-analytics' }
