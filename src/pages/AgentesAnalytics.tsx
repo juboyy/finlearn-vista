@@ -600,44 +600,55 @@ const AgentesAnalytics = () => {
             <h2 className="text-lg font-semibold text-slate-800 mb-6">Insights e Recomendações</h2>
             <div className="grid grid-cols-2 gap-6">
               <div>
-                <h3 className="text-sm font-medium text-slate-700 mb-4">Principais Insights</h3>
+                <h3 className="text-sm font-medium text-slate-700 mb-4 flex items-center gap-2">
+                  <div className="w-1 h-5 bg-slate-800 rounded-full"></div>
+                  Principais Insights
+                </h3>
                 <div className="space-y-3">
-                  <div className="p-4 rounded-lg bg-pastel-blue">
-                    <div className="flex items-start gap-3">
-                      <i className="fas fa-lightbulb text-slate-700 mt-1"></i>
-                      <div>
-                        <p className="text-sm font-medium text-slate-800 mb-1">Pico de uso às 14h</p>
-                        <p className="text-xs text-slate-600">Horário de maior demanda por análises de mercado</p>
+                  <div className="group p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-300 bg-white">
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                        <i className="fas fa-lightbulb text-slate-700 text-base"></i>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-slate-800 mb-1">Pico de uso às 14h</p>
+                        <p className="text-xs text-slate-600 leading-relaxed">Horário de maior demanda por análises de mercado</p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-lg bg-pastel-green">
-                    <div className="flex items-start gap-3">
-                      <i className="fas fa-chart-line text-slate-700 mt-1"></i>
-                      <div>
-                        <p className="text-sm font-medium text-slate-800 mb-1">Crescimento de 32%</p>
-                        <p className="text-xs text-slate-600">Aumento nas interações comparado ao mês anterior</p>
+                  <div className="group p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-300 bg-white">
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                        <i className="fas fa-chart-line text-slate-700 text-base"></i>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-slate-800 mb-1">Crescimento de 32%</p>
+                        <p className="text-xs text-slate-600 leading-relaxed">Aumento nas interações comparado ao mês anterior</p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-lg bg-pastel-purple">
-                    <div className="flex items-start gap-3">
-                      <i className="fas fa-star text-slate-700 mt-1"></i>
-                      <div>
-                        <p className="text-sm font-medium text-slate-800 mb-1">Alta satisfação</p>
-                        <p className="text-xs text-slate-600">96% dos usuários avaliam positivamente os agentes</p>
+                  <div className="group p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-300 bg-white">
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                        <i className="fas fa-star text-slate-700 text-base"></i>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-slate-800 mb-1">Alta satisfação</p>
+                        <p className="text-xs text-slate-600 leading-relaxed">96% dos usuários avaliam positivamente os agentes</p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-lg bg-pastel-yellow">
-                    <div className="flex items-start gap-3">
-                      <i className="fas fa-users text-slate-700 mt-1"></i>
-                      <div>
-                        <p className="text-sm font-medium text-slate-800 mb-1">Retenção elevada</p>
-                        <p className="text-xs text-slate-600">78% dos usuários retornam regularmente</p>
+                  <div className="group p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-300 bg-white">
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                        <i className="fas fa-users text-slate-700 text-base"></i>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-slate-800 mb-1">Retenção elevada</p>
+                        <p className="text-xs text-slate-600 leading-relaxed">78% dos usuários retornam regularmente</p>
                       </div>
                     </div>
                   </div>
@@ -645,44 +656,55 @@ const AgentesAnalytics = () => {
               </div>
 
               <div>
-                <h3 className="text-sm font-medium text-slate-700 mb-4">Recomendações</h3>
+                <h3 className="text-sm font-medium text-slate-700 mb-4 flex items-center gap-2">
+                  <div className="w-1 h-5 bg-slate-800 rounded-full"></div>
+                  Recomendações
+                </h3>
                 <div className="space-y-3">
-                  <div className="p-4 rounded-lg border border-pastel-blue bg-pastel-blue bg-opacity-20">
-                    <div className="flex items-start gap-3">
-                      <i className="fas fa-arrow-up text-slate-700 mt-1"></i>
-                      <div>
-                        <p className="text-sm font-medium text-slate-800 mb-1">Expandir capacidade</p>
-                        <p className="text-xs text-slate-600">Aumentar recursos no horário de pico para melhor performance</p>
+                  <div className="group p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-300 bg-gradient-to-br from-white to-slate-50/30">
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-lg bg-white border-2 border-slate-300 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:border-slate-400 transition-all duration-300">
+                        <i className="fas fa-arrow-up text-slate-700 text-base"></i>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-slate-800 mb-1">Expandir capacidade</p>
+                        <p className="text-xs text-slate-600 leading-relaxed">Aumentar recursos no horário de pico para melhor performance</p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-lg border border-pastel-green bg-pastel-green bg-opacity-20">
-                    <div className="flex items-start gap-3">
-                      <i className="fas fa-plus-circle text-slate-700 mt-1"></i>
-                      <div>
-                        <p className="text-sm font-medium text-slate-800 mb-1">Novo agente especializado</p>
-                        <p className="text-xs text-slate-600">Considere criar agente focado em fundos imobiliários</p>
+                  <div className="group p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-300 bg-gradient-to-br from-white to-slate-50/30">
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-lg bg-white border-2 border-slate-300 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:border-slate-400 transition-all duration-300">
+                        <i className="fas fa-plus-circle text-slate-700 text-base"></i>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-slate-800 mb-1">Novo agente especializado</p>
+                        <p className="text-xs text-slate-600 leading-relaxed">Considere criar agente focado em fundos imobiliários</p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-lg border border-pastel-purple bg-pastel-purple bg-opacity-20">
-                    <div className="flex items-start gap-3">
-                      <i className="fas fa-graduation-cap text-slate-700 mt-1"></i>
-                      <div>
-                        <p className="text-sm font-medium text-slate-800 mb-1">Treinamento adicional</p>
-                        <p className="text-xs text-slate-600">Melhorar respostas sobre tributação e compliance</p>
+                  <div className="group p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-300 bg-gradient-to-br from-white to-slate-50/30">
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-lg bg-white border-2 border-slate-300 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:border-slate-400 transition-all duration-300">
+                        <i className="fas fa-graduation-cap text-slate-700 text-base"></i>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-slate-800 mb-1">Treinamento adicional</p>
+                        <p className="text-xs text-slate-600 leading-relaxed">Melhorar respostas sobre tributação e compliance</p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-lg border border-pastel-pink bg-pastel-pink bg-opacity-20">
-                    <div className="flex items-start gap-3">
-                      <i className="fas fa-video text-slate-700 mt-1"></i>
-                      <div>
-                        <p className="text-sm font-medium text-slate-800 mb-1">Integração de vídeo</p>
-                        <p className="text-xs text-slate-600">Implementar respostas com avatar para maior engajamento</p>
+                  <div className="group p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-300 bg-gradient-to-br from-white to-slate-50/30">
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-lg bg-white border-2 border-slate-300 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:border-slate-400 transition-all duration-300">
+                        <i className="fas fa-video text-slate-700 text-base"></i>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-slate-800 mb-1">Integração de vídeo</p>
+                        <p className="text-xs text-slate-600 leading-relaxed">Implementar respostas com avatar para maior engajamento</p>
                       </div>
                     </div>
                   </div>
