@@ -312,8 +312,7 @@ const PerformanceSEO = () => {
                   { category: 'Mercado de Capitais', growth: '+42%', articles: 18, avgPosition: 3.2, icon: 'fa-chart-line', color: 'bg-pastel-blue', textColor: 'text-blue-600' },
                   { category: 'Compliance e Regulação', growth: '+38%', articles: 15, avgPosition: 2.8, icon: 'fa-balance-scale', color: 'bg-pastel-purple', textColor: 'text-purple-600' },
                   { category: 'Open Finance', growth: '+35%', articles: 12, avgPosition: 3.5, icon: 'fa-coins', color: 'bg-pastel-green', textColor: 'text-green-600' },
-                  { category: 'Meios de Pagamento', growth: '+28%', articles: 10, avgPosition: 4.1, icon: 'fa-credit-card', color: 'bg-pastel-yellow', textColor: 'text-yellow-600' },
-                  { category: 'Educação Financeira', growth: '+22%', articles: 8, avgPosition: 4.8, icon: 'fa-graduation-cap', color: 'bg-pastel-pink', textColor: 'text-pink-600' }
+                  { category: 'Meios de Pagamento', growth: '+28%', articles: 10, avgPosition: 4.1, icon: 'fa-credit-card', color: 'bg-pastel-yellow', textColor: 'text-yellow-600' }
                 ].map((cat, idx) => (
                   <div key={idx} className="p-4 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors">
                     <div className="flex items-start justify-between mb-3">
