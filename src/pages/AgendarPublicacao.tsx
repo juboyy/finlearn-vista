@@ -523,9 +523,10 @@ export default function AgendarPublicacao() {
                           <span
                             className={`text-xs px-2 py-1 rounded flex items-center gap-1 ${
                               content.isPaid 
-                                ? 'bg-amber-100 text-amber-700' 
+                                ? 'text-slate-700' 
                                 : 'bg-emerald-100 text-emerald-700'
                             }`}
+                            style={content.isPaid ? { backgroundColor: '#E8D4C5' } : {}}
                           >
                             {content.isPaid ? (
                               <>
