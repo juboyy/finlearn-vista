@@ -723,41 +723,41 @@ export function CriarAgentePersonalidade() {
             <div className="mt-6 grid grid-cols-4 gap-4">
               <div className="bg-pastel-indigo rounded-lg p-4 border border-indigo-200">
                 <div className="flex items-center space-x-2 mb-2">
-                  <Eye className="text-indigo-600" size={16} />
-                  <span className="text-xs font-semibold text-foreground">
+                  <Eye className="text-slate-800" size={16} />
+                  <span className="text-xs font-semibold text-slate-800">
                     Formalidade
                   </span>
                 </div>
-                <p className="text-2xl font-bold text-indigo-600">{formality[0]}%</p>
-                <p className="text-xs text-muted-foreground mt-1">Profissional</p>
+                <p className="text-2xl font-bold text-slate-800">{formality[0]}%</p>
+                <p className="text-xs text-slate-800 mt-1">Profissional</p>
               </div>
               <div className="bg-pastel-blue rounded-lg p-4 border border-sky-200">
                 <div className="flex items-center space-x-2 mb-2">
-                  <Smile className="text-sky-600" size={16} />
-                  <span className="text-xs font-semibold text-foreground">Empatia</span>
+                  <Smile className="text-slate-800" size={16} />
+                  <span className="text-xs font-semibold text-slate-800">Empatia</span>
                 </div>
-                <p className="text-2xl font-bold text-sky-600">{empathy[0]}%</p>
-                <p className="text-xs text-muted-foreground mt-1">Alta empatia</p>
+                <p className="text-2xl font-bold text-slate-800">{empathy[0]}%</p>
+                <p className="text-xs text-slate-800 mt-1">Alta empatia</p>
               </div>
               <div className="bg-pastel-pink rounded-lg p-4 border border-pink-200">
                 <div className="flex items-center space-x-2 mb-2">
-                  <Hand className="text-pink-600" size={16} />
-                  <span className="text-xs font-semibold text-foreground">
+                  <Hand className="text-slate-800" size={16} />
+                  <span className="text-xs font-semibold text-slate-800">
                     Assertividade
                   </span>
                 </div>
-                <p className="text-2xl font-bold text-pink-600">{assertiveness[0]}%</p>
-                <p className="text-xs text-muted-foreground mt-1">Equilibrada</p>
+                <p className="text-2xl font-bold text-slate-800">{assertiveness[0]}%</p>
+                <p className="text-xs text-slate-800 mt-1">Equilibrada</p>
               </div>
               <div className="bg-pastel-green rounded-lg p-4 border border-emerald-200">
                 <div className="flex items-center space-x-2 mb-2">
-                  <Lightbulb className="text-emerald-600" size={16} />
-                  <span className="text-xs font-semibold text-foreground">
+                  <Lightbulb className="text-slate-800" size={16} />
+                  <span className="text-xs font-semibold text-slate-800">
                     Entusiasmo
                   </span>
                 </div>
-                <p className="text-2xl font-bold text-emerald-600">{enthusiasm[0]}%</p>
-                <p className="text-xs text-muted-foreground mt-1">Moderado</p>
+                <p className="text-2xl font-bold text-slate-800">{enthusiasm[0]}%</p>
+                <p className="text-xs text-slate-800 mt-1">Moderado</p>
               </div>
             </div>
           </div>
