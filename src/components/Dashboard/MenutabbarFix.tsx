@@ -1,7 +1,7 @@
 import { BarChart3, Grid3x3, List, ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef } from "react";
 
-type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'documentos' | 'estudos';
+type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'relatorios' | 'documentos' | 'estudos';
 
 interface MenutabbarFixProps {
   activeTab: TabType;
@@ -106,6 +106,15 @@ export const MenutabbarFix = ({ activeTab, setActiveTab }: MenutabbarFixProps) =
           >
             <i className="fas fa-chart-line"></i>
             <span>Análises</span>
+          </button>
+          <button 
+            onClick={() => setActiveTab('relatorios')}
+            className={`px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm ${
+              activeTab === 'relatorios' ? 'bg-pastel-blue text-slate-800' : 'text-slate-600 hover:bg-slate-100'
+            }`}
+          >
+            <i className="fas fa-file-invoice"></i>
+            <span>Relatórios</span>
           </button>
           <button 
             onClick={() => setActiveTab('documentos')}

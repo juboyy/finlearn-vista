@@ -3,7 +3,7 @@ import { MenutabbarFix } from "@/components/Dashboard/MenutabbarFix";
 import { useState } from "react";
 import { Bell } from "lucide-react";
 
-type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'documentos' | 'estudos';
+type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'relatorios' | 'documentos' | 'estudos';
 
 export default function Webinars() {
   const [activeTab, setActiveTab] = useState<TabType>('webinars');
