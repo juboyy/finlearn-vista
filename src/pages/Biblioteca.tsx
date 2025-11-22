@@ -753,6 +753,15 @@ export function Biblioteca() {
                   <p className="text-sm text-slate-500">Criar nota de texto</p>
                 </div>
               </button>
+              <button className="w-full flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-[#C9B88C] transition" style={{ '--hover-bg': 'rgba(201, 184, 140, 0.2)' } as any}>
+                <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#C9B88C' }}>
+                  <FileText className="h-6 w-6 text-slate-700" />
+                </div>
+                <div className="text-left">
+                  <p className="font-medium text-slate-800">Novo Documento</p>
+                  <p className="text-sm text-slate-500">Criar documento</p>
+                </div>
+              </button>
               <button className="w-full flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-[#D4C5E8] transition" style={{ '--hover-bg': 'rgba(212, 197, 232, 0.2)' } as any}>
                 <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#D4C5E8' }}>
                   <Mic className="h-6 w-6 text-slate-700" />
