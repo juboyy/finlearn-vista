@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, X, Podcast, GraduationCap, Bot, Book, Video, Newspaper, TrendingUp, FileText, FlaskConical } from "lucide-react";
+import { ArrowLeft, X, Podcast, GraduationCap, Bot, Book, Video, Newspaper, TrendingUp, FileText, FlaskConical, FileBarChart } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function CriarConteudo() {
@@ -238,10 +238,24 @@ export default function CriarConteudo() {
                     </div>
                   </button>
 
-                  {/* Option 8: Documentos */}
+                  {/* Option 8: Relatórios */}
+                  <button className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
+                    <div className="w-12 h-12 rounded-lg bg-[hsl(var(--pastel-blue))] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
+                      <FileBarChart className="w-6 h-6" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-sm font-bold text-foreground mb-0.5">Relatórios</h3>
+                      <p className="text-xs text-muted-foreground">Crie relatórios detalhados e análises completas.</p>
+                    </div>
+                    <div className="text-muted-foreground/30 group-hover:text-muted-foreground transition-colors">
+                      <i className="fa-solid fa-chevron-right text-sm"></i>
+                    </div>
+                  </button>
+
+                  {/* Option 9: Documentos */}
                   <Link to="/novo-documento" className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
                     <div className="w-12 h-12 rounded-lg bg-[hsl(var(--pastel-pink))] border border-border text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
-                      <FileText className="w-6 h-6" />
+                      <Newspaper className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
                       <h3 className="text-sm font-bold text-foreground mb-0.5">Documentos</h3>
@@ -252,7 +266,7 @@ export default function CriarConteudo() {
                     </div>
                   </Link>
 
-                  {/* Option 9: Estudos Acadêmicos */}
+                  {/* Option 10: Estudos Acadêmicos */}
                   <button className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
                     <div className="w-12 h-12 rounded-lg bg-[hsl(var(--pastel-orange))] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
                       <FlaskConical className="w-6 h-6" />
