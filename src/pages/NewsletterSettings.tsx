@@ -31,7 +31,7 @@ export default function NewsletterSettings() {
         <div className="p-8">
           {/* Tab Navigation */}
           <div className="grid grid-cols-4 gap-6 mb-8">
-            <button className="p-4 bg-white rounded-xl text-left hover:shadow-md transition" style={{ border: '2px solid #B8D4E8' }}>
+            <button className="p-4 bg-white border border-slate-200 rounded-xl text-left hover:shadow-md transition">
               <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-3" style={{ backgroundColor: '#B8D4E8' }}>
                 <Send className="text-slate-700" size={20} />
               </div>
