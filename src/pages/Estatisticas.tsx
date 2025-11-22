@@ -15,28 +15,28 @@ const Estatisticas = () => {
           y: [8, 12, 6, 10, 7, 11],
           name: 'Análise Fund.',
           type: 'bar',
-          marker: { color: '#6b7280' }
+          marker: { color: '#87B4CE' }
         },
         {
           x: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
           y: [5, 4, 7, 3, 6, 5],
           name: 'Renda Fixa',
           type: 'bar',
-          marker: { color: '#4ade80' }
+          marker: { color: '#8CC4AC' }
         },
         {
           x: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
           y: [3, 2, 5, 4, 3, 6],
           name: 'Gestão de Risco',
           type: 'bar',
-          marker: { color: '#a78bfa' }
+          marker: { color: '#9B8FB9' }
         },
         {
           x: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
           y: [2, 3, 4, 5, 4, 3],
           name: 'Compliance',
           type: 'bar',
-          marker: { color: '#fb923c' }
+          marker: { color: '#D9A98A' }
         }
       ];
 
