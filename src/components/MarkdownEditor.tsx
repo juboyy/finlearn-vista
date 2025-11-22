@@ -126,23 +126,6 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
   ];
 
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    const textarea = e.currentTarget;
-    const cursorPosition = textarea.selectionStart;
-    const textBeforeCursor = textarea.value.substring(0, cursorPosition);
-    
-    // Check if "/" was just typed
-    if (e.key === "/" && !showCommandMenu) {
-      // Get cursor position for menu placement
-      const lines = textBeforeCursor.split("\n");
-      const currentLineNumber = lines.length;
-      const lineHeight = 24; // Approximate line height
-      const top = currentLineNumber * lineHeight;
-      
-      setCommandMenuPosition({ top, left: 20 });
-      setShowCommandMenu(true);
-      setSelectedCommandIndex(0);
-    }
-    
     // Navigate command menu with arrow keys
     if (showCommandMenu) {
       if (e.key === "ArrowDown") {
@@ -163,11 +146,26 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    onChange(e.target.value);
-    
-    // Hide command menu if "/" is deleted
+    const newValue = e.target.value;
     const cursorPosition = e.target.selectionStart;
-    const textBeforeCursor = e.target.value.substring(0, cursorPosition);
+    const textBeforeCursor = newValue.substring(0, cursorPosition);
+    
+    onChange(newValue);
+    
+    // Show command menu if "/" was just typed
+    if (textBeforeCursor.endsWith("/") && !showCommandMenu) {
+      const textarea = e.target;
+      const lines = textBeforeCursor.split("\n");
+      const currentLineNumber = lines.length;
+      const lineHeight = 24;
+      const top = Math.min(currentLineNumber * lineHeight, 300);
+      
+      setCommandMenuPosition({ top, left: 20 });
+      setShowCommandMenu(true);
+      setSelectedCommandIndex(0);
+    }
+    
+    // Hide command menu if "/" is deleted or user typed something else
     if (!textBeforeCursor.endsWith("/") && showCommandMenu) {
       setShowCommandMenu(false);
     }
