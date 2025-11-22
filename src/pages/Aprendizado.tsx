@@ -3,7 +3,7 @@ import { MenutabbarFix } from "@/components/Dashboard/MenutabbarFix";
 import { HistoricoDocumentos } from "@/components/Dashboard/HistoricoDocumentos";
 import { RelatoriosPendentes } from "@/components/Dashboard/RelatoriosPendentes";
 import { NewspapersNaoLidas } from "@/components/Dashboard/NewspapersNaoLidas";
-import { Bell, Play, Clock, BookOpen, TrendingUp, Headphones, Calendar, Users, MessageCircle, Star, BookMarked, Video, Award, Heart, CheckCircle, PlayCircle, Trophy, ChartLine, Shield, Bitcoin, Gavel, PieChart, Repeat, Globe, Leaf, Plus, BookOpenCheck, CreditCard, FileText, Bookmark, Quote, Download, Share2, Bot, Eye, Percent, DollarSign, Lightbulb, AlertTriangle, Coins, Mic, Search, ChevronLeft, ChevronRight, Circle, History } from "lucide-react";
+import { Bell, Play, Clock, BookOpen, TrendingUp, Headphones, Calendar, Users, MessageCircle, Star, BookMarked, Video, Award, Heart, CheckCircle, PlayCircle, Trophy, ChartLine, Shield, Bitcoin, Gavel, PieChart, Repeat, Globe, Leaf, Plus, BookOpenCheck, CreditCard, FileText, Bookmark, Quote, Download, Share2, Bot, Eye, Percent, DollarSign, Lightbulb, AlertTriangle, Coins, Mic, Search, ChevronLeft, ChevronRight, Circle } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ebookRiskManagementPink from "@/assets/ebook-risk-management-pink.png";
@@ -350,22 +350,14 @@ const Aprendizado = () => {
               </div>
               <div className="flex items-center gap-4">
                 {activeTab === 'documentos' && (
-                  <>
-                    <div className="relative">
-                      <input
-                        type="text"
-                        placeholder="Buscar documentos..."
-                        className="w-80 pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pastel-purple focus:border-transparent"
-                      />
-                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
-                    </div>
-                    <button 
-                      onClick={() => setShowHistorico(!showHistorico)}
-                      className="relative p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition"
-                    >
-                      <History size={20} />
-                    </button>
-                  </>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      placeholder="Buscar documentos..."
+                      className="w-80 pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pastel-purple focus:border-transparent"
+                    />
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
+                  </div>
                 )}
                 <button className="relative p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
                   <Bell size={20} />
@@ -391,10 +383,18 @@ const Aprendizado = () => {
           </div>
         </header>
 
-        <MenutabbarFix activeTab={activeTab} setActiveTab={(tab) => {
-          setActiveTab(tab);
-          setShowHistorico(false);
-        }} />
+        <MenutabbarFix 
+          activeTab={activeTab} 
+          setActiveTab={(tab) => {
+            setActiveTab(tab);
+            setShowHistorico(false);
+          }}
+          onHistoricoClick={() => {
+            if (activeTab === 'documentos') {
+              setShowHistorico(!showHistorico);
+            }
+          }}
+        />
 
         {activeTab !== 'documentos' ? (
           <div className="flex-1 p-8 pb-32">
