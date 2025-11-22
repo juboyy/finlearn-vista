@@ -257,26 +257,26 @@ export default function NovoDocumento() {
       <main className="flex-1 overflow-y-auto">
         {/* Header */}
         <header className="bg-card border-b border-border sticky top-0 z-10">
-          <div className="px-8 py-4 flex items-center justify-between">
-            <div className="flex items-center gap-4 flex-1">
+          <div className="px-8 py-4 flex items-center justify-between gap-4 flex-wrap">
+            <div className="flex items-center gap-4 flex-1 min-w-0">
               <input 
                 type="text" 
                 defaultValue="Análise de Mercado Q4 2024" 
-                className="text-2xl font-semibold text-foreground bg-transparent border-none focus:outline-none focus:ring-0"
+                className="text-2xl font-semibold text-foreground bg-transparent border-none focus:outline-none focus:ring-0 min-w-0 flex-1"
               />
             </div>
-            <div className="flex items-center gap-3">
-              <button className="px-4 py-2 text-muted-foreground hover:bg-muted rounded-lg font-medium transition text-sm flex items-center gap-2">
+            <div className="flex items-center gap-3 flex-shrink-0">
+              <button className="px-4 py-2 text-muted-foreground hover:bg-muted rounded-lg font-medium transition text-sm flex items-center gap-2 whitespace-nowrap">
                 <Eye size={16} />
-                Pré-visualizar
+                <span className="hidden sm:inline">Pré-visualizar</span>
               </button>
-              <button className="px-4 py-2 text-muted-foreground hover:bg-muted rounded-lg font-medium transition text-sm flex items-center gap-2">
+              <button className="px-4 py-2 text-muted-foreground hover:bg-muted rounded-lg font-medium transition text-sm flex items-center gap-2 whitespace-nowrap">
                 <Share2 size={16} />
-                Compartilhar
+                <span className="hidden sm:inline">Compartilhar</span>
               </button>
-              <button className="px-4 py-2 bg-[hsl(206,35%,85%)] text-[hsl(220,15%,30%)] rounded-lg font-medium hover:bg-opacity-80 transition text-sm flex items-center gap-2">
+              <button className="px-4 py-2 bg-[hsl(206,35%,85%)] text-[hsl(220,15%,30%)] rounded-lg font-medium hover:bg-opacity-80 transition text-sm flex items-center gap-2 whitespace-nowrap">
                 <Save size={16} />
-                Salvar
+                <span className="hidden sm:inline">Salvar</span>
               </button>
             </div>
           </div>
