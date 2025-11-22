@@ -428,6 +428,7 @@ const PerformanceSEO = () => {
                         padding: '8px 12px'
                       }} 
                     />
+                    <Legend verticalAlign="bottom" height={36} iconType="circle" wrapperStyle={{ fontSize: '11px' }} />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
@@ -538,6 +539,7 @@ const PerformanceSEO = () => {
                         padding: '8px 12px'
                       }} 
                     />
+                    <Legend verticalAlign="bottom" height={36} iconType="circle" wrapperStyle={{ fontSize: '11px' }} />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
