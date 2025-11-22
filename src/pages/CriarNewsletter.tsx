@@ -18,7 +18,9 @@ export default function CriarNewsletter() {
       openRate: 68,
       lastSent: "2024-01-15",
       status: "active",
-      color: "#B8D4E8"
+      color: "#B8D4E8",
+      discountPercentage: 32,
+      sentCount: 24
     },
     {
       id: 2,
@@ -28,7 +30,9 @@ export default function CriarNewsletter() {
       openRate: 72,
       lastSent: "2024-01-14",
       status: "active",
-      color: "#C5E8D4"
+      color: "#C5E8D4",
+      discountPercentage: 28,
+      sentCount: 18
     },
     {
       id: 3,
@@ -38,7 +42,9 @@ export default function CriarNewsletter() {
       openRate: 65,
       lastSent: "2024-01-13",
       status: "draft",
-      color: "#D4C5E8"
+      color: "#D4C5E8",
+      discountPercentage: 41,
+      sentCount: 31
     }
   ];
 
@@ -478,7 +484,7 @@ export default function CriarNewsletter() {
                           <Percent className="text-slate-700" size={18} />
                         </div>
                       </div>
-                      <h3 className="text-2xl font-bold text-slate-800 mb-1">32%</h3>
+                      <h3 className="text-2xl font-bold text-slate-800 mb-1">{selectedNewsletterData?.discountPercentage}%</h3>
                       <p className="text-sm text-slate-500">Com Desconto</p>
                     </div>
 
@@ -488,7 +494,7 @@ export default function CriarNewsletter() {
                           <Send className="text-slate-700" size={18} />
                         </div>
                       </div>
-                      <h3 className="text-2xl font-bold text-slate-800 mb-1">24</h3>
+                      <h3 className="text-2xl font-bold text-slate-800 mb-1">{selectedNewsletterData?.sentCount}</h3>
                       <p className="text-sm text-slate-500">Enviadas</p>
                     </div>
                   </div>
