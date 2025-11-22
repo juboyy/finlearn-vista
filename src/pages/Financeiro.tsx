@@ -326,7 +326,13 @@ export default function Financeiro() {
             {/* Churn de Usuários - Quantidade */}
             <Card className="animate-fade-in" style={{ animationDelay: "0.9s" }}>
               <CardHeader>
-                <CardTitle className="text-foreground">Churn vs Novos Assinantes (Quantidade)</CardTitle>
+                <div className="flex items-start justify-between">
+                  <CardTitle className="text-foreground">Churn vs Novos Assinantes (Quantidade)</CardTitle>
+                  <div className="text-right">
+                    <p className="text-sm text-muted-foreground">Saldo Junho</p>
+                    <p className="text-2xl font-bold text-pastel-green">+42</p>
+                  </div>
+                </div>
               </CardHeader>
               <CardContent>
                 <ResponsiveContainer width="100%" height={300}>
