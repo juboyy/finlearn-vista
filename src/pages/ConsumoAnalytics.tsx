@@ -7,6 +7,25 @@ import {
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, Legend 
 } from 'recharts';
 
+const CustomTooltip = ({ active, payload }: any) => {
+  if (active && payload && payload.length) {
+    const data = payload[0];
+    return (
+      <div 
+        className="px-3 py-2 rounded-lg border shadow-sm"
+        style={{ 
+          backgroundColor: data.payload.fill || data.fill,
+          borderColor: 'white'
+        }}
+      >
+        <p className="text-sm font-bold text-white">{data.name}</p>
+        <p className="text-sm text-white">{data.value}</p>
+      </div>
+    );
+  }
+  return null;
+};
+
 const ConsumoAnalytics = () => {
   const navigate = useNavigate();
   const [studyView, setStudyView] = useState<'daily' | 'weekly'>('daily');
@@ -51,11 +70,11 @@ const ConsumoAnalytics = () => {
   ];
 
   const contentTypeData = [
-    { name: 'Vídeos', value: 40 },
-    { name: 'Artigos', value: 25 },
-    { name: 'E-books', value: 15 },
-    { name: 'Webinars', value: 12 },
-    { name: 'Podcasts', value: 8 }
+    { name: 'Vídeos', value: 40, fill: '#8AAACF' },
+    { name: 'Artigos', value: 25, fill: '#8EBC9F' },
+    { name: 'E-books', value: 15, fill: '#AC9CC9' },
+    { name: 'Webinars', value: 12, fill: '#C9AF89' },
+    { name: 'Podcasts', value: 8, fill: '#CC99A9' }
   ];
 
   const comparisonData = [
@@ -344,9 +363,8 @@ const ConsumoAnalytics = () => {
                       cx="50%"
                       cy="50%"
                       labelLine={false}
-                      label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
-                      innerRadius={60}
-                      outerRadius={80}
+                      innerRadius={50}
+                      outerRadius={90}
                       fill="#8884d8"
                       dataKey="value"
                     >
@@ -354,7 +372,7 @@ const ConsumoAnalytics = () => {
                         <Cell key={`cell-${index}`} fill={pieColors[index]} />
                       ))}
                     </Pie>
-                    <Tooltip />
+                    <Tooltip content={<CustomTooltip />} />
                     <Legend verticalAlign="bottom" height={36} iconType="circle" wrapperStyle={{ fontSize: '11px' }} />
                   </PieChart>
                 </ResponsiveContainer>
