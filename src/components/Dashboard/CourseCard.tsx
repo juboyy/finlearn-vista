@@ -36,7 +36,7 @@ export const CourseCard = ({
           />
         </div>
       </div>
-      <Button className={cn("font-medium hover:scale-105 transition-transform", bgColor)} variant="secondary">
+      <Button className={cn("font-medium transition-all hover:bg-pastel-gray-dark hover:text-gray-100", bgColor)} variant="secondary">
         Continuar
       </Button>
     </div>
