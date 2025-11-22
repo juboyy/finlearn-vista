@@ -192,7 +192,7 @@ export const NewspaperAnalytics = () => {
       margin: { l: 50, r: 50, t: 20, b: 80 },
       xaxis: { 
         gridcolor: '#f1f5f9',
-        tickangle: -45
+        tickangle: 0
       },
       yaxis: { 
         title: 'Número de Artigos',
