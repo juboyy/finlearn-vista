@@ -431,7 +431,7 @@ const ConsumoAnalytics = () => {
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={comparisonData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
-                    <XAxis dataKey="category" tick={{ fill: '#6b7280', fontSize: 10 }} angle={-90} textAnchor="end" height={100} />
+                    <XAxis dataKey="category" tick={{ fill: '#6b7280', fontSize: 10 }} angle={0} textAnchor="middle" height={100} interval={0} />
                     <YAxis tick={{ fill: '#6b7280', fontSize: 11 }} label={{ value: 'Performance (%)', angle: -90, position: 'insideLeft', style: { fontSize: 11, fill: '#6b7280' } }} />
                     <Tooltip contentStyle={{ backgroundColor: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '12px' }} />
                     <Legend wrapperStyle={{ fontSize: '11px' }} />
