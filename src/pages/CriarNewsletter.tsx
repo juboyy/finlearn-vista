@@ -540,8 +540,15 @@ export default function CriarNewsletter() {
                               >
                                 {subscriber.name.charAt(0)}
                               </div>
-                              <div>
-                                <p className="font-semibold text-sm text-slate-800">{subscriber.name}</p>
+                              <div className="flex-1">
+                                <div className="flex items-center gap-2">
+                                  <p className="font-semibold text-sm text-slate-800">{subscriber.name}</p>
+                                  <span
+                                    className={`w-2 h-2 rounded-full ${
+                                      subscriber.status === 'active' ? 'bg-green-500' : 'bg-slate-300'
+                                    }`}
+                                  ></span>
+                                </div>
                                 <p className="text-xs text-slate-500">{subscriber.email}</p>
                                 <p className="text-xs text-slate-400">{subscriber.company}</p>
                               </div>
@@ -611,11 +618,6 @@ export default function CriarNewsletter() {
                                   <span className="text-slate-500"> + {subscriber.additionalChannels}</span>
                                 )}
                               </span>
-                              <span
-                                className={`ml-auto w-2 h-2 rounded-full ${
-                                  subscriber.status === 'active' ? 'bg-green-500' : 'bg-slate-300'
-                                }`}
-                              ></span>
                             </div>
                           </div>
 
