@@ -178,9 +178,9 @@ export default function Financeiro() {
                     <XAxis 
                       dataKey="name" 
                       tick={{ fontSize: 11, fill: 'hsl(var(--muted-foreground))' }} 
-                      angle={-15} 
-                      textAnchor="end" 
-                      height={80} 
+                      angle={0} 
+                      textAnchor="middle" 
+                      height={60} 
                     />
                     <YAxis tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }} />
                     <Tooltip 
