@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { Settings, BarChart3, Plus, Users, ChevronRight, Calendar, SlidersHorizontal, EllipsisVertical, ChartLine, CreditCard, Scale, Globe, Building, Lightbulb, MailOpen, CheckCircle, Percent, Clock } from "lucide-react";
+import { Settings, BarChart3, Plus, Users, ChevronRight, Calendar, SlidersHorizontal, EllipsisVertical, ChartLine, CreditCard, Scale, Globe, Building, Lightbulb, MailOpen, CheckCircle, Percent, Clock, FileText } from "lucide-react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -104,6 +104,12 @@ export default function Newsletter() {
               <p className="text-sm text-slate-500 mt-1">Mantenha-se atualizado com as principais notícias do mercado financeiro</p>
             </div>
             <div className="flex items-center gap-3">
+              <button 
+                className="w-10 h-10 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center justify-center" 
+                style={{ backgroundColor: '#E8E0C5' }}
+              >
+                <FileText size={18} className="text-slate-700" />
+              </button>
               <button 
                 onClick={() => navigate('/newsletter-settings')}
                 className="w-10 h-10 border border-slate-200 text-slate-700 rounded-lg font-medium hover:bg-slate-50 transition flex items-center justify-center"
