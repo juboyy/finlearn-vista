@@ -375,10 +375,16 @@ const Aprendizado = () => {
             }
           }}
           onAnalyticsClick={() => {
+            console.log('Analytics clicked, current state:', showAnalytics);
             setShowAnalytics(!showAnalytics);
             setShowHistorico(false);
           }}
         />
+
+        {(() => {
+          console.log('Render state - showAnalytics:', showAnalytics, 'activeTab:', activeTab);
+          return null;
+        })()}
 
         {showAnalytics ? (
           <NewspaperAnalytics />
