@@ -486,20 +486,70 @@ const AgentesAnalytics = () => {
               </div>
             </section>
 
-            <section className="bg-white rounded-xl p-6 border border-slate-200">
-              <h2 className="text-lg font-semibold text-slate-800 mb-6">Evolução do Engajamento</h2>
-              <div className="h-[280px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={engagementTrendData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
-                    <XAxis dataKey="name" tick={{ fill: '#6b7280', fontSize: 11 }} />
-                    <YAxis tick={{ fill: '#6b7280', fontSize: 11 }} domain={[65, 85]} />
-                    <Tooltip contentStyle={{ backgroundColor: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '12px' }} />
-                    <Line type="monotone" dataKey="value" stroke="#AC9CC9" strokeWidth={3} name="Engajamento %" />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            </section>
+            <div className="grid grid-cols-3 gap-6">
+              <section className="col-span-2 bg-white rounded-xl p-6 border border-slate-200">
+                <h2 className="text-lg font-semibold text-slate-800 mb-6">Evolução do Engajamento</h2>
+                <div className="h-[280px] w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={engagementTrendData}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+                      <XAxis dataKey="name" tick={{ fill: '#6b7280', fontSize: 11 }} />
+                      <YAxis tick={{ fill: '#6b7280', fontSize: 11 }} domain={[65, 85]} />
+                      <Tooltip contentStyle={{ backgroundColor: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '12px' }} />
+                      <Line type="monotone" dataKey="value" stroke="#AC9CC9" strokeWidth={3} name="Engajamento %" />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              </section>
+
+              <section className="bg-white rounded-xl p-6 border border-slate-200">
+                <h2 className="text-lg font-semibold text-slate-800 mb-4">Sobre os Agentes IA</h2>
+                <div className="space-y-4">
+                  <div className="p-4 bg-gradient-to-br from-slate-50 to-slate-100/50 rounded-lg border border-slate-200">
+                    <div className="flex items-start gap-3 mb-3">
+                      <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center shadow-sm">
+                        <i className="fas fa-robot text-slate-700"></i>
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-sm font-semibold text-slate-800 mb-1">Assistentes Especializados</h3>
+                        <p className="text-xs text-slate-600 leading-relaxed">Agentes IA treinados em áreas específicas do mercado financeiro para oferecer análises precisas e recomendações personalizadas.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-4 bg-gradient-to-br from-slate-50 to-slate-100/50 rounded-lg border border-slate-200">
+                    <div className="flex items-start gap-3 mb-3">
+                      <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center shadow-sm">
+                        <i className="fas fa-clock text-slate-700"></i>
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-sm font-semibold text-slate-800 mb-1">Disponibilidade 24/7</h3>
+                        <p className="text-xs text-slate-600 leading-relaxed">Acesso contínuo aos agentes para suporte instantâneo em análises de mercado, compliance e estratégias de investimento.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-4 bg-gradient-to-br from-slate-50 to-slate-100/50 rounded-lg border border-slate-200">
+                    <div className="flex items-start gap-3 mb-3">
+                      <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center shadow-sm">
+                        <i className="fas fa-chart-line text-slate-700"></i>
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-sm font-semibold text-slate-800 mb-1">Aprendizado Contínuo</h3>
+                        <p className="text-xs text-slate-600 leading-relaxed">Os agentes são constantemente atualizados com as últimas tendências e regulamentações do mercado financeiro.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 p-3 bg-slate-100 rounded-lg border border-slate-200">
+                    <p className="text-xs text-slate-600 text-center">
+                      <i className="fas fa-info-circle mr-1.5 text-slate-500"></i>
+                      Todos os dados são processados com <strong className="text-slate-700">segurança</strong> e <strong className="text-slate-700">privacidade</strong>
+                    </p>
+                  </div>
+                </div>
+              </section>
+            </div>
           </div>
 
           {/* Análise Comparativa */}
