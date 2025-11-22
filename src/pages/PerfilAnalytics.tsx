@@ -1,6 +1,7 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Bell, Search } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
   AreaChart, Area, LineChart, Line, Legend 
@@ -8,6 +9,7 @@ import {
 
 const PerfilAnalytics = () => {
   const [timeFilter, setTimeFilter] = useState<'6months' | 'year' | 'all'>('year');
+  const navigate = useNavigate();
 
   const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
   
@@ -44,9 +46,17 @@ const PerfilAnalytics = () => {
       
       <main className="flex-1 overflow-y-auto h-full relative bg-slate-50/50">
         <header className="sticky top-0 z-20 bg-white/90 backdrop-blur-md border-b border-slate-200 px-8 py-5 flex justify-between items-center">
-          <div>
-            <h1 className="text-2xl font-bold text-slate-800 tracking-tight">Analytics do Perfil Creator</h1>
-            <p className="text-sm text-slate-500 mt-1 font-medium">Acompanhe o desempenho do seu perfil e engajamento com seu público</p>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => navigate(-1)}
+              className="w-10 h-10 rounded-lg border border-slate-200 bg-white flex items-center justify-center text-[hsl(var(--pastel-gray-dark))] hover:bg-slate-50 hover:text-slate-700 transition-colors shadow-sm"
+            >
+              <i className="fa-solid fa-arrow-left"></i>
+            </button>
+            <div>
+              <h1 className="text-2xl font-bold text-slate-800 tracking-tight">Analytics do Perfil Creator</h1>
+              <p className="text-sm text-slate-500 mt-1 font-medium">Acompanhe o desempenho do seu perfil e engajamento com seu público</p>
+            </div>
           </div>
           <div className="flex items-center gap-4">
             <div className="relative group">
