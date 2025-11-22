@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, TrendingUp, TrendingDown, DollarSign, Users, Receipt, Target } from "lucide-react";
+import { ArrowLeft, DollarSign, Users, Receipt, Target } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { StatCard } from "@/components/Dashboard/StatCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -52,19 +52,27 @@ const subscribers = [
   { id: 8, nome: "Fernanda Alves", newsletter: "Compliance Weekly", valor: 29.90, desconto: false, percentualDesconto: "-" },
 ];
 
-const COLORS = ['#C5E8D4', '#D4C5E8', '#E8D4C5', '#C5D4E8', '#E8C5D4'];
+// Cores do design system - pastel escuras
+const CHART_COLORS = {
+  blue: 'hsl(206, 35%, 65%)',
+  purple: 'hsl(270, 32%, 67%)',
+  peach: 'hsl(24, 48%, 68%)',
+  pink: 'hsl(322, 32%, 68%)',
+  green: 'hsl(152, 32%, 65%)',
+  orange: 'hsl(30, 35%, 67%)',
+};
 
 export default function Financeiro() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="flex h-screen overflow-hidden">
       <SidebarFix />
       
-      <div className="flex-1 ml-64">
+      <main className="flex-1 overflow-y-auto">
         {/* Header */}
-        <div className="bg-slate-50 border-b border-slate-200 px-8 py-4">
-          <div className="flex items-center justify-between">
+        <header className="bg-card border-b border-border sticky top-0 z-10">
+          <div className="px-8 py-4">
             <div className="flex items-center gap-4">
               <button
                 onClick={() => navigate("/criar-newsletter")}
@@ -73,78 +81,99 @@ export default function Financeiro() {
                 <ArrowLeft size={20} />
               </button>
               <div>
-                <h1 className="text-2xl font-bold text-foreground">Dashboard Financeiro</h1>
-                <p className="text-sm text-muted-foreground">Visão completa das receitas e assinantes</p>
+                <h1 className="text-2xl font-semibold text-foreground">Dashboard Financeiro</h1>
+                <p className="text-sm text-muted-foreground mt-1">Visão completa das receitas e assinantes</p>
               </div>
             </div>
           </div>
-        </div>
+        </header>
 
         <div className="p-8">
           {/* KPIs */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <StatCard
-              icon={DollarSign}
-              value="R$ 20.100"
-              label="Valor Recebido (Junho)"
-              trend="+12.5%"
-              trendType="positive"
-              bgColor="bg-[#C5E8D4]"
-            />
-            <StatCard
-              icon={Receipt}
-              value="R$ 8.450"
-              label="A Receber (Julho)"
-              trend="+8.2%"
-              trendType="positive"
-              bgColor="bg-[#D4C5E8]"
-            />
-            <StatCard
-              icon={Target}
-              value="R$ 44,08"
-              label="Receita Média por Usuário"
-              trend="+5.3%"
-              trendType="positive"
-              bgColor="bg-[#E8D4C5]"
-            />
-            <StatCard
-              icon={Users}
-              value="456"
-              label="Assinantes Ativos"
-              trend="+10.8%"
-              trendType="positive"
-              bgColor="bg-[#C5D4E8]"
-            />
-          </div>
+          <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div className="animate-fade-in" style={{ animationDelay: "0.1s" }}>
+              <StatCard
+                icon={DollarSign}
+                value="R$ 20.100"
+                label="Valor Recebido (Junho)"
+                trend="+12.5%"
+                trendType="positive"
+                bgColor="bg-pastel-green"
+              />
+            </div>
+            <div className="animate-fade-in" style={{ animationDelay: "0.2s" }}>
+              <StatCard
+                icon={Receipt}
+                value="R$ 8.450"
+                label="A Receber (Julho)"
+                trend="+8.2%"
+                trendType="positive"
+                bgColor="bg-pastel-purple"
+              />
+            </div>
+            <div className="animate-fade-in" style={{ animationDelay: "0.3s" }}>
+              <StatCard
+                icon={Target}
+                value="R$ 44,08"
+                label="Receita Média por Usuário"
+                trend="+5.3%"
+                trendType="positive"
+                bgColor="bg-pastel-peach"
+              />
+            </div>
+            <div className="animate-fade-in" style={{ animationDelay: "0.4s" }}>
+              <StatCard
+                icon={Users}
+                value="456"
+                label="Assinantes Ativos"
+                trend="+10.8%"
+                trendType="positive"
+                bgColor="bg-pastel-blue"
+              />
+            </div>
+          </section>
 
           {/* Gráficos */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
             {/* Receita por Newsletter */}
-            <Card>
+            <Card className="animate-fade-in" style={{ animationDelay: "0.5s" }}>
               <CardHeader>
-                <CardTitle>Receita por Newsletter (Últimos 4 Meses)</CardTitle>
+                <CardTitle className="text-foreground">Receita por Newsletter (Últimos 4 Meses)</CardTitle>
               </CardHeader>
               <CardContent>
                 <ResponsiveContainer width="100%" height={300}>
                   <BarChart data={revenueByNewsletter}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
-                    <XAxis dataKey="name" tick={{ fontSize: 11 }} angle={-15} textAnchor="end" height={80} />
-                    <YAxis tick={{ fontSize: 12 }} />
-                    <Tooltip contentStyle={{ backgroundColor: '#fff', border: '1px solid #ccc' }} />
-                    <Legend />
-                    <Bar dataKey="jan" stackId="a" fill="#C5E8D4" />
-                    <Bar dataKey="fev" stackId="a" fill="#D4C5E8" />
-                    <Bar dataKey="mar" stackId="a" fill="#E8D4C5" />
-                    <Bar dataKey="abr" stackId="a" fill="#C5D4E8" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis 
+                      dataKey="name" 
+                      tick={{ fontSize: 11, fill: 'hsl(var(--muted-foreground))' }} 
+                      angle={-15} 
+                      textAnchor="end" 
+                      height={80} 
+                    />
+                    <YAxis tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }} />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'hsl(var(--card))', 
+                        border: '1px solid hsl(var(--border))',
+                        borderRadius: '0.5rem',
+                        color: 'hsl(var(--foreground))'
+                      }} 
+                    />
+                    <Legend wrapperStyle={{ color: 'hsl(var(--foreground))' }} />
+                    <Bar dataKey="jan" stackId="a" fill={CHART_COLORS.green} />
+                    <Bar dataKey="fev" stackId="a" fill={CHART_COLORS.purple} />
+                    <Bar dataKey="mar" stackId="a" fill={CHART_COLORS.peach} />
+                    <Bar dataKey="abr" stackId="a" fill={CHART_COLORS.blue} />
                   </BarChart>
                 </ResponsiveContainer>
               </CardContent>
             </Card>
 
             {/* Receita por Tag */}
-            <Card>
+            <Card className="animate-fade-in" style={{ animationDelay: "0.6s" }}>
               <CardHeader>
-                <CardTitle>Receita por Tag</CardTitle>
+                <CardTitle className="text-foreground">Receita por Tag</CardTitle>
               </CardHeader>
               <CardContent>
                 <ResponsiveContainer width="100%" height={300}>
@@ -160,55 +189,99 @@ export default function Financeiro() {
                       dataKey="value"
                     >
                       {revenueByTag.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        <Cell 
+                          key={`cell-${index}`} 
+                          fill={Object.values(CHART_COLORS)[index % Object.values(CHART_COLORS).length]} 
+                        />
                       ))}
                     </Pie>
-                    <Tooltip />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'hsl(var(--card))', 
+                        border: '1px solid hsl(var(--border))',
+                        borderRadius: '0.5rem',
+                        color: 'hsl(var(--foreground))'
+                      }} 
+                    />
                   </PieChart>
                 </ResponsiveContainer>
               </CardContent>
             </Card>
 
             {/* Crescimento da Receita */}
-            <Card>
+            <Card className="animate-fade-in" style={{ animationDelay: "0.7s" }}>
               <CardHeader>
-                <CardTitle>Crescimento da Receita (6 Meses)</CardTitle>
+                <CardTitle className="text-foreground">Crescimento da Receita (6 Meses)</CardTitle>
               </CardHeader>
               <CardContent>
                 <ResponsiveContainer width="100%" height={300}>
                   <AreaChart data={revenueGrowth}>
                     <defs>
                       <linearGradient id="colorReceita" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#C5E8D4" stopOpacity={0.8}/>
-                        <stop offset="95%" stopColor="#C5E8D4" stopOpacity={0}/>
+                        <stop offset="5%" stopColor={CHART_COLORS.green} stopOpacity={0.8}/>
+                        <stop offset="95%" stopColor={CHART_COLORS.green} stopOpacity={0}/>
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
-                    <XAxis dataKey="mes" tick={{ fontSize: 12 }} />
-                    <YAxis tick={{ fontSize: 12 }} />
-                    <Tooltip contentStyle={{ backgroundColor: '#fff', border: '1px solid #ccc' }} />
-                    <Area type="monotone" dataKey="receita" stroke="#C5E8D4" fillOpacity={1} fill="url(#colorReceita)" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis dataKey="mes" tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }} />
+                    <YAxis tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }} />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'hsl(var(--card))', 
+                        border: '1px solid hsl(var(--border))',
+                        borderRadius: '0.5rem',
+                        color: 'hsl(var(--foreground))'
+                      }} 
+                    />
+                    <Area 
+                      type="monotone" 
+                      dataKey="receita" 
+                      stroke={CHART_COLORS.green} 
+                      fillOpacity={1} 
+                      fill="url(#colorReceita)" 
+                    />
                   </AreaChart>
                 </ResponsiveContainer>
               </CardContent>
             </Card>
 
             {/* Seguidores vs Receita */}
-            <Card>
+            <Card className="animate-fade-in" style={{ animationDelay: "0.8s" }}>
               <CardHeader>
-                <CardTitle>Seguidores vs Receita (em milhares)</CardTitle>
+                <CardTitle className="text-foreground">Seguidores vs Receita (em milhares)</CardTitle>
               </CardHeader>
               <CardContent>
                 <ResponsiveContainer width="100%" height={300}>
                   <LineChart data={followersVsRevenue}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
-                    <XAxis dataKey="mes" tick={{ fontSize: 12 }} />
-                    <YAxis yAxisId="left" tick={{ fontSize: 12 }} />
-                    <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 12 }} />
-                    <Tooltip contentStyle={{ backgroundColor: '#fff', border: '1px solid #ccc' }} />
-                    <Legend />
-                    <Line yAxisId="left" type="monotone" dataKey="seguidores" stroke="#D4C5E8" strokeWidth={2} name="Seguidores" />
-                    <Line yAxisId="right" type="monotone" dataKey="receita" stroke="#C5E8D4" strokeWidth={2} name="Receita (R$)" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis dataKey="mes" tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }} />
+                    <YAxis yAxisId="left" tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }} />
+                    <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }} />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'hsl(var(--card))', 
+                        border: '1px solid hsl(var(--border))',
+                        borderRadius: '0.5rem',
+                        color: 'hsl(var(--foreground))'
+                      }} 
+                    />
+                    <Legend wrapperStyle={{ color: 'hsl(var(--foreground))' }} />
+                    <Line 
+                      yAxisId="left" 
+                      type="monotone" 
+                      dataKey="seguidores" 
+                      stroke={CHART_COLORS.purple} 
+                      strokeWidth={2} 
+                      name="Seguidores" 
+                    />
+                    <Line 
+                      yAxisId="right" 
+                      type="monotone" 
+                      dataKey="receita" 
+                      stroke={CHART_COLORS.green} 
+                      strokeWidth={2} 
+                      name="Receita (R$)" 
+                    />
                   </LineChart>
                 </ResponsiveContainer>
               </CardContent>
@@ -216,40 +289,40 @@ export default function Financeiro() {
           </div>
 
           {/* Tabela de Assinantes */}
-          <Card>
+          <Card className="animate-fade-in" style={{ animationDelay: "0.9s" }}>
             <CardHeader>
-              <CardTitle>Assinantes e Pagamentos</CardTitle>
+              <CardTitle className="text-foreground">Assinantes e Pagamentos</CardTitle>
             </CardHeader>
             <CardContent>
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Nome</TableHead>
-                    <TableHead>Newsletter</TableHead>
-                    <TableHead>Valor Mensal</TableHead>
-                    <TableHead>Desconto</TableHead>
-                    <TableHead>Status</TableHead>
+                    <TableHead className="text-foreground">Nome</TableHead>
+                    <TableHead className="text-foreground">Newsletter</TableHead>
+                    <TableHead className="text-foreground">Valor Mensal</TableHead>
+                    <TableHead className="text-foreground">Desconto</TableHead>
+                    <TableHead className="text-foreground">Status</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {subscribers.map((sub) => (
                     <TableRow key={sub.id}>
-                      <TableCell className="font-medium">{sub.nome}</TableCell>
-                      <TableCell>{sub.newsletter}</TableCell>
-                      <TableCell>R$ {sub.valor.toFixed(2)}</TableCell>
+                      <TableCell className="font-medium text-foreground">{sub.nome}</TableCell>
+                      <TableCell className="text-muted-foreground">{sub.newsletter}</TableCell>
+                      <TableCell className="text-foreground">R$ {sub.valor.toFixed(2)}</TableCell>
                       <TableCell>
                         {sub.desconto ? (
-                          <Badge style={{ backgroundColor: '#E8D4C5', color: '#4a4a4a' }}>
+                          <Badge className="bg-pastel-peach text-pastel-gray-dark border-0">
                             {sub.percentualDesconto}
                           </Badge>
                         ) : (
-                          <Badge style={{ backgroundColor: '#e8e8e8', color: '#6a6a6a' }}>
+                          <Badge className="bg-muted text-muted-foreground border-0">
                             Sem desconto
                           </Badge>
                         )}
                       </TableCell>
                       <TableCell>
-                        <Badge style={{ backgroundColor: '#C5E8D4', color: '#4a4a4a' }}>
+                        <Badge className="bg-pastel-green text-pastel-gray-dark border-0">
                           Ativo
                         </Badge>
                       </TableCell>
@@ -260,7 +333,7 @@ export default function Financeiro() {
             </CardContent>
           </Card>
         </div>
-      </div>
+      </main>
     </div>
   );
 }
