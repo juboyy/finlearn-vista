@@ -342,20 +342,34 @@ export default function CriarNewsletter() {
                         }`}
                         style={selectedNewsletter === newsletter.id ? { backgroundColor: newsletter.color } : {}}
                       >
-                        <div className="flex items-start justify-between mb-2">
-                          <h3 className="font-semibold text-sm pr-8">{newsletter.title}</h3>
-                          <span
-                            className={`text-xs px-2 py-0.5 rounded ${
-                              newsletter.status === 'active'
-                                ? 'bg-green-100 text-green-700'
-                                : 'bg-slate-100 text-slate-600'
-                            }`}
-                          >
-                            {newsletter.status === 'active' ? 'Ativa' : 'Rascunho'}
-                          </span>
+                        <div className="flex items-start gap-2 mb-2">
+                          <div className="flex-1 min-w-0">
+                            <h3 className="font-semibold text-sm truncate pr-1">{newsletter.title}</h3>
+                          </div>
+                          <div className="flex items-center gap-1.5 flex-shrink-0">
+                            <span
+                              className={`text-xs px-2 py-0.5 rounded whitespace-nowrap ${
+                                newsletter.status === 'active'
+                                  ? 'bg-green-100 text-green-700'
+                                  : 'bg-slate-100 text-slate-600'
+                              }`}
+                            >
+                              {newsletter.status === 'active' ? 'Ativa' : 'Rascunho'}
+                            </span>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setShowHistoryFor(showHistoryFor === newsletter.id ? null : newsletter.id);
+                              }}
+                              className="p-1 bg-white rounded border border-slate-200 text-slate-600 hover:text-slate-800 hover:bg-slate-50 transition shadow-sm"
+                              title="Ver histórico de envios"
+                            >
+                              <FileText size={13} />
+                            </button>
+                          </div>
                         </div>
-                        <p className="text-xs text-slate-600 mb-2 line-clamp-2">{newsletter.description}</p>
-                        <div className="flex items-center justify-between text-xs text-slate-500">
+                        <p className="text-xs text-slate-600 mb-2.5 line-clamp-1">{newsletter.description}</p>
+                        <div className="flex items-center gap-3 text-xs text-slate-500">
                           <span className="flex items-center gap-1">
                             <Users size={12} />
                             {newsletter.subscribers}
@@ -365,16 +379,6 @@ export default function CriarNewsletter() {
                             {newsletter.openRate}%
                           </span>
                         </div>
-                      </button>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setShowHistoryFor(showHistoryFor === newsletter.id ? null : newsletter.id);
-                        }}
-                        className="absolute top-2 right-12 p-1.5 bg-white rounded-lg border border-slate-200 text-slate-600 hover:text-slate-800 hover:bg-slate-50 transition shadow-sm"
-                        title="Ver histórico de envios"
-                      >
-                        <FileText size={14} />
                       </button>
                     </div>
                   ))}
