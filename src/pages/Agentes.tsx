@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { 
   Search, 
@@ -18,16 +18,72 @@ import {
   Landmark,
   Bitcoin,
   Settings,
-  Home
+  Home,
+  CreditCard,
+  TrendingUp,
+  X,
+  Send
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AgentChat } from "@/components/AgentChat";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function Agentes() {
   const [activeFilter, setActiveFilter] = useState("Todos");
   const [chatAgent, setChatAgent] = useState<{ name: string; image: string } | null>(null);
+  const [showWelcomeModal, setShowWelcomeModal] = useState(false);
+  const [selectedAgent, setSelectedAgent] = useState("");
+  const [promptText, setPromptText] = useState("");
+
+  useEffect(() => {
+    setShowWelcomeModal(true);
+  }, []);
+
+  const specializedAgents = [
+    {
+      id: "mercado-financeiro",
+      name: "Especialista em Mercado Financeiro",
+      description: "Expert em análise de mercados, ações e tendências econômicas",
+      icon: ChartLine,
+      bgColor: "bg-[hsl(206,35%,75%)]"
+    },
+    {
+      id: "pagamentos",
+      name: "Especialista em Pagamentos",
+      description: "Conhecimento em sistemas de pagamento, fintechs e transações digitais",
+      icon: CreditCard,
+      bgColor: "bg-[hsl(280,35%,75%)]"
+    },
+    {
+      id: "capitais",
+      name: "Especialista em Mercado de Capitais",
+      description: "Especialista em IPOs, ofertas públicas e estruturação de operações",
+      icon: TrendingUp,
+      bgColor: "bg-[hsl(340,35%,75%)]"
+    }
+  ];
+
+  const handleStartChat = () => {
+    if (selectedAgent && promptText) {
+      const agent = specializedAgents.find(a => a.id === selectedAgent);
+      if (agent) {
+        setChatAgent({ 
+          name: agent.name, 
+          image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/f28f1efee6-bb8cd63f0a8ea0129291.png" 
+        });
+        setShowWelcomeModal(false);
+        setPromptText("");
+      }
+    }
+  };
 
   const filters = ["Todos", "Análise", "Mentoria", "Educação", "Pesquisa"];
 
@@ -178,6 +234,125 @@ export default function Agentes() {
             agentImage={chatAgent.image}
             onClose={() => setChatAgent(null)}
           />
+        )}
+
+        {/* Welcome Modal */}
+        {showWelcomeModal && !chatAgent && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div className="bg-card border border-border rounded-2xl max-w-2xl w-full shadow-2xl">
+              <div className="flex items-center justify-between p-6 border-b border-border">
+                <div>
+                  <h2 className="text-2xl font-semibold text-foreground">Bem-vindo aos Agentes de IA</h2>
+                  <p className="text-sm text-muted-foreground mt-1">Escolha um especialista e comece sua conversa</p>
+                </div>
+                <button 
+                  onClick={() => setShowWelcomeModal(false)}
+                  className="text-muted-foreground hover:text-foreground transition p-2 hover:bg-muted rounded-lg"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              <div className="p-6 space-y-6">
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-3">
+                    Selecione um Agente Especializado
+                  </label>
+                  <Select value={selectedAgent} onValueChange={setSelectedAgent}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Escolha um especialista..." />
+                    </SelectTrigger>
+                    <SelectContent className="bg-card border-border z-[60]">
+                      {specializedAgents.map((agent) => (
+                        <SelectItem 
+                          key={agent.id} 
+                          value={agent.id}
+                          className="cursor-pointer"
+                        >
+                          <div className="flex items-center gap-3 py-1">
+                            <div className={`w-10 h-10 rounded-lg ${agent.bgColor} flex items-center justify-center`}>
+                              <agent.icon className="text-[hsl(220,15%,30%)]" size={18} />
+                            </div>
+                            <div className="flex-1">
+                              <div className="font-medium text-foreground">{agent.name}</div>
+                              <div className="text-xs text-muted-foreground">{agent.description}</div>
+                            </div>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-3">
+                    O que vamos fazer hoje?
+                  </label>
+                  <div className="relative">
+                    <Input
+                      type="text"
+                      placeholder="Digite sua pergunta ou objetivo..."
+                      value={promptText}
+                      onChange={(e) => setPromptText(e.target.value)}
+                      onKeyDown={(e) => e.key === 'Enter' && handleStartChat()}
+                      className="pr-12"
+                    />
+                    <button
+                      onClick={handleStartChat}
+                      disabled={!selectedAgent || !promptText}
+                      className={`absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-lg transition ${
+                        selectedAgent && promptText
+                          ? 'bg-[hsl(206,35%,75%)] text-[hsl(220,15%,30%)] hover:bg-[hsl(206,35%,65%)]'
+                          : 'bg-muted text-muted-foreground cursor-not-allowed'
+                      }`}
+                    >
+                      <Send size={18} />
+                    </button>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-2">
+                    Pressione Enter ou clique no ícone para iniciar a conversa
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-3 gap-4 pt-4 border-t border-border">
+                  {specializedAgents.map((agent) => (
+                    <button
+                      key={agent.id}
+                      onClick={() => setSelectedAgent(agent.id)}
+                      className={`p-4 rounded-xl border-2 transition text-left ${
+                        selectedAgent === agent.id
+                          ? 'border-[hsl(206,35%,75%)] bg-[hsl(206,35%,75%)]/10'
+                          : 'border-border hover:border-[hsl(206,35%,75%)]/50'
+                      }`}
+                    >
+                      <div className={`w-12 h-12 rounded-lg ${agent.bgColor} flex items-center justify-center mb-3`}>
+                        <agent.icon className="text-[hsl(220,15%,30%)]" size={20} />
+                      </div>
+                      <div className="text-sm font-medium text-foreground mb-1">{agent.name.split(' ').slice(-2).join(' ')}</div>
+                      <div className="text-xs text-muted-foreground line-clamp-2">{agent.description}</div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="p-6 bg-muted/30 rounded-b-2xl border-t border-border">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Brain size={14} />
+                    <span>Assistentes com memória e contexto</span>
+                  </div>
+                  <Button
+                    onClick={handleStartChat}
+                    disabled={!selectedAgent || !promptText}
+                    className="bg-[hsl(206,35%,75%)] text-[hsl(220,15%,30%)] hover:bg-[hsl(206,35%,65%)]"
+                  >
+                    Iniciar Conversa
+                    <ChevronRight size={16} className="ml-2" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
         )}
         {/* Header */}
         <header className="bg-card border-b border-border sticky top-0 z-40">
