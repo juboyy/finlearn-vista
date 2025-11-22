@@ -426,7 +426,7 @@ export const NewspaperAnalytics = () => {
     const monthlyLayout = {
       margin: {
         l: 50,
-        r: 10,
+        r: 5,
         t: 10,
         b: 40
       },
@@ -440,7 +440,14 @@ export const NewspaperAnalytics = () => {
       plot_bgcolor: '#ffffff',
       paper_bgcolor: '#ffffff',
       barmode: 'group',
-      autosize: true
+      autosize: true,
+      showlegend: true,
+      legend: {
+        x: 1,
+        xanchor: 'right',
+        y: 1.02,
+        itemwidth: 50
+      }
     };
     Plotly.newPlot('monthly-comparison-chart', monthlyData, monthlyLayout, {
       displayModeBar: false
