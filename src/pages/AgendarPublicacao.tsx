@@ -443,7 +443,7 @@ export default function AgendarPublicacao() {
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <h2 className="text-lg font-semibold text-slate-800">Permissão de Canais de Envio</h2>
-                  <p className="text-sm text-slate-500 mt-1">Selecione os canais pelos quais deseja enviar o conteúdo</p>
+                  <p className="text-sm text-slate-500 mt-1">Selecione os canais pelos quais permite enviar o conteúdo</p>
                 </div>
                 <button onClick={() => setShowPreview(true)} className="px-4 py-2 text-slate-700 rounded-lg hover:opacity-90 transition text-sm flex items-center gap-2" style={{
                   backgroundColor: '#D4C5E8'
