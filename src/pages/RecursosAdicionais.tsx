@@ -398,21 +398,21 @@ export default function RecursosAdicionais() {
           {/* CTA Banner */}
           <section className="bg-pastel-blue rounded-xl p-8 text-center">
             <div className="max-w-2xl mx-auto">
-              <Rocket className="text-slate-700 mx-auto mb-4" size={48} />
-              <h2 className="text-2xl font-bold text-slate-800 mb-3">Comece a Usar Hoje</h2>
-              <p className="text-slate-600 mb-6">
+              <Rocket className="text-black mx-auto mb-4" size={48} />
+              <h2 className="text-2xl font-bold text-black mb-3">Comece a Usar Hoje</h2>
+              <p className="text-black mb-6">
                 Instale a extensão FinLearn e transforme sua experiência de navegação em uma jornada de aprendizado contínuo no mercado financeiro.
               </p>
               <div className="flex items-center justify-center gap-4">
-                <button className="px-6 py-3 bg-white text-slate-800 rounded-lg font-semibold hover:shadow-lg transition flex items-center gap-2">
+                <button className="px-6 py-3 bg-white text-black rounded-lg font-semibold hover:shadow-lg transition flex items-center gap-2">
                   <Chrome size={20} />
                   Instalar Agora
                 </button>
-                <button className="px-6 py-3 border-2 border-white text-slate-800 rounded-lg font-semibold hover:bg-white hover:bg-opacity-20 transition">
+                <button className="px-6 py-3 border-2 border-white text-black rounded-lg font-semibold hover:bg-white hover:bg-opacity-20 transition">
                   Ver Demonstração
                 </button>
               </div>
-              <p className="text-sm text-slate-500 mt-4">Gratuito para usuários Premium • Sem cartão de crédito</p>
+              <p className="text-sm text-black mt-4">Gratuito para usuários Premium • Sem cartão de crédito</p>
             </div>
           </section>
         </div>
