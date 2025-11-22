@@ -375,9 +375,11 @@ const Aprendizado = () => {
             }
           }}
           onAnalyticsClick={() => {
-            console.log('Analytics clicked, current state:', showAnalytics);
-            setShowAnalytics(!showAnalytics);
-            setShowHistorico(false);
+            if (activeTab === 'documentos') {
+              console.log('Analytics clicked, current state:', showAnalytics);
+              setShowAnalytics(!showAnalytics);
+              setShowHistorico(false);
+            }
           }}
         />
 
