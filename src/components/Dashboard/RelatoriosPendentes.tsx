@@ -442,8 +442,8 @@ export const RelatoriosPendentes = () => {
           <div className="border-b border-slate-200 bg-slate-50">
             <div className="grid grid-cols-12 gap-4 px-6 py-3 text-xs font-medium text-slate-600 uppercase tracking-wider">
               <div className="col-span-5">Relatório</div>
-              <div className="col-span-2">Categoria</div>
-              <div className="col-span-2">Páginas</div>
+              <div className="col-span-3">Categoria</div>
+              <div className="col-span-1">Páginas</div>
               <div className="col-span-2">Acesso</div>
               <div className="col-span-1 text-right">Ações</div>
             </div>
@@ -480,7 +480,8 @@ export const RelatoriosPendentes = () => {
                     {report.category}
                   </span>
                 </div>
-                <div className="col-span-2">
+                <div className="col-span-1"></div>
+                <div className="col-span-1">
                   <div className="flex items-center gap-2">
                     <i className="fas fa-file-pdf text-slate-400 text-sm"></i>
                     <span className="text-sm font-medium text-slate-700">{report.pages}</span>
