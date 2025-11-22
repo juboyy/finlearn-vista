@@ -8,7 +8,10 @@ import {
   Lightbulb,
   Type,
   Image as ImageIcon,
-  Code
+  Code,
+  Columns2,
+  FileEdit,
+  Eye
 } from "lucide-react";
 
 interface CommandMenuOption {
@@ -24,10 +27,13 @@ interface MarkdownEditorProps {
   onChange: (value: string) => void;
 }
 
+type ViewMode = 'split' | 'editor' | 'preview';
+
 export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
   const [showCommandMenu, setShowCommandMenu] = useState(false);
   const [commandMenuPosition, setCommandMenuPosition] = useState({ top: 0, left: 0 });
   const [selectedCommandIndex, setSelectedCommandIndex] = useState(0);
+  const [viewMode, setViewMode] = useState<ViewMode>('split');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const commandMenuRef = useRef<HTMLDivElement>(null);
 
@@ -190,9 +196,49 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
   }, []);
 
   return (
-    <div className="relative w-full h-full grid grid-cols-2 gap-4">
-      {/* Editor Column */}
-      <div className="relative border-r border-border">
+    <div className="relative w-full h-full flex flex-col">
+      {/* View Mode Toggle Buttons */}
+      <div className="flex items-center justify-end gap-2 mb-4 pb-4 border-b border-border">
+        <button
+          onClick={() => setViewMode('split')}
+          className={`px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-2 ${
+            viewMode === 'split'
+              ? 'bg-[hsl(206,35%,75%)] text-[hsl(220,15%,30%)]'
+              : 'bg-muted text-muted-foreground hover:bg-[hsl(206,35%,85%)]'
+          }`}
+        >
+          <Columns2 size={14} />
+          Split
+        </button>
+        <button
+          onClick={() => setViewMode('editor')}
+          className={`px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-2 ${
+            viewMode === 'editor'
+              ? 'bg-[hsl(206,35%,75%)] text-[hsl(220,15%,30%)]'
+              : 'bg-muted text-muted-foreground hover:bg-[hsl(206,35%,85%)]'
+          }`}
+        >
+          <FileEdit size={14} />
+          Editor
+        </button>
+        <button
+          onClick={() => setViewMode('preview')}
+          className={`px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-2 ${
+            viewMode === 'preview'
+              ? 'bg-[hsl(206,35%,75%)] text-[hsl(220,15%,30%)]'
+              : 'bg-muted text-muted-foreground hover:bg-[hsl(206,35%,85%)]'
+          }`}
+        >
+          <Eye size={14} />
+          Preview
+        </button>
+      </div>
+
+      {/* Content Area */}
+      <div className={`relative flex-1 ${viewMode === 'split' ? 'grid grid-cols-2 gap-4' : ''}`}>
+        {/* Editor Column */}
+        {(viewMode === 'split' || viewMode === 'editor') && (
+          <div className={`relative ${viewMode === 'split' ? 'border-r border-border' : ''}`}>
         <textarea
           ref={textareaRef}
           value={value}
@@ -206,58 +252,62 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
           }}
         />
         
-        {showCommandMenu && (
-          <div
-            ref={commandMenuRef}
-            className="absolute bg-card border border-border rounded-lg shadow-2xl z-50 w-80 overflow-hidden"
-            style={{
-              top: `${commandMenuPosition.top}px`,
-              left: `${commandMenuPosition.left}px`,
-            }}
-          >
-            <div className="py-2">
-              <div className="px-3 py-2 text-xs font-semibold text-muted-foreground uppercase border-b border-border">
-                Comandos Disponíveis
+            {showCommandMenu && (
+              <div
+                ref={commandMenuRef}
+                className="absolute bg-card border border-border rounded-lg shadow-2xl z-50 w-80 overflow-hidden"
+                style={{
+                  top: `${commandMenuPosition.top}px`,
+                  left: `${commandMenuPosition.left}px`,
+                }}
+              >
+                <div className="py-2">
+                  <div className="px-3 py-2 text-xs font-semibold text-muted-foreground uppercase border-b border-border">
+                    Comandos Disponíveis
+                  </div>
+                  {commandOptions.map((option, index) => {
+                    const Icon = option.icon;
+                    return (
+                      <button
+                        key={option.id}
+                        onClick={option.action}
+                        className={`w-full px-3 py-2.5 text-left hover:bg-muted transition flex items-start gap-3 ${
+                          index === selectedCommandIndex ? 'bg-muted' : ''
+                        }`}
+                      >
+                        <div className={`w-8 h-8 ${
+                          index === selectedCommandIndex 
+                            ? 'bg-[hsl(206,35%,75%)]' 
+                            : 'bg-[hsl(206,35%,85%)]'
+                        } rounded-lg flex items-center justify-center flex-shrink-0`}>
+                          <Icon className="text-[hsl(220,15%,30%)]" size={16} />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="font-medium text-foreground text-sm">{option.label}</div>
+                          <div className="text-xs text-muted-foreground">{option.description}</div>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
-              {commandOptions.map((option, index) => {
-                const Icon = option.icon;
-                return (
-                  <button
-                    key={option.id}
-                    onClick={option.action}
-                    className={`w-full px-3 py-2.5 text-left hover:bg-muted transition flex items-start gap-3 ${
-                      index === selectedCommandIndex ? 'bg-muted' : ''
-                    }`}
-                  >
-                    <div className={`w-8 h-8 ${
-                      index === selectedCommandIndex 
-                        ? 'bg-[hsl(206,35%,75%)]' 
-                        : 'bg-[hsl(206,35%,85%)]'
-                    } rounded-lg flex items-center justify-center flex-shrink-0`}>
-                      <Icon className="text-[hsl(220,15%,30%)]" size={16} />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="font-medium text-foreground text-sm">{option.label}</div>
-                      <div className="text-xs text-muted-foreground">{option.description}</div>
-                    </div>
-                  </button>
-                );
-              })}
+            )}
+          </div>
+        )}
+
+        {/* Preview Column */}
+        {(viewMode === 'split' || viewMode === 'preview') && (
+          <div className="relative overflow-y-auto p-8">
+            <div className="mb-4 text-xs font-semibold text-muted-foreground uppercase border-b border-border pb-2">
+              Preview
+            </div>
+            <div className="prose prose-slate dark:prose-invert max-w-none">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {value || "*Comece a escrever para ver o preview...*"}
+              </ReactMarkdown>
             </div>
           </div>
         )}
-      </div>
-
-      {/* Preview Column */}
-      <div className="relative overflow-y-auto p-8">
-        <div className="mb-4 text-xs font-semibold text-muted-foreground uppercase border-b border-border pb-2">
-          Preview
-        </div>
-        <div className="prose prose-slate dark:prose-invert max-w-none">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {value || "*Comece a escrever para ver o preview...*"}
-          </ReactMarkdown>
-        </div>
       </div>
     </div>
   );
