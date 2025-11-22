@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, DollarSign, Users, Receipt, Target, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowLeft, DollarSign, Users, Receipt, Target, ChevronLeft, ChevronRight, BarChart3 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { StatCard } from "@/components/Dashboard/StatCard";
@@ -104,17 +104,26 @@ export default function Financeiro() {
         {/* Header */}
         <header className="bg-card border-b border-border sticky top-0 z-10">
           <div className="px-8 py-4">
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => navigate("/criar-newsletter")}
-                className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition"
-              >
-                <ArrowLeft size={20} />
-              </button>
-              <div>
-                <h1 className="text-2xl font-semibold text-foreground">Dashboard Financeiro</h1>
-                <p className="text-sm text-muted-foreground mt-1">Visão completa das receitas e assinantes</p>
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={() => navigate("/criar-newsletter")}
+                  className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition"
+                >
+                  <ArrowLeft size={20} />
+                </button>
+                <div>
+                  <h1 className="text-2xl font-semibold text-foreground">Dashboard Financeiro</h1>
+                  <p className="text-sm text-muted-foreground mt-1">Visão completa das receitas e assinantes</p>
+                </div>
               </div>
+              <Button 
+                variant="outline" 
+                className="flex items-center gap-2"
+              >
+                <BarChart3 size={18} />
+                Métricas
+              </Button>
             </div>
           </div>
         </header>
