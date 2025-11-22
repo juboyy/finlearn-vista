@@ -29,6 +29,7 @@ export default function ConsumoAnalytics() {
         </header>
 
         <div className="p-8">
+          {/* Assinaturas Ativas */}
           <section className="bg-white rounded-xl p-6 border border-slate-200 mb-8">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-lg font-semibold text-slate-800">Assinaturas Ativas</h2>
@@ -77,6 +78,7 @@ export default function ConsumoAnalytics() {
             </button>
           </section>
 
+          {/* Saldo de Créditos e Resumo */}
           <div className="grid grid-cols-3 gap-6 mb-8">
             <section className="col-span-2 bg-white rounded-xl p-6 border border-slate-200">
               <div className="flex items-center justify-between mb-6">
@@ -202,119 +204,315 @@ export default function ConsumoAnalytics() {
             </section>
           </div>
 
+          {/* Histórico de Consumo de Créditos */}
           <section className="bg-white rounded-xl p-6 border border-slate-200 mb-8">
-            <h2 className="text-lg font-semibold text-slate-800 mb-4">Histórico de Consumo</h2>
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h2 className="text-lg font-semibold text-slate-800">Histórico de Consumo de Créditos</h2>
+                <p className="text-sm text-slate-500 mt-1">Detalhamento do uso dos agentes IA no mês atual</p>
+              </div>
+              <div className="flex gap-2">
+                <select className="px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-pastel-blue">
+                  <option>Novembro 2024</option>
+                  <option>Outubro 2024</option>
+                  <option>Setembro 2024</option>
+                  <option>Agosto 2024</option>
+                </select>
+                <Button variant="outline" className="bg-slate-100 text-slate-700 hover:bg-slate-200">
+                  <Download className="w-4 h-4 mr-2" />
+                  Exportar
+                </Button>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-4 gap-4 mb-6">
+              <div className="p-3 rounded-lg border border-slate-200 bg-slate-50">
+                <div className="flex items-center gap-2 mb-1">
+                  <Mic className="w-4 h-4 text-slate-600" />
+                  <span className="text-xs text-slate-600">Interações Voz</span>
+                </div>
+                <p className="text-xl font-bold text-slate-800">750</p>
+                <p className="text-xs text-slate-500 mt-1">R$ 37,50 gasto</p>
+              </div>
+
+              <div className="p-3 rounded-lg border border-slate-200 bg-slate-50">
+                <div className="flex items-center gap-2 mb-1">
+                  <Pen className="w-4 h-4 text-slate-600" />
+                  <span className="text-xs text-slate-600">Textos Gerados</span>
+                </div>
+                <p className="text-xl font-bold text-slate-800">1.160</p>
+                <p className="text-xs text-slate-500 mt-1">R$ 23,20 gasto</p>
+              </div>
+
+              <div className="p-3 rounded-lg border border-slate-200 bg-slate-50">
+                <div className="flex items-center gap-2 mb-1">
+                  <Video className="w-4 h-4 text-slate-600" />
+                  <span className="text-xs text-slate-600">Vídeos Criados</span>
+                </div>
+                <p className="text-xl font-bold text-slate-800">580</p>
+                <p className="text-xs text-slate-500 mt-1">R$ 87,00 gasto</p>
+              </div>
+
+              <div className="p-3 rounded-lg border border-slate-200 bg-pastel-blue bg-opacity-30">
+                <div className="flex items-center gap-2 mb-1">
+                  <Coins className="w-4 h-4 text-slate-700" />
+                  <span className="text-xs text-slate-700 font-medium">Total Consumido</span>
+                </div>
+                <p className="text-xl font-bold text-slate-800">2.490</p>
+                <p className="text-xs text-slate-600 mt-1">R$ 187,35 total</p>
+              </div>
+            </div>
+
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-slate-200">
-                <thead className="bg-slate-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
-                      Data
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
-                      Descrição
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
-                      Tipo
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider">
-                      Valor
-                    </th>
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-slate-200">
+                    <th className="text-left py-3 px-4 font-medium text-slate-600">Data/Hora</th>
+                    <th className="text-left py-3 px-4 font-medium text-slate-600">Tipo de Uso</th>
+                    <th className="text-left py-3 px-4 font-medium text-slate-600">Descrição</th>
+                    <th className="text-left py-3 px-4 font-medium text-slate-600">Créditos</th>
+                    <th className="text-left py-3 px-4 font-medium text-slate-600">Custo Unit.</th>
+                    <th className="text-left py-3 px-4 font-medium text-slate-600">Valor Total</th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-slate-200">
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
-                      15/11/2024
+                <tbody>
+                  <tr className="border-b border-slate-100 hover:bg-slate-50">
+                    <td className="py-4 px-4 text-sm text-slate-800">21 Nov, 14:32</td>
+                    <td className="py-4 px-4">
+                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-pink text-pastel-gray-dark text-xs rounded-full">
+                        <Video className="w-3 h-3" />
+                        Vídeo
+                      </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
-                      Geração de texto com IA
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
-                      Escrita
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800 text-right">
-                      R$ 2,50
-                    </td>
+                    <td className="py-4 px-4 text-sm text-slate-800">Criação de vídeo com avatar - Análise de mercado</td>
+                    <td className="py-4 px-4 text-sm text-slate-800">120</td>
+                    <td className="py-4 px-4 text-sm text-slate-600">R$ 0,15</td>
+                    <td className="py-4 px-4 text-sm font-medium text-slate-800">R$ 18,00</td>
                   </tr>
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
-                      14/11/2024
+                  <tr className="border-b border-slate-100 hover:bg-slate-50">
+                    <td className="py-4 px-4 text-sm text-slate-800">21 Nov, 11:15</td>
+                    <td className="py-4 px-4">
+                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-purple text-pastel-gray-dark text-xs rounded-full">
+                        <Pen className="w-3 h-3" />
+                        Escrita
+                      </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
-                      Geração de vídeo curto
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
-                      Vídeo
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800 text-right">
-                      R$ 7,50
-                    </td>
+                    <td className="py-4 px-4 text-sm text-slate-800">Geração de artigo sobre regulação bancária</td>
+                    <td className="py-4 px-4 text-sm text-slate-800">85</td>
+                    <td className="py-4 px-4 text-sm text-slate-600">R$ 0,02</td>
+                    <td className="py-4 px-4 text-sm font-medium text-slate-800">R$ 1,70</td>
                   </tr>
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
-                      14/11/2024
+                  <tr className="border-b border-slate-100 hover:bg-slate-50">
+                    <td className="py-4 px-4 text-sm text-slate-800">21 Nov, 09:45</td>
+                    <td className="py-4 px-4">
+                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-blue text-pastel-gray-dark text-xs rounded-full">
+                        <Mic className="w-3 h-3" />
+                        Voz
+                      </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
-                      Transcrição de áudio
+                    <td className="py-4 px-4 text-sm text-slate-800">Interação por voz - Consulta sobre fundos de investimento</td>
+                    <td className="py-4 px-4 text-sm text-slate-800">45</td>
+                    <td className="py-4 px-4 text-sm text-slate-600">R$ 0,05</td>
+                    <td className="py-4 px-4 text-sm font-medium text-slate-800">R$ 2,25</td>
+                  </tr>
+                  <tr className="border-b border-slate-100 hover:bg-slate-50">
+                    <td className="py-4 px-4 text-sm text-slate-800">20 Nov, 16:20</td>
+                    <td className="py-4 px-4">
+                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-purple text-pastel-gray-dark text-xs rounded-full">
+                        <i className="fas fa-file-alt text-xs"></i>
+                        Resumo
+                      </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
-                      Voz
+                    <td className="py-4 px-4 text-sm text-slate-800">Resumo de relatório trimestral - 15 páginas</td>
+                    <td className="py-4 px-4 text-sm text-slate-800">150</td>
+                    <td className="py-4 px-4 text-sm text-slate-600">R$ 0,02</td>
+                    <td className="py-4 px-4 text-sm font-medium text-slate-800">R$ 3,00</td>
+                  </tr>
+                  <tr className="border-b border-slate-100 hover:bg-slate-50">
+                    <td className="py-4 px-4 text-sm text-slate-800">20 Nov, 14:55</td>
+                    <td className="py-4 px-4">
+                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-pink text-pastel-gray-dark text-xs rounded-full">
+                        <Video className="w-3 h-3" />
+                        Vídeo
+                      </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800 text-right">
-                      R$ 1,25
+                    <td className="py-4 px-4 text-sm text-slate-800">Vídeo explicativo sobre compliance financeiro</td>
+                    <td className="py-4 px-4 text-sm text-slate-800">200</td>
+                    <td className="py-4 px-4 text-sm text-slate-600">R$ 0,15</td>
+                    <td className="py-4 px-4 text-sm font-medium text-slate-800">R$ 30,00</td>
+                  </tr>
+                  <tr className="border-b border-slate-100 hover:bg-slate-50">
+                    <td className="py-4 px-4 text-sm text-slate-800">20 Nov, 10:30</td>
+                    <td className="py-4 px-4">
+                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-blue text-pastel-gray-dark text-xs rounded-full">
+                        <i className="fas fa-volume-up text-xs"></i>
+                        Áudio
+                      </span>
                     </td>
+                    <td className="py-4 px-4 text-sm text-slate-800">Conversão de texto para áudio - Newsletter diária</td>
+                    <td className="py-4 px-4 text-sm text-slate-800">60</td>
+                    <td className="py-4 px-4 text-sm text-slate-600">R$ 0,05</td>
+                    <td className="py-4 px-4 text-sm font-medium text-slate-800">R$ 3,00</td>
+                  </tr>
+                  <tr className="border-b border-slate-100 hover:bg-slate-50">
+                    <td className="py-4 px-4 text-sm text-slate-800">19 Nov, 15:40</td>
+                    <td className="py-4 px-4">
+                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-purple text-pastel-gray-dark text-xs rounded-full">
+                        <i className="fas fa-newspaper text-xs"></i>
+                        Artigo
+                      </span>
+                    </td>
+                    <td className="py-4 px-4 text-sm text-slate-800">Criação de artigo sobre tendências do mercado de capitais</td>
+                    <td className="py-4 px-4 text-sm text-slate-800">320</td>
+                    <td className="py-4 px-4 text-sm text-slate-600">R$ 0,02</td>
+                    <td className="py-4 px-4 text-sm font-medium text-slate-800">R$ 6,40</td>
+                  </tr>
+                  <tr className="border-b border-slate-100 hover:bg-slate-50">
+                    <td className="py-4 px-4 text-sm text-slate-800">19 Nov, 11:25</td>
+                    <td className="py-4 px-4">
+                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-blue text-pastel-gray-dark text-xs rounded-full">
+                        <Mic className="w-3 h-3" />
+                        Voz
+                      </span>
+                    </td>
+                    <td className="py-4 px-4 text-sm text-slate-800">Sessão de perguntas e respostas sobre PIX</td>
+                    <td className="py-4 px-4 text-sm text-slate-800">95</td>
+                    <td className="py-4 px-4 text-sm text-slate-600">R$ 0,05</td>
+                    <td className="py-4 px-4 text-sm font-medium text-slate-800">R$ 4,75</td>
+                  </tr>
+                  <tr className="border-b border-slate-100 hover:bg-slate-50">
+                    <td className="py-4 px-4 text-sm text-slate-800">18 Nov, 16:10</td>
+                    <td className="py-4 px-4">
+                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-pink text-pastel-gray-dark text-xs rounded-full">
+                        <Video className="w-3 h-3" />
+                        Vídeo
+                      </span>
+                    </td>
+                    <td className="py-4 px-4 text-sm text-slate-800">Tutorial em vídeo sobre análise de risco de crédito</td>
+                    <td className="py-4 px-4 text-sm text-slate-800">260</td>
+                    <td className="py-4 px-4 text-sm text-slate-600">R$ 0,15</td>
+                    <td className="py-4 px-4 text-sm font-medium text-slate-800">R$ 39,00</td>
+                  </tr>
+                  <tr className="border-b border-slate-100 hover:bg-slate-50">
+                    <td className="py-4 px-4 text-sm text-slate-800">18 Nov, 13:50</td>
+                    <td className="py-4 px-4">
+                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-purple text-pastel-gray-dark text-xs rounded-full">
+                        <Pen className="w-3 h-3" />
+                        Escrita
+                      </span>
+                    </td>
+                    <td className="py-4 px-4 text-sm text-slate-800">Relatório personalizado de análise de portfólio</td>
+                    <td className="py-4 px-4 text-sm text-slate-800">180</td>
+                    <td className="py-4 px-4 text-sm text-slate-600">R$ 0,02</td>
+                    <td className="py-4 px-4 text-sm font-medium text-slate-800">R$ 3,60</td>
+                  </tr>
+                  <tr className="border-b border-slate-100 hover:bg-slate-50">
+                    <td className="py-4 px-4 text-sm text-slate-800">18 Nov, 09:15</td>
+                    <td className="py-4 px-4">
+                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-blue text-pastel-gray-dark text-xs rounded-full">
+                        <Mic className="w-3 h-3" />
+                        Voz
+                      </span>
+                    </td>
+                    <td className="py-4 px-4 text-sm text-slate-800">Consulta sobre regulamentação BACEN</td>
+                    <td className="py-4 px-4 text-sm text-slate-800">70</td>
+                    <td className="py-4 px-4 text-sm text-slate-600">R$ 0,05</td>
+                    <td className="py-4 px-4 text-sm font-medium text-slate-800">R$ 3,50</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50">
+                    <td className="py-4 px-4 text-sm text-slate-800">17 Nov, 14:20</td>
+                    <td className="py-4 px-4">
+                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-purple text-pastel-gray-dark text-xs rounded-full">
+                        <i className="fas fa-chart-bar text-xs"></i>
+                        Análise
+                      </span>
+                    </td>
+                    <td className="py-4 px-4 text-sm text-slate-800">Análise comparativa de produtos financeiros</td>
+                    <td className="py-4 px-4 text-sm text-slate-800">240</td>
+                    <td className="py-4 px-4 text-sm text-slate-600">R$ 0,02</td>
+                    <td className="py-4 px-4 text-sm font-medium text-slate-800">R$ 4,80</td>
                   </tr>
                 </tbody>
+                <tfoot>
+                  <tr className="border-t-2 border-slate-300 bg-slate-50">
+                    <td colSpan={3} className="py-4 px-4 text-sm font-semibold text-slate-800">TOTAL DO MÊS</td>
+                    <td className="py-4 px-4 text-sm font-bold text-slate-800">2.490</td>
+                    <td className="py-4 px-4"></td>
+                    <td className="py-4 px-4 text-base font-bold text-slate-800">R$ 187,35</td>
+                  </tr>
+                </tfoot>
               </table>
             </div>
-            <div className="mt-4 flex justify-end">
-              <button className="text-sm text-slate-600 hover:text-slate-800">
-                Ver Mais
-              </button>
+            <div className="flex items-center justify-between mt-6 pt-4 border-t border-slate-200">
+              <p className="text-sm text-slate-500">Mostrando 12 de 47 transações</p>
+              <div className="flex gap-2">
+                <button className="px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition">
+                  Anterior
+                </button>
+                <button className="px-3 py-2 bg-pastel-blue text-pastel-gray-dark rounded-lg text-sm font-medium">
+                  1
+                </button>
+                <button className="px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition">
+                  2
+                </button>
+                <button className="px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition">
+                  3
+                </button>
+                <button className="px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition">
+                  4
+                </button>
+                <button className="px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition">
+                  Próximo
+                </button>
+              </div>
             </div>
           </section>
 
+          {/* Métodos de Pagamento */}
           <section className="bg-white rounded-xl p-6 border border-slate-200 mb-8">
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-6">
               <h2 className="text-lg font-semibold text-slate-800">Métodos de Pagamento</h2>
-              <Button className="bg-pastel-blue hover:bg-opacity-80 text-pastel-gray-dark">
+              <Button className="bg-pastel-blue hover:bg-pastel-blueBtn text-pastel-gray-dark">
                 <Plus className="w-4 h-4 mr-2" />
                 Adicionar Cartão
               </Button>
             </div>
-            <div className="space-y-4">
-              <div className="flex items-center justify-between p-4 rounded-lg border border-slate-200">
-                <div className="flex items-center gap-4">
-                  <i className="fab fa-cc-visa text-2xl text-slate-600"></i>
-                  <div>
-                    <p className="font-medium text-slate-800">Visa **** 1234</p>
-                    <p className="text-sm text-slate-600">Expira em 12/25</p>
-                  </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200">
+                <div className="w-12 h-12 bg-pastel-blue rounded-lg flex items-center justify-center">
+                  <i className="fab fa-cc-visa text-slate-700 text-xl"></i>
                 </div>
+                <div className="flex-1">
+                  <h3 className="font-medium text-slate-800">Visa •••• 4532</h3>
+                  <p className="text-sm text-slate-500">Expira em 12/2026</p>
+                </div>
+                <span className="px-2 py-1 bg-pastel-green text-pastel-gray-dark text-xs rounded-full">Principal</span>
                 <div className="flex gap-2">
-                  <button className="p-2 text-slate-500 hover:bg-slate-100 rounded-lg transition">
+                  <button className="p-2 text-slate-600 hover:text-slate-800">
                     <Edit className="w-4 h-4" />
                   </button>
-                  <button className="p-2 text-slate-500 hover:bg-slate-100 rounded-lg transition">
+                  <button className="p-2 text-slate-600 hover:text-red-600">
                     <Trash className="w-4 h-4" />
                   </button>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between p-4 rounded-lg border border-slate-200">
-                <div className="flex items-center gap-4">
-                  <i className="fab fa-cc-mastercard text-2xl text-slate-600"></i>
-                  <div>
-                    <p className="font-medium text-slate-800">Mastercard **** 5678</p>
-                    <p className="text-sm text-slate-600">Expira em 08/26</p>
-                  </div>
+              <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200">
+                <div className="w-12 h-12 bg-pastel-purple rounded-lg flex items-center justify-center">
+                  <i className="fab fa-cc-mastercard text-slate-700 text-xl"></i>
                 </div>
+                <div className="flex-1">
+                  <h3 className="font-medium text-slate-800">Mastercard •••• 8901</h3>
+                  <p className="text-sm text-slate-500">Expira em 08/2025</p>
+                </div>
+                <button className="px-3 py-1 text-slate-600 border border-slate-200 rounded text-xs font-medium hover:bg-slate-50 transition">
+                  Definir como Principal
+                </button>
                 <div className="flex gap-2">
-                  <button className="p-2 text-slate-500 hover:bg-slate-100 rounded-lg transition">
+                  <button className="p-2 text-slate-600 hover:text-slate-800">
                     <Edit className="w-4 h-4" />
                   </button>
-                  <button className="p-2 text-slate-500 hover:bg-slate-100 rounded-lg transition">
+                  <button className="p-2 text-slate-600 hover:text-red-600">
                     <Trash className="w-4 h-4" />
                   </button>
                 </div>
@@ -322,109 +520,163 @@ export default function ConsumoAnalytics() {
             </div>
           </section>
 
+          {/* Cupons de Desconto */}
           <section className="bg-white rounded-xl p-6 border border-slate-200 mb-8">
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-6">
               <h2 className="text-lg font-semibold text-slate-800">Cupons de Desconto</h2>
-              <Button className="bg-pastel-yellow hover:bg-opacity-80 text-pastel-gray-dark">
-                <Percent className="w-4 h-4 mr-2" />
-                Resgatar Cupom
+              <Button className="bg-pastel-purple hover:bg-pastel-purpleBtn text-pastel-gray-dark">
+                <Ticket className="w-4 h-4 mr-2" />
+                Aplicar Cupom
               </Button>
             </div>
-            <div className="space-y-4">
-              <div className="flex items-center justify-between p-4 rounded-lg border border-slate-200">
-                <div className="flex items-center gap-4">
-                  <Gift className="w-5 h-5 text-slate-600" />
-                  <div>
-                    <p className="font-medium text-slate-800">Cupom de 10% OFF</p>
-                    <p className="text-sm text-slate-600">Expira em 30/11/2024</p>
-                  </div>
+            <div className="grid grid-cols-3 gap-4">
+              <div className="p-4 rounded-lg border-2 border-dashed border-pastel-green bg-pastel-green bg-opacity-20">
+                <div className="flex items-center gap-3 mb-2">
+                  <Percent className="w-4 h-4 text-slate-700" />
+                  <span className="font-medium text-slate-800">SAVE20</span>
                 </div>
-                <Badge className="bg-pastel-green text-pastel-gray-dark border-0">Ativo</Badge>
+                <p className="text-sm text-slate-600 mb-2">20% de desconto no próximo pagamento</p>
+                <p className="text-xs text-slate-500">Válido até 31/12/2024</p>
               </div>
 
-              <div className="flex items-center justify-between p-4 rounded-lg border border-slate-200">
-                <div className="flex items-center gap-4">
-                  <Ticket className="w-5 h-5 text-slate-600" />
-                  <div>
-                    <p className="font-medium text-slate-800">Cupom de R$20 OFF</p>
-                    <p className="text-sm text-slate-600">Expira em 15/12/2024</p>
-                  </div>
+              <div className="p-4 rounded-lg border-2 border-dashed border-pastel-blue bg-pastel-blue bg-opacity-20">
+                <div className="flex items-center gap-3 mb-2">
+                  <Gift className="w-4 h-4 text-slate-700" />
+                  <span className="font-medium text-slate-800">FRIEND50</span>
                 </div>
-                <Badge className="bg-slate-200 text-slate-500 border-0">Disponível</Badge>
+                <p className="text-sm text-slate-600 mb-2">R$ 50 para você e seu amigo</p>
+                <p className="text-xs text-slate-500">Programa de indicação</p>
+              </div>
+
+              <div className="p-4 rounded-lg border-2 border-dashed border-slate-200 bg-slate-50">
+                <div className="flex items-center gap-3 mb-2">
+                  <Plus className="w-4 h-4 text-slate-400" />
+                  <span className="font-medium text-slate-500">Adicionar Cupom</span>
+                </div>
+                <p className="text-sm text-slate-400 mb-2">Digite seu código de desconto</p>
+                <button className="text-xs text-pastel-blueText hover:underline">Inserir código</button>
               </div>
             </div>
           </section>
 
+          {/* Histórico de Pagamentos */}
           <section className="bg-white rounded-xl p-6 border border-slate-200">
-            <h2 className="text-lg font-semibold text-slate-800 mb-4">Histórico de Pagamentos</h2>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-lg font-semibold text-slate-800">Histórico de Pagamentos</h2>
+              <div className="flex gap-2">
+                <select className="px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-pastel-blue">
+                  <option>Todos os períodos</option>
+                  <option>Últimos 3 meses</option>
+                  <option>Últimos 6 meses</option>
+                  <option>Último ano</option>
+                </select>
+                <Button variant="outline" className="bg-slate-100 text-slate-700 hover:bg-slate-200">
+                  <Download className="w-4 h-4 mr-2" />
+                  Exportar
+                </Button>
+              </div>
+            </div>
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-slate-200">
-                <thead className="bg-slate-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
-                      Data
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
-                      Descrição
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
-                      Método
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider">
-                      Valor
-                    </th>
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-slate-200">
+                    <th className="text-left py-3 px-4 font-medium text-slate-600">Data</th>
+                    <th className="text-left py-3 px-4 font-medium text-slate-600">Descrição</th>
+                    <th className="text-left py-3 px-4 font-medium text-slate-600">Valor</th>
+                    <th className="text-left py-3 px-4 font-medium text-slate-600">Status</th>
+                    <th className="text-left py-3 px-4 font-medium text-slate-600">Ações</th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-slate-200">
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
-                      10/11/2024
+                <tbody>
+                  <tr className="border-b border-slate-100">
+                    <td className="py-4 px-4 text-sm text-slate-800">16 Nov 2024</td>
+                    <td className="py-4 px-4 text-sm text-slate-800">Assinaturas - Novembro</td>
+                    <td className="py-4 px-4 text-sm font-medium text-slate-800">R$ 259,70</td>
+                    <td className="py-4 px-4">
+                      <span className="px-2 py-1 bg-pastel-green text-pastel-gray-dark text-xs rounded-full">Pago</span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
-                      Assinatura Insights Premium
+                    <td className="py-4 px-4">
+                      <button className="text-pastel-blueText hover:underline text-sm">
+                        <Download className="w-3 h-3 inline-block mr-1" />
+                        Baixar
+                      </button>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
-                      Visa **** 1234
+                  </tr>
+                  <tr className="border-b border-slate-100">
+                    <td className="py-4 px-4 text-sm text-slate-800">08 Nov 2024</td>
+                    <td className="py-4 px-4 text-sm text-slate-800">Pacote de Créditos IA - 5.000 créditos</td>
+                    <td className="py-4 px-4 text-sm font-medium text-slate-800">R$ 179,90</td>
+                    <td className="py-4 px-4">
+                      <span className="px-2 py-1 bg-pastel-green text-pastel-gray-dark text-xs rounded-full">Pago</span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800 text-right">
-                      R$ 129,90
+                    <td className="py-4 px-4">
+                      <button className="text-pastel-blueText hover:underline text-sm">
+                        <Download className="w-3 h-3 inline-block mr-1" />
+                        Baixar
+                      </button>
+                    </td>
+                  </tr>
+                  <tr className="border-b border-slate-100">
+                    <td className="py-4 px-4 text-sm text-slate-800">16 Out 2024</td>
+                    <td className="py-4 px-4 text-sm text-slate-800">Assinaturas - Outubro</td>
+                    <td className="py-4 px-4 text-sm font-medium text-slate-800">R$ 259,70</td>
+                    <td className="py-4 px-4">
+                      <span className="px-2 py-1 bg-pastel-green text-pastel-gray-dark text-xs rounded-full">Pago</span>
+                    </td>
+                    <td className="py-4 px-4">
+                      <button className="text-pastel-blueText hover:underline text-sm">
+                        <Download className="w-3 h-3 inline-block mr-1" />
+                        Baixar
+                      </button>
+                    </td>
+                  </tr>
+                  <tr className="border-b border-slate-100">
+                    <td className="py-4 px-4 text-sm text-slate-800">16 Set 2024</td>
+                    <td className="py-4 px-4 text-sm text-slate-800">Assinaturas - Setembro</td>
+                    <td className="py-4 px-4 text-sm font-medium text-slate-800">R$ 259,70</td>
+                    <td className="py-4 px-4">
+                      <span className="px-2 py-1 bg-pastel-green text-pastel-gray-dark text-xs rounded-full">Pago</span>
+                    </td>
+                    <td className="py-4 px-4">
+                      <button className="text-pastel-blueText hover:underline text-sm">
+                        <Download className="w-3 h-3 inline-block mr-1" />
+                        Baixar
+                      </button>
                     </td>
                   </tr>
                   <tr>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
-                      05/11/2024
+                    <td className="py-4 px-4 text-sm text-slate-800">16 Ago 2024</td>
+                    <td className="py-4 px-4 text-sm text-slate-800">Assinaturas - Agosto</td>
+                    <td className="py-4 px-4 text-sm font-medium text-slate-800">R$ 259,70</td>
+                    <td className="py-4 px-4">
+                      <span className="px-2 py-1 bg-pastel-green text-pastel-gray-dark text-xs rounded-full">Pago</span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
-                      Compra de 5.000 créditos IA
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
-                      Mastercard **** 5678
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800 text-right">
-                      R$ 179,90
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
-                      01/11/2024
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
-                      Assinatura Newsletter Diária
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
-                      Visa **** 1234
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800 text-right">
-                      R$ 49,90
+                    <td className="py-4 px-4">
+                      <button className="text-pastel-blueText hover:underline text-sm">
+                        <Download className="w-3 h-3 inline-block mr-1" />
+                        Baixar
+                      </button>
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <div className="mt-4 flex justify-end">
-              <button className="text-sm text-slate-600 hover:text-slate-800">
-                Ver Mais
-              </button>
+            <div className="flex items-center justify-between mt-6 pt-4 border-t border-slate-200">
+              <p className="text-sm text-slate-500">Mostrando 5 de 9 transações</p>
+              <div className="flex gap-2">
+                <button className="px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition">
+                  Anterior
+                </button>
+                <button className="px-3 py-2 bg-pastel-blue text-pastel-gray-dark rounded-lg text-sm font-medium">
+                  1
+                </button>
+                <button className="px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition">
+                  2
+                </button>
+                <button className="px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition">
+                  Próximo
+                </button>
+              </div>
             </div>
           </section>
         </div>
