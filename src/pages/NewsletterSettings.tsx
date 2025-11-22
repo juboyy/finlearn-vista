@@ -1,5 +1,7 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Undo, Save, Send, Bell, Filter, Clock, Mail, Smartphone, Monitor, MessageSquare, Plus, X, Download, ChartLine, Newspaper, Book, Mic, MessageCircle } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function NewsletterSettings() {
   return (
@@ -90,10 +92,7 @@ export default function NewsletterSettings() {
                   </div>
                   <div className="flex items-center gap-4">
                     <button className="text-sm text-slate-600 hover:text-slate-800 font-medium">Editar</button>
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input type="checkbox" defaultChecked className="sr-only peer" />
-                      <div className="w-11 h-6 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all" style={{ backgroundColor: '#C5E8D4' }}></div>
-                    </label>
+                    <Switch defaultChecked />
                   </div>
                 </div>
 
@@ -113,10 +112,7 @@ export default function NewsletterSettings() {
                   </div>
                   <div className="flex items-center gap-4">
                     <button className="text-sm text-slate-600 hover:text-slate-800 font-medium">Configurar</button>
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input type="checkbox" defaultChecked className="sr-only peer" />
-                      <div className="w-11 h-6 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all" style={{ backgroundColor: '#C5E8D4' }}></div>
-                    </label>
+                    <Switch defaultChecked />
                   </div>
                 </div>
 
@@ -136,10 +132,7 @@ export default function NewsletterSettings() {
                   </div>
                   <div className="flex items-center gap-4">
                     <button className="text-sm text-slate-600 hover:text-slate-800 font-medium">Gerenciar</button>
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input type="checkbox" defaultChecked className="sr-only peer" />
-                      <div className="w-11 h-6 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all" style={{ backgroundColor: '#C5E8D4' }}></div>
-                    </label>
+                    <Switch defaultChecked />
                   </div>
                 </div>
 
@@ -159,10 +152,7 @@ export default function NewsletterSettings() {
                   </div>
                   <div className="flex items-center gap-4">
                     <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">Ativar</button>
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input type="checkbox" className="sr-only peer" />
-                      <div className="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
-                    </label>
+                    <Switch />
                   </div>
                 </div>
               </div>
@@ -202,10 +192,7 @@ export default function NewsletterSettings() {
                         <p className="text-sm font-medium text-slate-800">{item.label}</p>
                         <p className="text-xs text-slate-500 mt-1">{item.detail}</p>
                       </div>
-                      <label className="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" defaultChecked={item.checked} className="sr-only peer" />
-                        <div className={`w-11 h-6 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all ${item.checked ? '' : 'bg-slate-300'}`} style={item.checked ? { backgroundColor: '#C5E8D4' } : {}}></div>
-                      </label>
+                      <Switch defaultChecked={item.checked} />
                     </div>
                   ))}
                 </div>
@@ -224,10 +211,7 @@ export default function NewsletterSettings() {
                         <p className="text-sm font-medium text-slate-800">{item.label}</p>
                         <p className="text-xs text-slate-500 mt-1">{item.detail}</p>
                       </div>
-                      <label className="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" defaultChecked={item.checked} className="sr-only peer" />
-                        <div className={`w-11 h-6 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all ${item.checked ? '' : 'bg-slate-300'}`} style={item.checked ? { backgroundColor: '#C5E8D4' } : {}}></div>
-                      </label>
+                      <Switch defaultChecked={item.checked} />
                     </div>
                   ))}
                 </div>
@@ -282,7 +266,7 @@ export default function NewsletterSettings() {
                     { label: 'Análise de Risco', count: '15 newsletters', color: null, checked: false }
                   ].map((cat, idx) => (
                     <label key={idx} className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer ${cat.checked ? 'bg-opacity-30' : 'bg-slate-50 hover:bg-slate-100 transition'}`} style={cat.checked && cat.color ? { backgroundColor: cat.color + '4D', border: `2px solid ${cat.color}` } : { border: '1px solid #e2e8f0' }}>
-                      <input type="checkbox" defaultChecked={cat.checked} className="w-4 h-4 rounded focus:ring-2" />
+                      <Checkbox defaultChecked={cat.checked} />
                       <div>
                         <p className="text-sm font-medium text-slate-800">{cat.label}</p>
                         <p className="text-xs text-slate-500">{cat.count}</p>
@@ -303,7 +287,7 @@ export default function NewsletterSettings() {
                     { icon: MessageCircle, label: 'Opinião', checked: true }
                   ].map((type, idx) => (
                     <label key={idx} className="flex flex-col items-center gap-2 p-4 bg-slate-50 border border-slate-200 rounded-lg cursor-pointer hover:border-pastel-blue hover:bg-pastel-blue hover:bg-opacity-10 transition">
-                      <input type="checkbox" defaultChecked={type.checked} className="w-4 h-4 rounded" />
+                      <Checkbox defaultChecked={type.checked} />
                       <type.icon className="text-2xl text-slate-600" size={24} />
                       <span className="text-xs font-medium text-slate-700">{type.label}</span>
                     </label>
@@ -338,15 +322,15 @@ export default function NewsletterSettings() {
                 <h3 className="text-sm font-semibold text-slate-800 mb-4">Tamanho Preferido</h3>
                 <div className="flex items-center gap-4">
                   <label className="flex items-center gap-2">
-                    <input type="checkbox" defaultChecked className="w-4 h-4 rounded" />
+                    <Checkbox defaultChecked />
                     <span className="text-sm text-slate-700">Curto (2-3 min)</span>
                   </label>
                   <label className="flex items-center gap-2">
-                    <input type="checkbox" defaultChecked className="w-4 h-4 rounded" />
+                    <Checkbox defaultChecked />
                     <span className="text-sm text-slate-700">Médio (5-7 min)</span>
                   </label>
                   <label className="flex items-center gap-2">
-                    <input type="checkbox" className="w-4 h-4 rounded" />
+                    <Checkbox />
                     <span className="text-sm text-slate-700">Longo (10+ min)</span>
                   </label>
                 </div>
@@ -529,10 +513,7 @@ export default function NewsletterSettings() {
                         <p className="text-sm font-medium text-slate-800">{item.label}</p>
                         <p className="text-xs text-slate-500 mt-1">{item.detail}</p>
                       </div>
-                      <label className="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" defaultChecked={item.checked} className="sr-only peer" />
-                        <div className={`w-11 h-6 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all ${item.checked ? '' : 'bg-slate-300'}`} style={item.checked ? { backgroundColor: '#C5E8D4' } : {}}></div>
-                      </label>
+                      <Switch defaultChecked={item.checked} />
                     </div>
                   ))}
 
@@ -560,10 +541,7 @@ export default function NewsletterSettings() {
                         <p className="text-sm font-medium text-slate-800">{item.label}</p>
                         <p className="text-xs text-slate-500 mt-1">{item.detail}</p>
                       </div>
-                      <label className="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" defaultChecked={item.checked} className="sr-only peer" />
-                        <div className={`w-11 h-6 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all ${item.checked ? '' : 'bg-slate-300'}`} style={item.checked ? { backgroundColor: '#C5E8D4' } : {}}></div>
-                      </label>
+                      <Switch defaultChecked={item.checked} />
                     </div>
                   ))}
 
