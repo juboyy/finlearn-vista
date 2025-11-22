@@ -27,9 +27,12 @@ import {
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import Plot from 'react-plotly.js';
+import { MarkdownEditor } from "@/components/MarkdownEditor";
 
 export default function NovoDocumento() {
   const [agentDropdownOpen, setAgentDropdownOpen] = useState(false);
+  const [isNewDocument, setIsNewDocument] = useState(false);
+  const [editorContent, setEditorContent] = useState("");
   const [selectedAgent, setSelectedAgent] = useState({
     name: "Agente Analista",
     description: "Especialista em análise de mercado",
@@ -181,7 +184,13 @@ export default function NovoDocumento() {
         <div className="p-6 border-b border-border">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-foreground">Meus Documentos</h2>
-            <button className="w-8 h-8 bg-[hsl(206,35%,85%)] text-[hsl(220,15%,30%)] rounded-lg flex items-center justify-center hover:bg-opacity-80 transition">
+            <button 
+              onClick={() => {
+                setIsNewDocument(true);
+                setEditorContent("");
+              }}
+              className="w-8 h-8 bg-[hsl(206,35%,85%)] text-[hsl(220,15%,30%)] rounded-lg flex items-center justify-center hover:bg-opacity-80 transition"
+            >
               <Plus size={16} />
             </button>
           </div>
@@ -386,7 +395,15 @@ export default function NovoDocumento() {
         {/* Document Content */}
         <div className="p-8">
           <div className="max-w-4xl mx-auto">
-            <article className="prose prose-slate max-w-none">
+            {isNewDocument ? (
+              <div className="bg-card border border-border rounded-xl min-h-[600px]">
+                <MarkdownEditor 
+                  value={editorContent} 
+                  onChange={setEditorContent}
+                />
+              </div>
+            ) : (
+              <article className="prose prose-slate max-w-none">
               <div className="mb-8">
                 <h1 className="text-4xl font-bold text-foreground mb-2">Análise de Mercado Q4 2024</h1>
                 <div className="flex items-center gap-4 text-sm text-muted-foreground">
@@ -638,6 +655,7 @@ export default function NovoDocumento() {
                 </div>
               </div>
             </article>
+            )}
           </div>
         </div>
       </main>
