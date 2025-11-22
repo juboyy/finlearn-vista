@@ -2,7 +2,7 @@ import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { 
   Bell, Shield, Monitor, Clock, Palette, Languages, Plus, Smartphone, 
   Key, Fingerprint, Mail, Laptop, Tablet, LogOut, Calendar, CalendarDays,
-  Sun, Moon, SunMoon, MoreVertical, Newspaper
+  Sun, Moon, SunMoon, MoreVertical, Newspaper, Chrome, Download
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
@@ -15,6 +15,7 @@ export default function Configuracoes() {
   const sessionsRef = useFadeInOnScroll<HTMLElement>();
   const remindersRef = useFadeInOnScroll<HTMLElement>();
   const appearanceRef = useFadeInOnScroll<HTMLElement>();
+  const pluginRef = useFadeInOnScroll<HTMLElement>();
   const languageRef = useFadeInOnScroll<HTMLElement>();
 
   const scrollToSection = (section: string) => {
@@ -26,6 +27,7 @@ export default function Configuracoes() {
       sessoes: sessionsRef,
       lembretes: remindersRef,
       aparencia: appearanceRef,
+      plugin: pluginRef,
       idioma: languageRef,
     };
 
@@ -64,6 +66,7 @@ export default function Configuracoes() {
       { ref: sessionsRef, id: 'sessoes' },
       { ref: remindersRef, id: 'lembretes' },
       { ref: appearanceRef, id: 'aparencia' },
+      { ref: pluginRef, id: 'plugin' },
       { ref: languageRef, id: 'idioma' }
     ];
 
@@ -160,6 +163,17 @@ export default function Configuracoes() {
                 >
                   <Palette size={20} />
                   <span>Aparência</span>
+                </button>
+                <button 
+                  onClick={() => scrollToSection("plugin")}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left ${
+                    activeSection === "plugin" 
+                      ? "bg-pastel-blue text-slate-800 font-medium" 
+                      : "text-slate-600 hover:bg-slate-100 transition"
+                  }`}
+                >
+                  <Chrome size={20} />
+                  <span>Browser - Plugin</span>
                 </button>
                 <button 
                   onClick={() => scrollToSection("idioma")}
@@ -545,6 +559,64 @@ export default function Configuracoes() {
                         <p className="text-sm font-medium text-slate-800">Automático</p>
                       </button>
                     </div>
+                  </div>
+                </div>
+              </section>
+
+              <section 
+                ref={pluginRef}
+                data-section="plugin"
+                className="bg-white rounded-xl border border-slate-200 p-6 opacity-0"
+              >
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-12 h-12 bg-pastel-purple rounded-lg flex items-center justify-center">
+                    <Chrome className="text-slate-700" size={24} />
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-semibold text-slate-800">Browser - Plugin</h2>
+                    <p className="text-sm text-slate-500">Extensão para Google Chrome</p>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="p-6 rounded-lg border border-slate-200 bg-slate-50">
+                    <div className="flex items-start gap-4">
+                      <div className="w-16 h-16 bg-white rounded-lg flex items-center justify-center border border-slate-200">
+                        <Chrome className="text-slate-700" size={32} />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-slate-800 mb-2">Plugin para Google Chrome</h3>
+                        <p className="text-sm text-slate-600 mb-4">
+                          Acesse rapidamente seus conteúdos favoritos, receba notificações em tempo real e aproveite recursos exclusivos diretamente no seu navegador.
+                        </p>
+                        <button className="px-6 py-3 bg-pastel-purple text-slate-800 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2">
+                          <Download size={18} />
+                          <span>Instalar Plugin</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-4 rounded-lg border border-slate-200">
+                    <h4 className="font-medium text-slate-800 mb-3">Recursos do Plugin</h4>
+                    <ul className="space-y-2 text-sm text-slate-600">
+                      <li className="flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 bg-pastel-purple rounded-full"></div>
+                        <span>Acesso rápido aos seus conteúdos salvos</span>
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 bg-pastel-purple rounded-full"></div>
+                        <span>Notificações em tempo real de novos artigos</span>
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 bg-pastel-purple rounded-full"></div>
+                        <span>Salvar páginas da web para ler depois</span>
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 bg-pastel-purple rounded-full"></div>
+                        <span>Sincronização automática com sua conta</span>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </section>
