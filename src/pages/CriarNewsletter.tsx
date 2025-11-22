@@ -53,6 +53,7 @@ export default function CriarNewsletter() {
       lastOpened: "2024-01-14",
       openRate: 85,
       channel: "Email",
+      additionalChannels: 2,
       status: "active",
       company: "Fintech Brasil"
     },
@@ -66,6 +67,7 @@ export default function CriarNewsletter() {
       lastOpened: "2024-01-15",
       openRate: 92,
       channel: "Email",
+      additionalChannels: 3,
       status: "active",
       company: "Banco Regional"
     },
@@ -79,6 +81,7 @@ export default function CriarNewsletter() {
       lastOpened: "2024-01-10",
       openRate: 78,
       channel: "WhatsApp",
+      additionalChannels: 1,
       status: "active",
       company: "Investimentos Plus"
     },
@@ -92,6 +95,7 @@ export default function CriarNewsletter() {
       lastOpened: null,
       openRate: 0,
       channel: "Email",
+      additionalChannels: 0,
       status: "inactive",
       company: "Tech Solutions"
     },
@@ -104,7 +108,8 @@ export default function CriarNewsletter() {
       discountValue: 25,
       lastOpened: "2024-01-15",
       openRate: 95,
-      channel: "Email",
+      channel: "Slack",
+      additionalChannels: 4,
       status: "active",
       company: "Consultoria Financeira"
     },
@@ -118,6 +123,7 @@ export default function CriarNewsletter() {
       lastOpened: "2024-01-13",
       openRate: 88,
       channel: "Telegram",
+      additionalChannels: 2,
       status: "active",
       company: "Startup Inovação"
     }
@@ -599,7 +605,12 @@ export default function CriarNewsletter() {
                           <div className="col-span-2">
                             <div className="flex items-center gap-2">
                               <Mail size={14} className="text-slate-400" />
-                              <span className="text-sm text-slate-700">{subscriber.channel}</span>
+                              <span className="text-sm text-slate-700">
+                                {subscriber.channel}
+                                {subscriber.additionalChannels > 0 && (
+                                  <span className="text-slate-500"> + {subscriber.additionalChannels}</span>
+                                )}
+                              </span>
                               <span
                                 className={`ml-auto w-2 h-2 rounded-full ${
                                   subscriber.status === 'active' ? 'bg-green-500' : 'bg-slate-300'
