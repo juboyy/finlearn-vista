@@ -108,9 +108,13 @@ export default function NewsletterAnalytics() {
       }];
 
       window.Plotly.newPlot('engagement-chart', engagementData, {
-        margin: { t: 20, r: 20, b: 60, l: 40 },
+        margin: { t: 20, r: 20, b: 100, l: 40 },
         showlegend: false,
-        xaxis: { showgrid: false },
+        xaxis: { 
+          showgrid: false,
+          tickangle: -90,
+          automargin: true
+        },
         yaxis: { showgrid: true, gridcolor: '#f1f5f9', range: [0, 100] },
         paper_bgcolor: 'rgba(0,0,0,0)',
         plot_bgcolor: 'rgba(0,0,0,0)'
