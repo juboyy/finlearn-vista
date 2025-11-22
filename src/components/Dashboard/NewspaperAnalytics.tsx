@@ -643,12 +643,41 @@ export const NewspaperAnalytics = () => {
                   <div className="h-4 bg-slate-100 rounded animate-pulse"></div>
                   <div className="h-4 bg-slate-100 rounded animate-pulse w-5/6"></div>
                   <div className="h-4 bg-slate-100 rounded animate-pulse w-4/6"></div>
+                  <div className="h-4 bg-slate-100 rounded animate-pulse w-3/4 mt-4"></div>
+                  <div className="h-4 bg-slate-100 rounded animate-pulse w-full"></div>
                 </div>
               ) : (
-                <div className="prose prose-sm max-w-none">
-                  <p className="text-sm text-slate-600 leading-relaxed whitespace-pre-line">
-                    {insights}
-                  </p>
+                <div className="space-y-4">
+                  <div className="text-sm text-slate-700 leading-relaxed space-y-3">
+                    {insights.split('\n').map((paragraph, index) => {
+                      if (!paragraph.trim()) return null;
+                      
+                      // Check if it's a bullet point
+                      if (paragraph.trim().startsWith('•') || paragraph.trim().startsWith('-')) {
+                        const content = paragraph.replace(/^[•\-]\s*/, '');
+                        return (
+                          <div key={index} className="flex gap-3 p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition">
+                            <span className="text-pastel-purple font-bold flex-shrink-0">•</span>
+                            <p className="text-slate-700">{content}</p>
+                          </div>
+                        );
+                      }
+                      
+                      return (
+                        <p key={index} className="text-slate-700">
+                          {paragraph}
+                        </p>
+                      );
+                    })}
+                  </div>
+                  
+                  <button 
+                    onClick={generateInsights}
+                    className="mt-4 px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition flex items-center gap-2"
+                  >
+                    <i className="fas fa-sync-alt"></i>
+                    Gerar Novos Insights
+                  </button>
                 </div>
               )}
             </div>
