@@ -338,7 +338,7 @@ const AgentesAnalytics = () => {
                     <span className="text-sm font-medium text-slate-700">Média Geral</span>
                     <span className="text-2xl font-bold text-slate-800">1.8s</span>
                   </div>
-                  <p className="text-xs text-slate-600">Tempo médio de resposta dos agentes</p>
+                  <p className="text-xs font-bold text-slate-800">Tempo médio de resposta dos agentes</p>
                 </div>
                 
                 <div className="space-y-3">
