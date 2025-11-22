@@ -4,6 +4,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
+import newspaperRiskManagement from "@/assets/newspaper-risk-management.png";
+import newspaperFinancialStability from "@/assets/newspaper-financial-stability.png";
+import newspaperOpenFinance from "@/assets/newspaper-open-finance.png";
 
 export const NewspapersNaoLidas = () => {
   const [currentCarouselIndex, setCurrentCarouselIndex] = useState(0);
@@ -49,7 +52,7 @@ export const NewspapersNaoLidas = () => {
       date: "15/11/2024",
       readTime: "25 min",
       views: 284,
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/21b78d9c89-42a77a997c565cdf55c0.png",
+      image: newspaperRiskManagement,
       isNew: true,
     },
     {
@@ -61,7 +64,7 @@ export const NewspapersNaoLidas = () => {
       date: "14/11/2024",
       readTime: "42 min",
       views: 156,
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/05869e70e7-945ea02a18293ab0ee08.png",
+      image: newspaperFinancialStability,
       isNew: false,
     },
     {
@@ -73,7 +76,7 @@ export const NewspapersNaoLidas = () => {
       date: "13/11/2024",
       readTime: "35 min",
       views: 412,
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a6de00b220-5dae6b43ce0ed820b97e.png",
+      image: newspaperOpenFinance,
       isNew: false,
       isFavorite: true,
     },
