@@ -485,10 +485,10 @@ const ConsumoAnalytics = () => {
               </div>
               <div className="h-[320px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={metasPorCategoriaData} layout="horizontal">
+                  <BarChart data={metasPorCategoriaData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
-                    <XAxis type="number" tick={{ fill: '#6b7280', fontSize: 11 }} />
-                    <YAxis dataKey="categoria" type="category" tick={{ fill: '#6b7280', fontSize: 11 }} width={80} />
+                    <XAxis dataKey="categoria" tick={{ fill: '#6b7280', fontSize: 11 }} />
+                    <YAxis tick={{ fill: '#6b7280', fontSize: 11 }} label={{ value: 'Quantidade', angle: -90, position: 'insideLeft', style: { fontSize: 11, fill: '#6b7280' } }} />
                     <Tooltip contentStyle={{ backgroundColor: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '12px' }} />
                     <Legend wrapperStyle={{ fontSize: '11px' }} />
                     <Bar dataKey="meta" fill="#C9AF89" name="Meta" />
