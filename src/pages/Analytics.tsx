@@ -1,32 +1,43 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { Bell, Search, Download, Filter, MoreHorizontal, ChevronLeft, ChevronRight } from "lucide-react";
+import { Bell, Search, Download, Filter, MoreHorizontal } from "lucide-react";
 import { useState } from "react";
-import Plot from 'react-plotly.js';
+import { BarChart, Bar, PieChart, Pie, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, Area, AreaChart, Legend } from 'recharts';
 
 const Analytics = () => {
   const [timeFilter, setTimeFilter] = useState<'week' | 'month'>('month');
 
   // Dados para o gráfico de barras de agentes
   const agentData = [
-    { name: 'Analista Mercado', value: 1254, color: '#8AAACF' },
-    { name: 'Compliance', value: 892, color: '#AC9CC9' },
-    { name: 'Esp. Câmbio', value: 654, color: '#8EBC9F' },
-    { name: 'Gestor Risco', value: 540, color: '#C9AF89' },
-    { name: 'Consultor Portfólio', value: 480, color: '#CC99A9' }
+    { name: 'Analista Mercado', value: 1254 },
+    { name: 'Compliance', value: 892 },
+    { name: 'Esp. Câmbio', value: 654 },
+    { name: 'Gestor Risco', value: 540 },
+    { name: 'Consultor Portfólio', value: 480 }
   ];
 
+  const barColors = ['#8AAACF', '#AC9CC9', '#8EBC9F', '#C9AF89', '#CC99A9'];
+
   // Dados para o gráfico de pizza
-  const pieData = {
-    values: [35, 25, 20, 15, 5],
-    labels: ['Regulação', 'Mercado de Capitais', 'Meios de Pagamento', 'Macroeconomia', 'Outros'],
-    colors: ['#8AAACF', '#AC9CC9', '#8EBC9F', '#C9AF89', '#F3F4F6']
-  };
+  const pieData = [
+    { name: 'Regulação', value: 35 },
+    { name: 'Mercado de Capitais', value: 25 },
+    { name: 'Meios de Pagamento', value: 20 },
+    { name: 'Macroeconomia', value: 15 },
+    { name: 'Outros', value: 5 }
+  ];
+
+  const pieColors = ['#8AAACF', '#AC9CC9', '#8EBC9F', '#C9AF89', '#F3F4F6'];
 
   // Dados para o gráfico de tendência
-  const trendData = {
-    x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
-    y: [1200, 1450, 1300, 1600, 1550, 900, 850]
-  };
+  const trendData = [
+    { name: 'Seg', value: 1200 },
+    { name: 'Ter', value: 1450 },
+    { name: 'Qua', value: 1300 },
+    { name: 'Qui', value: 1600 },
+    { name: 'Sex', value: 1550 },
+    { name: 'Sáb', value: 900 },
+    { name: 'Dom', value: 850 }
+  ];
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -210,38 +221,26 @@ const Analytics = () => {
                 </div>
               </div>
               <div className="h-[320px] w-full">
-                <Plot
-                  data={[
-                    {
-                      type: 'bar',
-                      x: agentData.map(d => d.name),
-                      y: agentData.map(d => d.value),
-                      marker: {
-                        color: agentData.map(d => d.color),
-                        opacity: 1
-                      },
-                      hovertemplate: '<b>%{x}</b><br>Conversas: %{y}<extra></extra>'
-                    }
-                  ]}
-                  layout={{
-                    margin: { t: 20, r: 20, b: 40, l: 40 },
-                    plot_bgcolor: 'rgba(0,0,0,0)',
-                    paper_bgcolor: 'rgba(0,0,0,0)',
-                    showlegend: false,
-                    xaxis: {
-                      tickfont: { color: '#6b7280', size: 11, family: 'Inter' },
-                      gridcolor: 'transparent'
-                    },
-                    yaxis: {
-                      gridcolor: '#f3f4f6',
-                      tickfont: { color: '#6b7280', size: 11, family: 'Inter' },
-                      zeroline: false
-                    },
-                    bargap: 0.5
-                  }}
-                  config={{ responsive: true, displayModeBar: false }}
-                  style={{ width: '100%', height: '100%' }}
-                />
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={agentData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+                    <XAxis dataKey="name" tick={{ fill: '#6b7280', fontSize: 11 }} />
+                    <YAxis tick={{ fill: '#6b7280', fontSize: 11 }} />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'white', 
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '8px',
+                        fontSize: '12px'
+                      }} 
+                    />
+                    <Bar dataKey="value" radius={[8, 8, 0, 0]}>
+                      {agentData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={barColors[index]} />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
             </div>
 
@@ -252,32 +251,31 @@ const Analytics = () => {
                 <p className="text-sm text-slate-500 mt-1">Distribuição por tema de interesse</p>
               </div>
               <div className="h-[320px] w-full">
-                <Plot
-                  data={[
-                    {
-                      type: 'pie',
-                      values: pieData.values,
-                      labels: pieData.labels,
-                      marker: { colors: pieData.colors },
-                      textinfo: 'percent',
-                      textposition: 'inside',
-                      hoverinfo: 'label+percent',
-                      insidetextfont: { color: '#ffffff' }
-                    }
-                  ]}
-                  layout={{
-                    margin: { t: 0, r: 0, b: 20, l: 0 },
-                    paper_bgcolor: 'rgba(0,0,0,0)',
-                    showlegend: true,
-                    legend: {
-                      orientation: 'h',
-                      y: -0.1,
-                      font: { color: '#6b7280', size: 11, family: 'Inter' }
-                    }
-                  }}
-                  config={{ responsive: true, displayModeBar: false }}
-                  style={{ width: '100%', height: '100%' }}
-                />
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={pieData}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
+                      label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
+                      outerRadius={80}
+                      fill="#8884d8"
+                      dataKey="value"
+                    >
+                      {pieData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={pieColors[index]} />
+                      ))}
+                    </Pie>
+                    <Tooltip />
+                    <Legend 
+                      verticalAlign="bottom" 
+                      height={36}
+                      iconType="circle"
+                      wrapperStyle={{ fontSize: '11px' }}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
               </div>
             </div>
           </section>
@@ -340,37 +338,35 @@ const Analytics = () => {
                 </div>
               </div>
               <div className="h-[280px] w-full">
-                <Plot
-                  data={[
-                    {
-                      type: 'scatter',
-                      mode: 'lines',
-                      fill: 'tozeroy',
-                      x: trendData.x,
-                      y: trendData.y,
-                      line: { color: '#8EBC9F', width: 3, shape: 'spline' },
-                      fillcolor: 'rgba(142, 188, 159, 0.3)',
-                      hovertemplate: 'Visualizações: %{y}<extra></extra>'
-                    }
-                  ]}
-                  layout={{
-                    margin: { t: 10, r: 10, b: 30, l: 40 },
-                    plot_bgcolor: 'rgba(0,0,0,0)',
-                    paper_bgcolor: 'rgba(0,0,0,0)',
-                    showlegend: false,
-                    xaxis: {
-                      gridcolor: 'transparent',
-                      tickfont: { color: '#6b7280', family: 'Inter' }
-                    },
-                    yaxis: {
-                      gridcolor: '#f3f4f6',
-                      tickfont: { color: '#6b7280', family: 'Inter' },
-                      zeroline: false
-                    }
-                  }}
-                  config={{ responsive: true, displayModeBar: false }}
-                  style={{ width: '100%', height: '100%' }}
-                />
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={trendData}>
+                    <defs>
+                      <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#8EBC9F" stopOpacity={0.3}/>
+                        <stop offset="95%" stopColor="#8EBC9F" stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+                    <XAxis dataKey="name" tick={{ fill: '#6b7280', fontSize: 11 }} />
+                    <YAxis tick={{ fill: '#6b7280', fontSize: 11 }} />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'white', 
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '8px',
+                        fontSize: '12px'
+                      }} 
+                    />
+                    <Area 
+                      type="monotone" 
+                      dataKey="value" 
+                      stroke="#8EBC9F" 
+                      strokeWidth={3}
+                      fillOpacity={1} 
+                      fill="url(#colorValue)" 
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
               </div>
             </div>
           </section>
