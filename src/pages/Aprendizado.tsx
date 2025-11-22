@@ -376,19 +376,13 @@ const Aprendizado = () => {
           }}
           onAnalyticsClick={() => {
             if (activeTab === 'documentos') {
-              console.log('Analytics clicked, current state:', showAnalytics);
               setShowAnalytics(!showAnalytics);
               setShowHistorico(false);
             }
           }}
         />
 
-        {(() => {
-          console.log('Render state - showAnalytics:', showAnalytics, 'activeTab:', activeTab);
-          return null;
-        })()}
-
-        {showAnalytics ? (
+        {showAnalytics && activeTab === 'documentos' ? (
           <NewspaperAnalytics />
         ) : activeTab !== 'documentos' ? (
           <div className="flex-1 p-8 pb-32">
@@ -4631,9 +4625,9 @@ const Aprendizado = () => {
           </div>
         ) : null}
 
-        {activeTab === 'documentos' && !showHistorico && <NewspapersNaoLidas />}
+        {activeTab === 'documentos' && !showHistorico && !showAnalytics && <NewspapersNaoLidas />}
 
-        {activeTab === 'documentos' && showHistorico && <HistoricoDocumentos />}
+        {activeTab === 'documentos' && showHistorico && !showAnalytics && <HistoricoDocumentos />}
       </main>
 
       {selectedAgent && (
