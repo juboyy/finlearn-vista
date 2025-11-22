@@ -105,6 +105,7 @@ export default function Newsletter() {
             </div>
             <div className="flex items-center gap-3">
               <button 
+                onClick={() => navigate('/criar-newsletter')}
                 className="w-10 h-10 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center justify-center" 
                 style={{ backgroundColor: '#E8E0C5' }}
               >
