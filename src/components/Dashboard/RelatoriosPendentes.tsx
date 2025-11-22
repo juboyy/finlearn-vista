@@ -50,6 +50,7 @@ export const RelatoriosPendentes = () => {
       access: "Gratuito",
       accessType: "free",
       saved: false,
+      reads: 234,
     },
     {
       id: 2,
@@ -63,6 +64,7 @@ export const RelatoriosPendentes = () => {
       access: "R$ 149,00",
       accessType: "premium",
       saved: true,
+      reads: 189,
     },
     {
       id: 3,
@@ -76,6 +78,7 @@ export const RelatoriosPendentes = () => {
       access: "Gratuito",
       accessType: "free",
       saved: false,
+      reads: 412,
     },
     {
       id: 4,
@@ -89,6 +92,7 @@ export const RelatoriosPendentes = () => {
       access: "R$ 199,00",
       accessType: "premium",
       saved: false,
+      reads: 156,
     },
     {
       id: 5,
@@ -102,6 +106,7 @@ export const RelatoriosPendentes = () => {
       access: "Gratuito",
       accessType: "free",
       saved: false,
+      reads: 298,
     },
     {
       id: 6,
@@ -115,6 +120,7 @@ export const RelatoriosPendentes = () => {
       access: "R$ 249,00",
       accessType: "premium",
       saved: true,
+      reads: 523,
     },
     {
       id: 7,
@@ -128,6 +134,7 @@ export const RelatoriosPendentes = () => {
       access: "Gratuito",
       accessType: "free",
       saved: false,
+      reads: 367,
     },
     {
       id: 8,
@@ -141,6 +148,7 @@ export const RelatoriosPendentes = () => {
       access: "R$ 179,00",
       accessType: "premium",
       saved: false,
+      reads: 445,
     },
     {
       id: 9,
@@ -154,6 +162,7 @@ export const RelatoriosPendentes = () => {
       access: "Gratuito",
       accessType: "free",
       saved: false,
+      reads: 291,
     },
     {
       id: 10,
@@ -167,6 +176,7 @@ export const RelatoriosPendentes = () => {
       access: "R$ 169,00",
       accessType: "premium",
       saved: false,
+      reads: 178,
     },
   ];
 
@@ -443,7 +453,8 @@ export const RelatoriosPendentes = () => {
             <div className="grid grid-cols-12 gap-4 px-6 py-3 text-xs font-medium text-slate-600 uppercase tracking-wider">
               <div className="col-span-4">Relatório</div>
               <div className="col-span-3">Categoria</div>
-              <div className="col-span-2">Páginas</div>
+              <div className="col-span-1">Páginas</div>
+              <div className="col-span-1">Leituras</div>
               <div className="col-span-2">Acesso</div>
               <div className="col-span-1 text-right">Ações</div>
             </div>
@@ -480,10 +491,16 @@ export const RelatoriosPendentes = () => {
                     {report.category}
                   </span>
                 </div>
-                <div className="col-span-2">
+                <div className="col-span-1">
                   <div className="flex items-center gap-2">
                     <i className="fas fa-file-pdf text-slate-400 text-sm"></i>
                     <span className="text-sm font-medium text-slate-700">{report.pages}</span>
+                  </div>
+                </div>
+                <div className="col-span-1">
+                  <div className="flex items-center gap-2">
+                    <i className="fas fa-eye text-slate-400 text-sm"></i>
+                    <span className="text-sm font-medium text-slate-700">{report.reads}</span>
                   </div>
                 </div>
                 <div className="col-span-2">
