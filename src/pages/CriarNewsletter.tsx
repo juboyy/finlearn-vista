@@ -1,13 +1,25 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Plus, Search, Filter, Mail, Calendar, Eye, CheckCircle, XCircle, Percent, Users, TrendingUp, Send, Edit, Trash2, MoreVertical, FileText } from "lucide-react";
+import { ArrowLeft, Plus, Search, Filter, Mail, Calendar, Eye, CheckCircle, XCircle, Percent, Users, TrendingUp, Send, Edit, Trash2, MoreVertical, FileText, Clock } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import { cn } from "@/lib/utils";
 
 export default function CriarNewsletter() {
   const navigate = useNavigate();
   const [selectedNewsletter, setSelectedNewsletter] = useState<number | null>(1);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showHistoryFor, setShowHistoryFor] = useState<number | null>(null);
+  const [showScheduleModal, setShowScheduleModal] = useState(false);
+  const [scheduleDate, setScheduleDate] = useState<Date>();
+  const [scheduleTime, setScheduleTime] = useState("08:00");
+  const [selectedContent, setSelectedContent] = useState<number[]>([]);
 
   const newsletters = [
     {
@@ -213,6 +225,61 @@ export default function CriarNewsletter() {
   const selectedNewsletterData = newsletters.find(n => n.id === selectedNewsletter);
   const filteredHistory = contentHistory.filter(h => h.newsletterId === showHistoryFor);
 
+  // Available content from library
+  const availableContent = [
+    {
+      id: 1,
+      title: "Guia Completo de Compliance Bancário 2024",
+      type: "Artigo",
+      createdDate: "2024-01-10",
+      author: "Maria Silva"
+    },
+    {
+      id: 2,
+      title: "Análise de Mercado: Tendências PIX",
+      type: "Relatório",
+      createdDate: "2024-01-12",
+      author: "João Santos"
+    },
+    {
+      id: 3,
+      title: "Workshop: Open Finance na Prática",
+      type: "Webinar",
+      createdDate: "2024-01-08",
+      author: "Ana Costa"
+    },
+    {
+      id: 4,
+      title: "E-book: Gestão de Risco em Fintechs",
+      type: "E-book",
+      createdDate: "2024-01-05",
+      author: "Pedro Oliveira"
+    },
+    {
+      id: 5,
+      title: "Checklist: Conformidade LGPD",
+      type: "Documento",
+      createdDate: "2024-01-15",
+      author: "Carla Souza"
+    }
+  ];
+
+  const handleScheduleSubmit = () => {
+    if (!scheduleDate || selectedContent.length === 0) {
+      return;
+    }
+    console.log("Agendamento:", {
+      newsletterId: showHistoryFor,
+      date: scheduleDate,
+      time: scheduleTime,
+      content: selectedContent
+    });
+    setShowScheduleModal(false);
+    setScheduleDate(undefined);
+    setScheduleTime("08:00");
+    setSelectedContent([]);
+  };
+
   return (
     <div className="flex min-h-screen bg-slate-50">
       <SidebarFix />
@@ -328,12 +395,22 @@ export default function CriarNewsletter() {
                           {newsletters.find(n => n.id === showHistoryFor)?.title}
                         </p>
                       </div>
-                      <button
-                        onClick={() => setShowHistoryFor(null)}
-                        className="px-4 py-2 border border-slate-200 text-slate-700 rounded-lg hover:bg-slate-50 transition text-sm"
-                      >
-                        Fechar
-                      </button>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => setShowScheduleModal(true)}
+                          className="px-4 py-2 text-slate-700 rounded-lg hover:opacity-90 transition text-sm flex items-center gap-2"
+                          style={{ backgroundColor: '#C5E8D4' }}
+                        >
+                          <Clock size={16} />
+                          Agendar Nova Publicação
+                        </button>
+                        <button
+                          onClick={() => setShowHistoryFor(null)}
+                          className="px-4 py-2 border border-slate-200 text-slate-700 rounded-lg hover:bg-slate-50 transition text-sm"
+                        >
+                          Fechar
+                        </button>
+                      </div>
                     </div>
                   </div>
 
@@ -684,6 +761,151 @@ export default function CriarNewsletter() {
           </div>
         </div>
       )}
+
+      {/* Schedule Publication Modal */}
+      <Dialog open={showScheduleModal} onOpenChange={setShowScheduleModal}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-semibold text-slate-800">Agendar Nova Publicação</DialogTitle>
+            <p className="text-sm text-slate-500 mt-1">
+              Selecione os conteúdos da biblioteca e defina a data de envio
+            </p>
+          </DialogHeader>
+
+          <div className="space-y-6 mt-4">
+            {/* Date and Time Selection */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-slate-700">Data de Envio</label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-full justify-start text-left font-normal",
+                        !scheduleDate && "text-muted-foreground"
+                      )}
+                    >
+                      <Calendar className="mr-2 h-4 w-4" />
+                      {scheduleDate ? format(scheduleDate, "PPP", { locale: ptBR }) : "Selecione uma data"}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <CalendarComponent
+                      mode="single"
+                      selected={scheduleDate}
+                      onSelect={setScheduleDate}
+                      disabled={(date) => date < new Date()}
+                      initialFocus
+                      className="pointer-events-auto"
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-slate-700">Horário de Envio</label>
+                <input
+                  type="time"
+                  value={scheduleTime}
+                  onChange={(e) => setScheduleTime(e.target.value)}
+                  className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C5E8D4]"
+                />
+              </div>
+            </div>
+
+            {/* Content Selection */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-slate-700">Conteúdos Disponíveis</label>
+              <div className="border border-slate-200 rounded-lg divide-y divide-slate-100 max-h-96 overflow-y-auto">
+                {availableContent.map((content) => (
+                  <div
+                    key={content.id}
+                    className="p-4 hover:bg-slate-50 transition flex items-start gap-3"
+                  >
+                    <Checkbox
+                      id={`content-${content.id}`}
+                      checked={selectedContent.includes(content.id)}
+                      onCheckedChange={(checked) => {
+                        if (checked) {
+                          setSelectedContent([...selectedContent, content.id]);
+                        } else {
+                          setSelectedContent(selectedContent.filter(id => id !== content.id));
+                        }
+                      }}
+                      className="mt-1"
+                    />
+                    <label
+                      htmlFor={`content-${content.id}`}
+                      className="flex-1 cursor-pointer"
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div>
+                          <h4 className="font-medium text-sm text-slate-800">{content.title}</h4>
+                          <p className="text-xs text-slate-500 mt-1">
+                            {content.type} • {content.author} • {new Date(content.createdDate).toLocaleDateString('pt-BR')}
+                          </p>
+                        </div>
+                        <span
+                          className="text-xs px-2 py-1 rounded text-slate-700"
+                          style={{ backgroundColor: '#E8E0C5' }}
+                        >
+                          {content.type}
+                        </span>
+                      </div>
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Summary */}
+            {selectedContent.length > 0 && (
+              <div
+                className="p-4 rounded-lg border"
+                style={{ backgroundColor: '#B8D4E8', borderColor: '#9AB8CC' }}
+              >
+                <h4 className="text-sm font-semibold text-slate-800 mb-2">Resumo do Agendamento</h4>
+                <div className="space-y-1 text-sm text-slate-700">
+                  <p><strong>{selectedContent.length}</strong> conteúdo(s) selecionado(s)</p>
+                  {scheduleDate && (
+                    <p>
+                      <strong>Envio:</strong> {format(scheduleDate, "PPP", { locale: ptBR })} às {scheduleTime}
+                    </p>
+                  )}
+                  <p>
+                    <strong>Newsletter:</strong> {newsletters.find(n => n.id === showHistoryFor)?.title}
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* Actions */}
+            <div className="flex justify-end gap-3 pt-4 border-t border-slate-200">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setShowScheduleModal(false);
+                  setScheduleDate(undefined);
+                  setScheduleTime("08:00");
+                  setSelectedContent([]);
+                }}
+              >
+                Cancelar
+              </Button>
+              <Button
+                disabled={!scheduleDate || selectedContent.length === 0}
+                onClick={handleScheduleSubmit}
+                className="text-slate-700 hover:opacity-90"
+                style={{ backgroundColor: '#C5E8D4' }}
+              >
+                <Clock size={16} className="mr-2" />
+                Agendar Publicação
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
