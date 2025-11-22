@@ -1,4 +1,6 @@
 import { useState, useRef, useEffect, KeyboardEvent } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { 
   BarChart3, 
   Table as TableIcon, 
@@ -188,60 +190,75 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
   }, []);
 
   return (
-    <div className="relative w-full h-full">
-      <textarea
-        ref={textareaRef}
-        value={value}
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-        placeholder="Digite '/' para ver os comandos disponíveis..."
-        className="w-full h-full min-h-[600px] p-8 bg-transparent border-none focus:outline-none resize-none font-mono text-foreground leading-relaxed"
-        style={{ 
-          fontSize: '15px',
-          lineHeight: '24px'
-        }}
-      />
-      
-      {showCommandMenu && (
-        <div
-          ref={commandMenuRef}
-          className="absolute bg-card border border-border rounded-lg shadow-2xl z-50 w-80 overflow-hidden"
-          style={{
-            top: `${commandMenuPosition.top}px`,
-            left: `${commandMenuPosition.left}px`,
+    <div className="relative w-full h-full grid grid-cols-2 gap-4">
+      {/* Editor Column */}
+      <div className="relative border-r border-border">
+        <textarea
+          ref={textareaRef}
+          value={value}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+          placeholder="Digite '/' para ver os comandos disponíveis..."
+          className="w-full h-full min-h-[600px] p-8 bg-transparent border-none focus:outline-none resize-none font-mono text-foreground leading-relaxed"
+          style={{ 
+            fontSize: '15px',
+            lineHeight: '24px'
           }}
-        >
-          <div className="py-2">
-            <div className="px-3 py-2 text-xs font-semibold text-muted-foreground uppercase border-b border-border">
-              Comandos Disponíveis
+        />
+        
+        {showCommandMenu && (
+          <div
+            ref={commandMenuRef}
+            className="absolute bg-card border border-border rounded-lg shadow-2xl z-50 w-80 overflow-hidden"
+            style={{
+              top: `${commandMenuPosition.top}px`,
+              left: `${commandMenuPosition.left}px`,
+            }}
+          >
+            <div className="py-2">
+              <div className="px-3 py-2 text-xs font-semibold text-muted-foreground uppercase border-b border-border">
+                Comandos Disponíveis
+              </div>
+              {commandOptions.map((option, index) => {
+                const Icon = option.icon;
+                return (
+                  <button
+                    key={option.id}
+                    onClick={option.action}
+                    className={`w-full px-3 py-2.5 text-left hover:bg-muted transition flex items-start gap-3 ${
+                      index === selectedCommandIndex ? 'bg-muted' : ''
+                    }`}
+                  >
+                    <div className={`w-8 h-8 ${
+                      index === selectedCommandIndex 
+                        ? 'bg-[hsl(206,35%,75%)]' 
+                        : 'bg-[hsl(206,35%,85%)]'
+                    } rounded-lg flex items-center justify-center flex-shrink-0`}>
+                      <Icon className="text-[hsl(220,15%,30%)]" size={16} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-medium text-foreground text-sm">{option.label}</div>
+                      <div className="text-xs text-muted-foreground">{option.description}</div>
+                    </div>
+                  </button>
+                );
+              })}
             </div>
-            {commandOptions.map((option, index) => {
-              const Icon = option.icon;
-              return (
-                <button
-                  key={option.id}
-                  onClick={option.action}
-                  className={`w-full px-3 py-2.5 text-left hover:bg-muted transition flex items-start gap-3 ${
-                    index === selectedCommandIndex ? 'bg-muted' : ''
-                  }`}
-                >
-                  <div className={`w-8 h-8 ${
-                    index === selectedCommandIndex 
-                      ? 'bg-[hsl(206,35%,75%)]' 
-                      : 'bg-[hsl(206,35%,85%)]'
-                  } rounded-lg flex items-center justify-center flex-shrink-0`}>
-                    <Icon className="text-[hsl(220,15%,30%)]" size={16} />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="font-medium text-foreground text-sm">{option.label}</div>
-                    <div className="text-xs text-muted-foreground">{option.description}</div>
-                  </div>
-                </button>
-              );
-            })}
           </div>
+        )}
+      </div>
+
+      {/* Preview Column */}
+      <div className="relative overflow-y-auto p-8">
+        <div className="mb-4 text-xs font-semibold text-muted-foreground uppercase border-b border-border pb-2">
+          Preview
         </div>
-      )}
+        <div className="prose prose-slate dark:prose-invert max-w-none">
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {value || "*Comece a escrever para ver o preview...*"}
+          </ReactMarkdown>
+        </div>
+      </div>
     </div>
   );
 }
