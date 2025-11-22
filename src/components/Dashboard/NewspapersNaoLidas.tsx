@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search, Bell, Plus, History, FileText, Calendar, Clock, Star, Eye, Bookmark, MoreHorizontal, Building, Circle, ChevronLeft, ChevronRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
+import newspaperCriptomoedas from "@/assets/newspaper-criptomoedas.png";
+import newspaperSustentabilidade from "@/assets/newspaper-sustentabilidade.png";
 
 export const NewspapersNaoLidas = () => {
   const [currentCarouselIndex, setCurrentCarouselIndex] = useState(0);
@@ -76,6 +78,30 @@ export const NewspapersNaoLidas = () => {
       image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a6de00b220-5dae6b43ce0ed820b97e.png",
       isNew: false,
       isFavorite: true,
+    },
+    {
+      id: 4,
+      title: "Criptomoedas e Ativos Digitais: Regulação no Brasil",
+      category: "Normativos",
+      categoryColor: "bg-[#A68CC9]",
+      description: "Panorama completo sobre a regulação de criptomoedas no Brasil, incluindo diretrizes do Banco Central, tributação e perspectivas futuras para o mercado de ativos digitais.",
+      date: "12/11/2024",
+      readTime: "38 min",
+      views: 523,
+      image: newspaperCriptomoedas,
+      isNew: true,
+    },
+    {
+      id: 5,
+      title: "Finanças Sustentáveis e Títulos Verdes 2025",
+      category: "Pesquisas",
+      categoryColor: "bg-[#C99B8C]",
+      description: "Estudo sobre o crescimento de finanças sustentáveis no Brasil, análise do mercado de green bonds e tendências ESG para instituições financeiras em 2025.",
+      date: "11/11/2024",
+      readTime: "30 min",
+      views: 367,
+      image: newspaperSustentabilidade,
+      isNew: false,
     },
   ];
 
@@ -217,6 +243,15 @@ export const NewspapersNaoLidas = () => {
   const handleNextCarousel = () => {
     setCurrentCarouselIndex((prev) => (prev < featuredNewspapers.length - 1 ? prev + 1 : 0));
   };
+
+  // Auto-rotate carousel every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentCarouselIndex((prev) => (prev < featuredNewspapers.length - 1 ? prev + 1 : 0));
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [featuredNewspapers.length]);
 
   return (
     <div className="flex-1 p-8 pb-32">
