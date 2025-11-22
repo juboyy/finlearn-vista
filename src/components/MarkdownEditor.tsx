@@ -11,7 +11,12 @@ import {
   Code,
   Columns2,
   FileEdit,
-  Eye
+  Eye,
+  Wand2,
+  Search,
+  Network,
+  Video,
+  Bot
 } from "lucide-react";
 
 interface CommandMenuOption {
@@ -128,6 +133,56 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
       description: "Bloco de código",
       action: () => {
         insertContent("\n\n```javascript\n// Seu código aqui\n```\n\n");
+        setShowCommandMenu(false);
+      }
+    },
+    {
+      id: "continue",
+      label: "Continuação de texto",
+      icon: Wand2,
+      description: "Continuar escrevendo com IA",
+      action: () => {
+        insertContent("\n\n[Continuação gerada por IA...]\n\n");
+        setShowCommandMenu(false);
+      }
+    },
+    {
+      id: "search",
+      label: "Buscar dados",
+      icon: Search,
+      description: "Buscar informações externas",
+      action: () => {
+        insertContent("\n\n🔍 **Dados Buscados:**\n- Resultado 1\n- Resultado 2\n\n");
+        setShowCommandMenu(false);
+      }
+    },
+    {
+      id: "correlate",
+      label: "Correlacionar conteúdo",
+      icon: Network,
+      description: "Criar correlações entre dados",
+      action: () => {
+        insertContent("\n\n🔗 **Correlações:**\n- Correlação 1\n- Correlação 2\n\n");
+        setShowCommandMenu(false);
+      }
+    },
+    {
+      id: "video",
+      label: "Adicionar Vídeo",
+      icon: Video,
+      description: "Inserir um vídeo",
+      action: () => {
+        insertContent("\n\n[![Vídeo](thumbnail-url)](url-do-video)\n\n");
+        setShowCommandMenu(false);
+      }
+    },
+    {
+      id: "agent",
+      label: "Adicionar Agente",
+      icon: Bot,
+      description: "Inserir um agente IA",
+      action: () => {
+        insertContent("\n\n🤖 **Agente IA:**\n- Nome: [nome do agente]\n- Função: [descrição]\n\n");
         setShowCommandMenu(false);
       }
     }
