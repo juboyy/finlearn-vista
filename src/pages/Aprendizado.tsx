@@ -2,7 +2,8 @@ import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { MenutabbarFix } from "@/components/Dashboard/MenutabbarFix";
 import { HistoricoDocumentos } from "@/components/Dashboard/HistoricoDocumentos";
 import { RelatoriosPendentes } from "@/components/Dashboard/RelatoriosPendentes";
-import { Bell, Play, Clock, BookOpen, TrendingUp, Headphones, Calendar, Users, MessageCircle, Star, BookMarked, Video, Award, Heart, CheckCircle, PlayCircle, Trophy, ChartLine, Shield, Bitcoin, Gavel, PieChart, Repeat, Globe, Leaf, Plus, BookOpenCheck, CreditCard, FileText, Bookmark, Quote, Download, Share2, Bot, Eye, Percent, DollarSign, Lightbulb, AlertTriangle, Coins, Mic, Search, ChevronLeft, ChevronRight, Circle } from "lucide-react";
+import { NewspapersNaoLidas } from "@/components/Dashboard/NewspapersNaoLidas";
+import { Bell, Play, Clock, BookOpen, TrendingUp, Headphones, Calendar, Users, MessageCircle, Star, BookMarked, Video, Award, Heart, CheckCircle, PlayCircle, Trophy, ChartLine, Shield, Bitcoin, Gavel, PieChart, Repeat, Globe, Leaf, Plus, BookOpenCheck, CreditCard, FileText, Bookmark, Quote, Download, Share2, Bot, Eye, Percent, DollarSign, Lightbulb, AlertTriangle, Coins, Mic, Search, ChevronLeft, ChevronRight, Circle, History } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ebookRiskManagementPink from "@/assets/ebook-risk-management-pink.png";
@@ -337,21 +338,54 @@ const Aprendizado = () => {
           <div className="px-8 py-4">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-2xl font-semibold text-slate-800">Hub de Aprendizado</h1>
-                <p className="text-sm text-slate-500 mt-1">Explore cursos, webinars, podcasts e aulas com avatares IA</p>
+                <h1 className="text-2xl font-semibold text-slate-800">
+                  {activeTab === 'documentos' ? 'Newspapers Não Lidas' : 'Hub de Aprendizado'}
+                </h1>
+                <p className="text-sm text-slate-500 mt-1">
+                  {activeTab === 'documentos' 
+                    ? 'Novos documentos e publicações do mercado financeiro'
+                    : 'Explore cursos, webinars, podcasts e aulas com avatares IA'
+                  }
+                </p>
               </div>
               <div className="flex items-center gap-4">
+                {activeTab === 'documentos' && (
+                  <>
+                    <div className="relative">
+                      <input
+                        type="text"
+                        placeholder="Buscar documentos..."
+                        className="w-80 pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pastel-purple focus:border-transparent"
+                      />
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
+                    </div>
+                    <button 
+                      onClick={() => setShowHistorico(!showHistorico)}
+                      className="relative p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition"
+                    >
+                      <History size={20} />
+                    </button>
+                  </>
+                )}
                 <button className="relative p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
                   <Bell size={20} />
                   <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                 </button>
-                <button 
-                  onClick={() => navigate('/meus-conteudos')}
-                  className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
-                >
-                  <Plus className="w-4 h-4 inline mr-2" />
-                  Criar Conteúdo
-                </button>
+                {activeTab !== 'documentos' && (
+                  <button 
+                    onClick={() => navigate('/meus-conteudos')}
+                    className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
+                  >
+                    <Plus className="w-4 h-4 inline mr-2" />
+                    Criar Conteúdo
+                  </button>
+                )}
+                {activeTab === 'documentos' && (
+                  <button className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                    <Plus className="w-4 h-4 inline mr-2" />
+                    Adicionar Documento
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -362,7 +396,8 @@ const Aprendizado = () => {
           setShowHistorico(false);
         }} />
 
-        <div className="flex-1 p-8 pb-32">
+        {activeTab !== 'documentos' ? (
+          <div className="flex-1 p-8 pb-32">
           {activeTab === 'todos' && <>
 
               <div className="grid grid-cols-3 gap-6 mb-8">
@@ -3344,25 +3379,6 @@ const Aprendizado = () => {
 
           {activeTab === 'relatorios' && <RelatoriosPendentes />}
 
-          {activeTab === 'documentos' && !showHistorico && (
-            <div className="text-center py-16">
-              <div className="w-20 h-20 bg-pastel-purple rounded-full flex items-center justify-center mx-auto mb-4">
-                <FileText className="text-3xl text-slate-700" size={48} />
-              </div>
-              <h3 className="text-xl font-semibold text-slate-800 mb-2">Documentos</h3>
-              <p className="text-slate-600 mb-6">Gerencie e visualize seus documentos financeiros</p>
-              <button 
-                onClick={() => setShowHistorico(true)}
-                className="px-6 py-3 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
-              >
-                <Clock className="w-4 h-4 inline mr-2" />
-                Histórico
-              </button>
-            </div>
-          )}
-
-          {activeTab === 'documentos' && showHistorico && <HistoricoDocumentos />}
-
           {activeTab === 'estudos' && <>
               <div className="grid grid-cols-4 gap-6 mb-8">
                 <section className="col-span-4 grid grid-cols-4 gap-6">
@@ -4618,8 +4634,12 @@ const Aprendizado = () => {
                 </div>
               </section>
             </>}
+          </div>
+        ) : null}
 
-        </div>
+        {activeTab === 'documentos' && !showHistorico && <NewspapersNaoLidas />}
+
+        {activeTab === 'documentos' && showHistorico && <HistoricoDocumentos />}
       </main>
 
       {selectedAgent && (
