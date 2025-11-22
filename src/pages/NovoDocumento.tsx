@@ -1,580 +1,646 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Upload, Mic, Video, Camera, Play, Trash2, Copy, Edit, Plus, Save, Eye, Share2, X, Paperclip, Image as ImageIcon, FileText, Link as LinkIcon, Bold, Italic, Underline, List, ListOrdered, Lightbulb, ChartLine, Book, SpellCheck } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import { MediaUploadZone } from "@/components/MediaUploadZone";
-import { UploadedMediaItem } from "@/components/UploadedMediaItem";
-import { useToast } from "@/hooks/use-toast";
+import { 
+  Search, 
+  Plus, 
+  MoreVertical, 
+  Eye, 
+  Share2, 
+  Save, 
+  ChevronDown,
+  Bold,
+  Italic,
+  Underline,
+  List,
+  ListOrdered,
+  CheckSquare,
+  Link as LinkIcon,
+  Code,
+  BarChart3,
+  Table as TableIcon,
+  Heart,
+  Download,
+  ChartLine,
+  Shield,
+  Lightbulb,
+  AlertTriangle,
+  Pen
+} from "lucide-react";
+import { useState, useEffect } from "react";
+import Plot from 'react-plotly.js';
 
 export default function NovoDocumento() {
-  const [audioFiles, setAudioFiles] = useState<File[]>([]);
-  const [videoFiles, setVideoFiles] = useState<File[]>([]);
-  const [imageFiles, setImageFiles] = useState<File[]>([]);
-  const { toast } = useToast();
+  const [agentDropdownOpen, setAgentDropdownOpen] = useState(false);
+  const [selectedAgent, setSelectedAgent] = useState({
+    name: "Agente Analista",
+    description: "Especialista em análise de mercado",
+    icon: ChartLine,
+    color: "bg-[hsl(206,35%,85%)]"
+  });
 
-  const handleAudioUpload = (file: File) => {
-    setAudioFiles(prev => [...prev, file]);
-    toast({
-      title: "Áudio adicionado",
-      description: `${file.name} foi adicionado com sucesso.`,
-    });
-  };
+  const agents = [
+    {
+      name: "Agente Analista",
+      description: "Especialista em análise de mercado",
+      icon: ChartLine,
+      color: "bg-[hsl(206,35%,85%)]"
+    },
+    {
+      name: "Agente Compliance",
+      description: "Especialista em conformidade regulatória",
+      icon: Shield,
+      color: "bg-[hsl(160,35%,85%)]"
+    },
+    {
+      name: "Agente Estrategista",
+      description: "Especialista em estratégia de investimentos",
+      icon: Lightbulb,
+      color: "bg-[hsl(280,35%,85%)]"
+    },
+    {
+      name: "Agente Risco",
+      description: "Especialista em gestão de riscos",
+      icon: AlertTriangle,
+      color: "bg-[hsl(45,35%,85%)]"
+    },
+    {
+      name: "Agente Escritor",
+      description: "Especialista em redação financeira",
+      icon: Pen,
+      color: "bg-[hsl(340,35%,85%)]"
+    }
+  ];
 
-  const handleVideoUpload = (file: File) => {
-    setVideoFiles(prev => [...prev, file]);
-    toast({
-      title: "Vídeo adicionado",
-      description: `${file.name} foi adicionado com sucesso.`,
-    });
-  };
+  const documents = [
+    {
+      title: "Análise de Mercado Q4 2024",
+      lastEdited: "há 2 horas",
+      hasCharts: true,
+      hasTables: true,
+      chartsCount: 3,
+      tablesCount: 2,
+      isActive: true
+    },
+    {
+      title: "Relatório de Compliance",
+      lastEdited: "ontem",
+      hasTables: true,
+      tablesCount: 5,
+      isActive: false
+    },
+    {
+      title: "Estratégia de Investimentos 2025",
+      lastEdited: "há 3 dias",
+      hasCharts: true,
+      chartsCount: 6,
+      isActive: false
+    },
+    {
+      title: "Notas de Reunião - CVM",
+      lastEdited: "há 1 semana",
+      isActive: false
+    },
+    {
+      title: "Análise Técnica - IBOV",
+      lastEdited: "há 2 semanas",
+      hasCharts: true,
+      chartsCount: 4,
+      isActive: false
+    }
+  ];
 
-  const handleImageUpload = (file: File) => {
-    setImageFiles(prev => [...prev, file]);
-    toast({
-      title: "Imagem adicionada",
-      description: `${file.name} foi adicionada com sucesso.`,
-    });
-  };
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest('.agent-dropdown-container')) {
+        setAgentDropdownOpen(false);
+      }
+    };
 
-  const handleRemoveAudio = (index: number) => {
-    setAudioFiles(prev => prev.filter((_, i) => i !== index));
-    toast({
-      title: "Áudio removido",
-      description: "O arquivo foi removido com sucesso.",
-    });
-  };
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, []);
 
-  const handleRemoveVideo = (index: number) => {
-    setVideoFiles(prev => prev.filter((_, i) => i !== index));
-    toast({
-      title: "Vídeo removido",
-      description: "O arquivo foi removido com sucesso.",
-    });
-  };
+  // Data for Plotly charts
+  const indicesData = [
+    {
+      type: 'bar',
+      x: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov'],
+      y: [115200, 117800, 119500, 121300, 118900, 122400, 124100, 123500, 125800, 126900, 127458],
+      name: 'IBOVESPA',
+      marker: { color: '#B8D4E8' }
+    },
+    {
+      type: 'bar',
+      x: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov'],
+      y: [4100, 4150, 4220, 4280, 4190, 4310, 4380, 4420, 4490, 4540, 4589],
+      name: 'S&P 500',
+      marker: { color: '#C5E8D4' }
+    }
+  ];
 
-  const handleRemoveImage = (index: number) => {
-    setImageFiles(prev => prev.filter((_, i) => i !== index));
-    toast({
-      title: "Imagem removida",
-      description: "O arquivo foi removido com sucesso.",
-    });
+  const sectorData = [
+    {
+      type: 'bar',
+      x: ['Tecnologia', 'Financeiro', 'Saúde', 'Energia', 'Consumo', 'Indústria'],
+      y: [18.5, 12.3, 8.7, 5.2, 9.8, 6.4],
+      marker: {
+        color: ['#B8D4E8', '#C5E8D4', '#D4C5E8', '#E8E0C5', '#E8C5D8', '#E8D4C5']
+      }
+    }
+  ];
+
+  const riskData = [
+    {
+      type: 'heatmap',
+      z: [[8, 6, 4, 7], [5, 9, 3, 6], [4, 5, 8, 5], [7, 4, 6, 9]],
+      x: ['América do Norte', 'Europa', 'Ásia-Pacífico', 'América Latina'],
+      y: ['Político', 'Econômico', 'Operacional', 'Regulatório'],
+      colorscale: [
+        [0, '#C5E8D4'],
+        [0.5, '#E8E0C5'],
+        [1, '#E8C5D8']
+      ],
+      showscale: true,
+      hovertemplate: '%{y}<br>%{x}<br>Risco: %{z}<extra></extra>'
+    }
+  ];
+
+  const chartLayout = {
+    margin: { t: 40, r: 20, b: 60, l: 60 },
+    plot_bgcolor: '#ffffff',
+    paper_bgcolor: '#ffffff',
+    font: { family: 'Inter, sans-serif' }
   };
 
   return (
     <div className="flex min-h-screen w-full bg-background">
       <SidebarFix />
       
-      <div className="flex-1 flex flex-col">
+      {/* Documents Sidebar */}
+      <div className="w-80 bg-card border-r border-border flex flex-col">
+        <div className="p-6 border-b border-border">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold text-foreground">Meus Documentos</h2>
+            <button className="w-8 h-8 bg-[hsl(206,35%,85%)] text-[hsl(220,15%,30%)] rounded-lg flex items-center justify-center hover:bg-opacity-80 transition">
+              <Plus size={16} />
+            </button>
+          </div>
+          <div className="relative">
+            <input 
+              type="text" 
+              placeholder="Buscar documentos..." 
+              className="w-full px-4 py-2 pl-10 bg-muted border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(206,35%,75%)]"
+            />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={16} />
+          </div>
+        </div>
+
+        <div className="p-4 border-b border-border">
+          <div className="flex items-center gap-2 text-xs">
+            <button className="px-3 py-1.5 bg-[hsl(206,35%,85%)] text-[hsl(220,15%,30%)] rounded-lg font-medium">Todos</button>
+            <button className="px-3 py-1.5 text-muted-foreground hover:bg-muted rounded-lg font-medium">Recentes</button>
+            <button className="px-3 py-1.5 text-muted-foreground hover:bg-muted rounded-lg font-medium">Favoritos</button>
+          </div>
+        </div>
+
+        <div className="flex-1 overflow-y-auto p-4 space-y-2">
+          {documents.map((doc, index) => (
+            <div 
+              key={index} 
+              className={`p-3 rounded-lg border border-border cursor-pointer transition ${
+                doc.isActive ? 'bg-[hsl(206,35%,85%)]' : 'bg-card hover:bg-muted'
+              }`}
+            >
+              <div className="flex items-start justify-between mb-2">
+                <div className="flex-1 min-w-0">
+                  <h3 className={`text-sm truncate ${doc.isActive ? 'font-semibold' : 'font-medium'} text-foreground`}>
+                    {doc.title}
+                  </h3>
+                  <p className="text-xs text-muted-foreground">{doc.lastEdited}</p>
+                </div>
+                <button className="text-muted-foreground hover:text-foreground">
+                  <MoreVertical size={14} />
+                </button>
+              </div>
+              {(doc.hasCharts || doc.hasTables) && (
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  {doc.hasCharts && (
+                    <>
+                      <BarChart3 size={12} />
+                      <span>{doc.chartsCount} gráficos</span>
+                    </>
+                  )}
+                  {doc.hasCharts && doc.hasTables && <span>•</span>}
+                  {doc.hasTables && (
+                    <>
+                      <TableIcon size={12} />
+                      <span>{doc.tablesCount} tabelas</span>
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <main className="flex-1 overflow-y-auto">
         {/* Header */}
-        <header className="bg-card border-b border-border h-16 flex-none sticky top-0 z-10">
-          <div className="h-full px-8 flex items-center justify-between">
+        <header className="bg-card border-b border-border sticky top-0 z-10">
+          <div className="px-8 py-4 flex items-center justify-between">
             <div className="flex items-center gap-4 flex-1">
-              <Link to="/criar-conteudo" className="text-muted-foreground hover:text-foreground transition-colors">
-                <ArrowLeft className="w-5 h-5" />
-              </Link>
               <input 
                 type="text" 
-                placeholder="Título do documento..." 
-                className="text-2xl font-semibold text-foreground bg-transparent border-none focus:outline-none focus:ring-0 placeholder-muted-foreground"
+                defaultValue="Análise de Mercado Q4 2024" 
+                className="text-2xl font-semibold text-foreground bg-transparent border-none focus:outline-none focus:ring-0"
               />
             </div>
             <div className="flex items-center gap-3">
               <button className="px-4 py-2 text-muted-foreground hover:bg-muted rounded-lg font-medium transition text-sm flex items-center gap-2">
-                <Eye className="w-4 h-4" />
+                <Eye size={16} />
                 Pré-visualizar
               </button>
               <button className="px-4 py-2 text-muted-foreground hover:bg-muted rounded-lg font-medium transition text-sm flex items-center gap-2">
-                <Share2 className="w-4 h-4" />
+                <Share2 size={16} />
                 Compartilhar
               </button>
-              <button className="px-4 py-2 bg-[hsl(var(--pastel-blue))] text-[hsl(var(--pastel-gray-dark))] rounded-lg font-medium hover:bg-opacity-80 transition text-sm flex items-center gap-2">
-                <Save className="w-4 h-4" />
+              <button className="px-4 py-2 bg-[hsl(206,35%,85%)] text-[hsl(220,15%,30%)] rounded-lg font-medium hover:bg-opacity-80 transition text-sm flex items-center gap-2">
+                <Save size={16} />
                 Salvar
+              </button>
+            </div>
+          </div>
+
+          {/* AI Agent Section */}
+          <div className="px-8 py-3 border-t border-border bg-muted/30">
+            <div className="flex items-center gap-3">
+              <span className="text-sm font-medium text-muted-foreground">Assistido por:</span>
+              <div className="relative agent-dropdown-container">
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setAgentDropdownOpen(!agentDropdownOpen);
+                  }}
+                  className="px-4 py-2 bg-card hover:bg-muted rounded-lg font-medium transition text-sm flex items-center gap-3 border border-border"
+                >
+                  <div className={`w-7 h-7 ${selectedAgent.color} rounded-lg flex items-center justify-center flex-shrink-0`}>
+                    <selectedAgent.icon className="text-[hsl(220,15%,30%)]" size={14} />
+                  </div>
+                  <div className="flex flex-col items-start">
+                    <span className="text-foreground font-medium">{selectedAgent.name}</span>
+                    <span className="text-xs text-muted-foreground">{selectedAgent.description}</span>
+                  </div>
+                  <ChevronDown className="text-muted-foreground ml-2" size={14} />
+                </button>
+                
+                {agentDropdownOpen && (
+                  <div className="absolute top-full left-0 mt-2 w-80 bg-card border border-border rounded-lg shadow-lg z-50">
+                    <div className="p-2">
+                      <div className="px-3 py-2 text-xs font-semibold text-muted-foreground uppercase">Escolher Agente de IA</div>
+                      {agents.map((agent, index) => (
+                        <button
+                          key={index}
+                          onClick={() => {
+                            setSelectedAgent(agent);
+                            setAgentDropdownOpen(false);
+                          }}
+                          className={`w-full px-3 py-2 text-left hover:bg-muted rounded-lg transition flex items-start gap-3`}
+                        >
+                          <div className={`w-8 h-8 ${agent.color} rounded-lg flex items-center justify-center flex-shrink-0`}>
+                            <agent.icon className="text-[hsl(220,15%,30%)]" size={16} />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="font-medium text-foreground text-sm">{agent.name}</div>
+                            <div className="text-xs text-muted-foreground">{agent.description}</div>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+          
+          {/* Toolbar */}
+          <div className="px-8 py-3 border-t border-border flex items-center gap-2">
+            <div className="flex items-center gap-1 border-r border-border pr-3">
+              <button className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center" title="Negrito">
+                <Bold size={16} />
+              </button>
+              <button className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center" title="Itálico">
+                <Italic size={16} />
+              </button>
+              <button className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center" title="Sublinhado">
+                <Underline size={16} />
+              </button>
+            </div>
+
+            <div className="flex items-center gap-1 border-r border-border pr-3">
+              <button className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center" title="Título 1">
+                <span className="text-sm font-semibold">H1</span>
+              </button>
+              <button className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center" title="Título 2">
+                <span className="text-sm font-semibold">H2</span>
+              </button>
+              <button className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center" title="Título 3">
+                <span className="text-sm font-semibold">H3</span>
+              </button>
+            </div>
+
+            <div className="flex items-center gap-1 border-r border-border pr-3">
+              <button className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center" title="Lista com marcadores">
+                <List size={16} />
+              </button>
+              <button className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center" title="Lista numerada">
+                <ListOrdered size={16} />
+              </button>
+              <button className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center" title="Checklist">
+                <CheckSquare size={16} />
+              </button>
+            </div>
+
+            <div className="flex items-center gap-1 border-r border-border pr-3">
+              <button className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center" title="Adicionar link">
+                <LinkIcon size={16} />
+              </button>
+              <button className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center" title="Adicionar código">
+                <Code size={16} />
+              </button>
+            </div>
+
+            <div className="flex items-center gap-1">
+              <button className="px-3 py-1.5 text-muted-foreground hover:bg-muted rounded flex items-center gap-2 text-sm font-medium" title="Adicionar gráfico">
+                <BarChart3 size={16} />
+                <span>Gráfico</span>
+              </button>
+              <button className="px-3 py-1.5 text-muted-foreground hover:bg-muted rounded flex items-center gap-2 text-sm font-medium" title="Adicionar tabela">
+                <TableIcon size={16} />
+                <span>Tabela</span>
               </button>
             </div>
           </div>
         </header>
 
-        {/* Main Content */}
-        <main className="flex-1 overflow-y-auto">
-          <div className="p-8">
-            <div className="max-w-5xl mx-auto">
-              
-              {/* AI Assistant Section */}
-              <section className="mb-8">
-                <div className="bg-card rounded-2xl border-2 border-border p-8 mb-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-14 h-14 bg-[hsl(var(--pastel-blue))] rounded-xl flex items-center justify-center flex-shrink-0 border-2 border-border">
-                      <i className="fas fa-robot text-[hsl(var(--pastel-gray-dark))] text-2xl"></i>
-                    </div>
-                    <div className="flex-1">
-                      <h2 className="text-2xl font-bold text-foreground mb-2">Assistente de Criação com IA</h2>
-                      <p className="text-foreground mb-6">Deixe nossos agentes de IA criarem conteúdo profissional para você. Basta fornecer o tema e escolher o tipo de conteúdo.</p>
-                      
-                      <div className="bg-muted/50 rounded-xl border-2 border-border p-6">
-                        <div className="mb-6">
-                          <label className="block text-sm font-semibold text-foreground mb-3">Selecione o agente especializado:</label>
-                          <div className="grid grid-cols-3 gap-3">
-                            <button className="p-4 bg-[hsl(var(--pastel-blue))] rounded-lg border-2 border-border hover:bg-opacity-70 transition text-left">
-                              <div className="flex items-center gap-2 mb-2">
-                                <ChartLine className="w-4 h-4 text-[hsl(var(--pastel-gray-dark))]" />
-                                <span className="font-semibold text-[hsl(var(--pastel-gray-dark))] text-sm">Análise</span>
-                              </div>
-                              <p className="text-xs text-[hsl(var(--pastel-gray-dark))]/80">Relatórios e análises de mercado</p>
-                            </button>
-
-                            <button className="p-4 bg-[hsl(var(--pastel-green))] rounded-lg border-2 border-border hover:bg-opacity-70 transition text-left">
-                              <div className="flex items-center gap-2 mb-2">
-                                <i className="fas fa-balance-scale text-[hsl(var(--pastel-gray-dark))]"></i>
-                                <span className="font-semibold text-[hsl(var(--pastel-gray-dark))] text-sm">Compliance</span>
-                              </div>
-                              <p className="text-xs text-[hsl(var(--pastel-gray-dark))]/80">Documentos regulatórios</p>
-                            </button>
-
-                            <button className="p-4 bg-[hsl(var(--pastel-purple))] rounded-lg border-2 border-border hover:bg-opacity-70 transition text-left">
-                              <div className="flex items-center gap-2 mb-2">
-                                <i className="fas fa-graduation-cap text-[hsl(var(--pastel-gray-dark))]"></i>
-                                <span className="font-semibold text-[hsl(var(--pastel-gray-dark))] text-sm">Educacional</span>
-                              </div>
-                              <p className="text-xs text-[hsl(var(--pastel-gray-dark))]/80">Conteúdo didático</p>
-                            </button>
-
-                            <button className="p-4 bg-[hsl(var(--pastel-yellow))] rounded-lg border-2 border-border hover:bg-opacity-70 transition text-left">
-                              <div className="flex items-center gap-2 mb-2">
-                                <Lightbulb className="w-4 h-4 text-[hsl(var(--pastel-gray-dark))]" />
-                                <span className="font-semibold text-[hsl(var(--pastel-gray-dark))] text-sm">Estratégia</span>
-                              </div>
-                              <p className="text-xs text-[hsl(var(--pastel-gray-dark))]/80">Planejamento e insights</p>
-                            </button>
-
-                            <button className="p-4 bg-[hsl(var(--pastel-pink))] rounded-lg border-2 border-border hover:bg-opacity-70 transition text-left">
-                              <div className="flex items-center gap-2 mb-2">
-                                <i className="fas fa-file-contract text-[hsl(var(--pastel-gray-dark))]"></i>
-                                <span className="font-semibold text-[hsl(var(--pastel-gray-dark))] text-sm">Jurídico</span>
-                              </div>
-                              <p className="text-xs text-[hsl(var(--pastel-gray-dark))]/80">Documentos legais</p>
-                            </button>
-
-                            <button className="p-4 bg-[hsl(var(--pastel-peach))] rounded-lg border-2 border-border hover:bg-opacity-70 transition text-left">
-                              <div className="flex items-center gap-2 mb-2">
-                                <i className="fas fa-comments text-[hsl(var(--pastel-gray-dark))]"></i>
-                                <span className="font-semibold text-[hsl(var(--pastel-gray-dark))] text-sm">Comunicação</span>
-                              </div>
-                              <p className="text-xs text-[hsl(var(--pastel-gray-dark))]/80">Relatórios executivos</p>
-                            </button>
-                          </div>
-                        </div>
-
-                        <div className="mb-6">
-                          <label className="block text-sm font-semibold text-foreground mb-3">Escolha um agente específico (opcional):</label>
-                          <select className="w-full px-4 py-3 bg-card border-2 border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-[hsl(var(--pastel-blue))]">
-                            <option value="">Selecione um agente...</option>
-                            <optgroup label="Análise de Mercado">
-                              <option value="analista-acoes">Analista de Ações - Especialista em renda variável</option>
-                              <option value="analista-renda-fixa">Analista de Renda Fixa - Títulos e bonds</option>
-                              <option value="analista-macro">Analista Macroeconômico - Cenários e tendências</option>
-                            </optgroup>
-                            <optgroup label="Compliance e Regulatório">
-                              <option value="compliance-cvm">Especialista CVM - Normas e regulamentações</option>
-                              <option value="compliance-bacen">Especialista BACEN - Regulação bancária</option>
-                              <option value="compliance-anbima">Especialista ANBIMA - Certificações e normas</option>
-                            </optgroup>
-                            <optgroup label="Educacional">
-                              <option value="professor-financas">Professor de Finanças - Conceitos fundamentais</option>
-                              <option value="instrutor-investimentos">Instrutor de Investimentos - Produtos financeiros</option>
-                              <option value="mentor-certificacoes">Mentor de Certificações - Preparação para provas</option>
-                            </optgroup>
-                            <optgroup label="Estratégia">
-                              <option value="estrategista-fundos">Estrategista de Fundos - Gestão de carteiras</option>
-                              <option value="planejador-financeiro">Planejador Financeiro - Alocação de ativos</option>
-                              <option value="consultor-risco">Consultor de Risco - Gestão e mitigação</option>
-                            </optgroup>
-                            <optgroup label="Jurídico">
-                              <option value="advogado-mercado-capitais">Advogado Mercado de Capitais - Operações estruturadas</option>
-                              <option value="especialista-contratos">Especialista em Contratos - Documentação legal</option>
-                            </optgroup>
-                            <optgroup label="Comunicação">
-                              <option value="redator-relatorios">Redator de Relatórios - Comunicação executiva</option>
-                              <option value="analista-ri">Analista de RI - Relações com investidores</option>
-                            </optgroup>
-                          </select>
-                          <p className="text-xs text-muted-foreground mt-2">Ao selecionar um agente específico, o conteúdo será personalizado com a expertise dele</p>
-                        </div>
-
-                        <div className="mb-6">
-                          <label className="block text-sm font-semibold text-foreground mb-3">Sobre o que você quer escrever?</label>
-                          <div className="relative">
-                            <textarea 
-                              placeholder="Ex: Análise das novas regulamentações da CVM sobre fundos de investimento..." 
-                              className="w-full px-4 py-3 pb-14 bg-card border-2 border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-[hsl(var(--pastel-blue))] focus:border-transparent resize-none" 
-                              rows={4}
-                            />
-                            <div className="absolute bottom-3 left-3 right-3 flex items-center gap-2">
-                              <button className="px-3 py-1.5 bg-card border-2 border-border rounded-lg text-foreground hover:bg-muted transition flex items-center gap-2 text-sm">
-                                <Paperclip className="w-4 h-4" />
-                                <span>Anexar</span>
-                              </button>
-                              <button className="px-3 py-1.5 bg-card border-2 border-border rounded-lg text-foreground hover:bg-muted transition flex items-center gap-2 text-sm">
-                                <ImageIcon className="w-4 h-4" />
-                              </button>
-                              <button className="px-3 py-1.5 bg-card border-2 border-border rounded-lg text-foreground hover:bg-muted transition flex items-center gap-2 text-sm">
-                                <i className="fas fa-file-pdf"></i>
-                              </button>
-                              <button className="px-3 py-1.5 bg-card border-2 border-border rounded-lg text-foreground hover:bg-muted transition flex items-center gap-2 text-sm">
-                                <i className="fas fa-file-word"></i>
-                              </button>
-                              <button className="px-3 py-1.5 bg-card border-2 border-border rounded-lg text-foreground hover:bg-muted transition flex items-center gap-2 text-sm">
-                                <i className="fas fa-file-excel"></i>
-                              </button>
-                              <div className="flex-1"></div>
-                              <span className="text-xs text-muted-foreground">0/4000</span>
-                            </div>
-                          </div>
-                          
-                          <div className="mt-3 flex flex-wrap gap-2">
-                            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-card rounded-lg border-2 border-border">
-                              <i className="fas fa-file-pdf text-foreground text-sm"></i>
-                              <span className="text-xs text-foreground font-medium">relatorio-cvm-2024.pdf</span>
-                              <span className="text-xs text-muted-foreground">2.3 MB</span>
-                              <button className="ml-1 text-muted-foreground hover:text-foreground">
-                                <X className="w-3 h-3" />
-                              </button>
-                            </div>
-                            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-card rounded-lg border-2 border-border">
-                              <i className="fas fa-file-excel text-foreground text-sm"></i>
-                              <span className="text-xs text-foreground font-medium">dados-mercado-q4.xlsx</span>
-                              <span className="text-xs text-muted-foreground">1.8 MB</span>
-                              <button className="ml-1 text-muted-foreground hover:text-foreground">
-                                <X className="w-3 h-3" />
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="mb-6">
-                          <label className="block text-sm font-semibold text-foreground mb-3">Configurações adicionais:</label>
-                          <div className="grid grid-cols-2 gap-4">
-                            <div>
-                              <label className="text-xs text-muted-foreground mb-2 block">Tom de voz</label>
-                              <select className="w-full px-3 py-2 bg-card border-2 border-border rounded-lg text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-[hsl(var(--pastel-blue))]">
-                                <option>Profissional</option>
-                                <option>Técnico</option>
-                                <option>Conversacional</option>
-                                <option>Formal</option>
-                              </select>
-                            </div>
-                            <div>
-                              <label className="text-xs text-muted-foreground mb-2 block">Tamanho do conteúdo</label>
-                              <select className="w-full px-3 py-2 bg-card border-2 border-border rounded-lg text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-[hsl(var(--pastel-blue))]">
-                                <option>Curto (500 palavras)</option>
-                                <option>Médio (1000 palavras)</option>
-                                <option>Longo (2000+ palavras)</option>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
-
-                        <button className="w-full py-3 bg-foreground text-background rounded-lg font-semibold hover:bg-foreground/90 transition flex items-center justify-center gap-2">
-                          <i className="fas fa-wand-magic-sparkles"></i>
-                          <span>Gerar Conteúdo com IA</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+        {/* Document Content */}
+        <div className="p-8">
+          <div className="max-w-4xl mx-auto">
+            <article className="prose prose-slate max-w-none">
+              <div className="mb-8">
+                <h1 className="text-4xl font-bold text-foreground mb-2">Análise de Mercado Q4 2024</h1>
+                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                  <span>Última edição: 15 de novembro de 2024, 14:32</span>
+                  <span>•</span>
+                  <span>Por João Silva</span>
                 </div>
+              </div>
+
+              <section className="mb-8">
+                <h2 className="text-2xl font-semibold text-foreground mb-4">Resumo Executivo</h2>
+                <p className="text-foreground leading-relaxed mb-4">
+                  O quarto trimestre de 2024 apresentou um cenário de volatilidade moderada nos mercados financeiros globais, impulsionado principalmente por decisões de política monetária dos principais bancos centrais e tensões geopolíticas pontuais.
+                </p>
+                <p className="text-foreground leading-relaxed mb-4">
+                  Neste relatório, analisamos os principais indicadores macroeconômicos, o desempenho dos ativos de renda variável e fixa, além de apresentar projeções para o primeiro trimestre de 2025.
+                </p>
               </section>
 
-              {/* Media Upload Section */}
               <section className="mb-8">
-                <h2 className="text-2xl font-bold text-foreground mb-6">Adicionar Mídia</h2>
+                <h2 className="text-2xl font-semibold text-foreground mb-4">Principais Indicadores</h2>
                 
-                <div className="grid grid-cols-3 gap-6 mb-6">
-                  <MediaUploadZone
-                    type="audio"
-                    accept=".mp3,.wav,.m4a,.aac,audio/*"
-                    maxSize={50}
-                    icon={<Mic className="text-[hsl(var(--pastel-gray-dark))] w-5 h-5" />}
-                    title="Adicionar Áudio"
-                    subtitle="MP3, WAV, até 50MB"
-                    color="--pastel-purple"
-                    onUpload={handleAudioUpload}
-                  />
-
-                  <MediaUploadZone
-                    type="video"
-                    accept=".mp4,.mov,.avi,.webm,video/*"
-                    maxSize={200}
-                    icon={<Video className="text-[hsl(var(--pastel-gray-dark))] w-5 h-5" />}
-                    title="Adicionar Vídeo"
-                    subtitle="MP4, MOV, até 200MB"
-                    color="--pastel-pink"
-                    onUpload={handleVideoUpload}
-                  />
-
-                  <MediaUploadZone
-                    type="video"
-                    accept=".jpg,.jpeg,.png,.gif,.webp,image/*"
-                    maxSize={10}
-                    icon={<ImageIcon className="text-[hsl(var(--pastel-gray-dark))] w-5 h-5" />}
-                    title="Adicionar Imagem"
-                    subtitle="JPG, PNG, até 10MB"
-                    color="--pastel-blue"
-                    onUpload={handleImageUpload}
+                <div className="bg-card rounded-xl border border-border p-6 mb-6">
+                  <h3 className="text-lg font-semibold text-foreground mb-4">Desempenho dos Índices Principais</h3>
+                  <Plot
+                    data={indicesData as any}
+                    layout={{
+                      ...chartLayout,
+                      xaxis: { title: 'Mês' },
+                      yaxis: { title: 'Pontos' },
+                      showlegend: true,
+                      legend: { orientation: 'h', y: -0.2 },
+                      barmode: 'group',
+                      height: 400
+                    }}
+                    config={{ responsive: true, displayModeBar: false }}
+                    style={{ width: '100%' }}
                   />
                 </div>
 
-                {(audioFiles.length > 0 || videoFiles.length > 0 || imageFiles.length > 0) && (
-                  <div className="space-y-4">
-                    {audioFiles.map((file, index) => (
-                      <UploadedMediaItem
-                        key={`audio-${index}`}
-                        file={file}
-                        type="audio"
-                        color="--pastel-purple"
-                        icon={<i className="fas fa-music"></i>}
-                        onRemove={() => handleRemoveAudio(index)}
-                      />
-                    ))}
-                    {videoFiles.map((file, index) => (
-                      <UploadedMediaItem
-                        key={`video-${index}`}
-                        file={file}
-                        type="video"
-                        color="--pastel-pink"
-                        icon={<Video className="w-6 h-6" />}
-                        onRemove={() => handleRemoveVideo(index)}
-                      />
-                    ))}
-                    {imageFiles.map((file, index) => (
-                      <UploadedMediaItem
-                        key={`image-${index}`}
-                        file={file}
-                        type="video"
-                        color="--pastel-blue"
-                        icon={<ImageIcon className="w-6 h-6" />}
-                        thumbnail={URL.createObjectURL(file)}
-                        onRemove={() => handleRemoveImage(index)}
-                      />
-                    ))}
+                <div className="bg-card rounded-xl border border-border p-6 mb-6">
+                  <h3 className="text-lg font-semibold text-foreground mb-4">Comparativo de Ativos</h3>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b border-border">
+                          <th className="text-left py-3 px-4 font-semibold text-foreground">Ativo</th>
+                          <th className="text-right py-3 px-4 font-semibold text-foreground">Valor Atual</th>
+                          <th className="text-right py-3 px-4 font-semibold text-foreground">Variação Mensal</th>
+                          <th className="text-right py-3 px-4 font-semibold text-foreground">Variação Anual</th>
+                          <th className="text-right py-3 px-4 font-semibold text-foreground">Volume (Mi)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr className="border-b border-border hover:bg-muted">
+                          <td className="py-3 px-4 font-medium text-foreground">IBOVESPA</td>
+                          <td className="py-3 px-4 text-right text-foreground">127.458</td>
+                          <td className="py-3 px-4 text-right text-green-600">+3.2%</td>
+                          <td className="py-3 px-4 text-right text-green-600">+12.5%</td>
+                          <td className="py-3 px-4 text-right text-foreground">R$ 18.542</td>
+                        </tr>
+                        <tr className="border-b border-border hover:bg-muted">
+                          <td className="py-3 px-4 font-medium text-foreground">S&P 500</td>
+                          <td className="py-3 px-4 text-right text-foreground">4.589</td>
+                          <td className="py-3 px-4 text-right text-green-600">+2.8%</td>
+                          <td className="py-3 px-4 text-right text-green-600">+18.3%</td>
+                          <td className="py-3 px-4 text-right text-foreground">$ 245.320</td>
+                        </tr>
+                        <tr className="border-b border-border hover:bg-muted">
+                          <td className="py-3 px-4 font-medium text-foreground">FTSE 100</td>
+                          <td className="py-3 px-4 text-right text-foreground">7.842</td>
+                          <td className="py-3 px-4 text-right text-green-600">+1.5%</td>
+                          <td className="py-3 px-4 text-right text-green-600">+8.7%</td>
+                          <td className="py-3 px-4 text-right text-foreground">£ 89.456</td>
+                        </tr>
+                        <tr className="border-b border-border hover:bg-muted">
+                          <td className="py-3 px-4 font-medium text-foreground">DAX</td>
+                          <td className="py-3 px-4 text-right text-foreground">16.254</td>
+                          <td className="py-3 px-4 text-right text-red-600">-0.8%</td>
+                          <td className="py-3 px-4 text-right text-green-600">+15.2%</td>
+                          <td className="py-3 px-4 text-right text-foreground">€ 124.789</td>
+                        </tr>
+                        <tr className="hover:bg-muted">
+                          <td className="py-3 px-4 font-medium text-foreground">Nikkei 225</td>
+                          <td className="py-3 px-4 text-right text-foreground">32.145</td>
+                          <td className="py-3 px-4 text-right text-green-600">+4.1%</td>
+                          <td className="py-3 px-4 text-right text-green-600">+22.8%</td>
+                          <td className="py-3 px-4 text-right text-foreground">¥ 2.456.789</td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
-                )}
+                </div>
               </section>
 
-              {/* Transcription Section */}
               <section className="mb-8">
-                <div className="bg-card rounded-xl border-2 border-border p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-[hsl(var(--pastel-green))] rounded-lg flex items-center justify-center border-2 border-border">
-                        <FileText className="text-[hsl(var(--pastel-gray-dark))] w-5 h-5" />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-foreground">Transcrição Automática</h3>
-                        <p className="text-xs text-muted-foreground">Converta áudio e vídeo em texto</p>
-                      </div>
+                <h2 className="text-2xl font-semibold text-foreground mb-4">Análise Setorial</h2>
+                
+                <div className="bg-card rounded-xl border border-border p-6 mb-6">
+                  <h3 className="text-lg font-semibold text-foreground mb-4">Desempenho por Setor</h3>
+                  <Plot
+                    data={sectorData as any}
+                    layout={{
+                      ...chartLayout,
+                      xaxis: { title: 'Setor' },
+                      yaxis: { title: 'Variação (%)' },
+                      showlegend: false,
+                      height: 400
+                    }}
+                    config={{ responsive: true, displayModeBar: false }}
+                    style={{ width: '100%' }}
+                  />
+                </div>
+
+                <div className="space-y-4">
+                  <div className="bg-[hsl(206,35%,85%)] rounded-lg p-4">
+                    <h4 className="font-semibold text-foreground mb-2">Tecnologia</h4>
+                    <p className="text-sm text-foreground leading-relaxed">
+                      O setor de tecnologia manteve sua trajetória de crescimento, impulsionado pela adoção de soluções de IA e computação em nuvem. Destaque para empresas de software empresarial e cibersegurança.
+                    </p>
+                  </div>
+
+                  <div className="bg-[hsl(160,35%,85%)] rounded-lg p-4">
+                    <h4 className="font-semibold text-foreground mb-2">Financeiro</h4>
+                    <p className="text-sm text-foreground leading-relaxed">
+                      Bancos e instituições financeiras apresentaram resultados sólidos, beneficiados pela normalização das taxas de juros e expansão do crédito corporativo.
+                    </p>
+                  </div>
+
+                  <div className="bg-[hsl(45,35%,85%)] rounded-lg p-4">
+                    <h4 className="font-semibold text-foreground mb-2">Energia</h4>
+                    <p className="text-sm text-foreground leading-relaxed">
+                      Volatilidade moderada no setor energético, com destaque para empresas de energia renovável que continuam atraindo investimentos significativos.
+                    </p>
+                  </div>
+                </div>
+              </section>
+
+              <section className="mb-8">
+                <h2 className="text-2xl font-semibold text-foreground mb-4">Análise de Risco</h2>
+                
+                <div className="bg-card rounded-xl border border-border p-6 mb-6">
+                  <h3 className="text-lg font-semibold text-foreground mb-4">Matriz de Risco por Região</h3>
+                  <Plot
+                    data={riskData as any}
+                    layout={{
+                      ...chartLayout,
+                      xaxis: { title: 'Região' },
+                      yaxis: { title: 'Tipo de Risco' },
+                      height: 400
+                    }}
+                    config={{ responsive: true, displayModeBar: false }}
+                    style={{ width: '100%' }}
+                  />
+                </div>
+
+                <h3 className="text-xl font-semibold text-foreground mb-4">Principais Riscos Identificados</h3>
+                <ul className="space-y-3">
+                  <li className="flex items-start gap-3">
+                    <div className="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="text-red-600 text-xs">!</span>
                     </div>
-                    <button className="px-4 py-2 bg-[hsl(var(--pastel-green))] text-[hsl(var(--pastel-gray-dark))] rounded-lg font-medium hover:bg-opacity-70 transition text-sm border-2 border-border flex items-center gap-2">
-                      <i className="fas fa-magic"></i>
-                      Transcrever Mídia
+                    <div>
+                      <h4 className="font-semibold text-foreground mb-1">Risco Geopolítico</h4>
+                      <p className="text-sm text-foreground">Tensões comerciais entre grandes economias podem impactar cadeias de suprimento globais.</p>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="w-6 h-6 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="text-yellow-600 text-xs">!</span>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-foreground mb-1">Risco de Inflação</h4>
+                      <p className="text-sm text-foreground">Pressões inflacionárias persistentes podem levar a ajustes mais agressivos nas taxas de juros.</p>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="text-blue-600 text-xs">i</span>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-foreground mb-1">Risco Tecnológico</h4>
+                      <p className="text-sm text-foreground">Vulnerabilidades cibernéticas e regulamentação de IA podem afetar empresas de tecnologia.</p>
+                    </div>
+                  </li>
+                </ul>
+              </section>
+
+              <section className="mb-8">
+                <h2 className="text-2xl font-semibold text-foreground mb-4">Recomendações</h2>
+                
+                <div className="grid grid-cols-2 gap-4 mb-6">
+                  <div className="bg-card rounded-xl border border-border p-5">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 bg-[hsl(160,35%,85%)] rounded-lg flex items-center justify-center">
+                        <span className="text-[hsl(220,15%,30%)]">↑</span>
+                      </div>
+                      <h3 className="font-semibold text-foreground">Compra</h3>
+                    </div>
+                    <ul className="space-y-2 text-sm text-foreground">
+                      <li>• Ações de tecnologia com foco em IA</li>
+                      <li>• Títulos de renda fixa de longo prazo</li>
+                      <li>• ETFs de energia renovável</li>
+                    </ul>
+                  </div>
+
+                  <div className="bg-card rounded-xl border border-border p-5">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 bg-[hsl(45,35%,85%)] rounded-lg flex items-center justify-center">
+                        <span className="text-[hsl(220,15%,30%)]">−</span>
+                      </div>
+                      <h3 className="font-semibold text-foreground">Manter</h3>
+                    </div>
+                    <ul className="space-y-2 text-sm text-foreground">
+                      <li>• Ações do setor financeiro</li>
+                      <li>• Fundos imobiliários</li>
+                      <li>• Commodities agrícolas</li>
+                    </ul>
+                  </div>
+                </div>
+              </section>
+
+              <section className="mb-8">
+                <h2 className="text-2xl font-semibold text-foreground mb-4">Conclusão</h2>
+                <p className="text-foreground leading-relaxed mb-4">
+                  O cenário para o primeiro trimestre de 2025 permanece construtivo, com oportunidades em setores específicos e necessidade de gestão ativa de riscos. A diversificação continua sendo fundamental para navegação em um ambiente de incertezas globais.
+                </p>
+                <p className="text-foreground leading-relaxed">
+                  Recomendamos monitoramento contínuo dos indicadores macroeconômicos e ajustes táticos conforme necessário, mantendo uma visão de longo prazo alinhada aos objetivos estratégicos.
+                </p>
+              </section>
+
+              <div className="border-t border-border pt-6 mt-8">
+                <div className="flex items-center justify-between text-sm text-muted-foreground">
+                  <div>
+                    <span className="font-medium">Tags:</span>
+                    <span className="ml-2">Análise de Mercado, Q4 2024, Investimentos, Risco</span>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <button className="text-muted-foreground hover:text-foreground flex items-center gap-1">
+                      <Heart size={14} />
+                      <span>Favoritar</span>
+                    </button>
+                    <button className="text-muted-foreground hover:text-foreground flex items-center gap-1">
+                      <Download size={14} />
+                      <span>Exportar PDF</span>
                     </button>
                   </div>
-
-                  <div className="bg-muted/50 rounded-lg p-4 border-2 border-border">
-                    <div className="flex items-start gap-3 mb-3">
-                      <i className="fas fa-quote-left text-muted-foreground text-sm mt-1"></i>
-                      <div className="flex-1">
-                        <p className="text-sm text-foreground leading-relaxed mb-2">
-                          Olá a todos, bem-vindos à nossa apresentação sobre as tendências do mercado financeiro para 2025. Hoje vamos abordar os principais indicadores macroeconômicos que impactam o setor...
-                        </p>
-                        <p className="text-xs text-muted-foreground">Transcrição de: apresentacao-mercado-financeiro.mp3 • 00:00 - 00:15</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2 pt-3 border-t border-border">
-                      <button className="px-3 py-1.5 bg-card text-foreground rounded-lg text-xs font-medium hover:bg-muted transition border border-border flex items-center gap-1">
-                        <Copy className="w-3 h-3" />
-                        Copiar
-                      </button>
-                      <button className="px-3 py-1.5 bg-card text-foreground rounded-lg text-xs font-medium hover:bg-muted transition border border-border flex items-center gap-1">
-                        <Edit className="w-3 h-3" />
-                        Editar
-                      </button>
-                      <button className="px-3 py-1.5 bg-card text-foreground rounded-lg text-xs font-medium hover:bg-muted transition border border-border flex items-center gap-1">
-                        <Plus className="w-3 h-3" />
-                        Inserir no Documento
-                      </button>
-                    </div>
-                  </div>
                 </div>
-              </section>
-
-              {/* Editor Section */}
-              <section className="mb-8">
-                <div className="bg-card rounded-xl border-2 border-border overflow-hidden">
-                  <div className="px-6 py-3 border-b-2 border-border flex items-center gap-2 bg-muted/50">
-                    <div className="flex items-center gap-1 border-r-2 border-border pr-3">
-                      <button className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center transition" title="Negrito">
-                        <Bold className="w-4 h-4" />
-                      </button>
-                      <button className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center transition" title="Itálico">
-                        <Italic className="w-4 h-4" />
-                      </button>
-                      <button className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center transition" title="Sublinhado">
-                        <Underline className="w-4 h-4" />
-                      </button>
-                    </div>
-
-                    <div className="flex items-center gap-1 border-r-2 border-border pr-3">
-                      <button className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center transition" title="Título 1">
-                        <span className="text-sm font-semibold">H1</span>
-                      </button>
-                      <button className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center transition" title="Título 2">
-                        <span className="text-sm font-semibold">H2</span>
-                      </button>
-                      <button className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center transition" title="Título 3">
-                        <span className="text-sm font-semibold">H3</span>
-                      </button>
-                    </div>
-
-                    <div className="flex items-center gap-1 border-r-2 border-border pr-3">
-                      <button className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center transition" title="Lista com marcadores">
-                        <List className="w-4 h-4" />
-                      </button>
-                      <button className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center transition" title="Lista numerada">
-                        <ListOrdered className="w-4 h-4" />
-                      </button>
-                    </div>
-
-                    <div className="flex items-center gap-1">
-                      <button className="px-3 py-1.5 text-muted-foreground hover:bg-muted rounded flex items-center gap-2 text-sm font-medium transition" title="Adicionar imagem">
-                        <ImageIcon className="w-4 h-4" />
-                        <span>Imagem</span>
-                      </button>
-                      <button className="px-3 py-1.5 text-muted-foreground hover:bg-muted rounded flex items-center gap-2 text-sm font-medium transition" title="Adicionar link">
-                        <LinkIcon className="w-4 h-4" />
-                        <span>Link</span>
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="p-8 min-h-[400px]">
-                    <div className="prose prose-slate max-w-none">
-                      <p className="text-muted-foreground italic">Comece a escrever ou use a IA para gerar conteúdo automaticamente...</p>
-                    </div>
-                  </div>
-                </div>
-              </section>
-
-              {/* AI Suggestions */}
-              <section className="mb-8">
-                <div className="bg-card rounded-xl border-2 border-border p-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 bg-[hsl(var(--pastel-yellow))] rounded-lg flex items-center justify-center border-2 border-border">
-                      <Lightbulb className="text-[hsl(var(--pastel-gray-dark))] w-5 h-5" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground">Sugestões da IA</h3>
-                      <p className="text-xs text-muted-foreground">Melhorias e complementos para seu documento</p>
-                    </div>
-                  </div>
-
-                  <div className="space-y-3">
-                    <div className="bg-[hsl(var(--pastel-yellow))]/30 rounded-lg p-4 border-2 border-border">
-                      <div className="flex items-start gap-3">
-                        <ChartLine className="text-foreground w-5 h-5 mt-1" />
-                        <div className="flex-1">
-                          <p className="text-sm text-foreground font-medium mb-1">Adicionar gráfico comparativo</p>
-                          <p className="text-xs text-muted-foreground">Que tal incluir um gráfico mostrando a evolução dos índices mencionados?</p>
-                        </div>
-                        <button className="px-3 py-1.5 bg-card text-foreground rounded-lg text-xs font-medium hover:bg-muted transition border border-border">
-                          Adicionar
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="bg-[hsl(var(--pastel-blue))]/30 rounded-lg p-4 border-2 border-border">
-                      <div className="flex items-start gap-3">
-                        <Book className="text-foreground w-5 h-5 mt-1" />
-                        <div className="flex-1">
-                          <p className="text-sm text-foreground font-medium mb-1">Adicionar referências</p>
-                          <p className="text-xs text-muted-foreground">Encontramos 3 artigos relevantes da CVM que podem enriquecer seu conteúdo.</p>
-                        </div>
-                        <button className="px-3 py-1.5 bg-card text-foreground rounded-lg text-xs font-medium hover:bg-muted transition border border-border">
-                          Ver
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="bg-[hsl(var(--pastel-green))]/30 rounded-lg p-4 border-2 border-border">
-                      <div className="flex items-start gap-3">
-                        <SpellCheck className="text-foreground w-5 h-5 mt-1" />
-                        <div className="flex-1">
-                          <p className="text-sm text-foreground font-medium mb-1">Revisar ortografia e gramática</p>
-                          <p className="text-xs text-muted-foreground">Detectamos 2 possíveis melhorias no texto.</p>
-                        </div>
-                        <button className="px-3 py-1.5 bg-card text-foreground rounded-lg text-xs font-medium hover:bg-muted transition border border-border">
-                          Revisar
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </section>
-
-              {/* Document Settings */}
-              <section className="mb-8">
-                <div className="bg-card rounded-xl border-2 border-border p-6">
-                  <h3 className="font-semibold text-foreground mb-4">Configurações do Documento</h3>
-                  
-                  <div className="grid grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">Categoria</label>
-                      <select className="w-full px-4 py-2 bg-muted/50 border-2 border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-[hsl(var(--pastel-blue))]">
-                        <option>Análise de Mercado</option>
-                        <option>Relatório de Compliance</option>
-                        <option>Estratégia de Investimentos</option>
-                        <option>Educacional</option>
-                        <option>Notas de Reunião</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">Visibilidade</label>
-                      <select className="w-full px-4 py-2 bg-muted/50 border-2 border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-[hsl(var(--pastel-blue))]">
-                        <option>Privado</option>
-                        <option>Compartilhado com equipe</option>
-                        <option>Público</option>
-                      </select>
-                    </div>
-
-                    <div className="col-span-2">
-                      <label className="block text-sm font-medium text-foreground mb-2">Tags</label>
-                      <div className="flex flex-wrap gap-2 mb-2">
-                        <span className="px-3 py-1 bg-[hsl(var(--pastel-blue))] text-[hsl(var(--pastel-gray-dark))] rounded-full text-xs font-medium border-2 border-border flex items-center gap-2">
-                          Mercado Financeiro
-                          <X className="w-3 h-3 cursor-pointer hover:text-foreground" />
-                        </span>
-                        <span className="px-3 py-1 bg-[hsl(var(--pastel-green))] text-[hsl(var(--pastel-gray-dark))] rounded-full text-xs font-medium border-2 border-border flex items-center gap-2">
-                          CVM
-                          <X className="w-3 h-3 cursor-pointer hover:text-foreground" />
-                        </span>
-                        <span className="px-3 py-1 bg-[hsl(var(--pastel-purple))] text-[hsl(var(--pastel-gray-dark))] rounded-full text-xs font-medium border-2 border-border flex items-center gap-2">
-                          2025
-                          <X className="w-3 h-3 cursor-pointer hover:text-foreground" />
-                        </span>
-                      </div>
-                      <input 
-                        type="text" 
-                        placeholder="Adicionar tag..." 
-                        className="w-full px-4 py-2 bg-muted/50 border-2 border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-[hsl(var(--pastel-blue))]"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </section>
-            </div>
+              </div>
+            </article>
           </div>
-        </main>
-      </div>
+        </div>
+      </main>
     </div>
   );
 }
