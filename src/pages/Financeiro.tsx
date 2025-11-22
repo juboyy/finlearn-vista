@@ -393,7 +393,13 @@ export default function Financeiro() {
           {/* Tabela de Assinantes */}
           <Card className="animate-fade-in" style={{ animationDelay: "1.1s" }}>
             <CardHeader>
-              <CardTitle className="text-foreground">Assinantes e Pagamentos</CardTitle>
+              <div className="flex items-start justify-between">
+                <CardTitle className="text-foreground">Assinantes e Pagamentos</CardTitle>
+                <div className="text-right">
+                  <p className="text-sm text-muted-foreground">Receita Total Mensal</p>
+                  <p className="text-2xl font-bold" style={{ color: 'hsl(152, 32%, 65%)' }}>R$ 8.450</p>
+                </div>
+              </div>
             </CardHeader>
             <CardContent>
               <Table>
