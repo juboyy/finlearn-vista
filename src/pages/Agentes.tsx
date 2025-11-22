@@ -199,6 +199,12 @@ export default function Agentes() {
               <Bell size={20} />
               <span className="absolute top-1 right-1 w-2 h-2 bg-[hsl(45,35%,75%)] rounded-full" />
             </button>
+            <Button variant="outline" asChild>
+              <Link to="/consumo-analytics">
+                <ChartLine size={16} className="mr-2" />
+                Consumo
+              </Link>
+            </Button>
             <Button>
               <Plus size={16} className="mr-2" />
               Nova Conversa
