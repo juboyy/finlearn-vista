@@ -771,7 +771,7 @@ export const NewspaperAnalytics = () => {
           </div>
           
           {/* Instruction to click */}
-          <div className="mt-4 p-3 bg-pastel-blue rounded-lg flex items-center gap-3">
+          <div className="mt-4 p-3 bg-pastel-peach rounded-lg flex items-center gap-3">
             <i className="fas fa-info-circle text-slate-700"></i>
             <p className="text-sm text-slate-700">
               <span className="font-semibold">Dica:</span> Clique em qualquer barra ou ponto do gráfico para ver artigos específicos com baixa conclusão
