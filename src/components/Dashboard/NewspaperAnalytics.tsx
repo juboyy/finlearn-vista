@@ -3,6 +3,42 @@ import { useEffect, useState } from "react";
 export const NewspaperAnalytics = () => {
   const [insights, setInsights] = useState<string>("");
   const [loadingInsights, setLoadingInsights] = useState(true);
+  const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
+  const [showDrillDown, setShowDrillDown] = useState(false);
+
+  // Mock data for articles by topic with completion rates
+  const articlesByTopic: Record<string, Array<{title: string, source: string, completionRate: number, timeSpent: string, date: string}>> = {
+    'Mercado de Capitais': [
+      { title: 'Nova regulamentação da CVM impacta fundos de investimento', source: 'Valor Econômico', completionRate: 45, timeSpent: '2 min', date: 'Hoje' },
+      { title: 'Análise profunda: Mercado de renda variável em 2025', source: 'InfoMoney', completionRate: 38, timeSpent: '3 min', date: 'Ontem' },
+      { title: 'IPOs previstos para o primeiro trimestre', source: 'Bloomberg Brasil', completionRate: 62, timeSpent: '4 min', date: 'Hoje' },
+      { title: 'Estratégias de hedge para mercados voláteis', source: 'Valor Econômico', completionRate: 51, timeSpent: '3 min', date: '2 dias atrás' },
+      { title: 'Impacto das taxas de juros nos derivativos', source: 'InfoMoney', completionRate: 48, timeSpent: '2 min', date: 'Hoje' },
+    ],
+    'Regulamentação': [
+      { title: 'LGPD: Novas diretrizes para instituições financeiras', source: 'CVM Notícias', completionRate: 72, timeSpent: '5 min', date: 'Hoje' },
+      { title: 'Compliance em criptoativos: O que mudou em 2025', source: 'Valor Econômico', completionRate: 68, timeSpent: '4 min', date: 'Ontem' },
+      { title: 'Basileia III: Implementação no Brasil', source: 'Bloomberg Brasil', completionRate: 55, timeSpent: '3 min', date: '3 dias atrás' },
+    ],
+    'Payments': [
+      { title: 'Open Finance: Desafios técnicos da integração completa', source: 'InfoMoney', completionRate: 42, timeSpent: '2 min', date: 'Hoje' },
+      { title: 'PIX internacional: Análise técnica e regulatória detalhada', source: 'Valor Econômico', completionRate: 35, timeSpent: '3 min', date: 'Ontem' },
+      { title: 'Tokenização de pagamentos: Futuro ou presente?', source: 'Bloomberg Brasil', completionRate: 58, timeSpent: '4 min', date: 'Hoje' },
+      { title: 'Fraudes em pagamentos digitais: Relatório completo 2024', source: 'InfoMoney', completionRate: 47, timeSpent: '2 min', date: '2 dias atrás' },
+      { title: 'Carteiras digitais vs Bancos tradicionais: Comparativo extenso', source: 'Estadão Economia', completionRate: 52, timeSpent: '3 min', date: 'Hoje' },
+    ],
+    'Banking': [
+      { title: 'Fusões e aquisições no setor bancário brasileiro', source: 'Valor Econômico', completionRate: 65, timeSpent: '5 min', date: 'Ontem' },
+      { title: 'Banking as a Service: Modelo de negócio em expansão', source: 'InfoMoney', completionRate: 59, timeSpent: '4 min', date: 'Hoje' },
+      { title: 'Crédito consignado: Análise de riscos e oportunidades', source: 'Bloomberg Brasil', completionRate: 71, timeSpent: '5 min', date: '3 dias atrás' },
+    ],
+    'Economia': [
+      { title: 'Inflação global: Perspectivas para 2025 em 50 páginas', source: 'Estadão Economia', completionRate: 28, timeSpent: '2 min', date: 'Hoje' },
+      { title: 'Taxa Selic: Projeções e cenários macroeconômicos', source: 'Valor Econômico', completionRate: 67, timeSpent: '4 min', date: 'Ontem' },
+      { title: 'Relatório completo: PIB brasileiro 2024', source: 'InfoMoney', completionRate: 44, timeSpent: '3 min', date: 'Hoje' },
+      { title: 'Dívida pública: Análise histórica e perspectivas', source: 'Bloomberg Brasil', completionRate: 73, timeSpent: '6 min', date: '2 dias atrás' },
+    ],
+  };
 
   useEffect(() => {
     // Initialize Plotly charts after component mounts
@@ -181,6 +217,18 @@ export const NewspaperAnalytics = () => {
     };
     
     Plotly.newPlot('topic-completion-correlation-chart', topicCorrelationData, topicCorrelationLayout, {displayModeBar: false});
+    
+    // Add click event to topic correlation chart
+    const topicChart = document.getElementById('topic-completion-correlation-chart');
+    if (topicChart) {
+      (topicChart as any).on('plotly_click', (data: any) => {
+        const pointIndex = data.points[0].pointIndex;
+        const topics = ['Mercado de Capitais', 'Regulamentação', 'Payments', 'Banking', 'Economia'];
+        const clickedTopic = topics[pointIndex];
+        setSelectedTopic(clickedTopic);
+        setShowDrillDown(true);
+      });
+    }
 
     // Monthly Comparison Chart
     const monthlyData = [
@@ -721,7 +769,163 @@ export const NewspaperAnalytics = () => {
               <p className="text-xs text-slate-600">Temas com mais artigos tendem a ter taxas de conclusão mais variadas</p>
             </div>
           </div>
+          
+          {/* Instruction to click */}
+          <div className="mt-4 p-3 bg-pastel-blue rounded-lg flex items-center gap-3">
+            <i className="fas fa-info-circle text-slate-700"></i>
+            <p className="text-sm text-slate-700">
+              <span className="font-semibold">Dica:</span> Clique em qualquer barra ou ponto do gráfico para ver artigos específicos com baixa conclusão
+            </p>
+          </div>
         </section>
+
+        {/* Drill-Down Modal */}
+        {showDrillDown && selectedTopic && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+              {/* Modal Header */}
+              <div className="p-6 border-b border-slate-200">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h2 className="text-xl font-semibold text-slate-800 flex items-center gap-3">
+                      <i className="fas fa-layer-group text-pastel-purple"></i>
+                      Artigos com Baixa Conclusão: {selectedTopic}
+                    </h2>
+                    <p className="text-sm text-slate-500 mt-1">
+                      Artigos com taxa de conclusão abaixo de 75% - Identifique oportunidades de melhoria
+                    </p>
+                  </div>
+                  <button 
+                    onClick={() => setShowDrillDown(false)}
+                    className="w-10 h-10 rounded-lg hover:bg-slate-100 flex items-center justify-center text-slate-500 hover:text-slate-700 transition"
+                  >
+                    <i className="fas fa-times text-xl"></i>
+                  </button>
+                </div>
+              </div>
+
+              {/* Modal Content */}
+              <div className="flex-1 overflow-y-auto p-6">
+                <div className="space-y-4">
+                  {articlesByTopic[selectedTopic]
+                    ?.filter(article => article.completionRate < 75)
+                    .sort((a, b) => a.completionRate - b.completionRate)
+                    .map((article, index) => (
+                      <div 
+                        key={index}
+                        className="border border-slate-200 rounded-lg p-5 hover:shadow-md transition"
+                      >
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-3 mb-2">
+                              <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                                article.completionRate < 40 
+                                  ? 'bg-red-50 text-red-700 border border-red-200'
+                                  : article.completionRate < 60 
+                                  ? 'bg-yellow-50 text-yellow-700 border border-yellow-200'
+                                  : 'bg-orange-50 text-orange-700 border border-orange-200'
+                              }`}>
+                                {article.completionRate}% concluído
+                              </span>
+                              <span className="text-xs text-slate-500">{article.date}</span>
+                            </div>
+                            
+                            <h3 className="font-semibold text-slate-800 mb-2 hover:text-pastel-purple cursor-pointer">
+                              {article.title}
+                            </h3>
+                            
+                            <div className="flex items-center gap-4 text-sm text-slate-600">
+                              <div className="flex items-center gap-2">
+                                <i className="fas fa-globe text-slate-400"></i>
+                                <span>{article.source}</span>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <i className="fas fa-clock text-slate-400"></i>
+                                <span>{article.timeSpent} de leitura</span>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="flex flex-col gap-2">
+                            <button className="px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition whitespace-nowrap">
+                              <i className="fas fa-book-open mr-2"></i>
+                              Continuar Lendo
+                            </button>
+                            <button className="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-200 transition whitespace-nowrap">
+                              <i className="fas fa-chart-bar mr-2"></i>
+                              Ver Análise
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Progress bar */}
+                        <div className="mt-4 pt-4 border-t border-slate-100">
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="text-xs text-slate-600 font-medium">Progresso de Leitura</span>
+                            <span className="text-xs text-slate-500">{article.completionRate}%</span>
+                          </div>
+                          <div className="w-full bg-slate-100 rounded-full h-2">
+                            <div 
+                              className={`h-2 rounded-full transition-all ${
+                                article.completionRate < 40 
+                                  ? 'bg-red-400'
+                                  : article.completionRate < 60 
+                                  ? 'bg-yellow-400'
+                                  : 'bg-orange-400'
+                              }`}
+                              style={{width: `${article.completionRate}%`}}
+                            ></div>
+                          </div>
+                        </div>
+
+                        {/* Suggested action */}
+                        {article.completionRate < 50 && (
+                          <div className="mt-3 p-3 bg-blue-50 rounded-lg">
+                            <div className="flex items-start gap-2">
+                              <i className="fas fa-lightbulb text-blue-600 mt-0.5"></i>
+                              <div>
+                                <p className="text-xs font-semibold text-slate-800">Sugestão de Melhoria</p>
+                                <p className="text-xs text-slate-600 mt-1">
+                                  {article.completionRate < 40 
+                                    ? 'Artigo pode ser muito técnico ou longo. Considere criar um resumo executivo.'
+                                    : 'Adicione mais elementos visuais ou divida em seções menores para melhorar o engajamento.'}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                </div>
+
+                {articlesByTopic[selectedTopic]?.filter(article => article.completionRate < 75).length === 0 && (
+                  <div className="text-center py-12">
+                    <i className="fas fa-check-circle text-6xl text-green-500 mb-4"></i>
+                    <h3 className="text-lg font-semibold text-slate-800 mb-2">Excelente Engajamento!</h3>
+                    <p className="text-slate-600">Todos os artigos deste tema têm taxa de conclusão acima de 75%</p>
+                  </div>
+                )}
+              </div>
+
+              {/* Modal Footer */}
+              <div className="p-6 border-t border-slate-200 bg-slate-50">
+                <div className="flex items-center justify-between">
+                  <div className="text-sm text-slate-600">
+                    <span className="font-semibold">
+                      {articlesByTopic[selectedTopic]?.filter(article => article.completionRate < 75).length || 0}
+                    </span> artigos com baixa conclusão encontrados
+                  </div>
+                  <button 
+                    onClick={() => setShowDrillDown(false)}
+                    className="px-6 py-2 bg-slate-800 text-white rounded-lg font-medium hover:bg-slate-700 transition"
+                  >
+                    Fechar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Completion Rate and Reading Habits */}
         <div className="grid grid-cols-2 gap-6 mb-8">
