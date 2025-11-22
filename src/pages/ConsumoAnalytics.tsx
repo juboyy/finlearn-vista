@@ -36,7 +36,7 @@ export default function ConsumoAnalytics() {
               <Badge className="bg-pastel-green text-pastel-gray-dark border-0">3 Ativas</Badge>
             </div>
             <div className="grid grid-cols-3 gap-6 mb-6">
-              <div className="p-4 rounded-lg border border-slate-200 bg-pastel-blue bg-opacity-[2.5]">
+              <div className="p-4 rounded-lg border border-slate-200" style={{ backgroundColor: 'hsl(var(--pastel-blue) / 0.025)' }}>
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="font-semibold text-slate-800">Newsletter Diária</h3>
                   <i className="fas fa-envelope text-slate-600"></i>
@@ -48,7 +48,7 @@ export default function ConsumoAnalytics() {
                 </div>
               </div>
 
-              <div className="p-4 rounded-lg border border-slate-200 bg-pastel-purple bg-opacity-[2.5]">
+              <div className="p-4 rounded-lg border border-slate-200" style={{ backgroundColor: 'hsl(var(--pastel-purple) / 0.025)' }}>
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="font-semibold text-slate-800">Relatórios Semanais</h3>
                   <i className="fas fa-file-alt text-slate-600"></i>
@@ -60,7 +60,7 @@ export default function ConsumoAnalytics() {
                 </div>
               </div>
 
-              <div className="p-4 rounded-lg border border-slate-200 bg-pastel-green bg-opacity-[2.5]">
+              <div className="p-4 rounded-lg border border-slate-200" style={{ backgroundColor: 'hsl(var(--pastel-green) / 0.025)' }}>
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="font-semibold text-slate-800">Insights Premium</h3>
                   <i className="fas fa-star text-slate-600"></i>
