@@ -598,34 +598,72 @@ const ConsumoAnalytics = () => {
             </div>
           </section>
 
-          <section className="bg-white rounded-xl p-6 border border-slate-200">
-            <h2 className="text-lg font-semibold text-slate-800 mb-6">Insights de Aprendizado</h2>
-            <div className="grid grid-cols-2 gap-8">
+          <section className="bg-white rounded-xl p-8 border border-slate-200">
+            <div className="flex items-center gap-3 mb-8">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-pastel-purple to-pastel-blue flex items-center justify-center">
+                <i className="fas fa-lightbulb text-white text-lg"></i>
+              </div>
               <div>
-                <h3 className="text-sm font-medium text-slate-700 mb-4">Padrões de Estudo</h3>
+                <h2 className="text-xl font-semibold text-slate-800">Insights de Aprendizado</h2>
+                <p className="text-sm text-slate-500">Análise personalizada do seu comportamento</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 mb-5">
+                  <div className="w-8 h-8 rounded-lg bg-pastel-blue flex items-center justify-center">
+                    <i className="fas fa-chart-line text-[hsl(var(--pastel-gray-dark))] text-sm"></i>
+                  </div>
+                  <h3 className="text-base font-semibold text-slate-800">Padrões de Estudo</h3>
+                </div>
+                
                 <div className="space-y-3">
                   {[
-                    { label: 'Melhor horário', value: '14h - 16h' },
-                    { label: 'Tipo preferido', value: 'Vídeos' },
-                    { label: 'Duração média', value: '45 min' }
+                    { label: 'Melhor horário', value: '14h - 16h', icon: 'fa-clock', color: 'pastel-purple' },
+                    { label: 'Tipo preferido', value: 'Vídeos', icon: 'fa-video', color: 'pastel-blue' },
+                    { label: 'Duração média', value: '45 min', icon: 'fa-hourglass-half', color: 'pastel-green' }
                   ].map((pattern, idx) => (
-                    <div key={idx} className="flex items-center justify-between p-3 rounded-lg bg-slate-50">
-                      <span className="text-sm text-slate-600">{pattern.label}</span>
-                      <span className="text-sm font-medium text-slate-800">{pattern.value}</span>
+                    <div 
+                      key={idx} 
+                      className="group flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-slate-50 to-slate-50/50 border border-slate-200 hover:shadow-md hover:border-slate-300 transition-all duration-300"
+                    >
+                      <div className={`w-10 h-10 rounded-lg bg-${pattern.color} flex items-center justify-center flex-shrink-0`}>
+                        <i className={`fas ${pattern.icon} text-[hsl(var(--pastel-gray-dark))]`}></i>
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-xs text-slate-500 mb-1">{pattern.label}</p>
+                        <p className="text-sm font-semibold text-slate-800">{pattern.value}</p>
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
-              <div>
-                <h3 className="text-sm font-medium text-slate-700 mb-4">Recomendações</h3>
+
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 mb-5">
+                  <div className="w-8 h-8 rounded-lg bg-pastel-yellow flex items-center justify-center">
+                    <i className="fas fa-sparkles text-[hsl(var(--pastel-gray-dark))] text-sm"></i>
+                  </div>
+                  <h3 className="text-base font-semibold text-slate-800">Recomendações</h3>
+                </div>
+
                 <div className="space-y-3">
                   {[
-                    { text: 'Foque mais em derivativos para equilibrar seu portfólio de conhecimento', bg: 'bg-pastel-blue' },
-                    { text: 'Considere participar de mais webinars ao vivo para networking', bg: 'bg-pastel-green' },
-                    { text: 'Sua consistência está excelente - continue assim!', bg: 'bg-pastel-purple' }
+                    { text: 'Foque mais em derivativos para equilibrar seu portfólio de conhecimento', icon: 'fa-bullseye', color: 'pastel-blue' },
+                    { text: 'Considere participar de mais webinars ao vivo para networking', icon: 'fa-users', color: 'pastel-green' },
+                    { text: 'Sua consistência está excelente - continue assim!', icon: 'fa-trophy', color: 'pastel-yellow' }
                   ].map((rec, idx) => (
-                    <div key={idx} className={`p-3 rounded-lg ${rec.bg}`}>
-                      <p className="text-sm text-slate-700">{rec.text}</p>
+                    <div 
+                      key={idx} 
+                      className={`group p-4 rounded-xl bg-${rec.color} border border-slate-200 hover:shadow-md transition-all duration-300`}
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-white/60 flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <i className={`fas ${rec.icon} text-[hsl(var(--pastel-gray-dark))] text-sm`}></i>
+                        </div>
+                        <p className="text-sm text-slate-700 leading-relaxed">{rec.text}</p>
+                      </div>
                     </div>
                   ))}
                 </div>
