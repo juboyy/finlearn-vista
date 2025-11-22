@@ -1,12 +1,11 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Bell, Search, Download, Filter, MoreHorizontal } from "lucide-react";
 import { useState } from "react";
-import { BarChart, Bar, PieChart, Pie, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, Area, AreaChart, Legend } from 'recharts';
+import { BarChart, Bar, PieChart, Pie, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, Area, AreaChart, Legend } from 'recharts';
 
 const Analytics = () => {
   const [timeFilter, setTimeFilter] = useState<'week' | 'month'>('month');
 
-  // Dados para o gráfico de barras de agentes
   const agentData = [
     { name: 'Analista Mercado', value: 1254 },
     { name: 'Compliance', value: 892 },
@@ -17,7 +16,6 @@ const Analytics = () => {
 
   const barColors = ['#8AAACF', '#AC9CC9', '#8EBC9F', '#C9AF89', '#CC99A9'];
 
-  // Dados para o gráfico de pizza
   const pieData = [
     { name: 'Regulação', value: 35 },
     { name: 'Mercado de Capitais', value: 25 },
@@ -28,7 +26,6 @@ const Analytics = () => {
 
   const pieColors = ['#8AAACF', '#AC9CC9', '#8EBC9F', '#C9AF89', '#F3F4F6'];
 
-  // Dados para o gráfico de tendência
   const trendData = [
     { name: 'Seg', value: 1200 },
     { name: 'Ter', value: 1450 },
@@ -44,7 +41,6 @@ const Analytics = () => {
       <SidebarFix />
       
       <main className="flex-1 overflow-y-auto h-full relative bg-slate-50/50">
-        {/* Header */}
         <header className="sticky top-0 z-20 bg-white/90 backdrop-blur-md border-b border-slate-200 px-8 py-5 flex justify-between items-center">
           <div>
             <h1 className="text-2xl font-bold text-slate-800 tracking-tight">Painel de Analytics</h1>
@@ -67,130 +63,63 @@ const Analytics = () => {
         </header>
 
         <div className="p-8 space-y-8">
-          {/* Botões Rápidos */}
           <section className="space-y-4">
             <div>
               <h2 className="text-xl font-bold text-slate-800">Botões Rápidos</h2>
               <p className="text-sm text-slate-500 mt-1">Acesso direto às principais áreas de análise</p>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-              <button className="bg-white border border-slate-200 p-6 rounded-xl flex flex-col items-center justify-center gap-3 hover:shadow-md transition-all duration-300 group">
-                <div className="w-14 h-14 rounded-xl bg-pastel-purple flex items-center justify-center text-slate-600 group-hover:scale-110 transition-transform">
-                  <i className="fa-solid fa-robot text-2xl"></i>
-                </div>
-                <span className="text-sm font-bold text-slate-700">AI Agents</span>
-              </button>
-              <button className="bg-white border border-slate-200 p-6 rounded-xl flex flex-col items-center justify-center gap-3 hover:shadow-md transition-all duration-300 group">
-                <div className="w-14 h-14 rounded-xl bg-pastel-green flex items-center justify-center text-slate-600 group-hover:scale-110 transition-transform">
-                  <i className="fa-solid fa-chart-area text-2xl"></i>
-                </div>
-                <span className="text-sm font-bold text-slate-700">Consumo</span>
-              </button>
-              <button className="bg-white border border-slate-200 p-6 rounded-xl flex flex-col items-center justify-center gap-3 hover:shadow-md transition-all duration-300 group">
-                <div className="w-14 h-14 rounded-xl bg-pastel-blue flex items-center justify-center text-slate-600 group-hover:scale-110 transition-transform">
-                  <i className="fa-solid fa-gauge-high text-2xl"></i>
-                </div>
-                <span className="text-sm font-bold text-slate-700">Performance</span>
-              </button>
-              <button className="bg-white border border-slate-200 p-6 rounded-xl flex flex-col items-center justify-center gap-3 hover:shadow-md transition-all duration-300 group">
-                <div className="w-14 h-14 rounded-xl bg-pastel-peach flex items-center justify-center text-slate-600 group-hover:scale-110 transition-transform">
-                  <i className="fa-solid fa-file-lines text-2xl"></i>
-                </div>
-                <span className="text-sm font-bold text-slate-700">Conteúdo</span>
-              </button>
-              <button className="bg-white border border-slate-200 p-6 rounded-xl flex flex-col items-center justify-center gap-3 hover:shadow-md transition-all duration-300 group">
-                <div className="w-14 h-14 rounded-xl bg-pastel-pink flex items-center justify-center text-slate-600 group-hover:scale-110 transition-transform">
-                  <i className="fa-solid fa-user-circle text-2xl"></i>
-                </div>
-                <span className="text-sm font-bold text-slate-700">Perfil</span>
-              </button>
+              {[
+                { icon: 'fa-robot', label: 'AI Agents', color: 'bg-pastel-purple' },
+                { icon: 'fa-chart-area', label: 'Consumo', color: 'bg-pastel-green' },
+                { icon: 'fa-gauge-high', label: 'Performance', color: 'bg-pastel-blue' },
+                { icon: 'fa-file-lines', label: 'Conteúdo', color: 'bg-pastel-peach' },
+                { icon: 'fa-user-circle', label: 'Perfil', color: 'bg-pastel-pink' }
+              ].map((btn, idx) => (
+                <button key={idx} className="bg-white border border-slate-200 p-6 rounded-xl flex flex-col items-center justify-center gap-3 hover:shadow-md transition-all duration-300 group">
+                  <div className={`w-14 h-14 rounded-xl ${btn.color} flex items-center justify-center text-slate-600 group-hover:scale-110 transition-transform`}>
+                    <i className={`fa-solid ${btn.icon} text-2xl`}></i>
+                  </div>
+                  <span className="text-sm font-bold text-slate-700">{btn.label}</span>
+                </button>
+              ))}
             </div>
           </section>
 
-          {/* KPIs */}
           <section className="space-y-4">
             <div>
               <h2 className="text-xl font-bold text-slate-800">Resumo Geral</h2>
               <p className="text-sm text-slate-500 mt-1">Principais indicadores de desempenho da plataforma</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="bg-white border border-slate-200 p-6 rounded-xl flex flex-col justify-between h-36 relative overflow-hidden group hover:shadow-md transition-all duration-300">
-                <div className="flex justify-between items-start z-10">
-                  <div>
-                    <p className="text-sm font-semibold text-slate-500">Total de Consultas</p>
-                    <h3 className="text-3xl font-bold text-slate-800 mt-2">124.5k</h3>
+              {[
+                { title: 'Total de Consultas', value: '124.5k', icon: 'fa-magnifying-glass-chart', color: 'bg-pastel-blue', trend: '+12%', trendUp: true },
+                { title: 'Interações com Agentes', value: '8.2k', icon: 'fa-robot', color: 'bg-pastel-purple', trend: '+5.4%', trendUp: true },
+                { title: 'Artigos Lidos', value: '45.9k', icon: 'fa-book-open-reader', color: 'bg-pastel-green', trend: '-2.1%', trendUp: false },
+                { title: 'Tempo Médio (Sessão)', value: '14m 22s', icon: 'fa-clock', color: 'bg-pastel-peach', trend: '+8.3%', trendUp: true }
+              ].map((kpi, idx) => (
+                <div key={idx} className="bg-white border border-slate-200 p-6 rounded-xl flex flex-col justify-between h-36 relative overflow-hidden group hover:shadow-md transition-all duration-300">
+                  <div className="flex justify-between items-start z-10">
+                    <div>
+                      <p className="text-sm font-semibold text-slate-500">{kpi.title}</p>
+                      <h3 className="text-3xl font-bold text-slate-800 mt-2">{kpi.value}</h3>
+                    </div>
+                    <div className={`w-12 h-12 rounded-xl ${kpi.color} flex items-center justify-center text-slate-600`}>
+                      <i className={`fa-solid ${kpi.icon} text-lg`}></i>
+                    </div>
                   </div>
-                  <div className="w-12 h-12 rounded-xl bg-pastel-blue flex items-center justify-center text-slate-600">
-                    <i className="fa-solid fa-magnifying-glass-chart text-lg"></i>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 mt-auto z-10">
-                  <span className="text-xs font-bold text-emerald-700 bg-emerald-100 px-2.5 py-1 rounded-md flex items-center gap-1">
-                    <i className="fa-solid fa-arrow-up text-[10px]"></i> 12%
-                  </span>
-                  <span className="text-xs font-medium text-slate-400">vs. mês anterior</span>
-                </div>
-              </div>
-
-              <div className="bg-white border border-slate-200 p-6 rounded-xl flex flex-col justify-between h-36 relative overflow-hidden group hover:shadow-md transition-all duration-300">
-                <div className="flex justify-between items-start z-10">
-                  <div>
-                    <p className="text-sm font-semibold text-slate-500">Interações com Agentes</p>
-                    <h3 className="text-3xl font-bold text-slate-800 mt-2">8.2k</h3>
-                  </div>
-                  <div className="w-12 h-12 rounded-xl bg-pastel-purple flex items-center justify-center text-slate-600">
-                    <i className="fa-solid fa-robot text-lg"></i>
+                  <div className="flex items-center gap-2 mt-auto z-10">
+                    <span className={`text-xs font-bold px-2.5 py-1 rounded-md flex items-center gap-1 ${kpi.trendUp ? 'text-emerald-700 bg-emerald-100' : 'text-rose-700 bg-rose-100'}`}>
+                      <i className={`fa-solid ${kpi.trendUp ? 'fa-arrow-up' : 'fa-arrow-down'} text-[10px]`}></i> {kpi.trend}
+                    </span>
+                    <span className="text-xs font-medium text-slate-400">vs. mês anterior</span>
                   </div>
                 </div>
-                <div className="flex items-center gap-2 mt-auto z-10">
-                  <span className="text-xs font-bold text-emerald-700 bg-emerald-100 px-2.5 py-1 rounded-md flex items-center gap-1">
-                    <i className="fa-solid fa-arrow-up text-[10px]"></i> 5.4%
-                  </span>
-                  <span className="text-xs font-medium text-slate-400">vs. mês anterior</span>
-                </div>
-              </div>
-
-              <div className="bg-white border border-slate-200 p-6 rounded-xl flex flex-col justify-between h-36 relative overflow-hidden group hover:shadow-md transition-all duration-300">
-                <div className="flex justify-between items-start z-10">
-                  <div>
-                    <p className="text-sm font-semibold text-slate-500">Artigos Lidos</p>
-                    <h3 className="text-3xl font-bold text-slate-800 mt-2">45.9k</h3>
-                  </div>
-                  <div className="w-12 h-12 rounded-xl bg-pastel-green flex items-center justify-center text-slate-600">
-                    <i className="fa-solid fa-book-open-reader text-lg"></i>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 mt-auto z-10">
-                  <span className="text-xs font-bold text-rose-700 bg-rose-100 px-2.5 py-1 rounded-md flex items-center gap-1">
-                    <i className="fa-solid fa-arrow-down text-[10px]"></i> 2.1%
-                  </span>
-                  <span className="text-xs font-medium text-slate-400">vs. mês anterior</span>
-                </div>
-              </div>
-
-              <div className="bg-white border border-slate-200 p-6 rounded-xl flex flex-col justify-between h-36 relative overflow-hidden group hover:shadow-md transition-all duration-300">
-                <div className="flex justify-between items-start z-10">
-                  <div>
-                    <p className="text-sm font-semibold text-slate-500">Tempo Médio (Sessão)</p>
-                    <h3 className="text-3xl font-bold text-slate-800 mt-2">14m 22s</h3>
-                  </div>
-                  <div className="w-12 h-12 rounded-xl bg-pastel-peach flex items-center justify-center text-slate-600">
-                    <i className="fa-solid fa-clock text-lg"></i>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 mt-auto z-10">
-                  <span className="text-xs font-bold text-emerald-700 bg-emerald-100 px-2.5 py-1 rounded-md flex items-center gap-1">
-                    <i className="fa-solid fa-arrow-up text-[10px]"></i> 8.3%
-                  </span>
-                  <span className="text-xs font-medium text-slate-400">vs. mês anterior</span>
-                </div>
-              </div>
+              ))}
             </div>
           </section>
 
-          {/* Gráficos Principais */}
           <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Gráfico de Barras */}
             <div className="bg-white border border-slate-200 p-6 rounded-xl lg:col-span-2 flex flex-col">
               <div className="flex justify-between items-center mb-6">
                 <div>
@@ -201,9 +130,7 @@ const Analytics = () => {
                   <button
                     onClick={() => setTimeFilter('week')}
                     className={`px-4 py-1.5 text-xs font-semibold rounded-md transition-all ${
-                      timeFilter === 'week'
-                        ? 'bg-white text-slate-800 shadow-sm border border-slate-200'
-                        : 'text-slate-500 hover:text-slate-700'
+                      timeFilter === 'week' ? 'bg-white text-slate-800 shadow-sm border border-slate-200' : 'text-slate-500 hover:text-slate-700'
                     }`}
                   >
                     Semana
@@ -211,9 +138,7 @@ const Analytics = () => {
                   <button
                     onClick={() => setTimeFilter('month')}
                     className={`px-4 py-1.5 text-xs font-semibold rounded-md transition-all ${
-                      timeFilter === 'month'
-                        ? 'bg-white text-slate-800 shadow-sm border border-slate-200'
-                        : 'text-slate-500 hover:text-slate-700'
+                      timeFilter === 'month' ? 'bg-white text-slate-800 shadow-sm border border-slate-200' : 'text-slate-500 hover:text-slate-700'
                     }`}
                   >
                     Mês
@@ -226,14 +151,7 @@ const Analytics = () => {
                     <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
                     <XAxis dataKey="name" tick={{ fill: '#6b7280', fontSize: 11 }} />
                     <YAxis tick={{ fill: '#6b7280', fontSize: 11 }} />
-                    <Tooltip 
-                      contentStyle={{ 
-                        backgroundColor: 'white', 
-                        border: '1px solid #e5e7eb',
-                        borderRadius: '8px',
-                        fontSize: '12px'
-                      }} 
-                    />
+                    <Tooltip contentStyle={{ backgroundColor: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '12px' }} />
                     <Bar dataKey="value" radius={[8, 8, 0, 0]}>
                       {agentData.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={barColors[index]} />
@@ -244,7 +162,6 @@ const Analytics = () => {
               </div>
             </div>
 
-            {/* Gráfico de Pizza */}
             <div className="bg-white border border-slate-200 p-6 rounded-xl flex flex-col">
               <div className="mb-6">
                 <h2 className="text-lg font-bold text-slate-800">Categorias de Conteúdo</h2>
@@ -268,21 +185,14 @@ const Analytics = () => {
                       ))}
                     </Pie>
                     <Tooltip />
-                    <Legend 
-                      verticalAlign="bottom" 
-                      height={36}
-                      iconType="circle"
-                      wrapperStyle={{ fontSize: '11px' }}
-                    />
+                    <Legend verticalAlign="bottom" height={36} iconType="circle" wrapperStyle={{ fontSize: '11px' }} />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
             </div>
           </section>
 
-          {/* Seção de Tendências */}
           <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Termos de Busca */}
             <div className="bg-white border border-slate-200 p-6 rounded-xl">
               <div className="flex justify-between items-center mb-6">
                 <div className="flex items-center gap-3">
@@ -308,9 +218,7 @@ const Analytics = () => {
                 ].map((item) => (
                   <div key={item.rank} className="flex items-center justify-between group p-3 rounded-xl bg-slate-50/50 hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-all">
                     <div className="flex items-center gap-4">
-                      <div className="w-6 h-6 rounded bg-slate-200 flex items-center justify-center text-xs font-bold text-slate-500">
-                        {item.rank}
-                      </div>
+                      <div className="w-6 h-6 rounded bg-slate-200 flex items-center justify-center text-xs font-bold text-slate-500">{item.rank}</div>
                       <span className="text-sm font-semibold text-slate-700">{item.term}</span>
                     </div>
                     <div className="flex items-center gap-4">
@@ -324,7 +232,6 @@ const Analytics = () => {
               </div>
             </div>
 
-            {/* Gráfico de Tendência */}
             <div className="bg-white border border-slate-200 p-6 rounded-xl">
               <div className="flex justify-between items-center mb-6">
                 <div className="flex items-center gap-3">
@@ -349,29 +256,14 @@ const Analytics = () => {
                     <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
                     <XAxis dataKey="name" tick={{ fill: '#6b7280', fontSize: 11 }} />
                     <YAxis tick={{ fill: '#6b7280', fontSize: 11 }} />
-                    <Tooltip 
-                      contentStyle={{ 
-                        backgroundColor: 'white', 
-                        border: '1px solid #e5e7eb',
-                        borderRadius: '8px',
-                        fontSize: '12px'
-                      }} 
-                    />
-                    <Area 
-                      type="monotone" 
-                      dataKey="value" 
-                      stroke="#8EBC9F" 
-                      strokeWidth={3}
-                      fillOpacity={1} 
-                      fill="url(#colorValue)" 
-                    />
+                    <Tooltip contentStyle={{ backgroundColor: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '12px' }} />
+                    <Area type="monotone" dataKey="value" stroke="#8EBC9F" strokeWidth={3} fillOpacity={1} fill="url(#colorValue)" />
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
             </div>
           </section>
 
-          {/* Tabela de Agentes */}
           <section className="bg-white border border-slate-200 rounded-xl overflow-hidden">
             <div className="p-6 border-b border-slate-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white">
               <div>
@@ -402,137 +294,50 @@ const Analytics = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
-                  <tr className="hover:bg-slate-50 transition-colors group">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-pastel-blue flex items-center justify-center text-slate-600 text-lg">
-                          <i className="fa-solid fa-chart-simple"></i>
+                  {[
+                    { name: 'Analista de Mercado', subtitle: 'Análise Técnica', icon: 'fa-chart-simple', color: 'bg-pastel-blue', category: 'Mercados', conversations: '1.254', rating: '4.8', status: 'Ativo', statusColor: 'bg-emerald-100 text-emerald-700' },
+                    { name: 'Consultor de Compliance', subtitle: 'Regulamentação', icon: 'fa-scale-balanced', color: 'bg-pastel-purple', category: 'Jurídico', conversations: '892', rating: '4.7', status: 'Ativo', statusColor: 'bg-emerald-100 text-emerald-700' },
+                    { name: 'Especialista em Câmbio', subtitle: 'Moedas Estrangeiras', icon: 'fa-coins', color: 'bg-pastel-green', category: 'FX', conversations: '654', rating: '4.9', status: 'Manutenção', statusColor: 'bg-amber-100 text-amber-700' },
+                    { name: 'Gestor de Risco', subtitle: 'Análise de Risco', icon: 'fa-shield-halved', color: 'bg-pastel-peach', category: 'Gestão', conversations: '540', rating: '4.6', status: 'Ativo', statusColor: 'bg-emerald-100 text-emerald-700' }
+                  ].map((agent, idx) => (
+                    <tr key={idx} className="hover:bg-slate-50 transition-colors group">
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center gap-3">
+                          <div className={`w-10 h-10 rounded-xl ${agent.color} flex items-center justify-center text-slate-600 text-lg`}>
+                            <i className={`fa-solid ${agent.icon}`}></i>
+                          </div>
+                          <div>
+                            <p className="text-sm font-bold text-slate-800">{agent.name}</p>
+                            <p className="text-xs text-slate-500 font-medium">{agent.subtitle}</p>
+                          </div>
                         </div>
-                        <div>
-                          <p className="text-sm font-bold text-slate-800">Analista de Mercado</p>
-                          <p className="text-xs text-slate-500 font-medium">Análise Técnica</p>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-600 border border-slate-200">{agent.category}</span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-slate-600 font-semibold">{agent.conversations}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right">
+                        <div className="flex items-center justify-end gap-1.5">
+                          <span className="text-sm font-bold text-slate-800">{agent.rating}</span>
+                          <i className="fa-solid fa-star text-yellow-400 text-xs"></i>
                         </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-600 border border-slate-200">Mercados</span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-slate-600 font-semibold">1.254</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right">
-                      <div className="flex items-center justify-end gap-1.5">
-                        <span className="text-sm font-bold text-slate-800">4.8</span>
-                        <i className="fa-solid fa-star text-yellow-400 text-xs"></i>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-center">
-                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700">Ativo</span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-center">
-                      <button className="px-4 py-1.5 rounded-lg bg-pastel-blue text-slate-700 text-xs font-bold hover:opacity-90 transition-colors">Detalhes</button>
-                    </td>
-                  </tr>
-
-                  <tr className="hover:bg-slate-50 transition-colors group">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-pastel-purple flex items-center justify-center text-slate-600 text-lg">
-                          <i className="fa-solid fa-scale-balanced"></i>
-                        </div>
-                        <div>
-                          <p className="text-sm font-bold text-slate-800">Consultor de Compliance</p>
-                          <p className="text-xs text-slate-500 font-medium">Regulamentação</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-600 border border-slate-200">Jurídico</span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-slate-600 font-semibold">892</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right">
-                      <div className="flex items-center justify-end gap-1.5">
-                        <span className="text-sm font-bold text-slate-800">4.7</span>
-                        <i className="fa-solid fa-star text-yellow-400 text-xs"></i>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-center">
-                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700">Ativo</span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-center">
-                      <button className="px-4 py-1.5 rounded-lg bg-pastel-purple text-slate-700 text-xs font-bold hover:opacity-90 transition-colors">Detalhes</button>
-                    </td>
-                  </tr>
-
-                  <tr className="hover:bg-slate-50 transition-colors group">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-pastel-green flex items-center justify-center text-slate-600 text-lg">
-                          <i className="fa-solid fa-coins"></i>
-                        </div>
-                        <div>
-                          <p className="text-sm font-bold text-slate-800">Especialista em Câmbio</p>
-                          <p className="text-xs text-slate-500 font-medium">Moedas Estrangeiras</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-600 border border-slate-200">FX</span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-slate-600 font-semibold">654</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right">
-                      <div className="flex items-center justify-end gap-1.5">
-                        <span className="text-sm font-bold text-slate-800">4.9</span>
-                        <i className="fa-solid fa-star text-yellow-400 text-xs"></i>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-center">
-                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-700">Manutenção</span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-center">
-                      <button className="px-4 py-1.5 rounded-lg bg-pastel-green text-slate-700 text-xs font-bold hover:opacity-90 transition-colors">Detalhes</button>
-                    </td>
-                  </tr>
-
-                  <tr className="hover:bg-slate-50 transition-colors group">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-pastel-peach flex items-center justify-center text-slate-600 text-lg">
-                          <i className="fa-solid fa-shield-halved"></i>
-                        </div>
-                        <div>
-                          <p className="text-sm font-bold text-slate-800">Gestor de Risco</p>
-                          <p className="text-xs text-slate-500 font-medium">Análise de Risco</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-600 border border-slate-200">Gestão</span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-slate-600 font-semibold">540</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right">
-                      <div className="flex items-center justify-end gap-1.5">
-                        <span className="text-sm font-bold text-slate-800">4.6</span>
-                        <i className="fa-solid fa-star text-yellow-400 text-xs"></i>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-center">
-                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700">Ativo</span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-center">
-                      <button className="px-4 py-1.5 rounded-lg bg-pastel-peach text-slate-700 text-xs font-bold hover:opacity-90 transition-colors">Detalhes</button>
-                    </td>
-                  </tr>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-center">
+                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold ${agent.statusColor}`}>{agent.status}</span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-center">
+                        <button className={`px-4 py-1.5 rounded-lg ${agent.color} text-slate-700 text-xs font-bold hover:opacity-90 transition-colors`}>Detalhes</button>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
             <div className="p-4 border-t border-slate-100 flex justify-between items-center bg-white">
               <span className="text-xs font-medium text-slate-500">Mostrando 1-4 de 12 agentes</span>
               <div className="flex gap-2">
-                <button disabled className="px-3 py-1.5 text-xs font-bold text-slate-500 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 disabled:opacity-50 shadow-sm">
-                  Anterior
-                </button>
-                <button className="px-3 py-1.5 text-xs font-bold text-slate-500 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 shadow-sm">
-                  Próximo
-                </button>
+                <button disabled className="px-3 py-1.5 text-xs font-bold text-slate-500 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 disabled:opacity-50 shadow-sm">Anterior</button>
+                <button className="px-3 py-1.5 text-xs font-bold text-slate-500 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 shadow-sm">Próximo</button>
               </div>
             </div>
           </section>
