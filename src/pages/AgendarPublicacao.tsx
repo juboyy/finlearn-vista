@@ -691,7 +691,7 @@ export default function AgendarPublicacao() {
 
       {/* Preview Modal */}
       <Dialog open={showPreview} onOpenChange={setShowPreview}>
-        <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-xl font-semibold">Preview das Mensagens</DialogTitle>
           </DialogHeader>
@@ -722,42 +722,114 @@ export default function AgendarPublicacao() {
           <div className="space-y-6">
             {/* Email Preview */}
             {selectedChannels.includes("email") && (
-              <div className="border border-slate-200 rounded-lg overflow-hidden">
+              <div className="border border-slate-200 rounded-lg overflow-hidden shadow-sm">
                 <div className="bg-slate-100 px-4 py-2 border-b border-slate-200 flex items-center gap-2">
                   <Mail size={16} className="text-slate-600" />
                   <span className="text-sm font-medium text-slate-700">Email</span>
                 </div>
-                <div className="p-6 bg-white">
-                  {/* Email Header */}
-                  <div className="mb-4 pb-4 border-b border-slate-200">
-                    <h2 className="text-xl font-bold text-slate-800 mb-2">Seus Conteúdos Desta Semana</h2>
-                    <p className="text-sm text-slate-600">Confira os artigos selecionados para você</p>
-                  </div>
-
-                  {/* Articles */}
-                  <div className="space-y-4">
-                    {filteredContent.slice(0, 3).map((content) => (
-                      <div key={content.id} className="flex gap-4 pb-4 border-b border-slate-100">
-                        <img 
-                          src={getContentImage(content.id)}
-                          alt={content.title}
-                          className="w-32 h-24 object-cover rounded"
-                        />
-                        <div className="flex-1">
-                          <h3 className="font-semibold text-slate-800 mb-1">{content.title}</h3>
-                          <p className="text-sm text-slate-600 mb-2">{content.author} • {content.type}</p>
-                          <a href="#" className="text-sm text-blue-600 hover:underline flex items-center gap-1">
-                            Ler artigo <ExternalLink size={12} />
-                          </a>
+                
+                {/* Email Container - Professional Style */}
+                <div className="bg-slate-50 p-8">
+                  <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+                    {/* Email Header with Branding */}
+                    <div className="px-8 pt-8 pb-6" style={{ backgroundColor: '#B8D4E8' }}>
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-2">
+                          <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center">
+                            <FileText size={20} className="text-slate-700" />
+                          </div>
+                          <div>
+                            <h1 className="text-xl font-bold text-slate-800">Newsletter</h1>
+                            <p className="text-xs text-slate-600">Conteúdos Selecionados</p>
+                          </div>
                         </div>
+                        <p className="text-xs text-slate-600">{new Date().toLocaleDateString('pt-BR')}</p>
                       </div>
-                    ))}
-                  </div>
+                      <h2 className="text-2xl font-bold text-slate-800 mb-2">
+                        Seus Conteúdos Desta Semana
+                      </h2>
+                      <p className="text-sm text-slate-700">
+                        Confira os artigos selecionados especialmente para você
+                      </p>
+                    </div>
 
-                  <div className="mt-6">
-                    <button className="w-full py-3 rounded text-white font-medium" style={{ backgroundColor: '#B8D4E8', color: '#334155' }}>
-                      Ver Todos os Artigos
-                    </button>
+                    {/* Email Content */}
+                    <div className="px-8 py-6">
+                      <div className="space-y-6">
+                        {filteredContent.slice(0, 3).map((content, idx) => (
+                          <div key={content.id} className="bg-slate-50 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-300 transition">
+                            <div className="flex gap-0">
+                              <div className="w-48 flex-shrink-0">
+                                <img 
+                                  src={getContentImage(content.id)}
+                                  alt={content.title}
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                              <div className="flex-1 p-4">
+                                <div className="flex items-start justify-between gap-2 mb-2">
+                                  <span 
+                                    className="text-xs px-2 py-1 rounded font-medium"
+                                    style={{ 
+                                      backgroundColor: content.isPaid ? '#B8D4E8' : '#C5E8D4',
+                                      color: '#334155'
+                                    }}
+                                  >
+                                    {content.type}
+                                  </span>
+                                  <span className="text-xs text-slate-500">
+                                    {new Date(content.createdDate).toLocaleDateString('pt-BR')}
+                                  </span>
+                                </div>
+                                <h3 className="font-bold text-slate-800 mb-2 text-base leading-tight">
+                                  {content.title}
+                                </h3>
+                                <p className="text-sm text-slate-600 mb-3">
+                                  Por {content.author}
+                                </p>
+                                <a 
+                                  href="#" 
+                                  className="inline-flex items-center gap-1 text-sm font-medium text-blue-600 hover:text-blue-700"
+                                >
+                                  Ler artigo completo <ExternalLink size={14} />
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* CTA Button */}
+                      <div className="mt-8 text-center">
+                        <a
+                          href="#"
+                          className="inline-block px-8 py-3 rounded-lg font-semibold text-white transition hover:opacity-90"
+                          style={{ backgroundColor: '#B8D4E8', color: '#334155' }}
+                        >
+                          Ver Todos os Conteúdos
+                        </a>
+                      </div>
+                    </div>
+
+                    {/* Email Footer */}
+                    <div className="px-8 py-6 bg-slate-100 border-t border-slate-200">
+                      <div className="text-center space-y-3">
+                        <p className="text-xs text-slate-600">
+                          Você está recebendo este email porque se inscreveu em nossa newsletter
+                        </p>
+                        <div className="flex items-center justify-center gap-4 text-xs">
+                          <a href="#" className="text-slate-600 hover:text-slate-800">Preferências</a>
+                          <span className="text-slate-400">•</span>
+                          <a href="#" className="text-slate-600 hover:text-slate-800">Cancelar inscrição</a>
+                        </div>
+                        <p className="text-xs text-slate-500 mt-4">
+                          © 2024 Newsletter Platform. Todos os direitos reservados.
+                        </p>
+                        <p className="text-xs text-slate-400">
+                          Rua Exemplo, 123 - São Paulo, SP
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
