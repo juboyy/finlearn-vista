@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Calendar as CalendarIcon, Clock, FileText, Folder } from "lucide-react";
+import { ArrowLeft, Calendar as CalendarIcon, Clock, FileText, Folder, Filter, X } from "lucide-react";
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
@@ -19,6 +19,10 @@ export default function AgendarPublicacao() {
   const [scheduleTime, setScheduleTime] = useState("08:00");
   const [selectedContent, setSelectedContent] = useState<number[]>([]);
   const [selectedFolder, setSelectedFolder] = useState<string>("all");
+  const [selectedType, setSelectedType] = useState<string>("all");
+  const [selectedTheme, setSelectedTheme] = useState<string>("all");
+  const [selectedArea, setSelectedArea] = useState<string>("all");
+  const [selectedAuthor, setSelectedAuthor] = useState<string>("all");
 
   const folders = [
     { id: "all", name: "Todos os Materiais", count: 8, color: "#B8D4E8" },
@@ -28,6 +32,47 @@ export default function AgendarPublicacao() {
     { id: "guides", name: "Guias e Checklists", count: 2, color: "#E8C5D4" }
   ];
 
+  const contentTypes = [
+    { value: "all", label: "Todos os Tipos" },
+    { value: "Artigo", label: "Artigo" },
+    { value: "Vídeo", label: "Vídeo" },
+    { value: "Podcast", label: "Podcast" },
+    { value: "Relatório", label: "Relatório" },
+    { value: "E-book", label: "E-book" },
+    { value: "Webinar", label: "Webinar" },
+    { value: "Documento", label: "Documento" }
+  ];
+
+  const themes = [
+    { value: "all", label: "Todos os Temas" },
+    { value: "open-banking", label: "Open Banking" },
+    { value: "pix", label: "PIX" },
+    { value: "criptomoedas", label: "Criptomoedas" },
+    { value: "regulacao", label: "Regulação" },
+    { value: "fintechs", label: "Fintechs" },
+    { value: "gestao-risco", label: "Gestão de Risco" }
+  ];
+
+  const areas = [
+    { value: "all", label: "Todas as Áreas" },
+    { value: "contabilidade", label: "Contabilidade" },
+    { value: "juridico", label: "Jurídico" },
+    { value: "compliance", label: "Compliance" },
+    { value: "tecnologia", label: "Tecnologia" },
+    { value: "operacoes", label: "Operações" },
+    { value: "marketing", label: "Marketing" }
+  ];
+
+  const authors = [
+    { value: "all", label: "Todos os Autores" },
+    { value: "maria-silva", label: "Maria Silva" },
+    { value: "joao-santos", label: "João Santos" },
+    { value: "ana-costa", label: "Ana Costa" },
+    { value: "pedro-oliveira", label: "Pedro Oliveira" },
+    { value: "carla-souza", label: "Carla Souza" },
+    { value: "roberto-lima", label: "Roberto Lima" }
+  ];
+
   const availableContent = [
     {
       id: 1,
@@ -35,7 +80,10 @@ export default function AgendarPublicacao() {
       type: "Artigo",
       createdDate: "2024-01-10",
       author: "Maria Silva",
-      folder: "compliance"
+      authorId: "maria-silva",
+      folder: "compliance",
+      theme: "regulacao",
+      area: "compliance"
     },
     {
       id: 2,
@@ -43,7 +91,10 @@ export default function AgendarPublicacao() {
       type: "Relatório",
       createdDate: "2024-01-12",
       author: "João Santos",
-      folder: "market"
+      authorId: "joao-santos",
+      folder: "market",
+      theme: "pix",
+      area: "operacoes"
     },
     {
       id: 3,
@@ -51,7 +102,10 @@ export default function AgendarPublicacao() {
       type: "Webinar",
       createdDate: "2024-01-08",
       author: "Ana Costa",
-      folder: "market"
+      authorId: "ana-costa",
+      folder: "market",
+      theme: "open-banking",
+      area: "tecnologia"
     },
     {
       id: 4,
@@ -59,7 +113,10 @@ export default function AgendarPublicacao() {
       type: "E-book",
       createdDate: "2024-01-05",
       author: "Pedro Oliveira",
-      folder: "compliance"
+      authorId: "pedro-oliveira",
+      folder: "compliance",
+      theme: "gestao-risco",
+      area: "compliance"
     },
     {
       id: 5,
@@ -67,7 +124,10 @@ export default function AgendarPublicacao() {
       type: "Documento",
       createdDate: "2024-01-15",
       author: "Carla Souza",
-      folder: "guides"
+      authorId: "carla-souza",
+      folder: "guides",
+      theme: "regulacao",
+      area: "juridico"
     },
     {
       id: 6,
@@ -75,7 +135,10 @@ export default function AgendarPublicacao() {
       type: "Relatório",
       createdDate: "2024-01-11",
       author: "Roberto Lima",
-      folder: "reports"
+      authorId: "roberto-lima",
+      folder: "reports",
+      theme: "open-banking",
+      area: "tecnologia"
     },
     {
       id: 7,
@@ -83,7 +146,10 @@ export default function AgendarPublicacao() {
       type: "Artigo",
       createdDate: "2024-01-09",
       author: "Julia Mendes",
-      folder: "guides"
+      authorId: "julia-mendes",
+      folder: "guides",
+      theme: "fintechs",
+      area: "tecnologia"
     },
     {
       id: 8,
@@ -91,7 +157,10 @@ export default function AgendarPublicacao() {
       type: "Relatório",
       createdDate: "2024-01-13",
       author: "Carlos Silva",
-      folder: "reports"
+      authorId: "carlos-silva",
+      folder: "reports",
+      theme: "pix",
+      area: "operacoes"
     },
     {
       id: 9,
@@ -99,7 +168,10 @@ export default function AgendarPublicacao() {
       type: "Artigo",
       createdDate: "2024-01-14",
       author: "Fernando Costa",
-      folder: "compliance"
+      authorId: "fernando-costa",
+      folder: "compliance",
+      theme: "regulacao",
+      area: "juridico"
     },
     {
       id: 10,
@@ -107,13 +179,53 @@ export default function AgendarPublicacao() {
       type: "Relatório",
       createdDate: "2024-01-07",
       author: "Patricia Lima",
-      folder: "reports"
+      authorId: "patricia-lima",
+      folder: "reports",
+      theme: "gestao-risco",
+      area: "contabilidade"
+    },
+    {
+      id: 11,
+      title: "Vídeo: Introdução ao Open Banking",
+      type: "Vídeo",
+      createdDate: "2024-01-16",
+      author: "Ana Costa",
+      authorId: "ana-costa",
+      folder: "market",
+      theme: "open-banking",
+      area: "marketing"
+    },
+    {
+      id: 12,
+      title: "Podcast: O Futuro das Criptomoedas",
+      type: "Podcast",
+      createdDate: "2024-01-06",
+      author: "João Santos",
+      authorId: "joao-santos",
+      folder: "market",
+      theme: "criptomoedas",
+      area: "tecnologia"
     }
   ];
 
-  const filteredContent = selectedFolder === "all" 
-    ? availableContent 
-    : availableContent.filter(content => content.folder === selectedFolder);
+  const filteredContent = availableContent.filter(content => {
+    const matchesFolder = selectedFolder === "all" || content.folder === selectedFolder;
+    const matchesType = selectedType === "all" || content.type === selectedType;
+    const matchesTheme = selectedTheme === "all" || content.theme === selectedTheme;
+    const matchesArea = selectedArea === "all" || content.area === selectedArea;
+    const matchesAuthor = selectedAuthor === "all" || content.authorId === selectedAuthor;
+    
+    return matchesFolder && matchesType && matchesTheme && matchesArea && matchesAuthor;
+  });
+
+  const activeFiltersCount = [selectedType, selectedTheme, selectedArea, selectedAuthor].filter(f => f !== "all").length;
+
+  const clearAllFilters = () => {
+    setSelectedType("all");
+    setSelectedTheme("all");
+    setSelectedArea("all");
+    setSelectedAuthor("all");
+  };
 
   const handleScheduleSubmit = () => {
     if (!scheduleDate || selectedContent.length === 0) {
@@ -205,10 +317,79 @@ export default function AgendarPublicacao() {
 
             {/* Content Selection */}
             <div className="bg-white rounded-xl border border-slate-200 p-6">
-              <h2 className="text-lg font-semibold text-slate-800 mb-4">Conteúdos Disponíveis</h2>
-              <p className="text-sm text-slate-500 mb-4">
-                Selecione os conteúdos que deseja incluir nesta publicação ({filteredContent.length} {filteredContent.length === 1 ? 'item' : 'itens'})
-              </p>
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h2 className="text-lg font-semibold text-slate-800">Conteúdos Disponíveis</h2>
+                  <p className="text-sm text-slate-500 mt-1">
+                    {filteredContent.length} {filteredContent.length === 1 ? 'item disponível' : 'itens disponíveis'}
+                  </p>
+                </div>
+                {activeFiltersCount > 0 && (
+                  <button
+                    onClick={clearAllFilters}
+                    className="flex items-center gap-2 px-3 py-1.5 text-sm text-slate-600 hover:text-slate-800 border border-slate-200 rounded-lg hover:bg-slate-50 transition"
+                  >
+                    <X size={14} />
+                    Limpar Filtros ({activeFiltersCount})
+                  </button>
+                )}
+              </div>
+
+              {/* Filters */}
+              <div className="grid grid-cols-4 gap-3 mb-4">
+                <div>
+                  <label className="text-xs font-medium text-slate-600 mb-1.5 block">Tipo de Conteúdo</label>
+                  <select
+                    value={selectedType}
+                    onChange={(e) => setSelectedType(e.target.value)}
+                    className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#B8D4E8]"
+                  >
+                    {contentTypes.map(type => (
+                      <option key={type.value} value={type.value}>{type.label}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="text-xs font-medium text-slate-600 mb-1.5 block">Tema do Mercado</label>
+                  <select
+                    value={selectedTheme}
+                    onChange={(e) => setSelectedTheme(e.target.value)}
+                    className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C5E8D4]"
+                  >
+                    {themes.map(theme => (
+                      <option key={theme.value} value={theme.value}>{theme.label}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="text-xs font-medium text-slate-600 mb-1.5 block">Área</label>
+                  <select
+                    value={selectedArea}
+                    onChange={(e) => setSelectedArea(e.target.value)}
+                    className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#D4C5E8]"
+                  >
+                    {areas.map(area => (
+                      <option key={area.value} value={area.value}>{area.label}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="text-xs font-medium text-slate-600 mb-1.5 block">Co-Autor</label>
+                  <select
+                    value={selectedAuthor}
+                    onChange={(e) => setSelectedAuthor(e.target.value)}
+                    className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#E8E0C5]"
+                  >
+                    {authors.map(author => (
+                      <option key={author.value} value={author.value}>{author.label}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
               <div className="border border-slate-200 rounded-lg divide-y divide-slate-100 max-h-[500px] overflow-y-auto">
                 {filteredContent.map((content) => (
                   <div
