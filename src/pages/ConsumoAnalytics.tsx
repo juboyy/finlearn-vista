@@ -297,12 +297,12 @@ const ConsumoAnalytics = () => {
                     </div>
                   </div>
                 ))}
-                <div className="mt-6 p-4 bg-pastel-peach rounded-lg">
+                <div className="mt-6 p-4 bg-pastel-yellow rounded-lg">
                   <p className="text-sm font-medium text-slate-800 mb-1">Progresso da Semana</p>
                   <div className="w-full bg-white rounded-full h-2 mb-2">
-                    <div className="bg-slate-700 h-2 rounded-full" style={{ width: '75%' }}></div>
+                    <div className="bg-slate-800 h-2 rounded-full" style={{ width: '75%' }}></div>
                   </div>
-                  <p className="text-xs text-slate-600">75% das metas concluídas</p>
+                  <p className="text-xs text-slate-800">75% das metas concluídas</p>
                 </div>
               </div>
             </section>
