@@ -1,6 +1,7 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Settings, BarChart3, Plus, Users, ChevronRight, Calendar, SlidersHorizontal, EllipsisVertical, ChartLine, CreditCard, Scale, Globe, Building, Lightbulb, MailOpen, CheckCircle, Percent, Clock } from "lucide-react";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 declare global {
   interface Window {
@@ -9,6 +10,8 @@ declare global {
 }
 
 export default function Newsletter() {
+  const navigate = useNavigate();
+  
   useEffect(() => {
     // Load Plotly if not already loaded
     if (!window.Plotly) {
@@ -104,7 +107,11 @@ export default function Newsletter() {
               <button className="w-10 h-10 border border-slate-200 text-slate-700 rounded-lg font-medium hover:bg-slate-50 transition flex items-center justify-center">
                 <Settings size={18} />
               </button>
-              <button className="w-10 h-10 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center justify-center" style={{ backgroundColor: '#C5E8D4' }}>
+              <button 
+                onClick={() => navigate('/newsletter-analytics')}
+                className="w-10 h-10 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center justify-center" 
+                style={{ backgroundColor: '#C5E8D4' }}
+              >
                 <BarChart3 size={18} />
               </button>
               <button className="px-4 py-2 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition" style={{ backgroundColor: '#D4C5E8' }}>
