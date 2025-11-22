@@ -36,7 +36,7 @@ export default function ConsumoAnalytics() {
               <Badge className="bg-pastel-green text-pastel-gray-dark border-0">3 Ativas</Badge>
             </div>
             <div className="grid grid-cols-3 gap-6 mb-6">
-              <div className="p-4 rounded-lg border border-pastel-blue bg-pastel-blue bg-opacity-20">
+              <div className="p-4 rounded-lg border border-pastel-blue bg-pastel-blue bg-opacity-10">
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="font-semibold text-slate-800">Newsletter Diária</h3>
                   <i className="fas fa-envelope text-slate-600"></i>
@@ -48,7 +48,7 @@ export default function ConsumoAnalytics() {
                 </div>
               </div>
 
-              <div className="p-4 rounded-lg border border-pastel-purple bg-pastel-purple bg-opacity-20">
+              <div className="p-4 rounded-lg border border-pastel-purple bg-pastel-purple bg-opacity-10">
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="font-semibold text-slate-800">Relatórios Semanais</h3>
                   <i className="fas fa-file-alt text-slate-600"></i>
@@ -60,7 +60,7 @@ export default function ConsumoAnalytics() {
                 </div>
               </div>
 
-              <div className="p-4 rounded-lg border border-pastel-green bg-pastel-green bg-opacity-20">
+              <div className="p-4 rounded-lg border border-pastel-green bg-pastel-green bg-opacity-10">
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="font-semibold text-slate-800">Insights Premium</h3>
                   <i className="fas fa-star text-slate-600"></i>
@@ -89,7 +89,7 @@ export default function ConsumoAnalytics() {
                 </Button>
               </div>
               <div className="grid grid-cols-3 gap-4 mb-6">
-                <div className="p-4 rounded-lg bg-pastel-blue bg-opacity-30">
+                <div className="p-4 rounded-lg bg-pastel-blue bg-opacity-15">
                   <div className="flex items-center gap-2 mb-2">
                     <Mic className="w-4 h-4 text-slate-700" />
                     <span className="text-sm font-medium text-slate-700">Voz</span>
@@ -101,7 +101,7 @@ export default function ConsumoAnalytics() {
                   </div>
                 </div>
 
-                <div className="p-4 rounded-lg bg-pastel-purple bg-opacity-30">
+                <div className="p-4 rounded-lg bg-pastel-purple bg-opacity-15">
                   <div className="flex items-center gap-2 mb-2">
                     <Pen className="w-4 h-4 text-slate-700" />
                     <span className="text-sm font-medium text-slate-700">Escrita</span>
@@ -113,7 +113,7 @@ export default function ConsumoAnalytics() {
                   </div>
                 </div>
 
-                <div className="p-4 rounded-lg bg-pastel-pink bg-opacity-30">
+                <div className="p-4 rounded-lg bg-pastel-pink bg-opacity-15">
                   <div className="flex items-center gap-2 mb-2">
                     <Video className="w-4 h-4 text-slate-700" />
                     <span className="text-sm font-medium text-slate-700">Vídeo</span>
@@ -174,7 +174,7 @@ export default function ConsumoAnalytics() {
             <section className="bg-white rounded-xl p-6 border border-slate-200">
               <h2 className="text-lg font-semibold text-slate-800 mb-6">Resumo do Mês</h2>
               <div className="space-y-4">
-                <div className="p-4 rounded-lg bg-pastel-green">
+                <div className="p-4 rounded-lg bg-pastel-green bg-opacity-40">
                   <div className="flex items-center gap-3 mb-2">
                     <Receipt className="w-5 h-5 text-slate-700" />
                     <span className="font-medium text-slate-800">Total Assinaturas</span>
@@ -183,7 +183,7 @@ export default function ConsumoAnalytics() {
                   <p className="text-sm text-slate-600">Novembro 2024</p>
                 </div>
 
-                <div className="p-4 rounded-lg bg-pastel-yellow">
+                <div className="p-4 rounded-lg bg-pastel-yellow bg-opacity-40">
                   <div className="flex items-center gap-3 mb-2">
                     <i className="fas fa-robot text-slate-700"></i>
                     <span className="font-medium text-slate-800">Créditos IA</span>
@@ -192,7 +192,7 @@ export default function ConsumoAnalytics() {
                   <p className="text-sm text-slate-600">Consumo do mês</p>
                 </div>
 
-                <div className="p-4 rounded-lg bg-pastel-peach">
+                <div className="p-4 rounded-lg bg-pastel-peach bg-opacity-40">
                   <div className="flex items-center gap-3 mb-2">
                     <Wallet className="w-5 h-5 text-slate-700" />
                     <span className="font-medium text-slate-800">Total Geral</span>
@@ -253,7 +253,7 @@ export default function ConsumoAnalytics() {
                 <p className="text-xs text-slate-500 mt-1">R$ 87,00 gasto</p>
               </div>
 
-              <div className="p-3 rounded-lg border border-slate-200 bg-pastel-blue bg-opacity-30">
+              <div className="p-3 rounded-lg border border-slate-200 bg-pastel-blue bg-opacity-15">
                 <div className="flex items-center gap-2 mb-1">
                   <Coins className="w-4 h-4 text-slate-700" />
                   <span className="text-xs text-slate-700 font-medium">Total Consumido</span>
@@ -279,7 +279,7 @@ export default function ConsumoAnalytics() {
                   <tr className="border-b border-slate-100 hover:bg-slate-50">
                     <td className="py-4 px-4 text-sm text-slate-800">21 Nov, 14:32</td>
                     <td className="py-4 px-4">
-                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-pink text-pastel-gray-dark text-xs rounded-full">
+                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-pink bg-opacity-50 text-pastel-gray-dark text-xs rounded-full">
                         <Video className="w-3 h-3" />
                         Vídeo
                       </span>
@@ -292,7 +292,7 @@ export default function ConsumoAnalytics() {
                   <tr className="border-b border-slate-100 hover:bg-slate-50">
                     <td className="py-4 px-4 text-sm text-slate-800">21 Nov, 11:15</td>
                     <td className="py-4 px-4">
-                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-purple text-pastel-gray-dark text-xs rounded-full">
+                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-purple bg-opacity-50 text-pastel-gray-dark text-xs rounded-full">
                         <Pen className="w-3 h-3" />
                         Escrita
                       </span>
@@ -305,7 +305,7 @@ export default function ConsumoAnalytics() {
                   <tr className="border-b border-slate-100 hover:bg-slate-50">
                     <td className="py-4 px-4 text-sm text-slate-800">21 Nov, 09:45</td>
                     <td className="py-4 px-4">
-                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-blue text-pastel-gray-dark text-xs rounded-full">
+                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-blue bg-opacity-50 text-pastel-gray-dark text-xs rounded-full">
                         <Mic className="w-3 h-3" />
                         Voz
                       </span>
@@ -318,7 +318,7 @@ export default function ConsumoAnalytics() {
                   <tr className="border-b border-slate-100 hover:bg-slate-50">
                     <td className="py-4 px-4 text-sm text-slate-800">20 Nov, 16:20</td>
                     <td className="py-4 px-4">
-                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-purple text-pastel-gray-dark text-xs rounded-full">
+                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-purple bg-opacity-50 text-pastel-gray-dark text-xs rounded-full">
                         <i className="fas fa-file-alt text-xs"></i>
                         Resumo
                       </span>
@@ -331,7 +331,7 @@ export default function ConsumoAnalytics() {
                   <tr className="border-b border-slate-100 hover:bg-slate-50">
                     <td className="py-4 px-4 text-sm text-slate-800">20 Nov, 14:55</td>
                     <td className="py-4 px-4">
-                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-pink text-pastel-gray-dark text-xs rounded-full">
+                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-pink bg-opacity-50 text-pastel-gray-dark text-xs rounded-full">
                         <Video className="w-3 h-3" />
                         Vídeo
                       </span>
@@ -344,7 +344,7 @@ export default function ConsumoAnalytics() {
                   <tr className="border-b border-slate-100 hover:bg-slate-50">
                     <td className="py-4 px-4 text-sm text-slate-800">20 Nov, 10:30</td>
                     <td className="py-4 px-4">
-                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-blue text-pastel-gray-dark text-xs rounded-full">
+                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-blue bg-opacity-50 text-pastel-gray-dark text-xs rounded-full">
                         <i className="fas fa-volume-up text-xs"></i>
                         Áudio
                       </span>
@@ -357,7 +357,7 @@ export default function ConsumoAnalytics() {
                   <tr className="border-b border-slate-100 hover:bg-slate-50">
                     <td className="py-4 px-4 text-sm text-slate-800">19 Nov, 15:40</td>
                     <td className="py-4 px-4">
-                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-purple text-pastel-gray-dark text-xs rounded-full">
+                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-purple bg-opacity-50 text-pastel-gray-dark text-xs rounded-full">
                         <i className="fas fa-newspaper text-xs"></i>
                         Artigo
                       </span>
@@ -370,7 +370,7 @@ export default function ConsumoAnalytics() {
                   <tr className="border-b border-slate-100 hover:bg-slate-50">
                     <td className="py-4 px-4 text-sm text-slate-800">19 Nov, 11:25</td>
                     <td className="py-4 px-4">
-                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-blue text-pastel-gray-dark text-xs rounded-full">
+                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-blue bg-opacity-50 text-pastel-gray-dark text-xs rounded-full">
                         <Mic className="w-3 h-3" />
                         Voz
                       </span>
@@ -383,7 +383,7 @@ export default function ConsumoAnalytics() {
                   <tr className="border-b border-slate-100 hover:bg-slate-50">
                     <td className="py-4 px-4 text-sm text-slate-800">18 Nov, 16:10</td>
                     <td className="py-4 px-4">
-                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-pink text-pastel-gray-dark text-xs rounded-full">
+                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-pink bg-opacity-50 text-pastel-gray-dark text-xs rounded-full">
                         <Video className="w-3 h-3" />
                         Vídeo
                       </span>
@@ -396,7 +396,7 @@ export default function ConsumoAnalytics() {
                   <tr className="border-b border-slate-100 hover:bg-slate-50">
                     <td className="py-4 px-4 text-sm text-slate-800">18 Nov, 13:50</td>
                     <td className="py-4 px-4">
-                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-purple text-pastel-gray-dark text-xs rounded-full">
+                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-purple bg-opacity-50 text-pastel-gray-dark text-xs rounded-full">
                         <Pen className="w-3 h-3" />
                         Escrita
                       </span>
@@ -409,7 +409,7 @@ export default function ConsumoAnalytics() {
                   <tr className="border-b border-slate-100 hover:bg-slate-50">
                     <td className="py-4 px-4 text-sm text-slate-800">18 Nov, 09:15</td>
                     <td className="py-4 px-4">
-                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-blue text-pastel-gray-dark text-xs rounded-full">
+                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-blue bg-opacity-50 text-pastel-gray-dark text-xs rounded-full">
                         <Mic className="w-3 h-3" />
                         Voz
                       </span>
@@ -422,7 +422,7 @@ export default function ConsumoAnalytics() {
                   <tr className="hover:bg-slate-50">
                     <td className="py-4 px-4 text-sm text-slate-800">17 Nov, 14:20</td>
                     <td className="py-4 px-4">
-                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-purple text-pastel-gray-dark text-xs rounded-full">
+                      <span className="inline-flex items-center gap-2 px-2 py-1 bg-pastel-purple bg-opacity-50 text-pastel-gray-dark text-xs rounded-full">
                         <i className="fas fa-chart-bar text-xs"></i>
                         Análise
                       </span>
@@ -479,14 +479,14 @@ export default function ConsumoAnalytics() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200">
-                <div className="w-12 h-12 bg-pastel-blue rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-pastel-blue bg-opacity-40 rounded-lg flex items-center justify-center">
                   <i className="fab fa-cc-visa text-slate-700 text-xl"></i>
                 </div>
                 <div className="flex-1">
                   <h3 className="font-medium text-slate-800">Visa •••• 4532</h3>
                   <p className="text-sm text-slate-500">Expira em 12/2026</p>
                 </div>
-                <span className="px-2 py-1 bg-pastel-green text-pastel-gray-dark text-xs rounded-full">Principal</span>
+                <span className="px-2 py-1 bg-pastel-green bg-opacity-50 text-pastel-gray-dark text-xs rounded-full">Principal</span>
                 <div className="flex gap-2">
                   <button className="p-2 text-slate-600 hover:text-slate-800">
                     <Edit className="w-4 h-4" />
@@ -498,7 +498,7 @@ export default function ConsumoAnalytics() {
               </div>
 
               <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200">
-                <div className="w-12 h-12 bg-pastel-purple rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-pastel-purple bg-opacity-40 rounded-lg flex items-center justify-center">
                   <i className="fab fa-cc-mastercard text-slate-700 text-xl"></i>
                 </div>
                 <div className="flex-1">
@@ -530,7 +530,7 @@ export default function ConsumoAnalytics() {
               </Button>
             </div>
             <div className="grid grid-cols-3 gap-4">
-              <div className="p-4 rounded-lg border-2 border-dashed border-pastel-green bg-pastel-green bg-opacity-20">
+              <div className="p-4 rounded-lg border-2 border-dashed border-pastel-green bg-pastel-green bg-opacity-10">
                 <div className="flex items-center gap-3 mb-2">
                   <Percent className="w-4 h-4 text-slate-700" />
                   <span className="font-medium text-slate-800">SAVE20</span>
@@ -539,7 +539,7 @@ export default function ConsumoAnalytics() {
                 <p className="text-xs text-slate-500">Válido até 31/12/2024</p>
               </div>
 
-              <div className="p-4 rounded-lg border-2 border-dashed border-pastel-blue bg-pastel-blue bg-opacity-20">
+              <div className="p-4 rounded-lg border-2 border-dashed border-pastel-blue bg-pastel-blue bg-opacity-10">
                 <div className="flex items-center gap-3 mb-2">
                   <Gift className="w-4 h-4 text-slate-700" />
                   <span className="font-medium text-slate-800">FRIEND50</span>
@@ -593,7 +593,7 @@ export default function ConsumoAnalytics() {
                     <td className="py-4 px-4 text-sm text-slate-800">Assinaturas - Novembro</td>
                     <td className="py-4 px-4 text-sm font-medium text-slate-800">R$ 259,70</td>
                     <td className="py-4 px-4">
-                      <span className="px-2 py-1 bg-pastel-green text-pastel-gray-dark text-xs rounded-full">Pago</span>
+                      <span className="px-2 py-1 bg-pastel-green bg-opacity-50 text-pastel-gray-dark text-xs rounded-full">Pago</span>
                     </td>
                     <td className="py-4 px-4">
                       <button className="text-pastel-blueText hover:underline text-sm">
@@ -607,7 +607,7 @@ export default function ConsumoAnalytics() {
                     <td className="py-4 px-4 text-sm text-slate-800">Pacote de Créditos IA - 5.000 créditos</td>
                     <td className="py-4 px-4 text-sm font-medium text-slate-800">R$ 179,90</td>
                     <td className="py-4 px-4">
-                      <span className="px-2 py-1 bg-pastel-green text-pastel-gray-dark text-xs rounded-full">Pago</span>
+                      <span className="px-2 py-1 bg-pastel-green bg-opacity-50 text-pastel-gray-dark text-xs rounded-full">Pago</span>
                     </td>
                     <td className="py-4 px-4">
                       <button className="text-pastel-blueText hover:underline text-sm">
@@ -621,7 +621,7 @@ export default function ConsumoAnalytics() {
                     <td className="py-4 px-4 text-sm text-slate-800">Assinaturas - Outubro</td>
                     <td className="py-4 px-4 text-sm font-medium text-slate-800">R$ 259,70</td>
                     <td className="py-4 px-4">
-                      <span className="px-2 py-1 bg-pastel-green text-pastel-gray-dark text-xs rounded-full">Pago</span>
+                      <span className="px-2 py-1 bg-pastel-green bg-opacity-50 text-pastel-gray-dark text-xs rounded-full">Pago</span>
                     </td>
                     <td className="py-4 px-4">
                       <button className="text-pastel-blueText hover:underline text-sm">
@@ -635,7 +635,7 @@ export default function ConsumoAnalytics() {
                     <td className="py-4 px-4 text-sm text-slate-800">Assinaturas - Setembro</td>
                     <td className="py-4 px-4 text-sm font-medium text-slate-800">R$ 259,70</td>
                     <td className="py-4 px-4">
-                      <span className="px-2 py-1 bg-pastel-green text-pastel-gray-dark text-xs rounded-full">Pago</span>
+                      <span className="px-2 py-1 bg-pastel-green bg-opacity-50 text-pastel-gray-dark text-xs rounded-full">Pago</span>
                     </td>
                     <td className="py-4 px-4">
                       <button className="text-pastel-blueText hover:underline text-sm">
@@ -649,7 +649,7 @@ export default function ConsumoAnalytics() {
                     <td className="py-4 px-4 text-sm text-slate-800">Assinaturas - Agosto</td>
                     <td className="py-4 px-4 text-sm font-medium text-slate-800">R$ 259,70</td>
                     <td className="py-4 px-4">
-                      <span className="px-2 py-1 bg-pastel-green text-pastel-gray-dark text-xs rounded-full">Pago</span>
+                      <span className="px-2 py-1 bg-pastel-green bg-opacity-50 text-pastel-gray-dark text-xs rounded-full">Pago</span>
                     </td>
                     <td className="py-4 px-4">
                       <button className="text-pastel-blueText hover:underline text-sm">
