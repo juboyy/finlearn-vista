@@ -163,6 +163,9 @@ const PerformanceSEO = () => {
           </section>
 
           {/* SEO Scores */}
+          <div className="mb-6">
+            <h2 className="text-xl font-semibold text-slate-800">Scores de Performance</h2>
+          </div>
           <section className="grid grid-cols-4 gap-6 mb-8">
             {[
               { title: 'SEO Score Médio', score: 82, change: '+3 pts', color: '#8EBC9F', textColor: 'text-green-700', bgColor: 'bg-green-50' },
