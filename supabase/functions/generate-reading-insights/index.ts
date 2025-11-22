@@ -11,23 +11,30 @@ serve(async (req) => {
   }
 
   try {
-    const { analyticsData } = await req.json();
+    const { analyticsData, focus } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     
     if (!LOVABLE_API_KEY) {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
 
+    // Ajusta o prompt baseado no foco específico
+    const focusInstruction = focus 
+      ? `Foque especialmente em: ${focus}. `
+      : '';
+
     const systemPrompt = `Você é um analista comportamental especializado em padrões de consumo de conteúdo financeiro e educacional. 
     Sua expertise está em identificar insights profundos baseados em dados de leitura e uso de plataformas.
     
     INSTRUÇÕES:
+    ${focusInstruction}
     - Analise os dados fornecidos e identifique 4-6 insights específicos e acionáveis
     - Cada insight deve ter um título marcante e uma explicação de 2-3 frases
     - Correlacione os dados entre si (ex: taxa de conclusão vs horários, temas vs tempo de leitura)
     - Identifique padrões positivos E oportunidades de melhoria
     - Use linguagem profissional mas acessível
     - Inclua recomendações práticas quando relevante
+    - Varie os insights a cada análise, explorando diferentes ângulos comportamentais
     
     FORMATO DE RESPOSTA:
     Use marcadores (•) para cada insight, com o título em negrito seguido da explicação.
