@@ -1,6 +1,7 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Calendar as CalendarIcon, Clock, FileText, Folder, Filter, X } from "lucide-react";
+import { ArrowLeft, Calendar as CalendarIcon, Clock, FileText, Folder, Filter, X, Video, Mic, FileBarChart, BookOpen, MonitorPlay, File, CreditCard, Zap, Bitcoin, Scale, Smartphone, ShieldCheck, Calculator, Laptop, Settings, Megaphone, User, ChevronDown } from "lucide-react";
 import { useState } from "react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -33,44 +34,44 @@ export default function AgendarPublicacao() {
   ];
 
   const contentTypes = [
-    { value: "all", label: "Todos os Tipos" },
-    { value: "Artigo", label: "Artigo" },
-    { value: "Vídeo", label: "Vídeo" },
-    { value: "Podcast", label: "Podcast" },
-    { value: "Relatório", label: "Relatório" },
-    { value: "E-book", label: "E-book" },
-    { value: "Webinar", label: "Webinar" },
-    { value: "Documento", label: "Documento" }
+    { value: "all", label: "Todos os Tipos", icon: Filter },
+    { value: "Artigo", label: "Artigo", icon: FileText },
+    { value: "Vídeo", label: "Vídeo", icon: Video },
+    { value: "Podcast", label: "Podcast", icon: Mic },
+    { value: "Relatório", label: "Relatório", icon: FileBarChart },
+    { value: "E-book", label: "E-book", icon: BookOpen },
+    { value: "Webinar", label: "Webinar", icon: MonitorPlay },
+    { value: "Documento", label: "Documento", icon: File }
   ];
 
   const themes = [
-    { value: "all", label: "Todos os Temas" },
-    { value: "open-banking", label: "Open Banking" },
-    { value: "pix", label: "PIX" },
-    { value: "criptomoedas", label: "Criptomoedas" },
-    { value: "regulacao", label: "Regulação" },
-    { value: "fintechs", label: "Fintechs" },
-    { value: "gestao-risco", label: "Gestão de Risco" }
+    { value: "all", label: "Todos os Temas", icon: Filter },
+    { value: "open-banking", label: "Open Banking", icon: CreditCard },
+    { value: "pix", label: "PIX", icon: Zap },
+    { value: "criptomoedas", label: "Criptomoedas", icon: Bitcoin },
+    { value: "regulacao", label: "Regulação", icon: Scale },
+    { value: "fintechs", label: "Fintechs", icon: Smartphone },
+    { value: "gestao-risco", label: "Gestão de Risco", icon: ShieldCheck }
   ];
 
   const areas = [
-    { value: "all", label: "Todas as Áreas" },
-    { value: "contabilidade", label: "Contabilidade" },
-    { value: "juridico", label: "Jurídico" },
-    { value: "compliance", label: "Compliance" },
-    { value: "tecnologia", label: "Tecnologia" },
-    { value: "operacoes", label: "Operações" },
-    { value: "marketing", label: "Marketing" }
+    { value: "all", label: "Todas as Áreas", icon: Filter },
+    { value: "contabilidade", label: "Contabilidade", icon: Calculator },
+    { value: "juridico", label: "Jurídico", icon: Scale },
+    { value: "compliance", label: "Compliance", icon: ShieldCheck },
+    { value: "tecnologia", label: "Tecnologia", icon: Laptop },
+    { value: "operacoes", label: "Operações", icon: Settings },
+    { value: "marketing", label: "Marketing", icon: Megaphone }
   ];
 
   const authors = [
-    { value: "all", label: "Todos os Autores" },
-    { value: "maria-silva", label: "Maria Silva" },
-    { value: "joao-santos", label: "João Santos" },
-    { value: "ana-costa", label: "Ana Costa" },
-    { value: "pedro-oliveira", label: "Pedro Oliveira" },
-    { value: "carla-souza", label: "Carla Souza" },
-    { value: "roberto-lima", label: "Roberto Lima" }
+    { value: "all", label: "Todos os Autores", icon: Filter },
+    { value: "maria-silva", label: "Maria Silva", icon: User },
+    { value: "joao-santos", label: "João Santos", icon: User },
+    { value: "ana-costa", label: "Ana Costa", icon: User },
+    { value: "pedro-oliveira", label: "Pedro Oliveira", icon: User },
+    { value: "carla-souza", label: "Carla Souza", icon: User },
+    { value: "roberto-lima", label: "Roberto Lima", icon: User }
   ];
 
   const availableContent = [
@@ -339,54 +340,90 @@ export default function AgendarPublicacao() {
               <div className="grid grid-cols-4 gap-3 mb-4">
                 <div>
                   <label className="text-xs font-medium text-slate-600 mb-1.5 block">Tipo de Conteúdo</label>
-                  <select
-                    value={selectedType}
-                    onChange={(e) => setSelectedType(e.target.value)}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#B8D4E8]"
-                  >
-                    {contentTypes.map(type => (
-                      <option key={type.value} value={type.value}>{type.label}</option>
-                    ))}
-                  </select>
+                  <Select value={selectedType} onValueChange={setSelectedType}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {contentTypes.map(type => {
+                        const Icon = type.icon;
+                        return (
+                          <SelectItem key={type.value} value={type.value}>
+                            <div className="flex items-center gap-2">
+                              <Icon size={16} className="text-slate-500" />
+                              <span>{type.label}</span>
+                            </div>
+                          </SelectItem>
+                        );
+                      })}
+                    </SelectContent>
+                  </Select>
                 </div>
 
                 <div>
                   <label className="text-xs font-medium text-slate-600 mb-1.5 block">Tema do Mercado</label>
-                  <select
-                    value={selectedTheme}
-                    onChange={(e) => setSelectedTheme(e.target.value)}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C5E8D4]"
-                  >
-                    {themes.map(theme => (
-                      <option key={theme.value} value={theme.value}>{theme.label}</option>
-                    ))}
-                  </select>
+                  <Select value={selectedTheme} onValueChange={setSelectedTheme}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {themes.map(theme => {
+                        const Icon = theme.icon;
+                        return (
+                          <SelectItem key={theme.value} value={theme.value}>
+                            <div className="flex items-center gap-2">
+                              <Icon size={16} className="text-slate-500" />
+                              <span>{theme.label}</span>
+                            </div>
+                          </SelectItem>
+                        );
+                      })}
+                    </SelectContent>
+                  </Select>
                 </div>
 
                 <div>
                   <label className="text-xs font-medium text-slate-600 mb-1.5 block">Área</label>
-                  <select
-                    value={selectedArea}
-                    onChange={(e) => setSelectedArea(e.target.value)}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#D4C5E8]"
-                  >
-                    {areas.map(area => (
-                      <option key={area.value} value={area.value}>{area.label}</option>
-                    ))}
-                  </select>
+                  <Select value={selectedArea} onValueChange={setSelectedArea}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {areas.map(area => {
+                        const Icon = area.icon;
+                        return (
+                          <SelectItem key={area.value} value={area.value}>
+                            <div className="flex items-center gap-2">
+                              <Icon size={16} className="text-slate-500" />
+                              <span>{area.label}</span>
+                            </div>
+                          </SelectItem>
+                        );
+                      })}
+                    </SelectContent>
+                  </Select>
                 </div>
 
                 <div>
                   <label className="text-xs font-medium text-slate-600 mb-1.5 block">Co-Autor</label>
-                  <select
-                    value={selectedAuthor}
-                    onChange={(e) => setSelectedAuthor(e.target.value)}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#E8E0C5]"
-                  >
-                    {authors.map(author => (
-                      <option key={author.value} value={author.value}>{author.label}</option>
-                    ))}
-                  </select>
+                  <Select value={selectedAuthor} onValueChange={setSelectedAuthor}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {authors.map(author => {
+                        const Icon = author.icon;
+                        return (
+                          <SelectItem key={author.value} value={author.value}>
+                            <div className="flex items-center gap-2">
+                              <Icon size={16} className="text-slate-500" />
+                              <span>{author.label}</span>
+                            </div>
+                          </SelectItem>
+                        );
+                      })}
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
 
