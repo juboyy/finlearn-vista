@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Search, Bell, Plus, Filter, Layers, Unlock, Crown, Bookmark, FileText, CheckCircle, Building, ThumbsUp, MoreHorizontal, FileCheck, Star } from "lucide-react";
 import { Circle } from "lucide-react";
-import relatorioAnaliseDados from "@/assets/relatorio-analise-dados.png";
+import relatorioBiDashboard from "@/assets/relatorio-bi-dashboard.png";
 
 export const RelatoriosPendentes = () => {
   const [viewType, setViewType] = useState("list");
@@ -264,7 +264,7 @@ export const RelatoriosPendentes = () => {
       price: "R$ 329",
       accessType: "premium",
       rating: 4.8,
-      image: relatorioAnaliseDados,
+      image: relatorioBiDashboard,
     },
   ];
 
