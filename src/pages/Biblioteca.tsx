@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 export function Biblioteca() {
   const [showModal, setShowModal] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [statusFilter, setStatusFilter] = useState<'publicado' | 'criacao'>('publicado');
 
   const libraryItems = [
     {
@@ -381,6 +382,28 @@ export function Biblioteca() {
               <section className="bg-white rounded-xl p-4 border border-slate-200 mb-6">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2 border-r border-slate-200 pr-4">
+                      <button 
+                        onClick={() => setStatusFilter('publicado')}
+                        className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
+                          statusFilter === 'publicado' 
+                            ? 'bg-[#B8D4E8] text-slate-700' 
+                            : 'text-slate-600 hover:bg-slate-100'
+                        }`}
+                      >
+                        Publicado
+                      </button>
+                      <button 
+                        onClick={() => setStatusFilter('criacao')}
+                        className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
+                          statusFilter === 'criacao' 
+                            ? 'bg-[#B8D4E8] text-slate-700' 
+                            : 'text-slate-600 hover:bg-slate-100'
+                        }`}
+                      >
+                        Em criação
+                      </button>
+                    </div>
                     <div className="flex items-center gap-2">
                       <span className="text-sm text-slate-600">Visualizar:</span>
                       <button 
