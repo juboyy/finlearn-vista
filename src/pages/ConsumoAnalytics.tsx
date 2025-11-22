@@ -483,16 +483,53 @@ const ConsumoAnalytics = () => {
                   </div>
                 </div>
               </div>
-              <div className="h-[320px] w-full">
+              <div className="h-[360px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={metasPorCategoriaData} layout="horizontal">
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
-                    <XAxis type="number" tick={{ fill: '#6b7280', fontSize: 11 }} />
-                    <YAxis dataKey="categoria" type="category" tick={{ fill: '#6b7280', fontSize: 11 }} width={100} />
-                    <Tooltip contentStyle={{ backgroundColor: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '12px' }} />
-                    <Legend wrapperStyle={{ fontSize: '11px' }} />
-                    <Bar dataKey="meta" fill="#C9AF89" name="Meta" stackId="a" />
-                    <Bar dataKey="realizado" fill="#8AAACF" name="Realizado" stackId="a" />
+                  <BarChart 
+                    data={metasPorCategoriaData} 
+                    layout="horizontal"
+                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                    <XAxis 
+                      type="number" 
+                      tick={{ fill: '#6b7280', fontSize: 12 }} 
+                      axisLine={{ stroke: '#e5e7eb' }}
+                    />
+                    <YAxis 
+                      dataKey="categoria" 
+                      type="category" 
+                      tick={{ fill: '#6b7280', fontSize: 12 }} 
+                      width={90}
+                      axisLine={{ stroke: '#e5e7eb' }}
+                    />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'white', 
+                        border: '1px solid #e5e7eb', 
+                        borderRadius: '8px', 
+                        fontSize: '13px',
+                        padding: '10px'
+                      }} 
+                    />
+                    <Legend 
+                      wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }}
+                      iconType="square"
+                    />
+                    <Bar 
+                      dataKey="meta" 
+                      fill="#C9AF89" 
+                      name="Meta"
+                      stackId="stack"
+                      barSize={28}
+                    />
+                    <Bar 
+                      dataKey="realizado" 
+                      fill="#8AAACF" 
+                      name="Realizado"
+                      stackId="stack"
+                      barSize={28}
+                    />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
