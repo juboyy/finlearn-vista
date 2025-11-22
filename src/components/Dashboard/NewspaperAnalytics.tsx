@@ -130,6 +130,58 @@ export const NewspaperAnalytics = () => {
     
     Plotly.newPlot('hourly-distribution-chart', hourlyData, hourlyLayout, {displayModeBar: false});
 
+    // Topic Completion Correlation Chart
+    const topicCorrelationData = [
+      {
+        x: ['Mercado de Capitais', 'Regulamentação', 'Payments', 'Banking', 'Economia'],
+        y: [187, 142, 128, 96, 84],
+        name: 'Artigos Lidos',
+        type: 'bar',
+        marker: { color: '#B8D4E8' },
+        yaxis: 'y'
+      },
+      {
+        x: ['Mercado de Capitais', 'Regulamentação', 'Payments', 'Banking', 'Economia'],
+        y: [78, 82, 68, 75, 71],
+        name: 'Taxa Conclusão (%)',
+        type: 'scatter',
+        mode: 'lines+markers',
+        line: { color: '#E8C5D8', width: 3 },
+        marker: { size: 10, color: '#E8C5D8' },
+        yaxis: 'y2'
+      }
+    ];
+    
+    const topicCorrelationLayout = {
+      margin: { l: 50, r: 50, t: 20, b: 80 },
+      xaxis: { 
+        gridcolor: '#f1f5f9',
+        tickangle: -45
+      },
+      yaxis: { 
+        title: 'Número de Artigos',
+        gridcolor: '#f1f5f9',
+        side: 'left'
+      },
+      yaxis2: {
+        title: 'Taxa de Conclusão (%)',
+        overlaying: 'y',
+        side: 'right',
+        range: [0, 100]
+      },
+      plot_bgcolor: '#ffffff',
+      paper_bgcolor: '#ffffff',
+      showlegend: true,
+      legend: {
+        x: 0.5,
+        y: 1.1,
+        xanchor: 'center',
+        orientation: 'h'
+      }
+    };
+    
+    Plotly.newPlot('topic-completion-correlation-chart', topicCorrelationData, topicCorrelationLayout, {displayModeBar: false});
+
     // Monthly Comparison Chart
     const monthlyData = [
       {
@@ -619,6 +671,54 @@ export const NewspaperAnalytics = () => {
                   <div className="bg-pastel-pink h-2 rounded-full" style={{width: '12%'}}></div>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Topic Completion Correlation */}
+        <section className="bg-white rounded-xl p-6 border border-slate-200 mb-8">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h2 className="text-lg font-semibold text-slate-800">Correlação: Temas vs Taxa de Conclusão</h2>
+              <p className="text-sm text-slate-500 mt-1">Análise da relação entre volume de leitura e engajamento por tema</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-pastel-blue rounded"></div>
+                <span className="text-xs text-slate-600">Artigos</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-pastel-pink rounded"></div>
+                <span className="text-xs text-slate-600">Taxa Conclusão</span>
+              </div>
+            </div>
+          </div>
+          <div id="topic-completion-correlation-chart" className="h-96"></div>
+          
+          {/* Insights about correlation */}
+          <div className="mt-6 grid grid-cols-3 gap-4">
+            <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+              <div className="flex items-center gap-2 mb-2">
+                <i className="fas fa-arrow-up text-green-600"></i>
+                <span className="text-sm font-semibold text-slate-800">Melhor Engajamento</span>
+              </div>
+              <p className="text-xs text-slate-600">Regulamentação tem 82% de conclusão apesar de ser o 2º tema mais lido</p>
+            </div>
+            
+            <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+              <div className="flex items-center gap-2 mb-2">
+                <i className="fas fa-exclamation-triangle text-yellow-600"></i>
+                <span className="text-sm font-semibold text-slate-800">Oportunidade</span>
+              </div>
+              <p className="text-xs text-slate-600">Payments tem apenas 68% de conclusão - conteúdo pode ser muito longo</p>
+            </div>
+            
+            <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <div className="flex items-center gap-2 mb-2">
+                <i className="fas fa-chart-line text-blue-600"></i>
+                <span className="text-sm font-semibold text-slate-800">Padrão Identificado</span>
+              </div>
+              <p className="text-xs text-slate-600">Temas com mais artigos tendem a ter taxas de conclusão mais variadas</p>
             </div>
           </div>
         </section>
