@@ -265,26 +265,50 @@ const PerfilAnalytics = () => {
                   <i className="fa-solid fa-users"></i>
                 </div>
                 <div>
-                  <h2 className="text-lg font-bold text-slate-800">Crescimento Total de Leitores</h2>
-                  <p className="text-sm text-slate-500">Evolução do total de leitores mensais</p>
+                  <h2 className="text-lg font-bold text-slate-800">Seguidores vs Consumidores de conteúdo</h2>
+                  <p className="text-sm text-slate-500">Quem lê seu conteúdo: seguidores e não-seguidores</p>
                 </div>
               </div>
-              <div className="h-[280px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={readersFollowersData.map(item => ({ name: item.name, value: item.followers + item.nonFollowers }))}>
-                    <defs>
-                      <linearGradient id="colorReaders" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#AC9CC9" stopOpacity={0.3}/>
-                        <stop offset="95%" stopColor="#AC9CC9" stopOpacity={0}/>
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
-                    <XAxis dataKey="name" tick={{ fill: '#6b7280', fontSize: 11 }} />
-                    <YAxis tick={{ fill: '#6b7280', fontSize: 11 }} />
-                    <Tooltip contentStyle={{ backgroundColor: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '12px' }} />
-                    <Area type="monotone" dataKey="value" stroke="#AC9CC9" strokeWidth={3} fillOpacity={1} fill="url(#colorReaders)" />
-                  </AreaChart>
-                </ResponsiveContainer>
+              <div className="space-y-6 mt-8">
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm font-bold text-slate-700">Seguidores que Consomem Conteúdo</span>
+                    <span className="text-sm font-bold text-slate-800">2.080 / 3.320</span>
+                  </div>
+                  <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+                    <div className="h-full bg-pastel-purpleBtn rounded-full" style={{ width: '62.7%' }}></div>
+                  </div>
+                  <p className="text-xs text-slate-500 mt-2">62.7% dos seus leitores são seguidores</p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
+                    <div className="flex items-center gap-2 mb-2">
+                      <i className="fa-solid fa-user-check text-pastel-purpleText text-sm"></i>
+                      <span className="text-xs font-semibold text-slate-500">Seguidores Leitores</span>
+                    </div>
+                    <p className="text-2xl font-bold text-slate-800">2.080</p>
+                    <p className="text-xs text-slate-500 mt-1">Engajamento ativo</p>
+                  </div>
+                  <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
+                    <div className="flex items-center gap-2 mb-2">
+                      <i className="fa-solid fa-eye text-[hsl(var(--pastel-gray-dark))] text-sm"></i>
+                      <span className="text-xs font-semibold text-slate-500">Não-Seguidores</span>
+                    </div>
+                    <p className="text-2xl font-bold text-slate-800">1.240</p>
+                    <p className="text-xs text-slate-500 mt-1">Potencial de conversão</p>
+                  </div>
+                </div>
+
+                <div className="p-4 bg-pastel-purple/10 rounded-xl border border-pastel-purple/20">
+                  <div className="flex items-start gap-3">
+                    <i className="fa-solid fa-lightbulb text-pastel-purpleText mt-0.5"></i>
+                    <div>
+                      <p className="text-sm font-bold text-pastel-purpleText">Dica de Crescimento</p>
+                      <p className="text-xs text-slate-600 mt-1">Você tem 1.240 leitores não-seguidores mensais. Incentive-os a seguir seu perfil para aumentar seu alcance!</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
