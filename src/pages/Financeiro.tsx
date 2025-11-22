@@ -330,7 +330,7 @@ export default function Financeiro() {
                   <CardTitle className="text-foreground">Churn vs Novos Assinantes (Quantidade)</CardTitle>
                   <div className="text-right">
                     <p className="text-sm text-muted-foreground">Saldo Junho</p>
-                    <p className="text-2xl font-bold text-pastel-green">+42</p>
+                    <p className="text-2xl font-bold" style={{ color: 'hsl(152, 32%, 65%)' }}>+42</p>
                   </div>
                 </div>
               </CardHeader>
