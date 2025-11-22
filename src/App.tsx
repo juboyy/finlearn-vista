@@ -50,6 +50,7 @@ import CriarConteudo from "./pages/CriarConteudo";
 import NovoDocumento from "./pages/NovoDocumento";
 import EvolucaoCartaoCredito from "./pages/EvolucaoCartaoCredito";
 import LerDepois from "./pages/LerDepois";
+import Newsletter from "./pages/Newsletter";
 
 import NotFound from "./pages/NotFound";
 
@@ -110,12 +111,13 @@ const App = () => {
           <Route path="/minha-agenda/dia" element={<MinhaAgendaDia />} />
           <Route path="/estudos-academicos" element={<EstudosAcademicos />} />
           <Route path="/criar-paper" element={<CriarPaper />} />
-          <Route path="/analises" element={<Analises />} />
-           <Route path="/meus-conteudos" element={<MeusConteudos />} />
-           <Route path="/criar-conteudo" element={<CriarConteudo />} />
-           <Route path="/novo-documento" element={<NovoDocumento />} />
-           <Route path="/evolucao-cartao-credito" element={<EvolucaoCartaoCredito />} />
-           <Route path="/ler-depois" element={<LerDepois />} />
+           <Route path="/analises" element={<Analises />} />
+            <Route path="/meus-conteudos" element={<MeusConteudos />} />
+            <Route path="/criar-conteudo" element={<CriarConteudo />} />
+            <Route path="/novo-documento" element={<NovoDocumento />} />
+            <Route path="/evolucao-cartao-credito" element={<EvolucaoCartaoCredito />} />
+            <Route path="/ler-depois" element={<LerDepois />} />
+            <Route path="/newsletter" element={<Newsletter />} />
           
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
