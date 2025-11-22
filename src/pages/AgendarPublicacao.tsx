@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Calendar as CalendarIcon, Clock, FileText, Folder, Filter, X, Video, Mic, FileBarChart, BookOpen, MonitorPlay, File, CreditCard, Zap, Bitcoin, Scale, Smartphone, ShieldCheck, Calculator, Laptop, Settings, Megaphone, User, ChevronDown, Mail, MessageSquare, MessageCircle, Image, Hash, Send, DollarSign, Gift } from "lucide-react";
+import { ArrowLeft, Calendar as CalendarIcon, Clock, FileText, Folder, Filter, X, Video, Mic, FileBarChart, BookOpen, MonitorPlay, File, CreditCard, Zap, Bitcoin, Scale, Smartphone, ShieldCheck, Calculator, Laptop, Settings, Megaphone, User, ChevronDown, Mail, MessageSquare, MessageCircle, Image, Hash, Send, DollarSign, Gift, Eye } from "lucide-react";
 import { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -342,8 +342,19 @@ export default function AgendarPublicacao() {
 
             {/* Delivery Channels Selection */}
             <div className="bg-white rounded-xl border border-slate-200 p-6">
-              <h2 className="text-lg font-semibold text-slate-800 mb-4">Canais de Envio</h2>
-              <p className="text-sm text-slate-500 mb-4">Selecione os canais pelos quais deseja enviar o conteúdo</p>
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h2 className="text-lg font-semibold text-slate-800">Canais de Envio</h2>
+                  <p className="text-sm text-slate-500 mt-1">Selecione os canais pelos quais deseja enviar o conteúdo</p>
+                </div>
+                <button
+                  className="px-4 py-2 text-slate-700 rounded-lg hover:opacity-90 transition text-sm flex items-center gap-2"
+                  style={{ backgroundColor: '#D4C5E8' }}
+                >
+                  <Eye size={16} />
+                  Preview
+                </button>
+              </div>
               <div className="grid grid-cols-7 gap-3">
                 {deliveryChannels.map((channel) => {
                   const Icon = channel.icon;
