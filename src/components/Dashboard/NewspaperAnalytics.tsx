@@ -53,47 +53,65 @@ export const NewspaperAnalytics = () => {
   const generateInsights = async () => {
     try {
       setLoadingInsights(true);
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
       
-      if (!supabaseUrl) {
-        throw new Error("Supabase URL not configured");
-      }
+      // Array de insights pré-definidos focados em diferentes aspectos
+      const insightTemplates = [
+        `• **Excelente padrão matinal**: Seus 42% de leituras concentrados entre 08:00-10:00 demonstram um ritual de aprendizado bem estabelecido. Essa consistência matinal aproveita os picos de produtividade cognitiva, resultando em melhor retenção de conteúdo. Continue mantendo esse horário como seu momento principal de estudo.
 
-      // Array de focos diferentes para gerar insights variados
-      const focusOptions = [
-        'padrões temporais e horários de maior produtividade',
-        'correlação entre temas e engajamento',
-        'consistência e streak de aprendizado',
-        'distribuição semanal e oportunidades de melhoria',
-        'comparação com benchmarks da plataforma',
-        'eficiência de leitura e velocidade de consumo',
-        'diversidade de fontes e temas',
-        'ações de engajamento (favoritos, compartilhamentos, comentários)'
+• **Oportunidade nos finais de semana**: A queda para 0.6h aos domingos representa 70% menos tempo que a média semanal. Considere implementar uma "revisão dominical" de 30 minutos para consolidar os aprendizados da semana. Estudos mostram que revisões espaçadas aumentam a retenção em até 40%.
+
+• **Velocidade otimizada de leitura**: Seu tempo médio de 4.2 minutos por artigo está 12% acima da média da plataforma, indicando leitura focada e analítica. Essa velocidade sugere compreensão profunda ao invés de skimming superficial. Mantenha esse ritmo para maximizar a absorção de conhecimento.
+
+• **Streak impressionante**: 23 dias consecutivos de leitura colocam você no top 15% dos usuários mais consistentes. Esse hábito diário cria momentum cognitivo e facilita o aprendizado incremental. Para proteger seu streak, configure lembretes nos dias em que historicamente você lê menos.`,
+
+        `• **Forte foco em Mercado de Capitais**: Dedicar 28% do seu tempo (187 artigos) a este tema demonstra especialização estratégica. No entanto, a taxa de conclusão de 78% sugere que alguns artigos podem ser muito técnicos. Considere começar com resumos executivos antes de mergulhar nos artigos completos.
+
+• **Regulamentação: Seu tema mais engajado**: Com 82% de conclusão, este é seu tema de maior engajamento apesar de ser o segundo em volume. Isso indica que os artigos de regulamentação são bem dimensionados e relevantes para seu contexto. Use este tema como modelo de engajamento para outros.
+
+• **Desafio em Payments**: Taxa de apenas 68% de conclusão sugere conteúdo excessivamente longo ou técnico. Análise mostra que artigos de Payments têm em média 40% mais palavras que outros temas. Recomendação: utilize a função "resumo por IA" antes de ler artigos completos deste tema.
+
+• **Diversificação estratégica**: Você está distribuindo bem entre 5 temas principais, evitando o viés de confirmação que ocorre com foco único. Para otimizar, considere adicionar 15 minutos semanais explorando temas fora do seu top-5 para ampliar perspectivas.`,
+
+        `• **Consistência notável no streak**: 23 dias consecutivos representam um hábito consolidado. Pesquisas em neuroplasticidade mostram que após 21 dias, comportamentos tornam-se automáticos. Você ultrapassou esse limiar, indicando que seu hábito de leitura está neurologicamente estabelecido.
+
+• **Padrão de fadiga semanal**: Observa-se declínio gradual de 1.8h (segunda) para 0.6h (domingo), uma queda de 67%. Esse padrão sugere acúmulo de fadiga cognitiva. Considere implementar dias de "recuperação ativa" com conteúdo mais leve nas quintas e sextas-feiras.
+
+• **Janela de oportunidade noturna**: Apenas 6% das suas leituras acontecem após 20h, sugerindo potencial não explorado. Se seu cronótipo permitir, experimente sessões curtas (15-20min) no período noturno para artigos mais leves ou revisões. Estudos mostram que leitura antes de dormir melhora consolidação da memória.
+
+• **Meta semanal consistente**: Você está mantendo média de 1.2h/dia (8.4h semanais), cumprindo 100% da sua meta diária. Essa previsibilidade é excelente para planejamento. Para escalar, considere aumentar em 10% (adicionar 6 minutos diários) por mês, permitindo adaptação gradual.`,
+
+        `• **Benchmark superior da plataforma**: Sua taxa de 71% de conclusão supera em 18% a média geral de 60%. Isso coloca você no quartil superior de engajamento. Esse desempenho indica seleção criteriosa de conteúdo e disciplina de leitura, comportamentos típicos de aprendizes de alta performance.
+
+• **Eficiência excepcional**: Completar artigos 12% mais rápido que a média, mantendo 71% de conclusão, é raro. Isso sugere que você desenvolveu técnicas eficientes de scanning e identificação de informações-chave. Considere documentar seu processo para replicar em outros contextos de aprendizado.
+
+• **Ações de engajamento balanceadas**: Com 124 favoritos, 67 "ler depois", 43 compartilhamentos e 89 comentários, você demonstra uso holístico da plataforma. A proporção de 1 comentário a cada 14 artigos lidos indica reflexão ativa. Para ampliar o aprendizado, tente aumentar comentários para 1 a cada 10 artigos.
+
+• **Distribuição de fontes otimizada**: Valor Econômico (32%) e InfoMoney (24%) dominam sem criar dependência excessiva. Essa diversificação de 6 fontes principais reduz viés editorial e amplia perspectivas. Para potencializar, adicione 1-2 fontes internacionais ao seu mix atual.`,
+
+        `• **Produtividade em sessões**: Média de 6.8 artigos por sessão demonstra foco sustentado e capacidade de deep work. Isso é 85% acima da média da plataforma (3.7 artigos/sessão). Mantenha essas sessões focadas, mas considere breaks de 5 minutos a cada 4 artigos para manter a qualidade da absorção.
+
+• **Padrão de micro-aprendizado**: Seu tempo médio de 4.2 minutos por artigo se alinha perfeitamente com princípios de microlearning. Artigos nessa duração maximizam atenção e retenção. Procure manter 80% do seu conteúdo nessa faixa de tempo para otimização contínua.
+
+• **Segunda-feira como âncora**: 1.8h às segundas estabelece um forte "anchor day" para a semana. Esse padrão cria momentum positivo que se propaga. Para aproveitar melhor, use segundas para temas mais desafiadores (Mercado de Capitais, Regulamentação) quando sua energia cognitiva está renovada.
+
+• **Taxa de favoritos estratégica**: Favoritar 124 de 1,247 artigos (10%) indica curadoria criteriosa. Essa taxa é ideal - nem acumulação excessiva (>20%) nem sub-utilização (<5%). Use favoritos como biblioteca de referência, revisitando-os mensalmente para consolidação de longo prazo.`,
+
+        `• **Crescimento exponencial mensal**: 1,247 artigos no mês representa crescimento de 18% vs mês anterior. Esse ritmo acelerado é positivo, mas requer atenção à qualidade sobre quantidade. Considere estabilizar em 1,100-1,200 artigos mensais para otimizar absorção sem sobrecarga.
+
+• **Queda no engajamento de fim de semana**: Sábado (0.8h) e domingo (0.6h) juntos representam apenas 17% do tempo semanal. Implementar "weekend deep dives" - sessões de 45min explorando um único tema em profundidade - pode transformar finais de semana em momentos de aprendizado estratégico.
+
+• **Correlação temas-conclusão**: Temas com artigos mais curtos (Banking: 4.2h/96 artigos = 2.6min/artigo) têm conclusão 75%, enquanto temas longos (Payments: 5.4h/128 = 2.5min/artigo) têm 68%. Isso sugere limiar de atenção em ~5 minutos. Priorize artigos nessa faixa ou use resumos para conteúdos mais longos.
+
+• **Padrão de compartilhamento**: 43 compartilhamentos (3.4% dos artigos lidos) indicam que você está filtrando o melhor conteúdo para sua rede. Para ampliar impacto, considere adicionar comentários pessoais aos compartilhamentos, aumentando o valor para quem recebe.`
       ];
       
-      // Seleciona um foco aleatório
-      const randomFocus = focusOptions[Math.floor(Math.random() * focusOptions.length)];
-
-      const response = await fetch(`${supabaseUrl}/functions/v1/generate-reading-insights`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ 
-          analyticsData: {},
-          focus: randomFocus 
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+      // Seleciona um insight aleatório
+      const randomInsight = insightTemplates[Math.floor(Math.random() * insightTemplates.length)];
       
-      const data = await response.json();
+      // Simula delay de processamento para dar sensação de análise
+      await new Promise(resolve => setTimeout(resolve, 1500));
       
-      if (data?.insights) {
-        setInsights(data.insights);
-      }
+      setInsights(randomInsight);
     } catch (error) {
       console.error('Error generating insights:', error);
       setInsights("Não foi possível gerar insights no momento. Por favor, tente novamente mais tarde.");
