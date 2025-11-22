@@ -57,6 +57,7 @@ import NewsletterSettings from "./pages/NewsletterSettings";
 import RecursosAdicionais from "./pages/RecursosAdicionais";
 import Analytics from "./pages/Analytics";
 import PerfilAnalytics from "./pages/PerfilAnalytics";
+import ConsumoAnalytics from "./pages/ConsumoAnalytics";
 
 import NotFound from "./pages/NotFound";
 
@@ -129,6 +130,7 @@ const App = () => {
             <Route path="/recursos-adicionais" element={<RecursosAdicionais />} />
             <Route path="/analytics" element={<Analytics />} />
             <Route path="/perfil-analytics" element={<PerfilAnalytics />} />
+            <Route path="/consumo-analytics" element={<ConsumoAnalytics />} />
           
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
