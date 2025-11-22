@@ -1,17 +1,11 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { 
-  Bell, Shield, Monitor, Clock, Palette, Languages, Plus, Smartphone, 
-  Key, Fingerprint, Mail, Laptop, Tablet, LogOut, Calendar, CalendarDays,
-  Sun, Moon, SunMoon, MoreVertical, Newspaper, Chrome, Download
-} from "lucide-react";
+import { Bell, Shield, Monitor, Clock, Palette, Languages, Plus, Smartphone, Key, Fingerprint, Mail, Laptop, Tablet, LogOut, Calendar, CalendarDays, Sun, Moon, SunMoon, MoreVertical, Newspaper, Chrome, Download } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
 import { useNavigate } from "react-router-dom";
-
 export default function Configuracoes() {
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState("seguranca");
-  
   const securityRef = useFadeInOnScroll<HTMLElement>();
   const notificationsRef = useFadeInOnScroll<HTMLElement>();
   const sessionsRef = useFadeInOnScroll<HTMLElement>();
@@ -19,10 +13,8 @@ export default function Configuracoes() {
   const appearanceRef = useFadeInOnScroll<HTMLElement>();
   const pluginRef = useFadeInOnScroll<HTMLElement>();
   const languageRef = useFadeInOnScroll<HTMLElement>();
-
   const scrollToSection = (section: string) => {
     setActiveSection(section);
-    
     const refs = {
       seguranca: securityRef,
       notificacoes: notificationsRef,
@@ -30,27 +22,27 @@ export default function Configuracoes() {
       lembretes: remindersRef,
       aparencia: appearanceRef,
       plugin: pluginRef,
-      idioma: languageRef,
+      idioma: languageRef
     };
-
     const targetRef = refs[section as keyof typeof refs];
     if (targetRef?.current) {
       const titleElement = targetRef.current.querySelector('h2');
       if (titleElement) {
-        titleElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        titleElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
       }
     }
   };
-
   useEffect(() => {
     const observerOptions = {
       root: null,
       rootMargin: '-20% 0px -70% 0px',
       threshold: 0
     };
-
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
+      entries.forEach(entry => {
         if (entry.isIntersecting) {
           const sectionId = entry.target.getAttribute('data-section');
           if (sectionId) {
@@ -59,36 +51,47 @@ export default function Configuracoes() {
         }
       });
     };
-
     const observer = new IntersectionObserver(observerCallback, observerOptions);
-
-    const refs = [
-      { ref: securityRef, id: 'seguranca' },
-      { ref: notificationsRef, id: 'notificacoes' },
-      { ref: sessionsRef, id: 'sessoes' },
-      { ref: remindersRef, id: 'lembretes' },
-      { ref: appearanceRef, id: 'aparencia' },
-      { ref: pluginRef, id: 'plugin' },
-      { ref: languageRef, id: 'idioma' }
-    ];
-
-    refs.forEach(({ ref }) => {
+    const refs = [{
+      ref: securityRef,
+      id: 'seguranca'
+    }, {
+      ref: notificationsRef,
+      id: 'notificacoes'
+    }, {
+      ref: sessionsRef,
+      id: 'sessoes'
+    }, {
+      ref: remindersRef,
+      id: 'lembretes'
+    }, {
+      ref: appearanceRef,
+      id: 'aparencia'
+    }, {
+      ref: pluginRef,
+      id: 'plugin'
+    }, {
+      ref: languageRef,
+      id: 'idioma'
+    }];
+    refs.forEach(({
+      ref
+    }) => {
       if (ref.current) {
         observer.observe(ref.current);
       }
     });
-
     return () => {
-      refs.forEach(({ ref }) => {
+      refs.forEach(({
+        ref
+      }) => {
         if (ref.current) {
           observer.unobserve(ref.current);
         }
       });
     };
   }, []);
-
-  return (
-    <div className="flex h-screen overflow-hidden">
+  return <div className="flex h-screen overflow-hidden">
       <SidebarFix />
       
       <main className="flex-1 overflow-y-auto">
@@ -111,80 +114,31 @@ export default function Configuracoes() {
           <div className="grid grid-cols-4 gap-6 mb-8">
             <div className="col-span-1 bg-white rounded-xl border border-slate-200 p-4 h-fit sticky top-24">
               <nav className="space-y-1">
-                <button 
-                  onClick={() => scrollToSection("seguranca")}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left ${
-                    activeSection === "seguranca" 
-                      ? "bg-pastel-blue text-slate-800 font-medium" 
-                      : "text-slate-600 hover:bg-slate-100 transition"
-                  }`}
-                >
+                <button onClick={() => scrollToSection("seguranca")} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left ${activeSection === "seguranca" ? "bg-pastel-blue text-slate-800 font-medium" : "text-slate-600 hover:bg-slate-100 transition"}`}>
                   <Shield size={20} />
                   <span>Segurança</span>
                 </button>
-                <button 
-                  onClick={() => scrollToSection("notificacoes")}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left ${
-                    activeSection === "notificacoes" 
-                      ? "bg-pastel-blue text-slate-800 font-medium" 
-                      : "text-slate-600 hover:bg-slate-100 transition"
-                  }`}
-                >
+                <button onClick={() => scrollToSection("notificacoes")} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left ${activeSection === "notificacoes" ? "bg-pastel-blue text-slate-800 font-medium" : "text-slate-600 hover:bg-slate-100 transition"}`}>
                   <Bell size={20} />
                   <span>Notificações</span>
                 </button>
-                <button 
-                  onClick={() => scrollToSection("sessoes")}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left ${
-                    activeSection === "sessoes" 
-                      ? "bg-pastel-blue text-slate-800 font-medium" 
-                      : "text-slate-600 hover:bg-slate-100 transition"
-                  }`}
-                >
+                <button onClick={() => scrollToSection("sessoes")} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left ${activeSection === "sessoes" ? "bg-pastel-blue text-slate-800 font-medium" : "text-slate-600 hover:bg-slate-100 transition"}`}>
                   <Monitor size={20} />
                   <span>Sessões</span>
                 </button>
-                <button 
-                  onClick={() => scrollToSection("lembretes")}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left ${
-                    activeSection === "lembretes" 
-                      ? "bg-pastel-blue text-slate-800 font-medium" 
-                      : "text-slate-600 hover:bg-slate-100 transition"
-                  }`}
-                >
+                <button onClick={() => scrollToSection("lembretes")} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left ${activeSection === "lembretes" ? "bg-pastel-blue text-slate-800 font-medium" : "text-slate-600 hover:bg-slate-100 transition"}`}>
                   <Clock size={20} />
                   <span>Lembretes</span>
                 </button>
-                <button 
-                  onClick={() => scrollToSection("aparencia")}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left ${
-                    activeSection === "aparencia" 
-                      ? "bg-pastel-blue text-slate-800 font-medium" 
-                      : "text-slate-600 hover:bg-slate-100 transition"
-                  }`}
-                >
+                <button onClick={() => scrollToSection("aparencia")} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left ${activeSection === "aparencia" ? "bg-pastel-blue text-slate-800 font-medium" : "text-slate-600 hover:bg-slate-100 transition"}`}>
                   <Palette size={20} />
                   <span>Aparência</span>
                 </button>
-                <button 
-                  onClick={() => scrollToSection("plugin")}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left ${
-                    activeSection === "plugin" 
-                      ? "bg-pastel-blue text-slate-800 font-medium" 
-                      : "text-slate-600 hover:bg-slate-100 transition"
-                  }`}
-                >
+                <button onClick={() => scrollToSection("plugin")} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left ${activeSection === "plugin" ? "bg-pastel-blue text-slate-800 font-medium" : "text-slate-600 hover:bg-slate-100 transition"}`}>
                   <Chrome size={20} />
                   <span>Browser - Plugin</span>
                 </button>
-                <button 
-                  onClick={() => scrollToSection("idioma")}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left ${
-                    activeSection === "idioma" 
-                      ? "bg-pastel-blue text-slate-800 font-medium" 
-                      : "text-slate-600 hover:bg-slate-100 transition"
-                  }`}
-                >
+                <button onClick={() => scrollToSection("idioma")} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left ${activeSection === "idioma" ? "bg-pastel-blue text-slate-800 font-medium" : "text-slate-600 hover:bg-slate-100 transition"}`}>
                   <Languages size={20} />
                   <span>Idioma</span>
                 </button>
@@ -192,11 +146,7 @@ export default function Configuracoes() {
             </div>
 
             <div className="col-span-3 space-y-6">
-              <section 
-                ref={securityRef}
-                data-section="seguranca"
-                className="bg-white rounded-xl border border-slate-200 p-6 opacity-0"
-              >
+              <section ref={securityRef} data-section="seguranca" className="bg-white rounded-xl border border-slate-200 p-6 opacity-0">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-pastel-blue rounded-lg flex items-center justify-center">
                     <Shield className="text-slate-700" size={24} />
@@ -257,18 +207,18 @@ export default function Configuracoes() {
                 </div>
               </section>
 
-              <section 
-                ref={notificationsRef}
-                data-section="notificacoes"
-                className="bg-white rounded-xl border border-slate-200 p-6 opacity-0"
-              >
+              <section ref={notificationsRef} data-section="notificacoes" className="bg-white rounded-xl border border-slate-200 p-6 opacity-0">
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
                     <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center">
                       <Bell className="text-slate-700" size={24} />
                     </div>
                     <div>
-                      <h2 className="text-lg font-semibold text-slate-800">Notificações</h2>
+                      <h2 className="text-lg font-semibold text-slate-800">Notificações Simplificadas
+
+
+
+  </h2>
                       <p className="text-sm text-slate-500">Escolha como deseja ser notificado</p>
                     </div>
                   </div>
@@ -365,11 +315,7 @@ export default function Configuracoes() {
                 </div>
               </section>
 
-              <section 
-                ref={sessionsRef}
-                data-section="sessoes"
-                className="bg-white rounded-xl border border-slate-200 p-6 opacity-0"
-              >
+              <section ref={sessionsRef} data-section="sessoes" className="bg-white rounded-xl border border-slate-200 p-6 opacity-0">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-pastel-purple rounded-lg flex items-center justify-center">
                     <Monitor className="text-slate-700" size={24} />
@@ -442,11 +388,7 @@ export default function Configuracoes() {
                 </button>
               </section>
 
-              <section 
-                ref={remindersRef}
-                data-section="lembretes"
-                className="bg-white rounded-xl border border-slate-200 p-6 opacity-0"
-              >
+              <section ref={remindersRef} data-section="lembretes" className="bg-white rounded-xl border border-slate-200 p-6 opacity-0">
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
                     <div className="w-12 h-12 bg-pastel-yellow rounded-lg flex items-center justify-center">
@@ -529,11 +471,7 @@ export default function Configuracoes() {
                 </div>
               </section>
 
-              <section 
-                ref={appearanceRef}
-                data-section="aparencia"
-                className="bg-white rounded-xl border border-slate-200 p-6 opacity-0"
-              >
+              <section ref={appearanceRef} data-section="aparencia" className="bg-white rounded-xl border border-slate-200 p-6 opacity-0">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-pastel-pink rounded-lg flex items-center justify-center">
                     <Palette className="text-slate-700" size={24} />
@@ -565,11 +503,7 @@ export default function Configuracoes() {
                 </div>
               </section>
 
-              <section 
-                ref={pluginRef}
-                data-section="plugin"
-                className="bg-white rounded-xl border border-slate-200 p-6 opacity-0"
-              >
+              <section ref={pluginRef} data-section="plugin" className="bg-white rounded-xl border border-slate-200 p-6 opacity-0">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-pastel-purple rounded-lg flex items-center justify-center">
                     <Chrome className="text-slate-700" size={24} />
@@ -591,10 +525,7 @@ export default function Configuracoes() {
                         <p className="text-sm text-slate-600 mb-4">
                           Acesse rapidamente seus conteúdos favoritos, receba notificações em tempo real e aproveite recursos exclusivos diretamente no seu navegador.
                         </p>
-                        <button 
-                          onClick={() => navigate("/recursos-adicionais")}
-                          className="px-6 py-3 bg-pastel-purple text-slate-800 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2"
-                        >
+                        <button onClick={() => navigate("/recursos-adicionais")} className="px-6 py-3 bg-pastel-purple text-slate-800 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2">
                           <Download size={18} />
                           <span>Instalar Plugin</span>
                         </button>
@@ -626,11 +557,7 @@ export default function Configuracoes() {
                 </div>
               </section>
 
-              <section 
-                ref={languageRef}
-                data-section="idioma"
-                className="bg-white rounded-xl border border-slate-200 p-6 opacity-0"
-              >
+              <section ref={languageRef} data-section="idioma" className="bg-white rounded-xl border border-slate-200 p-6 opacity-0">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-pastel-peach rounded-lg flex items-center justify-center">
                     <Languages className="text-slate-700" size={24} />
@@ -656,6 +583,5 @@ export default function Configuracoes() {
           </div>
         </div>
       </main>
-    </div>
-  );
+    </div>;
 }
