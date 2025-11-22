@@ -453,7 +453,7 @@ export const RelatoriosPendentes = () => {
           <div className="border-b border-slate-200 bg-slate-50">
             <div className="grid grid-cols-12 gap-4 px-6 py-3 text-xs font-medium text-slate-600 uppercase tracking-wider">
               <div className="col-span-4">Relatório</div>
-              <div className="col-span-3">Categoria</div>
+              <div className="col-span-3 ml-3">Categoria</div>
               <div className="col-span-1">Páginas</div>
               <div className="col-span-1">Leituras</div>
               <div className="col-span-2">Acesso</div>
@@ -486,7 +486,7 @@ export const RelatoriosPendentes = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-span-3">
+                <div className="col-span-3 ml-3">
                   <span className={`inline-flex items-center gap-2 px-3 py-1 ${report.categoryColor} text-slate-700 rounded-full text-xs font-medium whitespace-nowrap`}>
                     <Circle className="w-1.5 h-1.5 fill-current" />
                     {report.category}
