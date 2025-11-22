@@ -246,14 +246,22 @@ export default function CriarNewsletter() {
                   <p className="text-sm text-slate-500 mt-1">Crie e gerencie suas newsletters e acompanhe seus assinantes</p>
                 </div>
               </div>
-              <button
-                onClick={() => setShowCreateModal(true)}
-                className="px-4 py-2 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
-                style={{ backgroundColor: '#D4C5E8' }}
-              >
-                <Plus size={18} className="inline mr-2" />
-                Nova Newsletter
-              </button>
+              <div className="flex items-center gap-3">
+                <button
+                  className="px-4 py-2 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
+                  style={{ backgroundColor: '#C5E8D4' }}
+                >
+                  Financeiro
+                </button>
+                <button
+                  onClick={() => setShowCreateModal(true)}
+                  className="px-4 py-2 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
+                  style={{ backgroundColor: '#D4C5E8' }}
+                >
+                  <Plus size={18} className="inline mr-2" />
+                  Nova Newsletter
+                </button>
+              </div>
             </div>
           </div>
         </header>
