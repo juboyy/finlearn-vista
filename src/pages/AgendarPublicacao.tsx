@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Calendar as CalendarIcon, Clock, FileText, Folder, Filter, X, Video, Mic, FileBarChart, BookOpen, MonitorPlay, File, CreditCard, Zap, Bitcoin, Scale, Smartphone, ShieldCheck, Calculator, Laptop, Settings, Megaphone, User, ChevronDown, Mail, MessageSquare, MessageCircle, Image } from "lucide-react";
+import { ArrowLeft, Calendar as CalendarIcon, Clock, FileText, Folder, Filter, X, Video, Mic, FileBarChart, BookOpen, MonitorPlay, File, CreditCard, Zap, Bitcoin, Scale, Smartphone, ShieldCheck, Calculator, Laptop, Settings, Megaphone, User, ChevronDown, Mail, MessageSquare, MessageCircle, Image, Hash, Send } from "lucide-react";
 import { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -32,6 +32,8 @@ export default function AgendarPublicacao() {
     { id: "whatsapp", label: "WhatsApp", icon: MessageCircle, color: "#D4C5E8" },
     { id: "rcs", label: "RCS", icon: Smartphone, color: "#E8E0C5" },
     { id: "mms", label: "MMS", icon: Image, color: "#E8C5D4" },
+    { id: "slack", label: "Slack", icon: Hash, color: "#D4B8E8" },
+    { id: "telegram", label: "Telegram", icon: Send, color: "#B8E8E0" },
   ];
 
   const folders = [
@@ -330,7 +332,7 @@ export default function AgendarPublicacao() {
             <div className="bg-white rounded-xl border border-slate-200 p-6">
               <h2 className="text-lg font-semibold text-slate-800 mb-4">Canais de Envio</h2>
               <p className="text-sm text-slate-500 mb-4">Selecione os canais pelos quais deseja enviar o conteúdo</p>
-              <div className="grid grid-cols-5 gap-3">
+              <div className="grid grid-cols-7 gap-3">
                 {deliveryChannels.map((channel) => {
                   const Icon = channel.icon;
                   const isSelected = selectedChannels.includes(channel.id);
