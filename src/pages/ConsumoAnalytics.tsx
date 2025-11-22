@@ -469,6 +469,30 @@ const ConsumoAnalytics = () => {
                   </BarChart>
                 </ResponsiveContainer>
               </div>
+              
+              <div className="mt-6 p-4 bg-gradient-to-br from-pastel-purple/10 to-pastel-blue/10 rounded-xl border border-slate-200">
+                <div className="flex items-start gap-3 mb-3">
+                  <div className="w-8 h-8 rounded-lg bg-pastel-purple flex items-center justify-center flex-shrink-0">
+                    <i className="fas fa-brain text-[hsl(var(--pastel-gray-dark))] text-sm"></i>
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-semibold text-slate-800 mb-1">Insights da IA</h3>
+                    <p className="text-xs text-slate-600 leading-relaxed">
+                      Seu desempenho está consistentemente acima da média. Você atingiu 78% das suas metas nos últimos 6 meses, 
+                      com destaque para abril onde alcançou 92% de sucesso. Continue focando em webinars e e-books, 
+                      pois são as categorias onde você mais supera as expectativas.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 text-xs">
+                  <span className="px-2 py-1 bg-pastel-green rounded-full text-slate-700 font-medium">
+                    Alta performance
+                  </span>
+                  <span className="px-2 py-1 bg-pastel-yellow rounded-full text-slate-700 font-medium">
+                    Evolução constante
+                  </span>
+                </div>
+              </div>
             </section>
 
             <section className="bg-white rounded-xl p-6 border border-slate-200">
