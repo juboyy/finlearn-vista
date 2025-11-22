@@ -6,8 +6,10 @@ import {
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
+import { useNavigate } from "react-router-dom";
 
 export default function Configuracoes() {
+  const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState("seguranca");
   
   const securityRef = useFadeInOnScroll<HTMLElement>();
@@ -589,7 +591,10 @@ export default function Configuracoes() {
                         <p className="text-sm text-slate-600 mb-4">
                           Acesse rapidamente seus conteúdos favoritos, receba notificações em tempo real e aproveite recursos exclusivos diretamente no seu navegador.
                         </p>
-                        <button className="px-6 py-3 bg-pastel-purple text-slate-800 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2">
+                        <button 
+                          onClick={() => navigate("/recursos-adicionais")}
+                          className="px-6 py-3 bg-pastel-purple text-slate-800 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2"
+                        >
                           <Download size={18} />
                           <span>Instalar Plugin</span>
                         </button>
