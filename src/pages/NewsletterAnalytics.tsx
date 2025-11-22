@@ -154,6 +154,8 @@ export default function NewsletterAnalytics() {
         marker: {
           colors: ['#B8D4E8', '#D4C5E8', '#C5E8D4', '#E8E0C5']
         },
+        textinfo: 'none',
+        hovertemplate: '<b>%{label}</b><br>%{value}%<extra></extra>',
         hole: 0.4
       }];
 
