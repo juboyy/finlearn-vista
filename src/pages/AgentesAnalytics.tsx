@@ -428,41 +428,61 @@ const AgentesAnalytics = () => {
             <section className="bg-white rounded-xl p-6 border border-slate-200">
               <h2 className="text-lg font-semibold text-slate-800 mb-6">Métricas de Engajamento</h2>
               <div className="space-y-6">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="p-4 bg-pastel-blue rounded-lg">
-                    <div className="flex items-center gap-2 mb-2">
-                      <i className="fas fa-redo text-slate-700"></i>
-                      <span className="text-xs font-medium text-slate-600">Taxa de Retorno</span>
+                <div className="grid grid-cols-2 gap-5">
+                  <div className="group relative p-6 bg-gradient-to-br from-slate-50 to-slate-100/50 rounded-xl border border-slate-200 hover:border-slate-300 transition-all duration-300 hover:shadow-lg">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="w-12 h-12 rounded-xl bg-white border border-slate-200 flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-300">
+                        <i className="fas fa-redo text-slate-700 text-lg"></i>
+                      </div>
+                      <div className="absolute top-4 right-4 w-16 h-16 rounded-full bg-slate-200/30 blur-2xl"></div>
                     </div>
-                    <p className="text-2xl font-bold text-slate-800">78%</p>
-                    <p className="text-xs text-slate-600 mt-1">Usuários que retornam</p>
+                    <div className="relative">
+                      <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Taxa de Retorno</p>
+                      <p className="text-4xl font-bold text-slate-800 mb-1">78%</p>
+                      <p className="text-xs text-slate-600">Usuários que retornam</p>
+                    </div>
                   </div>
 
-                  <div className="p-4 bg-pastel-green rounded-lg">
-                    <div className="flex items-center gap-2 mb-2">
-                      <i className="fas fa-exchange-alt text-slate-700"></i>
-                      <span className="text-xs font-medium text-slate-600">Sessões Médias</span>
+                  <div className="group relative p-6 bg-gradient-to-br from-slate-50 to-slate-100/50 rounded-xl border border-slate-200 hover:border-slate-300 transition-all duration-300 hover:shadow-lg">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="w-12 h-12 rounded-xl bg-white border border-slate-200 flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-300">
+                        <i className="fas fa-exchange-alt text-slate-700 text-lg"></i>
+                      </div>
+                      <div className="absolute top-4 right-4 w-16 h-16 rounded-full bg-slate-200/30 blur-2xl"></div>
                     </div>
-                    <p className="text-2xl font-bold text-slate-800">4.2</p>
-                    <p className="text-xs text-slate-600 mt-1">Por usuário/dia</p>
+                    <div className="relative">
+                      <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Sessões Médias</p>
+                      <p className="text-4xl font-bold text-slate-800 mb-1">4.2</p>
+                      <p className="text-xs text-slate-600">Por usuário/dia</p>
+                    </div>
                   </div>
 
-                  <div className="p-4 bg-pastel-purple rounded-lg">
-                    <div className="flex items-center gap-2 mb-2">
-                      <i className="fas fa-comments text-slate-700"></i>
-                      <span className="text-xs font-medium text-slate-600">Mensagens/Sessão</span>
+                  <div className="group relative p-6 bg-gradient-to-br from-slate-50 to-slate-100/50 rounded-xl border border-slate-200 hover:border-slate-300 transition-all duration-300 hover:shadow-lg">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="w-12 h-12 rounded-xl bg-white border border-slate-200 flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-300">
+                        <i className="fas fa-comments text-slate-700 text-lg"></i>
+                      </div>
+                      <div className="absolute top-4 right-4 w-16 h-16 rounded-full bg-slate-200/30 blur-2xl"></div>
                     </div>
-                    <p className="text-2xl font-bold text-slate-800">8.5</p>
-                    <p className="text-xs text-slate-600 mt-1">Interações médias</p>
+                    <div className="relative">
+                      <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Mensagens/Sessão</p>
+                      <p className="text-4xl font-bold text-slate-800 mb-1">8.5</p>
+                      <p className="text-xs text-slate-600">Interações médias</p>
+                    </div>
                   </div>
 
-                  <div className="p-4 bg-pastel-yellow rounded-lg">
-                    <div className="flex items-center gap-2 mb-2">
-                      <i className="fas fa-check-circle text-slate-700"></i>
-                      <span className="text-xs font-medium text-slate-600">Resolução</span>
+                  <div className="group relative p-6 bg-gradient-to-br from-slate-50 to-slate-100/50 rounded-xl border border-slate-200 hover:border-slate-300 transition-all duration-300 hover:shadow-lg">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="w-12 h-12 rounded-xl bg-white border border-slate-200 flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-300">
+                        <i className="fas fa-check-circle text-slate-700 text-lg"></i>
+                      </div>
+                      <div className="absolute top-4 right-4 w-16 h-16 rounded-full bg-slate-200/30 blur-2xl"></div>
                     </div>
-                    <p className="text-2xl font-bold text-slate-800">94%</p>
-                    <p className="text-xs text-slate-600 mt-1">Consultas resolvidas</p>
+                    <div className="relative">
+                      <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Resolução</p>
+                      <p className="text-4xl font-bold text-slate-800 mb-1">94%</p>
+                      <p className="text-xs text-slate-600">Consultas resolvidas</p>
+                    </div>
                   </div>
                 </div>
 
