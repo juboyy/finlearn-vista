@@ -1,7 +1,8 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Calendar as CalendarIcon, Clock, FileText, Folder, Filter, X, Video, Mic, FileBarChart, BookOpen, MonitorPlay, File, CreditCard, Zap, Bitcoin, Scale, Smartphone, ShieldCheck, Calculator, Laptop, Settings, Megaphone, User, ChevronDown, Mail, MessageSquare, MessageCircle, Image, Hash, Send, DollarSign, Gift, Eye } from "lucide-react";
+import { ArrowLeft, Calendar as CalendarIcon, Clock, FileText, Folder, Filter, X, Video, Mic, FileBarChart, BookOpen, MonitorPlay, File, CreditCard, Zap, Bitcoin, Scale, Smartphone, ShieldCheck, Calculator, Laptop, Settings, Megaphone, User, ChevronDown, Mail, MessageSquare, MessageCircle, Image, Hash, Send, DollarSign, Gift, Eye, ExternalLink } from "lucide-react";
 import { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -25,6 +26,7 @@ export default function AgendarPublicacao() {
   const [selectedArea, setSelectedArea] = useState<string>("all");
   const [selectedAuthor, setSelectedAuthor] = useState<string>("all");
   const [selectedChannels, setSelectedChannels] = useState<string[]>(["email"]);
+  const [showPreview, setShowPreview] = useState(false);
 
   const deliveryChannels = [
     { id: "email", label: "Email", icon: Mail, color: "#B8D4E8" },
@@ -348,6 +350,7 @@ export default function AgendarPublicacao() {
                   <p className="text-sm text-slate-500 mt-1">Selecione os canais pelos quais deseja enviar o conteúdo</p>
                 </div>
                 <button
+                  onClick={() => setShowPreview(true)}
                   className="px-4 py-2 text-slate-700 rounded-lg hover:opacity-90 transition text-sm flex items-center gap-2"
                   style={{ backgroundColor: '#D4C5E8' }}
                 >
@@ -666,6 +669,289 @@ export default function AgendarPublicacao() {
         </div>
         </div>
       </main>
+
+      {/* Preview Modal */}
+      <Dialog open={showPreview} onOpenChange={setShowPreview}>
+        <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-semibold">Preview das Mensagens</DialogTitle>
+          </DialogHeader>
+
+          {/* Selected Channels Display */}
+          <div className="mb-6">
+            <h3 className="text-sm font-medium text-slate-700 mb-3">Canais Selecionados</h3>
+            <div className="flex flex-wrap gap-2">
+              {selectedChannels.map((channelId) => {
+                const channel = deliveryChannels.find(c => c.id === channelId);
+                if (!channel) return null;
+                const Icon = channel.icon;
+                return (
+                  <div
+                    key={channelId}
+                    className="px-3 py-1.5 rounded-lg flex items-center gap-2 text-sm text-slate-700"
+                    style={{ backgroundColor: channel.color }}
+                  >
+                    <Icon size={14} />
+                    {channel.label}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Preview Content */}
+          <div className="space-y-6">
+            {/* Email Preview */}
+            {selectedChannels.includes("email") && (
+              <div className="border border-slate-200 rounded-lg overflow-hidden">
+                <div className="bg-slate-100 px-4 py-2 border-b border-slate-200 flex items-center gap-2">
+                  <Mail size={16} className="text-slate-600" />
+                  <span className="text-sm font-medium text-slate-700">Email</span>
+                </div>
+                <div className="p-6 bg-white">
+                  {/* Email Header */}
+                  <div className="mb-4 pb-4 border-b border-slate-200">
+                    <h2 className="text-xl font-bold text-slate-800 mb-2">Seus Conteúdos Desta Semana</h2>
+                    <p className="text-sm text-slate-600">Confira os artigos selecionados para você</p>
+                  </div>
+
+                  {/* Articles */}
+                  <div className="space-y-4">
+                    {filteredContent.slice(0, 3).map((content, idx) => (
+                      <div key={content.id} className="flex gap-4 pb-4 border-b border-slate-100">
+                        <img 
+                          src={`https://images.unsplash.com/photo-${1550000000000 + idx}?w=200&h=150&fit=crop`}
+                          alt={content.title}
+                          className="w-32 h-24 object-cover rounded"
+                        />
+                        <div className="flex-1">
+                          <h3 className="font-semibold text-slate-800 mb-1">{content.title}</h3>
+                          <p className="text-sm text-slate-600 mb-2">{content.author} • {content.type}</p>
+                          <a href="#" className="text-sm text-blue-600 hover:underline flex items-center gap-1">
+                            Ler artigo <ExternalLink size={12} />
+                          </a>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-6">
+                    <button className="w-full py-3 rounded text-white font-medium" style={{ backgroundColor: '#B8D4E8', color: '#334155' }}>
+                      Ver Todos os Artigos
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* SMS Preview */}
+            {selectedChannels.includes("sms") && (
+              <div className="border border-slate-200 rounded-lg overflow-hidden">
+                <div className="bg-slate-100 px-4 py-2 border-b border-slate-200 flex items-center gap-2">
+                  <MessageSquare size={16} className="text-slate-600" />
+                  <span className="text-sm font-medium text-slate-700">SMS</span>
+                </div>
+                <div className="p-6 bg-white">
+                  <div className="max-w-md mx-auto bg-slate-50 rounded-lg p-4 border border-slate-200">
+                    <p className="text-sm text-slate-800 mb-2">
+                      <strong>Novos conteúdos!</strong>
+                    </p>
+                    {filteredContent.slice(0, 3).map((content, idx) => (
+                      <p key={content.id} className="text-sm text-slate-700 mb-1">
+                        {idx + 1}. {content.title}
+                      </p>
+                    ))}
+                    <p className="text-sm text-blue-600 mt-3">
+                      Acesse: lovable.app/content
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* WhatsApp Preview */}
+            {selectedChannels.includes("whatsapp") && (
+              <div className="border border-slate-200 rounded-lg overflow-hidden">
+                <div className="bg-slate-100 px-4 py-2 border-b border-slate-200 flex items-center gap-2">
+                  <MessageCircle size={16} className="text-slate-600" />
+                  <span className="text-sm font-medium text-slate-700">WhatsApp</span>
+                </div>
+                <div className="p-6" style={{ backgroundColor: '#E5DDD5' }}>
+                  <div className="max-w-md ml-auto">
+                    <div className="bg-white rounded-lg shadow-sm p-4 mb-2">
+                      <p className="text-sm font-semibold text-slate-800 mb-2">📚 Seus Conteúdos da Semana</p>
+                      {filteredContent.slice(0, 3).map((content) => (
+                        <div key={content.id} className="mb-3 pb-3 border-b border-slate-100 last:border-0">
+                          <img 
+                            src={`https://images.unsplash.com/photo-${1550000000000 + content.id}?w=300&h=200&fit=crop`}
+                            alt={content.title}
+                            className="w-full h-32 object-cover rounded mb-2"
+                          />
+                          <p className="text-sm font-medium text-slate-800">{content.title}</p>
+                          <p className="text-xs text-slate-600 mt-1">{content.author}</p>
+                        </div>
+                      ))}
+                      <button className="w-full mt-2 py-2 bg-green-500 text-white rounded text-sm font-medium">
+                        Ver Todos os Artigos
+                      </button>
+                    </div>
+                    <p className="text-xs text-slate-500 text-right">Agora</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* RCS Preview */}
+            {selectedChannels.includes("rcs") && (
+              <div className="border border-slate-200 rounded-lg overflow-hidden">
+                <div className="bg-slate-100 px-4 py-2 border-b border-slate-200 flex items-center gap-2">
+                  <Smartphone size={16} className="text-slate-600" />
+                  <span className="text-sm font-medium text-slate-700">RCS</span>
+                </div>
+                <div className="p-6 bg-gradient-to-b from-slate-50 to-white">
+                  <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+                    <div className="p-4 border-b border-slate-200">
+                      <h3 className="font-semibold text-slate-800">Conteúdos em Destaque</h3>
+                    </div>
+                    <div className="p-4 space-y-3">
+                      {filteredContent.slice(0, 3).map((content) => (
+                        <div key={content.id} className="flex gap-3 p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition">
+                          <img 
+                            src={`https://images.unsplash.com/photo-${1550000000000 + content.id}?w=100&h=100&fit=crop`}
+                            alt={content.title}
+                            className="w-16 h-16 object-cover rounded"
+                          />
+                          <div className="flex-1">
+                            <p className="text-sm font-medium text-slate-800 line-clamp-2">{content.title}</p>
+                            <p className="text-xs text-slate-600 mt-1">{content.type}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="p-4 border-t border-slate-200">
+                      <button className="w-full py-2 bg-blue-600 text-white rounded font-medium text-sm">
+                        Acessar Conteúdos
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* MMS Preview */}
+            {selectedChannels.includes("mms") && (
+              <div className="border border-slate-200 rounded-lg overflow-hidden">
+                <div className="bg-slate-100 px-4 py-2 border-b border-slate-200 flex items-center gap-2">
+                  <Image size={16} className="text-slate-600" />
+                  <span className="text-sm font-medium text-slate-700">MMS</span>
+                </div>
+                <div className="p-6 bg-white">
+                  <div className="max-w-md mx-auto space-y-3">
+                    {filteredContent.slice(0, 3).map((content) => (
+                      <div key={content.id} className="bg-slate-50 rounded-lg overflow-hidden border border-slate-200">
+                        <img 
+                          src={`https://images.unsplash.com/photo-${1550000000000 + content.id}?w=400&h=250&fit=crop`}
+                          alt={content.title}
+                          className="w-full h-40 object-cover"
+                        />
+                        <div className="p-3">
+                          <p className="text-sm font-medium text-slate-800">{content.title}</p>
+                          <p className="text-xs text-slate-600 mt-1">{content.author} • {content.type}</p>
+                          <p className="text-xs text-blue-600 mt-2">lovable.app/read/{content.id}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Slack Preview */}
+            {selectedChannels.includes("slack") && (
+              <div className="border border-slate-200 rounded-lg overflow-hidden">
+                <div className="bg-slate-100 px-4 py-2 border-b border-slate-200 flex items-center gap-2">
+                  <Hash size={16} className="text-slate-600" />
+                  <span className="text-sm font-medium text-slate-700">Slack</span>
+                </div>
+                <div className="p-6 bg-white">
+                  <div className="border-l-4 border-purple-500 pl-4 py-2">
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="w-8 h-8 rounded bg-purple-100 flex items-center justify-center">
+                        <FileText size={16} className="text-purple-600" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-slate-800">Conteúdos Bot</p>
+                        <p className="text-xs text-slate-500">Agora</p>
+                      </div>
+                    </div>
+                    <p className="text-sm text-slate-800 mb-3">
+                      📋 <strong>Novos conteúdos disponíveis:</strong>
+                    </p>
+                    <div className="space-y-2 bg-slate-50 rounded p-3">
+                      {filteredContent.slice(0, 3).map((content, idx) => (
+                        <div key={content.id} className="pb-2 border-b border-slate-200 last:border-0">
+                          <p className="text-sm font-medium text-slate-800">{idx + 1}. {content.title}</p>
+                          <p className="text-xs text-slate-600">{content.author} • {content.type}</p>
+                          <a href="#" className="text-xs text-blue-600 hover:underline">Ver artigo →</a>
+                        </div>
+                      ))}
+                    </div>
+                    <button className="mt-3 px-4 py-2 bg-purple-600 text-white rounded text-sm font-medium hover:bg-purple-700 transition">
+                      Ver Todos
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Telegram Preview */}
+            {selectedChannels.includes("telegram") && (
+              <div className="border border-slate-200 rounded-lg overflow-hidden">
+                <div className="bg-slate-100 px-4 py-2 border-b border-slate-200 flex items-center gap-2">
+                  <Send size={16} className="text-slate-600" />
+                  <span className="text-sm font-medium text-slate-700">Telegram</span>
+                </div>
+                <div className="p-6 bg-gradient-to-b from-blue-50 to-white">
+                  <div className="max-w-md mx-auto">
+                    <div className="bg-white rounded-xl shadow-sm p-4 mb-2">
+                      <div className="flex items-center gap-2 mb-3">
+                        <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">
+                          C
+                        </div>
+                        <div>
+                          <p className="font-semibold text-slate-800">Conteúdos Channel</p>
+                          <p className="text-xs text-slate-500">Canal verificado</p>
+                        </div>
+                      </div>
+                      <p className="text-sm text-slate-800 mb-3">
+                        🎯 <strong>Destaques da Semana</strong>
+                      </p>
+                      {filteredContent.slice(0, 3).map((content) => (
+                        <div key={content.id} className="mb-3">
+                          <img 
+                            src={`https://images.unsplash.com/photo-${1550000000000 + content.id}?w=400&h=200&fit=crop`}
+                            alt={content.title}
+                            className="w-full h-32 object-cover rounded mb-2"
+                          />
+                          <p className="text-sm font-medium text-slate-800">{content.title}</p>
+                          <p className="text-xs text-slate-600 mt-1">{content.author}</p>
+                          <a href="#" className="text-sm text-blue-600 hover:underline inline-flex items-center gap-1 mt-1">
+                            Ler mais <ExternalLink size={12} />
+                          </a>
+                        </div>
+                      ))}
+                      <div className="mt-4 pt-3 border-t border-slate-200 flex justify-between items-center text-xs text-slate-500">
+                        <span>3.2K visualizações</span>
+                        <span>Hoje às {scheduleTime}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
