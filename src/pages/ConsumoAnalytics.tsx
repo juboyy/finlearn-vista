@@ -94,6 +94,23 @@ const ConsumoAnalytics = () => {
     { name: 'Jun', ibov: 108, petr4: 54 }
   ];
 
+  const metasConsumoData = [
+    { name: 'Jan', atingidas: 8, naoAtingidas: 3 },
+    { name: 'Fev', atingidas: 10, naoAtingidas: 2 },
+    { name: 'Mar', atingidas: 7, naoAtingidas: 4 },
+    { name: 'Abr', atingidas: 12, naoAtingidas: 1 },
+    { name: 'Mai', atingidas: 11, naoAtingidas: 2 },
+    { name: 'Jun', atingidas: 9, naoAtingidas: 3 }
+  ];
+
+  const metasPorCategoriaData = [
+    { categoria: 'Vídeos', meta: 20, realizado: 18 },
+    { categoria: 'Artigos', meta: 15, realizado: 17 },
+    { categoria: 'E-books', meta: 5, realizado: 4 },
+    { categoria: 'Webinars', meta: 8, realizado: 10 },
+    { categoria: 'Cursos', meta: 3, realizado: 3 }
+  ];
+
   const knowledgeAreas = [
     { name: 'Análise Técnica', percentage: 85, color: 'bg-pastel-blue' },
     { name: 'Renda Fixa', percentage: 72, color: 'bg-pastel-green' },
@@ -420,6 +437,62 @@ const ConsumoAnalytics = () => {
                     <Legend wrapperStyle={{ fontSize: '11px' }} />
                     <Bar dataKey="voce" fill="#8AAACF" name="Você" radius={[8, 8, 0, 0]} />
                     <Bar dataKey="media" fill="#C9AF89" name="Média da Plataforma" radius={[8, 8, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </section>
+          </div>
+
+          <div className="grid grid-cols-2 gap-6">
+            <section className="bg-white rounded-xl p-6 border border-slate-200">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-pastel-purple flex items-center justify-center">
+                    <i className="fas fa-bullseye text-[hsl(var(--pastel-gray-dark))]"></i>
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-semibold text-slate-800">Metas de Consumo Mensal</h2>
+                    <p className="text-sm text-slate-500">Atingidas vs. Não Atingidas</p>
+                  </div>
+                </div>
+              </div>
+              <div className="h-[320px] w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={metasConsumoData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+                    <XAxis dataKey="name" tick={{ fill: '#6b7280', fontSize: 11 }} />
+                    <YAxis tick={{ fill: '#6b7280', fontSize: 11 }} label={{ value: 'Quantidade', angle: -90, position: 'insideLeft', style: { fontSize: 11, fill: '#6b7280' } }} />
+                    <Tooltip contentStyle={{ backgroundColor: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '12px' }} />
+                    <Legend wrapperStyle={{ fontSize: '11px' }} />
+                    <Bar dataKey="atingidas" fill="#8EBC9F" name="Metas Atingidas" radius={[8, 8, 0, 0]} stackId="a" />
+                    <Bar dataKey="naoAtingidas" fill="#CC99A9" name="Não Atingidas" radius={[8, 8, 0, 0]} stackId="a" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </section>
+
+            <section className="bg-white rounded-xl p-6 border border-slate-200">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-pastel-blue flex items-center justify-center">
+                    <i className="fas fa-chart-line text-[hsl(var(--pastel-gray-dark))]"></i>
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-semibold text-slate-800">Progresso por Categoria</h2>
+                    <p className="text-sm text-slate-500">Meta vs. Realizado</p>
+                  </div>
+                </div>
+              </div>
+              <div className="h-[320px] w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={metasPorCategoriaData} layout="horizontal">
+                    <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+                    <XAxis type="number" tick={{ fill: '#6b7280', fontSize: 11 }} />
+                    <YAxis dataKey="categoria" type="category" tick={{ fill: '#6b7280', fontSize: 11 }} width={80} />
+                    <Tooltip contentStyle={{ backgroundColor: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '12px' }} />
+                    <Legend wrapperStyle={{ fontSize: '11px' }} />
+                    <Bar dataKey="meta" fill="#C9AF89" name="Meta" radius={[0, 8, 8, 0]} />
+                    <Bar dataKey="realizado" fill="#8AAACF" name="Realizado" radius={[0, 8, 8, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
