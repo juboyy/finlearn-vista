@@ -486,16 +486,18 @@ const AgentesAnalytics = () => {
                   </div>
                 </div>
 
-                <div className="h-[200px] w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={engagementTrendData}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
-                      <XAxis dataKey="name" tick={{ fill: '#6b7280', fontSize: 10 }} />
-                      <YAxis tick={{ fill: '#6b7280', fontSize: 10 }} domain={[65, 85]} />
-                      <Tooltip contentStyle={{ backgroundColor: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '12px' }} />
-                      <Line type="monotone" dataKey="value" stroke="#AC9CC9" strokeWidth={2} fill="#AC9CC9" fillOpacity={0.1} />
-                    </LineChart>
-                  </ResponsiveContainer>
+                <div className="mt-10 px-8">
+                  <div className="h-[200px] w-full max-w-4xl mx-auto">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart data={engagementTrendData}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+                        <XAxis dataKey="name" tick={{ fill: '#6b7280', fontSize: 10 }} />
+                        <YAxis tick={{ fill: '#6b7280', fontSize: 10 }} domain={[65, 85]} />
+                        <Tooltip contentStyle={{ backgroundColor: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '12px' }} />
+                        <Line type="monotone" dataKey="value" stroke="#AC9CC9" strokeWidth={2} fill="#AC9CC9" fillOpacity={0.1} />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </div>
                 </div>
               </div>
             </section>
