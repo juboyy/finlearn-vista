@@ -400,7 +400,7 @@ const AgentesAnalytics = () => {
 
           {/* Consultas Mais Frequentes e Métricas de Engajamento */}
           <div className="grid grid-cols-2 gap-6 mb-8">
-            <div className="space-y-6">
+            <div className="flex flex-col space-y-6">
               <section className="bg-white rounded-xl p-6 border border-slate-200">
                 <h2 className="text-lg font-semibold text-slate-800 mb-6">Consultas Mais Frequentes</h2>
                 <div className="space-y-4">
@@ -426,7 +426,7 @@ const AgentesAnalytics = () => {
                 </div>
               </section>
 
-              <section className="bg-white rounded-xl p-6 border border-slate-200">
+              <section className="flex-1 bg-white rounded-xl p-6 border border-slate-200">
                 <h2 className="text-lg font-semibold text-slate-800 mb-6">Evolução do Engajamento</h2>
                 <div className="h-[280px] w-full">
                   <ResponsiveContainer width="100%" height="100%">
@@ -442,7 +442,7 @@ const AgentesAnalytics = () => {
               </section>
             </div>
 
-            <div className="space-y-6">
+            <div className="flex flex-col space-y-6">
               <section className="bg-white rounded-xl p-6 border border-slate-200">
                 <h2 className="text-lg font-semibold text-slate-800 mb-6">Métricas de Engajamento</h2>
                 <div className="grid grid-cols-2 gap-5">
@@ -504,7 +504,7 @@ const AgentesAnalytics = () => {
                 </div>
               </section>
 
-              <section className="bg-white rounded-xl p-6 border border-slate-200">
+              <section className="flex-1 bg-white rounded-xl p-6 border border-slate-200">
                 <h2 className="text-lg font-semibold text-slate-800 mb-4">Sobre os Agentes IA</h2>
                 <div className="space-y-4">
                   <div className="p-4 bg-gradient-to-br from-slate-50 to-slate-100/50 rounded-lg border border-slate-200">
