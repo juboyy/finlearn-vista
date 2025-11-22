@@ -1346,48 +1346,48 @@ export const NewspaperAnalytics = () => {
             <div className="p-6 border border-slate-200 rounded-lg">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-semibold text-slate-800">Meta Diária</h3>
-                <span className="text-2xl font-bold text-green-600">100%</span>
+                <span className="text-2xl font-bold text-pastel-green">100%</span>
               </div>
               <div className="w-full bg-slate-100 rounded-full h-3 mb-3">
-                <div className="bg-green-500 h-3 rounded-full" style={{
+                <div className="bg-pastel-green h-3 rounded-full" style={{
               width: '100%'
             }}></div>
               </div>
               <div className="flex items-center justify-between text-sm">
-                <span className="text-slate-600">5 de 5 artigos</span>
-                <span className="text-green-600 font-medium"><i className="fas fa-check-circle mr-1"></i>Completa</span>
+                <span className="text-pastel-gray-dark">5 de 5 artigos</span>
+                <span className="text-pastel-green font-medium"><i className="fas fa-check-circle mr-1"></i>Completa</span>
               </div>
             </div>
 
             <div className="p-6 border border-slate-200 rounded-lg">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-semibold text-slate-800">Meta Semanal</h3>
-                <span className="text-2xl font-bold text-blue-600">85%</span>
+                <span className="text-2xl font-bold text-pastel-blue">85%</span>
               </div>
               <div className="w-full bg-slate-100 rounded-full h-3 mb-3">
-                <div className="bg-blue-500 h-3 rounded-full" style={{
+                <div className="bg-pastel-blue h-3 rounded-full" style={{
               width: '85%'
             }}></div>
               </div>
               <div className="flex items-center justify-between text-sm">
-                <span className="text-slate-600">34 de 40 artigos</span>
-                <span className="text-blue-600 font-medium">Faltam 6</span>
+                <span className="text-pastel-gray-dark">34 de 40 artigos</span>
+                <span className="text-pastel-blue font-medium">Faltam 6</span>
               </div>
             </div>
 
             <div className="p-6 border border-slate-200 rounded-lg">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-semibold text-slate-800">Meta Mensal</h3>
-                <span className="text-2xl font-bold text-purple-600">72%</span>
+                <span className="text-2xl font-bold text-pastel-purple">72%</span>
               </div>
               <div className="w-full bg-slate-100 rounded-full h-3 mb-3">
-                <div className="bg-purple-500 h-3 rounded-full" style={{
+                <div className="bg-pastel-purple h-3 rounded-full" style={{
               width: '72%'
             }}></div>
               </div>
               <div className="flex items-center justify-between text-sm">
-                <span className="text-slate-600">115 de 160 artigos</span>
-                <span className="text-purple-600 font-medium">Faltam 45</span>
+                <span className="text-pastel-gray-dark">115 de 160 artigos</span>
+                <span className="text-pastel-purple font-medium">Faltam 45</span>
               </div>
             </div>
           </div>
