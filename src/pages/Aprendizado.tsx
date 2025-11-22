@@ -162,6 +162,7 @@ const Aprendizado = () => {
   const [filterSpecialty, setFilterSpecialty] = useState("Todas especialidades");
   const [videoCallOpen, setVideoCallOpen] = useState(false);
   const [selectedAgent, setSelectedAgent] = useState<{ name: string; avatar: string } | null>(null);
+  const [showHistorico, setShowHistorico] = useState(false);
   const navigate = useNavigate();
 
   const handleVideoCall = (agentName: string, agentAvatar: string) => {
@@ -355,7 +356,10 @@ const Aprendizado = () => {
           </div>
         </header>
 
-        <MenutabbarFix activeTab={activeTab} setActiveTab={setActiveTab} />
+        <MenutabbarFix activeTab={activeTab} setActiveTab={(tab) => {
+          setActiveTab(tab);
+          setShowHistorico(false);
+        }} />
 
         <div className="flex-1 p-8 pb-32">
           {activeTab === 'todos' && <>
@@ -3337,7 +3341,24 @@ const Aprendizado = () => {
 
           {activeTab === 'analises'}
 
-          {activeTab === 'documentos' && <HistoricoDocumentos />}
+          {activeTab === 'documentos' && !showHistorico && (
+            <div className="text-center py-16">
+              <div className="w-20 h-20 bg-pastel-purple rounded-full flex items-center justify-center mx-auto mb-4">
+                <FileText className="text-3xl text-slate-700" size={48} />
+              </div>
+              <h3 className="text-xl font-semibold text-slate-800 mb-2">Documentos</h3>
+              <p className="text-slate-600 mb-6">Gerencie e visualize seus documentos financeiros</p>
+              <button 
+                onClick={() => setShowHistorico(true)}
+                className="px-6 py-3 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
+              >
+                <Clock className="w-4 h-4 inline mr-2" />
+                Histórico
+              </button>
+            </div>
+          )}
+
+          {activeTab === 'documentos' && showHistorico && <HistoricoDocumentos />}
 
           {activeTab === 'estudos' && <>
               <div className="grid grid-cols-4 gap-6 mb-8">
