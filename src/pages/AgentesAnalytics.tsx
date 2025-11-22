@@ -124,7 +124,7 @@ const AgentesAnalytics = () => {
               <div key={idx} className="bg-white rounded-xl p-6 border border-slate-200">
                 <div className="flex items-center justify-between mb-4">
                   <div className={`w-12 h-12 ${stat.color} rounded-lg flex items-center justify-center`}>
-                    <i className={`fas ${stat.icon} text-[hsl(var(--pastel-gray-dark))] text-xl`}></i>
+                    <i className={`fas ${stat.icon} text-slate-700 text-xl`}></i>
                   </div>
                   <span className={`text-xs font-medium ${stat.changeType === 'green' ? 'text-green-600 bg-green-50' : stat.changeType === 'blue' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 bg-slate-50'} px-2 py-1 rounded`}>
                     {stat.change}
@@ -215,13 +215,13 @@ const AgentesAnalytics = () => {
                 { name: 'Consultor de Investimentos', desc: 'Estratégias e alocação', icon: 'fa-briefcase', color: 'bg-pastel-purple', interactions: 298, time: '5.1 min', satisfaction: '97%', usage: 24 },
                 { name: 'Calculadora Financeira', desc: 'Cálculos e simulações', icon: 'fa-calculator', color: 'bg-pastel-yellow', interactions: 150, time: '2.1 min', satisfaction: '92%', usage: 12 },
                 { name: 'Especialista em Cartões', desc: 'Produtos e bandeiras', icon: 'fa-credit-card', color: 'bg-pastel-pink', interactions: 243, time: '3.8 min', satisfaction: '96%', usage: 19 },
-                { name: 'Especialista em SCD', desc: 'Sistema de Crédito Direto', icon: 'fa-file-invoice-dollar', color: 'bg-pastel-peach', interactions: 187, time: '4.2 min', satisfaction: '94%', usage: 15 }
+                { name: 'Especialista em SCD', desc: 'Sistema de Crédito Direto', icon: 'fa-file-invoice-dollar', color: 'bg-pastel-orange', interactions: 187, time: '4.2 min', satisfaction: '94%', usage: 15 }
               ].map((agent, idx) => (
                 <div key={idx} className="border border-slate-200 rounded-xl p-5 hover:shadow-lg transition">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <div className={`w-12 h-12 ${agent.color} rounded-full flex items-center justify-center`}>
-                        <i className={`fas ${agent.icon} text-[hsl(var(--pastel-gray-dark))] text-lg`}></i>
+                        <i className={`fas ${agent.icon} text-slate-700 text-lg`}></i>
                       </div>
                       <div>
                         <h3 className="text-base font-semibold text-slate-800">{agent.name}</h3>
@@ -409,11 +409,11 @@ const AgentesAnalytics = () => {
                   { rank: 3, title: 'Estratégias de diversificação', queries: 143, percent: '11.5%', color: 'bg-pastel-purple' },
                   { rank: 4, title: 'Cálculo de rentabilidade', queries: 128, percent: '10.3%', color: 'bg-pastel-yellow' },
                   { rank: 5, title: 'Tributação de investimentos', queries: 115, percent: '9.2%', color: 'bg-pastel-pink' },
-                  { rank: 6, title: 'Análise de fundos imobiliários', queries: 98, percent: '7.9%', color: 'bg-pastel-peach' }
+                  { rank: 6, title: 'Análise de fundos imobiliários', queries: 98, percent: '7.9%', color: 'bg-pastel-orange' }
                 ].map((item) => (
                   <div key={item.rank} className="flex items-center gap-4 p-3 rounded-lg bg-slate-50 hover:bg-slate-100 transition">
                     <div className={`w-8 h-8 ${item.color} rounded-lg flex items-center justify-center`}>
-                      <span className="text-sm font-bold text-[hsl(var(--pastel-gray-dark))]">{item.rank}</span>
+                      <span className="text-sm font-bold text-slate-700">{item.rank}</span>
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-medium text-slate-800">{item.title}</p>
@@ -431,7 +431,7 @@ const AgentesAnalytics = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="p-4 bg-pastel-blue rounded-lg">
                     <div className="flex items-center gap-2 mb-2">
-                      <i className="fas fa-redo text-[hsl(var(--pastel-gray-dark))]"></i>
+                      <i className="fas fa-redo text-slate-700"></i>
                       <span className="text-xs font-medium text-slate-600">Taxa de Retorno</span>
                     </div>
                     <p className="text-2xl font-bold text-slate-800">78%</p>
@@ -440,7 +440,7 @@ const AgentesAnalytics = () => {
 
                   <div className="p-4 bg-pastel-green rounded-lg">
                     <div className="flex items-center gap-2 mb-2">
-                      <i className="fas fa-exchange-alt text-[hsl(var(--pastel-gray-dark))]"></i>
+                      <i className="fas fa-exchange-alt text-slate-700"></i>
                       <span className="text-xs font-medium text-slate-600">Sessões Médias</span>
                     </div>
                     <p className="text-2xl font-bold text-slate-800">4.2</p>
@@ -449,7 +449,7 @@ const AgentesAnalytics = () => {
 
                   <div className="p-4 bg-pastel-purple rounded-lg">
                     <div className="flex items-center gap-2 mb-2">
-                      <i className="fas fa-comments text-[hsl(var(--pastel-gray-dark))]"></i>
+                      <i className="fas fa-comments text-slate-700"></i>
                       <span className="text-xs font-medium text-slate-600">Mensagens/Sessão</span>
                     </div>
                     <p className="text-2xl font-bold text-slate-800">8.5</p>
@@ -458,7 +458,7 @@ const AgentesAnalytics = () => {
 
                   <div className="p-4 bg-pastel-yellow rounded-lg">
                     <div className="flex items-center gap-2 mb-2">
-                      <i className="fas fa-check-circle text-[hsl(var(--pastel-gray-dark))]"></i>
+                      <i className="fas fa-check-circle text-slate-700"></i>
                       <span className="text-xs font-medium text-slate-600">Resolução</span>
                     </div>
                     <p className="text-2xl font-bold text-slate-800">94%</p>
@@ -531,7 +531,7 @@ const AgentesAnalytics = () => {
                 <div className="space-y-3">
                   <div className="p-4 rounded-lg bg-pastel-blue">
                     <div className="flex items-start gap-3">
-                      <i className="fas fa-lightbulb text-[hsl(var(--pastel-gray-dark))] mt-1"></i>
+                      <i className="fas fa-lightbulb text-slate-700 mt-1"></i>
                       <div>
                         <p className="text-sm font-medium text-slate-800 mb-1">Pico de uso às 14h</p>
                         <p className="text-xs text-slate-600">Horário de maior demanda por análises de mercado</p>
@@ -541,7 +541,7 @@ const AgentesAnalytics = () => {
 
                   <div className="p-4 rounded-lg bg-pastel-green">
                     <div className="flex items-start gap-3">
-                      <i className="fas fa-chart-line text-[hsl(var(--pastel-gray-dark))] mt-1"></i>
+                      <i className="fas fa-chart-line text-slate-700 mt-1"></i>
                       <div>
                         <p className="text-sm font-medium text-slate-800 mb-1">Crescimento de 32%</p>
                         <p className="text-xs text-slate-600">Aumento nas interações comparado ao mês anterior</p>
@@ -551,7 +551,7 @@ const AgentesAnalytics = () => {
 
                   <div className="p-4 rounded-lg bg-pastel-purple">
                     <div className="flex items-start gap-3">
-                      <i className="fas fa-star text-[hsl(var(--pastel-gray-dark))] mt-1"></i>
+                      <i className="fas fa-star text-slate-700 mt-1"></i>
                       <div>
                         <p className="text-sm font-medium text-slate-800 mb-1">Alta satisfação</p>
                         <p className="text-xs text-slate-600">96% dos usuários avaliam positivamente os agentes</p>
@@ -561,7 +561,7 @@ const AgentesAnalytics = () => {
 
                   <div className="p-4 rounded-lg bg-pastel-yellow">
                     <div className="flex items-start gap-3">
-                      <i className="fas fa-users text-[hsl(var(--pastel-gray-dark))] mt-1"></i>
+                      <i className="fas fa-users text-slate-700 mt-1"></i>
                       <div>
                         <p className="text-sm font-medium text-slate-800 mb-1">Retenção elevada</p>
                         <p className="text-xs text-slate-600">78% dos usuários retornam regularmente</p>
@@ -576,7 +576,7 @@ const AgentesAnalytics = () => {
                 <div className="space-y-3">
                   <div className="p-4 rounded-lg border border-pastel-blue bg-pastel-blue bg-opacity-20">
                     <div className="flex items-start gap-3">
-                      <i className="fas fa-arrow-up text-[hsl(var(--pastel-gray-dark))] mt-1"></i>
+                      <i className="fas fa-arrow-up text-slate-700 mt-1"></i>
                       <div>
                         <p className="text-sm font-medium text-slate-800 mb-1">Expandir capacidade</p>
                         <p className="text-xs text-slate-600">Aumentar recursos no horário de pico para melhor performance</p>
@@ -586,7 +586,7 @@ const AgentesAnalytics = () => {
 
                   <div className="p-4 rounded-lg border border-pastel-green bg-pastel-green bg-opacity-20">
                     <div className="flex items-start gap-3">
-                      <i className="fas fa-plus-circle text-[hsl(var(--pastel-gray-dark))] mt-1"></i>
+                      <i className="fas fa-plus-circle text-slate-700 mt-1"></i>
                       <div>
                         <p className="text-sm font-medium text-slate-800 mb-1">Novo agente especializado</p>
                         <p className="text-xs text-slate-600">Considere criar agente focado em fundos imobiliários</p>
@@ -596,7 +596,7 @@ const AgentesAnalytics = () => {
 
                   <div className="p-4 rounded-lg border border-pastel-purple bg-pastel-purple bg-opacity-20">
                     <div className="flex items-start gap-3">
-                      <i className="fas fa-graduation-cap text-[hsl(var(--pastel-gray-dark))] mt-1"></i>
+                      <i className="fas fa-graduation-cap text-slate-700 mt-1"></i>
                       <div>
                         <p className="text-sm font-medium text-slate-800 mb-1">Treinamento adicional</p>
                         <p className="text-xs text-slate-600">Melhorar respostas sobre tributação e compliance</p>
@@ -606,7 +606,7 @@ const AgentesAnalytics = () => {
 
                   <div className="p-4 rounded-lg border border-pastel-pink bg-pastel-pink bg-opacity-20">
                     <div className="flex items-start gap-3">
-                      <i className="fas fa-video text-[hsl(var(--pastel-gray-dark))] mt-1"></i>
+                      <i className="fas fa-video text-slate-700 mt-1"></i>
                       <div>
                         <p className="text-sm font-medium text-slate-800 mb-1">Integração de vídeo</p>
                         <p className="text-xs text-slate-600">Implementar respostas com avatar para maior engajamento</p>

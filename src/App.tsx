@@ -60,7 +60,6 @@ import PerfilAnalytics from "./pages/PerfilAnalytics";
 import ConsumoAnalytics from "./pages/ConsumoAnalytics";
 import PerformanceSEO from "./pages/PerformanceSEO";
 import AgentesAnalytics from "./pages/AgentesAnalytics";
-import AgentesAnalyticsTest from "./pages/AgentesAnalyticsTest";
 
 import NotFound from "./pages/NotFound";
 
@@ -136,7 +135,6 @@ const App = () => {
             <Route path="/consumo-analytics" element={<ConsumoAnalytics />} />
           <Route path="/performance-seo" element={<PerformanceSEO />} />
           <Route path="/agentes-analytics" element={<AgentesAnalytics />} />
-          <Route path="/agentes-analytics-test" element={<AgentesAnalyticsTest />} />
           
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
