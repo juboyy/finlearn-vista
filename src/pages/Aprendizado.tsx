@@ -375,13 +375,12 @@ const Aprendizado = () => {
             }
           }}
           onAnalyticsClick={() => {
-            if (activeTab === 'documentos') {
-              setShowAnalytics(!showAnalytics);
-            }
+            setShowAnalytics(!showAnalytics);
+            setShowHistorico(false);
           }}
         />
 
-        {showAnalytics && activeTab === 'documentos' ? (
+        {showAnalytics ? (
           <NewspaperAnalytics />
         ) : activeTab !== 'documentos' ? (
           <div className="flex-1 p-8 pb-32">
