@@ -366,9 +366,9 @@ export const HistoricoDocumentos = () => {
         <section className="bg-white rounded-xl border border-slate-200 overflow-hidden">
           <div className="border-b border-slate-200 bg-slate-50">
             <div className="grid grid-cols-12 gap-4 px-6 py-3 text-xs font-medium text-slate-600 uppercase tracking-wider">
-              <div className="col-span-5">Artigo</div>
+              <div className="col-span-4">Artigo</div>
               <div className="col-span-2">Categoria</div>
-              <div className="col-span-2">Fonte</div>
+              <div className="col-span-3">Fonte</div>
               <div className="col-span-2">Lido em</div>
               <div className="col-span-1 text-right">Ações</div>
             </div>
@@ -380,7 +380,7 @@ export const HistoricoDocumentos = () => {
               className="border-b border-slate-100 hover:bg-slate-50 transition-colors cursor-pointer"
             >
               <div className="grid grid-cols-12 gap-4 px-6 py-4 items-center">
-                <div className="col-span-5 flex items-center gap-4">
+                <div className="col-span-4 flex items-center gap-4">
                   <div className={`w-10 h-10 ${article.iconColor} rounded-lg flex items-center justify-center flex-shrink-0`}>
                     <Newspaper className="text-slate-600 w-5 h-5" />
                   </div>
@@ -407,7 +407,7 @@ export const HistoricoDocumentos = () => {
                     {article.category}
                   </span>
                 </div>
-                <div className="col-span-2">
+                <div className="col-span-3">
                   <div className="flex items-center gap-2">
                     <div className="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center">
                       <Globe className="text-slate-600 w-3 h-3" />
