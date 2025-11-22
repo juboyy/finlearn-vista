@@ -5,16 +5,17 @@ import {
   Sun, Moon, SunMoon, MoreVertical, Newspaper
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
+import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
 
 export default function Configuracoes() {
   const [activeSection, setActiveSection] = useState("seguranca");
   
-  const securityRef = useRef<HTMLElement>(null);
-  const notificationsRef = useRef<HTMLElement>(null);
-  const sessionsRef = useRef<HTMLElement>(null);
-  const remindersRef = useRef<HTMLElement>(null);
-  const appearanceRef = useRef<HTMLElement>(null);
-  const languageRef = useRef<HTMLElement>(null);
+  const securityRef = useFadeInOnScroll<HTMLElement>();
+  const notificationsRef = useFadeInOnScroll<HTMLElement>();
+  const sessionsRef = useFadeInOnScroll<HTMLElement>();
+  const remindersRef = useFadeInOnScroll<HTMLElement>();
+  const appearanceRef = useFadeInOnScroll<HTMLElement>();
+  const languageRef = useFadeInOnScroll<HTMLElement>();
 
   const scrollToSection = (section: string) => {
     setActiveSection(section);
@@ -175,7 +176,7 @@ export default function Configuracoes() {
               <section 
                 ref={securityRef}
                 data-section="seguranca"
-                className="bg-white rounded-xl border border-slate-200 p-6"
+                className="bg-white rounded-xl border border-slate-200 p-6 opacity-0"
               >
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-pastel-blue rounded-lg flex items-center justify-center">
@@ -240,7 +241,7 @@ export default function Configuracoes() {
               <section 
                 ref={notificationsRef}
                 data-section="notificacoes"
-                className="bg-white rounded-xl border border-slate-200 p-6"
+                className="bg-white rounded-xl border border-slate-200 p-6 opacity-0"
               >
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
@@ -348,7 +349,7 @@ export default function Configuracoes() {
               <section 
                 ref={sessionsRef}
                 data-section="sessoes"
-                className="bg-white rounded-xl border border-slate-200 p-6"
+                className="bg-white rounded-xl border border-slate-200 p-6 opacity-0"
               >
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-pastel-purple rounded-lg flex items-center justify-center">
@@ -425,7 +426,7 @@ export default function Configuracoes() {
               <section 
                 ref={remindersRef}
                 data-section="lembretes"
-                className="bg-white rounded-xl border border-slate-200 p-6"
+                className="bg-white rounded-xl border border-slate-200 p-6 opacity-0"
               >
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
@@ -512,7 +513,7 @@ export default function Configuracoes() {
               <section 
                 ref={appearanceRef}
                 data-section="aparencia"
-                className="bg-white rounded-xl border border-slate-200 p-6"
+                className="bg-white rounded-xl border border-slate-200 p-6 opacity-0"
               >
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-pastel-pink rounded-lg flex items-center justify-center">
@@ -548,7 +549,7 @@ export default function Configuracoes() {
               <section 
                 ref={languageRef}
                 data-section="idioma"
-                className="bg-white rounded-xl border border-slate-200 p-6"
+                className="bg-white rounded-xl border border-slate-200 p-6 opacity-0"
               >
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-pastel-peach rounded-lg flex items-center justify-center">
