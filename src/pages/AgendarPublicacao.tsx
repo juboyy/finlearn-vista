@@ -4,6 +4,12 @@ import { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useNavigate, useLocation } from "react-router-dom";
+import ebookRiskManagement from "@/assets/ebook-risk-management-pink.png";
+import creditoRural from "@/assets/credito-rural-2025.png";
+import newspaperRiskManagement from "@/assets/newspaper-risk-management.png";
+import newspaperOpenFinance from "@/assets/newspaper-open-finance.png";
+import relatorioAnalise from "@/assets/relatorio-analise-dados.png";
+import relatorioBi from "@/assets/relatorio-bi-dashboard.png";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
@@ -265,6 +271,19 @@ export default function AgendarPublicacao() {
       channels: selectedChannels
     });
     navigate('/criar-newsletter');
+  };
+
+  // Função para pegar imagem baseada no ID do conteúdo
+  const getContentImage = (contentId: number) => {
+    const images = [
+      ebookRiskManagement,
+      creditoRural,
+      newspaperRiskManagement,
+      newspaperOpenFinance,
+      relatorioAnalise,
+      relatorioBi
+    ];
+    return images[contentId % images.length];
   };
 
   return (
@@ -717,10 +736,10 @@ export default function AgendarPublicacao() {
 
                   {/* Articles */}
                   <div className="space-y-4">
-                    {filteredContent.slice(0, 3).map((content, idx) => (
+                    {filteredContent.slice(0, 3).map((content) => (
                       <div key={content.id} className="flex gap-4 pb-4 border-b border-slate-100">
                         <img 
-                          src={`https://images.unsplash.com/photo-${1550000000000 + idx}?w=200&h=150&fit=crop`}
+                          src={getContentImage(content.id)}
                           alt={content.title}
                           className="w-32 h-24 object-cover rounded"
                         />
@@ -783,7 +802,7 @@ export default function AgendarPublicacao() {
                       {filteredContent.slice(0, 3).map((content) => (
                         <div key={content.id} className="mb-3 pb-3 border-b border-slate-100 last:border-0">
                           <img 
-                            src={`https://images.unsplash.com/photo-${1550000000000 + content.id}?w=300&h=200&fit=crop`}
+                            src={getContentImage(content.id)}
                             alt={content.title}
                             className="w-full h-32 object-cover rounded mb-2"
                           />
@@ -817,7 +836,7 @@ export default function AgendarPublicacao() {
                       {filteredContent.slice(0, 3).map((content) => (
                         <div key={content.id} className="flex gap-3 p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition">
                           <img 
-                            src={`https://images.unsplash.com/photo-${1550000000000 + content.id}?w=100&h=100&fit=crop`}
+                            src={getContentImage(content.id)}
                             alt={content.title}
                             className="w-16 h-16 object-cover rounded"
                           />
@@ -850,7 +869,7 @@ export default function AgendarPublicacao() {
                     {filteredContent.slice(0, 3).map((content) => (
                       <div key={content.id} className="bg-slate-50 rounded-lg overflow-hidden border border-slate-200">
                         <img 
-                          src={`https://images.unsplash.com/photo-${1550000000000 + content.id}?w=400&h=250&fit=crop`}
+                          src={getContentImage(content.id)}
                           alt={content.title}
                           className="w-full h-40 object-cover"
                         />
@@ -929,7 +948,7 @@ export default function AgendarPublicacao() {
                       {filteredContent.slice(0, 3).map((content) => (
                         <div key={content.id} className="mb-3">
                           <img 
-                            src={`https://images.unsplash.com/photo-${1550000000000 + content.id}?w=400&h=200&fit=crop`}
+                            src={getContentImage(content.id)}
                             alt={content.title}
                             className="w-full h-32 object-cover rounded mb-2"
                           />
