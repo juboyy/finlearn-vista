@@ -475,7 +475,7 @@ export const RelatoriosPendentes = () => {
                   </div>
                 </div>
                 <div className="col-span-2">
-                  <span className={`inline-flex items-center gap-2 px-3 py-1 ${report.categoryColor} text-slate-700 rounded-full text-xs font-medium`}>
+                  <span className={`inline-flex items-center gap-2 px-3 py-1 ${report.categoryColor} text-slate-700 rounded-full text-xs font-medium whitespace-nowrap`}>
                     <Circle className="w-1.5 h-1.5 fill-current" />
                     {report.category}
                   </span>
