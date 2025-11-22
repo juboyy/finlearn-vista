@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Calendar as CalendarIcon, Clock, FileText } from "lucide-react";
+import { ArrowLeft, Calendar as CalendarIcon, Clock, FileText, Folder } from "lucide-react";
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
@@ -18,6 +18,15 @@ export default function AgendarPublicacao() {
   const [scheduleDate, setScheduleDate] = useState<Date>();
   const [scheduleTime, setScheduleTime] = useState("08:00");
   const [selectedContent, setSelectedContent] = useState<number[]>([]);
+  const [selectedFolder, setSelectedFolder] = useState<string>("all");
+
+  const folders = [
+    { id: "all", name: "Todos os Materiais", count: 8, color: "#B8D4E8" },
+    { id: "compliance", name: "Compliance", count: 3, color: "#C5E8D4" },
+    { id: "market", name: "Análise de Mercado", count: 2, color: "#D4C5E8" },
+    { id: "reports", name: "Relatórios", count: 3, color: "#E8E0C5" },
+    { id: "guides", name: "Guias e Checklists", count: 2, color: "#E8C5D4" }
+  ];
 
   const availableContent = [
     {
@@ -25,58 +34,86 @@ export default function AgendarPublicacao() {
       title: "Guia Completo de Compliance Bancário 2024",
       type: "Artigo",
       createdDate: "2024-01-10",
-      author: "Maria Silva"
+      author: "Maria Silva",
+      folder: "compliance"
     },
     {
       id: 2,
       title: "Análise de Mercado: Tendências PIX",
       type: "Relatório",
       createdDate: "2024-01-12",
-      author: "João Santos"
+      author: "João Santos",
+      folder: "market"
     },
     {
       id: 3,
       title: "Workshop: Open Finance na Prática",
       type: "Webinar",
       createdDate: "2024-01-08",
-      author: "Ana Costa"
+      author: "Ana Costa",
+      folder: "market"
     },
     {
       id: 4,
       title: "E-book: Gestão de Risco em Fintechs",
       type: "E-book",
       createdDate: "2024-01-05",
-      author: "Pedro Oliveira"
+      author: "Pedro Oliveira",
+      folder: "compliance"
     },
     {
       id: 5,
       title: "Checklist: Conformidade LGPD",
       type: "Documento",
       createdDate: "2024-01-15",
-      author: "Carla Souza"
+      author: "Carla Souza",
+      folder: "guides"
     },
     {
       id: 6,
       title: "Relatório: Tendências Open Banking",
       type: "Relatório",
       createdDate: "2024-01-11",
-      author: "Roberto Lima"
+      author: "Roberto Lima",
+      folder: "reports"
     },
     {
       id: 7,
       title: "Guia: Segurança em Pagamentos Digitais",
       type: "Artigo",
       createdDate: "2024-01-09",
-      author: "Julia Mendes"
+      author: "Julia Mendes",
+      folder: "guides"
     },
     {
       id: 8,
       title: "Análise: Impacto do PIX no Varejo",
       type: "Relatório",
       createdDate: "2024-01-13",
-      author: "Carlos Silva"
+      author: "Carlos Silva",
+      folder: "reports"
+    },
+    {
+      id: 9,
+      title: "Regulamentação BACEN 2024",
+      type: "Artigo",
+      createdDate: "2024-01-14",
+      author: "Fernando Costa",
+      folder: "compliance"
+    },
+    {
+      id: 10,
+      title: "Dashboard: Métricas Financeiras",
+      type: "Relatório",
+      createdDate: "2024-01-07",
+      author: "Patricia Lima",
+      folder: "reports"
     }
   ];
+
+  const filteredContent = selectedFolder === "all" 
+    ? availableContent 
+    : availableContent.filter(content => content.folder === selectedFolder);
 
   const handleScheduleSubmit = () => {
     if (!scheduleDate || selectedContent.length === 0) {
@@ -118,8 +155,10 @@ export default function AgendarPublicacao() {
           </div>
         </header>
 
-        <div className="p-8 max-w-5xl mx-auto">
-          <div className="space-y-6">
+        <div className="p-8">
+          <div className="grid grid-cols-12 gap-6">
+            {/* Main Content */}
+            <div className="col-span-9 space-y-6">
             {/* Date and Time Selection */}
             <div className="bg-white rounded-xl border border-slate-200 p-6">
               <h2 className="text-lg font-semibold text-slate-800 mb-4">Data e Horário do Envio</h2>
@@ -168,10 +207,10 @@ export default function AgendarPublicacao() {
             <div className="bg-white rounded-xl border border-slate-200 p-6">
               <h2 className="text-lg font-semibold text-slate-800 mb-4">Conteúdos Disponíveis</h2>
               <p className="text-sm text-slate-500 mb-4">
-                Selecione os conteúdos que deseja incluir nesta publicação
+                Selecione os conteúdos que deseja incluir nesta publicação ({filteredContent.length} {filteredContent.length === 1 ? 'item' : 'itens'})
               </p>
               <div className="border border-slate-200 rounded-lg divide-y divide-slate-100 max-h-[500px] overflow-y-auto">
-                {availableContent.map((content) => (
+                {filteredContent.map((content) => (
                   <div
                     key={content.id}
                     className="p-4 hover:bg-slate-50 transition flex items-start gap-3"
@@ -210,6 +249,12 @@ export default function AgendarPublicacao() {
                   </div>
                 ))}
               </div>
+              {filteredContent.length === 0 && (
+                <div className="text-center py-12 text-slate-500">
+                  <Folder size={48} className="mx-auto mb-2 text-slate-300" />
+                  <p>Nenhum conteúdo nesta pasta</p>
+                </div>
+              )}
             </div>
 
             {/* Summary */}
@@ -263,6 +308,41 @@ export default function AgendarPublicacao() {
               </Button>
             </div>
           </div>
+
+          {/* Right Sidebar - Folders */}
+          <div className="col-span-3">
+            <div className="bg-white rounded-xl border border-slate-200 p-4 sticky top-24">
+              <h2 className="text-lg font-semibold text-slate-800 mb-4">Pastas</h2>
+              <div className="space-y-2">
+                {folders.map((folder) => (
+                  <button
+                    key={folder.id}
+                    onClick={() => setSelectedFolder(folder.id)}
+                    className={`w-full text-left p-3 rounded-lg transition flex items-center gap-3 ${
+                      selectedFolder === folder.id
+                        ? 'text-slate-800'
+                        : 'hover:bg-slate-50 text-slate-600'
+                    }`}
+                    style={selectedFolder === folder.id ? { backgroundColor: folder.color } : {}}
+                  >
+                    <div 
+                      className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                      style={{ 
+                        backgroundColor: selectedFolder === folder.id ? 'rgba(255,255,255,0.5)' : folder.color 
+                      }}
+                    >
+                      <Folder size={16} className="text-slate-700" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium text-sm truncate">{folder.name}</p>
+                      <p className="text-xs opacity-70">{folder.count} {folder.count === 1 ? 'item' : 'itens'}</p>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
         </div>
       </main>
     </div>
