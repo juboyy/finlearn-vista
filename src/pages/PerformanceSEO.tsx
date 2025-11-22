@@ -356,7 +356,13 @@ const PerformanceSEO = () => {
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={keywordData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
-                    <XAxis dataKey="name" tick={{ fill: '#6b7280', fontSize: 10 }} angle={-45} textAnchor="end" height={100} />
+                    <XAxis 
+                      dataKey="name" 
+                      tick={{ fill: '#6b7280', fontSize: 10 }} 
+                      textAnchor="middle" 
+                      height={60}
+                      interval={0}
+                    />
                     <YAxis tick={{ fill: '#6b7280', fontSize: 11 }} label={{ value: 'Impressões', angle: -90, position: 'insideLeft', style: { fontSize: 11, fill: '#6b7280' } }} />
                     <Tooltip contentStyle={{ backgroundColor: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '12px' }} />
                     <Bar dataKey="value" fill="#8AAACF" />
