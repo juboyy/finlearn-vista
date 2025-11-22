@@ -1,10 +1,12 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Bell, Search, Download, Filter, MoreHorizontal } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { BarChart, Bar, PieChart, Pie, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, Area, AreaChart, Legend } from 'recharts';
 
 const Analytics = () => {
   const [timeFilter, setTimeFilter] = useState<'week' | 'month'>('month');
+  const navigate = useNavigate();
 
   const agentData = [
     { name: 'Analista Mercado', value: 1254 },
@@ -70,13 +72,17 @@ const Analytics = () => {
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
               {[
-                { icon: 'fa-robot', label: 'AI Agents', color: 'bg-pastel-purple' },
-                { icon: 'fa-chart-area', label: 'Consumo', color: 'bg-pastel-green' },
-                { icon: 'fa-gauge-high', label: 'Performance', color: 'bg-pastel-blue' },
-                { icon: 'fa-file-lines', label: 'Conteúdo', color: 'bg-pastel-peach' },
-                { icon: 'fa-user-circle', label: 'Perfil', color: 'bg-pastel-pink' }
+                { icon: 'fa-robot', label: 'AI Agents', color: 'bg-pastel-purple', path: null },
+                { icon: 'fa-chart-area', label: 'Consumo', color: 'bg-pastel-green', path: null },
+                { icon: 'fa-gauge-high', label: 'Performance', color: 'bg-pastel-blue', path: null },
+                { icon: 'fa-file-lines', label: 'Conteúdo', color: 'bg-pastel-peach', path: null },
+                { icon: 'fa-user-circle', label: 'Perfil', color: 'bg-pastel-pink', path: '/perfil-analytics' }
               ].map((btn, idx) => (
-                <button key={idx} className="bg-white border border-slate-200 p-6 rounded-xl flex flex-col items-center justify-center gap-3 hover:shadow-md transition-all duration-300 group">
+                <button 
+                  key={idx} 
+                  onClick={() => btn.path && navigate(btn.path)}
+                  className="bg-white border border-slate-200 p-6 rounded-xl flex flex-col items-center justify-center gap-3 hover:shadow-md transition-all duration-300 group"
+                >
                   <div className={`w-14 h-14 rounded-xl ${btn.color} flex items-center justify-center text-[hsl(var(--pastel-gray-dark))] group-hover:scale-110 transition-transform`}>
                     <i className={`fa-solid ${btn.icon} text-2xl`}></i>
                   </div>
