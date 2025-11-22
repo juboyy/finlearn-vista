@@ -258,7 +258,7 @@ export default function CriarConteudo() {
                       <Newspaper className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-sm font-bold text-foreground mb-0.5">Documentos</h3>
+                      <h3 className="text-sm font-bold text-foreground mb-0.5">Newspaper</h3>
                       <p className="text-xs text-muted-foreground">Upload de PDFs, planilhas e relatórios.</p>
                     </div>
                     <div className="text-muted-foreground/30 group-hover:text-muted-foreground transition-colors">
