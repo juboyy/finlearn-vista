@@ -1197,28 +1197,28 @@ const Aprendizado = () => {
                       <i className="fas fa-chart-line text-2xl text-slate-700"></i>
                     </div>
                     <h3 className="font-semibold text-slate-800 mb-1">Análise de Mercado</h3>
-                    <p className="text-sm text-slate-600">48 episódios</p>
+                    <p className="text-sm text-black font-bold">48 episódios</p>
                   </div>
                   <div className="bg-pastel-green rounded-xl p-6 hover:shadow-lg transition cursor-pointer group">
                     <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                       <i className="fas fa-piggy-bank text-2xl text-slate-700"></i>
                     </div>
                     <h3 className="font-semibold text-slate-800 mb-1">Investimentos</h3>
-                    <p className="text-sm text-slate-600">67 episódios</p>
+                    <p className="text-sm text-black font-bold">67 episódios</p>
                   </div>
                   <div className="bg-pastel-purple rounded-xl p-6 hover:shadow-lg transition cursor-pointer group">
                     <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                       <i className="fas fa-landmark text-2xl text-slate-700"></i>
                     </div>
                     <h3 className="font-semibold text-slate-800 mb-1">Regulação Bancária</h3>
-                    <p className="text-sm text-slate-600">32 episódios</p>
+                    <p className="text-sm text-black font-bold">32 episódios</p>
                   </div>
                   <div className="bg-pastel-pink rounded-xl p-6 hover:shadow-lg transition cursor-pointer group">
                     <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                       <i className="fas fa-gavel text-2xl text-slate-700"></i>
                     </div>
                     <h3 className="font-semibold text-slate-800 mb-1">Compliance</h3>
-                    <p className="text-sm text-slate-600">29 episódios</p>
+                    <p className="text-sm text-black font-bold">29 episódios</p>
                   </div>
                 </div>
               </section>
