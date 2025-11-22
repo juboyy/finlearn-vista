@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search, Bell, Plus, History, FileText, Calendar, Clock, Star, Eye, Bookmark, MoreHorizontal, Building, Circle, ChevronLeft, ChevronRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -212,6 +212,14 @@ export const NewspapersNaoLidas = () => {
       icon: FileText,
     },
   ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentCarouselIndex((prev) => (prev < featuredNewspapers.length - 1 ? prev + 1 : 0));
+    }, 5000); // Muda a cada 5 segundos
+
+    return () => clearInterval(interval);
+  }, [featuredNewspapers.length]);
 
   const handlePrevCarousel = () => {
     setCurrentCarouselIndex((prev) => (prev > 0 ? prev - 1 : featuredNewspapers.length - 1));
