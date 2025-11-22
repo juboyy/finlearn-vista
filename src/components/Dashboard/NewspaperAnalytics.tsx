@@ -1303,7 +1303,7 @@ export const NewspaperAnalytics = () => {
               <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
                 <div className="flex items-start gap-3">
                   <div className="w-10 h-10 bg-green-200 rounded-full flex items-center justify-center flex-shrink-0">
-                    <i className="fas fa-trophy text-green-700"></i>
+                    <i className="fas fa-trophy text-pastel-gray-dark"></i>
                   </div>
                   <div>
                     <h3 className="font-semibold text-slate-800 text-sm mb-1">Excelente progresso!</h3>
@@ -1315,7 +1315,7 @@ export const NewspaperAnalytics = () => {
               <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
                 <div className="flex items-start gap-3">
                   <div className="w-10 h-10 bg-blue-200 rounded-full flex items-center justify-center flex-shrink-0">
-                    <i className="fas fa-lightbulb text-blue-700"></i>
+                    <i className="fas fa-lightbulb text-pastel-gray-dark"></i>
                   </div>
                   <div>
                     <h3 className="font-semibold text-slate-800 text-sm mb-1">Sugestão de leitura</h3>
@@ -1327,7 +1327,7 @@ export const NewspaperAnalytics = () => {
               <div className="p-4 bg-purple-50 border border-purple-200 rounded-lg">
                 <div className="flex items-start gap-3">
                   <div className="w-10 h-10 bg-purple-200 rounded-full flex items-center justify-center flex-shrink-0">
-                    <i className="fas fa-chart-line text-purple-700"></i>
+                    <i className="fas fa-chart-line text-pastel-gray-dark"></i>
                   </div>
                   <div>
                     <h3 className="font-semibold text-slate-800 text-sm mb-1">Meta alcançada</h3>
