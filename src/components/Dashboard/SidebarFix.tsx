@@ -1,4 +1,4 @@
-import { Home, Newspaper, Bot, Mail, GraduationCap, Book, MessageCircle, Store, TrendingUp, Users, Settings, ChevronDown, User, CreditCard, Target, Bookmark, Calendar } from "lucide-react";
+import { Home, Newspaper, Bot, GraduationCap, Book, MessageCircle, Store, TrendingUp, Users, Settings, ChevronDown, User, CreditCard, Target, Bookmark, Calendar } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -7,7 +7,6 @@ const navigation = [
   { name: "Dashboard", href: "/", icon: Home },
   { name: "Conteúdo", href: "/conteudo", icon: Newspaper },
   { name: "Agentes IA", href: "/agentes", icon: Bot },
-  { name: "Newsletter", href: "/newsletter", icon: Mail },
   { name: "Aprendizado", href: "/aprendizado", icon: GraduationCap },
   { name: "Biblioteca", href: "/biblioteca", icon: Book },
   { name: "Comunidade", href: "/comunidade", icon: MessageCircle },

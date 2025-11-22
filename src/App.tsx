@@ -50,7 +50,6 @@ import CriarConteudo from "./pages/CriarConteudo";
 import NovoDocumento from "./pages/NovoDocumento";
 import EvolucaoCartaoCredito from "./pages/EvolucaoCartaoCredito";
 import LerDepois from "./pages/LerDepois";
-import Newsletter from "./pages/Newsletter";
 
 import NotFound from "./pages/NotFound";
 
@@ -117,7 +116,6 @@ const App = () => {
             <Route path="/novo-documento" element={<NovoDocumento />} />
             <Route path="/evolucao-cartao-credito" element={<EvolucaoCartaoCredito />} />
             <Route path="/ler-depois" element={<LerDepois />} />
-            <Route path="/newsletter" element={<Newsletter />} />
           
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
