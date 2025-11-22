@@ -402,8 +402,7 @@ export default function MinhasAssinaturas() {
                       <p className="text-sm font-semibold text-slate-800">Total de Assinaturas Pagas:</p>
                     </td>
                     <td className="px-6 py-4">
-                      <p className="text-lg font-bold text-slate-800">R$ 216,00</p>
-                      <p className="text-xs text-slate-500">/mês</p>
+                      <p className="text-2xl font-bold text-slate-800">R$ 216,00/mês</p>
                     </td>
                     <td colSpan={3} className="px-6 py-4">
                       <p className="text-xs text-slate-600">5 newsletters pagas + 3 gratuitas</p>
