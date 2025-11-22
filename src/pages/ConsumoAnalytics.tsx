@@ -491,8 +491,8 @@ const ConsumoAnalytics = () => {
                     <YAxis dataKey="categoria" type="category" tick={{ fill: '#6b7280', fontSize: 11 }} width={80} />
                     <Tooltip contentStyle={{ backgroundColor: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '12px' }} />
                     <Legend wrapperStyle={{ fontSize: '11px' }} />
-                    <Bar dataKey="meta" fill="#C9AF89" name="Meta" radius={[0, 8, 8, 0]} />
-                    <Bar dataKey="realizado" fill="#8AAACF" name="Realizado" radius={[0, 8, 8, 0]} />
+                    <Bar dataKey="meta" fill="#C9AF89" name="Meta" />
+                    <Bar dataKey="realizado" fill="#8AAACF" name="Realizado" />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
