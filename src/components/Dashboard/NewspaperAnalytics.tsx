@@ -1070,6 +1070,28 @@ export const NewspaperAnalytics = () => {
                 </div>
               </div>
 
+              <div className="p-4 bg-slate-50 rounded-lg">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-sm font-medium text-slate-700">Taxa de Conclusão</span>
+                  <span className="text-lg font-bold text-slate-800">87%</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-slate-600">
+                  <i className="fas fa-check-circle"></i>
+                  <span>Você completa a maioria dos artigos que inicia</span>
+                </div>
+              </div>
+
+              <div className="p-4 bg-slate-50 rounded-lg">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-sm font-medium text-slate-700">Tema Mais Lido</span>
+                  <span className="text-lg font-bold text-slate-800">Gestão de Risco</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-slate-600">
+                  <i className="fas fa-star"></i>
+                  <span>34% do seu tempo de leitura focado neste tema</span>
+                </div>
+              </div>
+
               <div className="pt-4 border-t border-slate-200">
                 <h3 className="text-sm font-medium text-slate-700 mb-3">Distribuição Horária</h3>
                 <div id="hourly-distribution-chart" className="h-40"></div>
