@@ -240,14 +240,14 @@ const Estatisticas = () => {
                   </div>
                 </div>
                 <p className="text-xs text-slate-600 mb-2">Progresso de Leitura:</p>
-                <div className="w-full bg-slate-100 rounded-full h-2 mb-1">
-                  <div className="bg-pastel-gray-dark h-2 rounded-full" style={{ width: '75%' }}></div>
+                <div className="w-full bg-pastel-blue/20 rounded-full h-2 mb-1">
+                  <div className="bg-pastel-blue h-2 rounded-full" style={{ width: '75%' }}></div>
                 </div>
                 <div className="flex justify-between text-xs text-muted-foreground mb-5">
                   <span>75%</span>
                   <span>32 de 43 conteúdos</span>
                 </div>
-                <button className="w-full py-2.5 bg-slate-100 text-pastel-gray-dark font-semibold text-sm rounded-lg hover:bg-slate-200 transition-colors">
+                <button className="w-full py-2.5 bg-pastel-blue/20 text-pastel-gray-dark font-semibold text-sm rounded-lg hover:bg-pastel-blue/30 transition-colors">
                   Ver Perfil
                 </button>
               </div>
@@ -264,14 +264,14 @@ const Estatisticas = () => {
                   </div>
                 </div>
                 <p className="text-xs text-slate-600 mb-2">Progresso de Leitura:</p>
-                <div className="w-full bg-slate-100 rounded-full h-2 mb-1">
-                  <div className="h-2 rounded-full" style={{ width: '90%', backgroundColor: '#a78bfa' }}></div>
+                <div className="w-full bg-pastel-purple/20 rounded-full h-2 mb-1">
+                  <div className="bg-pastel-purple h-2 rounded-full" style={{ width: '90%' }}></div>
                 </div>
                 <div className="flex justify-between text-xs text-muted-foreground mb-5">
                   <span>90%</span>
                   <span>18 de 20 conteúdos</span>
                 </div>
-                <button className="w-full py-2.5 bg-slate-100 text-pastel-gray-dark font-semibold text-sm rounded-lg hover:bg-slate-200 transition-colors">
+                <button className="w-full py-2.5 bg-pastel-purple/20 text-pastel-gray-dark font-semibold text-sm rounded-lg hover:bg-pastel-purple/30 transition-colors">
                   Ver Perfil
                 </button>
               </div>
@@ -288,14 +288,14 @@ const Estatisticas = () => {
                   </div>
                 </div>
                 <p className="text-xs text-slate-600 mb-2">Progresso de Leitura:</p>
-                <div className="w-full bg-slate-100 rounded-full h-2 mb-1">
-                  <div className="h-2 rounded-full" style={{ width: '40%', backgroundColor: '#4ade80' }}></div>
+                <div className="w-full bg-pastel-green/20 rounded-full h-2 mb-1">
+                  <div className="bg-pastel-green h-2 rounded-full" style={{ width: '40%' }}></div>
                 </div>
                 <div className="flex justify-between text-xs text-muted-foreground mb-5">
                   <span>40%</span>
                   <span>15 de 38 conteúdos</span>
                 </div>
-                <button className="w-full py-2.5 bg-slate-100 text-pastel-gray-dark font-semibold text-sm rounded-lg hover:bg-slate-200 transition-colors">
+                <button className="w-full py-2.5 bg-pastel-green/20 text-pastel-gray-dark font-semibold text-sm rounded-lg hover:bg-pastel-green/30 transition-colors">
                   Ver Perfil
                 </button>
               </div>
