@@ -20,7 +20,11 @@ export function Biblioteca() {
       modifiedRelative: "há 2 horas",
       createdDate: "15/11/2024",
       createdTime: "10:30",
-      starred: false
+      starred: false,
+      status: "publicado",
+      publishedDate: "15/11/2024",
+      linkedToNewsletter: true,
+      newsletterName: "Newsletter Semanal #23"
     },
     {
       id: 2,
@@ -35,7 +39,10 @@ export function Biblioteca() {
       modifiedRelative: "há 1 dia",
       createdDate: "16/11/2024",
       createdTime: "14:20",
-      starred: false
+      starred: false,
+      status: "publicado",
+      publishedDate: "16/11/2024",
+      linkedToNewsletter: false
     },
     {
       id: 3,
@@ -49,7 +56,11 @@ export function Biblioteca() {
       createdDate: "10/11/2024",
       createdTime: "09:15",
       starred: true,
-      showStarInTitle: true
+      showStarInTitle: true,
+      status: "publicado",
+      publishedDate: "10/11/2024",
+      linkedToNewsletter: true,
+      newsletterName: "Newsletter Mensal - Novembro"
     },
     {
       id: 4,
@@ -135,6 +146,38 @@ export function Biblioteca() {
       starred: false
     },
     {
+      id: 4,
+      title: "Ideias para Carteira",
+      description: "",
+      type: "Áudio",
+      typeColor: "#A68CC9",
+      icon: "microphone",
+      audioProgress: 30,
+      audioDuration: "08:15",
+      modifiedDate: "14/11/2024",
+      modifiedRelative: "há 3 dias",
+      createdDate: "14/11/2024",
+      createdTime: "16:45",
+      starred: false,
+      status: "criacao"
+    },
+    {
+      id: 5,
+      title: "Links Importantes",
+      description: "Coleção de links para relatórios do mercado, sites de análise...",
+      type: "Links",
+      typeColor: "#C97B7B",
+      icon: "link",
+      modifiedDate: "12/11/2024",
+      modifiedRelative: "há 5 dias",
+      createdDate: "05/11/2024",
+      createdTime: "11:00",
+      starred: false,
+      status: "publicado",
+      publishedDate: "05/11/2024",
+      linkedToNewsletter: false
+    },
+    {
       id: 10,
       title: "Rascunho - Análise Setorial",
       description: "Análise preliminar do setor de tecnologia brasileiro",
@@ -145,7 +188,8 @@ export function Biblioteca() {
       modifiedRelative: "há 2 semanas",
       createdDate: "03/11/2024",
       createdTime: "17:30",
-      starred: false
+      starred: false,
+      status: "criacao"
     }
   ];
 
@@ -468,264 +512,210 @@ export function Biblioteca() {
               {/* Grid View */}
               {viewMode === 'grid' && (
                 <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {/* Note 1 */}
-                  <div className="bg-white rounded-xl p-5 border border-slate-200 flex flex-col justify-between hover:shadow-lg transition-shadow duration-300 group">
-                    <div>
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#7FA8C9' }}>
-                          <FileText className="h-5 w-5 text-slate-600" />
+                  {libraryItems
+                    .filter(item => item.status === statusFilter)
+                    .map((item) => (
+                    <div key={item.id} className="bg-white rounded-xl p-5 border border-slate-200 flex flex-col justify-between hover:shadow-lg transition-shadow duration-300 group">
+                      <div>
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: item.typeColor }}>
+                            {getIconComponent(item.icon)}
+                          </div>
+                          <div className="flex items-center gap-2 text-slate-400">
+                            <button className={item.starred ? "text-yellow-600" : "hover:text-yellow-600 transition-colors"}>
+                              <Star className={`h-4 w-4 ${item.starred ? 'fill-current' : ''}`} />
+                            </button>
+                            <button className="hover:text-slate-600 transition-colors">
+                              <MoreHorizontal className="h-4 w-4" />
+                            </button>
+                          </div>
                         </div>
-                        <div className="flex items-center gap-2 text-slate-400">
-                          <button className="hover:text-yellow-600 transition-colors">
-                            <Star className="h-4 w-4" />
-                          </button>
-                          <button className="hover:text-slate-600 transition-colors">
-                            <MoreHorizontal className="h-4 w-4" />
-                          </button>
-                        </div>
+                        <h3 className="font-semibold text-slate-800 mb-1 flex items-center gap-2">
+                          {item.title}
+                          {item.showStarInTitle && <Star className="h-3 w-3 text-yellow-500 fill-yellow-500" />}
+                        </h3>
+                        {item.description && (
+                          <p className="text-sm text-slate-500 mb-4 line-clamp-2">{item.description}</p>
+                        )}
+                        {item.audioProgress !== undefined && (
+                          <div className="flex items-center gap-2 mb-4">
+                            <button className="w-6 h-6 flex items-center justify-center rounded-full text-slate-600" style={{ backgroundColor: item.typeColor }}>
+                              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z"/>
+                              </svg>
+                            </button>
+                            <div className="w-full bg-slate-200 rounded-full h-1.5">
+                              <div className="h-1.5 rounded-full" style={{ backgroundColor: item.typeColor, width: `${item.audioProgress}%` }}></div>
+                            </div>
+                            <span className="text-xs text-slate-500 font-mono">{item.audioDuration}</span>
+                          </div>
+                        )}
                       </div>
-                      <h3 className="font-semibold text-slate-800 mb-1">Estratégias de Day Trade</h3>
-                      <p className="text-sm text-slate-500 mb-4 line-clamp-2">Anotações sobre padrões gráficos e indicadores...</p>
-                    </div>
-                    <div className="flex items-center justify-between text-xs mt-auto">
-                      <span className="text-slate-400">Editado há 2 horas</span>
-                      <span className="text-white px-2 py-0.5 rounded-md font-medium" style={{ backgroundColor: '#7FA8C9' }}>trading</span>
-                    </div>
-                  </div>
-
-                  {/* Note 2 - Audio */}
-                  <div className="bg-white rounded-xl p-5 border border-slate-200 flex flex-col justify-between hover:shadow-lg transition-shadow duration-300 group">
-                    <div>
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#A68CC9' }}>
-                          <Mic className="h-5 w-5 text-slate-600" />
-                        </div>
-                        <div className="flex items-center gap-2 text-slate-400">
-                          <button className="hover:text-yellow-600 transition-colors">
-                            <Star className="h-4 w-4" />
-                          </button>
-                          <button className="hover:text-slate-600 transition-colors">
-                            <MoreHorizontal className="h-4 w-4" />
-                          </button>
-                        </div>
-                      </div>
-                      <h3 className="font-semibold text-slate-800 mb-2">Resumo Webinar IA</h3>
-                      <div className="flex items-center gap-2 mb-4">
-                        <button className="w-6 h-6 flex items-center justify-center rounded-full text-slate-600" style={{ backgroundColor: '#A68CC9' }}>
-                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M8 5v14l11-7z"/>
-                          </svg>
-                        </button>
-                        <div className="w-full bg-slate-200 rounded-full h-1.5">
-                          <div className="h-1.5 rounded-full" style={{ backgroundColor: '#A68CC9', width: '75%' }}></div>
-                        </div>
-                        <span className="text-xs text-slate-500 font-mono">12:34</span>
+                      <div className="flex items-center justify-between text-xs mt-auto">
+                        <span className="text-slate-400">{item.modifiedRelative}</span>
+                        <span className="text-white px-2 py-0.5 rounded-md font-medium" style={{ backgroundColor: item.typeColor }}>{item.type}</span>
                       </div>
                     </div>
-                    <div className="flex items-center justify-between text-xs mt-auto">
-                      <span className="text-slate-400">Gravado ontem</span>
-                      <div className="w-6 h-6 rounded-full flex items-center justify-center" style={{ backgroundColor: '#E89A5C' }}>
-                        <svg className="w-3 h-3 text-slate-600" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Note 3 */}
-                  <div className="bg-white rounded-xl p-5 border border-slate-200 flex flex-col justify-between hover:shadow-lg transition-shadow duration-300 group">
-                    <div>
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#C99B8C' }}>
-                          <FileText className="h-5 w-5 text-slate-600" />
-                        </div>
-                        <div className="flex items-center gap-2 text-slate-400">
-                          <button className="text-yellow-600">
-                            <Star className="h-4 w-4 fill-current" />
-                          </button>
-                          <button className="hover:text-slate-600 transition-colors">
-                            <MoreHorizontal className="h-4 w-4" />
-                          </button>
-                        </div>
-                      </div>
-                      <h3 className="font-semibold text-slate-800 mb-1">Análise Fundamentalista</h3>
-                      <p className="text-sm text-slate-500 mb-4 line-clamp-2">Metodologia para análise de demonstrações financeira...</p>
-                    </div>
-                    <div className="flex items-center justify-between text-xs mt-auto">
-                      <span className="text-slate-400">Editado há 1 dia</span>
-                      <span className="text-white px-2 py-0.5 rounded-md font-medium" style={{ backgroundColor: '#8CC99B' }}>estudo</span>
-                    </div>
-                  </div>
-
-                  {/* Note 4 - Audio */}
-                  <div className="bg-white rounded-xl p-5 border border-slate-200 flex flex-col justify-between hover:shadow-lg transition-shadow duration-300 group">
-                    <div>
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#8CC99B' }}>
-                          <Mic className="h-5 w-5 text-slate-600" />
-                        </div>
-                        <div className="flex items-center gap-2 text-slate-400">
-                          <button className="hover:text-yellow-600 transition-colors">
-                            <Star className="h-4 w-4" />
-                          </button>
-                          <button className="hover:text-slate-600 transition-colors">
-                            <MoreHorizontal className="h-4 w-4" />
-                          </button>
-                        </div>
-                      </div>
-                      <h3 className="font-semibold text-slate-800 mb-2">Ideias para Carteira</h3>
-                      <div className="flex items-center gap-2 mb-4">
-                        <button className="w-6 h-6 flex items-center justify-center rounded-full text-slate-600" style={{ backgroundColor: '#8CC99B' }}>
-                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M8 5v14l11-7z"/>
-                          </svg>
-                        </button>
-                        <div className="w-full bg-slate-200 rounded-full h-1.5">
-                          <div className="h-1.5 rounded-full" style={{ backgroundColor: '#8CC99B', width: '30%' }}></div>
-                        </div>
-                        <span className="text-xs text-slate-500 font-mono">08:15</span>
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between text-xs mt-auto">
-                      <span className="text-slate-400">Gravado há 3 dias</span>
-                      <span className="text-white px-2 py-0.5 rounded-md font-medium" style={{ backgroundColor: '#A68CC9' }}>mercado</span>
-                    </div>
-                  </div>
-
-                  {/* Note 5 */}
-                  <div className="bg-white rounded-xl p-5 border border-slate-200 flex flex-col justify-between hover:shadow-lg transition-shadow duration-300 group">
-                    <div>
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#C9B88C' }}>
-                          <LinkIcon className="h-5 w-5 text-slate-600" />
-                        </div>
-                        <div className="flex items-center gap-2 text-slate-400">
-                          <button className="hover:text-yellow-600 transition-colors">
-                            <Star className="h-4 w-4" />
-                          </button>
-                          <button className="hover:text-slate-600 transition-colors">
-                            <MoreHorizontal className="h-4 w-4" />
-                          </button>
-                        </div>
-                      </div>
-                      <h3 className="font-semibold text-slate-800 mb-1">Links Importantes</h3>
-                      <p className="text-sm text-slate-500 mb-4 line-clamp-2">Coleção de links para relatórios do mercado, site...</p>
-                    </div>
-                    <div className="flex items-center justify-between text-xs mt-auto">
-                      <span className="text-slate-400">Atualizado há 5 dias</span>
-                      <span className="text-white px-2 py-0.5 rounded-md font-medium" style={{ backgroundColor: '#C97B7B' }}>Importante</span>
-                    </div>
-                  </div>
-
-                  {/* Note 6 */}
-                  <div className="bg-white rounded-xl p-5 border border-slate-200 flex flex-col justify-between hover:shadow-lg transition-shadow duration-300 group">
-                    <div>
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#7FA8C9' }}>
-                          <CalendarCheck className="h-5 w-5 text-slate-600" />
-                        </div>
-                        <div className="flex items-center gap-2 text-slate-400">
-                          <button className="text-yellow-600">
-                            <Star className="h-4 w-4 fill-current" />
-                          </button>
-                          <button className="hover:text-slate-600 transition-colors">
-                            <MoreHorizontal className="h-4 w-4" />
-                          </button>
-                        </div>
-                      </div>
-                      <h3 className="font-semibold text-slate-800 mb-1">Cronograma de Estudos</h3>
-                      <p className="text-sm text-slate-500 mb-4 line-clamp-2">Planejamento semanal de conteúdos a estudar e...</p>
-                    </div>
-                    <div className="flex items-center justify-between text-xs mt-auto">
-                      <span className="text-slate-400">Editado há 1 semana</span>
-                      <span className="text-white px-2 py-0.5 rounded-md font-medium" style={{ backgroundColor: '#8CC99B' }}>estudo</span>
-                    </div>
-                  </div>
+                  ))}
                 </section>
               )}
 
               {/* List View */}
               {viewMode === 'list' && (
               <section className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-                {/* Table Header */}
-                <div className="grid grid-cols-12 gap-4 px-6 py-3 bg-slate-50 border-b border-slate-200">
-                  <div className="col-span-5 text-xs font-semibold text-slate-600 uppercase">Nome</div>
-                  <div className="col-span-2 text-xs font-semibold text-slate-600 uppercase">Tipo</div>
-                  <div className="col-span-2 text-xs font-semibold text-slate-600 uppercase">Modificado</div>
-                  <div className="col-span-2 text-xs font-semibold text-slate-600 uppercase">Criado</div>
-                  <div className="col-span-1 text-xs font-semibold text-slate-600 uppercase text-right">Ações</div>
-                </div>
+                {/* Table Header - Changes based on status */}
+                {statusFilter === 'publicado' ? (
+                  <div className="grid grid-cols-12 gap-4 px-6 py-3 bg-slate-50 border-b border-slate-200">
+                    <div className="col-span-4 text-xs font-semibold text-slate-600 uppercase">Nome</div>
+                    <div className="col-span-2 text-xs font-semibold text-slate-600 uppercase">Tipo</div>
+                    <div className="col-span-2 text-xs font-semibold text-slate-600 uppercase">Data de Publicação</div>
+                    <div className="col-span-3 text-xs font-semibold text-slate-600 uppercase">Newsletter</div>
+                    <div className="col-span-1 text-xs font-semibold text-slate-600 uppercase text-right">Ações</div>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-12 gap-4 px-6 py-3 bg-slate-50 border-b border-slate-200">
+                    <div className="col-span-5 text-xs font-semibold text-slate-600 uppercase">Nome</div>
+                    <div className="col-span-2 text-xs font-semibold text-slate-600 uppercase">Tipo</div>
+                    <div className="col-span-2 text-xs font-semibold text-slate-600 uppercase">Modificado</div>
+                    <div className="col-span-2 text-xs font-semibold text-slate-600 uppercase">Criado</div>
+                    <div className="col-span-1 text-xs font-semibold text-slate-600 uppercase text-right">Ações</div>
+                  </div>
+                )}
 
-                {/* Items */}
-                {libraryItems.map((item) => (
+                {/* Items - Filtered by status */}
+                {libraryItems
+                  .filter(item => item.status === statusFilter)
+                  .map((item) => (
                   <div
                     key={item.id}
                     className="border-b border-slate-100 hover:bg-slate-50 transition-colors cursor-pointer"
                   >
-                    <div className="grid grid-cols-12 gap-4 px-6 py-4 items-center">
-                      <div className="col-span-5 flex items-center gap-4">
-                        <div
-                          className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                          style={{ backgroundColor: item.typeColor }}
-                        >
-                          {getIconComponent(item.icon)}
+                    {statusFilter === 'publicado' ? (
+                      // Published items view
+                      <div className="grid grid-cols-12 gap-4 px-6 py-4 items-center">
+                        <div className="col-span-4 flex items-center gap-4">
+                          <div
+                            className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                            style={{ backgroundColor: item.typeColor }}
+                          >
+                            {getIconComponent(item.icon)}
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <h3 className="font-semibold text-slate-800 truncate flex items-center gap-2">
+                              {item.title}
+                              {item.showStarInTitle && <Star className="h-3 w-3 text-yellow-500 fill-yellow-500" />}
+                            </h3>
+                            {item.description && (
+                              <p className="text-sm text-slate-500 truncate">{item.description}</p>
+                            )}
+                          </div>
                         </div>
-                        <div className="min-w-0 flex-1">
-                          <h3 className="font-semibold text-slate-800 truncate flex items-center gap-2">
-                            {item.title}
-                            {item.showStarInTitle && <Star className="h-3 w-3 text-yellow-500 fill-yellow-500" />}
-                          </h3>
-                          {item.description && (
-                            <p className="text-sm text-slate-500 truncate">{item.description}</p>
-                          )}
-                          {item.audioProgress !== undefined && (
-                            <div className="flex items-center gap-2 mt-1">
-                              <div className="w-32 bg-slate-200 rounded-full h-1">
-                                <div
-                                  className="h-1 rounded-full"
-                                  style={{
-                                    backgroundColor: item.typeColor,
-                                    width: `${item.audioProgress}%`
-                                  }}
-                                ></div>
-                              </div>
-                              <span className="text-xs text-slate-500 font-mono">{item.audioDuration}</span>
+                        <div className="col-span-2">
+                          <span
+                            className="inline-flex items-center gap-2 px-3 py-1 text-white rounded-full text-xs font-medium"
+                            style={{ backgroundColor: item.typeColor }}
+                          >
+                            {getSmallIconComponent(item.icon)}
+                            {item.type}
+                          </span>
+                        </div>
+                        <div className="col-span-2">
+                          <div className="text-sm text-slate-700">{item.publishedDate}</div>
+                        </div>
+                        <div className="col-span-3">
+                          {item.linkedToNewsletter ? (
+                            <div className="flex items-center gap-2">
+                              <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#8CC99B' }}></div>
+                              <span className="text-sm text-slate-700 truncate">
+                                {item.newsletterName || 'Newsletter Vinculada'}
+                              </span>
                             </div>
+                          ) : (
+                            <span className="text-sm text-slate-400">Sem correlação</span>
                           )}
                         </div>
+                        <div className="col-span-1 flex items-center justify-end gap-2">
+                          <button
+                            className={`p-2 transition-colors ${
+                              item.starred
+                                ? 'text-yellow-600 hover:text-yellow-700'
+                                : 'text-slate-400 hover:text-yellow-600'
+                            }`}
+                          >
+                            <Star className={`h-4 w-4 ${item.starred ? 'fill-current' : ''}`} />
+                          </button>
+                          <button className="p-2 text-slate-400 hover:text-slate-600 transition-colors">
+                            <MoreHorizontal className="h-4 w-4" />
+                          </button>
+                        </div>
                       </div>
-                      <div className="col-span-2">
-                        <span
-                          className="inline-flex items-center gap-2 px-3 py-1 text-white rounded-full text-xs font-medium"
-                          style={{ backgroundColor: item.typeColor }}
-                        >
-                          {getSmallIconComponent(item.icon)}
-                          {item.type}
-                        </span>
+                    ) : (
+                      // Draft items view
+                      <div className="grid grid-cols-12 gap-4 px-6 py-4 items-center">
+                        <div className="col-span-5 flex items-center gap-4">
+                          <div
+                            className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                            style={{ backgroundColor: item.typeColor }}
+                          >
+                            {getIconComponent(item.icon)}
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <h3 className="font-semibold text-slate-800 truncate flex items-center gap-2">
+                              {item.title}
+                              {item.showStarInTitle && <Star className="h-3 w-3 text-yellow-500 fill-yellow-500" />}
+                            </h3>
+                            {item.description && (
+                              <p className="text-sm text-slate-500 truncate">{item.description}</p>
+                            )}
+                            {item.audioProgress !== undefined && (
+                              <div className="flex items-center gap-2 mt-1">
+                                <div className="w-32 bg-slate-200 rounded-full h-1">
+                                  <div
+                                    className="h-1 rounded-full"
+                                    style={{
+                                      backgroundColor: item.typeColor,
+                                      width: `${item.audioProgress}%`
+                                    }}
+                                  ></div>
+                                </div>
+                                <span className="text-xs text-slate-500 font-mono">{item.audioDuration}</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <div className="col-span-2">
+                          <span
+                            className="inline-flex items-center gap-2 px-3 py-1 text-white rounded-full text-xs font-medium"
+                            style={{ backgroundColor: item.typeColor }}
+                          >
+                            {getSmallIconComponent(item.icon)}
+                            {item.type}
+                          </span>
+                        </div>
+                        <div className="col-span-2">
+                          <div className="text-sm text-slate-700">{item.modifiedDate}</div>
+                          <div className="text-xs text-slate-500">{item.modifiedRelative}</div>
+                        </div>
+                        <div className="col-span-2">
+                          <div className="text-sm text-slate-700">{item.createdDate}</div>
+                          <div className="text-xs text-slate-500">{item.createdTime}</div>
+                        </div>
+                        <div className="col-span-1 flex items-center justify-end gap-2">
+                          <button
+                            className={`p-2 transition-colors ${
+                              item.starred
+                                ? 'text-yellow-600 hover:text-yellow-700'
+                                : 'text-slate-400 hover:text-yellow-600'
+                            }`}
+                          >
+                            <Star className={`h-4 w-4 ${item.starred ? 'fill-current' : ''}`} />
+                          </button>
+                          <button className="p-2 text-slate-400 hover:text-slate-600 transition-colors">
+                            <MoreHorizontal className="h-4 w-4" />
+                          </button>
+                        </div>
                       </div>
-                      <div className="col-span-2">
-                        <div className="text-sm text-slate-700">{item.modifiedDate}</div>
-                        <div className="text-xs text-slate-500">{item.modifiedRelative}</div>
-                      </div>
-                      <div className="col-span-2">
-                        <div className="text-sm text-slate-700">{item.createdDate}</div>
-                        <div className="text-xs text-slate-500">{item.createdTime}</div>
-                      </div>
-                      <div className="col-span-1 flex items-center justify-end gap-2">
-                        <button
-                          className={`p-2 transition-colors ${
-                            item.starred
-                              ? 'text-yellow-600 hover:text-yellow-700'
-                              : 'text-slate-400 hover:text-yellow-600'
-                          }`}
-                        >
-                          <Star className={`h-4 w-4 ${item.starred ? 'fill-current' : ''}`} />
-                        </button>
-                        <button className="p-2 text-slate-400 hover:text-slate-600 transition-colors">
-                          <MoreHorizontal className="h-4 w-4" />
-                        </button>
-                      </div>
-                    </div>
+                    )}
                   </div>
                 ))}
               </section>
