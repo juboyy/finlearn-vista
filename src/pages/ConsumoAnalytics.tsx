@@ -2,8 +2,11 @@ import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Bell, TrendingUp, Download, Mic, Pen, Video, Coins, Receipt, Wallet, Info, ShoppingCart, Percent, Gift, Plus, Edit, Trash, Ticket } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useNavigate } from "react-router-dom";
 
 export default function ConsumoAnalytics() {
+  const navigate = useNavigate();
+
   return (
     <div className="flex h-screen overflow-hidden bg-slate-50">
       <SidebarFix />
@@ -83,7 +86,10 @@ export default function ConsumoAnalytics() {
             <section className="col-span-2 bg-white rounded-xl p-6 border border-slate-200">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-lg font-semibold text-slate-800">Saldo de Créditos IA</h2>
-                <Button className="bg-pastel-yellow hover:bg-opacity-80 text-pastel-gray-dark">
+                <Button 
+                  onClick={() => navigate('/comprar-creditos')}
+                  className="bg-pastel-yellow hover:bg-opacity-80 text-pastel-gray-dark"
+                >
                   <Coins className="w-4 h-4 mr-2" />
                   Comprar Créditos
                 </Button>
