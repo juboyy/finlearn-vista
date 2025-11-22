@@ -1,2 +1,7 @@
+project_id = "p98pqg"
+
 [functions.chat-agent]
+verify_jwt = false
+
+[functions.generate-reading-insights]
 verify_jwt = false

@@ -1,12 +1,52 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export const NewspaperAnalytics = () => {
+  const [insights, setInsights] = useState<string>("");
+  const [loadingInsights, setLoadingInsights] = useState(true);
+
   useEffect(() => {
     // Initialize Plotly charts after component mounts
     if (typeof window !== 'undefined' && (window as any).Plotly) {
       initializeCharts();
     }
+    
+    // Generate AI insights
+    generateInsights();
   }, []);
+
+  const generateInsights = async () => {
+    try {
+      setLoadingInsights(true);
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      
+      if (!supabaseUrl) {
+        throw new Error("Supabase URL not configured");
+      }
+
+      const response = await fetch(`${supabaseUrl}/functions/v1/generate-reading-insights`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ analyticsData: {} })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      if (data?.insights) {
+        setInsights(data.insights);
+      }
+    } catch (error) {
+      console.error('Error generating insights:', error);
+      setInsights("Não foi possível gerar insights no momento. Por favor, tente novamente mais tarde.");
+    } finally {
+      setLoadingInsights(false);
+    }
+  };
 
   const initializeCharts = () => {
     const Plotly = (window as any).Plotly;
@@ -588,6 +628,30 @@ export const NewspaperAnalytics = () => {
           <section className="bg-white rounded-xl p-6 border border-slate-200">
             <h2 className="text-lg font-semibold text-slate-800 mb-6">Análise de Taxa de Conclusão</h2>
             <div id="completion-rate-chart" className="h-64"></div>
+            
+            {/* AI Insights Section */}
+            <div className="mt-6 pt-6 border-t border-slate-200">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 bg-pastel-purple rounded-lg flex items-center justify-center">
+                  <i className="fas fa-brain text-slate-700"></i>
+                </div>
+                <h3 className="text-base font-semibold text-slate-800">Análise Comportamental por IA</h3>
+              </div>
+              
+              {loadingInsights ? (
+                <div className="space-y-3">
+                  <div className="h-4 bg-slate-100 rounded animate-pulse"></div>
+                  <div className="h-4 bg-slate-100 rounded animate-pulse w-5/6"></div>
+                  <div className="h-4 bg-slate-100 rounded animate-pulse w-4/6"></div>
+                </div>
+              ) : (
+                <div className="prose prose-sm max-w-none">
+                  <p className="text-sm text-slate-600 leading-relaxed whitespace-pre-line">
+                    {insights}
+                  </p>
+                </div>
+              )}
+            </div>
           </section>
 
           <section className="bg-white rounded-xl p-6 border border-slate-200">
