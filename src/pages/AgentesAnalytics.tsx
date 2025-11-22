@@ -607,7 +607,7 @@ const AgentesAnalytics = () => {
                 <div className="space-y-3">
                   <div className="group p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-300 bg-white">
                     <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                      <div className="w-10 h-10 rounded-lg bg-pastel-blue flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
                         <i className="fas fa-lightbulb text-slate-700 text-base"></i>
                       </div>
                       <div className="flex-1 min-w-0">
@@ -619,7 +619,7 @@ const AgentesAnalytics = () => {
 
                   <div className="group p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-300 bg-white">
                     <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                      <div className="w-10 h-10 rounded-lg bg-pastel-green flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
                         <i className="fas fa-chart-line text-slate-700 text-base"></i>
                       </div>
                       <div className="flex-1 min-w-0">
@@ -631,7 +631,7 @@ const AgentesAnalytics = () => {
 
                   <div className="group p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-300 bg-white">
                     <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                      <div className="w-10 h-10 rounded-lg bg-pastel-purple flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
                         <i className="fas fa-star text-slate-700 text-base"></i>
                       </div>
                       <div className="flex-1 min-w-0">
@@ -643,7 +643,7 @@ const AgentesAnalytics = () => {
 
                   <div className="group p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-300 bg-white">
                     <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                      <div className="w-10 h-10 rounded-lg bg-pastel-yellow flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
                         <i className="fas fa-users text-slate-700 text-base"></i>
                       </div>
                       <div className="flex-1 min-w-0">
@@ -663,7 +663,7 @@ const AgentesAnalytics = () => {
                 <div className="space-y-3">
                   <div className="group p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-300 bg-gradient-to-br from-white to-slate-50/30">
                     <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-white border-2 border-slate-300 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:border-slate-400 transition-all duration-300">
+                      <div className="w-10 h-10 rounded-lg bg-pastel-blue flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-all duration-300">
                         <i className="fas fa-arrow-up text-slate-700 text-base"></i>
                       </div>
                       <div className="flex-1 min-w-0">
@@ -675,7 +675,7 @@ const AgentesAnalytics = () => {
 
                   <div className="group p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-300 bg-gradient-to-br from-white to-slate-50/30">
                     <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-white border-2 border-slate-300 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:border-slate-400 transition-all duration-300">
+                      <div className="w-10 h-10 rounded-lg bg-pastel-green flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-all duration-300">
                         <i className="fas fa-plus-circle text-slate-700 text-base"></i>
                       </div>
                       <div className="flex-1 min-w-0">
@@ -687,7 +687,7 @@ const AgentesAnalytics = () => {
 
                   <div className="group p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-300 bg-gradient-to-br from-white to-slate-50/30">
                     <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-white border-2 border-slate-300 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:border-slate-400 transition-all duration-300">
+                      <div className="w-10 h-10 rounded-lg bg-pastel-purple flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-all duration-300">
                         <i className="fas fa-graduation-cap text-slate-700 text-base"></i>
                       </div>
                       <div className="flex-1 min-w-0">
@@ -699,7 +699,7 @@ const AgentesAnalytics = () => {
 
                   <div className="group p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-300 bg-gradient-to-br from-white to-slate-50/30">
                     <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-white border-2 border-slate-300 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:border-slate-400 transition-all duration-300">
+                      <div className="w-10 h-10 rounded-lg bg-pastel-pink flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-all duration-300">
                         <i className="fas fa-video text-slate-700 text-base"></i>
                       </div>
                       <div className="flex-1 min-w-0">
