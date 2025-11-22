@@ -138,23 +138,49 @@ const ConsumoAnalytics = () => {
 
         <div className="p-8 space-y-8">
           <section className="grid grid-cols-4 gap-6">
-            {[
-              { icon: 'fa-brain', label: 'Taxa de Retenção', value: '87%', badge: '+18%', badgeColor: 'text-emerald-600 bg-emerald-50', color: 'bg-pastel-blue' },
-              { icon: 'fa-trophy', label: 'Pontos XP', value: '342', badge: '+25', badgeColor: 'text-emerald-600 bg-emerald-50', color: 'bg-pastel-green' },
-              { icon: 'fa-target', label: 'Objetivos Atingidos', value: '92%', badge: 'Meta', badgeColor: 'text-slate-600 bg-slate-50', color: 'bg-pastel-yellow' },
-              { icon: 'fa-chart-bar', label: 'Posição Geral', value: '#23', badge: 'Ranking', badgeColor: 'text-blue-600 bg-blue-50', color: 'bg-pastel-pink' }
-            ].map((metric, idx) => (
-              <div key={idx} className="bg-white rounded-xl p-6 border border-slate-200">
-                <div className="flex items-center justify-between mb-4">
-                  <div className={`w-12 h-12 ${metric.color} rounded-lg flex items-center justify-center`}>
-                    <i className={`fas ${metric.icon} text-[hsl(var(--pastel-gray-dark))] text-xl`}></i>
-                  </div>
-                  <span className={`text-xs font-medium ${metric.badgeColor} px-2 py-1 rounded`}>{metric.badge}</span>
+            <div className="bg-white rounded-xl p-6 border border-slate-200">
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 bg-pastel-blue rounded-lg flex items-center justify-center">
+                  <i className="fas fa-book-reader text-[hsl(var(--pastel-gray-dark))] text-xl"></i>
                 </div>
-                <h3 className="text-3xl font-bold text-slate-800 mb-1">{metric.value}</h3>
-                <p className="text-sm text-slate-500">{metric.label}</p>
+                <span className="text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-1 rounded">+18%</span>
               </div>
-            ))}
+              <h3 className="text-3xl font-bold text-slate-800 mb-1">87%</h3>
+              <p className="text-sm text-slate-500">Taxa de Retenção</p>
+            </div>
+
+            <div className="bg-white rounded-xl p-6 border border-slate-200">
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center">
+                  <i className="fas fa-trophy text-[hsl(var(--pastel-gray-dark))] text-xl"></i>
+                </div>
+                <span className="text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-1 rounded">+25</span>
+              </div>
+              <h3 className="text-3xl font-bold text-slate-800 mb-1">342</h3>
+              <p className="text-sm text-slate-500">Pontos XP</p>
+            </div>
+
+            <div className="bg-white rounded-xl p-6 border border-slate-200">
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 bg-pastel-yellow rounded-lg flex items-center justify-center">
+                  <i className="fas fa-bullseye text-[hsl(var(--pastel-gray-dark))] text-xl"></i>
+                </div>
+                <span className="text-xs font-medium text-slate-600 bg-slate-50 px-2 py-1 rounded">Meta</span>
+              </div>
+              <h3 className="text-3xl font-bold text-slate-800 mb-1">92%</h3>
+              <p className="text-sm text-slate-500">Objetivos Atingidos</p>
+            </div>
+
+            <div className="bg-white rounded-xl p-6 border border-slate-200">
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 bg-pastel-pink rounded-lg flex items-center justify-center">
+                  <i className="fas fa-ranking-star text-[hsl(var(--pastel-gray-dark))] text-xl"></i>
+                </div>
+                <span className="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded">Ranking</span>
+              </div>
+              <h3 className="text-3xl font-bold text-slate-800 mb-1">#23</h3>
+              <p className="text-sm text-slate-500">Posição Geral</p>
+            </div>
           </section>
 
           <div className="grid grid-cols-2 gap-6">
