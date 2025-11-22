@@ -104,7 +104,10 @@ export default function Newsletter() {
               <p className="text-sm text-slate-500 mt-1">Mantenha-se atualizado com as principais notícias do mercado financeiro</p>
             </div>
             <div className="flex items-center gap-3">
-              <button className="w-10 h-10 border border-slate-200 text-slate-700 rounded-lg font-medium hover:bg-slate-50 transition flex items-center justify-center">
+              <button 
+                onClick={() => navigate('/newsletter-settings')}
+                className="w-10 h-10 border border-slate-200 text-slate-700 rounded-lg font-medium hover:bg-slate-50 transition flex items-center justify-center"
+              >
                 <Settings size={18} />
               </button>
               <button 
