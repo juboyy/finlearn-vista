@@ -359,7 +359,13 @@ export default function Financeiro() {
             {/* Churn de Usuários - Receita */}
             <Card className="animate-fade-in" style={{ animationDelay: "1s" }}>
               <CardHeader>
-                <CardTitle className="text-foreground">Churn vs Receita Nova (R$)</CardTitle>
+                <div className="flex items-start justify-between">
+                  <CardTitle className="text-foreground">Churn vs Receita Nova (R$)</CardTitle>
+                  <div className="text-right">
+                    <p className="text-sm text-muted-foreground">Saldo Junho</p>
+                    <p className="text-2xl font-bold" style={{ color: 'hsl(152, 32%, 65%)' }}>+R$ 2.240</p>
+                  </div>
+                </div>
               </CardHeader>
               <CardContent>
                 <ResponsiveContainer width="100%" height={300}>
