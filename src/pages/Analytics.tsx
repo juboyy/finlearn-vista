@@ -48,14 +48,14 @@ const Analytics = () => {
           </div>
           <div className="flex items-center gap-4">
             <div className="relative group">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 w-4 h-4 group-hover:text-slate-700 transition-colors" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[hsl(var(--pastel-gray-dark))] w-4 h-4 group-hover:text-slate-700 transition-colors" />
               <input
                 type="text"
                 placeholder="Buscar métricas..."
                 className="pl-9 pr-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-slate-400 w-64 transition-all shadow-sm text-slate-600 placeholder-slate-400"
               />
             </div>
-            <button className="w-10 h-10 rounded-lg border border-slate-200 bg-white flex items-center justify-center text-slate-600 hover:bg-slate-50 hover:text-slate-700 transition-colors relative shadow-sm">
+            <button className="w-10 h-10 rounded-lg border border-slate-200 bg-white flex items-center justify-center text-[hsl(var(--pastel-gray-dark))] hover:bg-slate-50 hover:text-slate-700 transition-colors relative shadow-sm">
               <Bell size={20} />
               <span className="absolute top-2.5 right-3 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
             </button>
@@ -77,7 +77,7 @@ const Analytics = () => {
                 { icon: 'fa-user-circle', label: 'Perfil', color: 'bg-pastel-pink' }
               ].map((btn, idx) => (
                 <button key={idx} className="bg-white border border-slate-200 p-6 rounded-xl flex flex-col items-center justify-center gap-3 hover:shadow-md transition-all duration-300 group">
-                  <div className={`w-14 h-14 rounded-xl ${btn.color} flex items-center justify-center text-slate-600 group-hover:scale-110 transition-transform`}>
+                  <div className={`w-14 h-14 rounded-xl ${btn.color} flex items-center justify-center text-[hsl(var(--pastel-gray-dark))] group-hover:scale-110 transition-transform`}>
                     <i className={`fa-solid ${btn.icon} text-2xl`}></i>
                   </div>
                   <span className="text-sm font-bold text-slate-700">{btn.label}</span>
@@ -104,7 +104,7 @@ const Analytics = () => {
                       <p className="text-sm font-semibold text-slate-500">{kpi.title}</p>
                       <h3 className="text-3xl font-bold text-slate-800 mt-2">{kpi.value}</h3>
                     </div>
-                    <div className={`w-12 h-12 rounded-xl ${kpi.color} flex items-center justify-center text-slate-600`}>
+                    <div className={`w-12 h-12 rounded-xl ${kpi.color} flex items-center justify-center text-[hsl(var(--pastel-gray-dark))]`}>
                       <i className={`fa-solid ${kpi.icon} text-lg`}></i>
                     </div>
                   </div>
@@ -196,7 +196,7 @@ const Analytics = () => {
             <div className="bg-white border border-slate-200 p-6 rounded-xl">
               <div className="flex justify-between items-center mb-6">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-pastel-pink flex items-center justify-center text-slate-600">
+                  <div className="w-10 h-10 rounded-xl bg-pastel-pink flex items-center justify-center text-[hsl(var(--pastel-gray-dark))]">
                     <i className="fa-solid fa-arrow-trend-up"></i>
                   </div>
                   <div>
@@ -235,7 +235,7 @@ const Analytics = () => {
             <div className="bg-white border border-slate-200 p-6 rounded-xl">
               <div className="flex justify-between items-center mb-6">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-pastel-green flex items-center justify-center text-slate-600">
+                  <div className="w-10 h-10 rounded-xl bg-pastel-green flex items-center justify-center text-[hsl(var(--pastel-gray-dark))]">
                     <i className="fa-solid fa-chart-area"></i>
                   </div>
                   <div>
@@ -303,7 +303,7 @@ const Analytics = () => {
                     <tr key={idx} className="hover:bg-slate-50 transition-colors group">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center gap-3">
-                          <div className={`w-10 h-10 rounded-xl ${agent.color} flex items-center justify-center text-slate-600 text-lg`}>
+                          <div className={`w-10 h-10 rounded-xl ${agent.color} flex items-center justify-center text-[hsl(var(--pastel-gray-dark))] text-lg`}>
                             <i className={`fa-solid ${agent.icon}`}></i>
                           </div>
                           <div>
