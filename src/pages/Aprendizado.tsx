@@ -8,6 +8,7 @@ import { Bell, Play, Clock, BookOpen, TrendingUp, Headphones, Calendar, Users, M
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ebookRiskManagementPink from "@/assets/ebook-risk-management-pink.png";
+import cursoAnaliseTecnicaIllustration from "@/assets/curso-analise-tecnica-illustration.png";
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts';
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -503,7 +504,7 @@ const Aprendizado = () => {
               <div className="space-y-4">
                 <div className="bg-white rounded-xl border border-slate-200 p-4 flex items-center gap-4 transition hover:shadow-md">
                   <div className="w-32 h-20 rounded-lg overflow-hidden flex-shrink-0">
-                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/9277263dd6-d496ce2f9588a997ccf8.png" alt="illustration of dual monitors displaying complex financial stock market charts, pastel colors, outlined style" className="w-full h-full object-cover" />
+                    <img src={cursoAnaliseTecnicaIllustration} alt="illustration of dual monitors displaying complex financial stock market charts, pastel colors, outlined style" className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex justify-between items-start mb-2">
