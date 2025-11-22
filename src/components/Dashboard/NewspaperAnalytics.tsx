@@ -587,7 +587,7 @@ export const NewspaperAnalytics = () => {
         <div className="grid grid-cols-2 gap-6 mb-8">
           <section className="bg-white rounded-xl p-6 border border-slate-200">
             <h2 className="text-lg font-semibold text-slate-800 mb-6">Análise de Taxa de Conclusão</h2>
-            <div id="completion-rate-chart" className="h-80"></div>
+            <div id="completion-rate-chart" className="h-64"></div>
           </section>
 
           <section className="bg-white rounded-xl p-6 border border-slate-200">
