@@ -1,3 +1,4 @@
+// Newsletter Analytics Page
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { BarChart3, Download, MailOpen, Percent, Clock, CheckCheck, Heart, ChartLine, CreditCard, Scale, Globe, Lightbulb, Trophy, Flame, Bookmark } from "lucide-react";
 import { useEffect } from "react";
