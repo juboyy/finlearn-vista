@@ -62,19 +62,25 @@ export default function Financeiro() {
       <SidebarFix />
       
       <div className="flex-1 ml-64">
-        <div className="p-8">
-          <div className="mb-8">
-            <button
-              onClick={() => navigate("/criar-newsletter")}
-              className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition mb-4"
-            >
-              <ArrowLeft size={20} />
-              Voltar
-            </button>
-            <h1 className="text-4xl font-bold text-foreground">Dashboard Financeiro</h1>
-            <p className="text-muted-foreground mt-2">Visão completa das receitas e assinantes</p>
+        {/* Header */}
+        <div className="bg-slate-50 border-b border-slate-200 px-8 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => navigate("/criar-newsletter")}
+                className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition"
+              >
+                <ArrowLeft size={20} />
+              </button>
+              <div>
+                <h1 className="text-2xl font-bold text-foreground">Dashboard Financeiro</h1>
+                <p className="text-sm text-muted-foreground">Visão completa das receitas e assinantes</p>
+              </div>
+            </div>
           </div>
+        </div>
 
+        <div className="p-8">
           {/* KPIs */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <StatCard
