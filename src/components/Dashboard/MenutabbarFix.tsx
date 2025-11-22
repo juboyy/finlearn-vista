@@ -4,10 +4,12 @@ type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webin
 interface MenutabbarFixProps {
   activeTab: TabType;
   setActiveTab: (tab: TabType) => void;
+  onHistoricoClick?: () => void;
 }
 export const MenutabbarFix = ({
   activeTab,
-  setActiveTab
+  setActiveTab,
+  onHistoricoClick
 }: MenutabbarFixProps) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const scroll = (direction: 'left' | 'right') => {
@@ -96,7 +98,10 @@ export const MenutabbarFix = ({
           <BarChart3 size={18} />
           <span>Analytics</span>
         </button>
-        <button className="px-5 py-3 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2 whitespace-nowrap">
+        <button 
+          onClick={onHistoricoClick}
+          className="px-5 py-3 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2 whitespace-nowrap"
+        >
           <i className="fas fa-history"></i>
           <span>Histórico</span>
         </button>
