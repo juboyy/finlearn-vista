@@ -7,6 +7,38 @@ const PerformanceSEO = () => {
   const navigate = useNavigate();
   const [trendView, setTrendView] = useState<'impressions' | 'clicks' | 'ctr'>('impressions');
 
+  // Custom tick component for multi-line labels
+  const CustomXAxisTick = ({ x, y, payload }: any) => {
+    const words = payload.value.split(' ');
+    const lines = [];
+    
+    if (words.length <= 2) {
+      lines.push(words.join(' '));
+    } else {
+      const mid = Math.ceil(words.length / 2);
+      lines.push(words.slice(0, mid).join(' '));
+      lines.push(words.slice(mid).join(' '));
+    }
+    
+    return (
+      <g transform={`translate(${x},${y})`}>
+        {lines.map((line, index) => (
+          <text
+            key={index}
+            x={0}
+            y={0}
+            dy={index * 12 + 5}
+            textAnchor="middle"
+            fill="#6b7280"
+            fontSize={10}
+          >
+            {line}
+          </text>
+        ))}
+      </g>
+    );
+  };
+
   // Data for charts
   const monthlyTrendData = [
     { name: 'Sem 1', impressions: 28500, clicks: 4200, ctr: 14.7 },
@@ -358,9 +390,8 @@ const PerformanceSEO = () => {
                     <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
                     <XAxis 
                       dataKey="name" 
-                      tick={{ fill: '#6b7280', fontSize: 10 }} 
-                      textAnchor="middle" 
-                      height={60}
+                      tick={<CustomXAxisTick />}
+                      height={50}
                       interval={0}
                     />
                     <YAxis tick={{ fill: '#6b7280', fontSize: 11 }} label={{ value: 'Impressões', angle: -90, position: 'insideLeft', style: { fontSize: 11, fill: '#6b7280' } }} />
