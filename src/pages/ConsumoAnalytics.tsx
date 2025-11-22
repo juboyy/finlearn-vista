@@ -488,20 +488,25 @@ const ConsumoAnalytics = () => {
                   <BarChart 
                     data={metasPorCategoriaData} 
                     layout="horizontal"
-                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                    margin={{ top: 10, right: 30, left: 0, bottom: 10 }}
+                    barGap={4}
+                    barCategoryGap="20%"
                   >
-                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" horizontal={true} vertical={false} />
                     <XAxis 
                       type="number" 
                       tick={{ fill: '#6b7280', fontSize: 12 }} 
                       axisLine={{ stroke: '#e5e7eb' }}
+                      tickLine={{ stroke: '#e5e7eb' }}
+                      domain={[0, 25]}
                     />
                     <YAxis 
                       dataKey="categoria" 
                       type="category" 
                       tick={{ fill: '#6b7280', fontSize: 12 }} 
-                      width={90}
+                      width={70}
                       axisLine={{ stroke: '#e5e7eb' }}
+                      tickLine={{ stroke: '#e5e7eb' }}
                     />
                     <Tooltip 
                       contentStyle={{ 
@@ -510,25 +515,26 @@ const ConsumoAnalytics = () => {
                         borderRadius: '8px', 
                         fontSize: '13px',
                         padding: '10px'
-                      }} 
+                      }}
+                      cursor={{ fill: 'rgba(0, 0, 0, 0.05)' }}
                     />
                     <Legend 
-                      wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }}
-                      iconType="square"
+                      wrapperStyle={{ fontSize: '12px', paddingTop: '15px' }}
+                      iconType="circle"
                     />
                     <Bar 
                       dataKey="meta" 
                       fill="#C9AF89" 
                       name="Meta"
-                      stackId="stack"
-                      barSize={28}
+                      radius={[0, 4, 4, 0]}
+                      barSize={20}
                     />
                     <Bar 
                       dataKey="realizado" 
                       fill="#8AAACF" 
                       name="Realizado"
-                      stackId="stack"
-                      barSize={28}
+                      radius={[0, 4, 4, 0]}
+                      barSize={20}
                     />
                   </BarChart>
                 </ResponsiveContainer>
