@@ -54,6 +54,7 @@ import LerDepois from "./pages/LerDepois";
 import Newsletter from "./pages/Newsletter";
 import NewsletterAnalytics from "./pages/NewsletterAnalytics";
 import NewsletterSettings from "./pages/NewsletterSettings";
+import RecursosAdicionais from "./pages/RecursosAdicionais";
 
 import NotFound from "./pages/NotFound";
 
@@ -123,6 +124,7 @@ const App = () => {
             <Route path="/newsletter" element={<Newsletter />} />
             <Route path="/newsletter-analytics" element={<NewsletterAnalytics />} />
             <Route path="/newsletter-settings" element={<NewsletterSettings />} />
+            <Route path="/recursos-adicionais" element={<RecursosAdicionais />} />
           
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
