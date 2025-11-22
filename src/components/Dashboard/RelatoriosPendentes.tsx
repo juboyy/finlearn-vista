@@ -183,18 +183,6 @@ export const RelatoriosPendentes = () => {
 
   const featuredReports = [
     {
-      id: 1,
-      title: "Futuro dos Pagamentos Digitais no Brasil",
-      category: "Análise Setorial",
-      categoryColor: "bg-[#7FA8C9]",
-      publisher: "McKinsey",
-      pages: 156,
-      price: "R$ 299",
-      accessType: "premium",
-      rating: 4.9,
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/8dd35076d4-28e37f72d6b8ef65bc36.png",
-    },
-    {
       id: 2,
       title: "ESG e Sustentabilidade no Setor Financeiro",
       category: "Risco e Governança",
