@@ -22,6 +22,7 @@ import {
   MoreVertical
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip, ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, ZAxis } from "recharts";
 
 export default function MinhasAssinaturas() {
   const navigate = useNavigate();
@@ -449,6 +450,82 @@ export default function MinhasAssinaturas() {
                   </div>
                 ))}
               </div>
+            </div>
+          </section>
+
+          {/* Charts Section */}
+          <section className="grid grid-cols-2 gap-6 mt-8">
+            <div className="bg-white rounded-xl p-6 border border-slate-200">
+              <h3 className="text-base font-semibold text-slate-800 mb-4">Gráfico de Distribuição de Investimento</h3>
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={investmentBreakdown.map((item, index) => ({
+                      name: item.category,
+                      value: parseFloat(item.amount.replace('R$ ', '').replace(',', '.'))
+                    }))}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                    outerRadius={80}
+                    fill="#8884d8"
+                    dataKey="value"
+                  >
+                    {investmentBreakdown.map((item, index) => {
+                      const colors = {
+                        'pastel-blue': 'hsl(var(--pastel-blue))',
+                        'pastel-pink': 'hsl(var(--pastel-pink))',
+                        'pastel-purple': 'hsl(var(--pastel-purple))',
+                        'pastel-peach': 'hsl(var(--pastel-peach))'
+                      };
+                      return <Cell key={`cell-${index}`} fill={colors[item.color as keyof typeof colors]} />;
+                    })}
+                  </Pie>
+                  <Tooltip formatter={(value) => `R$ ${value}`} />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+
+            <div className="bg-white rounded-xl p-6 border border-slate-200">
+              <h3 className="text-base font-semibold text-slate-800 mb-4">Custo vs Satisfação com Assinatura</h3>
+              <ResponsiveContainer width="100%" height={300}>
+                <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis 
+                    type="number" 
+                    dataKey="price" 
+                    name="Custo" 
+                    unit=" R$"
+                    label={{ value: 'Custo Mensal (R$)', position: 'insideBottom', offset: -10 }}
+                  />
+                  <YAxis 
+                    type="number" 
+                    dataKey="satisfaction" 
+                    name="Satisfação" 
+                    unit="%"
+                    label={{ value: 'Satisfação (%)', angle: -90, position: 'insideLeft' }}
+                  />
+                  <ZAxis range={[100, 400]} />
+                  <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+                  <Legend />
+                  <Scatter 
+                    name="Newsletters" 
+                    data={[
+                      { name: 'Análise de Mercado', price: 49, satisfaction: 92 },
+                      { name: 'Payments Insider', price: 39, satisfaction: 88 },
+                      { name: 'Compliance em Foco', price: 0, satisfaction: 78 },
+                      { name: 'Economia em Números', price: 0, satisfaction: 82 },
+                      { name: 'Banking Insights', price: 45, satisfaction: 90 },
+                      { name: 'Inovação Financeira', price: 42, satisfaction: 85 },
+                      { name: 'Crédito & Risco', price: 41, satisfaction: 87 },
+                      { name: 'ESG & Finanças', price: 0, satisfaction: 75 }
+                    ]} 
+                    fill="hsl(var(--pastel-purple))"
+                  />
+                </ScatterChart>
+              </ResponsiveContainer>
             </div>
           </section>
         </div>
