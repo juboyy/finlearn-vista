@@ -118,8 +118,8 @@ export default function Financeiro() {
                 </div>
               </div>
               <Button 
-                variant="outline" 
                 className="flex items-center gap-2"
+                style={{ backgroundColor: 'hsl(152, 32%, 65%)', color: 'hsl(152, 32%, 28%)' }}
               >
                 <BarChart3 size={18} />
                 Métricas
