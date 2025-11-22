@@ -248,6 +248,7 @@ export default function CriarNewsletter() {
               </div>
               <div className="flex items-center gap-3">
                 <button
+                  onClick={() => navigate("/financeiro")}
                   className="px-4 py-2 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
                   style={{ backgroundColor: '#C5E8D4' }}
                 >
