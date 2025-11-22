@@ -59,12 +59,30 @@ export const NewspaperAnalytics = () => {
         throw new Error("Supabase URL not configured");
       }
 
+      // Array de focos diferentes para gerar insights variados
+      const focusOptions = [
+        'padrões temporais e horários de maior produtividade',
+        'correlação entre temas e engajamento',
+        'consistência e streak de aprendizado',
+        'distribuição semanal e oportunidades de melhoria',
+        'comparação com benchmarks da plataforma',
+        'eficiência de leitura e velocidade de consumo',
+        'diversidade de fontes e temas',
+        'ações de engajamento (favoritos, compartilhamentos, comentários)'
+      ];
+      
+      // Seleciona um foco aleatório
+      const randomFocus = focusOptions[Math.floor(Math.random() * focusOptions.length)];
+
       const response = await fetch(`${supabaseUrl}/functions/v1/generate-reading-insights`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ analyticsData: {} })
+        body: JSON.stringify({ 
+          analyticsData: {},
+          focus: randomFocus 
+        })
       });
 
       if (!response.ok) {
@@ -979,8 +997,8 @@ export const NewspaperAnalytics = () => {
                     onClick={generateInsights}
                     className="mt-4 px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition flex items-center gap-2"
                   >
-                    <i className="fas fa-sync-alt"></i>
-                    Gerar Novos Insights
+                    <i className="fas fa-dice"></i>
+                    Gerar Insight Aleatório
                   </button>
                 </div>
               )}
