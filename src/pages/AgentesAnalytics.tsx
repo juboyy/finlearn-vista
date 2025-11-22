@@ -486,8 +486,8 @@ const AgentesAnalytics = () => {
               </div>
             </section>
 
-            <div className="grid grid-cols-3 gap-6">
-              <section className="col-span-2 bg-white rounded-xl p-6 border border-slate-200">
+            <div className="grid grid-cols-2 gap-6">
+              <section className="bg-white rounded-xl p-6 border border-slate-200">
                 <h2 className="text-lg font-semibold text-slate-800 mb-6">Evolução do Engajamento</h2>
                 <div className="h-[280px] w-full">
                   <ResponsiveContainer width="100%" height="100%">
