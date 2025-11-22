@@ -526,7 +526,7 @@ export default function AgendarPublicacao() {
                                 ? 'text-slate-700' 
                                 : 'bg-emerald-100 text-emerald-700'
                             }`}
-                            style={content.isPaid ? { backgroundColor: '#E8D4C5' } : {}}
+                            style={content.isPaid ? { backgroundColor: '#B8D4E8' } : {}}
                           >
                             {content.isPaid ? (
                               <>
