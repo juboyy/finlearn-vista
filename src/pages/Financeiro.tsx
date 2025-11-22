@@ -1,10 +1,12 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, DollarSign, Users, Receipt, Target } from "lucide-react";
+import { ArrowLeft, DollarSign, Users, Receipt, Target, ChevronLeft, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { StatCard } from "@/components/Dashboard/StatCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, AreaChart, Area } from "recharts";
 
 // Dados mockados para demonstração
@@ -42,14 +44,36 @@ const followersVsRevenue = [
 ];
 
 const subscribers = [
-  { id: 1, nome: "João Silva", newsletter: "Insights Financeiros", valor: 49.90, desconto: true, percentualDesconto: "20%" },
-  { id: 2, nome: "Maria Santos", newsletter: "Análise de Mercado", valor: 39.90, desconto: false, percentualDesconto: "-" },
-  { id: 3, nome: "Pedro Costa", newsletter: "Tech & Inovação", valor: 59.90, desconto: true, percentualDesconto: "15%" },
-  { id: 4, nome: "Ana Paula", newsletter: "Compliance Weekly", valor: 29.90, desconto: false, percentualDesconto: "-" },
-  { id: 5, nome: "Carlos Eduardo", newsletter: "Insights Financeiros", valor: 49.90, desconto: true, percentualDesconto: "10%" },
-  { id: 6, nome: "Julia Fernandes", newsletter: "Análise de Mercado", valor: 39.90, desconto: false, percentualDesconto: "-" },
-  { id: 7, nome: "Roberto Lima", newsletter: "Tech & Inovação", valor: 59.90, desconto: true, percentualDesconto: "25%" },
-  { id: 8, nome: "Fernanda Alves", newsletter: "Compliance Weekly", valor: 29.90, desconto: false, percentualDesconto: "-" },
+  { id: 1, nome: "João Silva", newsletter: "Insights Financeiros", valor: 49.90, desconto: true, percentualDesconto: "20%", status: "Ativo" },
+  { id: 2, nome: "Maria Santos", newsletter: "Análise de Mercado", valor: 39.90, desconto: false, percentualDesconto: "-", status: "Ativo" },
+  { id: 3, nome: "Pedro Costa", newsletter: "Tech & Inovação", valor: 59.90, desconto: true, percentualDesconto: "15%", status: "Ativo" },
+  { id: 4, nome: "Ana Paula", newsletter: "Compliance Weekly", valor: 29.90, desconto: false, percentualDesconto: "-", status: "Ativo" },
+  { id: 5, nome: "Carlos Eduardo", newsletter: "Insights Financeiros", valor: 49.90, desconto: true, percentualDesconto: "10%", status: "Ativo" },
+  { id: 6, nome: "Julia Fernandes", newsletter: "Análise de Mercado", valor: 39.90, desconto: false, percentualDesconto: "-", status: "Ativo" },
+  { id: 7, nome: "Roberto Lima", newsletter: "Tech & Inovação", valor: 59.90, desconto: true, percentualDesconto: "25%", status: "Ativo" },
+  { id: 8, nome: "Fernanda Alves", newsletter: "Compliance Weekly", valor: 29.90, desconto: false, percentualDesconto: "-", status: "Ativo" },
+  { id: 9, nome: "Ricardo Mendes", newsletter: "Insights Financeiros", valor: 49.90, desconto: false, percentualDesconto: "-", status: "Ativo" },
+  { id: 10, nome: "Beatriz Oliveira", newsletter: "Análise de Mercado", valor: 39.90, desconto: true, percentualDesconto: "30%", status: "Ativo" },
+  { id: 11, nome: "Lucas Martins", newsletter: "Tech & Inovação", valor: 59.90, desconto: false, percentualDesconto: "-", status: "Ativo" },
+  { id: 12, nome: "Patricia Rocha", newsletter: "Compliance Weekly", valor: 29.90, desconto: true, percentualDesconto: "5%", status: "Ativo" },
+];
+
+const churnQuantity = [
+  { mes: "Jan", cancelados: 12, novos: 45 },
+  { mes: "Fev", cancelados: 15, novos: 52 },
+  { mes: "Mar", cancelados: 18, novos: 48 },
+  { mes: "Abr", cancelados: 14, novos: 56 },
+  { mes: "Mai", cancelados: 20, novos: 61 },
+  { mes: "Jun", cancelados: 16, novos: 58 },
+];
+
+const churnRevenue = [
+  { mes: "Jan", perdido: 520, ganho: 2240 },
+  { mes: "Fev", perdido: 680, ganho: 2650 },
+  { mes: "Mar", perdido: 790, ganho: 2380 },
+  { mes: "Abr", perdido: 610, ganho: 2880 },
+  { mes: "Mai", perdido: 880, ganho: 3120 },
+  { mes: "Jun", perdido: 710, ganho: 2950 },
 ];
 
 // Cores do design system - pastel escuras
@@ -64,6 +88,13 @@ const CHART_COLORS = {
 
 export default function Financeiro() {
   const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+  
+  const totalPages = Math.ceil(subscribers.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentSubscribers = subscribers.slice(startIndex, endIndex);
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -286,10 +317,64 @@ export default function Financeiro() {
                 </ResponsiveContainer>
               </CardContent>
             </Card>
+
+            {/* Churn de Usuários - Quantidade */}
+            <Card className="animate-fade-in" style={{ animationDelay: "0.9s" }}>
+              <CardHeader>
+                <CardTitle className="text-foreground">Churn vs Novos Assinantes (Quantidade)</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={churnQuantity}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis dataKey="mes" tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }} />
+                    <YAxis tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }} />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'hsl(var(--card))', 
+                        border: '1px solid hsl(var(--border))',
+                        borderRadius: '0.5rem',
+                        color: 'hsl(var(--foreground))'
+                      }} 
+                    />
+                    <Legend wrapperStyle={{ color: 'hsl(var(--foreground))' }} />
+                    <Bar dataKey="cancelados" fill={CHART_COLORS.peach} name="Cancelados" />
+                    <Bar dataKey="novos" fill={CHART_COLORS.green} name="Novos" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
+
+            {/* Churn de Usuários - Receita */}
+            <Card className="animate-fade-in" style={{ animationDelay: "1s" }}>
+              <CardHeader>
+                <CardTitle className="text-foreground">Churn vs Receita Nova (R$)</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={churnRevenue}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis dataKey="mes" tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }} />
+                    <YAxis tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }} />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'hsl(var(--card))', 
+                        border: '1px solid hsl(var(--border))',
+                        borderRadius: '0.5rem',
+                        color: 'hsl(var(--foreground))'
+                      }} 
+                    />
+                    <Legend wrapperStyle={{ color: 'hsl(var(--foreground))' }} />
+                    <Bar dataKey="perdido" fill={CHART_COLORS.pink} name="Receita Perdida" />
+                    <Bar dataKey="ganho" fill={CHART_COLORS.blue} name="Receita Nova" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
           </div>
 
           {/* Tabela de Assinantes */}
-          <Card className="animate-fade-in" style={{ animationDelay: "0.9s" }}>
+          <Card className="animate-fade-in" style={{ animationDelay: "1.1s" }}>
             <CardHeader>
               <CardTitle className="text-foreground">Assinantes e Pagamentos</CardTitle>
             </CardHeader>
@@ -299,17 +384,21 @@ export default function Financeiro() {
                   <TableRow>
                     <TableHead className="text-foreground">Nome</TableHead>
                     <TableHead className="text-foreground">Newsletter</TableHead>
-                    <TableHead className="text-foreground">Valor Mensal</TableHead>
-                    <TableHead className="text-foreground">Desconto</TableHead>
                     <TableHead className="text-foreground">Status</TableHead>
+                    <TableHead className="text-foreground">Desconto</TableHead>
+                    <TableHead className="text-foreground">Valor Mensal</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {subscribers.map((sub) => (
+                  {currentSubscribers.map((sub) => (
                     <TableRow key={sub.id}>
                       <TableCell className="font-medium text-foreground">{sub.nome}</TableCell>
                       <TableCell className="text-muted-foreground">{sub.newsletter}</TableCell>
-                      <TableCell className="text-foreground">R$ {sub.valor.toFixed(2)}</TableCell>
+                      <TableCell>
+                        <Badge className="bg-pastel-green text-pastel-gray-dark border-0">
+                          {sub.status}
+                        </Badge>
+                      </TableCell>
                       <TableCell>
                         {sub.desconto ? (
                           <Badge className="bg-pastel-peach text-pastel-gray-dark border-0">
@@ -321,15 +410,43 @@ export default function Financeiro() {
                           </Badge>
                         )}
                       </TableCell>
-                      <TableCell>
-                        <Badge className="bg-pastel-green text-pastel-gray-dark border-0">
-                          Ativo
-                        </Badge>
-                      </TableCell>
+                      <TableCell className="text-foreground">R$ {sub.valor.toFixed(2)}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
+              
+              {/* Paginação */}
+              <div className="flex items-center justify-between mt-4 pt-4 border-t border-border">
+                <p className="text-sm text-muted-foreground">
+                  Mostrando {startIndex + 1} - {Math.min(endIndex, subscribers.length)} de {subscribers.length} assinantes
+                </p>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                    disabled={currentPage === 1}
+                    className="flex items-center gap-1"
+                  >
+                    <ChevronLeft size={16} />
+                    Anterior
+                  </Button>
+                  <span className="text-sm text-muted-foreground px-3">
+                    Página {currentPage} de {totalPages}
+                  </span>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                    disabled={currentPage === totalPages}
+                    className="flex items-center gap-1"
+                  >
+                    Próximo
+                    <ChevronRight size={16} />
+                  </Button>
+                </div>
+              </div>
             </CardContent>
           </Card>
         </div>
