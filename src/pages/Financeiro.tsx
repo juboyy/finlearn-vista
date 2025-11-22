@@ -302,16 +302,21 @@ export default function Financeiro() {
                       type="monotone" 
                       dataKey="seguidores" 
                       stroke={CHART_COLORS.purple} 
-                      strokeWidth={2} 
+                      strokeWidth={3} 
                       name="Seguidores" 
+                      dot={{ fill: CHART_COLORS.purple, r: 5 }}
+                      activeDot={{ r: 7 }}
                     />
                     <Line 
                       yAxisId="right" 
                       type="monotone" 
                       dataKey="receita" 
                       stroke={CHART_COLORS.green} 
-                      strokeWidth={2} 
+                      strokeWidth={2.5} 
+                      strokeDasharray="8 4"
                       name="Receita (R$)" 
+                      dot={{ fill: CHART_COLORS.green, r: 4, strokeWidth: 2, stroke: 'hsl(var(--card))' }}
+                      activeDot={{ r: 6 }}
                     />
                   </LineChart>
                 </ResponsiveContainer>
