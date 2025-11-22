@@ -192,13 +192,19 @@ const PerfilAnalytics = () => {
               </div>
               <div className="h-[320px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={followersData}>
+                  <AreaChart data={followersData}>
+                    <defs>
+                      <linearGradient id="colorFollowers" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#8EBC9F" stopOpacity={0.3}/>
+                        <stop offset="95%" stopColor="#8EBC9F" stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
                     <XAxis dataKey="name" tick={{ fill: '#6b7280', fontSize: 11 }} />
                     <YAxis tick={{ fill: '#6b7280', fontSize: 11 }} />
                     <Tooltip contentStyle={{ backgroundColor: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '12px' }} />
-                    <Bar dataKey="value" fill="#8EBC9F" radius={[8, 8, 0, 0]} />
-                  </BarChart>
+                    <Area type="monotone" dataKey="value" stroke="#8EBC9F" strokeWidth={3} fillOpacity={1} fill="url(#colorFollowers)" />
+                  </AreaChart>
                 </ResponsiveContainer>
               </div>
             </div>
@@ -230,20 +236,23 @@ const PerfilAnalytics = () => {
             <div className="bg-white border border-slate-200 p-6 rounded-xl">
               <div className="mb-6">
                 <h2 className="text-lg font-bold text-slate-800">Taxa de Leitura de Artigos</h2>
-                <p className="text-sm text-slate-500 mt-1">Artigos lidos vs visualizações por mês</p>
+                <p className="text-sm text-slate-500 mt-1">Evolução da taxa de leitura ao longo do tempo</p>
               </div>
               <div className="h-[320px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={readingRateData}>
+                  <AreaChart data={readingRateData}>
+                    <defs>
+                      <linearGradient id="colorRate" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#C9AF89" stopOpacity={0.3}/>
+                        <stop offset="95%" stopColor="#C9AF89" stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
                     <XAxis dataKey="name" tick={{ fill: '#6b7280', fontSize: 11 }} />
-                    <YAxis yAxisId="left" tick={{ fill: '#6b7280', fontSize: 11 }} />
-                    <YAxis yAxisId="right" orientation="right" tick={{ fill: '#6b7280', fontSize: 11 }} />
+                    <YAxis tick={{ fill: '#6b7280', fontSize: 11 }} />
                     <Tooltip contentStyle={{ backgroundColor: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '12px' }} />
-                    <Legend wrapperStyle={{ fontSize: '11px' }} />
-                    <Bar yAxisId="left" dataKey="views" fill="#AC9CC9" name="Visualizações" radius={[8, 8, 0, 0]} />
-                    <Line yAxisId="right" type="monotone" dataKey="rate" stroke="#C9AF89" strokeWidth={3} name="Taxa (%)" dot={{ fill: '#C9AF89', r: 4 }} />
-                  </BarChart>
+                    <Area type="monotone" dataKey="rate" stroke="#C9AF89" strokeWidth={3} fillOpacity={1} fill="url(#colorRate)" />
+                  </AreaChart>
                 </ResponsiveContainer>
               </div>
             </div>
@@ -256,21 +265,25 @@ const PerfilAnalytics = () => {
                   <i className="fa-solid fa-users"></i>
                 </div>
                 <div>
-                  <h2 className="text-lg font-bold text-slate-800">Leitores vs Seguidores</h2>
-                  <p className="text-sm text-slate-500">Potencial de conversão de leitores em seguidores</p>
+                  <h2 className="text-lg font-bold text-slate-800">Crescimento Total de Leitores</h2>
+                  <p className="text-sm text-slate-500">Evolução do total de leitores mensais</p>
                 </div>
               </div>
               <div className="h-[280px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={readersFollowersData}>
+                  <AreaChart data={readersFollowersData.map(item => ({ name: item.name, value: item.followers + item.nonFollowers }))}>
+                    <defs>
+                      <linearGradient id="colorReaders" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#AC9CC9" stopOpacity={0.3}/>
+                        <stop offset="95%" stopColor="#AC9CC9" stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
                     <XAxis dataKey="name" tick={{ fill: '#6b7280', fontSize: 11 }} />
                     <YAxis tick={{ fill: '#6b7280', fontSize: 11 }} />
                     <Tooltip contentStyle={{ backgroundColor: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '12px' }} />
-                    <Legend wrapperStyle={{ fontSize: '11px' }} />
-                    <Bar dataKey="nonFollowers" fill="#AC9CC9" name="Leitores Não-Seguidores" radius={[8, 8, 0, 0]} />
-                    <Bar dataKey="followers" fill="#8EBC9F" name="Seguidores que Leram" radius={[8, 8, 0, 0]} />
-                  </BarChart>
+                    <Area type="monotone" dataKey="value" stroke="#AC9CC9" strokeWidth={3} fillOpacity={1} fill="url(#colorReaders)" />
+                  </AreaChart>
                 </ResponsiveContainer>
               </div>
             </div>
