@@ -1,679 +1,434 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { Bell, Search, Download } from "lucide-react";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { 
-  BarChart, Bar, PieChart, Pie, LineChart, Line, AreaChart, Area,
-  XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, Legend 
-} from 'recharts';
+import { Bell, TrendingUp, Download, Mic, Pen, Video, Coins, Receipt, Wallet, Info, ShoppingCart, Percent, Gift, Plus, Edit, Trash, Ticket } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
-const CustomTooltip = ({ active, payload }: any) => {
-  if (active && payload && payload.length) {
-    const data = payload[0];
-    return (
-      <div 
-        className="px-3 py-2 rounded-lg border shadow-sm"
-        style={{ 
-          backgroundColor: data.payload.fill || data.fill,
-          borderColor: 'white'
-        }}
-      >
-        <p className="text-sm font-bold text-white">{data.name}</p>
-        <p className="text-sm text-white">{data.value}</p>
-      </div>
-    );
-  }
-  return null;
-};
-
-const ConsumoAnalytics = () => {
-  const navigate = useNavigate();
-  const [studyView, setStudyView] = useState<'daily' | 'weekly'>('daily');
-  const [marketView, setMarketView] = useState<'stocks' | 'funds' | 'commodities'>('stocks');
-
-  const studyTimeData = [
-    { name: 'Seg', hours: 2.5 },
-    { name: 'Ter', hours: 3.2 },
-    { name: 'Qua', hours: 1.8 },
-    { name: 'Qui', hours: 4.1 },
-    { name: 'Sex', hours: 2.9 },
-    { name: 'Sáb', hours: 1.5 },
-    { name: 'Dom', hours: 1.2 }
-  ];
-
-  const completionData = [
-    { name: 'Análise Técnica', value: 25 },
-    { name: 'Renda Fixa', value: 20 },
-    { name: 'Derivativos', value: 15 },
-    { name: 'Fundos', value: 10 },
-    { name: 'Compliance', value: 30 }
-  ];
-
-  const pieColors = ['#8AAACF', '#8EBC9F', '#AC9CC9', '#C9AF89', '#CC99A9'];
-
-  const engagementData = [
-    { name: 'Jan', artigos: 45, webinars: 12, agente: 8 },
-    { name: 'Fev', artigos: 52, webinars: 18, agente: 10 },
-    { name: 'Mar', artigos: 48, webinars: 15, agente: 12 },
-    { name: 'Abr', artigos: 65, webinars: 22, agente: 15 },
-    { name: 'Mai', artigos: 58, webinars: 28, agente: 18 },
-    { name: 'Jun', artigos: 72, webinars: 25, agente: 20 }
-  ];
-
-  const velocityData = [
-    { name: 'Sem 1', value: 8 },
-    { name: 'Sem 2', value: 12 },
-    { name: 'Sem 3', value: 10 },
-    { name: 'Sem 4', value: 15 },
-    { name: 'Sem 5', value: 18 },
-    { name: 'Sem 6', value: 16 }
-  ];
-
-  const contentTypeData = [
-    { name: 'Vídeos', value: 40, fill: '#8AAACF' },
-    { name: 'Artigos', value: 25, fill: '#8EBC9F' },
-    { name: 'E-books', value: 15, fill: '#AC9CC9' },
-    { name: 'Webinars', value: 12, fill: '#C9AF89' },
-    { name: 'Podcasts', value: 8, fill: '#CC99A9' }
-  ];
-
-  const comparisonData = [
-    { category: 'Tempo de Estudo', voce: 87, media: 65 },
-    { category: 'Cursos Concluídos', voce: 92, media: 70 },
-    { category: 'Engajamento', voce: 78, media: 62 },
-    { category: 'Certificações', voce: 85, media: 68 },
-    { category: 'Participação', voce: 90, media: 72 }
-  ];
-
-  const marketData = [
-    { name: 'Jan', ibov: 100, petr4: 50 },
-    { name: 'Fev', ibov: 105, petr4: 52 },
-    { name: 'Mar', ibov: 98, petr4: 48 },
-    { name: 'Abr', ibov: 110, petr4: 55 },
-    { name: 'Mai', ibov: 115, petr4: 58 },
-    { name: 'Jun', ibov: 108, petr4: 54 }
-  ];
-
-  const metasConsumoData = [
-    { name: 'Jan', atingidas: 8, naoAtingidas: 3 },
-    { name: 'Fev', atingidas: 10, naoAtingidas: 2 },
-    { name: 'Mar', atingidas: 7, naoAtingidas: 4 },
-    { name: 'Abr', atingidas: 12, naoAtingidas: 1 },
-    { name: 'Mai', atingidas: 11, naoAtingidas: 2 },
-    { name: 'Jun', atingidas: 9, naoAtingidas: 3 }
-  ];
-
-  const metasPorCategoriaData = [
-    { categoria: 'Vídeos', meta: 20, realizado: 18 },
-    { categoria: 'Artigos', meta: 15, realizado: 17 },
-    { categoria: 'E-books', meta: 5, realizado: 4 },
-    { categoria: 'Webinars', meta: 8, realizado: 10 },
-    { categoria: 'Cursos', meta: 3, realizado: 3 }
-  ];
-
-  const knowledgeAreas = [
-    { name: 'Análise Técnica', percentage: 85, color: 'bg-pastel-blue' },
-    { name: 'Renda Fixa', percentage: 72, color: 'bg-pastel-green' },
-    { name: 'Derivativos', percentage: 68, color: 'bg-pastel-purple' },
-    { name: 'Fundos de Investimento', percentage: 78, color: 'bg-pastel-yellow' },
-    { name: 'Compliance', percentage: 91, color: 'bg-pastel-pink' }
-  ];
-
+export default function ConsumoAnalytics() {
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="flex h-screen overflow-hidden bg-slate-50">
       <SidebarFix />
-      
-      <main className="flex-1 overflow-y-auto h-full relative bg-slate-50/50">
-        <header className="sticky top-0 z-20 bg-white border-b border-slate-200">
+
+      <main className="flex-1 overflow-y-auto">
+        <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
           <div className="px-8 py-4 flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => navigate('/analytics')}
-                className="w-10 h-10 rounded-lg border border-slate-200 bg-white flex items-center justify-center text-[hsl(var(--pastel-gray-dark))] hover:bg-slate-50 hover:text-slate-700 transition-colors shadow-sm"
-              >
-                <i className="fa-solid fa-arrow-left"></i>
-              </button>
-              <div>
-                <h1 className="text-2xl font-semibold text-slate-800">Analytics & Progresso de Estudo</h1>
-                <p className="text-sm text-slate-500 mt-1">Acompanhe seu desempenho e evolução</p>
-              </div>
+            <div>
+              <h1 className="text-2xl font-semibold text-slate-800">Cobrança e Assinatura</h1>
+              <p className="text-sm text-slate-500 mt-1">Gerencie suas assinaturas, créditos e histórico de consumo</p>
             </div>
             <div className="flex items-center gap-4">
-              <select className="text-sm text-slate-600 border border-slate-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-slate-200">
-                <option>Últimos 30 dias</option>
-                <option>Últimos 7 dias</option>
-                <option>Últimos 90 dias</option>
-                <option>Este ano</option>
-              </select>
-              <button className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:opacity-90 transition shadow-sm">
-                <Download size={16} className="inline mr-2" />
-                Exportar
+              <button className="relative p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
+                <Bell className="w-5 h-5" />
+                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
               </button>
+              <Button className="bg-pastel-green hover:bg-pastel-greenBtn text-pastel-gray-dark">
+                <TrendingUp className="w-4 h-4 mr-2" />
+                Upgrade Plano
+              </Button>
             </div>
           </div>
         </header>
 
-        <div className="p-8 space-y-8">
-          <section className="grid grid-cols-4 gap-6">
-            <div className="bg-white rounded-xl p-6 border border-slate-200">
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 bg-pastel-blue rounded-lg flex items-center justify-center">
-                  <i className="fas fa-book-reader text-[hsl(var(--pastel-gray-dark))] text-xl"></i>
-                </div>
-                <span className="text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-1 rounded">+18%</span>
-              </div>
-              <h3 className="text-3xl font-bold text-slate-800 mb-1">87%</h3>
-              <p className="text-sm text-slate-500">Taxa de Retenção</p>
+        <div className="p-8">
+          <section className="bg-white rounded-xl p-6 border border-slate-200 mb-8">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-lg font-semibold text-slate-800">Assinaturas Ativas</h2>
+              <Badge className="bg-pastel-green text-pastel-gray-dark border-0">3 Ativas</Badge>
             </div>
-
-            <div className="bg-white rounded-xl p-6 border border-slate-200">
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center">
-                  <i className="fas fa-trophy text-[hsl(var(--pastel-gray-dark))] text-xl"></i>
+            <div className="grid grid-cols-3 gap-6 mb-6">
+              <div className="p-4 rounded-lg border border-pastel-blue bg-pastel-blue bg-opacity-20">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="font-semibold text-slate-800">Newsletter Diária</h3>
+                  <i className="fas fa-envelope text-slate-600"></i>
                 </div>
-                <span className="text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-1 rounded">+25</span>
+                <p className="text-sm text-slate-600 mb-4">Análises do mercado financeiro todos os dias</p>
+                <div className="flex items-center justify-between">
+                  <span className="text-lg font-bold text-slate-800">R$ 49,90/mês</span>
+                  <button className="text-xs text-slate-600 hover:text-slate-800">Gerenciar</button>
+                </div>
               </div>
-              <h3 className="text-3xl font-bold text-slate-800 mb-1">342</h3>
-              <p className="text-sm text-slate-500">Pontos XP</p>
+
+              <div className="p-4 rounded-lg border border-pastel-purple bg-pastel-purple bg-opacity-20">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="font-semibold text-slate-800">Relatórios Semanais</h3>
+                  <i className="fas fa-file-alt text-slate-600"></i>
+                </div>
+                <p className="text-sm text-slate-600 mb-4">Relatórios detalhados de tendências</p>
+                <div className="flex items-center justify-between">
+                  <span className="text-lg font-bold text-slate-800">R$ 79,90/mês</span>
+                  <button className="text-xs text-slate-600 hover:text-slate-800">Gerenciar</button>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-lg border border-pastel-green bg-pastel-green bg-opacity-20">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="font-semibold text-slate-800">Insights Premium</h3>
+                  <i className="fas fa-star text-slate-600"></i>
+                </div>
+                <p className="text-sm text-slate-600 mb-4">Conteúdo exclusivo de especialistas</p>
+                <div className="flex items-center justify-between">
+                  <span className="text-lg font-bold text-slate-800">R$ 129,90/mês</span>
+                  <button className="text-xs text-slate-600 hover:text-slate-800">Gerenciar</button>
+                </div>
+              </div>
             </div>
+            <button className="w-full py-3 border-2 border-dashed border-slate-300 rounded-lg text-slate-600 hover:border-slate-400 hover:text-slate-700 transition">
+              <Plus className="w-4 h-4 inline-block mr-2" />
+              Adicionar Nova Assinatura
+            </button>
+          </section>
 
-            <div className="bg-white rounded-xl p-6 border border-slate-200">
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 bg-pastel-yellow rounded-lg flex items-center justify-center">
-                  <i className="fas fa-bullseye text-[hsl(var(--pastel-gray-dark))] text-xl"></i>
-                </div>
-                <span className="text-xs font-medium text-slate-600 bg-slate-50 px-2 py-1 rounded">Meta</span>
+          <div className="grid grid-cols-3 gap-6 mb-8">
+            <section className="col-span-2 bg-white rounded-xl p-6 border border-slate-200">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-lg font-semibold text-slate-800">Saldo de Créditos IA</h2>
+                <Button className="bg-pastel-yellow hover:bg-opacity-80 text-pastel-gray-dark">
+                  <Coins className="w-4 h-4 mr-2" />
+                  Comprar Créditos
+                </Button>
               </div>
-              <h3 className="text-3xl font-bold text-slate-800 mb-1">92%</h3>
-              <p className="text-sm text-slate-500">Objetivos Atingidos</p>
+              <div className="grid grid-cols-3 gap-4 mb-6">
+                <div className="p-4 rounded-lg bg-pastel-blue bg-opacity-30">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Mic className="w-4 h-4 text-slate-700" />
+                    <span className="text-sm font-medium text-slate-700">Voz</span>
+                  </div>
+                  <p className="text-2xl font-bold text-slate-800 mb-1">1.250</p>
+                  <p className="text-xs text-slate-600">créditos disponíveis</p>
+                  <div className="mt-3 bg-slate-200 rounded-full h-2">
+                    <div className="bg-pastel-blue h-2 rounded-full" style={{ width: '62.5%' }}></div>
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-lg bg-pastel-purple bg-opacity-30">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Pen className="w-4 h-4 text-slate-700" />
+                    <span className="text-sm font-medium text-slate-700">Escrita</span>
+                  </div>
+                  <p className="text-2xl font-bold text-slate-800 mb-1">3.840</p>
+                  <p className="text-xs text-slate-600">créditos disponíveis</p>
+                  <div className="mt-3 bg-slate-200 rounded-full h-2">
+                    <div className="bg-pastel-purple h-2 rounded-full" style={{ width: '76.8%' }}></div>
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-lg bg-pastel-pink bg-opacity-30">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Video className="w-4 h-4 text-slate-700" />
+                    <span className="text-sm font-medium text-slate-700">Vídeo</span>
+                  </div>
+                  <p className="text-2xl font-bold text-slate-800 mb-1">420</p>
+                  <p className="text-xs text-slate-600">créditos disponíveis</p>
+                  <div className="mt-3 bg-slate-200 rounded-full h-2">
+                    <div className="bg-pastel-pink h-2 rounded-full" style={{ width: '42%' }}></div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="p-3 rounded-lg border border-slate-200 bg-slate-50">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm text-slate-600">Custo por crédito</span>
+                    <Info className="w-4 h-4 text-slate-400" />
+                  </div>
+                  <div className="space-y-1">
+                    <div className="flex justify-between text-xs">
+                      <span className="text-slate-600">Voz:</span>
+                      <span className="font-medium text-slate-800">R$ 0,05</span>
+                    </div>
+                    <div className="flex justify-between text-xs">
+                      <span className="text-slate-600">Escrita:</span>
+                      <span className="font-medium text-slate-800">R$ 0,02</span>
+                    </div>
+                    <div className="flex justify-between text-xs">
+                      <span className="text-slate-600">Vídeo:</span>
+                      <span className="font-medium text-slate-800">R$ 0,15</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-lg border border-slate-200 bg-slate-50">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm text-slate-600">Pacotes disponíveis</span>
+                    <ShoppingCart className="w-4 h-4 text-slate-400" />
+                  </div>
+                  <div className="space-y-1">
+                    <div className="flex justify-between text-xs">
+                      <span className="text-slate-600">1.000 créditos:</span>
+                      <span className="font-medium text-slate-800">R$ 39,90</span>
+                    </div>
+                    <div className="flex justify-between text-xs">
+                      <span className="text-slate-600">5.000 créditos:</span>
+                      <span className="font-medium text-slate-800">R$ 179,90</span>
+                    </div>
+                    <div className="flex justify-between text-xs">
+                      <span className="text-slate-600">10.000 créditos:</span>
+                      <span className="font-medium text-slate-800">R$ 329,90</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section className="bg-white rounded-xl p-6 border border-slate-200">
+              <h2 className="text-lg font-semibold text-slate-800 mb-6">Resumo do Mês</h2>
+              <div className="space-y-4">
+                <div className="p-4 rounded-lg bg-pastel-green">
+                  <div className="flex items-center gap-3 mb-2">
+                    <Receipt className="w-5 h-5 text-slate-700" />
+                    <span className="font-medium text-slate-800">Total Assinaturas</span>
+                  </div>
+                  <p className="text-2xl font-bold text-slate-800 mb-1">R$ 259,70</p>
+                  <p className="text-sm text-slate-600">Novembro 2024</p>
+                </div>
+
+                <div className="p-4 rounded-lg bg-pastel-yellow">
+                  <div className="flex items-center gap-3 mb-2">
+                    <i className="fas fa-robot text-slate-700"></i>
+                    <span className="font-medium text-slate-800">Créditos IA</span>
+                  </div>
+                  <p className="text-2xl font-bold text-slate-800 mb-1">R$ 187,35</p>
+                  <p className="text-sm text-slate-600">Consumo do mês</p>
+                </div>
+
+                <div className="p-4 rounded-lg bg-pastel-peach">
+                  <div className="flex items-center gap-3 mb-2">
+                    <Wallet className="w-5 h-5 text-slate-700" />
+                    <span className="font-medium text-slate-800">Total Geral</span>
+                  </div>
+                  <p className="text-2xl font-bold text-slate-800 mb-1">R$ 447,05</p>
+                  <p className="text-sm text-slate-600">Novembro 2024</p>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <section className="bg-white rounded-xl p-6 border border-slate-200 mb-8">
+            <h2 className="text-lg font-semibold text-slate-800 mb-4">Histórico de Consumo</h2>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-slate-200">
+                <thead className="bg-slate-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                      Data
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                      Descrição
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                      Tipo
+                    </th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider">
+                      Valor
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-slate-200">
+                  <tr>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
+                      15/11/2024
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
+                      Geração de texto com IA
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
+                      Escrita
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800 text-right">
+                      R$ 2,50
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
+                      14/11/2024
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
+                      Geração de vídeo curto
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
+                      Vídeo
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800 text-right">
+                      R$ 7,50
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
+                      14/11/2024
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
+                      Transcrição de áudio
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
+                      Voz
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800 text-right">
+                      R$ 1,25
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div className="bg-white rounded-xl p-6 border border-slate-200">
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 bg-pastel-pink rounded-lg flex items-center justify-center">
-                  <i className="fas fa-ranking-star text-[hsl(var(--pastel-gray-dark))] text-xl"></i>
-                </div>
-                <span className="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded">Ranking</span>
-              </div>
-              <h3 className="text-3xl font-bold text-slate-800 mb-1">#23</h3>
-              <p className="text-sm text-slate-500">Posição Geral</p>
+            <div className="mt-4 flex justify-end">
+              <button className="text-sm text-slate-600 hover:text-slate-800">
+                Ver Mais
+              </button>
             </div>
           </section>
 
-          <div className="grid grid-cols-2 gap-6">
-            <section className="bg-white rounded-xl p-6 border border-slate-200">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-semibold text-slate-800">Tempo de Estudo</h2>
+          <section className="bg-white rounded-xl p-6 border border-slate-200 mb-8">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold text-slate-800">Métodos de Pagamento</h2>
+              <Button className="bg-pastel-blue hover:bg-opacity-80 text-pastel-gray-dark">
+                <Plus className="w-4 h-4 mr-2" />
+                Adicionar Cartão
+              </Button>
+            </div>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between p-4 rounded-lg border border-slate-200">
+                <div className="flex items-center gap-4">
+                  <i className="fab fa-cc-visa text-2xl text-slate-600"></i>
+                  <div>
+                    <p className="font-medium text-slate-800">Visa **** 1234</p>
+                    <p className="text-sm text-slate-600">Expira em 12/25</p>
+                  </div>
+                </div>
                 <div className="flex gap-2">
-                  <button
-                    onClick={() => setStudyView('daily')}
-                    className={`px-3 py-1 rounded-lg text-sm font-medium transition ${
-                      studyView === 'daily' ? 'bg-pastel-blue text-slate-700' : 'text-slate-600 hover:bg-slate-100'
-                    }`}
-                  >
-                    Diário
+                  <button className="p-2 text-slate-500 hover:bg-slate-100 rounded-lg transition">
+                    <Edit className="w-4 h-4" />
                   </button>
-                  <button
-                    onClick={() => setStudyView('weekly')}
-                    className={`px-3 py-1 rounded-lg text-sm font-medium transition ${
-                      studyView === 'weekly' ? 'bg-pastel-blue text-slate-700' : 'text-slate-600 hover:bg-slate-100'
-                    }`}
-                  >
-                    Semanal
+                  <button className="p-2 text-slate-500 hover:bg-slate-100 rounded-lg transition">
+                    <Trash className="w-4 h-4" />
                   </button>
                 </div>
               </div>
-              <div className="h-[320px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={studyTimeData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
-                    <XAxis dataKey="name" tick={{ fill: '#6b7280', fontSize: 11 }} />
-                    <YAxis tick={{ fill: '#6b7280', fontSize: 11 }} label={{ value: 'Horas', angle: -90, position: 'insideLeft', style: { fontSize: 11, fill: '#6b7280' } }} />
-                    <Tooltip contentStyle={{ backgroundColor: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '12px' }} />
-                    <Bar dataKey="hours" fill="#8AAACF" radius={[8, 8, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </section>
 
-            <section className="bg-white rounded-xl p-6 border border-slate-200">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-semibold text-slate-800">Conclusão de Cursos</h2>
-                <span className="text-sm text-slate-500">Por categoria</span>
-              </div>
-              <div className="h-[320px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={completionData}
-                      cx="50%"
-                      cy="50%"
-                      labelLine={false}
-                      outerRadius={80}
-                      fill="#8884d8"
-                      dataKey="value"
-                    >
-                      {completionData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={pieColors[index]} />
-                      ))}
-                    </Pie>
-                    <Tooltip />
-                    <Legend verticalAlign="bottom" height={36} iconType="circle" wrapperStyle={{ fontSize: '11px' }} />
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-            </section>
-          </div>
-
-          <div className="grid grid-cols-2 gap-6">
-            <section className="bg-white rounded-xl p-6 border border-slate-200">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-semibold text-slate-800">Engajamento Mensal</h2>
-                <span className="text-sm text-slate-500">Interações por tipo</span>
-              </div>
-              <div className="h-[320px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={engagementData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
-                    <XAxis dataKey="name" tick={{ fill: '#6b7280', fontSize: 11 }} />
-                    <YAxis tick={{ fill: '#6b7280', fontSize: 11 }} />
-                    <Tooltip contentStyle={{ backgroundColor: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '12px' }} />
-                    <Legend wrapperStyle={{ fontSize: '11px' }} />
-                    <Line type="monotone" dataKey="artigos" stroke="#8AAACF" strokeWidth={3} name="Artigos" />
-                    <Line type="monotone" dataKey="webinars" stroke="#8EBC9F" strokeWidth={3} name="Webinars" />
-                    <Line type="monotone" dataKey="agente" stroke="#AC9CC9" strokeWidth={3} name="Agente IA" />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            </section>
-
-            <section className="bg-white rounded-xl p-6 border border-slate-200">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-semibold text-slate-800">Velocidade de Aprendizado</h2>
-                <span className="text-sm text-slate-500">Conteúdos por semana</span>
-              </div>
-              <div className="h-[320px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={velocityData}>
-                    <defs>
-                      <linearGradient id="colorVelocity" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#CC99A9" stopOpacity={0.3}/>
-                        <stop offset="95%" stopColor="#CC99A9" stopOpacity={0}/>
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
-                    <XAxis dataKey="name" tick={{ fill: '#6b7280', fontSize: 11 }} />
-                    <YAxis tick={{ fill: '#6b7280', fontSize: 11 }} />
-                    <Tooltip contentStyle={{ backgroundColor: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '12px' }} />
-                    <Area type="monotone" dataKey="value" stroke="#CC99A9" strokeWidth={3} fillOpacity={1} fill="url(#colorVelocity)" />
-                  </AreaChart>
-                </ResponsiveContainer>
-              </div>
-            </section>
-          </div>
-
-          <div className="grid grid-cols-3 gap-6">
-            <section className="bg-white rounded-xl p-6 border border-slate-200">
-              <h2 className="text-lg font-semibold text-slate-800 mb-6">Conhecimento de Mercado</h2>
-              <div className="space-y-4">
-                {knowledgeAreas.map((area, idx) => (
-                  <div key={idx}>
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-medium text-slate-700">{area.name}</span>
-                      <span className="text-sm font-bold text-slate-800">{area.percentage}%</span>
-                    </div>
-                    <div className="w-full bg-slate-100 rounded-full h-3">
-                      <div className={`${area.color} h-3 rounded-full`} style={{ width: `${area.percentage}%` }}></div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            <section className="bg-white rounded-xl p-6 border border-slate-200">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-semibold text-slate-800">Metas Semanais</h2>
-                <button className="px-3 py-1.5 bg-pastel-purple text-slate-700 rounded-lg text-sm font-medium hover:opacity-90 transition">
-                  <i className="fas fa-plus mr-1"></i>
-                  Adicionar Metas
-                </button>
-              </div>
-              <div className="space-y-5">
-                {[
-                  { icon: 'fa-check', text: 'Completar 3 cursos', progress: '3/3 concluídos', bg: 'bg-pastel-blue', completed: true },
-                  { icon: 'fa-check', text: '15 horas de estudo', progress: '18.5/15 horas', bg: 'bg-pastel-green', completed: true },
-                  { text: 'Interagir com 5 artigos', progress: '2/5 interações', bg: 'bg-slate-100', badge: '2/5', completed: false },
-                  { text: 'Participar de webinars', progress: '1/3 webinars', bg: 'bg-slate-100', badge: '1/3', completed: false }
-                ].map((goal, idx) => (
-                  <div key={idx} className="flex items-center gap-4">
-                    <div className={`w-10 h-10 ${goal.bg} rounded-full flex items-center justify-center`}>
-                      {goal.completed ? (
-                        <i className={`fas ${goal.icon} text-[hsl(var(--pastel-gray-dark))] text-sm`}></i>
-                      ) : (
-                        <span className="text-slate-600 text-sm font-bold">{goal.badge}</span>
-                      )}
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-sm font-medium text-slate-800">{goal.text}</p>
-                      <p className="text-xs text-slate-500">{goal.progress}</p>
-                    </div>
-                  </div>
-                ))}
-                <div className="mt-6 p-4 bg-pastel-yellow rounded-lg">
-                  <p className="text-sm font-medium text-slate-800 mb-1">Progresso da Semana</p>
-                  <div className="w-full bg-white rounded-full h-2 mb-2">
-                    <div className="bg-slate-800 h-2 rounded-full" style={{ width: '75%' }}></div>
-                  </div>
-                  <p className="text-xs text-slate-800">75% das metas concluídas</p>
-                </div>
-              </div>
-            </section>
-
-            <section className="bg-white rounded-xl p-6 border border-slate-200">
-              <h2 className="text-lg font-semibold text-slate-800 mb-6">Conquistas Recentes</h2>
-              <div className="space-y-4">
-                {[
-                  { icon: 'fa-medal', text: 'Especialista em Análise', desc: 'Completou curso avançado', bg: 'bg-pastel-yellow', iconColor: 'text-yellow-600' },
-                  { icon: 'fa-fire', text: 'Sequência de 15 dias', desc: 'Estudou todos os dias', bg: 'bg-pastel-green', iconColor: 'text-orange-600' },
-                  { icon: 'fa-star', text: 'Top 10% da Turma', desc: 'Ranking de desempenho', bg: 'bg-pastel-purple', iconColor: 'text-purple-600' },
-                  { icon: 'fa-comments', text: 'Participação Ativa', desc: '50+ comentários na comunidade', bg: 'bg-pastel-pink', iconColor: 'text-pink-600' }
-                ].map((achievement, idx) => (
-                  <div key={idx} className={`flex items-center gap-4 p-3 rounded-lg ${achievement.bg}`}>
-                    <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-                      <i className={`fas ${achievement.icon} ${achievement.iconColor} text-xl`}></i>
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-slate-800">{achievement.text}</p>
-                      <p className="text-xs text-slate-600">{achievement.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-          </div>
-
-          <div className="grid grid-cols-2 gap-6">
-            <section className="bg-white rounded-xl p-6 border border-slate-200">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-semibold text-slate-800">Consumo de Conteúdo</h2>
-                <span className="text-sm text-slate-500">Formato preferido</span>
-              </div>
-              <div className="h-[320px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={contentTypeData}
-                      cx="50%"
-                      cy="50%"
-                      labelLine={false}
-                      innerRadius={50}
-                      outerRadius={90}
-                      fill="#8884d8"
-                      dataKey="value"
-                    >
-                      {contentTypeData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={pieColors[index]} />
-                      ))}
-                    </Pie>
-                    <Tooltip content={<CustomTooltip />} />
-                    <Legend verticalAlign="bottom" height={36} iconType="circle" wrapperStyle={{ fontSize: '11px' }} />
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-            </section>
-
-            <section className="bg-white rounded-xl p-6 border border-slate-200">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-semibold text-slate-800">Comparação de Performance</h2>
-                <span className="text-sm text-slate-500">Você vs. Média</span>
-              </div>
-              <div className="h-[320px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={comparisonData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
-                    <XAxis dataKey="category" tick={{ fill: '#6b7280', fontSize: 10 }} angle={0} textAnchor="middle" height={100} interval={0} />
-                    <YAxis tick={{ fill: '#6b7280', fontSize: 11 }} label={{ value: 'Performance (%)', angle: -90, position: 'insideLeft', style: { fontSize: 11, fill: '#6b7280' } }} />
-                    <Tooltip contentStyle={{ backgroundColor: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '12px' }} />
-                    <Legend wrapperStyle={{ fontSize: '11px' }} />
-                    <Bar dataKey="voce" fill="#8AAACF" name="Você" radius={[8, 8, 0, 0]} />
-                    <Bar dataKey="media" fill="#C9AF89" name="Média da Plataforma" radius={[8, 8, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </section>
-          </div>
-
-          <div className="grid grid-cols-2 gap-6">
-            <section className="bg-white rounded-xl p-6 border border-slate-200">
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-pastel-purple flex items-center justify-center">
-                    <i className="fas fa-bullseye text-[hsl(var(--pastel-gray-dark))]"></i>
-                  </div>
+              <div className="flex items-center justify-between p-4 rounded-lg border border-slate-200">
+                <div className="flex items-center gap-4">
+                  <i className="fab fa-cc-mastercard text-2xl text-slate-600"></i>
                   <div>
-                    <h2 className="text-lg font-semibold text-slate-800">Metas de Consumo Mensal</h2>
-                    <p className="text-sm text-slate-500">Atingidas vs. Não Atingidas</p>
+                    <p className="font-medium text-slate-800">Mastercard **** 5678</p>
+                    <p className="text-sm text-slate-600">Expira em 08/26</p>
                   </div>
                 </div>
-              </div>
-              <div className="h-[320px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={metasConsumoData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
-                    <XAxis dataKey="name" tick={{ fill: '#6b7280', fontSize: 11 }} />
-                    <YAxis tick={{ fill: '#6b7280', fontSize: 11 }} label={{ value: 'Quantidade', angle: -90, position: 'insideLeft', style: { fontSize: 11, fill: '#6b7280' } }} />
-                    <Tooltip contentStyle={{ backgroundColor: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '12px' }} />
-                    <Legend wrapperStyle={{ fontSize: '11px' }} />
-                    <Bar dataKey="atingidas" fill="#8EBC9F" name="Metas Atingidas" stackId="a" />
-                    <Bar dataKey="naoAtingidas" fill="#CC99A9" name="Não Atingidas" stackId="a" />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-              
-              <div className="mt-6 p-4 bg-gradient-to-br from-pastel-purple/10 to-pastel-blue/10 rounded-xl border border-slate-200">
-                <div className="flex items-start gap-3 mb-3">
-                  <div className="w-8 h-8 rounded-lg bg-pastel-purple flex items-center justify-center flex-shrink-0">
-                    <i className="fas fa-brain text-[hsl(var(--pastel-gray-dark))] text-sm"></i>
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-semibold text-slate-800 mb-1">Insights da IA</h3>
-                    <p className="text-xs text-slate-600 leading-relaxed">
-                      Seu desempenho está consistentemente acima da média. Você atingiu 78% das suas metas nos últimos 6 meses, 
-                      com destaque para abril onde alcançou 92% de sucesso. Continue focando em webinars e e-books, 
-                      pois são as categorias onde você mais supera as expectativas.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 text-xs">
-                  <span className="px-2 py-1 bg-pastel-green rounded-full text-slate-700 font-medium">
-                    Alta performance
-                  </span>
-                  <span className="px-2 py-1 bg-pastel-yellow rounded-full text-slate-700 font-medium">
-                    Evolução constante
-                  </span>
+                <div className="flex gap-2">
+                  <button className="p-2 text-slate-500 hover:bg-slate-100 rounded-lg transition">
+                    <Edit className="w-4 h-4" />
+                  </button>
+                  <button className="p-2 text-slate-500 hover:bg-slate-100 rounded-lg transition">
+                    <Trash className="w-4 h-4" />
+                  </button>
                 </div>
               </div>
-            </section>
+            </div>
+          </section>
 
-            <section className="bg-white rounded-xl p-6 border border-slate-200">
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-pastel-blue flex items-center justify-center">
-                    <i className="fas fa-chart-line text-[hsl(var(--pastel-gray-dark))]"></i>
-                  </div>
+          <section className="bg-white rounded-xl p-6 border border-slate-200 mb-8">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold text-slate-800">Cupons de Desconto</h2>
+              <Button className="bg-pastel-yellow hover:bg-opacity-80 text-pastel-gray-dark">
+                <Percent className="w-4 h-4 mr-2" />
+                Resgatar Cupom
+              </Button>
+            </div>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between p-4 rounded-lg border border-slate-200">
+                <div className="flex items-center gap-4">
+                  <Gift className="w-5 h-5 text-slate-600" />
                   <div>
-                    <h2 className="text-lg font-semibold text-slate-800">Progresso por Categoria</h2>
-                    <p className="text-sm text-slate-500">Meta vs. Realizado</p>
+                    <p className="font-medium text-slate-800">Cupom de 10% OFF</p>
+                    <p className="text-sm text-slate-600">Expira em 30/11/2024</p>
                   </div>
                 </div>
+                <Badge className="bg-pastel-green text-pastel-gray-dark border-0">Ativo</Badge>
               </div>
-              <div className="space-y-4">
-                {metasPorCategoriaData.map((item, index) => (
-                  <div key={index} className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-slate-700">{item.categoria}</span>
-                      <div className="flex items-center gap-4 text-xs text-slate-500">
-                        <span>Meta: {item.meta}</span>
-                        <span>Realizado: {item.realizado}</span>
-                      </div>
-                    </div>
-                    <div className="space-y-1.5">
-                      <div className="flex items-center gap-2">
-                        <div className="w-16 text-xs text-slate-500">Meta</div>
-                        <div className="flex-1 bg-slate-100 rounded-full h-7 relative overflow-hidden">
-                          <div 
-                            className="h-full rounded-full flex items-center justify-end pr-3 text-xs font-medium text-slate-700 transition-all duration-500"
-                            style={{ 
-                              width: `${(item.meta / 25) * 100}%`,
-                              backgroundColor: '#C9AF89'
-                            }}
-                          >
-                            {item.meta}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className="w-16 text-xs text-slate-500">Realizado</div>
-                        <div className="flex-1 bg-slate-100 rounded-full h-7 relative overflow-hidden">
-                          <div 
-                            className="h-full rounded-full flex items-center justify-end pr-3 text-xs font-medium text-slate-700 transition-all duration-500"
-                            style={{ 
-                              width: `${(item.realizado / 25) * 100}%`,
-                              backgroundColor: '#8AAACF'
-                            }}
-                          >
-                            {item.realizado}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+
+              <div className="flex items-center justify-between p-4 rounded-lg border border-slate-200">
+                <div className="flex items-center gap-4">
+                  <Ticket className="w-5 h-5 text-slate-600" />
+                  <div>
+                    <p className="font-medium text-slate-800">Cupom de R$20 OFF</p>
+                    <p className="text-sm text-slate-600">Expira em 15/12/2024</p>
                   </div>
-                ))}
+                </div>
+                <Badge className="bg-slate-200 text-slate-500 border-0">Disponível</Badge>
               </div>
-            </section>
-          </div>
+            </div>
+          </section>
 
           <section className="bg-white rounded-xl p-6 border border-slate-200">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-lg font-semibold text-slate-800">Dados de Mercado - Acompanhamento</h2>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => setMarketView('stocks')}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
-                    marketView === 'stocks' ? 'bg-pastel-blue text-slate-700' : 'text-slate-600 hover:bg-slate-100'
-                  }`}
-                >
-                  Ações
-                </button>
-                <button
-                  onClick={() => setMarketView('funds')}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
-                    marketView === 'funds' ? 'bg-pastel-blue text-slate-700' : 'text-slate-600 hover:bg-slate-100'
-                  }`}
-                >
-                  Fundos
-                </button>
-                <button
-                  onClick={() => setMarketView('commodities')}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
-                    marketView === 'commodities' ? 'bg-pastel-blue text-slate-700' : 'text-slate-600 hover:bg-slate-100'
-                  }`}
-                >
-                  Commodities
-                </button>
-              </div>
+            <h2 className="text-lg font-semibold text-slate-800 mb-4">Histórico de Pagamentos</h2>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-slate-200">
+                <thead className="bg-slate-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                      Data
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                      Descrição
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                      Método
+                    </th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider">
+                      Valor
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-slate-200">
+                  <tr>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
+                      10/11/2024
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
+                      Assinatura Insights Premium
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
+                      Visa **** 1234
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800 text-right">
+                      R$ 129,90
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
+                      05/11/2024
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
+                      Compra de 5.000 créditos IA
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
+                      Mastercard **** 5678
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800 text-right">
+                      R$ 179,90
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
+                      01/11/2024
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
+                      Assinatura Newsletter Diária
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
+                      Visa **** 1234
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-800 text-right">
+                      R$ 49,90
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div className="h-[350px] w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={marketData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
-                  <XAxis dataKey="name" tick={{ fill: '#6b7280', fontSize: 11 }} />
-                  <YAxis tick={{ fill: '#6b7280', fontSize: 11 }} label={{ value: 'Variação (%)', angle: -90, position: 'insideLeft', style: { fontSize: 11, fill: '#6b7280' } }} />
-                  <Tooltip contentStyle={{ backgroundColor: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '12px' }} />
-                  <Legend wrapperStyle={{ fontSize: '11px' }} />
-                  <Line type="monotone" dataKey="ibov" stroke="#8AAACF" strokeWidth={3} name="IBOV" />
-                  <Line type="monotone" dataKey="petr4" stroke="#8EBC9F" strokeWidth={3} name="PETR4" />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-          </section>
-
-          <section className="bg-white rounded-xl p-8 border border-slate-200">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-pastel-purple to-pastel-blue flex items-center justify-center">
-                <i className="fas fa-lightbulb text-white text-lg"></i>
-              </div>
-              <div>
-                <h2 className="text-xl font-semibold text-slate-800">Insights de Aprendizado</h2>
-                <p className="text-sm text-slate-500">Análise personalizada do seu comportamento</p>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-6">
-              <div className="space-y-4">
-                <div className="flex items-center gap-2 mb-5">
-                  <div className="w-8 h-8 rounded-lg bg-pastel-blue flex items-center justify-center">
-                    <i className="fas fa-chart-line text-[hsl(var(--pastel-gray-dark))] text-sm"></i>
-                  </div>
-                  <h3 className="text-base font-semibold text-slate-800">Padrões de Estudo</h3>
-                </div>
-                
-                <div className="space-y-3">
-                  {[
-                    { label: 'Melhor horário', value: '14h - 16h', icon: 'fa-clock', color: 'pastel-purple' },
-                    { label: 'Tipo preferido', value: 'Vídeos', icon: 'fa-video', color: 'pastel-blue' },
-                    { label: 'Duração média', value: '45 min', icon: 'fa-hourglass-half', color: 'pastel-green' }
-                  ].map((pattern, idx) => (
-                    <div 
-                      key={idx} 
-                      className="group flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-slate-50 to-slate-50/50 border border-slate-200 hover:shadow-md hover:border-slate-300 transition-all duration-300"
-                    >
-                      <div className={`w-10 h-10 rounded-lg bg-${pattern.color} flex items-center justify-center flex-shrink-0`}>
-                        <i className={`fas ${pattern.icon} text-[hsl(var(--pastel-gray-dark))]`}></i>
-                      </div>
-                      <div className="flex-1">
-                        <p className="text-xs text-slate-500 mb-1">{pattern.label}</p>
-                        <p className="text-sm font-semibold text-slate-800">{pattern.value}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div className="flex items-center gap-2 mb-5">
-                  <div className="w-8 h-8 rounded-lg bg-pastel-yellow flex items-center justify-center">
-                    <i className="fas fa-sparkles text-[hsl(var(--pastel-gray-dark))] text-sm"></i>
-                  </div>
-                  <h3 className="text-base font-semibold text-slate-800">Recomendações</h3>
-                </div>
-
-                <div className="space-y-3">
-                  {[
-                    { text: 'Foque mais em derivativos para equilibrar seu portfólio de conhecimento', icon: 'fa-bullseye', color: 'pastel-blue' },
-                    { text: 'Considere participar de mais webinars ao vivo para networking', icon: 'fa-users', color: 'pastel-green' },
-                    { text: 'Sua consistência está excelente - continue assim!', icon: 'fa-trophy', color: 'pastel-yellow' }
-                  ].map((rec, idx) => (
-                    <div 
-                      key={idx} 
-                      className={`group p-4 rounded-xl bg-${rec.color} border border-slate-200 hover:shadow-md transition-all duration-300`}
-                    >
-                      <div className="flex items-start gap-3">
-                        <div className="w-8 h-8 rounded-lg bg-white/60 flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <i className={`fas ${rec.icon} text-[hsl(var(--pastel-gray-dark))] text-sm`}></i>
-                        </div>
-                        <p className="text-sm text-slate-700 leading-relaxed">{rec.text}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+            <div className="mt-4 flex justify-end">
+              <button className="text-sm text-slate-600 hover:text-slate-800">
+                Ver Mais
+              </button>
             </div>
           </section>
         </div>
       </main>
     </div>
   );
-};
-
-export default ConsumoAnalytics;
+}
