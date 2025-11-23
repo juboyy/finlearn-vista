@@ -1,9 +1,67 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { Eye, Save, Send, Smartphone, Monitor, CheckCircle, AlertTriangle, Search, Globe, Rocket, Users, Settings as SettingsIcon, Download, ArrowLeft, Lightbulb, ChartBar, SpellCheck, Info, History, Undo, Clock, CreditCard, Store, Shield, Twitter, Linkedin, Instagram, Youtube, Edit } from "lucide-react";
+import { Eye, Save, Send, Smartphone, Monitor, CheckCircle, AlertTriangle, Search, Globe, Rocket, Users, Settings as SettingsIcon, Download, ArrowLeft, Lightbulb, ChartBar, SpellCheck, Info, History, Undo, Clock, CreditCard, Store, Shield, Twitter, Linkedin, Instagram, Youtube, Edit, Loader2 } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 const AgendarPublicacaoRevisao = () => {
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (isModalOpen) {
+      setIsLoading(true);
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+      }, 7000);
+      return () => clearTimeout(timer);
+    }
+  }, [isModalOpen]);
+
+  const qualityItems = [
+    { 
+      label: "Texto otimizado", 
+      status: "approved",
+      icon: CheckCircle,
+      color: "hsl(var(--pastel-green))",
+      description: "Conteúdo claro e objetivo"
+    },
+    { 
+      label: "Links funcionais", 
+      status: "approved",
+      icon: CheckCircle,
+      color: "hsl(var(--pastel-green))",
+      description: "Todos os links verificados"
+    },
+    { 
+      label: "Imagens otimizadas", 
+      status: "approved",
+      icon: CheckCircle,
+      color: "hsl(var(--pastel-green))",
+      description: "Tamanho e formato corretos"
+    },
+    { 
+      label: "Palavras de spam", 
+      status: "warning",
+      icon: AlertTriangle,
+      color: "hsl(44 45% 56%)",
+      description: "2 palavras detectadas"
+    },
+    { 
+      label: "Compatibilidade mobile", 
+      status: "approved",
+      icon: CheckCircle,
+      color: "hsl(var(--pastel-green))",
+      description: "Design responsivo validado"
+    },
+    { 
+      label: "Tamanho do conteúdo", 
+      status: "approved",
+      icon: CheckCircle,
+      color: "hsl(var(--pastel-green))",
+      description: "Dentro do limite ideal"
+    },
+  ];
   const [activeDevice, setActiveDevice] = useState<"desktop" | "mobile">("desktop");
   const handlePublish = () => {
     if (confirm("Tem certeza que deseja publicar esta newsletter para 12.450 destinatários?")) {
@@ -572,14 +630,120 @@ const AgendarPublicacaoRevisao = () => {
                     }}></div>
                     </div>
                   </div>
-                  <button className="w-full py-3 rounded-xl font-semibold hover:opacity-80 transition border border-slate-200 flex items-center justify-center gap-2" style={{
-                  backgroundColor: 'hsl(var(--pastel-purple-btn))',
-                  color: 'hsl(var(--pastel-gray-dark))'
-                }}>
+                  <button 
+                    onClick={() => setIsModalOpen(true)}
+                    className="w-full py-3 rounded-xl font-semibold hover:opacity-80 transition border border-slate-200 flex items-center justify-center gap-2" 
+                    style={{
+                      backgroundColor: 'hsl(var(--pastel-purple-btn))',
+                      color: 'hsl(var(--pastel-gray-dark))'
+                    }}>
                     <Info size={18} />
                     Gerar Verificação 
                   </button>
                 </div>
+
+                {/* Quality Check Modal */}
+                <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+                  <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                    <DialogHeader>
+                      <DialogTitle className="flex items-center gap-3 text-xl">
+                        <div
+                          className="w-10 h-10 rounded-lg flex items-center justify-center"
+                          style={{ backgroundColor: 'hsl(var(--pastel-purple))' }}
+                        >
+                          <SpellCheck style={{ color: 'hsl(var(--pastel-gray-dark))' }} />
+                        </div>
+                        Verificação de Qualidade
+                      </DialogTitle>
+                    </DialogHeader>
+                    
+                    <div className="space-y-4 mt-6">
+                      {/* Score Section */}
+                      <div className="bg-slate-50 rounded-xl p-6 border border-slate-200">
+                        <div className="flex items-center justify-between mb-4">
+                          <span className="text-sm font-medium" style={{ color: 'hsl(var(--pastel-gray-dark))' }}>
+                            Score Geral
+                          </span>
+                          <span className="text-4xl font-bold" style={{ color: 'hsl(var(--foreground))' }}>
+                            95<span className="text-xl" style={{ color: 'hsl(var(--muted-foreground))' }}>/100</span>
+                          </span>
+                        </div>
+                        <div className="w-full bg-slate-200 rounded-full h-3">
+                          <div
+                            className="h-3 rounded-full transition-all duration-500"
+                            style={{ width: '95%', backgroundColor: 'hsl(var(--pastel-green))' }}
+                          ></div>
+                        </div>
+                      </div>
+
+                      {/* Quality Items */}
+                      <div className="space-y-3">
+                        {qualityItems.map((item, index) => {
+                          const Icon = item.icon;
+                          return (
+                            <div
+                              key={index}
+                              className="flex items-center gap-4 p-4 rounded-xl border transition-all duration-300"
+                              style={{
+                                backgroundColor: isLoading ? 'hsl(220 13% 95%)' : 'white',
+                                borderColor: isLoading ? 'hsl(220 13% 90%)' : 'hsl(var(--border))',
+                                opacity: isLoading ? 0.6 : 1
+                              }}
+                            >
+                              {/* Icon/Loader on the left */}
+                              <div className="shrink-0">
+                                {isLoading ? (
+                                  <Loader2 
+                                    size={24} 
+                                    className="animate-spin" 
+                                    style={{ color: 'hsl(220 13% 70%)' }}
+                                  />
+                                ) : (
+                                  <Icon size={24} style={{ color: item.color }} />
+                                )}
+                              </div>
+
+                              {/* Content */}
+                              <div className="flex-1">
+                                <p 
+                                  className="font-semibold mb-1"
+                                  style={{ 
+                                    color: isLoading ? 'hsl(220 13% 70%)' : 'hsl(var(--foreground))'
+                                  }}
+                                >
+                                  {item.label}
+                                </p>
+                                <p 
+                                  className="text-sm"
+                                  style={{ 
+                                    color: isLoading ? 'hsl(220 13% 75%)' : 'hsl(var(--muted-foreground))'
+                                  }}
+                                >
+                                  {isLoading ? 'Verificando...' : item.description}
+                                </p>
+                              </div>
+
+                              {/* Status Badge */}
+                              {!isLoading && (
+                                <div
+                                  className="px-3 py-1 rounded-full text-xs font-medium"
+                                  style={{
+                                    backgroundColor: item.status === 'approved' 
+                                      ? 'hsl(var(--pastel-green-btn))'
+                                      : 'hsl(44 45% 82%)',
+                                    color: 'hsl(var(--pastel-gray-dark))'
+                                  }}
+                                >
+                                  {item.status === 'approved' ? 'Aprovado' : 'Atenção'}
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
 
                 {/* Reach Card */}
                 <div className="bg-white rounded-2xl border border-slate-200 p-6">
