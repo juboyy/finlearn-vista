@@ -5,7 +5,7 @@ import {
   Paperclip, Image as ImageIcon, FileText, FileSpreadsheet, X, Music, Video, 
   Play, Trash2, Bold, Italic, Underline, List, ListOrdered, Link as LinkIcon,
   Eye, Share2, Save, Wand2, Camera, CloudUpload, FileCheck, Book, SpellCheck,
-  Plus, Copy, Edit
+  Plus, Copy, Edit, TrendingUp, Landmark, Award, Target, BadgeCheck, Megaphone
 } from "lucide-react";
 
 export default function NovoDocumento() {
@@ -48,6 +48,37 @@ export default function NovoDocumento() {
     { name: "Estratégia", icon: Lightbulb, color: "pastel-yellow", description: "Planejamento e insights" },
     { name: "Jurídico", icon: FileCheck2, color: "pastel-pink", description: "Documentos legais" },
     { name: "Comunicação", icon: MessageSquare, color: "pastel-peach", description: "Relatórios executivos" }
+  ];
+
+  const specificAgents = [
+    { group: "Análise de Mercado", agents: [
+      { value: "analista-acoes", name: "Analista de Ações - Especialista em renda variável", icon: TrendingUp },
+      { value: "analista-renda-fixa", name: "Analista de Renda Fixa - Títulos e bonds", icon: ChartLine },
+      { value: "analista-macro", name: "Analista Macroeconômico - Cenários e tendências", icon: TrendingUp }
+    ]},
+    { group: "Compliance e Regulatório", agents: [
+      { value: "compliance-cvm", name: "Especialista CVM - Normas e regulamentações", icon: Scale },
+      { value: "compliance-bacen", name: "Especialista BACEN - Regulação bancária", icon: Landmark },
+      { value: "compliance-anbima", name: "Especialista ANBIMA - Certificações e normas", icon: Award }
+    ]},
+    { group: "Educacional", agents: [
+      { value: "professor-financas", name: "Professor de Finanças - Conceitos fundamentais", icon: GraduationCap },
+      { value: "instrutor-investimentos", name: "Instrutor de Investimentos - Produtos financeiros", icon: Book },
+      { value: "mentor-certificacoes", name: "Mentor de Certificações - Preparação para provas", icon: Award }
+    ]},
+    { group: "Estratégia", agents: [
+      { value: "estrategista-fundos", name: "Estrategista de Fundos - Gestão de carteiras", icon: Target },
+      { value: "planejador-financeiro", name: "Planejador Financeiro - Alocação de ativos", icon: ChartLine },
+      { value: "consultor-risco", name: "Consultor de Risco - Gestão e mitigação", icon: Scale }
+    ]},
+    { group: "Jurídico", agents: [
+      { value: "advogado-mercado-capitais", name: "Advogado Mercado de Capitais - Operações estruturadas", icon: FileCheck2 },
+      { value: "especialista-contratos", name: "Especialista em Contratos - Documentação legal", icon: FileText }
+    ]},
+    { group: "Comunicação", agents: [
+      { value: "redator-relatorios", name: "Redator de Relatórios - Comunicação executiva", icon: Edit },
+      { value: "analista-ri", name: "Analista de RI - Relações com investidores", icon: Megaphone }
+    ]}
   ];
 
   const removeTag = (tagToRemove: string) => {
@@ -136,41 +167,34 @@ export default function NovoDocumento() {
                       {/* Specific Agent Dropdown */}
                       <div>
                         <label className="block text-sm font-semibold text-foreground mb-3">Escolha um agente específico (opcional):</label>
-                        <select 
-                          value={selectedSpecificAgent}
-                          onChange={(e) => setSelectedSpecificAgent(e.target.value)}
-                          className="w-full px-4 py-3 bg-card border-2 border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-[hsl(var(--pastel-blue))]"
-                        >
-                          <option value="">Selecione um agente...</option>
-                          <optgroup label="Análise de Mercado">
-                            <option value="analista-acoes">📊 Analista de Ações - Especialista em renda variável</option>
-                            <option value="analista-renda-fixa">📈 Analista de Renda Fixa - Títulos e bonds</option>
-                            <option value="analista-macro">🌍 Analista Macroeconômico - Cenários e tendências</option>
-                          </optgroup>
-                          <optgroup label="Compliance e Regulatório">
-                            <option value="compliance-cvm">⚖️ Especialista CVM - Normas e regulamentações</option>
-                            <option value="compliance-bacen">🏦 Especialista BACEN - Regulação bancária</option>
-                            <option value="compliance-anbima">📋 Especialista ANBIMA - Certificações e normas</option>
-                          </optgroup>
-                          <optgroup label="Educacional">
-                            <option value="professor-financas">🎓 Professor de Finanças - Conceitos fundamentais</option>
-                            <option value="instrutor-investimentos">💼 Instrutor de Investimentos - Produtos financeiros</option>
-                            <option value="mentor-certificacoes">📚 Mentor de Certificações - Preparação para provas</option>
-                          </optgroup>
-                          <optgroup label="Estratégia">
-                            <option value="estrategista-fundos">💡 Estrategista de Fundos - Gestão de carteiras</option>
-                            <option value="planejador-financeiro">📊 Planejador Financeiro - Alocação de ativos</option>
-                            <option value="consultor-risco">⚠️ Consultor de Risco - Gestão e mitigação</option>
-                          </optgroup>
-                          <optgroup label="Jurídico">
-                            <option value="advogado-mercado-capitais">⚖️ Advogado Mercado de Capitais - Operações estruturadas</option>
-                            <option value="especialista-contratos">📄 Especialista em Contratos - Documentação legal</option>
-                          </optgroup>
-                          <optgroup label="Comunicação">
-                            <option value="redator-relatorios">✍️ Redator de Relatórios - Comunicação executiva</option>
-                            <option value="analista-ri">📢 Analista de RI - Relações com investidores</option>
-                          </optgroup>
-                        </select>
+                        <div className="relative">
+                          <select 
+                            value={selectedSpecificAgent}
+                            onChange={(e) => setSelectedSpecificAgent(e.target.value)}
+                            className="w-full px-4 py-3 bg-card border-2 border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-[hsl(var(--pastel-blue))] appearance-none cursor-pointer"
+                          >
+                            <option value="">Selecione um agente...</option>
+                            {specificAgents.map((group) => (
+                              <optgroup key={group.group} label={group.group}>
+                                {group.agents.map((agent) => (
+                                  <option key={agent.value} value={agent.value}>
+                                    {agent.name}
+                                  </option>
+                                ))}
+                              </optgroup>
+                            ))}
+                          </select>
+                          {selectedSpecificAgent && (
+                            <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                              {specificAgents.flatMap(g => g.agents).find(a => a.value === selectedSpecificAgent)?.icon && 
+                                (() => {
+                                  const SelectedIcon = specificAgents.flatMap(g => g.agents).find(a => a.value === selectedSpecificAgent)!.icon;
+                                  return <SelectedIcon className="w-4 h-4 text-[hsl(var(--pastel-gray-dark))]" />;
+                                })()
+                              }
+                            </div>
+                          )}
+                        </div>
                         <p className="text-xs text-muted-foreground mt-2">Ao selecionar um agente específico, o conteúdo será personalizado com a expertise dele</p>
                       </div>
 
