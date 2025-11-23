@@ -11,9 +11,17 @@ import {
 export default function NovaNewsletter() {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
-  const [selectedProduct, setSelectedProduct] = useState("newspaper");
+  const [selectedProducts, setSelectedProducts] = useState<string[]>(["newspaper"]);
   const [selectedFrequency, setSelectedFrequency] = useState("");
   const [selectedColor, setSelectedColor] = useState("#B8D4E8");
+
+  const toggleProduct = (productId: string) => {
+    setSelectedProducts(prev => 
+      prev.includes(productId) 
+        ? prev.filter(id => id !== productId)
+        : [...prev, productId]
+    );
+  };
 
   const productTypes = [
     { id: "newspaper", name: "Newspaper", icon: Newspaper, description: "Notícias diárias e curadoria", color: "bg-[hsl(var(--pastel-purple))]" },
@@ -106,21 +114,20 @@ export default function NovaNewsletter() {
             {currentStep === 1 && (
               <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 mb-8">
                 <h2 className="text-xl font-bold text-slate-800 mb-2">Selecione o formato do conteúdo</h2>
-                <p className="text-slate-500 mb-8">Escolha o tipo de produto principal que você deseja criar. Você poderá adicionar complementos nas próximas etapas.</p>
+                <p className="text-slate-500 mb-8">Escolha um ou mais tipos de produto que você deseja criar. Você poderá adicionar complementos nas próximas etapas.</p>
 
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                   {productTypes.map((product) => {
                     const Icon = product.icon;
-                    const isSelected = selectedProduct === product.id;
+                    const isSelected = selectedProducts.includes(product.id);
                     
                     return (
                       <label key={product.id} className="cursor-pointer group relative">
                         <input 
-                          type="radio" 
-                          name="product_type" 
+                          type="checkbox" 
                           className="sr-only" 
                           checked={isSelected}
-                          onChange={() => setSelectedProduct(product.id)}
+                          onChange={() => toggleProduct(product.id)}
                         />
                         <div className={`p-6 rounded-xl border transition-all h-full flex flex-col items-center text-center group-hover:shadow-md bg-white ${
                           isSelected ? 'border-[hsl(var(--pastel-purple))] ring-2 ring-[hsl(var(--pastel-purple))] ring-opacity-20' : 'border-slate-200 hover:border-[hsl(var(--pastel-purple))]'
