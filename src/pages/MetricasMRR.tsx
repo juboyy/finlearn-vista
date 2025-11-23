@@ -427,7 +427,7 @@ const MetricasMRR = () => {
                 backgroundColor: 'hsl(210, 35%, 85%)'
               }}>
                   <DollarSign className="text-lg" style={{
-                  color: colors.blue
+                  color: colors.slate
                 }} />
                 </div>
                 <span className="text-xs px-2 py-1 rounded-full font-medium" style={{
@@ -446,7 +446,7 @@ const MetricasMRR = () => {
                 backgroundColor: 'hsl(152, 25%, 85%)'
               }}>
                   <TrendingUp className="text-lg" style={{
-                  color: colors.green
+                  color: colors.slate
                 }} />
                 </div>
                 <span className="text-xs px-2 py-1 rounded-full font-medium" style={{
@@ -465,7 +465,7 @@ const MetricasMRR = () => {
                 backgroundColor: 'hsl(270, 25%, 85%)'
               }}>
                   <BarChart3 className="text-lg" style={{
-                  color: colors.purple
+                  color: colors.slate
                 }} />
                 </div>
                 <span className="text-xs px-2 py-1 rounded-full font-medium" style={{
@@ -484,7 +484,7 @@ const MetricasMRR = () => {
                 backgroundColor: 'hsl(350, 35%, 85%)'
               }}>
                   <TrendingDown className="text-lg" style={{
-                  color: colors.red
+                  color: colors.slate
                 }} />
                 </div>
                 <span className="text-xs px-2 py-1 rounded-full font-medium" style={{
@@ -503,7 +503,7 @@ const MetricasMRR = () => {
                 backgroundColor: 'hsl(45, 35%, 85%)'
               }}>
                   <Percent className="text-lg" style={{
-                  color: colors.yellow
+                  color: colors.slate
                 }} />
                 </div>
                 <span className="text-xs px-2 py-1 rounded-full font-medium" style={{

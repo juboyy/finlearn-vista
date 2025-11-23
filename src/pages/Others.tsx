@@ -403,7 +403,7 @@ const Others = () => {
             <div className="bg-card p-4 rounded-xl border border-border hover:border-border/60 transition-all">
               <div className="flex items-start justify-between mb-2">
                 <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(206, 35%, 85%)' }}>
-                  <CalendarIcon className="text-lg" style={{ color: colors.blue }} />
+                  <CalendarIcon className="text-lg" style={{ color: colors.slate }} />
                 </div>
                 <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: 'hsl(152, 32%, 85%)', color: 'hsl(152, 32%, 28%)' }}>
                   +18%
@@ -417,7 +417,7 @@ const Others = () => {
             <div className="bg-card p-4 rounded-xl border border-border hover:border-border/60 transition-all">
               <div className="flex items-start justify-between mb-2">
                 <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(152, 35%, 85%)' }}>
-                  <Users className="text-lg" style={{ color: colors.green }} />
+                  <Users className="text-lg" style={{ color: colors.slate }} />
                 </div>
                 <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: 'hsl(152, 32%, 85%)', color: 'hsl(152, 32%, 28%)' }}>
                   +12%
@@ -431,7 +431,7 @@ const Others = () => {
             <div className="bg-card p-4 rounded-xl border border-border hover:border-border/60 transition-all">
               <div className="flex items-start justify-between mb-2">
                 <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(270, 35%, 85%)' }}>
-                  <DollarSign className="text-lg" style={{ color: colors.purple }} />
+                  <DollarSign className="text-lg" style={{ color: colors.slate }} />
                 </div>
                 <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: 'hsl(152, 32%, 85%)', color: 'hsl(152, 32%, 28%)' }}>
                   +5%
@@ -445,7 +445,7 @@ const Others = () => {
             <div className="bg-card p-4 rounded-xl border border-border hover:border-border/60 transition-all">
               <div className="flex items-start justify-between mb-2">
                 <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(180, 35%, 85%)' }}>
-                  <Clock className="text-lg" style={{ color: colors.teal }} />
+                  <Clock className="text-lg" style={{ color: colors.slate }} />
                 </div>
                 <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: 'hsl(152, 32%, 85%)', color: 'hsl(152, 32%, 28%)' }}>
                   -0.5m
@@ -459,7 +459,7 @@ const Others = () => {
             <div className="bg-card p-4 rounded-xl border border-border hover:border-border/60 transition-all">
               <div className="flex items-start justify-between mb-2">
                 <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(45, 78%, 88%)' }}>
-                  <TrendingUp className="text-lg" style={{ color: colors.yellow }} />
+                  <TrendingUp className="text-lg" style={{ color: colors.slate }} />
                 </div>
                 <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: 'hsl(152, 32%, 85%)', color: 'hsl(152, 32%, 28%)' }}>
                   +0.3x

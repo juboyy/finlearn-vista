@@ -305,7 +305,7 @@ const Churn = () => {
             <div className="bg-card p-4 rounded-xl border border-border hover:border-border/60 transition-all">
               <div className="flex items-start justify-between mb-2">
                 <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(350, 35%, 85%)' }}>
-                  <UserX className="text-lg" style={{ color: colors.red }} />
+                  <UserX className="text-lg" style={{ color: colors.slate }} />
                 </div>
                 <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: 'hsl(350, 35%, 85%)', color: 'hsl(350, 35%, 35%)' }}>
                   +0.3%
@@ -319,7 +319,7 @@ const Churn = () => {
             <div className="bg-card p-4 rounded-xl border border-border hover:border-border/60 transition-all">
               <div className="flex items-start justify-between mb-2">
                 <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(350, 35%, 85%)' }}>
-                  <DollarSign className="text-lg" style={{ color: colors.red }} />
+                  <DollarSign className="text-lg" style={{ color: colors.slate }} />
                 </div>
                 <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: 'hsl(350, 35%, 85%)', color: 'hsl(350, 35%, 35%)' }}>
                   +0.5%
@@ -333,7 +333,7 @@ const Churn = () => {
             <div className="bg-card p-4 rounded-xl border border-border hover:border-border/60 transition-all">
               <div className="flex items-start justify-between mb-2">
                 <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(350, 35%, 85%)' }}>
-                  <Building className="text-lg" style={{ color: colors.red }} />
+                  <Building className="text-lg" style={{ color: colors.slate }} />
                 </div>
                 <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: 'hsl(152, 32%, 85%)', color: 'hsl(152, 32%, 28%)' }}>
                   -0.1%
@@ -347,7 +347,7 @@ const Churn = () => {
             <div className="bg-card p-4 rounded-xl border border-border hover:border-border/60 transition-all">
               <div className="flex items-start justify-between mb-2">
                 <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(350, 35%, 85%)' }}>
-                  <TrendingDown className="text-lg" style={{ color: colors.red }} />
+                  <TrendingDown className="text-lg" style={{ color: colors.slate }} />
                 </div>
                 <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: 'hsl(350, 35%, 85%)', color: 'hsl(350, 35%, 35%)' }}>
                   +0.4%
