@@ -73,6 +73,7 @@ import Churn from "./pages/Churn";
 import Retention from "./pages/Retention";
 import Others from "./pages/Others";
 import NovaAssinatura from "./pages/NovaAssinatura";
+import NewsletterRevisao from "./pages/NewsletterRevisao";
 
 import NotFound from "./pages/NotFound";
 
@@ -161,6 +162,7 @@ const App = () => {
           <Route path="/retention" element={<Retention />} />
           <Route path="/others" element={<Others />} />
           <Route path="/nova-assinatura" element={<NovaAssinatura />} />
+          <Route path="/newsletter-revisao" element={<NewsletterRevisao />} />
           
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
