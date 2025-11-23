@@ -1,4 +1,4 @@
-import { ArrowLeft, DollarSign, TrendingUp, TrendingDown, Percent, BarChart3, Layers, ArrowUpRight, Users } from "lucide-react";
+import { ArrowLeft, DollarSign, TrendingUp, TrendingDown, Percent, BarChart3, Layers, ArrowUpRight, Users, UserX, UserCheck, MoreHorizontal } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
@@ -152,9 +152,27 @@ const MetricasMRR = () => {
               >
                 <ArrowLeft size={18} />
               </button>
-              <div>
+              <div className="flex-1">
                 <h1 className="text-xl font-semibold text-foreground">Análise Completa de MRR</h1>
                 <p className="text-xs text-muted-foreground">Todas as métricas de Monthly Recurring Revenue em um único painel</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <Button variant="outline" size="sm" className="h-8 gap-2">
+                  <BarChart3 className="h-4 w-4" />
+                  MRR
+                </Button>
+                <Button variant="outline" size="sm" className="h-8 gap-2">
+                  <UserX className="h-4 w-4" />
+                  Churn
+                </Button>
+                <Button variant="outline" size="sm" className="h-8 gap-2">
+                  <UserCheck className="h-4 w-4" />
+                  Retention
+                </Button>
+                <Button variant="outline" size="sm" className="h-8 gap-2">
+                  <MoreHorizontal className="h-4 w-4" />
+                  Others
+                </Button>
               </div>
             </div>
           </div>
