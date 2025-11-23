@@ -35,6 +35,7 @@ const agentConfig = {
 
 export const MetricsAgentChat = ({ metricType, onClose }: MetricsAgentChatProps) => {
   const [input, setInput] = useState("");
+  const [isClosing, setIsClosing] = useState(false);
   const agent = agentConfig[metricType];
   const { messages, sendMessage, isLoading, clearMessages } = useAgentChat(agent.name);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -44,6 +45,13 @@ export const MetricsAgentChat = ({ metricType, onClose }: MetricsAgentChatProps)
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages]);
+
+  const handleClose = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      onClose();
+    }, 300);
+  };
 
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
@@ -60,8 +68,8 @@ export const MetricsAgentChat = ({ metricType, onClose }: MetricsAgentChatProps)
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
-      <div className="bg-card border border-border rounded-xl shadow-2xl w-full max-w-3xl h-[80vh] flex flex-col animate-scale-in">
+    <div className={`fixed inset-0 z-50 bg-background/80 backdrop-blur-sm flex items-center justify-center p-4 ${isClosing ? 'animate-fade-out' : 'animate-fade-in'}`}>
+      <div className={`bg-card border border-border rounded-xl shadow-2xl w-full max-w-3xl h-[80vh] flex flex-col ${isClosing ? 'animate-scale-out' : 'animate-scale-in'}`}>
         {/* Header */}
         <div className="flex items-center gap-4 p-6 border-b border-border">
           <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
@@ -79,7 +87,7 @@ export const MetricsAgentChat = ({ metricType, onClose }: MetricsAgentChatProps)
           >
             <Trash2 size={20} />
           </Button>
-          <Button variant="ghost" size="icon" onClick={onClose}>
+          <Button variant="ghost" size="icon" onClick={handleClose}>
             <X size={20} />
           </Button>
         </div>
