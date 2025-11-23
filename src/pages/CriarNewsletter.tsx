@@ -565,7 +565,7 @@ export default function CriarNewsletter() {
                     <div className="grid grid-cols-12 gap-4 px-6 py-3 bg-slate-50 border-b border-slate-200">
                       <div className="col-span-3 text-xs font-semibold text-slate-600 uppercase">Assinante</div>
                       <div className="col-span-2 text-xs font-semibold text-slate-600 uppercase">Data Assinatura</div>
-                      <div className="col-span-1 text-xs font-semibold text-slate-600 uppercase text-center">Desconto</div>
+                      <div className="col-span-1 text-xs font-semibold text-slate-600 uppercase text-center -ml-3">Desconto</div>
                       <div className="col-span-1 text-xs font-semibold text-slate-600 uppercase">Última Abertura</div>
                       <div className="col-span-1 text-xs font-semibold text-slate-600 uppercase">Tempo sem abrir</div>
                       <div className="col-span-1 text-xs font-semibold text-slate-600 uppercase text-center">Taxa</div>
@@ -612,7 +612,7 @@ export default function CriarNewsletter() {
                             </div>
                           </div>
 
-                          <div className="col-span-1 text-center">
+                          <div className="col-span-1 text-center -ml-3">
                             {subscriber.hasDiscount ? (
                               <span
                                 className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium text-slate-700"
