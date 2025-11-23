@@ -706,21 +706,31 @@ const Churn = () => {
                   <MoreHorizontal size={16} />
                 </button>
               </div>
-              <ResponsiveContainer width="100%" height={200}>
+              <ResponsiveContainer width="100%" height={220}>
                 <PieChart>
                   <Pie
                     data={geoChurnData}
                     cx="50%"
-                    cy="50%"
+                    cy="45%"
                     outerRadius={70}
                     dataKey="value"
-                    label={(entry) => entry.name}
                   >
                     {geoChurnData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Pie>
-                  <Tooltip formatter={(value: number) => `${value}%`} />
+                  <Tooltip 
+                    contentStyle={{
+                      backgroundColor: 'hsl(var(--card))',
+                      border: '1px solid hsl(var(--border))'
+                    }}
+                    formatter={(value: number) => `${value}%`} 
+                  />
+                  <Legend 
+                    verticalAlign="bottom" 
+                    height={36}
+                    wrapperStyle={{ paddingTop: '0px' }}
+                  />
                 </PieChart>
               </ResponsiveContainer>
             </div>
