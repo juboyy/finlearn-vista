@@ -256,14 +256,20 @@ export default function NovaNewsletter() {
                       <div className="col-span-2">
                         <label className="block text-sm font-medium text-slate-700 mb-2">Tags</label>
                         <div className="p-2 border border-slate-300 rounded-lg bg-white flex flex-wrap gap-2">
-                          <span className="px-2 py-1 bg-purple-50 text-[hsl(var(--pastel-gray-dark))] rounded text-sm flex items-center gap-1">
+                          <span className="px-3 py-1 rounded-full text-sm flex items-center gap-1 text-slate-700" style={{ backgroundColor: '#D4C5E8' }}>
                             Pix 
                             <button className="hover:text-slate-900">
                               <span className="text-xs">×</span>
                             </button>
                           </span>
-                          <span className="px-2 py-1 bg-purple-50 text-[hsl(var(--pastel-gray-dark))] rounded text-sm flex items-center gap-1">
+                          <span className="px-3 py-1 rounded-full text-sm flex items-center gap-1 text-slate-700" style={{ backgroundColor: '#C5E8D4' }}>
                             Open Finance 
+                            <button className="hover:text-slate-900">
+                              <span className="text-xs">×</span>
+                            </button>
+                          </span>
+                          <span className="px-3 py-1 rounded-full text-sm flex items-center gap-1 text-slate-700" style={{ backgroundColor: '#E8C5D8' }}>
+                            Fintechs 
                             <button className="hover:text-slate-900">
                               <span className="text-xs">×</span>
                             </button>
@@ -271,32 +277,6 @@ export default function NovaNewsletter() {
                           <input type="text" className="flex-1 outline-none min-w-[100px] text-sm py-1" placeholder="Digite e pressione Enter..." />
                         </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Content Editor Preview */}
-                <div className="mt-8 border-t border-slate-100 pt-8">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-bold text-slate-800">Conteúdo da Primeira Edição</h3>
-                    <div className="flex gap-2">
-                      <button className="p-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded transition flex items-center gap-2">
-                        <Bot className="w-4 h-4" /> Gerar com IA
-                      </button>
-                    </div>
-                  </div>
-                  <div className="border border-slate-200 rounded-xl overflow-hidden">
-                    <div className="bg-slate-50 border-b border-slate-200 p-2 flex gap-2">
-                      <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-slate-200 text-slate-600"><Bold className="w-4 h-4" /></button>
-                      <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-slate-200 text-slate-600"><Italic className="w-4 h-4" /></button>
-                      <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-slate-200 text-slate-600"><Underline className="w-4 h-4" /></button>
-                      <div className="w-px bg-slate-300 mx-1 h-6 self-center"></div>
-                      <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-slate-200 text-slate-600"><List className="w-4 h-4" /></button>
-                      <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-slate-200 text-slate-600"><Link className="w-4 h-4" /></button>
-                      <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-slate-200 text-slate-600"><Image className="w-4 h-4" /></button>
-                    </div>
-                    <div className="p-6 bg-white min-h-[300px]">
-                      <p className="text-slate-400 italic">Comece a escrever sua newsletter aqui...</p>
                     </div>
                   </div>
                 </div>
