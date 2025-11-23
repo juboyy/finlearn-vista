@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, KeyboardEvent } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import Plot from 'react-plotly.js';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { 
   BarChart3, 
   Table as TableIcon, 
@@ -14,7 +15,8 @@ import {
   Search,
   Network,
   Video,
-  Bot
+  Bot,
+  Settings
 } from "lucide-react";
 
 interface CommandMenuOption {
@@ -34,6 +36,10 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
   const [showCommandMenu, setShowCommandMenu] = useState(false);
   const [commandMenuPosition, setCommandMenuPosition] = useState({ top: 0, left: 0 });
   const [selectedCommandIndex, setSelectedCommandIndex] = useState(0);
+  const [editingChart, setEditingChart] = useState<{ id: string; title: string; data: any } | null>(null);
+  const [chartTitle, setChartTitle] = useState("");
+  const [chartLabels, setChartLabels] = useState("");
+  const [chartValues, setChartValues] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const commandMenuRef = useRef<HTMLDivElement>(null);
 
@@ -315,6 +321,39 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const handleEditChart = (chartId: string, chartData: any) => {
+    setEditingChart({ id: chartId, title: chartData.title, data: chartData.data });
+    
+    // Extrai dados do gráfico para o formulário
+    const firstDataset = chartData.data[0];
+    if (firstDataset) {
+      setChartTitle(chartData.title || "");
+      
+      if (firstDataset.x) {
+        setChartLabels(Array.isArray(firstDataset.x) ? firstDataset.x.join(", ") : "");
+      } else if (firstDataset.labels) {
+        setChartLabels(Array.isArray(firstDataset.labels) ? firstDataset.labels.join(", ") : "");
+      }
+      
+      if (firstDataset.y) {
+        setChartValues(Array.isArray(firstDataset.y) ? firstDataset.y.join(", ") : "");
+      } else if (firstDataset.values) {
+        setChartValues(Array.isArray(firstDataset.values) ? firstDataset.values.join(", ") : "");
+      }
+    }
+  };
+
+  const handleSaveChart = () => {
+    if (!editingChart) return;
+    
+    // Atualiza o markdown com o novo título
+    const oldPattern = new RegExp(`!\\[.*?\\]\\(chart:${editingChart.id}\\)`, 'g');
+    const newMarkdown = value.replace(oldPattern, `![${chartTitle}](chart:${editingChart.id})`);
+    onChange(newMarkdown);
+    
+    setEditingChart(null);
+  };
+
   return (
     <div className="relative w-full h-full flex flex-col">
       {/* Content Area */}
@@ -393,7 +432,14 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
                   
                   if (chart) {
                     return (
-                      <div key={index} className="my-6 bg-card rounded-lg border border-border p-4 not-prose">
+                      <div 
+                        key={index} 
+                        className="my-6 bg-card rounded-lg border border-border p-4 not-prose relative group cursor-pointer hover:border-primary transition"
+                        onClick={() => handleEditChart(chartId, chart)}
+                      >
+                        <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition bg-primary/10 rounded-lg p-2">
+                          <Settings size={16} className="text-primary" />
+                        </div>
                         <Plot
                           data={chart.data}
                           layout={{
@@ -426,6 +472,80 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
             </div>
           </div>
       </div>
+
+      {/* Chart Edit Dialog */}
+      <Dialog open={!!editingChart} onOpenChange={(open) => !open && setEditingChart(null)}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Editar Gráfico</DialogTitle>
+            <DialogDescription>
+              Personalize o título e os dados do seu gráfico
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4 mt-4">
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-2">
+                Título do Gráfico
+              </label>
+              <input
+                type="text"
+                value={chartTitle}
+                onChange={(e) => setChartTitle(e.target.value)}
+                placeholder="Digite o título do gráfico"
+                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-background text-foreground"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-2">
+                Labels (separados por vírgula)
+              </label>
+              <input
+                type="text"
+                value={chartLabels}
+                onChange={(e) => setChartLabels(e.target.value)}
+                placeholder="Ex: Jan, Fev, Mar, Abr, Mai"
+                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-background text-foreground"
+              />
+              <p className="text-xs text-muted-foreground mt-1">
+                Para gráficos de pizza, use os nomes das categorias
+              </p>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-2">
+                Valores (separados por vírgula)
+              </label>
+              <input
+                type="text"
+                value={chartValues}
+                onChange={(e) => setChartValues(e.target.value)}
+                placeholder="Ex: 20, 35, 30, 45, 40"
+                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-background text-foreground"
+              />
+              <p className="text-xs text-muted-foreground mt-1">
+                Use números separados por vírgula
+              </p>
+            </div>
+
+            <div className="flex items-center justify-end gap-3 pt-4 border-t border-border">
+              <button
+                onClick={() => setEditingChart(null)}
+                className="px-4 py-2 border border-border text-foreground rounded-lg hover:bg-muted transition"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={handleSaveChart}
+                className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition"
+              >
+                Salvar Alterações
+              </button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
