@@ -1,6 +1,12 @@
-import { ArrowLeft, UserCheck, Calendar, CalendarDays, Magnet, Clock, RotateCw, BarChart3, UserX, MoreHorizontal } from "lucide-react";
+import { useState } from "react";
+import { ArrowLeft, UserCheck, Calendar as CalendarIcon, CalendarDays, Magnet, Clock, RotateCw, BarChart3, UserX, MoreHorizontal, Bot } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import { DateRange } from "react-day-picker";
 import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { 
   BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, 
@@ -10,6 +16,10 @@ import {
 
 const Retention = () => {
   const navigate = useNavigate();
+  const [dateRange, setDateRange] = useState<DateRange | undefined>({
+    from: new Date(2024, 0, 1),
+    to: new Date(2024, 5, 30),
+  });
 
   const colors = {
     blue: '#5b8db8',
@@ -294,6 +304,54 @@ const Retention = () => {
             </div>
           </div>
         </header>
+
+        {/* Subheader with filters */}
+        <div className="bg-card border-b border-border px-4 py-3">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="h-9 gap-2 text-sm"
+                  >
+                    <CalendarIcon className="h-4 w-4" />
+                    {dateRange?.from ? (
+                      dateRange.to ? (
+                        <>
+                          {format(dateRange.from, "dd MMM yyyy", { locale: ptBR })} -{" "}
+                          {format(dateRange.to, "dd MMM yyyy", { locale: ptBR })}
+                        </>
+                      ) : (
+                        format(dateRange.from, "dd MMM yyyy", { locale: ptBR })
+                      )
+                    ) : (
+                      <span>Selecionar período</span>
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-4 animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95" align="start">
+                  <Calendar
+                    mode="range"
+                    selected={dateRange}
+                    onSelect={setDateRange}
+                    numberOfMonths={2}
+                    className="pointer-events-auto"
+                    classNames={{
+                      months: "flex gap-8 relative",
+                      month: "space-y-4 first:pr-8 last:pl-8 last:border-l last:border-border",
+                    }}
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+            
+            <Button className="h-9 gap-2">
+              <Bot className="h-4 w-4" />
+              Agente de IA
+            </Button>
+          </div>
+        </div>
 
         <main className="p-4 w-full">
           {/* KPI Cards */}
