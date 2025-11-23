@@ -848,7 +848,7 @@ const AgendarPublicacaoRevisao = () => {
             </div>
           </div>
         </div>
-        
+
         {/* Verification Modal */}
         <Dialog open={isVerificationOpen} onOpenChange={handleCloseVerification}>
           <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
