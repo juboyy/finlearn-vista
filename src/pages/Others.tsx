@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ArrowLeft, Calendar as CalendarIcon, Users, DollarSign, Clock, TrendingUp, BarChart3, UserX, UserCheck, MoreHorizontal, Bot } from "lucide-react";
+import { MetricsAgentChat } from "@/components/MetricsAgentChat";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -20,6 +21,7 @@ const Others = () => {
     from: new Date(2024, 0, 1),
     to: new Date(2024, 5, 30),
   });
+  const [showAgentChat, setShowAgentChat] = useState(false);
 
   const colors = {
     blue: '#5b8db8',
@@ -390,7 +392,7 @@ const Others = () => {
               </Popover>
             </div>
             
-            <Button className="h-9 gap-2">
+            <Button className="h-9 gap-2" onClick={() => setShowAgentChat(true)}>
               <Bot className="h-4 w-4" />
               Agente de IA
             </Button>
@@ -1434,6 +1436,13 @@ const Others = () => {
           </div>
         </main>
       </div>
+      
+      {showAgentChat && (
+        <MetricsAgentChat 
+          metricType="Others" 
+          onClose={() => setShowAgentChat(false)} 
+        />
+      )}
     </div>
   );
 };
