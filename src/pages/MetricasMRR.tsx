@@ -139,11 +139,11 @@ const MetricasMRR = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background w-full">
+    <div className="min-h-screen bg-background w-full flex">
       <SidebarFix />
       
       <div className="flex-1 lg:ml-64">
-        <header className="bg-card border-b border-border sticky top-0 z-10">
+        <header className="bg-card border-b border-border w-full">
           <div className="px-4 py-2">
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
@@ -167,7 +167,7 @@ const MetricasMRR = () => {
           </div>
         </header>
 
-        <main className="p-4 overflow-y-auto">
+        <main className="p-4 w-full">
           {/* KPI Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 mb-4">
             <div className="bg-card p-4 rounded-xl border border-border hover:border-border/60 transition-all">
