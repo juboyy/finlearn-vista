@@ -535,7 +535,7 @@ const AgendarPublicacaoRevisao = () => {
                   <div className="flex items-center gap-3 mb-4">
                     <div
                       className="w-10 h-10 rounded-lg flex items-center justify-center"
-                      style={{ backgroundColor: 'hsl(var(--pastel-blue))' }}
+                      style={{ backgroundColor: 'hsl(var(--pastel-purple))' }}
                     >
                       <SpellCheck style={{ color: 'hsl(var(--pastel-gray-dark))' }} />
                     </div>
@@ -562,7 +562,7 @@ const AgendarPublicacaoRevisao = () => {
                   <button
                     className="w-full py-3 rounded-xl font-semibold hover:opacity-80 transition border border-slate-200 flex items-center justify-center gap-2"
                     style={{ 
-                      backgroundColor: 'hsl(var(--pastel-blue-btn))',
+                      backgroundColor: 'hsl(var(--pastel-purple-btn))',
                       color: 'hsl(var(--pastel-gray-dark))'
                     }}
                   >
