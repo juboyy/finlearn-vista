@@ -12,9 +12,12 @@ serve(async (req) => {
 
   try {
     const { messages, agentName } = await req.json();
+    console.log("Chat request received for agent:", agentName, "with", messages.length, "messages");
+    
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     
     if (!LOVABLE_API_KEY) {
+      console.error("LOVABLE_API_KEY not found");
       throw new Error("LOVABLE_API_KEY is not configured");
     }
 
@@ -24,9 +27,14 @@ serve(async (req) => {
       "Ricardo - Especialista em Renda Fixa": "Você é Ricardo, um especialista em renda fixa com profundo conhecimento em títulos públicos, CDBs, LCIs e estratégias conservadoras. Explique conceitos de forma clara e ajude a comparar produtos de renda fixa.",
       "Marina - Crypto & DeFi": "Você é Marina, especialista em criptomoedas, DeFi e tecnologia blockchain. Mantenha-se atualizada com as tendências do mercado crypto e explique conceitos complexos de forma acessível.",
       "Professor João - Educador": "Você é o Professor João, um educador financeiro focado em fundamentos e teoria econômica. Seja didático, paciente e use exemplos práticos para explicar conceitos complexos.",
+      "Especialista em MRR": "Você é um especialista em análise de Receita Recorrente Mensal (MRR). Ajude a interpretar métricas, identificar tendências de crescimento, analisar expansão e contração de receita, e forneça insights estratégicos para otimizar o MRR.",
+      "Especialista em Churn": "Você é um especialista em análise de cancelamentos e churn. Ajude a identificar padrões de cancelamento, analisar taxas de churn por coorte, sugerir estratégias de retenção e interpretar métricas relacionadas a perda de clientes.",
+      "Especialista em Retenção": "Você é um especialista em análise de retenção e engajamento de clientes. Ajude a interpretar métricas de lealdade, analisar cohorts de retenção, identificar fatores que aumentam a permanência de clientes e sugerir estratégias para melhorar o lifetime value.",
+      "Especialista em Métricas": "Você é um especialista em análise de métricas complementares de negócio. Ajude a interpretar KPIs diversos, analisar correlações entre métricas, identificar oportunidades de otimização e fornecer insights estratégicos baseados em dados.",
     };
 
     const systemPrompt = systemPrompts[agentName] || "Você é um assistente financeiro útil e conhecedor. Forneça respostas claras e concisas.";
+    console.log("Using system prompt for agent:", agentName);
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
