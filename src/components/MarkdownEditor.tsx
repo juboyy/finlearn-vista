@@ -9,9 +9,6 @@ import {
   Type,
   Image as ImageIcon,
   Code,
-  Columns2,
-  FileEdit,
-  Eye,
   Wand2,
   Search,
   Network,
@@ -32,13 +29,10 @@ interface MarkdownEditorProps {
   onChange: (value: string) => void;
 }
 
-type ViewMode = 'split' | 'editor' | 'preview';
-
 export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
   const [showCommandMenu, setShowCommandMenu] = useState(false);
   const [commandMenuPosition, setCommandMenuPosition] = useState({ top: 0, left: 0 });
   const [selectedCommandIndex, setSelectedCommandIndex] = useState(0);
-  const [viewMode, setViewMode] = useState<ViewMode>('split');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const commandMenuRef = useRef<HTMLDivElement>(null);
 
@@ -252,48 +246,10 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
 
   return (
     <div className="relative w-full h-full flex flex-col">
-      {/* View Mode Toggle Buttons */}
-      <div className="flex items-center justify-end gap-2 mb-4 pb-4 border-b border-border">
-        <button
-          onClick={() => setViewMode('split')}
-          className={`px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-2 ${
-            viewMode === 'split'
-              ? 'bg-[hsl(206,35%,75%)] text-[hsl(220,15%,30%)]'
-              : 'bg-muted text-muted-foreground hover:bg-[hsl(206,35%,85%)]'
-          }`}
-        >
-          <Columns2 size={14} />
-          Split
-        </button>
-        <button
-          onClick={() => setViewMode('editor')}
-          className={`px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-2 ${
-            viewMode === 'editor'
-              ? 'bg-[hsl(206,35%,75%)] text-[hsl(220,15%,30%)]'
-              : 'bg-muted text-muted-foreground hover:bg-[hsl(206,35%,85%)]'
-          }`}
-        >
-          <FileEdit size={14} />
-          Editor
-        </button>
-        <button
-          onClick={() => setViewMode('preview')}
-          className={`px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-2 ${
-            viewMode === 'preview'
-              ? 'bg-[hsl(206,35%,75%)] text-[hsl(220,15%,30%)]'
-              : 'bg-muted text-muted-foreground hover:bg-[hsl(206,35%,85%)]'
-          }`}
-        >
-          <Eye size={14} />
-          Preview
-        </button>
-      </div>
-
       {/* Content Area */}
-      <div className={`relative flex-1 ${viewMode === 'split' ? 'grid grid-cols-2 gap-4' : ''}`}>
+      <div className="relative flex-1 grid grid-cols-2 gap-4">
         {/* Editor Column */}
-        {(viewMode === 'split' || viewMode === 'editor') && (
-          <div className={`relative ${viewMode === 'split' ? 'border-r border-border' : ''}`}>
+        <div className="relative border-r border-border">
         <textarea
           ref={textareaRef}
           value={value}
@@ -348,11 +304,9 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
               </div>
             )}
           </div>
-        )}
 
         {/* Preview Column */}
-        {(viewMode === 'split' || viewMode === 'preview') && (
-          <div className="relative overflow-y-auto p-8">
+        <div className="relative overflow-y-auto p-8">
             <div className="mb-4 text-xs font-semibold text-muted-foreground uppercase border-b border-border pb-2">
               Preview
             </div>
@@ -362,7 +316,6 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
               </ReactMarkdown>
             </div>
           </div>
-        )}
       </div>
     </div>
   );
