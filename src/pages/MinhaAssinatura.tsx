@@ -1,11 +1,13 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { Download, Bell, Settings2, XCircle, Calendar, BookOpen, Clock, FileText, Podcast, Video, File, BookText, Search, ChevronLeft, ChevronRight, CreditCard, Receipt, Play, Heart, Share2, ThumbsUp, CheckCircle2, AlertCircle } from "lucide-react";
+import { Download, Bell, Settings2, XCircle, Calendar, BookOpen, Clock, FileText, Podcast, Video, File, BookText, Search, ChevronLeft, ChevronRight, CreditCard, Receipt, Play, Heart, Share2, ThumbsUp, CheckCircle2, AlertCircle, Building2, Mail, Phone, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useState } from "react";
+import { Separator } from "@/components/ui/separator";
 
 export default function MinhaAssinatura() {
   const [isManageOpen, setIsManageOpen] = useState(false);
+  const [selectedInvoice, setSelectedInvoice] = useState<any>(null);
 
   return (
     <div className="flex h-screen overflow-hidden bg-slate-50">
@@ -161,7 +163,10 @@ export default function MinhaAssinatura() {
                               <div className="font-bold text-slate-800">{invoice.amount}</div>
                               <div className="text-xs text-green-600 font-medium">{invoice.status}</div>
                             </div>
-                            <button className="px-3 py-2 border border-slate-200 text-slate-700 rounded-lg text-xs font-medium hover:bg-slate-50 transition">
+                            <button 
+                              onClick={() => setSelectedInvoice(invoice)}
+                              className="px-3 py-2 border border-slate-200 text-slate-700 rounded-lg text-xs font-medium hover:bg-slate-50 transition"
+                            >
                               <Download size={14} className="inline mr-1" />
                               PDF
                             </button>
@@ -553,6 +558,202 @@ export default function MinhaAssinatura() {
           </section>
         </div>
       </main>
+
+      {/* Invoice Modal */}
+      <Dialog open={!!selectedInvoice} onOpenChange={(open) => !open && setSelectedInvoice(null)}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          {selectedInvoice && (
+            <div className="bg-white">
+              {/* Invoice Header */}
+              <div className="border-b border-slate-200 pb-6 mb-6">
+                <div className="flex items-start justify-between mb-6">
+                  <div>
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#D4C5E8' }}>
+                        <FileText className="text-slate-700" size={24} />
+                      </div>
+                      <div>
+                        <h2 className="text-2xl font-bold text-slate-800">FATURA</h2>
+                        <p className="text-sm text-slate-600">Payments Insider</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-sm text-slate-600 mb-1">Fatura Nº</div>
+                    <div className="text-xl font-bold text-slate-800">{selectedInvoice.invoice}</div>
+                    <div className="mt-2">
+                      <span className="px-3 py-1.5 text-slate-800 rounded-full text-xs font-bold inline-flex items-center gap-1" style={{ backgroundColor: '#C5E8D4' }}>
+                        <CheckCircle2 size={12} />
+                        {selectedInvoice.status}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Dates Section */}
+                <div className="grid grid-cols-3 gap-4 mb-6">
+                  <div className="bg-slate-50 rounded-lg p-4 border border-slate-200">
+                    <div className="text-xs text-slate-500 mb-1">Data de Emissão</div>
+                    <div className="font-semibold text-slate-800">{selectedInvoice.date}</div>
+                  </div>
+                  <div className="bg-slate-50 rounded-lg p-4 border border-slate-200">
+                    <div className="text-xs text-slate-500 mb-1">Data de Vencimento</div>
+                    <div className="font-semibold text-slate-800">{selectedInvoice.date}</div>
+                  </div>
+                  <div className="bg-slate-50 rounded-lg p-4 border border-slate-200">
+                    <div className="text-xs text-slate-500 mb-1">Data de Pagamento</div>
+                    <div className="font-semibold text-slate-800">{selectedInvoice.date}</div>
+                  </div>
+                </div>
+
+                {/* Company and Customer Info */}
+                <div className="grid grid-cols-2 gap-6">
+                  <div>
+                    <div className="text-sm font-bold text-slate-800 mb-3">De:</div>
+                    <div className="space-y-2">
+                      <div className="flex items-start gap-2">
+                        <Building2 size={16} className="text-slate-500 mt-0.5 shrink-0" />
+                        <div>
+                          <div className="font-semibold text-slate-800">Payments Insider Ltda</div>
+                          <div className="text-sm text-slate-600">CNPJ: 12.345.678/0001-90</div>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <MapPin size={16} className="text-slate-500 mt-0.5 shrink-0" />
+                        <div className="text-sm text-slate-600">
+                          Av. Paulista, 1000 - 10º andar<br />
+                          São Paulo, SP - 01310-100
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Mail size={16} className="text-slate-500 shrink-0" />
+                        <div className="text-sm text-slate-600">contato@paymentsinsider.com.br</div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Phone size={16} className="text-slate-500 shrink-0" />
+                        <div className="text-sm text-slate-600">(11) 3000-0000</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="text-sm font-bold text-slate-800 mb-3">Para:</div>
+                    <div className="space-y-2">
+                      <div className="flex items-start gap-2">
+                        <Building2 size={16} className="text-slate-500 mt-0.5 shrink-0" />
+                        <div>
+                          <div className="font-semibold text-slate-800">João Silva</div>
+                          <div className="text-sm text-slate-600">CPF: 123.456.789-00</div>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <MapPin size={16} className="text-slate-500 mt-0.5 shrink-0" />
+                        <div className="text-sm text-slate-600">
+                          Rua das Flores, 123 - Apto 45<br />
+                          São Paulo, SP - 01234-567
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Mail size={16} className="text-slate-500 shrink-0" />
+                        <div className="text-sm text-slate-600">joao.silva@email.com</div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Phone size={16} className="text-slate-500 shrink-0" />
+                        <div className="text-sm text-slate-600">(11) 98765-4321</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Invoice Items */}
+              <div className="mb-6">
+                <div className="text-sm font-bold text-slate-800 mb-4">Itens da Fatura</div>
+                <div className="border border-slate-200 rounded-lg overflow-hidden">
+                  <table className="w-full">
+                    <thead className="bg-slate-50">
+                      <tr>
+                        <th className="text-left text-xs font-semibold text-slate-700 px-4 py-3">Descrição</th>
+                        <th className="text-center text-xs font-semibold text-slate-700 px-4 py-3">Período</th>
+                        <th className="text-right text-xs font-semibold text-slate-700 px-4 py-3">Valor</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-200">
+                      <tr>
+                        <td className="px-4 py-4">
+                          <div className="font-semibold text-slate-800">Assinatura Premium</div>
+                          <div className="text-sm text-slate-600">Payments Insider - Acesso completo</div>
+                        </td>
+                        <td className="px-4 py-4 text-center text-sm text-slate-600">
+                          23 Nov 2023 - 22 Dez 2023
+                        </td>
+                        <td className="px-4 py-4 text-right font-semibold text-slate-800">
+                          R$ 49,00
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* Payment Summary */}
+              <div className="border-t border-slate-200 pt-6">
+                <div className="flex justify-end mb-6">
+                  <div className="w-80 space-y-3">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-600">Subtotal</span>
+                      <span className="font-semibold text-slate-800">R$ 49,00</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-600">Descontos</span>
+                      <span className="font-semibold text-slate-800">R$ 0,00</span>
+                    </div>
+                    <Separator />
+                    <div className="flex justify-between">
+                      <span className="font-bold text-slate-800">Total</span>
+                      <span className="text-2xl font-bold text-slate-800">{selectedInvoice.amount}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Payment Method */}
+                <div className="bg-slate-50 rounded-lg p-4 border border-slate-200 mb-6">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#B8D4E8' }}>
+                        <CreditCard className="text-slate-700" size={20} />
+                      </div>
+                      <div>
+                        <div className="text-xs text-slate-600 mb-0.5">Método de Pagamento</div>
+                        <div className="font-semibold text-slate-800">Cartão de Crédito Visa •••• 4532</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Footer Notes */}
+                <div className="text-xs text-slate-500 space-y-1">
+                  <p>Esta é uma fatura eletrônica válida para todos os fins legais.</p>
+                  <p>Em caso de dúvidas, entre em contato através do email contato@paymentsinsider.com.br</p>
+                  <p className="mt-3 text-slate-400">Documento gerado em {new Date().toLocaleDateString('pt-BR')}</p>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex gap-3 mt-6 pt-6 border-t border-slate-200">
+                <button className="flex-1 px-4 py-2.5 text-slate-700 border border-slate-200 rounded-lg font-medium hover:bg-slate-50 transition">
+                  <Download size={18} className="inline mr-2" />
+                  Baixar PDF
+                </button>
+                <button className="flex-1 px-4 py-2.5 text-slate-700 border border-slate-200 rounded-lg font-medium hover:bg-slate-50 transition">
+                  <Mail size={18} className="inline mr-2" />
+                  Enviar por Email
+                </button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
