@@ -15,6 +15,31 @@ export default function CriarNewsletter() {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showHistoryFor, setShowHistoryFor] = useState<number | null>(null);
 
+  const calculateTimeWithoutOpening = (lastOpened: string | null) => {
+    if (!lastOpened) return { value: '—', color: 'text-slate-400' };
+    
+    const lastDate = new Date(lastOpened);
+    const today = new Date();
+    const diffTime = Math.abs(today.getTime() - lastDate.getTime());
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays === 0) {
+      return { value: 'Hoje', color: 'text-green-600' };
+    } else if (diffDays === 1) {
+      return { value: '1 dia', color: 'text-green-600' };
+    } else if (diffDays < 7) {
+      return { value: `${diffDays} dias`, color: 'text-green-600' };
+    } else if (diffDays < 14) {
+      return { value: '1 semana', color: 'text-yellow-600' };
+    } else if (diffDays < 30) {
+      const weeks = Math.floor(diffDays / 7);
+      return { value: `${weeks} semanas`, color: 'text-orange-600' };
+    } else {
+      const months = Math.floor(diffDays / 30);
+      return { value: `${months} ${months === 1 ? 'mês' : 'meses'}`, color: 'text-red-600' };
+    }
+  };
+
   const newsletters = [
     {
       id: 1,
@@ -541,7 +566,8 @@ export default function CriarNewsletter() {
                       <div className="col-span-3 text-xs font-semibold text-slate-600 uppercase">Assinante</div>
                       <div className="col-span-2 text-xs font-semibold text-slate-600 uppercase">Data Assinatura</div>
                       <div className="col-span-1 text-xs font-semibold text-slate-600 uppercase text-center">Desconto</div>
-                      <div className="col-span-2 text-xs font-semibold text-slate-600 uppercase">Última Abertura</div>
+                      <div className="col-span-1 text-xs font-semibold text-slate-600 uppercase">Última Abertura</div>
+                      <div className="col-span-1 text-xs font-semibold text-slate-600 uppercase">Tempo sem abrir</div>
                       <div className="col-span-1 text-xs font-semibold text-slate-600 uppercase text-center">Taxa</div>
                       <div className="col-span-2 text-xs font-semibold text-slate-600 uppercase">Canal</div>
                       <div className="col-span-1 text-xs font-semibold text-slate-600 uppercase text-right">Ações</div>
@@ -603,17 +629,31 @@ export default function CriarNewsletter() {
                             )}
                           </div>
 
-                          <div className="col-span-2">
+                          <div className="col-span-1">
                             {subscriber.lastOpened ? (
                               <div className="flex items-center gap-2">
                                 <Eye size={14} className="text-slate-400" />
                                 <span className="text-sm text-slate-700">
-                                  {new Date(subscriber.lastOpened).toLocaleDateString('pt-BR')}
+                                  {new Date(subscriber.lastOpened).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })}
                                 </span>
                               </div>
                             ) : (
-                              <span className="text-sm text-slate-400">Nunca abriu</span>
+                              <span className="text-sm text-slate-400">Nunca</span>
                             )}
+                          </div>
+
+                          <div className="col-span-1">
+                            {(() => {
+                              const timeInfo = calculateTimeWithoutOpening(subscriber.lastOpened);
+                              return (
+                                <div className="flex items-center gap-2">
+                                  <Clock size={14} className="text-slate-400" />
+                                  <span className={`text-sm font-medium ${timeInfo.color}`}>
+                                    {timeInfo.value}
+                                  </span>
+                                </div>
+                              );
+                            })()}
                           </div>
 
                           <div className="col-span-1 text-center">
