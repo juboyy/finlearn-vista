@@ -251,6 +251,22 @@ const Others = () => {
     { quarter: 'Q4', roi: 4.1 }
   ];
 
+  const winRateData = [
+    { size: "< R$10k", rate: 42 },
+    { size: "R$10-50k", rate: 35 },
+    { size: "R$50-100k", rate: 28 },
+    { size: "> R$100k", rate: 18 },
+  ];
+
+  const pipelineCoverageData = [
+    { month: "Jan", ratio: 4.5 },
+    { month: "Fev", ratio: 4.2 },
+    { month: "Mar", ratio: 3.8 },
+    { month: "Abr", ratio: 4.0 },
+    { month: "Mai", ratio: 4.3 },
+    { month: "Jun", ratio: 4.5 },
+  ];
+
   const sparkData1 = [{ v: 950 }, { v: 965 }, { v: 978 }, { v: 982 }];
   const sparkData2 = [{ v: 3600 }, { v: 3680 }, { v: 3710 }, { v: 3732 }];
   const sparkData3 = [{ v: 23.5 }, { v: 23.8 }, { v: 24.1 }, { v: 24.3 }];
@@ -1287,7 +1303,7 @@ const Others = () => {
             </div>
           </div>
 
-          {/* Sales Efficiency */}
+          {/* Sales Efficiency, Win Rate, Pipeline Coverage */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
             <div className="bg-card p-4 rounded-xl border border-border">
               <div className="flex justify-between items-center mb-3">
@@ -1310,6 +1326,51 @@ const Others = () => {
                     ))}
                   </Bar>
                 </BarChart>
+              </ResponsiveContainer>
+            </div>
+
+            <div className="bg-card p-4 rounded-xl border border-border">
+              <div className="flex justify-between items-center mb-3">
+                <h3 className="text-sm font-bold text-foreground">Win Rate by Deal Size</h3>
+                <button className="text-muted-foreground hover:text-foreground">
+                  <MoreHorizontal size={16} />
+                </button>
+              </div>
+              <ResponsiveContainer width="100%" height={240}>
+                <BarChart data={winRateData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                  <XAxis dataKey="size" tick={{ fontSize: 11 }} />
+                  <YAxis tick={{ fontSize: 11 }} />
+                  <Tooltip 
+                    contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))' }}
+                    formatter={(value: number) => `${value}%`}
+                  />
+                  <Bar dataKey="rate">
+                    {winRateData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={[colors.green, colors.blue, colors.yellow, colors.red][index]} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+
+            <div className="bg-card p-4 rounded-xl border border-border">
+              <div className="flex justify-between items-center mb-3">
+                <h3 className="text-sm font-bold text-foreground">Pipeline Coverage Ratio</h3>
+                <button className="text-muted-foreground hover:text-foreground">
+                  <MoreHorizontal size={16} />
+                </button>
+              </div>
+              <ResponsiveContainer width="100%" height={240}>
+                <LineChart data={pipelineCoverageData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                  <XAxis dataKey="month" tick={{ fontSize: 11 }} />
+                  <YAxis tick={{ fontSize: 11 }} />
+                  <Tooltip 
+                    contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))' }}
+                  />
+                  <Line type="monotone" dataKey="ratio" stroke={colors.teal} strokeWidth={2} dot={{ r: 4 }} />
+                </LineChart>
               </ResponsiveContainer>
             </div>
           </div>
