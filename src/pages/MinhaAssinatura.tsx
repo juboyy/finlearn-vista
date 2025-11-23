@@ -689,8 +689,12 @@ export default function MinhaAssinatura() {
                       <div>
                         <div className="text-xs text-slate-700 font-medium mb-0.5">Método de Pagamento</div>
                         <div className="font-bold text-slate-800 text-sm">Visa •••• 4532</div>
-                        <div className="text-xs text-slate-600 mt-1">Comprovante: #PAY-2023-11-4532</div>
                       </div>
+                    </div>
+                    <Separator className="my-3" />
+                    <div className="bg-white/60 rounded-lg p-3 border border-slate-200/50">
+                      <div className="text-xs text-slate-600 mb-1 font-medium">Número do Comprovante</div>
+                      <div className="text-base font-bold text-slate-800">#PAY-2023-11-4532</div>
                     </div>
                   </div>
 
