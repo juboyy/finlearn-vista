@@ -49,25 +49,100 @@ export default function Agentes() {
 
   const specializedAgents = [
     {
+      id: "analista-tecnica",
+      name: "Ana - Analista Técnica",
+      description: "Especialista em análise técnica, padrões gráficos e estratégias de trading",
+      icon: ChartLine,
+      bgColor: "bg-[hsl(206,35%,75%)]",
+      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/f28f1efee6-bb8cd63f0a8ea0129291.png"
+    },
+    {
+      id: "renda-fixa",
+      name: "Ricardo - Especialista em Renda Fixa",
+      description: "Expert em títulos públicos, CDBs, LCIs e estratégias conservadoras",
+      icon: Landmark,
+      bgColor: "bg-[hsl(280,35%,75%)]",
+      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4f08e86bcd-772ce53ecbb47d504bde.png"
+    },
+    {
+      id: "crypto-defi",
+      name: "Marina - Crypto & DeFi",
+      description: "Especialista em criptomoedas, DeFi e tecnologia blockchain",
+      icon: Bitcoin,
+      bgColor: "bg-[hsl(340,35%,75%)]",
+      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/521bb99722-72b06772970c6fd465e6.png"
+    },
+    {
+      id: "educador-financeiro",
+      name: "Professor João - Educador",
+      description: "Educador financeiro com foco em fundamentos e teoria econômica",
+      icon: GraduationCap,
+      bgColor: "bg-[hsl(160,35%,75%)]",
+      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4450be57c6-3f9f4c9c029e3c4d7519.png"
+    },
+    {
       id: "mercado-financeiro",
       name: "Especialista em Mercado Financeiro",
       description: "Expert em análise de mercados, ações e tendências econômicas",
-      icon: ChartLine,
-      bgColor: "bg-[hsl(206,35%,75%)]"
+      icon: TrendingUp,
+      bgColor: "bg-[hsl(206,35%,75%)]",
+      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-74fa07dc19664888168d.png"
     },
     {
       id: "pagamentos",
       name: "Especialista em Pagamentos",
       description: "Conhecimento em sistemas de pagamento, fintechs e transações digitais",
       icon: CreditCard,
-      bgColor: "bg-[hsl(280,35%,75%)]"
+      bgColor: "bg-[hsl(280,35%,75%)]",
+      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-13cb55de72175bb27fe6.png"
     },
     {
       id: "capitais",
       name: "Especialista em Mercado de Capitais",
       description: "Especialista em IPOs, ofertas públicas e estruturação de operações",
+      icon: Database,
+      bgColor: "bg-[hsl(340,35%,75%)]",
+      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-d3b919a60e4b8021bd1b.png"
+    },
+    {
+      id: "esg-investing",
+      name: "Julia - ESG & Investimentos Sustentáveis",
+      description: "Especialista em investimentos ESG e sustentabilidade corporativa",
       icon: TrendingUp,
-      bgColor: "bg-[hsl(340,35%,75%)]"
+      bgColor: "bg-[hsl(160,35%,75%)]",
+      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-22a909d28eba94674e80.png"
+    },
+    {
+      id: "compliance",
+      name: "Fernanda - Compliance & Regulação",
+      description: "Expert em compliance, regulamentação CVM e aspectos legais do mercado",
+      icon: Settings,
+      bgColor: "bg-[hsl(340,35%,75%)]",
+      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-d3b919a60e4b8021bd1b.png"
+    },
+    {
+      id: "valuation",
+      name: "Pedro - Valuation & M&A",
+      description: "Especialista em avaliação de empresas, fusões e aquisições",
+      icon: Landmark,
+      bgColor: "bg-[hsl(206,35%,75%)]",
+      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-74fa07dc19664888168d.png"
+    },
+    {
+      id: "private-equity",
+      name: "Lucas - Private Equity & VC",
+      description: "Expert em capital de risco, private equity e investimentos alternativos",
+      icon: CreditCard,
+      bgColor: "bg-[hsl(280,35%,75%)]",
+      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-13cb55de72175bb27fe6.png"
+    },
+    {
+      id: "gestao-risco",
+      name: "Carla - Gestão de Riscos",
+      description: "Especialista em análise e gestão de riscos financeiros e operacionais",
+      icon: Star,
+      bgColor: "bg-[hsl(340,35%,75%)]",
+      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-d3b919a60e4b8021bd1b.png"
     }
   ];
 
@@ -77,7 +152,7 @@ export default function Agentes() {
       if (agent) {
         setChatAgent({ 
           name: agent.name, 
-          image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/f28f1efee6-bb8cd63f0a8ea0129291.png" 
+          image: agent.image
         });
         setShowWelcomeModal(false);
         setPromptText("");
@@ -270,9 +345,11 @@ export default function Agentes() {
                           className="cursor-pointer"
                         >
                           <div className="flex items-center gap-3 py-1">
-                            <div className={`w-10 h-10 rounded-lg ${agent.bgColor} flex items-center justify-center`}>
-                              <agent.icon className="text-[hsl(220,15%,30%)]" size={18} />
-                            </div>
+                            <img 
+                              src={agent.image} 
+                              alt={agent.name}
+                              className="w-10 h-10 rounded-full object-cover"
+                            />
                             <div className="flex-1">
                               <div className="font-medium text-foreground">{agent.name}</div>
                               <div className="text-xs text-muted-foreground">{agent.description}</div>
