@@ -1,47 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { Eye, Save, Send, Smartphone, Monitor, CheckCircle, AlertTriangle, Search, Globe, Rocket, Users, Settings as SettingsIcon, Download, ArrowLeft, Lightbulb, ChartBar, SpellCheck, Info, History, Undo, Clock, CreditCard, Store, Shield, Twitter, Linkedin, Instagram, Youtube, Edit, Loader2 } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-
+import { Eye, Save, Send, Smartphone, Monitor, CheckCircle, AlertTriangle, Search, Globe, Rocket, Users, Settings as SettingsIcon, Download, ArrowLeft, Lightbulb, ChartBar, SpellCheck, Info, History, Undo, Clock, CreditCard, Store, Shield, Twitter, Linkedin, Instagram, Youtube, Edit } from "lucide-react";
 const AgendarPublicacaoRevisao = () => {
   const navigate = useNavigate();
   const [activeDevice, setActiveDevice] = useState<"desktop" | "mobile">("desktop");
-  const [isVerificationOpen, setIsVerificationOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [showResults, setShowResults] = useState(false);
-
-  useEffect(() => {
-    if (isVerificationOpen && !showResults) {
-      setIsLoading(true);
-      const timer = setTimeout(() => {
-        setIsLoading(false);
-        setShowResults(true);
-      }, 7000);
-      return () => clearTimeout(timer);
-    }
-  }, [isVerificationOpen, showResults]);
-
-  const handleOpenVerification = () => {
-    setIsVerificationOpen(true);
-    setShowResults(false);
-  };
-
-  const handleCloseVerification = () => {
-    setIsVerificationOpen(false);
-    setIsLoading(false);
-    setShowResults(false);
-  };
-
   const handlePublish = () => {
     if (confirm("Tem certeza que deseja publicar esta newsletter para 12.450 destinatários?")) {
       alert("Newsletter agendada com sucesso! Você receberá uma confirmação por e-mail.");
       navigate("/newsletter");
     }
   };
-
-  return (
-    <div className="flex min-h-screen overflow-hidden bg-slate-50">
+  return <div className="flex min-h-screen overflow-hidden bg-slate-50">
       <SidebarFix />
 
       <main className="flex-1 flex flex-col overflow-hidden">
@@ -567,44 +537,48 @@ const AgendarPublicacaoRevisao = () => {
                 {/* Quality Check Score Card */}
                 <div className="bg-white rounded-2xl border border-slate-200 p-6">
                   <div className="flex items-center gap-3 mb-4">
-                    <div
-                      className="w-10 h-10 rounded-lg flex items-center justify-center"
-                      style={{ backgroundColor: 'hsl(var(--pastel-purple))' }}
-                    >
-                      <SpellCheck style={{ color: 'hsl(var(--pastel-gray-dark))' }} />
+                    <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{
+                    backgroundColor: 'hsl(var(--pastel-purple))'
+                  }}>
+                      <SpellCheck style={{
+                      color: 'hsl(var(--pastel-gray-dark))'
+                    }} />
                     </div>
-                    <h3 className="font-bold text-lg" style={{ color: 'hsl(var(--foreground))' }}>
+                    <h3 className="font-bold text-lg" style={{
+                    color: 'hsl(var(--foreground))'
+                  }}>
                       Verificação de Qualidade
                     </h3>
                   </div>
                   <div className="space-y-3 mb-4">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm" style={{ color: 'hsl(var(--pastel-gray-dark))' }}>
+                      <span className="text-sm" style={{
+                      color: 'hsl(var(--pastel-gray-dark))'
+                    }}>
                         Score Geral
                       </span>
-                      <span className="text-3xl font-bold" style={{ color: 'hsl(var(--foreground))' }}>
-                        95<span className="text-lg" style={{ color: 'hsl(var(--muted-foreground))' }}>/100</span>
+                      <span className="text-3xl font-bold" style={{
+                      color: 'hsl(var(--foreground))'
+                    }}>
+                        95<span className="text-lg" style={{
+                        color: 'hsl(var(--muted-foreground))'
+                      }}>/100</span>
                       </span>
                     </div>
                     <div className="w-full bg-slate-100 rounded-full h-2">
-                      <div
-                        className="h-2 rounded-full transition-all"
-                        style={{ width: '95%', backgroundColor: 'hsl(var(--pastel-green))' }}
-                      ></div>
+                      <div className="h-2 rounded-full transition-all" style={{
+                      width: '95%',
+                      backgroundColor: 'hsl(var(--pastel-green))'
+                    }}></div>
                     </div>
                   </div>
-                  <button
-                    onClick={handleOpenVerification}
-                    className="w-full py-3 rounded-xl font-semibold hover:opacity-80 transition border border-slate-200 flex items-center justify-center gap-2"
-                    style={{
-                      backgroundColor: 'hsl(var(--pastel-purple-btn))',
-                      color: 'hsl(var(--pastel-gray-dark))'
-                    }}
-                  >
+                  <button className="w-full py-3 rounded-xl font-semibold hover:opacity-80 transition border border-slate-200 flex items-center justify-center gap-2" style={{
+                  backgroundColor: 'hsl(var(--pastel-purple-btn))',
+                  color: 'hsl(var(--pastel-gray-dark))'
+                }}>
                     <Info size={18} />
                     Gerar Verificação 
                   </button>
-                </div>
                 </div>
 
                 {/* Reach Card */}
@@ -848,145 +822,7 @@ const AgendarPublicacaoRevisao = () => {
             </div>
           </div>
         </div>
-
-        {/* Verification Modal */}
-        <Dialog open={isVerificationOpen} onOpenChange={handleCloseVerification}>
-          <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle className="text-2xl font-bold flex items-center gap-3" style={{ color: 'hsl(var(--foreground))' }}>
-                <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center"
-                  style={{ backgroundColor: 'hsl(var(--pastel-purple))' }}
-                >
-                  <SpellCheck style={{ color: 'hsl(var(--pastel-gray-dark))' }} />
-                </div>
-                Verificação de Qualidade
-              </DialogTitle>
-            </DialogHeader>
-            
-            <div className="space-y-3 mt-6">
-              {[
-                {
-                  icon: <CheckCircle className="text-xl" />,
-                  bg: 'hsl(152 32% 79%)',
-                  title: "Linha de Assunto Otimizada",
-                  desc: "Taxa de abertura estimada: 28-32%",
-                  status: "Aprovado",
-                  statusColor: "hsl(var(--pastel-gray-dark))"
-                },
-                {
-                  icon: <CheckCircle className="text-xl" />,
-                  bg: 'hsl(152 32% 79%)',
-                  title: "Links Funcionais",
-                  desc: "Todos os 8 links foram verificados",
-                  status: "Aprovado",
-                  statusColor: "hsl(var(--pastel-gray-dark))"
-                },
-                {
-                  icon: <CheckCircle className="text-xl" />,
-                  bg: 'hsl(152 32% 79%)',
-                  title: "Compatibilidade Mobile",
-                  desc: "Design responsivo testado",
-                  status: "Aprovado",
-                  statusColor: "hsl(var(--pastel-gray-dark))"
-                },
-                {
-                  icon: <AlertTriangle className="text-xl" />,
-                  bg: 'hsl(44 78% 89%)',
-                  title: "Palavras de Spam",
-                  desc: "1 palavra detectada: \"Grátis\"",
-                  status: "Revisar",
-                  statusColor: "hsl(var(--pastel-gray-dark))",
-                  isButton: true
-                },
-                {
-                  icon: <CheckCircle className="text-xl" />,
-                  bg: 'hsl(152 32% 79%)',
-                  title: "Conformidade LGPD",
-                  desc: "Link de cancelamento incluído",
-                  status: "Aprovado",
-                  statusColor: "hsl(var(--pastel-gray-dark))"
-                },
-                {
-                  icon: <Search className="text-xl" />,
-                  bg: 'hsl(206 35% 79%)',
-                  title: "Otimização SEO",
-                  desc: "Meta tags e palavras-chave otimizadas",
-                  status: "Detalhes",
-                  statusColor: "hsl(var(--pastel-gray-dark))",
-                  isButton: true
-                },
-                {
-                  icon: <Globe className="text-xl" />,
-                  bg: 'hsl(152 32% 79%)',
-                  title: "Segmentação GEO",
-                  desc: "Brasil: 95% • Internacional: 5%",
-                  status: "Configurar",
-                  statusColor: "hsl(var(--pastel-gray-dark))",
-                  isButton: true
-                }
-              ].map((item, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-center justify-between p-4 rounded-lg border border-slate-200 transition-all duration-500"
-                  style={{
-                    backgroundColor: isLoading || !showResults ? 'hsl(220 13% 91%)' : item.bg
-                  }}
-                >
-                  <div className="flex items-center gap-3">
-                    {isLoading ? (
-                      <Loader2 className="text-xl animate-spin" style={{ color: 'hsl(var(--pastel-gray-dark))' }} />
-                    ) : (
-                      <div style={{ color: showResults ? 'hsl(var(--pastel-gray-dark))' : 'hsl(220 13% 91%)' }}>
-                        {item.icon}
-                      </div>
-                    )}
-                    <div>
-                      <p
-                        className="font-medium text-sm transition-opacity duration-500"
-                        style={{
-                          color: 'hsl(var(--foreground))',
-                          opacity: showResults ? 1 : 0.3
-                        }}
-                      >
-                        {item.title}
-                      </p>
-                      <p
-                        className="text-xs transition-opacity duration-500"
-                        style={{
-                          color: 'hsl(var(--muted-foreground))',
-                          opacity: showResults ? 1 : 0.3
-                        }}
-                      >
-                        {item.desc}
-                      </p>
-                    </div>
-                  </div>
-                  {showResults && (
-                    item.isButton ? (
-                      <button
-                        className="font-bold text-sm hover:underline transition-opacity duration-500"
-                        style={{ color: item.statusColor }}
-                      >
-                        {item.status}
-                      </button>
-                    ) : (
-                      <span
-                        className="font-bold text-sm transition-opacity duration-500"
-                        style={{ color: item.statusColor }}
-                      >
-                        {item.status}
-                      </span>
-                    )
-                  )}
-                </div>
-              ))}
-            </div>
-          </DialogContent>
-        </Dialog>
       </main>
-    </div>
-  );
+    </div>;
 };
-
 export default AgendarPublicacaoRevisao;
