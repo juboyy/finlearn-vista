@@ -359,7 +359,7 @@ const Retention = () => {
             <div className="bg-card p-4 rounded-xl border border-border hover:border-border/60 transition-all">
               <div className="flex items-start justify-between mb-2">
                 <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(152, 35%, 85%)' }}>
-                  <UserCheck className="text-lg" style={{ color: colors.green }} />
+                  <UserCheck className="text-lg" style={{ color: colors.slate }} />
                 </div>
                 <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: 'hsl(152, 32%, 85%)', color: 'hsl(152, 32%, 28%)' }}>
                   +2.1%
@@ -373,7 +373,7 @@ const Retention = () => {
             <div className="bg-card p-4 rounded-xl border border-border hover:border-border/60 transition-all">
               <div className="flex items-start justify-between mb-2">
                 <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(206, 35%, 85%)' }}>
-                  <CalendarIcon className="text-lg" style={{ color: colors.blue }} />
+                  <CalendarIcon className="text-lg" style={{ color: colors.slate }} />
                 </div>
                 <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: 'hsl(152, 32%, 85%)', color: 'hsl(152, 32%, 28%)' }}>
                   +8.5%
@@ -387,7 +387,7 @@ const Retention = () => {
             <div className="bg-card p-4 rounded-xl border border-border hover:border-border/60 transition-all">
               <div className="flex items-start justify-between mb-2">
                 <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(270, 35%, 85%)' }}>
-                  <CalendarDays className="text-lg" style={{ color: colors.purple }} />
+                  <CalendarDays className="text-lg" style={{ color: colors.slate }} />
                 </div>
                 <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: 'hsl(152, 32%, 85%)', color: 'hsl(152, 32%, 28%)' }}>
                   +5.3%
@@ -401,7 +401,7 @@ const Retention = () => {
             <div className="bg-card p-4 rounded-xl border border-border hover:border-border/60 transition-all">
               <div className="flex items-start justify-between mb-2">
                 <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(180, 35%, 85%)' }}>
-                  <Magnet className="text-lg" style={{ color: colors.teal }} />
+                  <Magnet className="text-lg" style={{ color: colors.slate }} />
                 </div>
                 <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: 'hsl(152, 32%, 85%)', color: 'hsl(152, 32%, 28%)' }}>
                   +3%
@@ -415,7 +415,7 @@ const Retention = () => {
             <div className="bg-card p-4 rounded-xl border border-border hover:border-border/60 transition-all">
               <div className="flex items-start justify-between mb-2">
                 <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(45, 78%, 88%)' }}>
-                  <Clock className="text-lg" style={{ color: colors.yellow }} />
+                  <Clock className="text-lg" style={{ color: colors.slate }} />
                 </div>
                 <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: 'hsl(152, 32%, 85%)', color: 'hsl(152, 32%, 28%)' }}>
                   +2.3m
