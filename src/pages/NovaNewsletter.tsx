@@ -6,7 +6,8 @@ import {
   FileCheck, FlaskConical, Upload, Plus, ChevronRight, Check, Bold, 
   Italic, Underline, List, Link, Image, Calendar, Users, DollarSign,
   ChartPie, MessageCircle, Eye, ArrowRight, ArrowLeft, Info, Mail, 
-  MessageSquare, Smartphone, Hash, Send, CreditCard, Receipt
+  MessageSquare, Smartphone, Hash, Send, CreditCard, Receipt, CheckCircle,
+  Palette, Clock
 } from "lucide-react";
 
 export default function NovaNewsletter() {
@@ -862,6 +863,253 @@ export default function NovaNewsletter() {
               </div>
             )}
 
+            {/* Step 5: Review & Summary */}
+            {currentStep === 5 && (
+              <div className="space-y-8 mb-8">
+                {/* Hero Preview Card */}
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-lg overflow-hidden">
+                  <div 
+                    className="h-48 relative flex items-center justify-center"
+                    style={{ backgroundColor: selectedColor }}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-br from-black/5 to-transparent"></div>
+                    <div className="relative text-center space-y-3 px-8">
+                      <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium text-slate-700 bg-white/90 backdrop-blur-sm">
+                        <Newspaper className="w-3.5 h-3.5" />
+                        Fintechs & Inovação
+                      </div>
+                      <h2 className="text-3xl font-bold text-[hsl(var(--pastel-gray-dark))]">Revolução dos Pagamentos</h2>
+                      <p className="text-sm text-slate-600 max-w-2xl">Análise profunda sobre as transformações no mercado de pagamentos digitais e seu impacto no ecossistema financeiro.</p>
+                    </div>
+                  </div>
+                  
+                  <div className="p-6 bg-slate-50 border-t border-slate-200">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-6">
+                        <div className="flex items-center gap-2 text-sm text-slate-600">
+                          <Clock className="w-4 h-4 text-slate-400" />
+                          <span className="font-medium">{selectedFrequency || 'Diária'}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-slate-600">
+                          <Calendar className="w-4 h-4 text-slate-400" />
+                          <span>Seg a Sex às 07:00</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-slate-600">
+                          <Users className="w-4 h-4 text-slate-400" />
+                          <span>0 assinantes</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-2xl font-bold text-[hsl(var(--pastel-gray-dark))]">R$ 49,90</span>
+                        <span className="text-sm text-slate-500">/mês</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Tags */}
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-sm font-medium text-slate-600">Tags:</span>
+                  {['Pix', 'Open Banking', 'Fintechs', 'Regulação'].map((tag, idx) => (
+                    <span 
+                      key={idx}
+                      className="px-3 py-1.5 rounded-full text-sm font-medium text-[hsl(var(--pastel-gray-dark))]"
+                      style={{ backgroundColor: 'hsl(var(--pastel-purple))' }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Summary Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {/* Informações Básicas */}
+                  <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                    <div className="bg-[hsl(var(--pastel-blue))] p-4 flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-white/90 backdrop-blur-sm flex items-center justify-center">
+                          <FileText className="w-5 h-5 text-[hsl(var(--pastel-gray-dark))]" />
+                        </div>
+                        <h3 className="font-bold text-[hsl(var(--pastel-gray-dark))]">Informações Básicas</h3>
+                      </div>
+                    </div>
+                    <div className="p-5 space-y-3">
+                      <div className="flex items-center justify-between py-2 border-b border-slate-100">
+                        <div className="flex items-center gap-3">
+                          <Newspaper className="w-4 h-4 text-slate-400" />
+                          <span className="text-sm font-medium text-slate-600">Título</span>
+                        </div>
+                        <span className="text-sm font-semibold text-[hsl(var(--pastel-gray-dark))]">Revolução dos Pagamentos</span>
+                      </div>
+                      <div className="flex items-center justify-between py-2 border-b border-slate-100">
+                        <div className="flex items-center gap-3">
+                          <Hash className="w-4 h-4 text-slate-400" />
+                          <span className="text-sm font-medium text-slate-600">Categoria</span>
+                        </div>
+                        <span className="text-sm font-semibold text-[hsl(var(--pastel-gray-dark))]">Fintechs & Inovação</span>
+                      </div>
+                      <div className="flex items-center justify-between py-2 border-b border-slate-100">
+                        <div className="flex items-center gap-3">
+                          <Clock className="w-4 h-4 text-slate-400" />
+                          <span className="text-sm font-medium text-slate-600">Frequência</span>
+                        </div>
+                        <span className="text-sm font-semibold text-[hsl(var(--pastel-gray-dark))]">{selectedFrequency || 'Diária'}</span>
+                      </div>
+                      <div className="flex items-center justify-between py-2">
+                        <div className="flex items-center gap-3">
+                          <Calendar className="w-4 h-4 text-slate-400" />
+                          <span className="text-sm font-medium text-slate-600">Horário</span>
+                        </div>
+                        <span className="text-sm font-semibold text-[hsl(var(--pastel-gray-dark))]">Seg a Sex às 07:00</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Tipos de Conteúdo */}
+                  <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                    <div className="bg-[hsl(var(--pastel-purple))] p-4 flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-white/90 backdrop-blur-sm flex items-center justify-center">
+                          <Newspaper className="w-5 h-5 text-[hsl(var(--pastel-gray-dark))]" />
+                        </div>
+                        <h3 className="font-bold text-[hsl(var(--pastel-gray-dark))]">Tipos de Conteúdo</h3>
+                      </div>
+                    </div>
+                    <div className="p-5 space-y-3">
+                      {selectedProducts.map((productId, idx) => {
+                        const product = [
+                          { id: "newspaper", name: "Newspaper" },
+                          { id: "podcast", name: "Podcast" },
+                          { id: "courses", name: "Cursos" },
+                          { id: "avatar", name: "Avatar IA" },
+                          { id: "ebooks", name: "E-books" },
+                          { id: "webinars", name: "Webinars" },
+                          { id: "articles", name: "Artigos" },
+                          { id: "analysis", name: "Análises" },
+                          { id: "reports", name: "Relatórios" },
+                          { id: "studies", name: "Estudos" }
+                        ].find(p => p.id === productId);
+                        
+                        return product ? (
+                          <div key={idx} className="flex items-center justify-between py-2 border-b border-slate-100 last:border-0">
+                            <div className="flex items-center gap-3">
+                              <CheckCircle className="w-4 h-4 text-slate-400" />
+                              <span className="text-sm font-medium text-slate-600">{product.name}</span>
+                            </div>
+                            <span className="text-sm font-semibold text-[hsl(var(--pastel-gray-dark))]">Incluído</span>
+                          </div>
+                        ) : null;
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Canais de Distribuição */}
+                  <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                    <div className="bg-[hsl(var(--pastel-green))] p-4 flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-white/90 backdrop-blur-sm flex items-center justify-center">
+                          <Send className="w-5 h-5 text-[hsl(var(--pastel-gray-dark))]" />
+                        </div>
+                        <h3 className="font-bold text-[hsl(var(--pastel-gray-dark))]">Canais de Distribuição</h3>
+                      </div>
+                    </div>
+                    <div className="p-5 space-y-3">
+                      {selectedChannels.map((channelId, idx) => {
+                        const channelNames: Record<string, { name: string; icon: any }> = {
+                          email: { name: "Email", icon: Mail },
+                          sms: { name: "SMS", icon: MessageSquare },
+                          whatsapp: { name: "WhatsApp", icon: MessageCircle },
+                          rcs: { name: "RCS", icon: Smartphone },
+                          mms: { name: "MMS", icon: Image },
+                          slack: { name: "Slack", icon: Hash },
+                          telegram: { name: "Telegram", icon: Send },
+                          discord: { name: "Discord", icon: Users }
+                        };
+                        const channel = channelNames[channelId];
+                        const ChannelIcon = channel?.icon;
+                        
+                        return channel ? (
+                          <div key={idx} className="flex items-center justify-between py-2 border-b border-slate-100 last:border-0">
+                            <div className="flex items-center gap-3">
+                              {ChannelIcon && <ChannelIcon className="w-4 h-4 text-slate-400" />}
+                              <span className="text-sm font-medium text-slate-600">{channel.name}</span>
+                            </div>
+                            <span className="text-sm font-semibold text-[hsl(var(--pastel-gray-dark))]">Ativo</span>
+                          </div>
+                        ) : null;
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Monetização */}
+                  <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                    <div className="bg-[hsl(var(--pastel-peach))] p-4 flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-white/90 backdrop-blur-sm flex items-center justify-center">
+                          <DollarSign className="w-5 h-5 text-[hsl(var(--pastel-gray-dark))]" />
+                        </div>
+                        <h3 className="font-bold text-[hsl(var(--pastel-gray-dark))]">Monetização</h3>
+                      </div>
+                    </div>
+                    <div className="p-5 space-y-3">
+                      <div className="flex items-center justify-between py-2 border-b border-slate-100">
+                        <div className="flex items-center gap-3">
+                          <DollarSign className="w-4 h-4 text-slate-400" />
+                          <span className="text-sm font-medium text-slate-600">Preço</span>
+                        </div>
+                        <span className="text-sm font-semibold text-[hsl(var(--pastel-gray-dark))]">R$ 49,90</span>
+                      </div>
+                      <div className="flex items-center justify-between py-2 border-b border-slate-100">
+                        <div className="flex items-center gap-3">
+                          <Calendar className="w-4 h-4 text-slate-400" />
+                          <span className="text-sm font-medium text-slate-600">Período Trial</span>
+                        </div>
+                        <span className="text-sm font-semibold text-[hsl(var(--pastel-gray-dark))]">7 dias grátis</span>
+                      </div>
+                      <div className="flex items-center justify-between py-2">
+                        <div className="flex items-center gap-3">
+                          <Hash className="w-4 h-4 text-slate-400" />
+                          <span className="text-sm font-medium text-slate-600">Desconto</span>
+                        </div>
+                        <span className="text-sm font-semibold text-[hsl(var(--pastel-gray-dark))]">20% OFF anual</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Color Theme Preview */}
+                <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-[hsl(var(--pastel-purple))] flex items-center justify-center">
+                        <Palette className="w-5 h-5 text-[hsl(var(--pastel-gray-dark))]" />
+                      </div>
+                      <h3 className="font-bold text-[hsl(var(--pastel-gray-dark))]">Tema Visual</h3>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div 
+                      className="w-20 h-20 rounded-xl shadow-md border-4 border-white"
+                      style={{ backgroundColor: selectedColor }}
+                    ></div>
+                    <div>
+                      <p className="text-sm font-medium text-slate-600 mb-1">Cor Principal</p>
+                      <p className="text-xs text-slate-400 font-mono">{selectedColor}</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Success Message */}
+                <div className="bg-gradient-to-r from-[hsl(var(--pastel-green))] to-[hsl(var(--pastel-blue))] rounded-2xl p-8 text-center shadow-lg">
+                  <div className="w-16 h-16 rounded-full bg-white shadow-md flex items-center justify-center mx-auto mb-4">
+                    <Check className="w-8 h-8 text-[hsl(var(--pastel-green-btn))]" />
+                  </div>
+                  <h2 className="text-2xl font-bold text-[hsl(var(--pastel-gray-dark))] mb-2">Tudo Pronto para Publicar!</h2>
+                  <p className="text-[hsl(var(--pastel-gray-dark))]/80">Revise as informações acima e clique em "Publicar Newsletter" para finalizar.</p>
+                </div>
+              </div>
+            )}
+
             {/* Navigation Buttons */}
             <div className="flex items-center justify-between pt-6 border-t border-slate-200">
               <button 
@@ -871,13 +1119,23 @@ export default function NovaNewsletter() {
                 <ArrowLeft className="w-4 h-4" />
                 Voltar
               </button>
-              <button 
-                onClick={() => currentStep < 5 && setCurrentStep(currentStep + 1)}
-                className="px-8 py-3 rounded-lg text-slate-700 font-bold hover:opacity-90 transition shadow-sm hover:shadow flex items-center gap-2"
-                style={{ backgroundColor: '#D4C5E8' }}
-              >
-                {currentStep === 4 ? 'Revisar & Finalizar' : 'Próxima Etapa'} <ArrowRight className="w-4 h-4" />
-              </button>
+              {currentStep === 5 ? (
+                <button 
+                  className="px-8 py-3 rounded-lg font-bold transition shadow-md hover:shadow-lg flex items-center gap-2 text-white"
+                  style={{ backgroundColor: 'hsl(var(--pastel-purple-btn))' }}
+                >
+                  <Send className="w-4 h-4" />
+                  Publicar Newsletter
+                </button>
+              ) : (
+                <button 
+                  onClick={() => currentStep < 5 && setCurrentStep(currentStep + 1)}
+                  className="px-8 py-3 rounded-lg text-slate-700 font-bold hover:opacity-90 transition shadow-sm hover:shadow flex items-center gap-2"
+                  style={{ backgroundColor: '#D4C5E8' }}
+                >
+                  {currentStep === 4 ? 'Revisar & Finalizar' : 'Próxima Etapa'} <ArrowRight className="w-4 h-4" />
+                </button>
+              )}
             </div>
 
           </div>
