@@ -511,8 +511,8 @@ export default function NovaNewsletter() {
             {/* Step 4: Monetization */}
             {currentStep === 4 && (
               <div className="space-y-8 mb-8">
-                {/* Header with gradient */}
-                <div className="bg-gradient-to-br from-pastel-purple to-pastel-pink rounded-2xl p-8 text-center shadow-lg">
+                {/* Header */}
+                <div className="bg-pastel-purple rounded-2xl p-8 text-center shadow-lg">
                   <h2 className="text-3xl font-bold text-white mb-3">Configurações de Monetização</h2>
                   <p className="text-white/90 text-lg">Configure os planos de assinatura, preços e estratégias de monetização</p>
                 </div>
@@ -531,7 +531,7 @@ export default function NovaNewsletter() {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <label className="cursor-pointer group">
                       <input type="radio" name="monetization" className="sr-only peer" />
-                      <div className="p-6 bg-gradient-to-br from-pastel-green/20 to-pastel-green/5 rounded-xl border-2 border-pastel-green/30 peer-checked:border-pastel-green peer-checked:ring-4 peer-checked:ring-pastel-green/20 transition-all group-hover:shadow-md">
+                      <div className="p-6 bg-pastel-green/15 rounded-xl border-2 border-pastel-green/30 peer-checked:border-pastel-green peer-checked:ring-4 peer-checked:ring-pastel-green/20 transition-all group-hover:shadow-md">
                         <div className="w-10 h-10 rounded-lg bg-pastel-green mb-4 flex items-center justify-center">
                           <Check className="w-5 h-5 text-pastel-gray-dark" />
                         </div>
@@ -541,7 +541,7 @@ export default function NovaNewsletter() {
                     </label>
                     <label className="cursor-pointer group">
                       <input type="radio" name="monetization" className="sr-only peer" defaultChecked />
-                      <div className="p-6 bg-gradient-to-br from-pastel-purple/20 to-pastel-purple/5 rounded-xl border-2 border-pastel-purple/30 peer-checked:border-pastel-purple peer-checked:ring-4 peer-checked:ring-pastel-purple/20 transition-all group-hover:shadow-md">
+                      <div className="p-6 bg-pastel-purple/15 rounded-xl border-2 border-pastel-purple/30 peer-checked:border-pastel-purple peer-checked:ring-4 peer-checked:ring-pastel-purple/20 transition-all group-hover:shadow-md">
                         <div className="w-10 h-10 rounded-lg bg-pastel-purple mb-4 flex items-center justify-center">
                           <DollarSign className="w-5 h-5 text-pastel-gray-dark" />
                         </div>
@@ -551,7 +551,7 @@ export default function NovaNewsletter() {
                     </label>
                     <label className="cursor-pointer group">
                       <input type="radio" name="monetization" className="sr-only peer" />
-                      <div className="p-6 bg-gradient-to-br from-pastel-blue/20 to-pastel-blue/5 rounded-xl border-2 border-pastel-blue/30 peer-checked:border-pastel-blue peer-checked:ring-4 peer-checked:ring-pastel-blue/20 transition-all group-hover:shadow-md">
+                      <div className="p-6 bg-pastel-blue/15 rounded-xl border-2 border-pastel-blue/30 peer-checked:border-pastel-blue peer-checked:ring-4 peer-checked:ring-pastel-blue/20 transition-all group-hover:shadow-md">
                         <div className="w-10 h-10 rounded-lg bg-pastel-blue mb-4 flex items-center justify-center">
                           <ChartPie className="w-5 h-5 text-pastel-gray-dark" />
                         </div>
@@ -565,7 +565,7 @@ export default function NovaNewsletter() {
                 {/* Pricing Plans */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="bg-white rounded-2xl border-2 border-pastel-purple/30 shadow-md overflow-hidden group hover:shadow-xl transition-shadow">
-                    <div className="bg-gradient-to-br from-pastel-purple to-pastel-pink p-6">
+                    <div className="bg-pastel-purple p-6">
                       <div className="flex items-center justify-between mb-2">
                         <h3 className="text-xl font-bold text-white">Plano Mensal</h3>
                         <span className="px-3 py-1 text-xs font-bold rounded-full bg-white/90 text-pastel-gray-dark">Ativo</span>
@@ -599,7 +599,7 @@ export default function NovaNewsletter() {
                   </div>
 
                   <div className="bg-white rounded-2xl border-2 border-pastel-green/30 shadow-md overflow-hidden group hover:shadow-xl transition-shadow">
-                    <div className="bg-gradient-to-br from-pastel-green to-pastel-blue p-6">
+                    <div className="bg-pastel-green p-6">
                       <div className="flex items-center justify-between mb-2">
                         <h3 className="text-xl font-bold text-white">Plano Anual</h3>
                         <span className="px-3 py-1 text-xs font-bold rounded-full bg-white/90 text-pastel-gray-dark">Ativo</span>
@@ -681,25 +681,25 @@ export default function NovaNewsletter() {
 
                 {/* Discounts & Promotions */}
                 <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-                  <div className="bg-gradient-to-br from-pastel-yellow to-pastel-orange p-6">
+                  <div className="bg-pastel-yellow p-6">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-4">
                         <div className="w-12 h-12 rounded-xl bg-white shadow-md flex items-center justify-center">
-                          <DollarSign className="w-6 h-6 text-pastel-orange" />
+                          <DollarSign className="w-6 h-6 text-pastel-gray-dark" />
                         </div>
                         <div>
-                          <h3 className="text-xl font-bold text-white">Descontos & Promoções</h3>
-                          <p className="text-sm text-white/90">Configure cupons e ofertas especiais</p>
+                          <h3 className="text-xl font-bold text-pastel-gray-dark">Descontos & Promoções</h3>
+                          <p className="text-sm text-pastel-gray-dark/80">Configure cupons e ofertas especiais</p>
                         </div>
                       </div>
-                      <button className="px-5 py-3 bg-white text-pastel-gray-dark rounded-xl font-bold hover:shadow-lg transition flex items-center gap-2">
+                      <button className="px-5 py-3 bg-white text-pastel-gray-dark rounded-xl font-bold hover:shadow-lg transition flex items-center gap-2 border border-slate-200">
                         <Plus className="w-5 h-5" /> Novo Cupom
                       </button>
                     </div>
                   </div>
 
                   <div className="p-6 space-y-4">
-                    <div className="bg-gradient-to-br from-pastel-green/10 to-pastel-blue/10 rounded-xl p-5 border-2 border-pastel-green/30">
+                    <div className="bg-pastel-green/15 rounded-xl p-5 border-2 border-pastel-green/30">
                       <div className="flex items-center justify-between mb-4">
                         <div>
                           <div className="text-lg font-bold text-slate-800 mb-1">LAUNCH2024</div>
@@ -723,7 +723,7 @@ export default function NovaNewsletter() {
                       </div>
                     </div>
 
-                    <div className="bg-gradient-to-br from-pastel-pink/10 to-pastel-purple/10 rounded-xl p-5 border-2 border-pastel-pink/30">
+                    <div className="bg-pastel-pink/15 rounded-xl p-5 border-2 border-pastel-pink/30">
                       <div className="flex items-center justify-between mb-4">
                         <div>
                           <div className="text-lg font-bold text-slate-800 mb-1">FRIEND20</div>
@@ -750,7 +750,7 @@ export default function NovaNewsletter() {
                 </div>
 
                 {/* Platform Fee Info */}
-                <div className="bg-gradient-to-br from-pastel-blue/20 to-pastel-purple/20 border-2 border-pastel-blue/30 rounded-2xl p-6 flex items-start gap-4">
+                <div className="bg-pastel-blue/20 border-2 border-pastel-blue/30 rounded-2xl p-6 flex items-start gap-4">
                   <div className="w-10 h-10 rounded-lg bg-pastel-blue flex items-center justify-center flex-shrink-0">
                     <Info className="w-5 h-5 text-pastel-gray-dark" />
                   </div>
