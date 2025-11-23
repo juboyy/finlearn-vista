@@ -33,7 +33,7 @@ import {
   Edit
 } from "lucide-react";
 
-export default function AgendarPublicacaoRevisao() {
+const AgendarPublicacaoRevisao = () => {
   const navigate = useNavigate();
   const [activeDevice, setActiveDevice] = useState<"desktop" | "mobile">("desktop");
 
@@ -751,4 +751,6 @@ export default function AgendarPublicacaoRevisao() {
       </main>
     </div>
   );
-}
+};
+
+export default AgendarPublicacaoRevisao;
