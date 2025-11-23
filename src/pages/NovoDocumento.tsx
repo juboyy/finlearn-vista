@@ -744,7 +744,7 @@ export default function NovoDocumento() {
 
       {/* Chart Drawer */}
       <Sheet open={chartDrawerOpen} onOpenChange={setChartDrawerOpen}>
-        <SheetContent side="right" className="w-[400px] sm:w-[540px] overflow-y-auto">
+        <SheetContent side="right" className="w-[400px] sm:w-[540px] overflow-y-auto z-[100]">
           <SheetHeader>
             <SheetTitle>Adicionar Gráfico</SheetTitle>
             <SheetDescription>
