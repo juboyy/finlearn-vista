@@ -415,7 +415,7 @@ const Churn = () => {
               <ResponsiveContainer width="100%" height={240}>
                 <BarChart data={churnTenureData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                  <XAxis dataKey="tenure" tick={{ fontSize: 11 }} angle={-45} textAnchor="end" height={60} />
+                  <XAxis dataKey="tenure" tick={{ fontSize: 11 }} height={50} />
                   <YAxis tick={{ fontSize: 11 }} />
                   <Tooltip 
                     contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))' }}
