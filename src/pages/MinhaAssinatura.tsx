@@ -1,8 +1,12 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { Download, Bell, Settings, XCircle, Calendar, BookOpen, Clock, FileText, Podcast, Video, File, BookText, Search, ChevronLeft, ChevronRight, CreditCard, Receipt, Play, Heart, Share2, ThumbsUp } from "lucide-react";
+import { Download, Bell, Settings2, XCircle, Calendar, BookOpen, Clock, FileText, Podcast, Video, File, BookText, Search, ChevronLeft, ChevronRight, CreditCard, Receipt, Play, Heart, Share2, ThumbsUp, CheckCircle2, AlertCircle } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { useState } from "react";
 
 export default function MinhaAssinatura() {
+  const [isManageOpen, setIsManageOpen] = useState(false);
+
   return (
     <div className="flex h-screen overflow-hidden bg-slate-50">
       <SidebarFix />
@@ -63,21 +67,154 @@ export default function MinhaAssinatura() {
                       <Clock className="text-slate-500" size={16} />
                       <span className="text-slate-600">8h 32min de leitura</span>
                     </div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <button className="px-4 py-2 border border-slate-200 text-slate-700 rounded-lg font-medium hover:bg-slate-50 transition">
-                  <Settings size={18} className="inline mr-2" />
-                  Configurações
-                </button>
-                <button className="px-4 py-2 border border-red-200 text-red-600 rounded-lg font-medium hover:bg-red-50 transition">
-                  <XCircle size={18} className="inline mr-2" />
-                  Cancelar Assinatura
-                </button>
               </div>
             </div>
-          </section>
+          </div>
+          <div className="flex gap-2">
+            <Dialog open={isManageOpen} onOpenChange={setIsManageOpen}>
+              <DialogTrigger asChild>
+                <button className="px-4 py-2 border border-slate-200 text-slate-700 rounded-lg font-medium hover:bg-slate-50 transition">
+                  <Settings2 size={18} className="inline mr-2" />
+                  Gerenciar
+                </button>
+              </DialogTrigger>
+              <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle className="text-2xl font-bold text-slate-800">Gerenciar Assinatura</DialogTitle>
+                </DialogHeader>
+                
+                <div className="space-y-6 py-4">
+                  {/* Subscription Info */}
+                  <div className="bg-slate-50 rounded-xl p-6 border border-slate-200">
+                    <div className="flex items-start justify-between mb-4">
+                      <div>
+                        <h3 className="text-lg font-bold text-slate-800 mb-1">Payments Insider - Premium</h3>
+                        <p className="text-sm text-slate-600">Plano mensal com renovação automática</p>
+                      </div>
+                      <span className="px-3 py-1.5 text-slate-800 rounded-full text-xs font-bold" style={{ backgroundColor: '#C5E8D4' }}>
+                        <CheckCircle2 size={12} className="inline mr-1" />
+                        Ativa
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-3 gap-4">
+                      <div>
+                        <div className="text-xs text-slate-500 mb-1">Valor Mensal</div>
+                        <div className="text-2xl font-bold text-slate-800">R$ 49,00</div>
+                      </div>
+                      <div>
+                        <div className="text-xs text-slate-500 mb-1">Próxima Cobrança</div>
+                        <div className="text-lg font-semibold text-slate-800">23 Dez 2023</div>
+                      </div>
+                      <div>
+                        <div className="text-xs text-slate-500 mb-1">Membro Desde</div>
+                        <div className="text-lg font-semibold text-slate-800">15 Abr 2023</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Payment Method */}
+                  <div>
+                    <h3 className="text-lg font-bold text-slate-800 mb-4">Método de Pagamento</h3>
+                    <div className="bg-white border border-slate-200 rounded-xl p-5 flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="w-14 h-14 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#B8D4E8' }}>
+                          <CreditCard className="text-slate-700" size={24} />
+                        </div>
+                        <div>
+                          <div className="font-semibold text-slate-800 mb-1">Visa •••• 4532</div>
+                          <div className="text-sm text-slate-500">Expira em 12/2025</div>
+                        </div>
+                      </div>
+                      <button className="px-4 py-2 border border-slate-200 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-50 transition">
+                        Alterar
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Invoices */}
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-lg font-bold text-slate-800">Histórico de Faturas</h3>
+                      <button className="text-sm font-medium hover:underline" style={{ color: '#8b5cf6' }}>
+                        Ver todas
+                      </button>
+                    </div>
+                    <div className="space-y-3">
+                      {[
+                        { date: '23 Nov 2023', amount: 'R$ 49,00', status: 'Pago', invoice: 'INV-2023-11-001' },
+                        { date: '23 Out 2023', amount: 'R$ 49,00', status: 'Pago', invoice: 'INV-2023-10-001' },
+                        { date: '23 Set 2023', amount: 'R$ 49,00', status: 'Pago', invoice: 'INV-2023-09-001' },
+                        { date: '23 Ago 2023', amount: 'R$ 49,00', status: 'Pago', invoice: 'INV-2023-08-001' },
+                      ].map((invoice, index) => (
+                        <div key={index} className="bg-white border border-slate-200 rounded-lg p-4 flex items-center justify-between hover:shadow-sm transition">
+                          <div className="flex items-center gap-4">
+                            <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#D4C5E8' }}>
+                              <Receipt className="text-slate-700" size={18} />
+                            </div>
+                            <div>
+                              <div className="font-semibold text-slate-800 text-sm mb-1">{invoice.invoice}</div>
+                              <div className="text-xs text-slate-500">{invoice.date}</div>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-4">
+                            <div className="text-right">
+                              <div className="font-bold text-slate-800">{invoice.amount}</div>
+                              <div className="text-xs text-green-600 font-medium">{invoice.status}</div>
+                            </div>
+                            <button className="px-3 py-2 border border-slate-200 text-slate-700 rounded-lg text-xs font-medium hover:bg-slate-50 transition">
+                              <Download size={14} className="inline mr-1" />
+                              PDF
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Benefits */}
+                  <div>
+                    <h3 className="text-lg font-bold text-slate-800 mb-4">Benefícios Inclusos</h3>
+                    <div className="grid grid-cols-2 gap-3">
+                      {[
+                        { icon: FileText, label: 'Artigos ilimitados', color: '#B8D4E8' },
+                        { icon: Podcast, label: 'Podcasts exclusivos', color: '#D4C5E8' },
+                        { icon: Video, label: 'Webinars mensais', color: '#E8D4C5' },
+                        { icon: File, label: 'Relatórios Deep Dive', color: '#C5E8D4' },
+                        { icon: BookText, label: 'Biblioteca E-books', color: '#E8C5D8' },
+                        { icon: Heart, label: 'Comunidade Premium', color: '#E8E0C5' },
+                      ].map((benefit, index) => (
+                        <div key={index} className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg border border-slate-100">
+                          <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ backgroundColor: benefit.color }}>
+                            <benefit.icon className="text-slate-700" size={16} />
+                          </div>
+                          <span className="text-sm font-medium text-slate-700">{benefit.label}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Danger Zone */}
+                  <div className="border border-red-200 rounded-xl p-5 bg-red-50/30">
+                    <div className="flex items-start gap-3 mb-4">
+                      <AlertCircle className="text-red-600 shrink-0" size={20} />
+                      <div>
+                        <h3 className="font-bold text-slate-800 mb-1">Cancelar Assinatura</h3>
+                        <p className="text-sm text-slate-600">
+                          Ao cancelar, você perderá acesso a todos os benefícios premium no final do período atual (23 Dez 2023).
+                        </p>
+                      </div>
+                    </div>
+                    <button className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition">
+                      <XCircle size={18} className="inline mr-2" />
+                      Cancelar Assinatura
+                    </button>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
+          </div>
+        </div>
+      </section>
 
           {/* Quick Stats */}
           <section className="grid grid-cols-4 gap-6 mb-8">
