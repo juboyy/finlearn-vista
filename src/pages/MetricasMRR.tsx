@@ -323,12 +323,7 @@ const MetricasMRR = () => {
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className={`h-8 gap-2 transition-all ${
-                    selectedMetric === 'MRR' 
-                      ? 'bg-primary text-primary-foreground hover:bg-primary/90' 
-                      : 'hover:bg-accent hover:text-accent-foreground'
-                  }`}
-                  onClick={() => setSelectedMetric('MRR')}
+                  className="h-8 gap-2 transition-all bg-primary text-primary-foreground hover:bg-primary/90"
                 >
                   <BarChart3 className="h-4 w-4" />
                   MRR
@@ -336,11 +331,7 @@ const MetricasMRR = () => {
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className={`h-8 gap-2 transition-all ${
-                    selectedMetric === 'Churn' 
-                      ? 'bg-primary text-primary-foreground hover:bg-primary/90' 
-                      : 'hover:bg-accent hover:text-accent-foreground'
-                  }`}
+                  className="h-8 gap-2 transition-all hover:bg-accent hover:text-accent-foreground"
                   onClick={() => navigate('/churn')}
                 >
                   <UserX className="h-4 w-4" />
@@ -358,12 +349,8 @@ const MetricasMRR = () => {
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className={`h-8 gap-2 transition-all ${
-                    selectedMetric === 'Others' 
-                      ? 'bg-primary text-primary-foreground hover:bg-primary/90' 
-                      : 'hover:bg-accent hover:text-accent-foreground'
-                  }`}
-                  onClick={() => setSelectedMetric('Others')}
+                  className="h-8 gap-2 transition-all hover:bg-accent hover:text-accent-foreground"
+                  onClick={() => navigate('/others')}
                 >
                   <MoreHorizontal className="h-4 w-4" />
                   Others
