@@ -118,6 +118,7 @@ export default function Financeiro() {
                 </div>
               </div>
               <Button 
+                onClick={() => navigate("/metricas-mrr")}
                 className="flex items-center gap-2 transition-all duration-300 hover:scale-105"
                 style={{ backgroundColor: 'hsl(152, 32%, 65%)', color: 'hsl(152, 32%, 28%)' }}
                 onMouseEnter={(e) => {
