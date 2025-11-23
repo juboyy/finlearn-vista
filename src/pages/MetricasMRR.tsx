@@ -142,7 +142,7 @@ const MetricasMRR = () => {
     <div className="min-h-screen bg-background w-full flex">
       <SidebarFix />
       
-      <div className="flex-1 lg:ml-64">
+      <div className="flex-1 w-full">
         <header className="bg-card border-b border-border w-full">
           <div className="px-4 py-2">
             <div className="flex items-center justify-between gap-4">
