@@ -437,23 +437,33 @@ const Churn = () => {
                   <MoreHorizontal size={16} />
                 </button>
               </div>
-              <ResponsiveContainer width="100%" height={240}>
+              <ResponsiveContainer width="100%" height={260}>
                 <PieChart>
                   <Pie
                     data={churnPlanData}
                     cx="50%"
-                    cy="50%"
+                    cy="45%"
                     innerRadius={50}
-                    outerRadius={90}
-                    paddingAngle={2}
+                    outerRadius={85}
+                    paddingAngle={0}
                     dataKey="value"
-                    label={(entry) => `${entry.name} ${entry.value}%`}
                   >
                     {churnPlanData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Pie>
-                  <Tooltip formatter={(value: number) => `${value}%`} />
+                  <Tooltip 
+                    contentStyle={{
+                      backgroundColor: 'hsl(var(--card))',
+                      border: '1px solid hsl(var(--border))'
+                    }}
+                    formatter={(value: number) => `${value}%`} 
+                  />
+                  <Legend 
+                    verticalAlign="bottom" 
+                    height={36}
+                    wrapperStyle={{ paddingTop: '0px' }}
+                  />
                 </PieChart>
               </ResponsiveContainer>
             </div>
