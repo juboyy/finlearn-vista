@@ -660,6 +660,17 @@ export default function NovaNewsletter() {
                       </select>
                     </div>
                     <div className="space-y-3">
+                      <label className="block text-sm font-bold text-slate-700">Dia de Envio da Fatura</label>
+                      <select className="w-full px-4 py-4 rounded-xl border-2 border-slate-300 focus:ring-4 focus:ring-pastel-purple/20 focus:border-pastel-purple outline-none bg-white font-medium">
+                        <option value="same">No dia do vencimento</option>
+                        <option value="1" selected>1 dia antes do vencimento</option>
+                        <option value="3">3 dias antes do vencimento</option>
+                        <option value="5">5 dias antes do vencimento</option>
+                        <option value="7">7 dias antes do vencimento</option>
+                        <option value="10">10 dias antes do vencimento</option>
+                      </select>
+                    </div>
+                    <div className="space-y-3 col-span-1 md:col-span-2">
                       <label className="block text-sm font-bold text-slate-700">Métodos de Pagamento</label>
                       <div className="space-y-3">
                         <label className="flex items-center gap-4 cursor-pointer group bg-white p-4 rounded-xl border-2 border-slate-200 hover:border-pastel-blue/50 transition-all">
