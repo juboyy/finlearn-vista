@@ -285,6 +285,7 @@ const Retention = () => {
                   variant="outline" 
                   size="sm" 
                   className="h-8 gap-2 transition-all hover:bg-accent hover:text-accent-foreground"
+                  onClick={() => navigate('/others')}
                 >
                   <MoreHorizontal className="h-4 w-4" />
                   Others
