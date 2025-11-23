@@ -2,6 +2,12 @@ import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { ArrowLeft, Plus, Search, Filter, Mail, Calendar, Eye, CheckCircle, XCircle, Percent, Users, TrendingUp, Send, Edit, Trash2, MoreVertical, FileText, Clock, Wallet } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export default function CriarNewsletter() {
   const navigate = useNavigate();
@@ -644,9 +650,24 @@ export default function CriarNewsletter() {
                             <button className="p-2 text-slate-400 hover:text-red-600 transition">
                               <Trash2 size={16} />
                             </button>
-                            <button className="p-2 text-slate-400 hover:text-slate-600 transition">
-                              <MoreVertical size={16} />
-                            </button>
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <button className="p-2 text-slate-400 hover:text-slate-600 transition">
+                                  <MoreVertical size={16} />
+                                </button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end" className="w-48">
+                                <DropdownMenuItem 
+                                  className="cursor-pointer"
+                                  onClick={() => {
+                                    console.log('Ver detalhes do assinante:', subscriber.name);
+                                  }}
+                                >
+                                  <Eye size={16} className="mr-2" />
+                                  Ver detalhes
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
                           </div>
                         </div>
                       ))}
