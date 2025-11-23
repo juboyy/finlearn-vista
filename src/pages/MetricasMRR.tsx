@@ -553,12 +553,31 @@ const MetricasMRR = () => {
                   <p className="text-xs text-muted-foreground">Por tipo de movimento</p>
                 </div>
               </div>
-              <ResponsiveContainer width="100%" height={260}>
+              <ResponsiveContainer width="100%" height={280}>
                 <PieChart>
-                  <Pie data={compositionData} cx="50%" cy="50%" innerRadius={60} outerRadius={100} paddingAngle={2} dataKey="value" label={entry => entry.name}>
+                  <Pie 
+                    data={compositionData} 
+                    cx="50%" 
+                    cy="50%" 
+                    innerRadius={70} 
+                    outerRadius={110} 
+                    paddingAngle={0} 
+                    dataKey="value"
+                  >
                     {compositionData.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.color} />)}
                   </Pie>
-                  <Tooltip formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`} />
+                  <Tooltip 
+                    contentStyle={{
+                      backgroundColor: 'hsl(var(--card))',
+                      border: '1px solid hsl(var(--border))'
+                    }}
+                    formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`} 
+                  />
+                  <Legend 
+                    verticalAlign="bottom" 
+                    height={36}
+                    wrapperStyle={{ paddingTop: '20px' }}
+                  />
                 </PieChart>
               </ResponsiveContainer>
             </div>
