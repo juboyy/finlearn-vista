@@ -395,7 +395,7 @@ const AgendarPublicacaoRevisao = () => {
                     {[
                       {
                         icon: <CheckCircle className="text-green-600 text-xl" />,
-                        bg: 'hsl(var(--pastel-green))',
+                        bg: 'hsl(152 32% 79%)',
                         title: "Linha de Assunto Otimizada",
                         desc: "Taxa de abertura estimada: 28-32%",
                         status: "Aprovado",
@@ -403,7 +403,7 @@ const AgendarPublicacaoRevisao = () => {
                       },
                       {
                         icon: <CheckCircle className="text-green-600 text-xl" />,
-                        bg: 'hsl(var(--pastel-green))',
+                        bg: 'hsl(152 32% 79%)',
                         title: "Links Funcionais",
                         desc: "Todos os 8 links foram verificados",
                         status: "Aprovado",
@@ -411,7 +411,7 @@ const AgendarPublicacaoRevisao = () => {
                       },
                       {
                         icon: <CheckCircle className="text-green-600 text-xl" />,
-                        bg: 'hsl(var(--pastel-green))',
+                        bg: 'hsl(152 32% 79%)',
                         title: "Compatibilidade Mobile",
                         desc: "Design responsivo testado",
                         status: "Aprovado",
@@ -419,7 +419,7 @@ const AgendarPublicacaoRevisao = () => {
                       },
                       {
                         icon: <AlertTriangle className="text-amber-600 text-xl" />,
-                        bg: 'hsl(var(--pastel-yellow))',
+                        bg: 'hsl(44 78% 89%)',
                         title: "Palavras de Spam",
                         desc: "1 palavra detectada: \"Grátis\"",
                         status: "Revisar",
@@ -428,7 +428,7 @@ const AgendarPublicacaoRevisao = () => {
                       },
                       {
                         icon: <CheckCircle className="text-green-600 text-xl" />,
-                        bg: 'hsl(var(--pastel-green))',
+                        bg: 'hsl(152 32% 79%)',
                         title: "Conformidade LGPD",
                         desc: "Link de cancelamento incluído",
                         status: "Aprovado",
@@ -436,7 +436,7 @@ const AgendarPublicacaoRevisao = () => {
                       },
                       {
                         icon: <Search className="text-blue-600 text-xl" />,
-                        bg: 'hsl(var(--pastel-blue))',
+                        bg: 'hsl(206 35% 79%)',
                         title: "Otimização SEO",
                         desc: "Meta tags e palavras-chave otimizadas",
                         status: "Detalhes",
@@ -445,7 +445,7 @@ const AgendarPublicacaoRevisao = () => {
                       },
                       {
                         icon: <Globe className="text-green-600 text-xl" />,
-                        bg: 'hsl(var(--pastel-green))',
+                        bg: 'hsl(152 32% 79%)',
                         title: "Segmentação GEO",
                         desc: "Brasil: 95% • Internacional: 5%",
                         status: "Configurar",
