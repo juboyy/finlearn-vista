@@ -66,6 +66,15 @@ const Churn = () => {
     { tenure: '24m+', rate: 0.8 }
   ];
 
+  const cohortChurnData = [
+    { cohort: 'Jan 24', M0: 0, M1: 5.2, M2: 4.8, M3: 4.5, M4: 4.2, M5: 3.9 },
+    { cohort: 'Fev 24', M0: 0, M1: 4.9, M2: 4.5, M3: 4.2, M4: 3.9, M5: null },
+    { cohort: 'Mar 24', M0: 0, M1: 4.6, M2: 4.2, M3: 3.9, M4: null, M5: null },
+    { cohort: 'Abr 24', M0: 0, M1: 4.3, M2: 3.9, M3: null, M4: null, M5: null },
+    { cohort: 'Mai 24', M0: 0, M1: 4.0, M2: null, M3: null, M4: null, M5: null },
+    { cohort: 'Jun 24', M0: 0, M1: null, M2: null, M3: null, M4: null, M5: null }
+  ];
+
   const churnPlanData = [
     { name: 'Basic', value: 45, color: colors.red },
     { name: 'Pro', value: 32, color: colors.purple },
@@ -475,32 +484,97 @@ const Churn = () => {
                   <MoreHorizontal size={16} />
                 </button>
               </div>
-              <div className="h-[240px] flex items-center justify-center">
-                <div className="grid grid-cols-6 gap-1 w-full px-2">
-                  {[
-                    [5.2, 4.8, 4.5, 4.2, 3.9, 3.6],
-                    [4.9, 4.5, 4.2, 3.9, 3.6, 0],
-                    [4.6, 4.2, 3.9, 3.6, 0, 0],
-                    [4.3, 3.9, 3.6, 0, 0, 0],
-                    [4.0, 3.6, 0, 0, 0, 0],
-                    [3.7, 0, 0, 0, 0, 0]
-                  ].map((row, i) => (
-                    row.map((val, j) => (
-                      val > 0 && (
-                        <div
-                          key={`${i}-${j}`}
-                          className="aspect-square rounded text-[10px] flex items-center justify-center text-foreground font-medium"
-                          style={{
-                            backgroundColor: val > 4.5 ? colors.red : val > 4 ? colors.yellow : colors.green,
-                            opacity: 0.8
-                          }}
-                        >
-                          {val}
-                        </div>
-                      )
-                    ))
-                  ))}
-                </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs">
+                  <thead>
+                    <tr>
+                      <th className="text-left p-2 text-muted-foreground font-semibold">Coorte</th>
+                      <th className="text-center p-2 text-muted-foreground font-semibold">M0</th>
+                      <th className="text-center p-2 text-muted-foreground font-semibold">M1</th>
+                      <th className="text-center p-2 text-muted-foreground font-semibold">M2</th>
+                      <th className="text-center p-2 text-muted-foreground font-semibold">M3</th>
+                      <th className="text-center p-2 text-muted-foreground font-semibold">M4</th>
+                      <th className="text-center p-2 text-muted-foreground font-semibold">M5</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {cohortChurnData.map((row, i) => (
+                      <tr key={i} className="border-t border-border">
+                        <td className="p-2 font-medium text-foreground">{row.cohort}</td>
+                        <td className="p-1">
+                          <div className="w-full h-8 rounded flex items-center justify-center font-medium text-foreground" style={{ backgroundColor: colors.green, opacity: 0.7 }}>
+                            0%
+                          </div>
+                        </td>
+                        <td className="p-1">
+                          {row.M1 && (
+                            <div 
+                              className="w-full h-8 rounded flex items-center justify-center font-medium text-foreground" 
+                              style={{ 
+                                backgroundColor: row.M1 > 4.5 ? colors.red : row.M1 > 4 ? colors.yellow : colors.green, 
+                                opacity: 0.7 
+                              }}
+                            >
+                              {row.M1}%
+                            </div>
+                          )}
+                        </td>
+                        <td className="p-1">
+                          {row.M2 && (
+                            <div 
+                              className="w-full h-8 rounded flex items-center justify-center font-medium text-foreground" 
+                              style={{ 
+                                backgroundColor: row.M2 > 4.5 ? colors.red : row.M2 > 4 ? colors.yellow : colors.green, 
+                                opacity: 0.7 
+                              }}
+                            >
+                              {row.M2}%
+                            </div>
+                          )}
+                        </td>
+                        <td className="p-1">
+                          {row.M3 && (
+                            <div 
+                              className="w-full h-8 rounded flex items-center justify-center font-medium text-foreground" 
+                              style={{ 
+                                backgroundColor: row.M3 > 4.5 ? colors.red : row.M3 > 4 ? colors.yellow : colors.green, 
+                                opacity: 0.7 
+                              }}
+                            >
+                              {row.M3}%
+                            </div>
+                          )}
+                        </td>
+                        <td className="p-1">
+                          {row.M4 && (
+                            <div 
+                              className="w-full h-8 rounded flex items-center justify-center font-medium text-foreground" 
+                              style={{ 
+                                backgroundColor: row.M4 > 4.5 ? colors.red : row.M4 > 4 ? colors.yellow : colors.green, 
+                                opacity: 0.7 
+                              }}
+                            >
+                              {row.M4}%
+                            </div>
+                          )}
+                        </td>
+                        <td className="p-1">
+                          {row.M5 && (
+                            <div 
+                              className="w-full h-8 rounded flex items-center justify-center font-medium text-foreground" 
+                              style={{ 
+                                backgroundColor: row.M5 > 4.5 ? colors.red : row.M5 > 4 ? colors.yellow : colors.green, 
+                                opacity: 0.7 
+                              }}
+                            >
+                              {row.M5}%
+                            </div>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
