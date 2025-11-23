@@ -701,7 +701,7 @@ const Retention = () => {
               <ResponsiveContainer width="100%" height={240}>
                 <BarChart data={firstActionData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                  <XAxis dataKey="time" tick={{ fontSize: 10 }} angle={-20} textAnchor="end" height={60} />
+                  <XAxis dataKey="time" tick={{ fontSize: 10 }} />
                   <YAxis tick={{ fontSize: 11 }} />
                   <Tooltip 
                     contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))' }}
@@ -903,7 +903,7 @@ const Retention = () => {
               <ResponsiveContainer width="100%" height={240}>
                 <LineChart data={featureTimelineData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                  <XAxis dataKey="week" tick={{ fontSize: 10 }} angle={-20} textAnchor="end" height={60} />
+                  <XAxis dataKey="week" tick={{ fontSize: 10 }} />
                   <YAxis tick={{ fontSize: 11 }} />
                   <Tooltip 
                     contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))' }}
