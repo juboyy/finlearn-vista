@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { X, Send, Loader2 } from "lucide-react";
+import { X, Send, Loader2, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -36,7 +36,7 @@ const agentConfig = {
 export const MetricsAgentChat = ({ metricType, onClose }: MetricsAgentChatProps) => {
   const [input, setInput] = useState("");
   const agent = agentConfig[metricType];
-  const { messages, sendMessage, isLoading } = useAgentChat(agent.name);
+  const { messages, sendMessage, isLoading, clearMessages } = useAgentChat(agent.name);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -71,6 +71,14 @@ export const MetricsAgentChat = ({ metricType, onClose }: MetricsAgentChatProps)
             <h2 className="font-semibold text-foreground">{agent.name}</h2>
             <p className="text-sm text-muted-foreground">{agent.description}</p>
           </div>
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={clearMessages}
+            title="Limpar histórico"
+          >
+            <Trash2 size={20} />
+          </Button>
           <Button variant="ghost" size="icon" onClick={onClose}>
             <X size={20} />
           </Button>

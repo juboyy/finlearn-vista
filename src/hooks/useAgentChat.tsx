@@ -1,12 +1,29 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 
 type Message = { role: "user" | "assistant"; content: string };
 
 export const useAgentChat = (agentName: string) => {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const storageKey = `agent-chat-history-${agentName}`;
+  
+  const [messages, setMessages] = useState<Message[]>(() => {
+    try {
+      const stored = localStorage.getItem(storageKey);
+      return stored ? JSON.parse(stored) : [];
+    } catch {
+      return [];
+    }
+  });
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(messages));
+    } catch (error) {
+      console.error("Failed to save chat history:", error);
+    }
+  }, [messages, storageKey]);
 
   const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat-agent`;
 
@@ -139,7 +156,12 @@ export const useAgentChat = (agentName: string) => {
 
   const clearMessages = useCallback(() => {
     setMessages([]);
-  }, []);
+    try {
+      localStorage.removeItem(storageKey);
+    } catch (error) {
+      console.error("Failed to clear chat history:", error);
+    }
+  }, [storageKey]);
 
   return { messages, sendMessage, isLoading, clearMessages };
 };
