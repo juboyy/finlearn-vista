@@ -379,27 +379,97 @@ const Retention = () => {
                   <MoreHorizontal size={16} />
                 </button>
               </div>
-              <div className="h-[280px] flex items-center justify-center">
-                <div className="grid grid-cols-6 gap-1 w-full px-2">
-                  {cohortRetentionData.map((cohort, i) => (
-                    <div key={i} className="flex flex-col gap-1">
-                  {Object.entries(cohort).filter(([key]) => key !== 'cohort').map(([key, val], j) => (
-                        val !== null && typeof val === 'number' && (
-                          <div
-                            key={j}
-                            className="aspect-square rounded text-[9px] flex items-center justify-center text-foreground font-medium"
-                            style={{
-                              backgroundColor: val > 90 ? colors.green : val > 75 ? colors.yellow : colors.red,
-                              opacity: 0.8
-                            }}
-                          >
-                            {val}
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs">
+                  <thead>
+                    <tr>
+                      <th className="text-left p-2 text-muted-foreground font-semibold">Coorte</th>
+                      <th className="text-center p-2 text-muted-foreground font-semibold">M0</th>
+                      <th className="text-center p-2 text-muted-foreground font-semibold">M1</th>
+                      <th className="text-center p-2 text-muted-foreground font-semibold">M2</th>
+                      <th className="text-center p-2 text-muted-foreground font-semibold">M3</th>
+                      <th className="text-center p-2 text-muted-foreground font-semibold">M4</th>
+                      <th className="text-center p-2 text-muted-foreground font-semibold">M5</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {cohortRetentionData.map((row, i) => (
+                      <tr key={i} className="border-t border-border">
+                        <td className="p-2 font-medium text-foreground">{row.cohort}</td>
+                        <td className="p-1">
+                          <div className="w-full h-8 rounded flex items-center justify-center font-medium text-foreground" style={{ backgroundColor: colors.green, opacity: 0.7 }}>
+                            100%
                           </div>
-                        )
-                      ))}
-                    </div>
-                  ))}
-                </div>
+                        </td>
+                        <td className="p-1">
+                          {row.M1 && (
+                            <div 
+                              className="w-full h-8 rounded flex items-center justify-center font-medium text-foreground" 
+                              style={{ 
+                                backgroundColor: row.M1 > 90 ? colors.green : row.M1 > 80 ? colors.yellow : colors.red, 
+                                opacity: 0.7 
+                              }}
+                            >
+                              {row.M1}%
+                            </div>
+                          )}
+                        </td>
+                        <td className="p-1">
+                          {row.M2 && (
+                            <div 
+                              className="w-full h-8 rounded flex items-center justify-center font-medium text-foreground" 
+                              style={{ 
+                                backgroundColor: row.M2 > 90 ? colors.green : row.M2 > 80 ? colors.yellow : colors.red, 
+                                opacity: 0.7 
+                              }}
+                            >
+                              {row.M2}%
+                            </div>
+                          )}
+                        </td>
+                        <td className="p-1">
+                          {row.M3 && (
+                            <div 
+                              className="w-full h-8 rounded flex items-center justify-center font-medium text-foreground" 
+                              style={{ 
+                                backgroundColor: row.M3 > 90 ? colors.green : row.M3 > 80 ? colors.yellow : colors.red, 
+                                opacity: 0.7 
+                              }}
+                            >
+                              {row.M3}%
+                            </div>
+                          )}
+                        </td>
+                        <td className="p-1">
+                          {row.M4 && (
+                            <div 
+                              className="w-full h-8 rounded flex items-center justify-center font-medium text-foreground" 
+                              style={{ 
+                                backgroundColor: row.M4 > 90 ? colors.green : row.M4 > 80 ? colors.yellow : colors.red, 
+                                opacity: 0.7 
+                              }}
+                            >
+                              {row.M4}%
+                            </div>
+                          )}
+                        </td>
+                        <td className="p-1">
+                          {row.M5 && (
+                            <div 
+                              className="w-full h-8 rounded flex items-center justify-center font-medium text-foreground" 
+                              style={{ 
+                                backgroundColor: row.M5 > 90 ? colors.green : row.M5 > 80 ? colors.yellow : colors.red, 
+                                opacity: 0.7 
+                              }}
+                            >
+                              {row.M5}%
+                            </div>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
 
@@ -748,8 +818,49 @@ const Retention = () => {
                   <MoreHorizontal size={16} />
                 </button>
               </div>
-              <div className="h-[280px] flex items-center justify-center">
-                <div className="text-sm text-muted-foreground">Cohort Heatmap Visualization</div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs">
+                  <thead>
+                    <tr>
+                      <th className="text-left p-2 text-muted-foreground font-semibold">Coorte</th>
+                      <th className="text-center p-2 text-muted-foreground font-semibold">Semana 0</th>
+                      <th className="text-center p-2 text-muted-foreground font-semibold">Semana 1</th>
+                      <th className="text-center p-2 text-muted-foreground font-semibold">Semana 2</th>
+                      <th className="text-center p-2 text-muted-foreground font-semibold">Semana 3</th>
+                      <th className="text-center p-2 text-muted-foreground font-semibold">Semana 4</th>
+                      <th className="text-center p-2 text-muted-foreground font-semibold">Semana 5</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      { name: 'Coorte 1', values: [100, 85, 72, 65, 58, 52] },
+                      { name: 'Coorte 2', values: [100, 88, 76, 68, 62, null] },
+                      { name: 'Coorte 3', values: [100, 90, 79, 72, null, null] },
+                      { name: 'Coorte 4', values: [100, 92, 82, null, null, null] },
+                      { name: 'Coorte 5', values: [100, 94, null, null, null, null] },
+                      { name: 'Coorte 6', values: [100, null, null, null, null, null] }
+                    ].map((cohort, i) => (
+                      <tr key={i} className="border-t border-border">
+                        <td className="p-2 font-medium text-foreground">{cohort.name}</td>
+                        {cohort.values.map((val, j) => (
+                          <td key={j} className="p-1">
+                            {val !== null && (
+                              <div 
+                                className="w-full h-8 rounded flex items-center justify-center font-medium text-foreground" 
+                                style={{ 
+                                  backgroundColor: val >= 90 ? colors.green : val >= 70 ? colors.yellow : colors.red, 
+                                  opacity: 0.7 
+                                }}
+                              >
+                                {val}%
+                              </div>
+                            )}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
 
