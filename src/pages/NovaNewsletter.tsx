@@ -514,7 +514,8 @@ export default function NovaNewsletter() {
                       { id: 'rcs', name: 'RCS', icon: Smartphone },
                       { id: 'mms', name: 'MMS', icon: Image },
                       { id: 'slack', name: 'Slack', icon: Hash },
-                      { id: 'telegram', name: 'Telegram', icon: Send }
+                      { id: 'telegram', name: 'Telegram', icon: Send },
+                      { id: 'discord', name: 'Discord', icon: Users }
                     ].map((channel) => {
                       const Icon = channel.icon;
                       const isSelected = selectedChannels.includes(channel.id);
@@ -523,7 +524,7 @@ export default function NovaNewsletter() {
                         <button
                           key={channel.id}
                           onClick={() => toggleChannel(channel.id)}
-                          className={`flex flex-col items-center justify-center gap-2 px-6 py-4 rounded-xl border-2 transition-all ${
+                          className={`flex flex-col items-center justify-center gap-2 w-28 h-28 rounded-xl border-2 transition-all ${
                             isSelected 
                               ? 'border-[#B8D4E8] shadow-sm' 
                               : 'border-slate-200 hover:border-slate-300'
