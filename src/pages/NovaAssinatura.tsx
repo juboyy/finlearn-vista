@@ -375,7 +375,8 @@ export default function NovaAssinatura() {
               {trendingNewsletters.map((newsletter, idx) => (
                 <div 
                   key={newsletter.id} 
-                  className={`bg-card rounded-xl overflow-hidden hover:shadow-xl transition ${
+                  onClick={() => navigate(`/newsletter/${newsletter.id}`)}
+                  className={`bg-card rounded-xl overflow-hidden hover:shadow-xl transition cursor-pointer ${
                     idx === 0 ? 'border-2 border-[hsl(206,35%,75%)]' : 'border-2 border-slate-700'
                   }`}
                 >
@@ -582,7 +583,11 @@ export default function NovaAssinatura() {
                   </thead>
                   <tbody className="bg-card divide-y divide-border">
                     {tableNewsletters.map((newsletter, idx) => (
-                      <tr key={idx} className="hover:bg-muted/50 transition">
+                      <tr 
+                        key={idx} 
+                        onClick={() => navigate(`/newsletter/${idx + 1}`)}
+                        className="hover:bg-muted/50 transition cursor-pointer"
+                      >
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-3">
                             <div className={`w-10 h-10 ${newsletter.iconBg} rounded-lg flex items-center justify-center flex-shrink-0`}>
