@@ -531,7 +531,7 @@ const MetricasMRR = () => {
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                   <XAxis dataKey="name" tick={{
                   fontSize: 11
-                }} angle={-45} textAnchor="end" height={80} />
+                }} height={60} />
                   <YAxis tick={{
                   fontSize: 11
                 }} />
