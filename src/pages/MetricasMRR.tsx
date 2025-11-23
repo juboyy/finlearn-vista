@@ -576,7 +576,7 @@ const MetricasMRR = () => {
                   <Legend 
                     verticalAlign="bottom" 
                     height={36}
-                    wrapperStyle={{ paddingTop: '5px' }}
+                    wrapperStyle={{ paddingTop: '0px' }}
                   />
                 </PieChart>
               </ResponsiveContainer>
