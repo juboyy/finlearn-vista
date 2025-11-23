@@ -329,8 +329,12 @@ export default function Newsletter() {
                       </div>
                       <div className="text-sm font-bold text-slate-800">R$ 39/mês</div>
                     </div>
-                    <button className="w-full px-4 py-2 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition" style={{ backgroundColor: '#D4C5E8' }}>
-                      Assinar Newsletter
+                    <button 
+                      onClick={() => navigate('/minha-assinatura')}
+                      className="w-full px-4 py-2 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition" 
+                      style={{ backgroundColor: '#D4C5E8' }}
+                    >
+                      Ver Assinatura
                     </button>
                   </div>
                 </div>
