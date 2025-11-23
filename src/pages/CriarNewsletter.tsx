@@ -262,7 +262,7 @@ export default function CriarNewsletter() {
                   Financeiro
                 </button>
                 <button
-                  onClick={() => setShowCreateModal(true)}
+                  onClick={() => navigate('/nova-newsletter')}
                   className="px-4 py-2 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
                   style={{ backgroundColor: '#D4C5E8' }}
                 >
