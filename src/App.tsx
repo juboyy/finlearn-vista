@@ -65,6 +65,7 @@ import AgentesAnalytics from "./pages/AgentesAnalytics";
 import ComprarCreditos from "./pages/ComprarCreditos";
 import MinhasAssinaturas from "./pages/MinhasAssinaturas";
 import Financeiro from "./pages/Financeiro";
+import MetricasMRR from "./pages/MetricasMRR";
 
 import NotFound from "./pages/NotFound";
 
@@ -145,6 +146,7 @@ const App = () => {
           <Route path="/comprar-creditos" element={<ComprarCreditos />} />
           <Route path="/minhas-assinaturas" element={<MinhasAssinaturas />} />
           <Route path="/financeiro" element={<Financeiro />} />
+          <Route path="/metricas-mrr" element={<MetricasMRR />} />
           
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
