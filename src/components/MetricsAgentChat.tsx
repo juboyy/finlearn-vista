@@ -93,9 +93,9 @@ export const MetricsAgentChat = ({ metricType, onClose }: MetricsAgentChatProps)
 
   return (
     <div className={`fixed inset-0 z-50 bg-background/90 backdrop-blur-md flex items-center justify-center p-4 ${isClosing ? 'animate-fade-out' : 'animate-fade-in'}`}>
-      <div className={`bg-gradient-to-br from-card via-card to-card/95 border-2 border-border/50 rounded-2xl shadow-2xl w-full max-w-4xl h-[85vh] flex flex-col overflow-hidden ${isClosing ? 'animate-scale-out' : 'animate-scale-in'}`}>
+      <div className={`bg-gradient-to-br from-card via-card to-card/95 border-2 border-slate-700 rounded-2xl shadow-2xl w-full max-w-4xl h-[85vh] flex flex-col overflow-hidden ${isClosing ? 'animate-scale-out' : 'animate-scale-in'}`}>
         {/* Header com gradiente */}
-        <div className="relative flex items-center gap-4 p-6 border-b border-border/50 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5">
+        <div className="relative flex items-center gap-4 p-6 border-b-2 border-slate-700 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5">
           <div className="relative">
             <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 ring-2 ring-primary/20 shadow-lg">
               <img src={agent.image} alt={agent.name} className="w-full h-full object-cover" />
@@ -151,10 +151,10 @@ export const MetricsAgentChat = ({ metricType, onClose }: MetricsAgentChatProps)
                   </div>
                 )}
                 <div
-                  className={`max-w-[75%] rounded-2xl px-5 py-3 shadow-sm ${
+                  className={`max-w-[75%] rounded-2xl px-5 py-3 shadow-sm border-2 ${
                     msg.role === "user"
-                      ? "bg-gradient-to-br from-primary to-primary/90 text-primary-foreground"
-                      : "bg-muted/80 text-foreground border border-border/50"
+                      ? "bg-gradient-to-br from-primary to-primary/90 text-primary-foreground border-slate-600"
+                      : "bg-muted/80 text-foreground border-slate-600"
                   }`}
                 >
                   <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</p>
@@ -166,7 +166,7 @@ export const MetricsAgentChat = ({ metricType, onClose }: MetricsAgentChatProps)
                 <div className="w-9 h-9 rounded-full overflow-hidden flex-shrink-0 ring-2 ring-primary/20 shadow-sm">
                   <img src={agent.image} alt={agent.name} className="w-full h-full object-cover" />
                 </div>
-                <div className="bg-muted/80 rounded-2xl px-5 py-3 flex items-center gap-2 border border-border/50">
+                <div className="bg-muted/80 rounded-2xl px-5 py-3 flex items-center gap-2 border-2 border-slate-600">
                   <Loader2 className="animate-spin text-primary" size={16} />
                   <span className="text-sm text-muted-foreground">Analisando...</span>
                 </div>
@@ -176,14 +176,14 @@ export const MetricsAgentChat = ({ metricType, onClose }: MetricsAgentChatProps)
         </ScrollArea>
 
         {/* Input */}
-        <div className="p-6 border-t border-border/50 bg-gradient-to-t from-background/50 to-transparent space-y-3">
+        <div className="p-6 border-t-2 border-slate-700 bg-gradient-to-t from-background/50 to-transparent space-y-3">
           {messages.length === 0 && (
             <div className="flex flex-wrap gap-2 mb-3 animate-fade-in" style={{ animationDelay: '0.2s' }}>
               {agent.suggestions.map((suggestion, idx) => (
                 <button
                   key={idx}
                   onClick={() => setInput(suggestion)}
-                  className="text-xs px-4 py-2.5 rounded-full bg-primary/5 hover:bg-primary/10 text-foreground border border-primary/20 hover:border-primary/40 transition-all duration-200 hover:scale-105 hover:shadow-sm"
+                  className="text-xs px-4 py-2.5 rounded-full bg-primary/5 hover:bg-primary/10 text-foreground border-2 border-slate-600 hover:border-slate-500 transition-all duration-200 hover:scale-105 hover:shadow-sm"
                 >
                   {suggestion}
                 </button>
@@ -197,7 +197,7 @@ export const MetricsAgentChat = ({ metricType, onClose }: MetricsAgentChatProps)
               onKeyPress={handleKeyPress}
               placeholder="Digite sua pergunta sobre as métricas..."
               disabled={isLoading}
-              className="flex-1 h-12 rounded-xl bg-background/50 border-border/50 focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all"
+              className="flex-1 h-12 rounded-xl bg-background/50 border-2 border-slate-600 focus:border-slate-500 focus:ring-2 focus:ring-primary/20 transition-all"
             />
             <Button 
               onClick={handleSend} 
