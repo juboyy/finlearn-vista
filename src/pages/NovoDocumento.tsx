@@ -150,7 +150,7 @@ export default function NovoDocumento() {
                             <button
                               key={agent.name}
                               onClick={() => setSelectedAgent(agent.name)}
-                              className={`p-4 bg-[hsl(var(--${agent.color}))]/60 rounded-lg border-2 border-border hover:bg-[hsl(var(--${agent.color}))]/40 transition text-left ${
+                              className={`p-4 bg-[hsl(var(--${agent.color}))] rounded-lg border-2 border-border hover:bg-opacity-70 transition text-left ${
                                 selectedAgent === agent.name ? 'ring-2 ring-[hsl(var(--pastel-gray-dark))]' : ''
                               }`}
                             >
