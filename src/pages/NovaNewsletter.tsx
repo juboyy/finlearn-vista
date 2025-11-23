@@ -510,110 +510,147 @@ export default function NovaNewsletter() {
 
             {/* Step 4: Monetization */}
             {currentStep === 4 && (
-              <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 mb-8">
-                <h2 className="text-xl font-bold text-slate-800 mb-2">Configurações de Monetização</h2>
-                <p className="text-slate-500 mb-8">Configure os planos de assinatura, preços e estratégias de monetização</p>
+              <div className="space-y-8 mb-8">
+                {/* Header with gradient */}
+                <div className="bg-gradient-to-br from-pastel-purple to-pastel-pink rounded-2xl p-8 text-center shadow-lg">
+                  <h2 className="text-3xl font-bold text-white mb-3">Configurações de Monetização</h2>
+                  <p className="text-white/90 text-lg">Configure os planos de assinatura, preços e estratégias de monetização</p>
+                </div>
                 
                 {/* Monetization Type */}
-                <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl p-6 mb-8 border border-purple-100">
-                  <h3 className="font-bold text-slate-800 mb-4">Modelo de Monetização</h3>
-                  <div className="flex gap-4 mb-6">
-                    <label className="flex-1 cursor-pointer">
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-12 h-12 rounded-xl bg-pastel-purple flex items-center justify-center">
+                      <DollarSign className="w-6 h-6 text-pastel-gray-dark" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-slate-800">Modelo de Monetização</h3>
+                      <p className="text-sm text-slate-500">Escolha como seu conteúdo será monetizado</p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <label className="cursor-pointer group">
                       <input type="radio" name="monetization" className="sr-only peer" />
-                      <div className="p-4 bg-white rounded-lg border-2 border-slate-200 peer-checked:border-purple-400 peer-checked:ring-2 peer-checked:ring-purple-100 transition-all">
-                        <div className="font-bold text-slate-800 mb-1">Gratuita</div>
-                        <p className="text-xs text-slate-600">Conteúdo aberto para todos</p>
+                      <div className="p-6 bg-gradient-to-br from-pastel-green/20 to-pastel-green/5 rounded-xl border-2 border-pastel-green/30 peer-checked:border-pastel-green peer-checked:ring-4 peer-checked:ring-pastel-green/20 transition-all group-hover:shadow-md">
+                        <div className="w-10 h-10 rounded-lg bg-pastel-green mb-4 flex items-center justify-center">
+                          <Check className="w-5 h-5 text-pastel-gray-dark" />
+                        </div>
+                        <div className="font-bold text-slate-800 mb-2">Gratuita</div>
+                        <p className="text-sm text-slate-600">Conteúdo aberto para todos os leitores</p>
                       </div>
                     </label>
-                    <label className="flex-1 cursor-pointer">
+                    <label className="cursor-pointer group">
                       <input type="radio" name="monetization" className="sr-only peer" defaultChecked />
-                      <div className="p-4 bg-white rounded-lg border-2 border-slate-200 peer-checked:border-purple-400 peer-checked:ring-2 peer-checked:ring-purple-100 transition-all">
-                        <div className="font-bold text-slate-800 mb-1">Premium (Paga)</div>
-                        <p className="text-xs text-slate-600">Assinatura única</p>
+                      <div className="p-6 bg-gradient-to-br from-pastel-purple/20 to-pastel-purple/5 rounded-xl border-2 border-pastel-purple/30 peer-checked:border-pastel-purple peer-checked:ring-4 peer-checked:ring-pastel-purple/20 transition-all group-hover:shadow-md">
+                        <div className="w-10 h-10 rounded-lg bg-pastel-purple mb-4 flex items-center justify-center">
+                          <DollarSign className="w-5 h-5 text-pastel-gray-dark" />
+                        </div>
+                        <div className="font-bold text-slate-800 mb-2">Premium (Paga)</div>
+                        <p className="text-sm text-slate-600">Assinatura única com conteúdo exclusivo</p>
                       </div>
                     </label>
-                    <label className="flex-1 cursor-pointer">
+                    <label className="cursor-pointer group">
                       <input type="radio" name="monetization" className="sr-only peer" />
-                      <div className="p-4 bg-white rounded-lg border-2 border-slate-200 peer-checked:border-purple-400 peer-checked:ring-2 peer-checked:ring-purple-100 transition-all">
-                        <div className="font-bold text-slate-800 mb-1">Freemium (Mista)</div>
-                        <p className="text-xs text-slate-600">Conteúdo básico grátis + Premium</p>
+                      <div className="p-6 bg-gradient-to-br from-pastel-blue/20 to-pastel-blue/5 rounded-xl border-2 border-pastel-blue/30 peer-checked:border-pastel-blue peer-checked:ring-4 peer-checked:ring-pastel-blue/20 transition-all group-hover:shadow-md">
+                        <div className="w-10 h-10 rounded-lg bg-pastel-blue mb-4 flex items-center justify-center">
+                          <ChartPie className="w-5 h-5 text-pastel-gray-dark" />
+                        </div>
+                        <div className="font-bold text-slate-800 mb-2">Freemium (Mista)</div>
+                        <p className="text-sm text-slate-600">Conteúdo básico grátis + Premium</p>
                       </div>
                     </label>
                   </div>
                 </div>
 
                 {/* Pricing Plans */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                  <div className="border border-slate-200 rounded-xl p-6 bg-gradient-to-br from-white to-slate-50">
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="font-bold text-slate-800">Plano Mensal</h3>
-                      <span className="px-3 py-1 text-xs font-medium rounded-full" style={{ backgroundColor: '#D4C5E8', color: '#4a5568' }}>Ativo</span>
-                    </div>
-                    <div className="mb-4">
-                      <label className="block text-sm font-medium text-slate-700 mb-2">Preço Mensal</label>
-                      <div className="relative">
-                        <span className="absolute left-3 top-3 text-slate-500 font-medium">R$</span>
-                        <input 
-                          type="number" 
-                          className="w-full pl-10 pr-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-purple-200 focus:border-purple-400 outline-none" 
-                          defaultValue="29.90" 
-                          step="0.01"
-                        />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="bg-white rounded-2xl border-2 border-pastel-purple/30 shadow-md overflow-hidden group hover:shadow-xl transition-shadow">
+                    <div className="bg-gradient-to-br from-pastel-purple to-pastel-pink p-6">
+                      <div className="flex items-center justify-between mb-2">
+                        <h3 className="text-xl font-bold text-white">Plano Mensal</h3>
+                        <span className="px-3 py-1 text-xs font-bold rounded-full bg-white/90 text-pastel-gray-dark">Ativo</span>
                       </div>
+                      <p className="text-white/90 text-sm">Cobrança recorrente mensal</p>
                     </div>
-                    <div className="space-y-3">
-                      <label className="flex items-center gap-2">
-                        <input type="checkbox" className="w-4 h-4 rounded text-purple-600" />
-                        <span className="text-sm text-slate-700">Habilitar período de trial</span>
-                      </label>
-                      <div className="pl-6">
-                        <label className="block text-xs font-medium text-slate-600 mb-1">Duração do Trial (dias)</label>
-                        <input type="number" className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg bg-white" defaultValue="7" />
+                    <div className="p-6 space-y-6">
+                      <div>
+                        <label className="block text-sm font-bold text-slate-700 mb-3">Preço Mensal</label>
+                        <div className="relative">
+                          <span className="absolute left-4 top-4 text-slate-500 font-bold text-lg">R$</span>
+                          <input 
+                            type="number" 
+                            className="w-full pl-12 pr-4 py-4 text-2xl font-bold rounded-xl border-2 border-slate-300 focus:ring-4 focus:ring-pastel-purple/20 focus:border-pastel-purple outline-none bg-slate-50" 
+                            defaultValue="29.90" 
+                            step="0.01"
+                          />
+                        </div>
+                      </div>
+                      <div className="bg-pastel-purple/10 rounded-xl p-4 border border-pastel-purple/20">
+                        <label className="flex items-center gap-3 mb-3 cursor-pointer">
+                          <input type="checkbox" className="w-5 h-5 rounded text-pastel-purple" />
+                          <span className="font-bold text-slate-800">Habilitar período de trial</span>
+                        </label>
+                        <div className="pl-8">
+                          <label className="block text-sm font-medium text-slate-600 mb-2">Duração do Trial (dias)</label>
+                          <input type="number" className="w-full px-4 py-3 text-sm font-medium border-2 border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-pastel-purple/20 focus:border-pastel-purple outline-none" defaultValue="7" />
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                  <div className="border border-slate-200 rounded-xl p-6 bg-gradient-to-br from-white to-slate-50">
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="font-bold text-slate-800">Plano Anual</h3>
-                      <span className="px-3 py-1 text-xs font-medium rounded-full" style={{ backgroundColor: '#C5E8D4', color: '#4a5568' }}>Ativo</span>
-                    </div>
-                    <div className="mb-4">
-                      <label className="block text-sm font-medium text-slate-700 mb-2">Preço Anual</label>
-                      <div className="relative">
-                        <span className="absolute left-3 top-3 text-slate-500 font-medium">R$</span>
-                        <input 
-                          type="number" 
-                          className="w-full pl-10 pr-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-purple-200 focus:border-purple-400 outline-none" 
-                          defaultValue="299.00" 
-                          step="0.01"
-                        />
+                  <div className="bg-white rounded-2xl border-2 border-pastel-green/30 shadow-md overflow-hidden group hover:shadow-xl transition-shadow">
+                    <div className="bg-gradient-to-br from-pastel-green to-pastel-blue p-6">
+                      <div className="flex items-center justify-between mb-2">
+                        <h3 className="text-xl font-bold text-white">Plano Anual</h3>
+                        <span className="px-3 py-1 text-xs font-bold rounded-full bg-white/90 text-pastel-gray-dark">Ativo</span>
                       </div>
-                      <p className="text-xs text-slate-500 mt-2">Economia de 16% comparado ao mensal</p>
+                      <p className="text-white/90 text-sm">Cobrança anual com desconto</p>
                     </div>
-                    <div className="space-y-3">
-                      <label className="flex items-center gap-2">
-                        <input type="checkbox" defaultChecked className="w-4 h-4 rounded text-purple-600" />
-                        <span className="text-sm text-slate-700">Habilitar período de trial</span>
-                      </label>
-                      <div className="pl-6">
-                        <label className="block text-xs font-medium text-slate-600 mb-1">Duração do Trial (dias)</label>
-                        <input type="number" className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg bg-white" defaultValue="14" />
+                    <div className="p-6 space-y-6">
+                      <div>
+                        <label className="block text-sm font-bold text-slate-700 mb-3">Preço Anual</label>
+                        <div className="relative">
+                          <span className="absolute left-4 top-4 text-slate-500 font-bold text-lg">R$</span>
+                          <input 
+                            type="number" 
+                            className="w-full pl-12 pr-4 py-4 text-2xl font-bold rounded-xl border-2 border-slate-300 focus:ring-4 focus:ring-pastel-green/20 focus:border-pastel-green outline-none bg-slate-50" 
+                            defaultValue="299.00" 
+                            step="0.01"
+                          />
+                        </div>
+                        <div className="mt-3 px-3 py-2 bg-pastel-green/20 rounded-lg">
+                          <p className="text-sm font-bold text-pastel-gray-dark">Economia de 16% comparado ao mensal</p>
+                        </div>
+                      </div>
+                      <div className="bg-pastel-green/10 rounded-xl p-4 border border-pastel-green/20">
+                        <label className="flex items-center gap-3 mb-3 cursor-pointer">
+                          <input type="checkbox" defaultChecked className="w-5 h-5 rounded text-pastel-green" />
+                          <span className="font-bold text-slate-800">Habilitar período de trial</span>
+                        </label>
+                        <div className="pl-8">
+                          <label className="block text-sm font-medium text-slate-600 mb-2">Duração do Trial (dias)</label>
+                          <input type="number" className="w-full px-4 py-3 text-sm font-medium border-2 border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-pastel-green/20 focus:border-pastel-green outline-none" defaultValue="14" />
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 {/* Billing & Invoice Settings */}
-                <div className="bg-slate-50 rounded-xl p-6 mb-8 border border-slate-200">
-                  <h3 className="font-bold text-slate-800 mb-4 flex items-center gap-2">
-                    <Calendar className="w-5 h-5" />
-                    Configurações de Faturamento
-                  </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-12 h-12 rounded-xl bg-pastel-blue flex items-center justify-center">
+                      <Calendar className="w-6 h-6 text-pastel-gray-dark" />
+                    </div>
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-2">Dia de Vencimento da Fatura</label>
-                      <select className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-purple-200 focus:border-purple-400 outline-none bg-white">
+                      <h3 className="text-xl font-bold text-slate-800">Configurações de Faturamento</h3>
+                      <p className="text-sm text-slate-500">Defina datas e métodos de pagamento</p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-3">
+                      <label className="block text-sm font-bold text-slate-700">Dia de Vencimento da Fatura</label>
+                      <select className="w-full px-4 py-4 rounded-xl border-2 border-slate-300 focus:ring-4 focus:ring-pastel-blue/20 focus:border-pastel-blue outline-none bg-white font-medium">
                         <option value="1">Dia 1 do mês</option>
                         <option value="5" selected>Dia 5 do mês</option>
                         <option value="10">Dia 10 do mês</option>
@@ -622,20 +659,20 @@ export default function NovaNewsletter() {
                         <option value="signup">Data da assinatura</option>
                       </select>
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-2">Método de Pagamento</label>
-                      <div className="space-y-2">
-                        <label className="flex items-center gap-2">
-                          <input type="checkbox" defaultChecked className="w-4 h-4 rounded text-purple-600" />
-                          <span className="text-sm text-slate-700">Cartão de Crédito</span>
+                    <div className="space-y-3">
+                      <label className="block text-sm font-bold text-slate-700">Métodos de Pagamento</label>
+                      <div className="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <label className="flex items-center gap-3 cursor-pointer group">
+                          <input type="checkbox" defaultChecked className="w-5 h-5 rounded text-pastel-blue" />
+                          <span className="text-sm font-medium text-slate-700 group-hover:text-slate-900">Cartão de Crédito</span>
                         </label>
-                        <label className="flex items-center gap-2">
-                          <input type="checkbox" defaultChecked className="w-4 h-4 rounded text-purple-600" />
-                          <span className="text-sm text-slate-700">PIX</span>
+                        <label className="flex items-center gap-3 cursor-pointer group">
+                          <input type="checkbox" defaultChecked className="w-5 h-5 rounded text-pastel-blue" />
+                          <span className="text-sm font-medium text-slate-700 group-hover:text-slate-900">PIX</span>
                         </label>
-                        <label className="flex items-center gap-2">
-                          <input type="checkbox" className="w-4 h-4 rounded text-purple-600" />
-                          <span className="text-sm text-slate-700">Boleto Bancário</span>
+                        <label className="flex items-center gap-3 cursor-pointer group">
+                          <input type="checkbox" className="w-5 h-5 rounded text-pastel-blue" />
+                          <span className="text-sm font-medium text-slate-700 group-hover:text-slate-900">Boleto Bancário</span>
                         </label>
                       </div>
                     </div>
@@ -643,67 +680,69 @@ export default function NovaNewsletter() {
                 </div>
 
                 {/* Discounts & Promotions */}
-                <div className="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-xl p-6 mb-8 border border-yellow-100">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-yellow-600">
-                        <DollarSign className="w-5 h-5" />
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                  <div className="bg-gradient-to-br from-pastel-yellow to-pastel-orange p-6">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-xl bg-white shadow-md flex items-center justify-center">
+                          <DollarSign className="w-6 h-6 text-pastel-orange" />
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-bold text-white">Descontos & Promoções</h3>
+                          <p className="text-sm text-white/90">Configure cupons e ofertas especiais</p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="font-bold text-slate-800">Descontos & Promoções</h3>
-                        <p className="text-sm text-slate-600">Configure cupons e ofertas especiais</p>
-                      </div>
+                      <button className="px-5 py-3 bg-white text-pastel-gray-dark rounded-xl font-bold hover:shadow-lg transition flex items-center gap-2">
+                        <Plus className="w-5 h-5" /> Novo Cupom
+                      </button>
                     </div>
-                    <button className="px-4 py-2 bg-white text-yellow-700 rounded-lg font-medium hover:bg-yellow-50 transition text-sm flex items-center gap-2 shadow-sm">
-                      <Plus className="w-4 h-4" /> Novo Cupom
-                    </button>
                   </div>
 
-                  <div className="space-y-3">
-                    <div className="bg-white rounded-lg p-4 border border-slate-200">
-                      <div className="flex items-center justify-between mb-3">
+                  <div className="p-6 space-y-4">
+                    <div className="bg-gradient-to-br from-pastel-green/10 to-pastel-blue/10 rounded-xl p-5 border-2 border-pastel-green/30">
+                      <div className="flex items-center justify-between mb-4">
                         <div>
-                          <div className="font-bold text-slate-800">LAUNCH2024</div>
-                          <p className="text-xs text-slate-500">Promoção de lançamento</p>
+                          <div className="text-lg font-bold text-slate-800 mb-1">LAUNCH2024</div>
+                          <p className="text-sm text-slate-600">Promoção de lançamento</p>
                         </div>
-                        <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">Ativo</span>
+                        <span className="px-4 py-2 bg-pastel-green text-pastel-gray-dark rounded-xl text-sm font-bold">Ativo</span>
                       </div>
-                      <div className="grid grid-cols-3 gap-4 text-sm">
-                        <div>
-                          <span className="text-slate-600">Desconto:</span>
-                          <div className="font-bold text-slate-800">50% OFF</div>
+                      <div className="grid grid-cols-3 gap-6">
+                        <div className="bg-white rounded-lg p-3">
+                          <span className="text-xs text-slate-600 block mb-1">Desconto</span>
+                          <div className="text-lg font-bold text-slate-800">50% OFF</div>
                         </div>
-                        <div>
-                          <span className="text-slate-600">Válido até:</span>
-                          <div className="font-bold text-slate-800">31/12/2024</div>
+                        <div className="bg-white rounded-lg p-3">
+                          <span className="text-xs text-slate-600 block mb-1">Válido até</span>
+                          <div className="text-lg font-bold text-slate-800">31/12/2024</div>
                         </div>
-                        <div>
-                          <span className="text-slate-600">Usos:</span>
-                          <div className="font-bold text-slate-800">45/100</div>
+                        <div className="bg-white rounded-lg p-3">
+                          <span className="text-xs text-slate-600 block mb-1">Usos</span>
+                          <div className="text-lg font-bold text-slate-800">45/100</div>
                         </div>
                       </div>
                     </div>
 
-                    <div className="bg-white rounded-lg p-4 border border-slate-200">
-                      <div className="flex items-center justify-between mb-3">
+                    <div className="bg-gradient-to-br from-pastel-pink/10 to-pastel-purple/10 rounded-xl p-5 border-2 border-pastel-pink/30">
+                      <div className="flex items-center justify-between mb-4">
                         <div>
-                          <div className="font-bold text-slate-800">FRIEND20</div>
-                          <p className="text-xs text-slate-500">Indicação de amigos</p>
+                          <div className="text-lg font-bold text-slate-800 mb-1">FRIEND20</div>
+                          <p className="text-sm text-slate-600">Indicação de amigos</p>
                         </div>
-                        <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">Ativo</span>
+                        <span className="px-4 py-2 bg-pastel-pink text-pastel-gray-dark rounded-xl text-sm font-bold">Ativo</span>
                       </div>
-                      <div className="grid grid-cols-3 gap-4 text-sm">
-                        <div>
-                          <span className="text-slate-600">Desconto:</span>
-                          <div className="font-bold text-slate-800">20% OFF</div>
+                      <div className="grid grid-cols-3 gap-6">
+                        <div className="bg-white rounded-lg p-3">
+                          <span className="text-xs text-slate-600 block mb-1">Desconto</span>
+                          <div className="text-lg font-bold text-slate-800">20% OFF</div>
                         </div>
-                        <div>
-                          <span className="text-slate-600">Válido até:</span>
-                          <div className="font-bold text-slate-800">Indeterminado</div>
+                        <div className="bg-white rounded-lg p-3">
+                          <span className="text-xs text-slate-600 block mb-1">Válido até</span>
+                          <div className="text-lg font-bold text-slate-800">Indeterminado</div>
                         </div>
-                        <div>
-                          <span className="text-slate-600">Usos:</span>
-                          <div className="font-bold text-slate-800">Ilimitado</div>
+                        <div className="bg-white rounded-lg p-3">
+                          <span className="text-xs text-slate-600 block mb-1">Usos</span>
+                          <div className="text-lg font-bold text-slate-800">Ilimitado</div>
                         </div>
                       </div>
                     </div>
@@ -711,10 +750,12 @@ export default function NovaNewsletter() {
                 </div>
 
                 {/* Platform Fee Info */}
-                <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 flex items-start gap-3">
-                  <Info className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-                  <div className="text-sm text-slate-700">
-                    <strong>Informação importante:</strong> A plataforma cobra uma taxa de <strong>10%</strong> sobre todas as assinaturas processadas. 
+                <div className="bg-gradient-to-br from-pastel-blue/20 to-pastel-purple/20 border-2 border-pastel-blue/30 rounded-2xl p-6 flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-lg bg-pastel-blue flex items-center justify-center flex-shrink-0">
+                    <Info className="w-5 h-5 text-pastel-gray-dark" />
+                  </div>
+                  <div className="text-sm text-slate-700 leading-relaxed">
+                    <strong className="text-base">Informação importante:</strong> A plataforma cobra uma taxa de <strong>10%</strong> sobre todas as assinaturas processadas. 
                     Esta taxa cobre processamento de pagamentos, infraestrutura e suporte técnico.
                   </div>
                 </div>
