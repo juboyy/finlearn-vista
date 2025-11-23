@@ -394,62 +394,62 @@ const AgendarPublicacaoRevisao = () => {
                   <div className="space-y-3">
                     {[
                       {
-                        icon: <CheckCircle className="text-green-600 text-xl" />,
+                        icon: <CheckCircle className="text-xl" style={{ color: 'hsl(var(--pastel-gray-dark))' }} />,
                         bg: 'hsl(152 32% 79%)',
                         title: "Linha de Assunto Otimizada",
                         desc: "Taxa de abertura estimada: 28-32%",
                         status: "Aprovado",
-                        statusColor: "text-green-600"
+                        statusColor: "hsl(var(--pastel-gray-dark))"
                       },
                       {
-                        icon: <CheckCircle className="text-green-600 text-xl" />,
+                        icon: <CheckCircle className="text-xl" style={{ color: 'hsl(var(--pastel-gray-dark))' }} />,
                         bg: 'hsl(152 32% 79%)',
                         title: "Links Funcionais",
                         desc: "Todos os 8 links foram verificados",
                         status: "Aprovado",
-                        statusColor: "text-green-600"
+                        statusColor: "hsl(var(--pastel-gray-dark))"
                       },
                       {
-                        icon: <CheckCircle className="text-green-600 text-xl" />,
+                        icon: <CheckCircle className="text-xl" style={{ color: 'hsl(var(--pastel-gray-dark))' }} />,
                         bg: 'hsl(152 32% 79%)',
                         title: "Compatibilidade Mobile",
                         desc: "Design responsivo testado",
                         status: "Aprovado",
-                        statusColor: "text-green-600"
+                        statusColor: "hsl(var(--pastel-gray-dark))"
                       },
                       {
-                        icon: <AlertTriangle className="text-amber-600 text-xl" />,
+                        icon: <AlertTriangle className="text-xl" style={{ color: 'hsl(var(--pastel-gray-dark))' }} />,
                         bg: 'hsl(44 78% 89%)',
                         title: "Palavras de Spam",
                         desc: "1 palavra detectada: \"Grátis\"",
                         status: "Revisar",
-                        statusColor: "text-amber-600",
+                        statusColor: "hsl(var(--pastel-gray-dark))",
                         isButton: true
                       },
                       {
-                        icon: <CheckCircle className="text-green-600 text-xl" />,
+                        icon: <CheckCircle className="text-xl" style={{ color: 'hsl(var(--pastel-gray-dark))' }} />,
                         bg: 'hsl(152 32% 79%)',
                         title: "Conformidade LGPD",
                         desc: "Link de cancelamento incluído",
                         status: "Aprovado",
-                        statusColor: "text-green-600"
+                        statusColor: "hsl(var(--pastel-gray-dark))"
                       },
                       {
-                        icon: <Search className="text-blue-600 text-xl" />,
+                        icon: <Search className="text-xl" style={{ color: 'hsl(var(--pastel-gray-dark))' }} />,
                         bg: 'hsl(206 35% 79%)',
                         title: "Otimização SEO",
                         desc: "Meta tags e palavras-chave otimizadas",
                         status: "Detalhes",
-                        statusColor: "text-blue-600",
+                        statusColor: "hsl(var(--pastel-gray-dark))",
                         isButton: true
                       },
                       {
-                        icon: <Globe className="text-green-600 text-xl" />,
+                        icon: <Globe className="text-xl" style={{ color: 'hsl(var(--pastel-gray-dark))' }} />,
                         bg: 'hsl(152 32% 79%)',
                         title: "Segmentação GEO",
                         desc: "Brasil: 95% • Internacional: 5%",
                         status: "Configurar",
-                        statusColor: "text-green-600",
+                        statusColor: "hsl(var(--pastel-gray-dark))",
                         isButton: true
                       }
                     ].map((item, idx) => (
@@ -470,11 +470,11 @@ const AgendarPublicacaoRevisao = () => {
                           </div>
                         </div>
                         {item.isButton ? (
-                          <button className={`${item.statusColor} font-bold text-sm hover:underline`}>
+                          <button className="font-bold text-sm hover:underline" style={{ color: item.statusColor }}>
                             {item.status}
                           </button>
                         ) : (
-                          <span className={`${item.statusColor} font-bold text-sm`}>
+                          <span className="font-bold text-sm" style={{ color: item.statusColor }}>
                             {item.status}
                           </span>
                         )}
