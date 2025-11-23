@@ -708,6 +708,59 @@ export default function NovaNewsletter() {
                   </div>
 
                   <div className="p-6 space-y-4">
+                    {/* Referral Program Section */}
+                    <div className="bg-pastel-purple/15 rounded-xl p-6 border-2 border-pastel-purple/30">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-12 h-12 rounded-xl bg-pastel-purple flex items-center justify-center">
+                          <Users className="w-6 h-6 text-pastel-gray-dark" />
+                        </div>
+                        <div>
+                          <h4 className="text-lg font-bold text-slate-800">Programa de Indicação</h4>
+                          <p className="text-sm text-slate-600">Descontos progressivos por amigos que assinarem</p>
+                        </div>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                        <div className="bg-white rounded-xl p-4 border-2 border-pastel-blue/30">
+                          <div className="text-center">
+                            <div className="text-3xl font-bold text-pastel-blue mb-2">10%</div>
+                            <div className="text-xs font-medium text-slate-600 mb-1">Desconto mensal</div>
+                            <div className="text-sm font-bold text-slate-800">1 amigo</div>
+                          </div>
+                        </div>
+                        <div className="bg-white rounded-xl p-4 border-2 border-pastel-green/30">
+                          <div className="text-center">
+                            <div className="text-3xl font-bold text-pastel-green mb-2">25%</div>
+                            <div className="text-xs font-medium text-slate-600 mb-1">Desconto mensal</div>
+                            <div className="text-sm font-bold text-slate-800">3 amigos</div>
+                          </div>
+                        </div>
+                        <div className="bg-white rounded-xl p-4 border-2 border-pastel-yellow/30">
+                          <div className="text-center">
+                            <div className="text-3xl font-bold text-pastel-yellow mb-2">40%</div>
+                            <div className="text-xs font-medium text-slate-600 mb-1">Desconto mensal</div>
+                            <div className="text-sm font-bold text-slate-800">5 amigos</div>
+                          </div>
+                        </div>
+                        <div className="bg-white rounded-xl p-4 border-2 border-pastel-pink/30">
+                          <div className="text-center">
+                            <div className="text-3xl font-bold text-pastel-pink mb-2">GRÁTIS</div>
+                            <div className="text-xs font-medium text-slate-600 mb-1">Assinatura gratuita</div>
+                            <div className="text-sm font-bold text-slate-800">10+ amigos</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="bg-white rounded-lg p-4">
+                        <div className="flex items-start gap-3">
+                          <Info className="w-5 h-5 text-pastel-purple flex-shrink-0 mt-0.5" />
+                          <div className="text-sm text-slate-700">
+                            <strong>Como funciona:</strong> Cada amigo que assinar usando seu link de indicação garante um desconto progressivo na sua assinatura mensal. O desconto é aplicado automaticamente e permanece ativo enquanto seus indicados mantiverem a assinatura.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
                     <div className="bg-pastel-green/15 rounded-xl p-5 border-2 border-pastel-green/30">
                       <div className="flex items-center justify-between mb-4">
                         <div>
