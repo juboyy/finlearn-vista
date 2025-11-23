@@ -54,7 +54,9 @@ export default function Agentes() {
       description: "Especialista em análise técnica, padrões gráficos e estratégias de trading",
       icon: ChartLine,
       bgColor: "bg-[hsl(206,35%,75%)]",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/f28f1efee6-bb8cd63f0a8ea0129291.png"
+      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/f28f1efee6-bb8cd63f0a8ea0129291.png",
+      category: "Análise",
+      rating: "4.9"
     },
     {
       id: "renda-fixa",
@@ -62,7 +64,9 @@ export default function Agentes() {
       description: "Expert em títulos públicos, CDBs, LCIs e estratégias conservadoras",
       icon: Landmark,
       bgColor: "bg-[hsl(280,35%,75%)]",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4f08e86bcd-772ce53ecbb47d504bde.png"
+      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4f08e86bcd-772ce53ecbb47d504bde.png",
+      category: "Renda Fixa",
+      rating: "4.8"
     },
     {
       id: "crypto-defi",
@@ -70,7 +74,9 @@ export default function Agentes() {
       description: "Especialista em criptomoedas, DeFi e tecnologia blockchain",
       icon: Bitcoin,
       bgColor: "bg-[hsl(340,35%,75%)]",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/521bb99722-72b06772970c6fd465e6.png"
+      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/521bb99722-72b06772970c6fd465e6.png",
+      category: "Crypto",
+      rating: "4.7"
     },
     {
       id: "educador-financeiro",
@@ -78,7 +84,9 @@ export default function Agentes() {
       description: "Educador financeiro com foco em fundamentos e teoria econômica",
       icon: GraduationCap,
       bgColor: "bg-[hsl(160,35%,75%)]",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4450be57c6-3f9f4c9c029e3c4d7519.png"
+      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4450be57c6-3f9f4c9c029e3c4d7519.png",
+      category: "Educação",
+      rating: "4.9"
     },
     {
       id: "mercado-financeiro",
@@ -86,7 +94,9 @@ export default function Agentes() {
       description: "Expert em análise de mercados, ações e tendências econômicas",
       icon: TrendingUp,
       bgColor: "bg-[hsl(206,35%,75%)]",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-74fa07dc19664888168d.png"
+      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-74fa07dc19664888168d.png",
+      category: "Mercados",
+      rating: "4.8"
     },
     {
       id: "pagamentos",
@@ -94,7 +104,9 @@ export default function Agentes() {
       description: "Conhecimento em sistemas de pagamento, fintechs e transações digitais",
       icon: CreditCard,
       bgColor: "bg-[hsl(280,35%,75%)]",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-13cb55de72175bb27fe6.png"
+      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-13cb55de72175bb27fe6.png",
+      category: "Fintechs",
+      rating: "4.6"
     },
     {
       id: "capitais",
@@ -102,7 +114,9 @@ export default function Agentes() {
       description: "Especialista em IPOs, ofertas públicas e estruturação de operações",
       icon: Database,
       bgColor: "bg-[hsl(340,35%,75%)]",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-d3b919a60e4b8021bd1b.png"
+      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-d3b919a60e4b8021bd1b.png",
+      category: "Capitais",
+      rating: "4.7"
     },
     {
       id: "esg-investing",
@@ -110,7 +124,9 @@ export default function Agentes() {
       description: "Especialista em investimentos ESG e sustentabilidade corporativa",
       icon: TrendingUp,
       bgColor: "bg-[hsl(160,35%,75%)]",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-22a909d28eba94674e80.png"
+      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-22a909d28eba94674e80.png",
+      category: "ESG",
+      rating: "4.5"
     },
     {
       id: "compliance",
@@ -118,7 +134,9 @@ export default function Agentes() {
       description: "Expert em compliance, regulamentação CVM e aspectos legais do mercado",
       icon: Settings,
       bgColor: "bg-[hsl(340,35%,75%)]",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-d3b919a60e4b8021bd1b.png"
+      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-d3b919a60e4b8021bd1b.png",
+      category: "Compliance",
+      rating: "4.8"
     },
     {
       id: "valuation",
@@ -126,7 +144,9 @@ export default function Agentes() {
       description: "Especialista em avaliação de empresas, fusões e aquisições",
       icon: Landmark,
       bgColor: "bg-[hsl(206,35%,75%)]",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-74fa07dc19664888168d.png"
+      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-74fa07dc19664888168d.png",
+      category: "Valuation",
+      rating: "4.6"
     },
     {
       id: "private-equity",
@@ -134,7 +154,9 @@ export default function Agentes() {
       description: "Expert em capital de risco, private equity e investimentos alternativos",
       icon: CreditCard,
       bgColor: "bg-[hsl(280,35%,75%)]",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-13cb55de72175bb27fe6.png"
+      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-13cb55de72175bb27fe6.png",
+      category: "Investimentos",
+      rating: "4.7"
     },
     {
       id: "gestao-risco",
@@ -142,7 +164,9 @@ export default function Agentes() {
       description: "Especialista em análise e gestão de riscos financeiros e operacionais",
       icon: Star,
       bgColor: "bg-[hsl(340,35%,75%)]",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-d3b919a60e4b8021bd1b.png"
+      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-d3b919a60e4b8021bd1b.png",
+      category: "Riscos",
+      rating: "4.8"
     }
   ];
 
@@ -344,15 +368,26 @@ export default function Agentes() {
                           value={agent.id}
                           className="cursor-pointer"
                         >
-                          <div className="flex items-center gap-3 py-1">
+                          <div className="flex items-center gap-3 py-2">
                             <img 
                               src={agent.image} 
                               alt={agent.name}
                               className="w-10 h-10 rounded-full object-cover"
                             />
                             <div className="flex-1">
-                              <div className="font-medium text-foreground">{agent.name}</div>
-                              <div className="text-xs text-muted-foreground">{agent.description}</div>
+                              <div className="flex items-center gap-2 mb-1">
+                                <div className="font-medium text-foreground">{agent.name}</div>
+                                <div className="flex items-center gap-1.5">
+                                  <span className="text-xs px-2 py-0.5 rounded-full font-medium" style={{ backgroundColor: 'hsl(206,35%,85%)', color: 'hsl(206,35%,35%)' }}>
+                                    {agent.category}
+                                  </span>
+                                  <span className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-full font-medium" style={{ backgroundColor: 'hsl(45,78%,88%)', color: 'hsl(45,78%,35%)' }}>
+                                    <Star size={10} fill="currentColor" />
+                                    {agent.rating}
+                                  </span>
+                                </div>
+                              </div>
+                              <div className="text-xs text-muted-foreground line-clamp-1">{agent.description}</div>
                             </div>
                           </div>
                         </SelectItem>
