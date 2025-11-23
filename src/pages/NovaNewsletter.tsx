@@ -6,7 +6,7 @@ import {
   FileCheck, FlaskConical, Upload, Plus, ChevronRight, Check, Bold, 
   Italic, Underline, List, Link, Image, Calendar, Users, DollarSign,
   ChartPie, MessageCircle, Eye, ArrowRight, ArrowLeft, Info, Mail, 
-  MessageSquare, Smartphone, Hash, Send
+  MessageSquare, Smartphone, Hash, Send, CreditCard, Receipt
 } from "lucide-react";
 
 export default function NovaNewsletter() {
@@ -661,18 +661,27 @@ export default function NovaNewsletter() {
                     </div>
                     <div className="space-y-3">
                       <label className="block text-sm font-bold text-slate-700">Métodos de Pagamento</label>
-                      <div className="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
-                        <label className="flex items-center gap-3 cursor-pointer group">
-                          <input type="checkbox" defaultChecked className="w-5 h-5 rounded text-pastel-blue" />
-                          <span className="text-sm font-medium text-slate-700 group-hover:text-slate-900">Cartão de Crédito</span>
+                      <div className="space-y-3">
+                        <label className="flex items-center gap-4 cursor-pointer group bg-white p-4 rounded-xl border-2 border-slate-200 hover:border-pastel-blue/50 transition-all">
+                          <input type="checkbox" defaultChecked className="w-5 h-5 rounded text-pastel-blue flex-shrink-0" />
+                          <div className="w-10 h-10 rounded-lg bg-pastel-blue/20 flex items-center justify-center flex-shrink-0">
+                            <CreditCard className="w-5 h-5 text-pastel-blue" />
+                          </div>
+                          <span className="text-sm font-bold text-slate-800 group-hover:text-pastel-blue transition-colors">Cartão de Crédito</span>
                         </label>
-                        <label className="flex items-center gap-3 cursor-pointer group">
-                          <input type="checkbox" defaultChecked className="w-5 h-5 rounded text-pastel-blue" />
-                          <span className="text-sm font-medium text-slate-700 group-hover:text-slate-900">PIX</span>
+                        <label className="flex items-center gap-4 cursor-pointer group bg-white p-4 rounded-xl border-2 border-slate-200 hover:border-pastel-green/50 transition-all">
+                          <input type="checkbox" defaultChecked className="w-5 h-5 rounded text-pastel-green flex-shrink-0" />
+                          <div className="w-10 h-10 rounded-lg bg-pastel-green/20 flex items-center justify-center flex-shrink-0">
+                            <Smartphone className="w-5 h-5 text-pastel-green" />
+                          </div>
+                          <span className="text-sm font-bold text-slate-800 group-hover:text-pastel-green transition-colors">PIX</span>
                         </label>
-                        <label className="flex items-center gap-3 cursor-pointer group">
-                          <input type="checkbox" className="w-5 h-5 rounded text-pastel-blue" />
-                          <span className="text-sm font-medium text-slate-700 group-hover:text-slate-900">Boleto Bancário</span>
+                        <label className="flex items-center gap-4 cursor-pointer group bg-white p-4 rounded-xl border-2 border-slate-200 hover:border-pastel-orange/50 transition-all">
+                          <input type="checkbox" className="w-5 h-5 rounded text-pastel-orange flex-shrink-0" />
+                          <div className="w-10 h-10 rounded-lg bg-pastel-orange/20 flex items-center justify-center flex-shrink-0">
+                            <Receipt className="w-5 h-5 text-pastel-orange" />
+                          </div>
+                          <span className="text-sm font-bold text-slate-800 group-hover:text-pastel-orange transition-colors">Boleto Bancário</span>
                         </label>
                       </div>
                     </div>
