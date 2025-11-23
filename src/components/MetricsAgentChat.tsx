@@ -14,22 +14,22 @@ const agentConfig = {
   MRR: {
     name: "Especialista em MRR",
     description: "Análise de Receita Recorrente Mensal",
-    image: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=100&h=100&fit=crop",
+    image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-74fa07dc19664888168d.png",
   },
   Churn: {
     name: "Especialista em Churn",
     description: "Análise de Cancelamentos e Retenção",
-    image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=100&h=100&fit=crop",
+    image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4f08e86bcd-772ce53ecbb47d504bde.png",
   },
   Retention: {
     name: "Especialista em Retenção",
     description: "Análise de Engajamento e Lealdade",
-    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&h=100&fit=crop",
+    image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/f28f1efee6-bb8cd63f0a8ea0129291.png",
   },
   Others: {
     name: "Especialista em Métricas",
     description: "Análise de Métricas Complementares",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop",
+    image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/521bb99722-72b06772970c6fd465e6.png",
   }
 };
 
