@@ -54,42 +54,90 @@ export default function NovoDocumento() {
       name: 'Gráfico de Barras',
       description: 'Para comparar valores entre categorias',
       icon: BarChart3,
-      color: 'bg-[hsl(206,35%,85%)]'
+      color: 'bg-[hsl(206,35%,85%)]',
+      previewData: [{
+        type: 'bar',
+        x: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai'],
+        y: [20, 35, 30, 45, 40],
+        marker: { color: '#B8D4E8' }
+      }]
     },
     {
       id: 'line',
       name: 'Gráfico de Linha',
       description: 'Para mostrar tendências ao longo do tempo',
       icon: LineChart,
-      color: 'bg-[hsl(160,35%,85%)]'
+      color: 'bg-[hsl(160,35%,85%)]',
+      previewData: [{
+        type: 'scatter',
+        mode: 'lines',
+        x: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai'],
+        y: [20, 35, 30, 45, 40],
+        line: { color: '#C5E8D4', width: 2 }
+      }]
     },
     {
       id: 'pie',
       name: 'Gráfico de Pizza',
       description: 'Para mostrar proporções de um todo',
       icon: PieChart,
-      color: 'bg-[hsl(280,35%,85%)]'
+      color: 'bg-[hsl(280,35%,85%)]',
+      previewData: [{
+        type: 'pie',
+        values: [30, 25, 20, 15, 10],
+        labels: ['A', 'B', 'C', 'D', 'E'],
+        marker: { 
+          colors: ['#D4C5E8', '#B8D4E8', '#C5E8D4', '#E8E0C5', '#E8C5D8']
+        }
+      }]
     },
     {
       id: 'area',
       name: 'Gráfico de Área',
       description: 'Para mostrar volume ao longo do tempo',
       icon: AreaChart,
-      color: 'bg-[hsl(45,35%,85%)]'
+      color: 'bg-[hsl(45,35%,85%)]',
+      previewData: [{
+        type: 'scatter',
+        mode: 'lines',
+        fill: 'tozeroy',
+        x: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai'],
+        y: [20, 35, 30, 45, 40],
+        fillcolor: 'rgba(232, 224, 197, 0.5)',
+        line: { color: '#E8E0C5', width: 2 }
+      }]
     },
     {
       id: 'scatter',
       name: 'Gráfico de Dispersão',
       description: 'Para mostrar correlação entre variáveis',
       icon: ScatterChart,
-      color: 'bg-[hsl(340,35%,85%)]'
+      color: 'bg-[hsl(340,35%,85%)]',
+      previewData: [{
+        type: 'scatter',
+        mode: 'markers',
+        x: [1, 2, 3, 4, 5, 6, 7],
+        y: [10, 15, 13, 17, 20, 18, 25],
+        marker: { 
+          color: '#E8C5D8',
+          size: 8
+        }
+      }]
     },
     {
       id: 'trend',
       name: 'Gráfico de Tendência',
       description: 'Para análise de tendências e projeções',
       icon: TrendingUp,
-      color: 'bg-[hsl(190,35%,85%)]'
+      color: 'bg-[hsl(190,35%,85%)]',
+      previewData: [{
+        type: 'scatter',
+        mode: 'lines+markers',
+        x: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai'],
+        y: [20, 28, 35, 42, 48],
+        line: { color: '#A8C8D8', width: 3, shape: 'spline' },
+        marker: { color: '#A8C8D8', size: 6 }
+      }]
     }
   ];
 
@@ -752,24 +800,59 @@ export default function NovoDocumento() {
             </SheetDescription>
           </SheetHeader>
           
-          <div className="mt-8 space-y-3">
+          <div className="mt-8 space-y-4">
             {chartTypes.map((chart) => (
               <div
                 key={chart.id}
                 draggable
                 onDragStart={() => handleDragStart(chart.id)}
                 onDragEnd={handleDragEnd}
-                className={`p-4 rounded-lg border-2 border-border hover:border-primary transition-all cursor-move ${
+                className={`rounded-lg border-2 border-border hover:border-primary transition-all cursor-move overflow-hidden ${
                   draggedChart === chart.id ? 'opacity-50 scale-95' : ''
                 }`}
               >
-                <div className="flex items-start gap-4">
-                  <div className={`w-12 h-12 ${chart.color} rounded-lg flex items-center justify-center flex-shrink-0`}>
-                    <chart.icon className="text-[hsl(220,15%,30%)]" size={20} />
+                <div className="p-4">
+                  <div className="flex items-start gap-4 mb-3">
+                    <div className={`w-12 h-12 ${chart.color} rounded-lg flex items-center justify-center flex-shrink-0`}>
+                      <chart.icon className="text-[hsl(220,15%,30%)]" size={20} />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-foreground mb-1">{chart.name}</h3>
+                      <p className="text-sm text-muted-foreground">{chart.description}</p>
+                    </div>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-foreground mb-1">{chart.name}</h3>
-                    <p className="text-sm text-muted-foreground">{chart.description}</p>
+                  
+                  {/* Preview do Gráfico */}
+                  <div className="bg-muted/30 rounded-lg p-3 border border-border">
+                    <Plot
+                      data={chart.previewData as any}
+                      layout={{
+                        margin: { t: 10, r: 10, b: 30, l: 30 },
+                        height: 150,
+                        plot_bgcolor: 'transparent',
+                        paper_bgcolor: 'transparent',
+                        font: { 
+                          family: 'Inter, sans-serif',
+                          size: 9,
+                          color: '#64748b'
+                        },
+                        xaxis: { 
+                          showgrid: false,
+                          zeroline: false
+                        },
+                        yaxis: { 
+                          showgrid: true,
+                          gridcolor: '#e2e8f0',
+                          zeroline: false
+                        },
+                        showlegend: false
+                      }}
+                      config={{ 
+                        displayModeBar: false,
+                        staticPlot: true
+                      }}
+                      style={{ width: '100%', height: '150px' }}
+                    />
                   </div>
                 </div>
               </div>
