@@ -4,9 +4,11 @@ import { ArrowLeft, Plus, Filter, ArrowDownWideNarrow, BookOpen, Video, PieChart
 import { Link } from "react-router-dom";
 import { useState } from "react";
 type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'relatorios' | 'documentos' | 'estudos';
+type FilterType = 'todos' | 'rascunho' | 'revisao' | 'publicado';
 
 export default function MeusConteudos() {
   const [activeTab, setActiveTab] = useState<TabType>('todos');
+  const [activeFilter, setActiveFilter] = useState<FilterType>('todos');
   
   const contentItems = [{
     type: "Podcast",
@@ -108,6 +110,15 @@ export default function MeusConteudos() {
     date: "17 Out 2024",
     views: "-"
   }];
+
+  const filteredItems = contentItems.filter(item => {
+    if (activeFilter === 'todos') return true;
+    if (activeFilter === 'rascunho') return item.status === 'Rascunho';
+    if (activeFilter === 'revisao') return item.status === 'Em Revisão';
+    if (activeFilter === 'publicado') return item.status === 'Publicado';
+    return true;
+  });
+
   return <div className="flex min-h-screen w-full bg-background">
       <SidebarFix />
       
@@ -153,16 +164,44 @@ export default function MeusConteudos() {
 
               <div className="flex gap-6 mb-6">
                 <div className="flex-1 flex gap-3 bg-card rounded-lg border border-border p-1">
-                  <button className="flex-1 px-4 py-2 text-sm font-medium text-primary-foreground bg-primary rounded-md transition-colors">
+                  <button 
+                    onClick={() => setActiveFilter('todos')}
+                    className={`flex-1 px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                      activeFilter === 'todos' 
+                        ? 'text-primary-foreground bg-primary' 
+                        : 'text-muted-foreground hover:bg-accent/10'
+                    }`}
+                  >
                     Todos
                   </button>
-                  <button className="flex-1 px-4 py-2 text-sm font-medium text-muted-foreground hover:bg-accent/10 rounded-md transition-colors">
+                  <button 
+                    onClick={() => setActiveFilter('rascunho')}
+                    className={`flex-1 px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                      activeFilter === 'rascunho' 
+                        ? 'text-primary-foreground bg-primary' 
+                        : 'text-muted-foreground hover:bg-accent/10'
+                    }`}
+                  >
                     Rascunho
                   </button>
-                  <button className="flex-1 px-4 py-2 text-sm font-medium text-muted-foreground hover:bg-accent/10 rounded-md transition-colors">
+                  <button 
+                    onClick={() => setActiveFilter('revisao')}
+                    className={`flex-1 px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                      activeFilter === 'revisao' 
+                        ? 'text-primary-foreground bg-primary' 
+                        : 'text-muted-foreground hover:bg-accent/10'
+                    }`}
+                  >
                     Em Revisão
                   </button>
-                  <button className="flex-1 px-4 py-2 text-sm font-medium text-muted-foreground hover:bg-accent/10 rounded-md transition-colors">
+                  <button 
+                    onClick={() => setActiveFilter('publicado')}
+                    className={`flex-1 px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                      activeFilter === 'publicado' 
+                        ? 'text-primary-foreground bg-primary' 
+                        : 'text-muted-foreground hover:bg-accent/10'
+                    }`}
+                  >
                     Publicado
                   </button>
                 </div>
@@ -207,7 +246,7 @@ export default function MeusConteudos() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-border">
-                      {contentItems.map((item, index) => <tr key={index} className="hover:bg-accent/5 transition-colors group">
+                      {filteredItems.map((item, index) => <tr key={index} className="hover:bg-accent/5 transition-colors group">
                           <td className="px-6 py-4">
                             <input type="checkbox" className="w-4 h-4 rounded border-border" />
                           </td>
@@ -266,7 +305,7 @@ export default function MeusConteudos() {
                       <option>50</option>
                       <option>100</option>
                     </select>
-                    <span className="text-sm text-muted-foreground">de 127 conteúdos</span>
+                    <span className="text-sm text-muted-foreground">de {filteredItems.length} conteúdos</span>
                   </div>
                   
                   <div className="flex items-center gap-2">
