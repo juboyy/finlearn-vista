@@ -23,22 +23,75 @@ import {
   Shield,
   Lightbulb,
   AlertTriangle,
-  Pen
+  Pen,
+  TrendingUp,
+  PieChart,
+  AreaChart,
+  ScatterChart,
+  LineChart
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import Plot from 'react-plotly.js';
 import { MarkdownEditor } from "@/components/MarkdownEditor";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 
 export default function NovoDocumento() {
   const [agentDropdownOpen, setAgentDropdownOpen] = useState(false);
   const [isNewDocument, setIsNewDocument] = useState(false);
   const [editorContent, setEditorContent] = useState("");
+  const [chartDrawerOpen, setChartDrawerOpen] = useState(false);
+  const [draggedChart, setDraggedChart] = useState<string | null>(null);
   const [selectedAgent, setSelectedAgent] = useState({
     name: "Agente Analista",
     description: "Especialista em análise de mercado",
     icon: ChartLine,
     color: "bg-[hsl(206,35%,85%)]"
   });
+
+  const chartTypes = [
+    {
+      id: 'bar',
+      name: 'Gráfico de Barras',
+      description: 'Para comparar valores entre categorias',
+      icon: BarChart3,
+      color: 'bg-[hsl(206,35%,85%)]'
+    },
+    {
+      id: 'line',
+      name: 'Gráfico de Linha',
+      description: 'Para mostrar tendências ao longo do tempo',
+      icon: LineChart,
+      color: 'bg-[hsl(160,35%,85%)]'
+    },
+    {
+      id: 'pie',
+      name: 'Gráfico de Pizza',
+      description: 'Para mostrar proporções de um todo',
+      icon: PieChart,
+      color: 'bg-[hsl(280,35%,85%)]'
+    },
+    {
+      id: 'area',
+      name: 'Gráfico de Área',
+      description: 'Para mostrar volume ao longo do tempo',
+      icon: AreaChart,
+      color: 'bg-[hsl(45,35%,85%)]'
+    },
+    {
+      id: 'scatter',
+      name: 'Gráfico de Dispersão',
+      description: 'Para mostrar correlação entre variáveis',
+      icon: ScatterChart,
+      color: 'bg-[hsl(340,35%,85%)]'
+    },
+    {
+      id: 'trend',
+      name: 'Gráfico de Tendência',
+      description: 'Para análise de tendências e projeções',
+      icon: TrendingUp,
+      color: 'bg-[hsl(190,35%,85%)]'
+    }
+  ];
 
   const agents = [
     {
@@ -122,6 +175,27 @@ export default function NovoDocumento() {
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
   }, []);
+
+  const handleDragStart = (chartId: string) => {
+    setDraggedChart(chartId);
+  };
+
+  const handleDragEnd = () => {
+    setDraggedChart(null);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    if (draggedChart) {
+      console.log('Gráfico adicionado:', draggedChart);
+      // Aqui você pode adicionar a lógica para inserir o gráfico no documento
+      setChartDrawerOpen(false);
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+  };
 
   // Data for Plotly charts
   const indicesData = [
@@ -380,7 +454,11 @@ export default function NovoDocumento() {
             </div>
 
             <div className="flex items-center gap-1">
-              <button className="px-3 py-1.5 text-muted-foreground hover:bg-muted rounded flex items-center gap-2 text-sm font-medium" title="Adicionar gráfico">
+              <button 
+                onClick={() => setChartDrawerOpen(true)}
+                className="px-3 py-1.5 text-muted-foreground hover:bg-muted rounded flex items-center gap-2 text-sm font-medium" 
+                title="Adicionar gráfico"
+              >
                 <BarChart3 size={16} />
                 <span>Gráfico</span>
               </button>
@@ -393,7 +471,11 @@ export default function NovoDocumento() {
         </header>
 
         {/* Document Content */}
-        <div className="p-8">
+        <div 
+          className="p-8"
+          onDrop={handleDrop}
+          onDragOver={handleDragOver}
+        >
           <div className="max-w-4xl mx-auto">
             {isNewDocument ? (
               <div className="bg-card border border-border rounded-xl min-h-[600px]">
@@ -659,6 +741,56 @@ export default function NovoDocumento() {
           </div>
         </div>
       </main>
+
+      {/* Chart Drawer */}
+      <Sheet open={chartDrawerOpen} onOpenChange={setChartDrawerOpen}>
+        <SheetContent side="right" className="w-[400px] sm:w-[540px] overflow-y-auto">
+          <SheetHeader>
+            <SheetTitle>Adicionar Gráfico</SheetTitle>
+            <SheetDescription>
+              Arraste e solte o tipo de gráfico desejado no documento
+            </SheetDescription>
+          </SheetHeader>
+          
+          <div className="mt-8 space-y-3">
+            {chartTypes.map((chart) => (
+              <div
+                key={chart.id}
+                draggable
+                onDragStart={() => handleDragStart(chart.id)}
+                onDragEnd={handleDragEnd}
+                className={`p-4 rounded-lg border-2 border-border hover:border-primary transition-all cursor-move ${
+                  draggedChart === chart.id ? 'opacity-50 scale-95' : ''
+                }`}
+              >
+                <div className="flex items-start gap-4">
+                  <div className={`w-12 h-12 ${chart.color} rounded-lg flex items-center justify-center flex-shrink-0`}>
+                    <chart.icon className="text-[hsl(220,15%,30%)]" size={20} />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-foreground mb-1">{chart.name}</h3>
+                    <p className="text-sm text-muted-foreground">{chart.description}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 p-4 bg-muted/50 rounded-lg border border-border">
+            <div className="flex items-start gap-3">
+              <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                <Lightbulb className="text-primary" size={16} />
+              </div>
+              <div>
+                <h4 className="font-semibold text-foreground text-sm mb-1">Dica</h4>
+                <p className="text-xs text-muted-foreground">
+                  Arraste o tipo de gráfico para a área do documento onde deseja inseri-lo. Você poderá configurar os dados depois.
+                </p>
+              </div>
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }
