@@ -672,28 +672,56 @@ export default function NovaNewsletter() {
                     </div>
                     <div className="space-y-3 col-span-1 md:col-span-2">
                       <label className="block text-sm font-bold text-slate-700">Métodos de Pagamento</label>
-                      <div className="space-y-3">
-                        <label className="flex items-center gap-4 cursor-pointer group bg-white p-4 rounded-xl border-2 border-slate-200 hover:border-pastel-blue/50 transition-all">
-                          <input type="checkbox" defaultChecked className="w-5 h-5 rounded text-pastel-blue flex-shrink-0" />
-                          <div className="w-10 h-10 rounded-lg bg-pastel-blue/20 flex items-center justify-center flex-shrink-0">
-                            <CreditCard className="w-5 h-5 text-pastel-blue" />
-                          </div>
-                          <span className="text-sm font-bold text-slate-800 group-hover:text-pastel-blue transition-colors">Cartão de Crédito</span>
-                        </label>
-                        <label className="flex items-center gap-4 cursor-pointer group bg-white p-4 rounded-xl border-2 border-slate-200 hover:border-pastel-green/50 transition-all">
-                          <input type="checkbox" defaultChecked className="w-5 h-5 rounded text-pastel-green flex-shrink-0" />
-                          <div className="w-10 h-10 rounded-lg bg-pastel-green/20 flex items-center justify-center flex-shrink-0">
-                            <Smartphone className="w-5 h-5 text-pastel-green" />
-                          </div>
-                          <span className="text-sm font-bold text-slate-800 group-hover:text-pastel-green transition-colors">PIX</span>
-                        </label>
-                        <label className="flex items-center gap-4 cursor-pointer group bg-white p-4 rounded-xl border-2 border-slate-200 hover:border-pastel-orange/50 transition-all">
-                          <input type="checkbox" className="w-5 h-5 rounded text-pastel-orange flex-shrink-0" />
-                          <div className="w-10 h-10 rounded-lg bg-pastel-orange/20 flex items-center justify-center flex-shrink-0">
-                            <Receipt className="w-5 h-5 text-pastel-orange" />
-                          </div>
-                          <span className="text-sm font-bold text-slate-800 group-hover:text-pastel-orange transition-colors">Boleto Bancário</span>
-                        </label>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {/* Left Column - Traditional Methods */}
+                        <div className="space-y-3">
+                          <label className="flex items-center gap-4 cursor-pointer group bg-white p-4 rounded-xl border-2 border-slate-200 hover:border-pastel-blue/50 transition-all">
+                            <input type="checkbox" defaultChecked className="w-5 h-5 rounded text-pastel-blue flex-shrink-0" />
+                            <div className="w-10 h-10 rounded-lg bg-pastel-blue/20 flex items-center justify-center flex-shrink-0">
+                              <CreditCard className="w-5 h-5 text-pastel-blue" />
+                            </div>
+                            <span className="text-sm font-bold text-slate-800 group-hover:text-pastel-blue transition-colors">Cartão de Crédito</span>
+                          </label>
+                          <label className="flex items-center gap-4 cursor-pointer group bg-white p-4 rounded-xl border-2 border-slate-200 hover:border-pastel-green/50 transition-all">
+                            <input type="checkbox" defaultChecked className="w-5 h-5 rounded text-pastel-green flex-shrink-0" />
+                            <div className="w-10 h-10 rounded-lg bg-pastel-green/20 flex items-center justify-center flex-shrink-0">
+                              <Smartphone className="w-5 h-5 text-pastel-green" />
+                            </div>
+                            <span className="text-sm font-bold text-slate-800 group-hover:text-pastel-green transition-colors">PIX</span>
+                          </label>
+                          <label className="flex items-center gap-4 cursor-pointer group bg-white p-4 rounded-xl border-2 border-slate-200 hover:border-pastel-orange/50 transition-all">
+                            <input type="checkbox" className="w-5 h-5 rounded text-pastel-orange flex-shrink-0" />
+                            <div className="w-10 h-10 rounded-lg bg-pastel-orange/20 flex items-center justify-center flex-shrink-0">
+                              <Receipt className="w-5 h-5 text-pastel-orange" />
+                            </div>
+                            <span className="text-sm font-bold text-slate-800 group-hover:text-pastel-orange transition-colors">Boleto Bancário</span>
+                          </label>
+                        </div>
+
+                        {/* Right Column - Digital Wallets */}
+                        <div className="space-y-3">
+                          <label className="flex items-center gap-4 cursor-pointer group bg-white p-4 rounded-xl border-2 border-slate-200 hover:border-pastel-purple/50 transition-all">
+                            <input type="checkbox" className="w-5 h-5 rounded text-pastel-purple flex-shrink-0" />
+                            <div className="w-10 h-10 rounded-lg bg-pastel-purple/20 flex items-center justify-center flex-shrink-0">
+                              <Smartphone className="w-5 h-5 text-pastel-purple" />
+                            </div>
+                            <span className="text-sm font-bold text-slate-800 group-hover:text-pastel-purple transition-colors">Google Pay</span>
+                          </label>
+                          <label className="flex items-center gap-4 cursor-pointer group bg-white p-4 rounded-xl border-2 border-slate-200 hover:border-pastel-pink/50 transition-all">
+                            <input type="checkbox" className="w-5 h-5 rounded text-pastel-pink flex-shrink-0" />
+                            <div className="w-10 h-10 rounded-lg bg-pastel-pink/20 flex items-center justify-center flex-shrink-0">
+                              <Smartphone className="w-5 h-5 text-pastel-pink" />
+                            </div>
+                            <span className="text-sm font-bold text-slate-800 group-hover:text-pastel-pink transition-colors">Apple Pay</span>
+                          </label>
+                          <label className="flex items-center gap-4 cursor-pointer group bg-white p-4 rounded-xl border-2 border-slate-200 hover:border-pastel-yellow/50 transition-all">
+                            <input type="checkbox" className="w-5 h-5 rounded text-pastel-yellow flex-shrink-0" />
+                            <div className="w-10 h-10 rounded-lg bg-pastel-yellow/20 flex items-center justify-center flex-shrink-0">
+                              <DollarSign className="w-5 h-5 text-pastel-yellow" />
+                            </div>
+                            <span className="text-sm font-bold text-slate-800 group-hover:text-pastel-yellow transition-colors">PayPal</span>
+                          </label>
+                        </div>
                       </div>
                     </div>
                   </div>
