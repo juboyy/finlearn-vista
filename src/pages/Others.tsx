@@ -380,7 +380,7 @@ const Others = () => {
                     selected={dateRange}
                     onSelect={setDateRange}
                     numberOfMonths={2}
-                    className="pointer-events-auto"
+                    className="pointer-events-auto flex gap-6 divide-x divide-border"
                   />
                 </PopoverContent>
               </Popover>
