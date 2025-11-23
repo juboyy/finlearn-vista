@@ -1459,17 +1459,17 @@ const Aprendizado = () => {
                     <div className="p-10 flex flex-col justify-center">
                       <span className="inline-block px-3 py-1 bg-background text-foreground text-sm font-medium rounded-full mb-4 w-fit">Lançamento</span>
                       <h2 className="text-3xl font-bold text-foreground mb-4">Domine o Mercado de Capitais em 2025</h2>
-                      <p className="text-muted-foreground mb-6">Curso completo com certificação internacional. Aprenda estratégias avançadas de investimento, análise de risco e gestão de portfólio com especialistas do mercado.</p>
+                      <p className="text-foreground mb-6">Curso completo com certificação internacional. Aprenda estratégias avançadas de investimento, análise de risco e gestão de portfólio com especialistas do mercado.</p>
                       <div className="flex items-center gap-6 mb-6">
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-2 text-sm text-foreground">
                           <Video className="w-4 h-4" />
                           <span>42 aulas</span>
                         </div>
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-2 text-sm text-foreground">
                           <Clock className="w-4 h-4" />
                           <span>28h de conteúdo</span>
                         </div>
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-2 text-sm text-foreground">
                           <Award className="w-4 h-4" />
                           <span>Certificado</span>
                         </div>
@@ -1479,7 +1479,7 @@ const Aprendizado = () => {
                           Inscrever-se Agora
                         </button>
                         <div className="flex flex-col">
-                          <span className="text-xs text-muted-foreground line-through">R$ 1.497,00</span>
+                          <span className="text-xs text-foreground line-through">R$ 1.497,00</span>
                           <span className="text-2xl font-bold text-foreground">R$ 997,00</span>
                         </div>
                       </div>
