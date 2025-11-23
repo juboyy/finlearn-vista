@@ -75,7 +75,7 @@ export default function MinhaAssinatura() {
           <div className="flex gap-2">
             <Dialog open={isManageOpen} onOpenChange={setIsManageOpen}>
               <DialogTrigger asChild>
-                <button className="px-4 py-2 border border-slate-200 text-slate-700 rounded-lg font-medium hover:bg-slate-50 transition">
+                <button className="px-4 py-2 text-white rounded-lg font-medium hover:opacity-90 transition" style={{ backgroundColor: 'hsl(var(--pastel-green-btn))' }}>
                   <Settings2 size={18} className="inline mr-2" />
                   Gerenciar
                 </button>
