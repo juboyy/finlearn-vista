@@ -16,7 +16,8 @@ import {
   Network,
   Video,
   Bot,
-  Settings
+  Settings,
+  Eye
 } from "lucide-react";
 
 interface CommandMenuOption {
@@ -475,17 +476,26 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
 
       {/* Chart Edit Dialog */}
       <Dialog open={!!editingChart} onOpenChange={(open) => !open && setEditingChart(null)}>
-        <DialogContent className="max-w-2xl">
-          <DialogHeader>
-            <DialogTitle>Editar Gráfico</DialogTitle>
-            <DialogDescription>
-              Personalize o título e os dados do seu gráfico
-            </DialogDescription>
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader className="pb-4 border-b border-border">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#B8D4E8' }}>
+                <BarChart3 size={24} className="text-slate-700" />
+              </div>
+              <div>
+                <DialogTitle className="text-xl">Editar Gráfico</DialogTitle>
+                <DialogDescription>
+                  Personalize o título, dados e importe arquivos para o gráfico
+                </DialogDescription>
+              </div>
+            </div>
           </DialogHeader>
           
-          <div className="space-y-4 mt-4">
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
+          <div className="space-y-6 mt-6">
+            {/* Título do Gráfico */}
+            <div className="rounded-lg p-4 border border-border" style={{ backgroundColor: '#F8F9FA' }}>
+              <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 mb-3">
+                <Type size={16} />
                 Título do Gráfico
               </label>
               <input
@@ -493,52 +503,125 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
                 value={chartTitle}
                 onChange={(e) => setChartTitle(e.target.value)}
                 placeholder="Digite o título do gráfico"
-                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-background text-foreground"
+                className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[hsl(206,35%,75%)] bg-white text-slate-800 font-medium"
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
-                Labels (separados por vírgula)
-              </label>
+            {/* Dados do Gráfico */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="rounded-lg p-4 border border-border" style={{ backgroundColor: '#F8F9FA' }}>
+                <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 mb-3">
+                  <TableIcon size={16} />
+                  Labels
+                </label>
+                <input
+                  type="text"
+                  value={chartLabels}
+                  onChange={(e) => setChartLabels(e.target.value)}
+                  placeholder="Ex: Jan, Fev, Mar, Abr, Mai"
+                  className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[hsl(206,35%,75%)] bg-white text-slate-800"
+                />
+                <p className="text-xs text-slate-500 mt-2">
+                  Separados por vírgula
+                </p>
+              </div>
+
+              <div className="rounded-lg p-4 border border-border" style={{ backgroundColor: '#F8F9FA' }}>
+                <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 mb-3">
+                  <BarChart3 size={16} />
+                  Valores
+                </label>
+                <input
+                  type="text"
+                  value={chartValues}
+                  onChange={(e) => setChartValues(e.target.value)}
+                  placeholder="Ex: 20, 35, 30, 45, 40"
+                  className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[hsl(206,35%,75%)] bg-white text-slate-800"
+                />
+                <p className="text-xs text-slate-500 mt-2">
+                  Números separados por vírgula
+                </p>
+              </div>
+            </div>
+
+            {/* Upload de Arquivo */}
+            <div className="rounded-lg p-6 border-2 border-dashed border-slate-300 hover:border-[hsl(206,35%,75%)] transition cursor-pointer" style={{ backgroundColor: '#FAFBFC' }}>
               <input
-                type="text"
-                value={chartLabels}
-                onChange={(e) => setChartLabels(e.target.value)}
-                placeholder="Ex: Jan, Fev, Mar, Abr, Mai"
-                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-background text-foreground"
+                type="file"
+                id="chart-file-upload"
+                className="hidden"
+                accept=".csv,.xlsx,.xls,.json"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    console.log('Arquivo selecionado:', file.name);
+                    // Aqui você pode adicionar a lógica de processamento do arquivo
+                  }
+                }}
               />
-              <p className="text-xs text-muted-foreground mt-1">
-                Para gráficos de pizza, use os nomes das categorias
-              </p>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
-                Valores (separados por vírgula)
+              <label htmlFor="chart-file-upload" className="cursor-pointer">
+                <div className="flex flex-col items-center gap-3">
+                  <div className="w-14 h-14 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#D4C5E8' }}>
+                    <ImageIcon size={24} className="text-slate-700" />
+                  </div>
+                  <div className="text-center">
+                    <p className="text-sm font-semibold text-slate-700 mb-1">
+                      Upload de arquivo de dados
+                    </p>
+                    <p className="text-xs text-slate-500">
+                      CSV, Excel ou JSON - máx 20MB
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    className="px-4 py-2 rounded-lg text-sm font-medium text-slate-700 transition hover:opacity-80"
+                    style={{ backgroundColor: '#C5E8D4' }}
+                  >
+                    Escolher arquivo
+                  </button>
+                </div>
               </label>
-              <input
-                type="text"
-                value={chartValues}
-                onChange={(e) => setChartValues(e.target.value)}
-                placeholder="Ex: 20, 35, 30, 45, 40"
-                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-background text-foreground"
-              />
-              <p className="text-xs text-muted-foreground mt-1">
-                Use números separados por vírgula
-              </p>
             </div>
 
+            {/* Preview do Gráfico */}
+            {editingChart && (
+              <div className="rounded-lg p-4 border border-border" style={{ backgroundColor: '#F8F9FA' }}>
+                <h4 className="text-sm font-semibold text-slate-700 mb-3 flex items-center gap-2">
+                  <Eye size={16} />
+                  Preview
+                </h4>
+                <div className="bg-white rounded-lg p-4 border border-slate-200">
+                  <Plot
+                    data={editingChart.data}
+                    layout={{
+                      title: chartTitle || editingChart.title,
+                      margin: { t: 40, r: 20, b: 60, l: 60 },
+                      plot_bgcolor: 'transparent',
+                      paper_bgcolor: 'transparent',
+                      font: { family: 'Inter, sans-serif', color: '#64748b' },
+                      height: 300,
+                      xaxis: { showgrid: false },
+                      yaxis: { showgrid: true, gridcolor: '#e2e8f0' }
+                    }}
+                    config={{ responsive: true, displayModeBar: false }}
+                    style={{ width: '100%' }}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Botões de Ação */}
             <div className="flex items-center justify-end gap-3 pt-4 border-t border-border">
               <button
                 onClick={() => setEditingChart(null)}
-                className="px-4 py-2 border border-border text-foreground rounded-lg hover:bg-muted transition"
+                className="px-5 py-2.5 border border-slate-200 text-slate-700 rounded-lg hover:bg-slate-50 transition font-medium"
               >
                 Cancelar
               </button>
               <button
                 onClick={handleSaveChart}
-                className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition"
+                className="px-5 py-2.5 text-slate-700 rounded-lg hover:opacity-90 transition font-medium"
+                style={{ backgroundColor: '#B8D4E8' }}
               >
                 Salvar Alterações
               </button>
