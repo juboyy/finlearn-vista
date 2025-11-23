@@ -49,12 +49,12 @@ export const SidebarFix = () => {
         <div className="p-4">
           <div className="flex items-center gap-3 px-4 py-3">
             <img 
-              src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" 
+              src="https://storage.googleapis.com/uxpilot-auth.appspot.com/4450be57c6-3f9f4c9c029e3c4d7519.png" 
               alt="User" 
               className="w-10 h-10 rounded-full object-cover"
             />
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-sidebar-foreground truncate">João Silva</p>
+              <p className="text-sm font-medium text-sidebar-foreground truncate">Aristóteles</p>
               <p className="text-xs text-sidebar-foreground/70 truncate">Premium</p>
             </div>
             <button 
