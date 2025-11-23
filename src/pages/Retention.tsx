@@ -680,6 +680,7 @@ const Retention = () => {
                     ))}
                   </Pie>
                   <Tooltip formatter={(value: number) => `${value}%`} />
+                  <Legend />
                 </PieChart>
               </ResponsiveContainer>
             </div>
@@ -757,6 +758,7 @@ const Retention = () => {
                     ))}
                   </Pie>
                   <Tooltip formatter={(value: number) => `${value}%`} />
+                  <Legend />
                 </PieChart>
               </ResponsiveContainer>
             </div>
@@ -1036,6 +1038,7 @@ const Retention = () => {
                     ))}
                   </Pie>
                   <Tooltip formatter={(value: number) => `${value}%`} />
+                  <Legend />
                 </PieChart>
               </ResponsiveContainer>
             </div>
