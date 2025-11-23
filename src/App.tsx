@@ -55,6 +55,7 @@ import Newsletter from "./pages/Newsletter";
 import NewsletterAnalytics from "./pages/NewsletterAnalytics";
 import NewsletterSettings from "./pages/NewsletterSettings";
 import NewsletterDetalhes from "./pages/NewsletterDetalhes";
+import MinhaAssinatura from "./pages/MinhaAssinatura";
 import CriarNewsletter from "./pages/CriarNewsletter";
 import AgendarPublicacao from "./pages/AgendarPublicacao";
 import RecursosAdicionais from "./pages/RecursosAdicionais";
@@ -138,7 +139,8 @@ const App = () => {
             <Route path="/evolucao-cartao-credito" element={<EvolucaoCartaoCredito />} />
             <Route path="/ler-depois" element={<LerDepois />} />
             <Route path="/newsletter" element={<Newsletter />} />
-            <Route path="/newsletter/:id" element={<NewsletterDetalhes />} />
+          <Route path="/newsletter/:id" element={<NewsletterDetalhes />} />
+          <Route path="/minha-assinatura" element={<MinhaAssinatura />} />
             <Route path="/newsletter-analytics" element={<NewsletterAnalytics />} />
             <Route path="/newsletter-settings" element={<NewsletterSettings />} />
             <Route path="/criar-newsletter" element={<CriarNewsletter />} />
