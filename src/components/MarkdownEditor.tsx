@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, KeyboardEvent } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import Plot from 'react-plotly.js';
 import { 
   BarChart3, 
   Table as TableIcon, 
@@ -35,6 +36,76 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
   const [selectedCommandIndex, setSelectedCommandIndex] = useState(0);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const commandMenuRef = useRef<HTMLDivElement>(null);
+
+  // Dados dos gráficos disponíveis
+  const chartData: Record<string, any> = {
+    bar: {
+      data: [{
+        type: 'bar',
+        x: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai'],
+        y: [20, 35, 30, 45, 40],
+        marker: { color: '#B8D4E8' }
+      }],
+      title: 'Gráfico de Barras'
+    },
+    line: {
+      data: [{
+        type: 'scatter',
+        mode: 'lines',
+        x: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai'],
+        y: [20, 35, 30, 45, 40],
+        line: { color: '#C5E8D4', width: 2 }
+      }],
+      title: 'Gráfico de Linha'
+    },
+    pie: {
+      data: [{
+        type: 'pie',
+        values: [30, 25, 20, 15, 10],
+        labels: ['A', 'B', 'C', 'D', 'E'],
+        marker: { 
+          colors: ['#D4C5E8', '#B8D4E8', '#C5E8D4', '#E8E0C5', '#E8C5D8']
+        }
+      }],
+      title: 'Gráfico de Pizza'
+    },
+    area: {
+      data: [{
+        type: 'scatter',
+        mode: 'lines',
+        fill: 'tozeroy',
+        x: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai'],
+        y: [20, 35, 30, 45, 40],
+        fillcolor: 'rgba(232, 224, 197, 0.5)',
+        line: { color: '#E8E0C5', width: 2 }
+      }],
+      title: 'Gráfico de Área'
+    },
+    scatter: {
+      data: [{
+        type: 'scatter',
+        mode: 'markers',
+        x: [1, 2, 3, 4, 5, 6, 7],
+        y: [10, 15, 13, 17, 20, 18, 25],
+        marker: { 
+          color: '#E8C5D8',
+          size: 8
+        }
+      }],
+      title: 'Gráfico de Dispersão'
+    },
+    trend: {
+      data: [{
+        type: 'scatter',
+        mode: 'lines+markers',
+        x: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai'],
+        y: [20, 28, 35, 42, 48],
+        line: { color: '#A8C8D8', width: 3, shape: 'spline' },
+        marker: { color: '#A8C8D8', size: 6 }
+      }],
+      title: 'Gráfico de Tendência'
+    }
+  };
 
   const insertContent = (content: string) => {
     const textarea = textareaRef.current;
@@ -311,7 +382,41 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
               Preview
             </div>
             <div className="prose prose-slate dark:prose-invert max-w-none">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              <ReactMarkdown 
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  img: ({ node, src, alt, ...props }) => {
+                    // Verifica se é um gráfico
+                    if (src?.startsWith('chart:')) {
+                      const chartId = src.replace('chart:', '');
+                      const chart = chartData[chartId];
+                      
+                      if (chart) {
+                        return (
+                          <div className="my-6 bg-card rounded-lg border border-border p-4">
+                            <Plot
+                              data={chart.data}
+                              layout={{
+                                title: alt || chart.title,
+                                margin: { t: 40, r: 20, b: 60, l: 60 },
+                                plot_bgcolor: 'transparent',
+                                paper_bgcolor: 'transparent',
+                                font: { family: 'Inter, sans-serif' },
+                                height: 400
+                              }}
+                              config={{ responsive: true, displayModeBar: false }}
+                              style={{ width: '100%' }}
+                            />
+                          </div>
+                        );
+                      }
+                    }
+                    
+                    // Renderiza imagens normais
+                    return <img src={src} alt={alt} {...props} />;
+                  }
+                }}
+              >
                 {value || "*Comece a escrever para ver o preview...*"}
               </ReactMarkdown>
             </div>
