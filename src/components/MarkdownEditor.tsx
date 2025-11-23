@@ -382,43 +382,47 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
               Preview
             </div>
             <div className="prose prose-slate dark:prose-invert max-w-none">
-              <ReactMarkdown 
-                remarkPlugins={[remarkGfm]}
-                components={{
-                  img: ({ node, src, alt, ...props }) => {
-                    // Verifica se é um gráfico
-                    if (src?.startsWith('chart:')) {
-                      const chartId = src.replace('chart:', '');
-                      const chart = chartData[chartId];
-                      
-                      if (chart) {
-                        return (
-                          <div className="my-6 bg-card rounded-lg border border-border p-4">
-                            <Plot
-                              data={chart.data}
-                              layout={{
-                                title: alt || chart.title,
-                                margin: { t: 40, r: 20, b: 60, l: 60 },
-                                plot_bgcolor: 'transparent',
-                                paper_bgcolor: 'transparent',
-                                font: { family: 'Inter, sans-serif' },
-                                height: 400
-                              }}
-                              config={{ responsive: true, displayModeBar: false }}
-                              style={{ width: '100%' }}
-                            />
-                          </div>
-                        );
-                      }
-                    }
-                    
-                    // Renderiza imagens normais
-                    return <img src={src} alt={alt} {...props} />;
+              {value.split(/(\!\[.*?\]\(chart:.*?\))/g).map((part, index) => {
+                // Verifica se é um marcador de gráfico
+                const chartMatch = part.match(/\!\[(.*?)\]\(chart:(.*?)\)/);
+                
+                if (chartMatch) {
+                  const chartTitle = chartMatch[1];
+                  const chartId = chartMatch[2];
+                  const chart = chartData[chartId];
+                  
+                  if (chart) {
+                    return (
+                      <div key={index} className="my-6 bg-card rounded-lg border border-border p-4 not-prose">
+                        <Plot
+                          data={chart.data}
+                          layout={{
+                            title: chartTitle || chart.title,
+                            margin: { t: 40, r: 20, b: 60, l: 60 },
+                            plot_bgcolor: 'transparent',
+                            paper_bgcolor: 'transparent',
+                            font: { family: 'Inter, sans-serif', color: '#64748b' },
+                            height: 400,
+                            xaxis: { showgrid: false },
+                            yaxis: { showgrid: true, gridcolor: '#e2e8f0' }
+                          }}
+                          config={{ responsive: true, displayModeBar: false }}
+                          style={{ width: '100%' }}
+                        />
+                      </div>
+                    );
                   }
-                }}
-              >
-                {value || "*Comece a escrever para ver o preview...*"}
-              </ReactMarkdown>
+                }
+                
+                // Renderiza o markdown normal
+                return part ? (
+                  <ReactMarkdown key={index} remarkPlugins={[remarkGfm]}>
+                    {part}
+                  </ReactMarkdown>
+                ) : null;
+              })}
+              
+              {!value && <p className="text-muted-foreground italic">Comece a escrever para ver o preview...</p>}
             </div>
           </div>
       </div>
