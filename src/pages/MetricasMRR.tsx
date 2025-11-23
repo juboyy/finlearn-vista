@@ -341,7 +341,7 @@ const MetricasMRR = () => {
                       ? 'bg-primary text-primary-foreground hover:bg-primary/90' 
                       : 'hover:bg-accent hover:text-accent-foreground'
                   }`}
-                  onClick={() => setSelectedMetric('Churn')}
+                  onClick={() => navigate('/churn')}
                 >
                   <UserX className="h-4 w-4" />
                   Churn
