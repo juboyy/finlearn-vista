@@ -118,8 +118,14 @@ export default function Financeiro() {
                 </div>
               </div>
               <Button 
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 transition-all duration-300 hover:scale-105"
                 style={{ backgroundColor: 'hsl(152, 32%, 65%)', color: 'hsl(152, 32%, 28%)' }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = 'hsl(152, 32%, 55%)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'hsl(152, 32%, 65%)';
+                }}
               >
                 <BarChart3 size={18} />
                 Métricas
