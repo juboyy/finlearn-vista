@@ -558,9 +558,9 @@ const MetricasMRR = () => {
                   <Pie 
                     data={compositionData} 
                     cx="50%" 
-                    cy="45%" 
-                    innerRadius={70} 
-                    outerRadius={110} 
+                    cy="38%" 
+                    innerRadius={65} 
+                    outerRadius={100} 
                     paddingAngle={0} 
                     dataKey="value"
                   >
@@ -576,7 +576,7 @@ const MetricasMRR = () => {
                   <Legend 
                     verticalAlign="bottom" 
                     height={36}
-                    wrapperStyle={{ paddingTop: '10px' }}
+                    wrapperStyle={{ paddingTop: '5px' }}
                   />
                 </PieChart>
               </ResponsiveContainer>
