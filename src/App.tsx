@@ -67,6 +67,7 @@ import MinhasAssinaturas from "./pages/MinhasAssinaturas";
 import Financeiro from "./pages/Financeiro";
 import MetricasMRR from "./pages/MetricasMRR";
 import Churn from "./pages/Churn";
+import Retention from "./pages/Retention";
 
 import NotFound from "./pages/NotFound";
 
@@ -149,6 +150,7 @@ const App = () => {
           <Route path="/financeiro" element={<Financeiro />} />
           <Route path="/metricas-mrr" element={<MetricasMRR />} />
           <Route path="/churn" element={<Churn />} />
+          <Route path="/retention" element={<Retention />} />
           
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
