@@ -104,7 +104,8 @@ export const MetricsAgentChat = ({ metricType, onClose }: MetricsAgentChatProps)
             {messages.map((msg, idx) => (
               <div
                 key={idx}
-                className={`flex gap-3 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+                className={`flex gap-3 ${msg.role === "user" ? "justify-end" : "justify-start"} animate-fade-in`}
+                style={{ animationDelay: `${idx * 0.05}s` }}
               >
                 {msg.role === "assistant" && (
                   <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
@@ -123,7 +124,7 @@ export const MetricsAgentChat = ({ metricType, onClose }: MetricsAgentChatProps)
               </div>
             ))}
             {isLoading && (
-              <div className="flex gap-3 justify-start">
+              <div className="flex gap-3 justify-start animate-fade-in">
                 <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
                   <img src={agent.image} alt={agent.name} className="w-full h-full object-cover" />
                 </div>
