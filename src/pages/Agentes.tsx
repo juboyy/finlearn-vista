@@ -317,26 +317,6 @@ export default function Agentes() {
                     Pressione Shift + Enter para nova linha ou Enter para iniciar
                   </p>
                 </div>
-
-                <div className="grid grid-cols-3 gap-4 pt-4 border-t border-border">
-                  {specializedAgents.map((agent) => (
-                    <button
-                      key={agent.id}
-                      onClick={() => setSelectedAgent(agent.id)}
-                      className={`p-4 rounded-xl border-2 transition text-left ${
-                        selectedAgent === agent.id
-                          ? 'border-[hsl(206,35%,75%)] bg-[hsl(206,35%,75%)]/10'
-                          : 'border-border hover:border-[hsl(206,35%,75%)]/50'
-                      }`}
-                    >
-                      <div className={`w-12 h-12 rounded-lg ${agent.bgColor} flex items-center justify-center mb-3`}>
-                        <agent.icon className="text-[hsl(220,15%,30%)]" size={20} />
-                      </div>
-                      <div className="text-sm font-medium text-foreground mb-1">{agent.name.split(' ').slice(-2).join(' ')}</div>
-                      <div className="text-xs text-muted-foreground line-clamp-2">{agent.description}</div>
-                    </button>
-                  ))}
-                </div>
               </div>
 
               <div className="p-6 bg-muted/30 rounded-b-2xl border-t border-border">
