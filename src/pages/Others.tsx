@@ -1,6 +1,12 @@
-import { ArrowLeft, Calendar, Users, DollarSign, Clock, TrendingUp, BarChart3, UserX, UserCheck, MoreHorizontal } from "lucide-react";
+import { useState } from "react";
+import { ArrowLeft, Calendar as CalendarIcon, Users, DollarSign, Clock, TrendingUp, BarChart3, UserX, UserCheck, MoreHorizontal, Bot } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import { DateRange } from "react-day-picker";
 import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { 
   BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, 
@@ -10,6 +16,10 @@ import {
 
 const Others = () => {
   const navigate = useNavigate();
+  const [dateRange, setDateRange] = useState<DateRange | undefined>({
+    from: new Date(2024, 0, 1),
+    to: new Date(2024, 5, 30),
+  });
 
   const colors = {
     blue: '#5b8db8',
@@ -339,13 +349,57 @@ const Others = () => {
           </div>
         </header>
 
+        {/* Subheader with filters */}
+        <div className="bg-card border-b border-border px-4 py-3">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="h-9 gap-2 text-sm"
+                  >
+                    <CalendarIcon className="h-4 w-4" />
+                    {dateRange.from ? (
+                      dateRange.to ? (
+                        <>
+                          {format(dateRange.from, "dd MMM yyyy", { locale: ptBR })} -{" "}
+                          {format(dateRange.to, "dd MMM yyyy", { locale: ptBR })}
+                        </>
+                      ) : (
+                        format(dateRange.from, "dd MMM yyyy", { locale: ptBR })
+                      )
+                    ) : (
+                      <span>Selecionar período</span>
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="range"
+                    selected={dateRange}
+                    onSelect={setDateRange}
+                    numberOfMonths={2}
+                    className="pointer-events-auto"
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+            
+            <Button className="h-9 gap-2">
+              <Bot className="h-4 w-4" />
+              Agente de IA
+            </Button>
+          </div>
+        </div>
+
         <main className="p-4 w-full">
           {/* KPI Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 mb-4">
             <div className="bg-card p-4 rounded-xl border border-border hover:border-border/60 transition-all">
               <div className="flex items-start justify-between mb-2">
                 <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(206, 35%, 85%)' }}>
-                  <Calendar className="text-lg" style={{ color: colors.blue }} />
+                  <CalendarIcon className="text-lg" style={{ color: colors.blue }} />
                 </div>
                 <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: 'hsl(152, 32%, 85%)', color: 'hsl(152, 32%, 28%)' }}>
                   +18%
