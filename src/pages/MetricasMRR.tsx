@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Area, AreaChart } from "recharts";
-
 const MetricasMRR = () => {
   const navigate = useNavigate();
 
@@ -15,146 +14,308 @@ const MetricasMRR = () => {
     purple: '#957dad',
     yellow: '#e2c275',
     slate: '#64748b',
-    teal: '#4e8d93',
+    teal: '#4e8d93'
   };
 
   // Dados para os gráficos
-  const waterfallData = [
-    { name: 'MRR Inicial', value: 420000, type: 'absolute' },
-    { name: 'Novo MRR', value: 85200, type: 'positive' },
-    { name: 'Expansão', value: 32800, type: 'positive' },
-    { name: 'Reativação', value: 5800, type: 'positive' },
-    { name: 'Contração', value: -8200, type: 'negative' },
-    { name: 'Churn', value: -18700, type: 'negative' },
-    { name: 'MRR Final', value: 516900, type: 'total' },
-  ];
-
-  const compositionData = [
-    { name: 'Novo MRR', value: 85200, color: colors.green },
-    { name: 'Expansão', value: 32800, color: colors.purple },
-    { name: 'Reativação', value: 5800, color: colors.teal },
-    { name: 'Contração', value: 8200, color: colors.yellow },
-    { name: 'Churn', value: 18700, color: colors.red },
-  ];
-
-  const evolutionData = [
-    { month: 'Jan', value: 320000 },
-    { month: 'Fev', value: 345000 },
-    { month: 'Mar', value: 368000 },
-    { month: 'Abr', value: 392000 },
-    { month: 'Mai', value: 415000 },
-    { month: 'Jun', value: 428900 },
-    { month: 'Jul', value: 445000 },
-    { month: 'Ago', value: 460000 },
-    { month: 'Set', value: 470000 },
-    { month: 'Out', value: 480000 },
-    { month: 'Nov', value: 482500 },
-    { month: 'Dez', value: 495000 },
-  ];
-
-  const netNewMRRData = [
-    { month: 'Jan', value: 25000 },
-    { month: 'Fev', value: 23000 },
-    { month: 'Mar', value: 24000 },
-    { month: 'Abr', value: 22000 },
-    { month: 'Mai', value: 23800 },
-    { month: 'Jun', value: 53600 },
-  ];
-
-  const planDistributionData = [
-    { name: 'Enterprise', value: 180000, color: colors.blue },
-    { name: 'Pro', value: 220000, color: colors.purple },
-    { name: 'Basic', value: 82500, color: colors.slate },
-  ];
-
-  const contractionData = [
-    { month: 'Jan', value: 6500 },
-    { month: 'Fev', value: 7200 },
-    { month: 'Mar', value: 8800 },
-    { month: 'Abr', value: 7500 },
-    { month: 'Mai', value: 8200 },
-    { month: 'Jun', value: 8200 },
-  ];
-
-  const reactivationData = [
-    { month: 'Jan', value: 4200 },
-    { month: 'Fev', value: 5500 },
-    { month: 'Mar', value: 6800 },
-    { month: 'Abr', value: 5200 },
-    { month: 'Mai', value: 4900 },
-    { month: 'Jun', value: 5800 },
-  ];
-
-  const arpuData = [
-    { month: 'Jan', value: 32.00 },
-    { month: 'Fev', value: 32.50 },
-    { month: 'Mar', value: 33.00 },
-    { month: 'Abr', value: 33.80 },
-    { month: 'Mai', value: 34.00 },
-    { month: 'Jun', value: 34.50 },
-  ];
-
-  const quickRatioData = [
-    { month: 'Jan', value: 3.8 },
-    { month: 'Fev', value: 4.2 },
-    { month: 'Mar', value: 3.9 },
-    { month: 'Abr', value: 4.5 },
-    { month: 'Mai', value: 4.1 },
-    { month: 'Jun', value: 4.6 },
-  ];
-
-  const churnRateData = [
-    { month: 'Jan', value: 4.2 },
-    { month: 'Fev', value: 3.8 },
-    { month: 'Mar', value: 4.5 },
-    { month: 'Abr', value: 3.9 },
-    { month: 'Mai', value: 4.1 },
-    { month: 'Jun', value: 3.9 },
-  ];
-
-  const expansionRateData = [
-    { month: 'Jan', value: 6.8 },
-    { month: 'Fev', value: 7.2 },
-    { month: 'Mar', value: 7.5 },
-    { month: 'Abr', value: 8.1 },
-    { month: 'Mai', value: 7.8 },
-    { month: 'Jun', value: 7.6 },
-  ];
-
-  const segmentDistributionData = [
-    { name: 'Enterprise', value: 180000 },
-    { name: 'Pro', value: 220000 },
-    { name: 'Basic', value: 82500 },
-    { name: 'Trial', value: 0 },
-  ];
-
-  const forecastData = [
-    { month: 'Jun', actual: 482500, realistic: 482500, conservative: 482500, optimistic: 482500 },
-    { month: 'Jul', realistic: 495000, conservative: 490000, optimistic: 502000 },
-    { month: 'Ago', realistic: 508000, conservative: 498000, optimistic: 522000 },
-    { month: 'Set', realistic: 520000, conservative: 505000, optimistic: 542000 },
-    { month: 'Out', realistic: 533000, conservative: 512000, optimistic: 563000 },
-    { month: 'Nov', realistic: 546000, conservative: 518000, optimistic: 585000 },
-    { month: 'Dez', realistic: 560000, conservative: 525000, optimistic: 608000 },
-  ];
-
-  return (
-    <div className="min-h-screen bg-background w-full flex">
+  const waterfallData = [{
+    name: 'MRR Inicial',
+    value: 420000,
+    type: 'absolute'
+  }, {
+    name: 'Novo MRR',
+    value: 85200,
+    type: 'positive'
+  }, {
+    name: 'Expansão',
+    value: 32800,
+    type: 'positive'
+  }, {
+    name: 'Reativação',
+    value: 5800,
+    type: 'positive'
+  }, {
+    name: 'Contração',
+    value: -8200,
+    type: 'negative'
+  }, {
+    name: 'Churn',
+    value: -18700,
+    type: 'negative'
+  }, {
+    name: 'MRR Final',
+    value: 516900,
+    type: 'total'
+  }];
+  const compositionData = [{
+    name: 'Novo MRR',
+    value: 85200,
+    color: colors.green
+  }, {
+    name: 'Expansão',
+    value: 32800,
+    color: colors.purple
+  }, {
+    name: 'Reativação',
+    value: 5800,
+    color: colors.teal
+  }, {
+    name: 'Contração',
+    value: 8200,
+    color: colors.yellow
+  }, {
+    name: 'Churn',
+    value: 18700,
+    color: colors.red
+  }];
+  const evolutionData = [{
+    month: 'Jan',
+    value: 320000
+  }, {
+    month: 'Fev',
+    value: 345000
+  }, {
+    month: 'Mar',
+    value: 368000
+  }, {
+    month: 'Abr',
+    value: 392000
+  }, {
+    month: 'Mai',
+    value: 415000
+  }, {
+    month: 'Jun',
+    value: 428900
+  }, {
+    month: 'Jul',
+    value: 445000
+  }, {
+    month: 'Ago',
+    value: 460000
+  }, {
+    month: 'Set',
+    value: 470000
+  }, {
+    month: 'Out',
+    value: 480000
+  }, {
+    month: 'Nov',
+    value: 482500
+  }, {
+    month: 'Dez',
+    value: 495000
+  }];
+  const netNewMRRData = [{
+    month: 'Jan',
+    value: 25000
+  }, {
+    month: 'Fev',
+    value: 23000
+  }, {
+    month: 'Mar',
+    value: 24000
+  }, {
+    month: 'Abr',
+    value: 22000
+  }, {
+    month: 'Mai',
+    value: 23800
+  }, {
+    month: 'Jun',
+    value: 53600
+  }];
+  const planDistributionData = [{
+    name: 'Enterprise',
+    value: 180000,
+    color: colors.blue
+  }, {
+    name: 'Pro',
+    value: 220000,
+    color: colors.purple
+  }, {
+    name: 'Basic',
+    value: 82500,
+    color: colors.slate
+  }];
+  const contractionData = [{
+    month: 'Jan',
+    value: 6500
+  }, {
+    month: 'Fev',
+    value: 7200
+  }, {
+    month: 'Mar',
+    value: 8800
+  }, {
+    month: 'Abr',
+    value: 7500
+  }, {
+    month: 'Mai',
+    value: 8200
+  }, {
+    month: 'Jun',
+    value: 8200
+  }];
+  const reactivationData = [{
+    month: 'Jan',
+    value: 4200
+  }, {
+    month: 'Fev',
+    value: 5500
+  }, {
+    month: 'Mar',
+    value: 6800
+  }, {
+    month: 'Abr',
+    value: 5200
+  }, {
+    month: 'Mai',
+    value: 4900
+  }, {
+    month: 'Jun',
+    value: 5800
+  }];
+  const arpuData = [{
+    month: 'Jan',
+    value: 32.00
+  }, {
+    month: 'Fev',
+    value: 32.50
+  }, {
+    month: 'Mar',
+    value: 33.00
+  }, {
+    month: 'Abr',
+    value: 33.80
+  }, {
+    month: 'Mai',
+    value: 34.00
+  }, {
+    month: 'Jun',
+    value: 34.50
+  }];
+  const quickRatioData = [{
+    month: 'Jan',
+    value: 3.8
+  }, {
+    month: 'Fev',
+    value: 4.2
+  }, {
+    month: 'Mar',
+    value: 3.9
+  }, {
+    month: 'Abr',
+    value: 4.5
+  }, {
+    month: 'Mai',
+    value: 4.1
+  }, {
+    month: 'Jun',
+    value: 4.6
+  }];
+  const churnRateData = [{
+    month: 'Jan',
+    value: 4.2
+  }, {
+    month: 'Fev',
+    value: 3.8
+  }, {
+    month: 'Mar',
+    value: 4.5
+  }, {
+    month: 'Abr',
+    value: 3.9
+  }, {
+    month: 'Mai',
+    value: 4.1
+  }, {
+    month: 'Jun',
+    value: 3.9
+  }];
+  const expansionRateData = [{
+    month: 'Jan',
+    value: 6.8
+  }, {
+    month: 'Fev',
+    value: 7.2
+  }, {
+    month: 'Mar',
+    value: 7.5
+  }, {
+    month: 'Abr',
+    value: 8.1
+  }, {
+    month: 'Mai',
+    value: 7.8
+  }, {
+    month: 'Jun',
+    value: 7.6
+  }];
+  const segmentDistributionData = [{
+    name: 'Enterprise',
+    value: 180000
+  }, {
+    name: 'Pro',
+    value: 220000
+  }, {
+    name: 'Basic',
+    value: 82500
+  }, {
+    name: 'Trial',
+    value: 0
+  }];
+  const forecastData = [{
+    month: 'Jun',
+    actual: 482500,
+    realistic: 482500,
+    conservative: 482500,
+    optimistic: 482500
+  }, {
+    month: 'Jul',
+    realistic: 495000,
+    conservative: 490000,
+    optimistic: 502000
+  }, {
+    month: 'Ago',
+    realistic: 508000,
+    conservative: 498000,
+    optimistic: 522000
+  }, {
+    month: 'Set',
+    realistic: 520000,
+    conservative: 505000,
+    optimistic: 542000
+  }, {
+    month: 'Out',
+    realistic: 533000,
+    conservative: 512000,
+    optimistic: 563000
+  }, {
+    month: 'Nov',
+    realistic: 546000,
+    conservative: 518000,
+    optimistic: 585000
+  }, {
+    month: 'Dez',
+    realistic: 560000,
+    conservative: 525000,
+    optimistic: 608000
+  }];
+  return <div className="min-h-screen bg-background w-full flex">
       <SidebarFix />
       
       <div className="flex-1 w-full">
         <header className="bg-card border-b border-border w-full">
           <div className="px-4 py-2">
             <div className="flex items-center gap-3">
-              <button
-                onClick={() => navigate("/financeiro")}
-                className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition"
-              >
+              <button onClick={() => navigate("/financeiro")} className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition">
                 <ArrowLeft size={18} />
               </button>
               <div className="flex-1">
-                <h1 className="text-xl font-semibold text-foreground">Análise Completa de MRR</h1>
-                <p className="text-xs text-muted-foreground">Todas as métricas de Monthly Recurring Revenue em um único painel</p>
+                <h1 className="text-xl font-semibold text-foreground">Análise Completa de Desempenho
+
+ </h1>
+                <p className="text-xs text-muted-foreground">Todas as métricas de desempenho financeiro em um único painel</p>
               </div>
               <div className="flex items-center gap-2">
                 <Button variant="outline" size="sm" className="h-8 gap-2">
@@ -183,10 +344,17 @@ const MetricasMRR = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 mb-4">
             <div className="bg-card p-4 rounded-xl border border-border hover:border-border/60 transition-all">
               <div className="flex items-start justify-between mb-2">
-                <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(210, 35%, 85%)' }}>
-                  <DollarSign className="text-lg" style={{ color: colors.blue }} />
+                <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{
+                backgroundColor: 'hsl(210, 35%, 85%)'
+              }}>
+                  <DollarSign className="text-lg" style={{
+                  color: colors.blue
+                }} />
                 </div>
-                <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: 'hsl(152, 32%, 85%)', color: 'hsl(152, 32%, 28%)' }}>+12.5%</span>
+                <span className="text-xs px-2 py-1 rounded-full font-medium" style={{
+                backgroundColor: 'hsl(152, 32%, 85%)',
+                color: 'hsl(152, 32%, 28%)'
+              }}>+12.5%</span>
               </div>
               <p className="text-xs font-semibold text-muted-foreground uppercase mb-1">MRR Total</p>
               <h3 className="text-2xl font-bold text-foreground">R$ 482.5k</h3>
@@ -195,10 +363,17 @@ const MetricasMRR = () => {
 
             <div className="bg-card p-4 rounded-xl border border-border hover:border-border/60 transition-all">
               <div className="flex items-start justify-between mb-2">
-                <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(152, 25%, 85%)' }}>
-                  <TrendingUp className="text-lg" style={{ color: colors.green }} />
+                <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{
+                backgroundColor: 'hsl(152, 25%, 85%)'
+              }}>
+                  <TrendingUp className="text-lg" style={{
+                  color: colors.green
+                }} />
                 </div>
-                <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: 'hsl(152, 32%, 85%)', color: 'hsl(152, 32%, 28%)' }}>+R$ 60k</span>
+                <span className="text-xs px-2 py-1 rounded-full font-medium" style={{
+                backgroundColor: 'hsl(152, 32%, 85%)',
+                color: 'hsl(152, 32%, 28%)'
+              }}>+R$ 60k</span>
               </div>
               <p className="text-xs font-semibold text-muted-foreground uppercase mb-1">Novo MRR</p>
               <h3 className="text-2xl font-bold text-foreground">R$ 85.2k</h3>
@@ -207,10 +382,17 @@ const MetricasMRR = () => {
 
             <div className="bg-card p-4 rounded-xl border border-border hover:border-border/60 transition-all">
               <div className="flex items-start justify-between mb-2">
-                <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(270, 25%, 85%)' }}>
-                  <BarChart3 className="text-lg" style={{ color: colors.purple }} />
+                <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{
+                backgroundColor: 'hsl(270, 25%, 85%)'
+              }}>
+                  <BarChart3 className="text-lg" style={{
+                  color: colors.purple
+                }} />
                 </div>
-                <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: 'hsl(152, 32%, 85%)', color: 'hsl(152, 32%, 28%)' }}>+R$ 25k</span>
+                <span className="text-xs px-2 py-1 rounded-full font-medium" style={{
+                backgroundColor: 'hsl(152, 32%, 85%)',
+                color: 'hsl(152, 32%, 28%)'
+              }}>+R$ 25k</span>
               </div>
               <p className="text-xs font-semibold text-muted-foreground uppercase mb-1">Expansão MRR</p>
               <h3 className="text-2xl font-bold text-foreground">R$ 32.8k</h3>
@@ -219,10 +401,17 @@ const MetricasMRR = () => {
 
             <div className="bg-card p-4 rounded-xl border border-border hover:border-border/60 transition-all">
               <div className="flex items-start justify-between mb-2">
-                <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(350, 35%, 85%)' }}>
-                  <TrendingDown className="text-lg" style={{ color: colors.red }} />
+                <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{
+                backgroundColor: 'hsl(350, 35%, 85%)'
+              }}>
+                  <TrendingDown className="text-lg" style={{
+                  color: colors.red
+                }} />
                 </div>
-                <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: 'hsl(350, 35%, 85%)', color: 'hsl(350, 35%, 35%)' }}>-R$ 12.5k</span>
+                <span className="text-xs px-2 py-1 rounded-full font-medium" style={{
+                backgroundColor: 'hsl(350, 35%, 85%)',
+                color: 'hsl(350, 35%, 35%)'
+              }}>-R$ 12.5k</span>
               </div>
               <p className="text-xs font-semibold text-muted-foreground uppercase mb-1">Churn MRR</p>
               <h3 className="text-2xl font-bold text-foreground">R$ 18.7k</h3>
@@ -231,10 +420,17 @@ const MetricasMRR = () => {
 
             <div className="bg-card p-4 rounded-xl border border-border hover:border-border/60 transition-all">
               <div className="flex items-start justify-between mb-2">
-                <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(45, 35%, 85%)' }}>
-                  <Percent className="text-lg" style={{ color: colors.yellow }} />
+                <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{
+                backgroundColor: 'hsl(45, 35%, 85%)'
+              }}>
+                  <Percent className="text-lg" style={{
+                  color: colors.yellow
+                }} />
                 </div>
-                <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: 'hsl(210, 25%, 85%)', color: 'hsl(210, 25%, 35%)' }}>+0.2%</span>
+                <span className="text-xs px-2 py-1 rounded-full font-medium" style={{
+                backgroundColor: 'hsl(210, 25%, 85%)',
+                color: 'hsl(210, 25%, 35%)'
+              }}>+0.2%</span>
               </div>
               <p className="text-xs font-semibold text-muted-foreground uppercase mb-1">MRR Growth Rate</p>
               <h3 className="text-2xl font-bold text-foreground">12.5%</h3>
@@ -254,23 +450,18 @@ const MetricasMRR = () => {
               <ResponsiveContainer width="100%" height={260}>
                 <BarChart data={waterfallData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                  <XAxis dataKey="name" tick={{ fontSize: 11 }} angle={-45} textAnchor="end" height={80} />
-                  <YAxis tick={{ fontSize: 11 }} />
-                  <Tooltip 
-                    contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))' }}
-                    formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`}
-                  />
+                  <XAxis dataKey="name" tick={{
+                  fontSize: 11
+                }} angle={-45} textAnchor="end" height={80} />
+                  <YAxis tick={{
+                  fontSize: 11
+                }} />
+                  <Tooltip contentStyle={{
+                  backgroundColor: 'hsl(var(--card))',
+                  border: '1px solid hsl(var(--border))'
+                }} formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`} />
                   <Bar dataKey="value" fill={colors.blue}>
-                    {waterfallData.map((entry, index) => (
-                      <Cell 
-                        key={`cell-${index}`} 
-                        fill={
-                          entry.type === 'positive' ? colors.green : 
-                          entry.type === 'negative' ? colors.red : 
-                          colors.blue
-                        } 
-                      />
-                    ))}
+                    {waterfallData.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.type === 'positive' ? colors.green : entry.type === 'negative' ? colors.red : colors.blue} />)}
                   </Bar>
                 </BarChart>
               </ResponsiveContainer>
@@ -285,19 +476,8 @@ const MetricasMRR = () => {
               </div>
               <ResponsiveContainer width="100%" height={260}>
                 <PieChart>
-                  <Pie
-                    data={compositionData}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={100}
-                    paddingAngle={2}
-                    dataKey="value"
-                    label={(entry) => entry.name}
-                  >
-                    {compositionData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
+                  <Pie data={compositionData} cx="50%" cy="50%" innerRadius={60} outerRadius={100} paddingAngle={2} dataKey="value" label={entry => entry.name}>
+                    {compositionData.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.color} />)}
                   </Pie>
                   <Tooltip formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`} />
                 </PieChart>
@@ -318,17 +498,21 @@ const MetricasMRR = () => {
                 <AreaChart data={evolutionData}>
                   <defs>
                     <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor={colors.blue} stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor={colors.blue} stopOpacity={0}/>
+                      <stop offset="5%" stopColor={colors.blue} stopOpacity={0.3} />
+                      <stop offset="95%" stopColor={colors.blue} stopOpacity={0} />
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                  <XAxis dataKey="month" tick={{ fontSize: 11 }} />
-                  <YAxis tick={{ fontSize: 11 }} />
-                  <Tooltip 
-                    contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))' }}
-                    formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`}
-                  />
+                  <XAxis dataKey="month" tick={{
+                  fontSize: 11
+                }} />
+                  <YAxis tick={{
+                  fontSize: 11
+                }} />
+                  <Tooltip contentStyle={{
+                  backgroundColor: 'hsl(var(--card))',
+                  border: '1px solid hsl(var(--border))'
+                }} formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`} />
                   <Area type="monotone" dataKey="value" stroke={colors.blue} strokeWidth={3} fillOpacity={1} fill="url(#colorValue)" />
                 </AreaChart>
               </ResponsiveContainer>
@@ -344,12 +528,16 @@ const MetricasMRR = () => {
               <ResponsiveContainer width="100%" height={260}>
                 <BarChart data={netNewMRRData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                  <XAxis dataKey="month" tick={{ fontSize: 11 }} />
-                  <YAxis tick={{ fontSize: 11 }} />
-                  <Tooltip 
-                    contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))' }}
-                    formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`}
-                  />
+                  <XAxis dataKey="month" tick={{
+                  fontSize: 11
+                }} />
+                  <YAxis tick={{
+                  fontSize: 11
+                }} />
+                  <Tooltip contentStyle={{
+                  backgroundColor: 'hsl(var(--card))',
+                  border: '1px solid hsl(var(--border))'
+                }} formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`} />
                   <Bar dataKey="value" fill={colors.green} radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
@@ -362,18 +550,8 @@ const MetricasMRR = () => {
               <h4 className="text-xs font-bold text-muted-foreground uppercase mb-3">MRR por Plano</h4>
               <ResponsiveContainer width="100%" height={150}>
                 <PieChart>
-                  <Pie
-                    data={planDistributionData}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={30}
-                    outerRadius={60}
-                    paddingAngle={2}
-                    dataKey="value"
-                  >
-                    {planDistributionData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
+                  <Pie data={planDistributionData} cx="50%" cy="50%" innerRadius={30} outerRadius={60} paddingAngle={2} dataKey="value">
+                    {planDistributionData.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.color} />)}
                   </Pie>
                   <Tooltip formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`} />
                 </PieChart>
@@ -386,11 +564,13 @@ const MetricasMRR = () => {
                 <AreaChart data={contractionData}>
                   <defs>
                     <linearGradient id="colorContraction" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor={colors.yellow} stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor={colors.yellow} stopOpacity={0}/>
+                      <stop offset="5%" stopColor={colors.yellow} stopOpacity={0.3} />
+                      <stop offset="95%" stopColor={colors.yellow} stopOpacity={0} />
                     </linearGradient>
                   </defs>
-                  <XAxis dataKey="month" tick={{ fontSize: 9 }} hide />
+                  <XAxis dataKey="month" tick={{
+                  fontSize: 9
+                }} hide />
                   <YAxis hide />
                   <Tooltip formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`} />
                   <Area type="monotone" dataKey="value" stroke={colors.yellow} strokeWidth={2} fill="url(#colorContraction)" />
@@ -408,11 +588,13 @@ const MetricasMRR = () => {
                 <AreaChart data={reactivationData}>
                   <defs>
                     <linearGradient id="colorReactivation" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor={colors.teal} stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor={colors.teal} stopOpacity={0}/>
+                      <stop offset="5%" stopColor={colors.teal} stopOpacity={0.3} />
+                      <stop offset="95%" stopColor={colors.teal} stopOpacity={0} />
                     </linearGradient>
                   </defs>
-                  <XAxis dataKey="month" tick={{ fontSize: 9 }} hide />
+                  <XAxis dataKey="month" tick={{
+                  fontSize: 9
+                }} hide />
                   <YAxis hide />
                   <Tooltip formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`} />
                   <Area type="monotone" dataKey="value" stroke={colors.teal} strokeWidth={2} fill="url(#colorReactivation)" />
@@ -428,10 +610,14 @@ const MetricasMRR = () => {
               <h4 className="text-xs font-bold text-muted-foreground uppercase mb-3">MRR Médio/Cliente</h4>
               <ResponsiveContainer width="100%" height={150}>
                 <LineChart data={arpuData}>
-                  <XAxis dataKey="month" tick={{ fontSize: 9 }} hide />
+                  <XAxis dataKey="month" tick={{
+                  fontSize: 9
+                }} hide />
                   <YAxis hide />
                   <Tooltip formatter={(value: number) => `R$ ${value.toFixed(2)}`} />
-                  <Line type="monotone" dataKey="value" stroke={colors.purple} strokeWidth={2} dot={{ r: 3 }} />
+                  <Line type="monotone" dataKey="value" stroke={colors.purple} strokeWidth={2} dot={{
+                  r: 3
+                }} />
                 </LineChart>
               </ResponsiveContainer>
               <div className="mt-3 text-center">
@@ -453,9 +639,16 @@ const MetricasMRR = () => {
               <ResponsiveContainer width="100%" height={200}>
                 <BarChart data={quickRatioData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                  <XAxis dataKey="month" tick={{ fontSize: 11 }} />
-                  <YAxis tick={{ fontSize: 11 }} />
-                  <Tooltip contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))' }} />
+                  <XAxis dataKey="month" tick={{
+                  fontSize: 11
+                }} />
+                  <YAxis tick={{
+                  fontSize: 11
+                }} />
+                  <Tooltip contentStyle={{
+                  backgroundColor: 'hsl(var(--card))',
+                  border: '1px solid hsl(var(--border))'
+                }} />
                   <Bar dataKey="value" fill={colors.green} radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
@@ -471,13 +664,19 @@ const MetricasMRR = () => {
               <ResponsiveContainer width="100%" height={200}>
                 <LineChart data={churnRateData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                  <XAxis dataKey="month" tick={{ fontSize: 11 }} />
-                  <YAxis tick={{ fontSize: 11 }} />
-                  <Tooltip 
-                    contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))' }}
-                    formatter={(value: number) => `${value.toFixed(1)}%`}
-                  />
-                  <Line type="monotone" dataKey="value" stroke={colors.red} strokeWidth={3} dot={{ r: 5 }} />
+                  <XAxis dataKey="month" tick={{
+                  fontSize: 11
+                }} />
+                  <YAxis tick={{
+                  fontSize: 11
+                }} />
+                  <Tooltip contentStyle={{
+                  backgroundColor: 'hsl(var(--card))',
+                  border: '1px solid hsl(var(--border))'
+                }} formatter={(value: number) => `${value.toFixed(1)}%`} />
+                  <Line type="monotone" dataKey="value" stroke={colors.red} strokeWidth={3} dot={{
+                  r: 5
+                }} />
                 </LineChart>
               </ResponsiveContainer>
             </div>
@@ -492,13 +691,19 @@ const MetricasMRR = () => {
               <ResponsiveContainer width="100%" height={200}>
                 <LineChart data={expansionRateData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                  <XAxis dataKey="month" tick={{ fontSize: 11 }} />
-                  <YAxis tick={{ fontSize: 11 }} />
-                  <Tooltip 
-                    contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))' }}
-                    formatter={(value: number) => `${value.toFixed(1)}%`}
-                  />
-                  <Line type="monotone" dataKey="value" stroke={colors.purple} strokeWidth={3} dot={{ r: 5 }} />
+                  <XAxis dataKey="month" tick={{
+                  fontSize: 11
+                }} />
+                  <YAxis tick={{
+                  fontSize: 11
+                }} />
+                  <Tooltip contentStyle={{
+                  backgroundColor: 'hsl(var(--card))',
+                  border: '1px solid hsl(var(--border))'
+                }} formatter={(value: number) => `${value.toFixed(1)}%`} />
+                  <Line type="monotone" dataKey="value" stroke={colors.purple} strokeWidth={3} dot={{
+                  r: 5
+                }} />
                 </LineChart>
               </ResponsiveContainer>
             </div>
@@ -527,30 +732,15 @@ const MetricasMRR = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {[
-                      ['Jan', 100, 98, 95, 92, 90, 88],
-                      ['Fev', 100, 97, 94, 91, 89, 87],
-                      ['Mar', 100, 96, 93, 90, 88, null],
-                      ['Abr', 100, 95, 92, 89, null, null],
-                      ['Mai', 100, 94, 91, null, null, null],
-                      ['Jun', 100, 93, null, null, null, null],
-                    ].map((row, i) => (
-                      <tr key={i} className="border-b border-border/50">
+                    {[['Jan', 100, 98, 95, 92, 90, 88], ['Fev', 100, 97, 94, 91, 89, 87], ['Mar', 100, 96, 93, 90, 88, null], ['Abr', 100, 95, 92, 89, null, null], ['Mai', 100, 94, 91, null, null, null], ['Jun', 100, 93, null, null, null, null]].map((row, i) => <tr key={i} className="border-b border-border/50">
                         <td className="p-2 font-medium">{row[0]}</td>
-                        {row.slice(1).map((val, j) => (
-                          <td 
-                            key={j} 
-                            className="text-center p-2"
-                            style={{ 
-                              backgroundColor: val ? `hsl(210, 35%, ${100 - (val as number) / 2}%)` : 'transparent',
-                              color: val && (val as number) < 95 ? 'white' : 'inherit'
-                            }}
-                          >
+                        {row.slice(1).map((val, j) => <td key={j} className="text-center p-2" style={{
+                      backgroundColor: val ? `hsl(210, 35%, ${100 - (val as number) / 2}%)` : 'transparent',
+                      color: val && val as number < 95 ? 'white' : 'inherit'
+                    }}>
                             {val ? `${val}%` : '-'}
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
+                          </td>)}
+                      </tr>)}
                   </tbody>
                 </table>
               </div>
@@ -566,16 +756,18 @@ const MetricasMRR = () => {
               <ResponsiveContainer width="100%" height={280}>
                 <BarChart data={segmentDistributionData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                  <XAxis dataKey="name" tick={{ fontSize: 11 }} />
-                  <YAxis tick={{ fontSize: 11 }} />
-                  <Tooltip 
-                    contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))' }}
-                    formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`}
-                  />
+                  <XAxis dataKey="name" tick={{
+                  fontSize: 11
+                }} />
+                  <YAxis tick={{
+                  fontSize: 11
+                }} />
+                  <Tooltip contentStyle={{
+                  backgroundColor: 'hsl(var(--card))',
+                  border: '1px solid hsl(var(--border))'
+                }} formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`} />
                   <Bar dataKey="value" radius={[4, 4, 0, 0]}>
-                    {segmentDistributionData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={[colors.blue, colors.purple, colors.slate, colors.slate][index]} />
-                    ))}
+                    {segmentDistributionData.map((entry, index) => <Cell key={`cell-${index}`} fill={[colors.blue, colors.purple, colors.slate, colors.slate][index]} />)}
                   </Bar>
                 </BarChart>
               </ResponsiveContainer>
@@ -590,23 +782,40 @@ const MetricasMRR = () => {
                 <p className="text-xs text-muted-foreground">Baseado em tendências históricas e pipeline</p>
               </div>
               <div className="flex gap-2">
-                <span className="text-xs px-3 py-1 rounded-full" style={{ backgroundColor: 'hsl(210, 25%, 85%)', color: 'hsl(210, 25%, 35%)' }}>Conservador</span>
-                <span className="text-xs px-3 py-1 rounded-full font-medium" style={{ backgroundColor: 'hsl(210, 35%, 85%)', color: colors.blue }}>Realista</span>
-                <span className="text-xs px-3 py-1 rounded-full" style={{ backgroundColor: 'hsl(210, 25%, 85%)', color: 'hsl(210, 25%, 35%)' }}>Otimista</span>
+                <span className="text-xs px-3 py-1 rounded-full" style={{
+                backgroundColor: 'hsl(210, 25%, 85%)',
+                color: 'hsl(210, 25%, 35%)'
+              }}>Conservador</span>
+                <span className="text-xs px-3 py-1 rounded-full font-medium" style={{
+                backgroundColor: 'hsl(210, 35%, 85%)',
+                color: colors.blue
+              }}>Realista</span>
+                <span className="text-xs px-3 py-1 rounded-full" style={{
+                backgroundColor: 'hsl(210, 25%, 85%)',
+                color: 'hsl(210, 25%, 35%)'
+              }}>Otimista</span>
               </div>
             </div>
             <ResponsiveContainer width="100%" height={280}>
               <LineChart data={forecastData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                <XAxis dataKey="month" tick={{ fontSize: 11 }} />
-                <YAxis tick={{ fontSize: 11 }} />
-                <Tooltip 
-                  contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))' }}
-                  formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`}
-                />
+                <XAxis dataKey="month" tick={{
+                fontSize: 11
+              }} />
+                <YAxis tick={{
+                fontSize: 11
+              }} />
+                <Tooltip contentStyle={{
+                backgroundColor: 'hsl(var(--card))',
+                border: '1px solid hsl(var(--border))'
+              }} formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`} />
                 <Legend />
-                <Line type="monotone" dataKey="actual" stroke={colors.blue} strokeWidth={3} name="MRR Real" dot={{ r: 5 }} />
-                <Line type="monotone" dataKey="realistic" stroke={colors.green} strokeWidth={3} strokeDasharray="5 5" name="Projeção Realista" dot={{ r: 4 }} />
+                <Line type="monotone" dataKey="actual" stroke={colors.blue} strokeWidth={3} name="MRR Real" dot={{
+                r: 5
+              }} />
+                <Line type="monotone" dataKey="realistic" stroke={colors.green} strokeWidth={3} strokeDasharray="5 5" name="Projeção Realista" dot={{
+                r: 4
+              }} />
                 <Line type="monotone" dataKey="conservative" stroke={colors.slate} strokeWidth={2} strokeDasharray="3 3" name="Conservador" dot={false} opacity={0.7} />
                 <Line type="monotone" dataKey="optimistic" stroke={colors.purple} strokeWidth={2} strokeDasharray="3 3" name="Otimista" dot={false} opacity={0.7} />
               </LineChart>
@@ -614,8 +823,6 @@ const MetricasMRR = () => {
           </div>
         </main>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default MetricasMRR;
