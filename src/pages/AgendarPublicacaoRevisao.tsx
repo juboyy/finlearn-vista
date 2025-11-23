@@ -183,16 +183,16 @@ const AgendarPublicacaoRevisao = () => {
                         <div
                           className="px-8 py-6 border-l-4"
                           style={{ 
-                            backgroundColor: 'hsl(var(--pastel-yellow))',
-                            borderColor: 'hsl(48 96% 56%)'
+                            backgroundColor: 'hsl(44 45% 82%)',
+                            borderColor: 'hsl(44 45% 56%)'
                           }}
                         >
                           <div className="flex items-start gap-3">
                             <div
                               className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5"
-                              style={{ backgroundColor: 'hsl(48 96% 56%)' }}
+                              style={{ backgroundColor: 'hsl(44 45% 56%)' }}
                             >
-                              <Lightbulb size={16} className="text-white" />
+                              <Lightbulb size={16} style={{ color: 'hsl(var(--pastel-gray-dark))' }} />
                             </div>
                             <div>
                               <p className="text-sm font-bold mb-1" style={{ color: 'hsl(var(--foreground))' }}>
