@@ -225,6 +225,52 @@ export default function NovoDocumento() {
     return () => document.removeEventListener('click', handleClickOutside);
   }, []);
 
+  // Funções helper para manipulação do markdown
+  const insertMarkdown = (before: string, after: string = '') => {
+    if (!isNewDocument) return;
+    
+    const textarea = document.querySelector('textarea') as HTMLTextAreaElement;
+    if (!textarea) {
+      setEditorContent(prev => prev + before + after);
+      return;
+    }
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = editorContent.substring(start, end);
+    
+    const newContent = 
+      editorContent.substring(0, start) +
+      before +
+      selectedText +
+      after +
+      editorContent.substring(end);
+    
+    setEditorContent(newContent);
+    
+    setTimeout(() => {
+      textarea.focus();
+      const newPosition = start + before.length + selectedText.length;
+      textarea.setSelectionRange(newPosition, newPosition);
+    }, 0);
+  };
+
+  const handleBold = () => insertMarkdown('**', '**');
+  const handleItalic = () => insertMarkdown('*', '*');
+  const handleUnderline = () => insertMarkdown('<u>', '</u>');
+  const handleH1 = () => insertMarkdown('\n# ', '\n');
+  const handleH2 = () => insertMarkdown('\n## ', '\n');
+  const handleH3 = () => insertMarkdown('\n### ', '\n');
+  const handleBulletList = () => insertMarkdown('\n- ', '\n');
+  const handleNumberedList = () => insertMarkdown('\n1. ', '\n');
+  const handleChecklist = () => insertMarkdown('\n- [ ] ', '\n');
+  const handleLink = () => insertMarkdown('[', '](url)');
+  const handleCode = () => insertMarkdown('```\n', '\n```');
+  const handleTable = () => {
+    const tableMarkdown = '\n\n| Coluna 1 | Coluna 2 | Coluna 3 |\n|----------|----------|----------|\n| Dado 1   | Dado 2   | Dado 3   |\n| Dado 4   | Dado 5   | Dado 6   |\n\n';
+    insertMarkdown(tableMarkdown);
+  };
+
   const handleDragStart = (chartId: string) => {
     setDraggedChart(chartId);
     setIsDragging(true);
@@ -474,46 +520,90 @@ export default function NovoDocumento() {
           {/* Toolbar */}
           <div className="px-8 py-3 border-t border-border flex items-center gap-2">
             <div className="flex items-center gap-1 border-r border-border pr-3">
-              <button className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center" title="Negrito">
+              <button 
+                onClick={handleBold}
+                className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center transition" 
+                title="Negrito (Ctrl+B)"
+              >
                 <Bold size={16} />
               </button>
-              <button className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center" title="Itálico">
+              <button 
+                onClick={handleItalic}
+                className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center transition" 
+                title="Itálico (Ctrl+I)"
+              >
                 <Italic size={16} />
               </button>
-              <button className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center" title="Sublinhado">
+              <button 
+                onClick={handleUnderline}
+                className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center transition" 
+                title="Sublinhado"
+              >
                 <Underline size={16} />
               </button>
             </div>
 
             <div className="flex items-center gap-1 border-r border-border pr-3">
-              <button className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center" title="Título 1">
+              <button 
+                onClick={handleH1}
+                className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center transition" 
+                title="Título 1"
+              >
                 <span className="text-sm font-semibold">H1</span>
               </button>
-              <button className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center" title="Título 2">
+              <button 
+                onClick={handleH2}
+                className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center transition" 
+                title="Título 2"
+              >
                 <span className="text-sm font-semibold">H2</span>
               </button>
-              <button className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center" title="Título 3">
+              <button 
+                onClick={handleH3}
+                className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center transition" 
+                title="Título 3"
+              >
                 <span className="text-sm font-semibold">H3</span>
               </button>
             </div>
 
             <div className="flex items-center gap-1 border-r border-border pr-3">
-              <button className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center" title="Lista com marcadores">
+              <button 
+                onClick={handleBulletList}
+                className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center transition" 
+                title="Lista com marcadores"
+              >
                 <List size={16} />
               </button>
-              <button className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center" title="Lista numerada">
+              <button 
+                onClick={handleNumberedList}
+                className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center transition" 
+                title="Lista numerada"
+              >
                 <ListOrdered size={16} />
               </button>
-              <button className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center" title="Checklist">
+              <button 
+                onClick={handleChecklist}
+                className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center transition" 
+                title="Checklist"
+              >
                 <CheckSquare size={16} />
               </button>
             </div>
 
             <div className="flex items-center gap-1 border-r border-border pr-3">
-              <button className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center" title="Adicionar link">
+              <button 
+                onClick={handleLink}
+                className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center transition" 
+                title="Adicionar link"
+              >
                 <LinkIcon size={16} />
               </button>
-              <button className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center" title="Adicionar código">
+              <button 
+                onClick={handleCode}
+                className="w-8 h-8 text-muted-foreground hover:bg-muted rounded flex items-center justify-center transition" 
+                title="Bloco de código"
+              >
                 <Code size={16} />
               </button>
             </div>
@@ -521,13 +611,17 @@ export default function NovoDocumento() {
             <div className="flex items-center gap-1">
               <button 
                 onClick={() => setChartDrawerOpen(true)}
-                className="px-3 py-1.5 text-muted-foreground hover:bg-muted rounded flex items-center gap-2 text-sm font-medium" 
+                className="px-3 py-1.5 text-muted-foreground hover:bg-muted rounded flex items-center gap-2 text-sm font-medium transition" 
                 title="Adicionar gráfico"
               >
                 <BarChart3 size={16} />
                 <span>Gráfico</span>
               </button>
-              <button className="px-3 py-1.5 text-muted-foreground hover:bg-muted rounded flex items-center gap-2 text-sm font-medium" title="Adicionar tabela">
+              <button 
+                onClick={handleTable}
+                className="px-3 py-1.5 text-muted-foreground hover:bg-muted rounded flex items-center gap-2 text-sm font-medium transition" 
+                title="Adicionar tabela"
+              >
                 <TableIcon size={16} />
                 <span>Tabela</span>
               </button>
