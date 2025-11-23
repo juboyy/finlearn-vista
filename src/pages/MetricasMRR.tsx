@@ -1,10 +1,12 @@
 import { ArrowLeft, DollarSign, TrendingUp, TrendingDown, Percent, BarChart3, Layers, ArrowUpRight, Users, UserX, UserCheck, MoreHorizontal } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Area, AreaChart } from "recharts";
 const MetricasMRR = () => {
   const navigate = useNavigate();
+  const [selectedMetric, setSelectedMetric] = useState<'MRR' | 'Churn' | 'Retention' | 'Others'>('MRR');
 
   // Cores pastel escuro do sistema
   const colors = {
@@ -318,19 +320,55 @@ const MetricasMRR = () => {
                 <p className="text-xs text-muted-foreground">Todas as métricas de desempenho financeiro em um único painel</p>
               </div>
               <div className="flex items-center gap-2">
-                <Button variant="outline" size="sm" className="h-8 gap-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className={`h-8 gap-2 transition-all ${
+                    selectedMetric === 'MRR' 
+                      ? 'bg-primary text-primary-foreground hover:bg-primary/90' 
+                      : 'hover:bg-accent hover:text-accent-foreground'
+                  }`}
+                  onClick={() => setSelectedMetric('MRR')}
+                >
                   <BarChart3 className="h-4 w-4" />
                   MRR
                 </Button>
-                <Button variant="outline" size="sm" className="h-8 gap-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className={`h-8 gap-2 transition-all ${
+                    selectedMetric === 'Churn' 
+                      ? 'bg-primary text-primary-foreground hover:bg-primary/90' 
+                      : 'hover:bg-accent hover:text-accent-foreground'
+                  }`}
+                  onClick={() => setSelectedMetric('Churn')}
+                >
                   <UserX className="h-4 w-4" />
                   Churn
                 </Button>
-                <Button variant="outline" size="sm" className="h-8 gap-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className={`h-8 gap-2 transition-all ${
+                    selectedMetric === 'Retention' 
+                      ? 'bg-primary text-primary-foreground hover:bg-primary/90' 
+                      : 'hover:bg-accent hover:text-accent-foreground'
+                  }`}
+                  onClick={() => setSelectedMetric('Retention')}
+                >
                   <UserCheck className="h-4 w-4" />
                   Retention
                 </Button>
-                <Button variant="outline" size="sm" className="h-8 gap-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className={`h-8 gap-2 transition-all ${
+                    selectedMetric === 'Others' 
+                      ? 'bg-primary text-primary-foreground hover:bg-primary/90' 
+                      : 'hover:bg-accent hover:text-accent-foreground'
+                  }`}
+                  onClick={() => setSelectedMetric('Others')}
+                >
                   <MoreHorizontal className="h-4 w-4" />
                   Others
                 </Button>
