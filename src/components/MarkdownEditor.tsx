@@ -2,6 +2,8 @@ import { useState, useRef, useEffect, KeyboardEvent } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import Plot from 'react-plotly.js';
+import * as XLSX from 'xlsx';
+import { z } from 'zod';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { 
   BarChart3, 
@@ -17,7 +19,10 @@ import {
   Video,
   Bot,
   Settings,
-  Eye
+  Eye,
+  Upload,
+  FileSpreadsheet,
+  CheckCircle
 } from "lucide-react";
 
 interface CommandMenuOption {
@@ -41,8 +46,16 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
   const [chartTitle, setChartTitle] = useState("");
   const [chartLabels, setChartLabels] = useState("");
   const [chartValues, setChartValues] = useState("");
+  const [uploadedFileName, setUploadedFileName] = useState("");
+  const [isProcessing, setIsProcessing] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const commandMenuRef = useRef<HTMLDivElement>(null);
+
+  // Schema de validação para dados do arquivo
+  const fileDataSchema = z.object({
+    labels: z.array(z.string()).min(1, "Arquivo deve conter pelo menos um label"),
+    values: z.array(z.number()).min(1, "Arquivo deve conter pelo menos um valor")
+  });
 
   // Dados dos gráficos disponíveis
   const chartData: Record<string, any> = {
@@ -353,6 +366,110 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
     onChange(newMarkdown);
     
     setEditingChart(null);
+    setUploadedFileName("");
+  };
+
+  const processCSV = (text: string): { labels: string[]; values: number[] } => {
+    const lines = text.trim().split('\n');
+    if (lines.length < 2) throw new Error("CSV deve ter pelo menos 2 linhas (cabeçalho e dados)");
+    
+    const labels: string[] = [];
+    const values: number[] = [];
+    
+    // Ignora a primeira linha (cabeçalho)
+    for (let i = 1; i < lines.length; i++) {
+      const columns = lines[i].split(',').map(col => col.trim());
+      if (columns.length >= 2) {
+        labels.push(columns[0]);
+        const value = parseFloat(columns[1]);
+        if (!isNaN(value)) {
+          values.push(value);
+        }
+      }
+    }
+    
+    return { labels, values };
+  };
+
+  const processExcel = (arrayBuffer: ArrayBuffer): { labels: string[]; values: number[] } => {
+    const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+    const jsonData = XLSX.utils.sheet_to_json(firstSheet, { header: 1 }) as any[][];
+    
+    if (jsonData.length < 2) throw new Error("Excel deve ter pelo menos 2 linhas (cabeçalho e dados)");
+    
+    const labels: string[] = [];
+    const values: number[] = [];
+    
+    // Ignora a primeira linha (cabeçalho)
+    for (let i = 1; i < jsonData.length; i++) {
+      const row = jsonData[i];
+      if (row.length >= 2) {
+        labels.push(String(row[0] || '').trim());
+        const value = parseFloat(String(row[1] || '0'));
+        if (!isNaN(value)) {
+          values.push(value);
+        }
+      }
+    }
+    
+    return { labels, values };
+  };
+
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    // Validação de tamanho (máx 20MB)
+    if (file.size > 20 * 1024 * 1024) {
+      alert('Arquivo muito grande. O tamanho máximo é 20MB.');
+      return;
+    }
+
+    setIsProcessing(true);
+    setUploadedFileName(file.name);
+
+    try {
+      let processedData: { labels: string[]; values: number[] };
+
+      if (file.name.endsWith('.csv')) {
+        const text = await file.text();
+        processedData = processCSV(text);
+      } else if (file.name.endsWith('.xlsx') || file.name.endsWith('.xls')) {
+        const arrayBuffer = await file.arrayBuffer();
+        processedData = processExcel(arrayBuffer);
+      } else if (file.name.endsWith('.json')) {
+        const text = await file.text();
+        const jsonData = JSON.parse(text);
+        
+        if (Array.isArray(jsonData)) {
+          processedData = {
+            labels: jsonData.map(item => String(item.label || item.name || item.x || '')),
+            values: jsonData.map(item => parseFloat(String(item.value || item.y || 0)))
+          };
+        } else {
+          throw new Error("JSON deve ser um array de objetos");
+        }
+      } else {
+        throw new Error("Formato de arquivo não suportado");
+      }
+
+      // Valida os dados processados
+      const validatedData = fileDataSchema.parse(processedData);
+
+      // Atualiza os campos
+      setChartLabels(validatedData.labels.join(', '));
+      setChartValues(validatedData.values.join(', '));
+
+    } catch (error) {
+      console.error('Erro ao processar arquivo:', error);
+      alert(`Erro ao processar arquivo: ${error instanceof Error ? error.message : 'Erro desconhecido'}`);
+      setUploadedFileName("");
+    } finally {
+      setIsProcessing(false);
+      // Limpa o input para permitir upload do mesmo arquivo novamente
+      event.target.value = '';
+    }
   };
 
   return (
@@ -545,40 +662,76 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
             </div>
 
             {/* Upload de Arquivo */}
-            <div className="rounded-lg p-6 border-2 border-dashed border-slate-300 hover:border-[hsl(206,35%,75%)] transition cursor-pointer" style={{ backgroundColor: '#FAFBFC' }}>
+            <div className="rounded-lg border-2 border-dashed transition" style={{ 
+              backgroundColor: uploadedFileName ? '#E8F5E9' : '#FAFBFC',
+              borderColor: uploadedFileName ? '#81C784' : '#CBD5E0'
+            }}>
               <input
                 type="file"
                 id="chart-file-upload"
                 className="hidden"
                 accept=".csv,.xlsx,.xls,.json"
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  if (file) {
-                    console.log('Arquivo selecionado:', file.name);
-                    // Aqui você pode adicionar a lógica de processamento do arquivo
-                  }
-                }}
+                onChange={handleFileUpload}
+                disabled={isProcessing}
               />
-              <label htmlFor="chart-file-upload" className="cursor-pointer">
+              <label htmlFor="chart-file-upload" className="cursor-pointer block p-6">
                 <div className="flex flex-col items-center gap-3">
-                  <div className="w-14 h-14 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#D4C5E8' }}>
-                    <ImageIcon size={24} className="text-slate-700" />
-                  </div>
-                  <div className="text-center">
-                    <p className="text-sm font-semibold text-slate-700 mb-1">
-                      Upload de arquivo de dados
-                    </p>
-                    <p className="text-xs text-slate-500">
-                      CSV, Excel ou JSON - máx 20MB
-                    </p>
-                  </div>
-                  <button
-                    type="button"
-                    className="px-4 py-2 rounded-lg text-sm font-medium text-slate-700 transition hover:opacity-80"
-                    style={{ backgroundColor: '#C5E8D4' }}
-                  >
-                    Escolher arquivo
-                  </button>
+                  {isProcessing ? (
+                    <>
+                      <div className="w-14 h-14 rounded-lg flex items-center justify-center animate-pulse" style={{ backgroundColor: '#B8D4E8' }}>
+                        <Upload size={24} className="text-slate-700 animate-bounce" />
+                      </div>
+                      <p className="text-sm font-semibold text-slate-700">
+                        Processando arquivo...
+                      </p>
+                    </>
+                  ) : uploadedFileName ? (
+                    <>
+                      <div className="w-14 h-14 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#C5E8D4' }}>
+                        <CheckCircle size={24} className="text-slate-700" />
+                      </div>
+                      <div className="text-center">
+                        <p className="text-sm font-semibold text-slate-700 mb-1">
+                          Arquivo carregado com sucesso
+                        </p>
+                        <p className="text-xs text-slate-500 flex items-center gap-1 justify-center">
+                          <FileSpreadsheet size={12} />
+                          {uploadedFileName}
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        className="px-4 py-2 rounded-lg text-sm font-medium text-slate-700 transition hover:opacity-80"
+                        style={{ backgroundColor: '#B8D4E8' }}
+                      >
+                        Carregar outro arquivo
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <div className="w-14 h-14 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#D4C5E8' }}>
+                        <Upload size={24} className="text-slate-700" />
+                      </div>
+                      <div className="text-center">
+                        <p className="text-sm font-semibold text-slate-700 mb-1">
+                          Upload de arquivo de dados
+                        </p>
+                        <p className="text-xs text-slate-500">
+                          CSV, Excel ou JSON - máx 20MB
+                        </p>
+                        <p className="text-xs text-slate-400 mt-2">
+                          Formato esperado: Label, Valor
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        className="px-4 py-2 rounded-lg text-sm font-medium text-slate-700 transition hover:opacity-80"
+                        style={{ backgroundColor: '#C5E8D4' }}
+                      >
+                        Escolher arquivo
+                      </button>
+                    </>
+                  )}
                 </div>
               </label>
             </div>
