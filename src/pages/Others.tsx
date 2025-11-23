@@ -375,13 +375,15 @@ const Others = () => {
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0 animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95" align="start">
-                  <Calendar
-                    mode="range"
-                    selected={dateRange}
-                    onSelect={setDateRange}
-                    numberOfMonths={2}
-                    className="pointer-events-auto flex gap-6 divide-x divide-border"
-                  />
+                  <div className="flex">
+                    <Calendar
+                      mode="range"
+                      selected={dateRange}
+                      onSelect={setDateRange}
+                      numberOfMonths={2}
+                      className="pointer-events-auto [&_.rdp-months]:flex [&_.rdp-months]:gap-0 [&_.rdp-month:first-child]:pr-4 [&_.rdp-month:last-child]:pl-4 [&_.rdp-month:last-child]:border-l [&_.rdp-month:last-child]:border-border"
+                    />
+                  </div>
                 </PopoverContent>
               </Popover>
             </div>
