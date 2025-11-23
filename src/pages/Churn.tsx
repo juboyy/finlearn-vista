@@ -560,7 +560,7 @@ const Churn = () => {
               <ResponsiveContainer width="100%" height={260}>
                 <BarChart data={churnChannelData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                  <XAxis dataKey="channel" tick={{ fontSize: 11 }} angle={-20} textAnchor="end" height={70} />
+                  <XAxis dataKey="channel" tick={{ fontSize: 11 }} height={50} />
                   <YAxis tick={{ fontSize: 11 }} />
                   <Tooltip 
                     contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))' }}
