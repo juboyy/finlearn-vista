@@ -553,12 +553,12 @@ const MetricasMRR = () => {
                   <p className="text-xs text-muted-foreground">Por tipo de movimento</p>
                 </div>
               </div>
-              <ResponsiveContainer width="100%" height={280}>
+              <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
                   <Pie 
                     data={compositionData} 
                     cx="50%" 
-                    cy="50%" 
+                    cy="45%" 
                     innerRadius={70} 
                     outerRadius={110} 
                     paddingAngle={0} 
@@ -576,7 +576,7 @@ const MetricasMRR = () => {
                   <Legend 
                     verticalAlign="bottom" 
                     height={36}
-                    wrapperStyle={{ paddingTop: '20px' }}
+                    wrapperStyle={{ paddingTop: '10px' }}
                   />
                 </PieChart>
               </ResponsiveContainer>
