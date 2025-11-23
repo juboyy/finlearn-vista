@@ -120,10 +120,10 @@ const Retention = () => {
   ];
 
   const activeDaysData = [
-    { range: '1-7 dias', value: 15, color: colors.red },
-    { range: '8-15 dias', value: 25, color: colors.yellow },
     { range: '16-23 dias', value: 35, color: colors.blue },
-    { range: '24-30 dias', value: 25, color: colors.green }
+    { range: '8-15 dias', value: 25, color: colors.yellow },
+    { range: '24-30 dias', value: 25, color: colors.green },
+    { range: '1-7 dias', value: 15, color: colors.red }
   ];
 
   const peakHoursData = [
