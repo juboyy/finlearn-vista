@@ -467,7 +467,11 @@ export default function NovaNewsletter() {
                 <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 mt-8">
                   <div className="flex items-center justify-between mb-2">
                     <h3 className="text-lg font-bold text-slate-800">Permissão de Canais de Envio</h3>
-                    <button className="px-4 py-2 rounded-lg text-sm font-medium text-slate-700 hover:opacity-90 transition flex items-center gap-2" style={{ backgroundColor: '#D4C5E8' }}>
+                    <button 
+                      onClick={() => navigate('/newsletter-preview')}
+                      className="px-4 py-2 rounded-lg text-sm font-medium text-slate-700 hover:opacity-90 transition flex items-center gap-2" 
+                      style={{ backgroundColor: '#D4C5E8' }}
+                    >
                       <Eye className="w-4 h-4" /> Preview
                     </button>
                   </div>
