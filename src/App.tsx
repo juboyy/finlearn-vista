@@ -69,6 +69,7 @@ import MetricasMRR from "./pages/MetricasMRR";
 import Churn from "./pages/Churn";
 import Retention from "./pages/Retention";
 import Others from "./pages/Others";
+import NovaAssinatura from "./pages/NovaAssinatura";
 
 import NotFound from "./pages/NotFound";
 
@@ -153,6 +154,7 @@ const App = () => {
           <Route path="/churn" element={<Churn />} />
           <Route path="/retention" element={<Retention />} />
           <Route path="/others" element={<Others />} />
+          <Route path="/nova-assinatura" element={<NovaAssinatura />} />
           
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

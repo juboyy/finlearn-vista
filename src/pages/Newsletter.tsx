@@ -124,7 +124,11 @@ export default function Newsletter() {
               >
                 <BarChart3 size={18} />
               </button>
-              <button className="px-4 py-2 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition" style={{ backgroundColor: '#D4C5E8' }}>
+              <button 
+                onClick={() => navigate('/nova-assinatura')}
+                className="px-4 py-2 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition" 
+                style={{ backgroundColor: '#D4C5E8' }}
+              >
                 <Plus size={18} className="inline mr-2" />
                 Nova Assinatura
               </button>
