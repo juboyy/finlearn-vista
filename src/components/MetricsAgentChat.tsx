@@ -60,8 +60,8 @@ export const MetricsAgentChat = ({ metricType, onClose }: MetricsAgentChatProps)
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-card border border-border rounded-xl shadow-2xl w-full max-w-3xl h-[80vh] flex flex-col">
+    <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
+      <div className="bg-card border border-border rounded-xl shadow-2xl w-full max-w-3xl h-[80vh] flex flex-col animate-scale-in">
         {/* Header */}
         <div className="flex items-center gap-4 p-6 border-b border-border">
           <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
