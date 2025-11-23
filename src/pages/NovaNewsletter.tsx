@@ -74,12 +74,14 @@ export default function NovaNewsletter() {
               <button className="px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-lg font-medium transition">
                 Salvar Rascunho
               </button>
-              <button 
-                onClick={() => navigate('/newsletter-preview')}
-                className="px-4 py-2 bg-slate-800 text-white rounded-lg font-medium hover:bg-slate-900 transition flex items-center gap-2"
-              >
-                <Eye className="w-4 h-4" /> Visualizar
-              </button>
+              {currentStep === 5 && (
+                <button 
+                  onClick={() => navigate('/newsletter-preview')}
+                  className="px-4 py-2 bg-slate-800 text-white rounded-lg font-medium hover:bg-slate-900 transition flex items-center gap-2"
+                >
+                  <Eye className="w-4 h-4" /> Visualizar
+                </button>
+              )}
             </div>
           </div>
         </header>
@@ -470,13 +472,6 @@ export default function NovaNewsletter() {
                 <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 mt-8">
                   <div className="flex items-center justify-between mb-2">
                     <h3 className="text-lg font-bold text-slate-800">Permissão de Canais de Envio</h3>
-                    <button 
-                      onClick={() => navigate('/newsletter-preview')}
-                      className="px-4 py-2 rounded-lg text-sm font-medium text-slate-700 hover:opacity-90 transition flex items-center gap-2" 
-                      style={{ backgroundColor: '#D4C5E8' }}
-                    >
-                      <Eye className="w-4 h-4" /> Preview
-                    </button>
                   </div>
                   <p className="text-slate-500 mb-6">Selecione os canais pelos quais permite enviar o conteúdo</p>
                   
@@ -1093,13 +1088,6 @@ export default function NovaNewsletter() {
                       </div>
                       <h3 className="font-bold text-[hsl(var(--pastel-gray-dark))]">Tema Visual</h3>
                     </div>
-                    <button 
-                      onClick={() => navigate('/newsletter-preview')}
-                      className="px-4 py-2 rounded-lg text-sm font-medium text-slate-700 hover:opacity-90 transition flex items-center gap-2" 
-                      style={{ backgroundColor: '#D4C5E8' }}
-                    >
-                      <Eye className="w-4 h-4" /> Visualizar Página
-                    </button>
                   </div>
                   <div className="flex items-center gap-4">
                     <div 
