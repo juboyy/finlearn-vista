@@ -152,8 +152,8 @@ export default function MinhaAssinatura() {
                               <Receipt className="text-slate-700" size={18} />
                             </div>
                             <div>
-                              <div className="font-semibold text-slate-800 text-sm mb-1">{invoice.invoice}</div>
-                              <div className="text-xs text-slate-500">{invoice.date}</div>
+                              <div className="font-bold text-slate-800 mb-1">{invoice.date}</div>
+                              <div className="text-xs text-slate-500">{invoice.invoice}</div>
                             </div>
                           </div>
                           <div className="flex items-center gap-4">
