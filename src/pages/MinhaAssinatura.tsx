@@ -561,194 +561,174 @@ export default function MinhaAssinatura() {
 
       {/* Invoice Modal */}
       <Dialog open={!!selectedInvoice} onOpenChange={(open) => !open && setSelectedInvoice(null)}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-5xl max-h-[85vh] overflow-hidden p-0">
           {selectedInvoice && (
-            <div className="bg-white">
-              {/* Invoice Header */}
-              <div className="border-b border-slate-200 pb-6 mb-6">
-                <div className="flex items-start justify-between mb-6">
-                  <div>
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#D4C5E8' }}>
-                        <FileText className="text-slate-700" size={24} />
-                      </div>
-                      <div>
-                        <h2 className="text-2xl font-bold text-slate-800">FATURA</h2>
-                        <p className="text-sm text-slate-600">Payments Insider</p>
-                      </div>
+            <div className="bg-gradient-to-br from-slate-50 to-white overflow-y-auto max-h-[85vh]">
+              {/* Invoice Header with decorative background */}
+              <div className="relative px-8 pt-8 pb-6 mb-6" style={{ background: 'linear-gradient(135deg, #D4C5E8 0%, #B8D4E8 100%)' }}>
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="w-16 h-16 rounded-xl bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-lg">
+                      <FileText className="text-slate-700" size={28} />
+                    </div>
+                    <div>
+                      <h2 className="text-3xl font-bold text-slate-800 mb-1">FATURA</h2>
+                      <p className="text-sm text-slate-700 font-medium">Payments Insider</p>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-sm text-slate-600 mb-1">Fatura Nº</div>
-                    <div className="text-xl font-bold text-slate-800">{selectedInvoice.invoice}</div>
-                    <div className="mt-2">
-                      <span className="px-3 py-1.5 text-slate-800 rounded-full text-xs font-bold inline-flex items-center gap-1" style={{ backgroundColor: '#C5E8D4' }}>
-                        <CheckCircle2 size={12} />
-                        {selectedInvoice.status}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Dates Section */}
-                <div className="grid grid-cols-3 gap-4 mb-6">
-                  <div className="bg-slate-50 rounded-lg p-4 border border-slate-200">
-                    <div className="text-xs text-slate-500 mb-1">Data de Emissão</div>
-                    <div className="font-semibold text-slate-800">{selectedInvoice.date}</div>
-                  </div>
-                  <div className="bg-slate-50 rounded-lg p-4 border border-slate-200">
-                    <div className="text-xs text-slate-500 mb-1">Data de Vencimento</div>
-                    <div className="font-semibold text-slate-800">{selectedInvoice.date}</div>
-                  </div>
-                  <div className="bg-slate-50 rounded-lg p-4 border border-slate-200">
-                    <div className="text-xs text-slate-500 mb-1">Data de Pagamento</div>
-                    <div className="font-semibold text-slate-800">{selectedInvoice.date}</div>
-                  </div>
-                </div>
-
-                {/* Company and Customer Info */}
-                <div className="grid grid-cols-2 gap-6">
-                  <div>
-                    <div className="text-sm font-bold text-slate-800 mb-3">De:</div>
-                    <div className="space-y-2">
-                      <div className="flex items-start gap-2">
-                        <Building2 size={16} className="text-slate-500 mt-0.5 shrink-0" />
-                        <div>
-                          <div className="font-semibold text-slate-800">Payments Insider Ltda</div>
-                          <div className="text-sm text-slate-600">CNPJ: 12.345.678/0001-90</div>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-2">
-                        <MapPin size={16} className="text-slate-500 mt-0.5 shrink-0" />
-                        <div className="text-sm text-slate-600">
-                          Av. Paulista, 1000 - 10º andar<br />
-                          São Paulo, SP - 01310-100
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Mail size={16} className="text-slate-500 shrink-0" />
-                        <div className="text-sm text-slate-600">contato@paymentsinsider.com.br</div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Phone size={16} className="text-slate-500 shrink-0" />
-                        <div className="text-sm text-slate-600">(11) 3000-0000</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <div className="text-sm font-bold text-slate-800 mb-3">Para:</div>
-                    <div className="space-y-2">
-                      <div className="flex items-start gap-2">
-                        <Building2 size={16} className="text-slate-500 mt-0.5 shrink-0" />
-                        <div>
-                          <div className="font-semibold text-slate-800">João Silva</div>
-                          <div className="text-sm text-slate-600">CPF: 123.456.789-00</div>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-2">
-                        <MapPin size={16} className="text-slate-500 mt-0.5 shrink-0" />
-                        <div className="text-sm text-slate-600">
-                          Rua das Flores, 123 - Apto 45<br />
-                          São Paulo, SP - 01234-567
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Mail size={16} className="text-slate-500 shrink-0" />
-                        <div className="text-sm text-slate-600">joao.silva@email.com</div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Phone size={16} className="text-slate-500 shrink-0" />
-                        <div className="text-sm text-slate-600">(11) 98765-4321</div>
-                      </div>
-                    </div>
+                  <div className="text-right bg-white/90 backdrop-blur-sm rounded-xl p-4 shadow-lg">
+                    <div className="text-xs text-slate-600 mb-1">Fatura Nº</div>
+                    <div className="text-xl font-bold text-slate-800 mb-2">{selectedInvoice.invoice}</div>
+                    <span className="px-3 py-1.5 rounded-full text-xs font-bold inline-flex items-center gap-1.5" style={{ backgroundColor: '#C5E8D4', color: '#4a5568' }}>
+                      <CheckCircle2 size={12} />
+                      {selectedInvoice.status}
+                    </span>
                   </div>
                 </div>
               </div>
 
-              {/* Invoice Items */}
-              <div className="mb-6">
-                <div className="text-sm font-bold text-slate-800 mb-4">Itens da Fatura</div>
-                <div className="border border-slate-200 rounded-lg overflow-hidden">
-                  <table className="w-full">
-                    <thead className="bg-slate-50">
-                      <tr>
-                        <th className="text-left text-xs font-semibold text-slate-700 px-4 py-3">Descrição</th>
-                        <th className="text-center text-xs font-semibold text-slate-700 px-4 py-3">Período</th>
-                        <th className="text-right text-xs font-semibold text-slate-700 px-4 py-3">Valor</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-200">
-                      <tr>
-                        <td className="px-4 py-4">
-                          <div className="font-semibold text-slate-800">Assinatura Premium</div>
-                          <div className="text-sm text-slate-600">Payments Insider - Acesso completo</div>
-                        </td>
-                        <td className="px-4 py-4 text-center text-sm text-slate-600">
-                          23 Nov 2023 - 22 Dez 2023
-                        </td>
-                        <td className="px-4 py-4 text-right font-semibold text-slate-800">
-                          R$ 49,00
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+              <div className="px-8 pb-8">
+                {/* Dates Section - Compact */}
+                <div className="grid grid-cols-3 gap-3 mb-6">
+                  <div className="rounded-lg p-3 border border-slate-200" style={{ backgroundColor: '#E8D4C5' }}>
+                    <div className="text-xs text-slate-700 font-medium mb-1">Data de Emissão</div>
+                    <div className="font-bold text-slate-800">{selectedInvoice.date}</div>
+                  </div>
+                  <div className="rounded-lg p-3 border border-slate-200" style={{ backgroundColor: '#D4C5E8' }}>
+                    <div className="text-xs text-slate-700 font-medium mb-1">Vencimento</div>
+                    <div className="font-bold text-slate-800">{selectedInvoice.date}</div>
+                  </div>
+                  <div className="rounded-lg p-3 border border-slate-200" style={{ backgroundColor: '#C5E8D4' }}>
+                    <div className="text-xs text-slate-700 font-medium mb-1">Pagamento</div>
+                    <div className="font-bold text-slate-800">{selectedInvoice.date}</div>
+                  </div>
                 </div>
-              </div>
 
-              {/* Payment Summary */}
-              <div className="border-t border-slate-200 pt-6">
-                <div className="flex justify-end mb-6">
-                  <div className="w-80 space-y-3">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-slate-600">Subtotal</span>
-                      <span className="font-semibold text-slate-800">R$ 49,00</span>
+                {/* Company and Customer Info - Side by side, compact */}
+                <div className="grid grid-cols-2 gap-4 mb-6">
+                  <div className="bg-white rounded-xl p-4 border border-slate-200 shadow-sm">
+                    <div className="text-xs font-bold text-slate-700 mb-3" style={{ color: '#6b7280' }}>EMISSOR</div>
+                    <div className="space-y-2.5">
+                      <div className="flex items-start gap-2">
+                        <Building2 size={14} className="text-slate-500 mt-0.5 shrink-0" />
+                        <div>
+                          <div className="font-bold text-slate-800 text-sm">Payments Insider Ltda</div>
+                          <div className="text-xs text-slate-600">CNPJ: 12.345.678/0001-90</div>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <MapPin size={14} className="text-slate-500 mt-0.5 shrink-0" />
+                        <div className="text-xs text-slate-600">Av. Paulista, 1000 - 10º andar, São Paulo, SP</div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Mail size={14} className="text-slate-500 shrink-0" />
+                        <div className="text-xs text-slate-600">contato@paymentsinsider.com.br</div>
+                      </div>
                     </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-slate-600">Descontos</span>
-                      <span className="font-semibold text-slate-800">R$ 0,00</span>
-                    </div>
-                    <Separator />
-                    <div className="flex justify-between">
-                      <span className="font-bold text-slate-800">Total</span>
-                      <span className="text-2xl font-bold text-slate-800">{selectedInvoice.amount}</span>
+                  </div>
+
+                  <div className="bg-white rounded-xl p-4 border border-slate-200 shadow-sm">
+                    <div className="text-xs font-bold text-slate-700 mb-3" style={{ color: '#6b7280' }}>CLIENTE</div>
+                    <div className="space-y-2.5">
+                      <div className="flex items-start gap-2">
+                        <Building2 size={14} className="text-slate-500 mt-0.5 shrink-0" />
+                        <div>
+                          <div className="font-bold text-slate-800 text-sm">João Silva</div>
+                          <div className="text-xs text-slate-600">CPF: 123.456.789-00</div>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <MapPin size={14} className="text-slate-500 mt-0.5 shrink-0" />
+                        <div className="text-xs text-slate-600">Rua das Flores, 123, São Paulo, SP</div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Mail size={14} className="text-slate-500 shrink-0" />
+                        <div className="text-xs text-slate-600">joao.silva@email.com</div>
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Payment Method */}
-                <div className="bg-slate-50 rounded-lg p-4 border border-slate-200 mb-6">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#B8D4E8' }}>
-                        <CreditCard className="text-slate-700" size={20} />
+                {/* Invoice Items - Compact table */}
+                <div className="mb-6">
+                  <div className="text-sm font-bold text-slate-800 mb-3">Itens da Fatura</div>
+                  <div className="border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                    <table className="w-full">
+                      <thead style={{ backgroundColor: '#D4C5E8' }}>
+                        <tr>
+                          <th className="text-left text-xs font-bold text-slate-700 px-4 py-3">Descrição</th>
+                          <th className="text-center text-xs font-bold text-slate-700 px-4 py-3">Período</th>
+                          <th className="text-right text-xs font-bold text-slate-700 px-4 py-3">Valor</th>
+                        </tr>
+                      </thead>
+                      <tbody className="bg-white">
+                        <tr>
+                          <td className="px-4 py-3">
+                            <div className="font-bold text-slate-800 text-sm">Assinatura Premium</div>
+                            <div className="text-xs text-slate-600">Payments Insider - Acesso completo</div>
+                          </td>
+                          <td className="px-4 py-3 text-center text-xs text-slate-600">
+                            23 Nov - 22 Dez 2023
+                          </td>
+                          <td className="px-4 py-3 text-right font-bold text-slate-800">
+                            R$ 49,00
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                {/* Payment Summary and Method - Side by side */}
+                <div className="grid grid-cols-2 gap-4 mb-6">
+                  <div className="rounded-xl p-4 border border-slate-200 shadow-sm" style={{ backgroundColor: '#B8D4E8' }}>
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 rounded-lg bg-white/80 flex items-center justify-center">
+                        <CreditCard className="text-slate-700" size={18} />
                       </div>
                       <div>
-                        <div className="text-xs text-slate-600 mb-0.5">Método de Pagamento</div>
-                        <div className="font-semibold text-slate-800">Cartão de Crédito Visa •••• 4532</div>
+                        <div className="text-xs text-slate-700 font-medium mb-0.5">Método de Pagamento</div>
+                        <div className="font-bold text-slate-800 text-sm">Visa •••• 4532</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-white rounded-xl p-4 border border-slate-200 shadow-sm">
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-slate-600">Subtotal</span>
+                        <span className="font-semibold text-slate-800">R$ 49,00</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-slate-600">Descontos</span>
+                        <span className="font-semibold text-slate-800">R$ 0,00</span>
+                      </div>
+                      <Separator className="my-2" />
+                      <div className="flex justify-between items-center">
+                        <span className="font-bold text-slate-800">Total</span>
+                        <span className="text-2xl font-bold text-slate-800">{selectedInvoice.amount}</span>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Footer Notes */}
-                <div className="text-xs text-slate-500 space-y-1">
+                {/* Action Buttons */}
+                <div className="flex gap-3">
+                  <button className="flex-1 px-4 py-3 text-white rounded-xl font-semibold shadow-lg transition-all hover:shadow-xl hover:scale-[1.02]" style={{ backgroundColor: '#D4C5E8' }}>
+                    <Download size={18} className="inline mr-2" />
+                    Baixar PDF
+                  </button>
+                  <button className="flex-1 px-4 py-3 text-white rounded-xl font-semibold shadow-lg transition-all hover:shadow-xl hover:scale-[1.02]" style={{ backgroundColor: '#B8D4E8' }}>
+                    <Mail size={18} className="inline mr-2" />
+                    Enviar por Email
+                  </button>
+                </div>
+
+                {/* Footer Notes - Compact */}
+                <div className="text-xs text-slate-500 mt-4 pt-4 border-t border-slate-200 space-y-0.5">
                   <p>Esta é uma fatura eletrônica válida para todos os fins legais.</p>
-                  <p>Em caso de dúvidas, entre em contato através do email contato@paymentsinsider.com.br</p>
-                  <p className="mt-3 text-slate-400">Documento gerado em {new Date().toLocaleDateString('pt-BR')}</p>
+                  <p className="text-slate-400">Documento gerado em {new Date().toLocaleDateString('pt-BR')}</p>
                 </div>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex gap-3 mt-6 pt-6 border-t border-slate-200">
-                <button className="flex-1 px-4 py-2.5 text-slate-700 border border-slate-200 rounded-lg font-medium hover:bg-slate-50 transition">
-                  <Download size={18} className="inline mr-2" />
-                  Baixar PDF
-                </button>
-                <button className="flex-1 px-4 py-2.5 text-slate-700 border border-slate-200 rounded-lg font-medium hover:bg-slate-50 transition">
-                  <Mail size={18} className="inline mr-2" />
-                  Enviar por Email
-                </button>
               </div>
             </div>
           )}
