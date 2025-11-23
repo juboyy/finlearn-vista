@@ -674,6 +674,7 @@ const Retention = () => {
                     cy="50%"
                     outerRadius={90}
                     dataKey="value"
+                    nameKey="name"
                   >
                     {sessionFrequencyData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />
@@ -752,6 +753,7 @@ const Retention = () => {
                     innerRadius={50}
                     outerRadius={80}
                     dataKey="value"
+                    nameKey="range"
                   >
                     {activeDaysData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />
@@ -1032,6 +1034,7 @@ const Retention = () => {
                     cy="50%"
                     outerRadius={70}
                     dataKey="value"
+                    nameKey="risk"
                   >
                     {churnRiskData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />
