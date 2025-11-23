@@ -145,23 +145,16 @@ const MetricasMRR = () => {
       <div className="flex-1 w-full">
         <header className="bg-card border-b border-border w-full">
           <div className="px-4 py-2">
-            <div className="flex items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={() => navigate("/financeiro")}
-                  className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition"
-                >
-                  <ArrowLeft size={18} />
-                </button>
-                <div>
-                  <h1 className="text-xl font-semibold text-foreground">Análise Completa de MRR</h1>
-                  <p className="text-xs text-muted-foreground">Todas as métricas de Monthly Recurring Revenue em um único painel</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-1 bg-card p-0.5 rounded-lg border border-border">
-                <Button size="sm" className="h-7 text-xs" style={{ backgroundColor: 'hsl(210, 25%, 85%)', color: 'hsl(210, 25%, 35%)' }}>Mensal</Button>
-                <Button size="sm" variant="ghost" className="h-7 text-xs text-muted-foreground">Trimestral</Button>
-                <Button size="sm" variant="ghost" className="h-7 text-xs text-muted-foreground">Anual</Button>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => navigate("/financeiro")}
+                className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition"
+              >
+                <ArrowLeft size={18} />
+              </button>
+              <div>
+                <h1 className="text-xl font-semibold text-foreground">Análise Completa de MRR</h1>
+                <p className="text-xs text-muted-foreground">Todas as métricas de Monthly Recurring Revenue em um único painel</p>
               </div>
             </div>
           </div>
