@@ -115,7 +115,14 @@ export default function NovaNewsletter() {
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold border-4 border-white shadow-sm ring-2 ${
                     currentStep === 4 ? 'bg-[hsl(var(--pastel-purple))] text-[hsl(var(--pastel-gray-dark))] ring-purple-100' : 'bg-white text-slate-400 ring-slate-200'
                   }`}>4</div>
-                  <span className={`text-sm font-medium ${currentStep === 4 ? 'text-[hsl(var(--pastel-gray-dark))]' : 'text-slate-400'}`}>Revisão</span>
+                  <span className={`text-sm font-medium ${currentStep === 4 ? 'text-[hsl(var(--pastel-gray-dark))]' : 'text-slate-400'}`}>Monetização</span>
+                </div>
+
+                <div className="flex flex-col items-center gap-2 bg-slate-50 px-4">
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold border-4 border-white shadow-sm ring-2 ${
+                    currentStep === 5 ? 'bg-[hsl(var(--pastel-purple))] text-[hsl(var(--pastel-gray-dark))] ring-purple-100' : 'bg-white text-slate-400 ring-slate-200'
+                  }`}>5</div>
+                  <span className={`text-sm font-medium ${currentStep === 5 ? 'text-[hsl(var(--pastel-gray-dark))]' : 'text-slate-400'}`}>Revisão</span>
                 </div>
               </div>
             </div>
@@ -456,46 +463,6 @@ export default function NovaNewsletter() {
                   </div>
                 </div>
 
-                <h3 className="font-bold text-slate-800 mb-4">Configurações de Monetização</h3>
-                <div className="bg-slate-50 border border-slate-200 rounded-xl p-6">
-                  <div className="flex items-center gap-6 mb-6">
-                    <label className="flex items-center gap-2 cursor-pointer">
-                      <input type="radio" name="monetization" className="w-4 h-4 text-purple-600 border-gray-300 focus:ring-purple-500" />
-                      <span className="text-slate-700 font-medium">Gratuita</span>
-                    </label>
-                    <label className="flex items-center gap-2 cursor-pointer">
-                      <input type="radio" name="monetization" className="w-4 h-4 text-purple-600 border-gray-300 focus:ring-purple-500" defaultChecked />
-                      <span className="text-slate-700 font-medium">Premium (Paga)</span>
-                    </label>
-                    <label className="flex items-center gap-2 cursor-pointer">
-                      <input type="radio" name="monetization" className="w-4 h-4 text-purple-600 border-gray-300 focus:ring-purple-500" />
-                      <span className="text-slate-700 font-medium">Freemium (Mista)</span>
-                    </label>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-2">Preço Mensal (R$)</label>
-                      <div className="relative">
-                        <span className="absolute left-3 top-3 text-slate-500">R$</span>
-                        <input type="number" className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-purple-200 outline-none" defaultValue="29.90" />
-                      </div>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-2">Preço Anual (R$)</label>
-                      <div className="relative">
-                        <span className="absolute left-3 top-3 text-slate-500">R$</span>
-                        <input type="number" className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-purple-200 outline-none" defaultValue="299.00" />
-                      </div>
-                    </div>
-                    <div className="flex items-end">
-                      <div className="text-sm text-slate-500 mb-3">
-                        <Info className="w-4 h-4 inline mr-1" /> A plataforma cobra 10% de taxa sobre assinaturas.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
                 {/* Communication Channels */}
                 <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 mt-8">
                   <div className="flex items-center justify-between mb-2">
@@ -541,6 +508,219 @@ export default function NovaNewsletter() {
               </div>
             )}
 
+            {/* Step 4: Monetization */}
+            {currentStep === 4 && (
+              <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 mb-8">
+                <h2 className="text-xl font-bold text-slate-800 mb-2">Configurações de Monetização</h2>
+                <p className="text-slate-500 mb-8">Configure os planos de assinatura, preços e estratégias de monetização</p>
+                
+                {/* Monetization Type */}
+                <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl p-6 mb-8 border border-purple-100">
+                  <h3 className="font-bold text-slate-800 mb-4">Modelo de Monetização</h3>
+                  <div className="flex gap-4 mb-6">
+                    <label className="flex-1 cursor-pointer">
+                      <input type="radio" name="monetization" className="sr-only peer" />
+                      <div className="p-4 bg-white rounded-lg border-2 border-slate-200 peer-checked:border-purple-400 peer-checked:ring-2 peer-checked:ring-purple-100 transition-all">
+                        <div className="font-bold text-slate-800 mb-1">Gratuita</div>
+                        <p className="text-xs text-slate-600">Conteúdo aberto para todos</p>
+                      </div>
+                    </label>
+                    <label className="flex-1 cursor-pointer">
+                      <input type="radio" name="monetization" className="sr-only peer" defaultChecked />
+                      <div className="p-4 bg-white rounded-lg border-2 border-slate-200 peer-checked:border-purple-400 peer-checked:ring-2 peer-checked:ring-purple-100 transition-all">
+                        <div className="font-bold text-slate-800 mb-1">Premium (Paga)</div>
+                        <p className="text-xs text-slate-600">Assinatura única</p>
+                      </div>
+                    </label>
+                    <label className="flex-1 cursor-pointer">
+                      <input type="radio" name="monetization" className="sr-only peer" />
+                      <div className="p-4 bg-white rounded-lg border-2 border-slate-200 peer-checked:border-purple-400 peer-checked:ring-2 peer-checked:ring-purple-100 transition-all">
+                        <div className="font-bold text-slate-800 mb-1">Freemium (Mista)</div>
+                        <p className="text-xs text-slate-600">Conteúdo básico grátis + Premium</p>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Pricing Plans */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                  <div className="border border-slate-200 rounded-xl p-6 bg-gradient-to-br from-white to-slate-50">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="font-bold text-slate-800">Plano Mensal</h3>
+                      <span className="px-3 py-1 text-xs font-medium rounded-full" style={{ backgroundColor: '#D4C5E8', color: '#4a5568' }}>Ativo</span>
+                    </div>
+                    <div className="mb-4">
+                      <label className="block text-sm font-medium text-slate-700 mb-2">Preço Mensal</label>
+                      <div className="relative">
+                        <span className="absolute left-3 top-3 text-slate-500 font-medium">R$</span>
+                        <input 
+                          type="number" 
+                          className="w-full pl-10 pr-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-purple-200 focus:border-purple-400 outline-none" 
+                          defaultValue="29.90" 
+                          step="0.01"
+                        />
+                      </div>
+                    </div>
+                    <div className="space-y-3">
+                      <label className="flex items-center gap-2">
+                        <input type="checkbox" className="w-4 h-4 rounded text-purple-600" />
+                        <span className="text-sm text-slate-700">Habilitar período de trial</span>
+                      </label>
+                      <div className="pl-6">
+                        <label className="block text-xs font-medium text-slate-600 mb-1">Duração do Trial (dias)</label>
+                        <input type="number" className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg bg-white" defaultValue="7" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="border border-slate-200 rounded-xl p-6 bg-gradient-to-br from-white to-slate-50">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="font-bold text-slate-800">Plano Anual</h3>
+                      <span className="px-3 py-1 text-xs font-medium rounded-full" style={{ backgroundColor: '#C5E8D4', color: '#4a5568' }}>Ativo</span>
+                    </div>
+                    <div className="mb-4">
+                      <label className="block text-sm font-medium text-slate-700 mb-2">Preço Anual</label>
+                      <div className="relative">
+                        <span className="absolute left-3 top-3 text-slate-500 font-medium">R$</span>
+                        <input 
+                          type="number" 
+                          className="w-full pl-10 pr-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-purple-200 focus:border-purple-400 outline-none" 
+                          defaultValue="299.00" 
+                          step="0.01"
+                        />
+                      </div>
+                      <p className="text-xs text-slate-500 mt-2">Economia de 16% comparado ao mensal</p>
+                    </div>
+                    <div className="space-y-3">
+                      <label className="flex items-center gap-2">
+                        <input type="checkbox" defaultChecked className="w-4 h-4 rounded text-purple-600" />
+                        <span className="text-sm text-slate-700">Habilitar período de trial</span>
+                      </label>
+                      <div className="pl-6">
+                        <label className="block text-xs font-medium text-slate-600 mb-1">Duração do Trial (dias)</label>
+                        <input type="number" className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg bg-white" defaultValue="14" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Billing & Invoice Settings */}
+                <div className="bg-slate-50 rounded-xl p-6 mb-8 border border-slate-200">
+                  <h3 className="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    <Calendar className="w-5 h-5" />
+                    Configurações de Faturamento
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-2">Dia de Vencimento da Fatura</label>
+                      <select className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-purple-200 focus:border-purple-400 outline-none bg-white">
+                        <option value="1">Dia 1 do mês</option>
+                        <option value="5" selected>Dia 5 do mês</option>
+                        <option value="10">Dia 10 do mês</option>
+                        <option value="15">Dia 15 do mês</option>
+                        <option value="20">Dia 20 do mês</option>
+                        <option value="signup">Data da assinatura</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-2">Método de Pagamento</label>
+                      <div className="space-y-2">
+                        <label className="flex items-center gap-2">
+                          <input type="checkbox" defaultChecked className="w-4 h-4 rounded text-purple-600" />
+                          <span className="text-sm text-slate-700">Cartão de Crédito</span>
+                        </label>
+                        <label className="flex items-center gap-2">
+                          <input type="checkbox" defaultChecked className="w-4 h-4 rounded text-purple-600" />
+                          <span className="text-sm text-slate-700">PIX</span>
+                        </label>
+                        <label className="flex items-center gap-2">
+                          <input type="checkbox" className="w-4 h-4 rounded text-purple-600" />
+                          <span className="text-sm text-slate-700">Boleto Bancário</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Discounts & Promotions */}
+                <div className="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-xl p-6 mb-8 border border-yellow-100">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-yellow-600">
+                        <DollarSign className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-slate-800">Descontos & Promoções</h3>
+                        <p className="text-sm text-slate-600">Configure cupons e ofertas especiais</p>
+                      </div>
+                    </div>
+                    <button className="px-4 py-2 bg-white text-yellow-700 rounded-lg font-medium hover:bg-yellow-50 transition text-sm flex items-center gap-2 shadow-sm">
+                      <Plus className="w-4 h-4" /> Novo Cupom
+                    </button>
+                  </div>
+
+                  <div className="space-y-3">
+                    <div className="bg-white rounded-lg p-4 border border-slate-200">
+                      <div className="flex items-center justify-between mb-3">
+                        <div>
+                          <div className="font-bold text-slate-800">LAUNCH2024</div>
+                          <p className="text-xs text-slate-500">Promoção de lançamento</p>
+                        </div>
+                        <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">Ativo</span>
+                      </div>
+                      <div className="grid grid-cols-3 gap-4 text-sm">
+                        <div>
+                          <span className="text-slate-600">Desconto:</span>
+                          <div className="font-bold text-slate-800">50% OFF</div>
+                        </div>
+                        <div>
+                          <span className="text-slate-600">Válido até:</span>
+                          <div className="font-bold text-slate-800">31/12/2024</div>
+                        </div>
+                        <div>
+                          <span className="text-slate-600">Usos:</span>
+                          <div className="font-bold text-slate-800">45/100</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="bg-white rounded-lg p-4 border border-slate-200">
+                      <div className="flex items-center justify-between mb-3">
+                        <div>
+                          <div className="font-bold text-slate-800">FRIEND20</div>
+                          <p className="text-xs text-slate-500">Indicação de amigos</p>
+                        </div>
+                        <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">Ativo</span>
+                      </div>
+                      <div className="grid grid-cols-3 gap-4 text-sm">
+                        <div>
+                          <span className="text-slate-600">Desconto:</span>
+                          <div className="font-bold text-slate-800">20% OFF</div>
+                        </div>
+                        <div>
+                          <span className="text-slate-600">Válido até:</span>
+                          <div className="font-bold text-slate-800">Indeterminado</div>
+                        </div>
+                        <div>
+                          <span className="text-slate-600">Usos:</span>
+                          <div className="font-bold text-slate-800">Ilimitado</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Platform Fee Info */}
+                <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 flex items-start gap-3">
+                  <Info className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                  <div className="text-sm text-slate-700">
+                    <strong>Informação importante:</strong> A plataforma cobra uma taxa de <strong>10%</strong> sobre todas as assinaturas processadas. 
+                    Esta taxa cobre processamento de pagamentos, infraestrutura e suporte técnico.
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Navigation Buttons */}
             <div className="flex items-center justify-between pt-6 border-t border-slate-200">
               <button 
@@ -551,11 +731,11 @@ export default function NovaNewsletter() {
                 Voltar
               </button>
               <button 
-                onClick={() => currentStep < 4 && setCurrentStep(currentStep + 1)}
+                onClick={() => currentStep < 5 && setCurrentStep(currentStep + 1)}
                 className="px-8 py-3 rounded-lg text-slate-700 font-bold hover:opacity-90 transition shadow-sm hover:shadow flex items-center gap-2"
                 style={{ backgroundColor: '#D4C5E8' }}
               >
-                Próxima Etapa <ArrowRight className="w-4 h-4" />
+                {currentStep === 4 ? 'Revisar & Finalizar' : 'Próxima Etapa'} <ArrowRight className="w-4 h-4" />
               </button>
             </div>
 
