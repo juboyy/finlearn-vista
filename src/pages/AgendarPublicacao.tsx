@@ -375,7 +375,7 @@ export default function AgendarPublicacao() {
       content: selectedContent,
       channels: selectedChannels
     });
-    navigate('/criar-newsletter');
+    navigate('/agendar-publicacao-revisao');
   };
 
   // Função para pegar imagem baseada no ID do conteúdo

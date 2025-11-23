@@ -59,6 +59,7 @@ import MinhaAssinatura from "./pages/MinhaAssinatura";
 import CriarNewsletter from "./pages/CriarNewsletter";
 import NovaNewsletter from "./pages/NovaNewsletter";
 import AgendarPublicacao from "./pages/AgendarPublicacao";
+import AgendarPublicacaoRevisao from "./pages/AgendarPublicacaoRevisao";
 import RecursosAdicionais from "./pages/RecursosAdicionais";
 import Analytics from "./pages/Analytics";
 import PerfilAnalytics from "./pages/PerfilAnalytics";
@@ -149,6 +150,7 @@ const App = () => {
             <Route path="/criar-newsletter" element={<CriarNewsletter />} />
             <Route path="/nova-newsletter" element={<NovaNewsletter />} />
             <Route path="/agendar-publicacao" element={<AgendarPublicacao />} />
+            <Route path="/agendar-publicacao-revisao" element={<AgendarPublicacaoRevisao />} />
             <Route path="/recursos-adicionais" element={<RecursosAdicionais />} />
             <Route path="/analytics" element={<Analytics />} />
             <Route path="/perfil-analytics" element={<PerfilAnalytics />} />
