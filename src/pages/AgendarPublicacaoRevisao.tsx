@@ -530,6 +530,47 @@ const AgendarPublicacaoRevisao = () => {
                   </button>
                 </div>
 
+                {/* Quality Check Score Card */}
+                <div className="bg-white rounded-2xl border border-slate-200 p-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div
+                      className="w-10 h-10 rounded-lg flex items-center justify-center"
+                      style={{ backgroundColor: 'hsl(var(--pastel-blue))' }}
+                    >
+                      <SpellCheck style={{ color: 'hsl(var(--pastel-gray-dark))' }} />
+                    </div>
+                    <h3 className="font-bold text-lg" style={{ color: 'hsl(var(--foreground))' }}>
+                      Verificação de Qualidade
+                    </h3>
+                  </div>
+                  <div className="space-y-3 mb-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm" style={{ color: 'hsl(var(--pastel-gray-dark))' }}>
+                        Score Geral
+                      </span>
+                      <span className="text-3xl font-bold" style={{ color: 'hsl(var(--foreground))' }}>
+                        95<span className="text-lg" style={{ color: 'hsl(var(--muted-foreground))' }}>/100</span>
+                      </span>
+                    </div>
+                    <div className="w-full bg-slate-100 rounded-full h-2">
+                      <div 
+                        className="h-2 rounded-full transition-all" 
+                        style={{ width: '95%', backgroundColor: 'hsl(var(--pastel-green))' }}
+                      ></div>
+                    </div>
+                  </div>
+                  <button
+                    className="w-full py-3 rounded-xl font-semibold hover:opacity-80 transition border border-slate-200 flex items-center justify-center gap-2"
+                    style={{ 
+                      backgroundColor: 'hsl(var(--pastel-blue-btn))',
+                      color: 'hsl(var(--pastel-gray-dark))'
+                    }}
+                  >
+                    <Info size={18} />
+                    Ver Detalhes
+                  </button>
+                </div>
+
                 {/* Reach Card */}
                 <div className="bg-white rounded-2xl border border-slate-200 p-6">
                   <h3 className="font-bold mb-4 flex items-center gap-2" style={{ color: 'hsl(var(--foreground))' }}>
