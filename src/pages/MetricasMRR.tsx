@@ -349,12 +349,8 @@ const MetricasMRR = () => {
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className={`h-8 gap-2 transition-all ${
-                    selectedMetric === 'Retention' 
-                      ? 'bg-primary text-primary-foreground hover:bg-primary/90' 
-                      : 'hover:bg-accent hover:text-accent-foreground'
-                  }`}
-                  onClick={() => setSelectedMetric('Retention')}
+                  className="h-8 gap-2 transition-all hover:bg-accent hover:text-accent-foreground"
+                  onClick={() => navigate('/retention')}
                 >
                   <UserCheck className="h-4 w-4" />
                   Retention
