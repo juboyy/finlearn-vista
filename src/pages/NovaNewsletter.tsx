@@ -74,7 +74,10 @@ export default function NovaNewsletter() {
               <button className="px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-lg font-medium transition">
                 Salvar Rascunho
               </button>
-              <button className="px-4 py-2 bg-slate-800 text-white rounded-lg font-medium hover:bg-slate-900 transition flex items-center gap-2">
+              <button 
+                onClick={() => navigate('/newsletter-preview')}
+                className="px-4 py-2 bg-slate-800 text-white rounded-lg font-medium hover:bg-slate-900 transition flex items-center gap-2"
+              >
                 <Eye className="w-4 h-4" /> Visualizar
               </button>
             </div>
