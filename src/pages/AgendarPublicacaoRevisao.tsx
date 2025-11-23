@@ -20,46 +20,74 @@ const AgendarPublicacaoRevisao = () => {
 
   const qualityItems = [
     { 
-      label: "Texto otimizado", 
+      label: "Linha de Assunto Otimizada", 
       status: "approved",
       icon: CheckCircle,
       color: "hsl(var(--pastel-green))",
-      description: "Conteúdo claro e objetivo"
+      bgColor: "hsl(152 32% 79%)",
+      description: "Taxa de abertura estimada: 28-32%",
+      statusText: "Aprovado",
+      hasButton: false
     },
     { 
-      label: "Links funcionais", 
+      label: "Links Funcionais", 
       status: "approved",
       icon: CheckCircle,
       color: "hsl(var(--pastel-green))",
-      description: "Todos os links verificados"
+      bgColor: "hsl(152 32% 79%)",
+      description: "Todos os 8 links foram verificados",
+      statusText: "Aprovado",
+      hasButton: false
     },
     { 
-      label: "Imagens otimizadas", 
+      label: "Compatibilidade Mobile", 
       status: "approved",
       icon: CheckCircle,
       color: "hsl(var(--pastel-green))",
-      description: "Tamanho e formato corretos"
+      bgColor: "hsl(152 32% 79%)",
+      description: "Design responsivo testado",
+      statusText: "Aprovado",
+      hasButton: false
     },
     { 
-      label: "Palavras de spam", 
+      label: "Palavras de Spam", 
       status: "warning",
       icon: AlertTriangle,
       color: "hsl(44 45% 56%)",
-      description: "2 palavras detectadas"
+      bgColor: "hsl(44 78% 89%)",
+      description: "1 palavra detectada: \"Grátis\"",
+      statusText: "Revisar",
+      hasButton: true
     },
     { 
-      label: "Compatibilidade mobile", 
+      label: "Conformidade LGPD", 
       status: "approved",
       icon: CheckCircle,
       color: "hsl(var(--pastel-green))",
-      description: "Design responsivo validado"
+      bgColor: "hsl(152 32% 79%)",
+      description: "Link de cancelamento incluído",
+      statusText: "Aprovado",
+      hasButton: false
     },
     { 
-      label: "Tamanho do conteúdo", 
-      status: "approved",
-      icon: CheckCircle,
+      label: "Otimização SEO", 
+      status: "info",
+      icon: Search,
+      color: "hsl(var(--pastel-blue))",
+      bgColor: "hsl(206 35% 79%)",
+      description: "Meta tags e palavras-chave otimizadas",
+      statusText: "Detalhes",
+      hasButton: true
+    },
+    { 
+      label: "Segmentação GEO", 
+      status: "info",
+      icon: Globe,
       color: "hsl(var(--pastel-green))",
-      description: "Dentro do limite ideal"
+      bgColor: "hsl(152 32% 79%)",
+      description: "Brasil: 95% • Internacional: 5%",
+      statusText: "Configurar",
+      hasButton: true
     },
   ];
   const [activeDevice, setActiveDevice] = useState<"desktop" | "mobile">("desktop");
@@ -683,59 +711,65 @@ const AgendarPublicacaoRevisao = () => {
                           return (
                             <div
                               key={index}
-                              className="flex items-center gap-4 p-4 rounded-xl border transition-all duration-300"
+                              className="flex items-center justify-between p-4 rounded-xl border transition-all duration-300"
                               style={{
-                                backgroundColor: isLoading ? 'hsl(220 13% 95%)' : 'white',
+                                backgroundColor: isLoading ? 'hsl(220 13% 95%)' : item.bgColor,
                                 borderColor: isLoading ? 'hsl(220 13% 90%)' : 'hsl(var(--border))',
                                 opacity: isLoading ? 0.6 : 1
                               }}
                             >
-                              {/* Icon/Loader on the left */}
-                              <div className="shrink-0">
-                                {isLoading ? (
-                                  <Loader2 
-                                    size={24} 
-                                    className="animate-spin" 
-                                    style={{ color: 'hsl(220 13% 70%)' }}
-                                  />
-                                ) : (
-                                  <Icon size={24} style={{ color: item.color }} />
-                                )}
-                              </div>
-
-                              {/* Content */}
-                              <div className="flex-1">
-                                <p 
-                                  className="font-semibold mb-1"
-                                  style={{ 
-                                    color: isLoading ? 'hsl(220 13% 70%)' : 'hsl(var(--foreground))'
-                                  }}
-                                >
-                                  {item.label}
-                                </p>
-                                <p 
-                                  className="text-sm"
-                                  style={{ 
-                                    color: isLoading ? 'hsl(220 13% 75%)' : 'hsl(var(--muted-foreground))'
-                                  }}
-                                >
-                                  {isLoading ? 'Verificando...' : item.description}
-                                </p>
-                              </div>
-
-                              {/* Status Badge */}
-                              {!isLoading && (
-                                <div
-                                  className="px-3 py-1 rounded-full text-xs font-medium"
-                                  style={{
-                                    backgroundColor: item.status === 'approved' 
-                                      ? 'hsl(var(--pastel-green-btn))'
-                                      : 'hsl(44 45% 82%)',
-                                    color: 'hsl(var(--pastel-gray-dark))'
-                                  }}
-                                >
-                                  {item.status === 'approved' ? 'Aprovado' : 'Atenção'}
+                              <div className="flex items-center gap-3">
+                                {/* Icon/Loader on the left */}
+                                <div className="shrink-0">
+                                  {isLoading ? (
+                                    <Loader2 
+                                      size={20} 
+                                      className="animate-spin" 
+                                      style={{ color: 'hsl(220 13% 70%)' }}
+                                    />
+                                  ) : (
+                                    <Icon size={20} style={{ color: 'hsl(var(--pastel-gray-dark))' }} />
+                                  )}
                                 </div>
+
+                                {/* Content */}
+                                <div>
+                                  <p 
+                                    className="font-medium text-sm mb-1"
+                                    style={{ 
+                                      color: isLoading ? 'hsl(220 13% 70%)' : 'hsl(var(--foreground))'
+                                    }}
+                                  >
+                                    {item.label}
+                                  </p>
+                                  <p 
+                                    className="text-xs"
+                                    style={{ 
+                                      color: isLoading ? 'hsl(220 13% 75%)' : 'hsl(var(--muted-foreground))'
+                                    }}
+                                  >
+                                    {isLoading ? 'Verificando...' : item.description}
+                                  </p>
+                                </div>
+                              </div>
+
+                              {/* Status Text/Button */}
+                              {!isLoading && (
+                                item.hasButton ? (
+                                  <button 
+                                    className="font-bold text-sm hover:underline shrink-0"
+                                    style={{ color: 'hsl(var(--pastel-gray-dark))' }}
+                                  >
+                                    {item.statusText}
+                                  </button>
+                                ) : (
+                                  <span 
+                                    className="font-bold text-sm shrink-0"
+                                    style={{ color: 'hsl(var(--pastel-gray-dark))' }}
+                                  >
+                                    {item.statusText}
+                                  </span>
+                                )
                               )}
                             </div>
                           );
