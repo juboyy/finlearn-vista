@@ -1090,6 +1090,13 @@ export default function NovaNewsletter() {
                       </div>
                       <h3 className="font-bold text-[hsl(var(--pastel-gray-dark))]">Tema Visual</h3>
                     </div>
+                    <button 
+                      onClick={() => navigate('/newsletter-preview')}
+                      className="px-4 py-2 rounded-lg text-sm font-medium text-slate-700 hover:opacity-90 transition flex items-center gap-2" 
+                      style={{ backgroundColor: '#D4C5E8' }}
+                    >
+                      <Eye className="w-4 h-4" /> Visualizar Página
+                    </button>
                   </div>
                   <div className="flex items-center gap-4">
                     <div 
