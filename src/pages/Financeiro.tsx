@@ -120,12 +120,12 @@ export default function Financeiro() {
               <Button 
                 onClick={() => navigate("/metricas-mrr")}
                 className="flex items-center gap-2 transition-all duration-300 hover:scale-105"
-                style={{ backgroundColor: CHART_COLORS.green, color: 'hsl(152, 32%, 28%)' }}
+                style={{ backgroundColor: 'hsl(152, 28%, 75%)', color: 'hsl(152, 32%, 28%)' }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'hsl(152, 32%, 55%)';
+                  e.currentTarget.style.backgroundColor = 'hsl(152, 28%, 68%)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = CHART_COLORS.green;
+                  e.currentTarget.style.backgroundColor = 'hsl(152, 28%, 75%)';
                 }}
               >
                 <BarChart3 size={18} />
