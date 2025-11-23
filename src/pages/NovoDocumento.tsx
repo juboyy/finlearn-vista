@@ -41,6 +41,7 @@ export default function NovoDocumento() {
   const [editorContent, setEditorContent] = useState("");
   const [chartDrawerOpen, setChartDrawerOpen] = useState(false);
   const [draggedChart, setDraggedChart] = useState<string | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
   const [selectedAgent, setSelectedAgent] = useState({
     name: "Agente Analista",
     description: "Especialista em análise de mercado",
@@ -226,18 +227,26 @@ export default function NovoDocumento() {
 
   const handleDragStart = (chartId: string) => {
     setDraggedChart(chartId);
+    setIsDragging(true);
   };
 
   const handleDragEnd = () => {
     setDraggedChart(null);
+    setIsDragging(false);
   };
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
+    setIsDragging(false);
+    
     if (draggedChart) {
-      console.log('Gráfico adicionado:', draggedChart);
-      // Aqui você pode adicionar a lógica para inserir o gráfico no documento
-      setChartDrawerOpen(false);
+      const chart = chartTypes.find(c => c.id === draggedChart);
+      if (chart) {
+        // Insere o marcador do gráfico no markdown
+        const chartMarkdown = `\n\n### ${chart.name}\n\n![${chart.name}](chart:${chart.id})\n\n*${chart.description}*\n\n`;
+        setEditorContent(prev => prev + chartMarkdown);
+        setChartDrawerOpen(false);
+      }
     }
   };
 
@@ -520,11 +529,31 @@ export default function NovoDocumento() {
 
         {/* Document Content */}
         <div 
-          className="p-8"
+          className="p-8 relative"
           onDrop={handleDrop}
           onDragOver={handleDragOver}
         >
-          <div className="max-w-4xl mx-auto">
+          {/* Drop Zone Overlay */}
+          {isDragging && (
+            <div className="fixed inset-0 z-40 pointer-events-none">
+              <div className="absolute inset-0 bg-primary/5 backdrop-blur-sm animate-fade-in" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="bg-card border-2 border-dashed border-primary rounded-xl p-8 shadow-lg animate-scale-in">
+                  <div className="flex flex-col items-center gap-4">
+                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+                      <BarChart3 className="text-primary" size={32} />
+                    </div>
+                    <div className="text-center">
+                      <h3 className="text-lg font-semibold text-foreground mb-1">Solte o gráfico aqui</h3>
+                      <p className="text-sm text-muted-foreground">O gráfico será inserido no documento</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+          
+          <div className={`max-w-4xl mx-auto transition-opacity ${isDragging ? 'opacity-30' : 'opacity-100'}`}>
             {isNewDocument ? (
               <div className="bg-card border border-border rounded-xl min-h-[600px]">
                 <MarkdownEditor 
@@ -807,8 +836,10 @@ export default function NovoDocumento() {
                 draggable
                 onDragStart={() => handleDragStart(chart.id)}
                 onDragEnd={handleDragEnd}
-                className={`rounded-lg border-2 border-border hover:border-primary transition-all cursor-move overflow-hidden ${
-                  draggedChart === chart.id ? 'opacity-50 scale-95' : ''
+                className={`rounded-lg border-2 transition-all cursor-move overflow-hidden ${
+                  draggedChart === chart.id 
+                    ? 'opacity-30 scale-95 border-primary' 
+                    : 'border-border hover:border-primary hover:shadow-md'
                 }`}
               >
                 <div className="p-4">
