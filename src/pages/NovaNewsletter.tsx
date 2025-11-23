@@ -5,7 +5,8 @@ import {
   Newspaper, Podcast, GraduationCap, Bot, Book, Video, FileText, BarChart3, 
   FileCheck, FlaskConical, Upload, Plus, ChevronRight, Check, Bold, 
   Italic, Underline, List, Link, Image, Calendar, Users, DollarSign,
-  ChartPie, MessageCircle, Eye, ArrowRight, ArrowLeft, Info
+  ChartPie, MessageCircle, Eye, ArrowRight, ArrowLeft, Info, Mail, 
+  MessageSquare, Smartphone, Hash, Send
 } from "lucide-react";
 
 export default function NovaNewsletter() {
@@ -14,12 +15,21 @@ export default function NovaNewsletter() {
   const [selectedProducts, setSelectedProducts] = useState<string[]>(["newspaper"]);
   const [selectedFrequency, setSelectedFrequency] = useState("");
   const [selectedColor, setSelectedColor] = useState("#B8D4E8");
+  const [selectedChannels, setSelectedChannels] = useState<string[]>(["email"]);
 
   const toggleProduct = (productId: string) => {
     setSelectedProducts(prev => 
       prev.includes(productId) 
         ? prev.filter(id => id !== productId)
         : [...prev, productId]
+    );
+  };
+
+  const toggleChannel = (channelId: string) => {
+    setSelectedChannels(prev => 
+      prev.includes(channelId) 
+        ? prev.filter(id => id !== channelId)
+        : [...prev, channelId]
     );
   };
 
@@ -483,6 +493,48 @@ export default function NovaNewsletter() {
                         <Info className="w-4 h-4 inline mr-1" /> A plataforma cobra 10% de taxa sobre assinaturas.
                       </div>
                     </div>
+                  </div>
+                </div>
+
+                {/* Communication Channels */}
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 mt-8">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="text-lg font-bold text-slate-800">Permissão de Canais de Envio</h3>
+                    <button className="px-4 py-2 rounded-lg text-sm font-medium text-slate-700 hover:opacity-90 transition flex items-center gap-2" style={{ backgroundColor: '#D4C5E8' }}>
+                      <Eye className="w-4 h-4" /> Preview
+                    </button>
+                  </div>
+                  <p className="text-slate-500 mb-6">Selecione os canais pelos quais permite enviar o conteúdo</p>
+                  
+                  <div className="flex gap-4 flex-wrap">
+                    {[
+                      { id: 'email', name: 'Email', icon: Mail },
+                      { id: 'sms', name: 'SMS', icon: MessageSquare },
+                      { id: 'whatsapp', name: 'WhatsApp', icon: MessageCircle },
+                      { id: 'rcs', name: 'RCS', icon: Smartphone },
+                      { id: 'mms', name: 'MMS', icon: Image },
+                      { id: 'slack', name: 'Slack', icon: Hash },
+                      { id: 'telegram', name: 'Telegram', icon: Send }
+                    ].map((channel) => {
+                      const Icon = channel.icon;
+                      const isSelected = selectedChannels.includes(channel.id);
+                      
+                      return (
+                        <button
+                          key={channel.id}
+                          onClick={() => toggleChannel(channel.id)}
+                          className={`flex flex-col items-center justify-center gap-2 px-6 py-4 rounded-xl border-2 transition-all ${
+                            isSelected 
+                              ? 'border-[#B8D4E8] shadow-sm' 
+                              : 'border-slate-200 hover:border-slate-300'
+                          }`}
+                          style={isSelected ? { backgroundColor: '#B8D4E8' } : { backgroundColor: 'white' }}
+                        >
+                          <Icon className="w-6 h-6 text-slate-700" />
+                          <span className="text-sm font-medium text-slate-700">{channel.name}</span>
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
