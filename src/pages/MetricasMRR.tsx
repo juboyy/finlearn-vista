@@ -139,40 +139,40 @@ const MetricasMRR = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background flex">
+    <div className="min-h-screen bg-background w-full">
       <SidebarFix />
       
-      <div className="flex-1 flex flex-col lg:ml-64">
+      <div className="flex-1 lg:ml-64">
         <header className="bg-card border-b border-border sticky top-0 z-10">
-          <div className="px-8 py-4">
+          <div className="px-4 py-2">
             <div className="flex items-center justify-between gap-4">
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3">
                 <button
                   onClick={() => navigate("/financeiro")}
                   className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition"
                 >
-                  <ArrowLeft size={20} />
+                  <ArrowLeft size={18} />
                 </button>
                 <div>
-                  <h1 className="text-2xl font-semibold text-foreground">Análise Completa de MRR</h1>
-                  <p className="text-sm text-muted-foreground mt-1">Todas as métricas de Monthly Recurring Revenue em um único painel</p>
+                  <h1 className="text-xl font-semibold text-foreground">Análise Completa de MRR</h1>
+                  <p className="text-xs text-muted-foreground">Todas as métricas de Monthly Recurring Revenue em um único painel</p>
                 </div>
               </div>
-              <div className="flex items-center gap-2 bg-card p-1 rounded-lg border border-border">
-                <Button size="sm" style={{ backgroundColor: 'hsl(210, 25%, 85%)', color: 'hsl(210, 25%, 35%)' }}>Mensal</Button>
-                <Button size="sm" variant="ghost" className="text-muted-foreground">Trimestral</Button>
-                <Button size="sm" variant="ghost" className="text-muted-foreground">Anual</Button>
+              <div className="flex items-center gap-1 bg-card p-0.5 rounded-lg border border-border">
+                <Button size="sm" className="h-7 text-xs" style={{ backgroundColor: 'hsl(210, 25%, 85%)', color: 'hsl(210, 25%, 35%)' }}>Mensal</Button>
+                <Button size="sm" variant="ghost" className="h-7 text-xs text-muted-foreground">Trimestral</Button>
+                <Button size="sm" variant="ghost" className="h-7 text-xs text-muted-foreground">Anual</Button>
               </div>
             </div>
           </div>
         </header>
 
-        <main className="flex-1 p-8 overflow-y-auto">
+        <main className="p-4 overflow-y-auto">
           {/* KPI Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
-            <div className="bg-card p-5 rounded-xl border border-border hover:border-border/60 transition-all">
-              <div className="flex items-start justify-between mb-3">
-                <div className="h-10 w-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(210, 35%, 85%)' }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 mb-4">
+            <div className="bg-card p-4 rounded-xl border border-border hover:border-border/60 transition-all">
+              <div className="flex items-start justify-between mb-2">
+                <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(210, 35%, 85%)' }}>
                   <DollarSign className="text-lg" style={{ color: colors.blue }} />
                 </div>
                 <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: 'hsl(152, 32%, 85%)', color: 'hsl(152, 32%, 28%)' }}>+12.5%</span>
@@ -182,9 +182,9 @@ const MetricasMRR = () => {
               <p className="text-xs text-muted-foreground mt-1">vs R$ 428.9k mês anterior</p>
             </div>
 
-            <div className="bg-card p-5 rounded-xl border border-border hover:border-border/60 transition-all">
-              <div className="flex items-start justify-between mb-3">
-                <div className="h-10 w-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(152, 25%, 85%)' }}>
+            <div className="bg-card p-4 rounded-xl border border-border hover:border-border/60 transition-all">
+              <div className="flex items-start justify-between mb-2">
+                <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(152, 25%, 85%)' }}>
                   <TrendingUp className="text-lg" style={{ color: colors.green }} />
                 </div>
                 <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: 'hsl(152, 32%, 85%)', color: 'hsl(152, 32%, 28%)' }}>+R$ 60k</span>
@@ -194,9 +194,9 @@ const MetricasMRR = () => {
               <p className="text-xs text-muted-foreground mt-1">Novos assinantes</p>
             </div>
 
-            <div className="bg-card p-5 rounded-xl border border-border hover:border-border/60 transition-all">
-              <div className="flex items-start justify-between mb-3">
-                <div className="h-10 w-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(270, 25%, 85%)' }}>
+            <div className="bg-card p-4 rounded-xl border border-border hover:border-border/60 transition-all">
+              <div className="flex items-start justify-between mb-2">
+                <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(270, 25%, 85%)' }}>
                   <BarChart3 className="text-lg" style={{ color: colors.purple }} />
                 </div>
                 <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: 'hsl(152, 32%, 85%)', color: 'hsl(152, 32%, 28%)' }}>+R$ 25k</span>
@@ -206,9 +206,9 @@ const MetricasMRR = () => {
               <p className="text-xs text-muted-foreground mt-1">Upgrades e upsells</p>
             </div>
 
-            <div className="bg-card p-5 rounded-xl border border-border hover:border-border/60 transition-all">
-              <div className="flex items-start justify-between mb-3">
-                <div className="h-10 w-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(350, 35%, 85%)' }}>
+            <div className="bg-card p-4 rounded-xl border border-border hover:border-border/60 transition-all">
+              <div className="flex items-start justify-between mb-2">
+                <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(350, 35%, 85%)' }}>
                   <TrendingDown className="text-lg" style={{ color: colors.red }} />
                 </div>
                 <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: 'hsl(350, 35%, 85%)', color: 'hsl(350, 35%, 35%)' }}>-R$ 12.5k</span>
@@ -218,9 +218,9 @@ const MetricasMRR = () => {
               <p className="text-xs text-muted-foreground mt-1">Cancelamentos</p>
             </div>
 
-            <div className="bg-card p-5 rounded-xl border border-border hover:border-border/60 transition-all">
-              <div className="flex items-start justify-between mb-3">
-                <div className="h-10 w-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(45, 35%, 85%)' }}>
+            <div className="bg-card p-4 rounded-xl border border-border hover:border-border/60 transition-all">
+              <div className="flex items-start justify-between mb-2">
+                <div className="h-9 w-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(45, 35%, 85%)' }}>
                   <Percent className="text-lg" style={{ color: colors.yellow }} />
                 </div>
                 <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: 'hsl(210, 25%, 85%)', color: 'hsl(210, 25%, 35%)' }}>+0.2%</span>
@@ -232,15 +232,15 @@ const MetricasMRR = () => {
           </div>
 
           {/* Movimentação e Composição */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-            <div className="lg:col-span-2 bg-card p-6 rounded-xl border border-border">
-              <div className="flex justify-between items-center mb-5">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
+            <div className="lg:col-span-2 bg-card p-4 rounded-xl border border-border">
+              <div className="flex justify-between items-center mb-3">
                 <div>
-                  <h3 className="text-lg font-bold text-foreground">Movimentação de MRR (Waterfall)</h3>
-                  <p className="text-xs text-muted-foreground mt-1">Visualização detalhada das mudanças no MRR</p>
+                  <h3 className="text-base font-bold text-foreground">Movimentação de MRR (Waterfall)</h3>
+                  <p className="text-xs text-muted-foreground">Visualização detalhada das mudanças no MRR</p>
                 </div>
               </div>
-              <ResponsiveContainer width="100%" height={300}>
+              <ResponsiveContainer width="100%" height={260}>
                 <BarChart data={waterfallData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                   <XAxis dataKey="name" tick={{ fontSize: 11 }} angle={-45} textAnchor="end" height={80} />
@@ -268,11 +268,11 @@ const MetricasMRR = () => {
             <div className="bg-card p-6 rounded-xl border border-border">
               <div className="flex justify-between items-center mb-5">
                 <div>
-                  <h3 className="text-lg font-bold text-foreground">Composição MRR</h3>
-                  <p className="text-xs text-muted-foreground mt-1">Por tipo de movimento</p>
+                  <h3 className="text-base font-bold text-foreground">Composição MRR</h3>
+                  <p className="text-xs text-muted-foreground">Por tipo de movimento</p>
                 </div>
               </div>
-              <ResponsiveContainer width="100%" height={300}>
+              <ResponsiveContainer width="100%" height={260}>
                 <PieChart>
                   <Pie
                     data={compositionData}
@@ -295,15 +295,15 @@ const MetricasMRR = () => {
           </div>
 
           {/* Evolução e Net New MRR */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-            <div className="bg-card p-6 rounded-xl border border-border">
-              <div className="flex justify-between items-center mb-5">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+            <div className="bg-card p-4 rounded-xl border border-border">
+              <div className="flex justify-between items-center mb-3">
                 <div>
-                  <h3 className="text-lg font-bold text-foreground">Evolução do MRR (12 meses)</h3>
-                  <p className="text-xs text-muted-foreground mt-1">Tendência histórica mensal</p>
+                  <h3 className="text-base font-bold text-foreground">Evolução do MRR (12 meses)</h3>
+                  <p className="text-xs text-muted-foreground">Tendência histórica mensal</p>
                 </div>
               </div>
-              <ResponsiveContainer width="100%" height={300}>
+              <ResponsiveContainer width="100%" height={240}>
                 <AreaChart data={evolutionData}>
                   <defs>
                     <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
@@ -323,14 +323,14 @@ const MetricasMRR = () => {
               </ResponsiveContainer>
             </div>
 
-            <div className="bg-card p-6 rounded-xl border border-border">
-              <div className="flex justify-between items-center mb-5">
+            <div className="bg-card p-4 rounded-xl border border-border">
+              <div className="flex justify-between items-center mb-3">
                 <div>
-                  <h3 className="text-lg font-bold text-foreground">Net New MRR</h3>
-                  <p className="text-xs text-muted-foreground mt-1">Novo + Expansão - Contração - Churn</p>
+                  <h3 className="text-base font-bold text-foreground">Net New MRR</h3>
+                  <p className="text-xs text-muted-foreground">Novo + Expansão - Contração - Churn</p>
                 </div>
               </div>
-              <ResponsiveContainer width="100%" height={300}>
+              <ResponsiveContainer width="100%" height={260}>
                 <BarChart data={netNewMRRData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                   <XAxis dataKey="month" tick={{ fontSize: 11 }} />
@@ -346,9 +346,9 @@ const MetricasMRR = () => {
           </div>
 
           {/* Mini Charts */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-            <div className="bg-card p-5 rounded-xl border border-border">
-              <h4 className="text-xs font-bold text-muted-foreground uppercase mb-4">MRR por Plano</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+            <div className="bg-card p-3 rounded-xl border border-border">
+              <h4 className="text-xs font-bold text-muted-foreground uppercase mb-3">MRR por Plano</h4>
               <ResponsiveContainer width="100%" height={150}>
                 <PieChart>
                   <Pie
@@ -369,8 +369,8 @@ const MetricasMRR = () => {
               </ResponsiveContainer>
             </div>
 
-            <div className="bg-card p-5 rounded-xl border border-border">
-              <h4 className="text-xs font-bold text-muted-foreground uppercase mb-4">Contração MRR</h4>
+            <div className="bg-card p-3 rounded-xl border border-border">
+              <h4 className="text-xs font-bold text-muted-foreground uppercase mb-3">Contração MRR</h4>
               <ResponsiveContainer width="100%" height={150}>
                 <AreaChart data={contractionData}>
                   <defs>
@@ -391,8 +391,8 @@ const MetricasMRR = () => {
               </div>
             </div>
 
-            <div className="bg-card p-5 rounded-xl border border-border">
-              <h4 className="text-xs font-bold text-muted-foreground uppercase mb-4">Reativação MRR</h4>
+            <div className="bg-card p-3 rounded-xl border border-border">
+              <h4 className="text-xs font-bold text-muted-foreground uppercase mb-3">Reativação MRR</h4>
               <ResponsiveContainer width="100%" height={150}>
                 <AreaChart data={reactivationData}>
                   <defs>
@@ -413,8 +413,8 @@ const MetricasMRR = () => {
               </div>
             </div>
 
-            <div className="bg-card p-5 rounded-xl border border-border">
-              <h4 className="text-xs font-bold text-muted-foreground uppercase mb-4">MRR Médio/Cliente</h4>
+            <div className="bg-card p-3 rounded-xl border border-border">
+              <h4 className="text-xs font-bold text-muted-foreground uppercase mb-3">MRR Médio/Cliente</h4>
               <ResponsiveContainer width="100%" height={150}>
                 <LineChart data={arpuData}>
                   <XAxis dataKey="month" tick={{ fontSize: 9 }} hide />
@@ -431,15 +431,15 @@ const MetricasMRR = () => {
           </div>
 
           {/* Advanced Metrics */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-            <div className="bg-card p-6 rounded-xl border border-border">
-              <div className="flex justify-between items-center mb-5">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
+            <div className="bg-card p-4 rounded-xl border border-border">
+              <div className="flex justify-between items-center mb-3">
                 <div>
-                  <h3 className="text-lg font-bold text-foreground">Quick Ratio MRR</h3>
-                  <p className="text-xs text-muted-foreground mt-1">(Novo + Expansão) / (Contração + Churn)</p>
+                  <h3 className="text-base font-bold text-foreground">Quick Ratio MRR</h3>
+                  <p className="text-xs text-muted-foreground">(Novo + Expansão) / (Contração + Churn)</p>
                 </div>
               </div>
-              <ResponsiveContainer width="100%" height={240}>
+              <ResponsiveContainer width="100%" height={200}>
                 <BarChart data={quickRatioData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                   <XAxis dataKey="month" tick={{ fontSize: 11 }} />
@@ -450,14 +450,14 @@ const MetricasMRR = () => {
               </ResponsiveContainer>
             </div>
 
-            <div className="bg-card p-6 rounded-xl border border-border">
-              <div className="flex justify-between items-center mb-5">
+            <div className="bg-card p-4 rounded-xl border border-border">
+              <div className="flex justify-between items-center mb-3">
                 <div>
-                  <h3 className="text-lg font-bold text-foreground">MRR Churn Rate</h3>
-                  <p className="text-xs text-muted-foreground mt-1">Taxa mensal de perda de MRR</p>
+                  <h3 className="text-base font-bold text-foreground">MRR Churn Rate</h3>
+                  <p className="text-xs text-muted-foreground">Taxa mensal de perda de MRR</p>
                 </div>
               </div>
-              <ResponsiveContainer width="100%" height={240}>
+              <ResponsiveContainer width="100%" height={200}>
                 <LineChart data={churnRateData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                   <XAxis dataKey="month" tick={{ fontSize: 11 }} />
@@ -471,14 +471,14 @@ const MetricasMRR = () => {
               </ResponsiveContainer>
             </div>
 
-            <div className="bg-card p-6 rounded-xl border border-border">
-              <div className="flex justify-between items-center mb-5">
+            <div className="bg-card p-4 rounded-xl border border-border">
+              <div className="flex justify-between items-center mb-3">
                 <div>
-                  <h3 className="text-lg font-bold text-foreground">MRR Expansion Rate</h3>
-                  <p className="text-xs text-muted-foreground mt-1">Taxa de crescimento via expansão</p>
+                  <h3 className="text-base font-bold text-foreground">MRR Expansion Rate</h3>
+                  <p className="text-xs text-muted-foreground">Taxa de crescimento via expansão</p>
                 </div>
               </div>
-              <ResponsiveContainer width="100%" height={240}>
+              <ResponsiveContainer width="100%" height={200}>
                 <LineChart data={expansionRateData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                   <XAxis dataKey="month" tick={{ fontSize: 11 }} />
@@ -494,12 +494,12 @@ const MetricasMRR = () => {
           </div>
 
           {/* Segment Distribution */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-            <div className="bg-card p-6 rounded-xl border border-border">
-              <div className="flex justify-between items-center mb-5">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+            <div className="bg-card p-4 rounded-xl border border-border">
+              <div className="flex justify-between items-center mb-3">
                 <div>
-                  <h3 className="text-lg font-bold text-foreground">Análise de Coorte MRR</h3>
-                  <p className="text-xs text-muted-foreground mt-1">Retenção de receita por coorte de entrada</p>
+                  <h3 className="text-base font-bold text-foreground">Análise de Coorte MRR</h3>
+                  <p className="text-xs text-muted-foreground">Retenção de receita por coorte de entrada</p>
                 </div>
               </div>
               <div className="overflow-x-auto">
@@ -545,14 +545,14 @@ const MetricasMRR = () => {
               </div>
             </div>
 
-            <div className="bg-card p-6 rounded-xl border border-border">
-              <div className="flex justify-between items-center mb-5">
+            <div className="bg-card p-4 rounded-xl border border-border">
+              <div className="flex justify-between items-center mb-3">
                 <div>
-                  <h3 className="text-lg font-bold text-foreground">Distribuição MRR por Segmento</h3>
-                  <p className="text-xs text-muted-foreground mt-1">Breakdown por tipo de cliente</p>
+                  <h3 className="text-base font-bold text-foreground">Distribuição MRR por Segmento</h3>
+                  <p className="text-xs text-muted-foreground">Breakdown por tipo de cliente</p>
                 </div>
               </div>
-              <ResponsiveContainer width="100%" height={320}>
+              <ResponsiveContainer width="100%" height={280}>
                 <BarChart data={segmentDistributionData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                   <XAxis dataKey="name" tick={{ fontSize: 11 }} />
@@ -572,11 +572,11 @@ const MetricasMRR = () => {
           </div>
 
           {/* Forecast */}
-          <div className="bg-card p-6 rounded-xl border border-border mb-6">
-            <div className="flex justify-between items-center mb-5">
+          <div className="bg-card p-4 rounded-xl border border-border mb-4">
+            <div className="flex justify-between items-center mb-3">
               <div>
-                <h3 className="text-lg font-bold text-foreground">Projeção de MRR (6 meses)</h3>
-                <p className="text-xs text-muted-foreground mt-1">Baseado em tendências históricas e pipeline</p>
+                <h3 className="text-base font-bold text-foreground">Projeção de MRR (6 meses)</h3>
+                <p className="text-xs text-muted-foreground">Baseado em tendências históricas e pipeline</p>
               </div>
               <div className="flex gap-2">
                 <span className="text-xs px-3 py-1 rounded-full" style={{ backgroundColor: 'hsl(210, 25%, 85%)', color: 'hsl(210, 25%, 35%)' }}>Conservador</span>
@@ -584,7 +584,7 @@ const MetricasMRR = () => {
                 <span className="text-xs px-3 py-1 rounded-full" style={{ backgroundColor: 'hsl(210, 25%, 85%)', color: 'hsl(210, 25%, 35%)' }}>Otimista</span>
               </div>
             </div>
-            <ResponsiveContainer width="100%" height={350}>
+            <ResponsiveContainer width="100%" height={280}>
               <LineChart data={forecastData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                 <XAxis dataKey="month" tick={{ fontSize: 11 }} />
