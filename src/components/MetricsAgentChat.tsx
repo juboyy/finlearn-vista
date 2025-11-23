@@ -15,21 +15,45 @@ const agentConfig = {
     name: "Especialista em MRR",
     description: "Análise de Receita Recorrente Mensal",
     image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-74fa07dc19664888168d.png",
+    suggestions: [
+      "Como interpretar a variação do MRR?",
+      "Qual é um bom crescimento de MRR?",
+      "Como calcular expansão vs contração?",
+      "Estratégias para aumentar o MRR"
+    ]
   },
   Churn: {
     name: "Especialista em Churn",
     description: "Análise de Cancelamentos e Retenção",
     image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4f08e86bcd-772ce53ecbb47d504bde.png",
+    suggestions: [
+      "Qual é uma taxa de churn saudável?",
+      "Como reduzir o churn rapidamente?",
+      "O que fazer com churn involuntário?",
+      "Como analisar motivos de cancelamento?"
+    ]
   },
   Retention: {
     name: "Especialista em Retenção",
     description: "Análise de Engajamento e Lealdade",
     image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/f28f1efee6-bb8cd63f0a8ea0129291.png",
+    suggestions: [
+      "Como melhorar a retenção de clientes?",
+      "O que é uma boa taxa de retenção?",
+      "Como analisar cohorts de retenção?",
+      "Estratégias para aumentar lifetime value"
+    ]
   },
   Others: {
     name: "Especialista em Métricas",
     description: "Análise de Métricas Complementares",
     image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/521bb99722-72b06772970c6fd465e6.png",
+    suggestions: [
+      "Como calcular CAC vs LTV?",
+      "Quais métricas acompanhar primeiro?",
+      "Como interpretar correlações entre métricas?",
+      "Benchmarks importantes para SaaS"
+    ]
   }
 };
 
@@ -138,7 +162,20 @@ export const MetricsAgentChat = ({ metricType, onClose }: MetricsAgentChatProps)
         </ScrollArea>
 
         {/* Input */}
-        <div className="p-6 border-t border-border">
+        <div className="p-6 border-t border-border space-y-3">
+          {messages.length === 0 && (
+            <div className="flex flex-wrap gap-2 mb-3">
+              {agent.suggestions.map((suggestion, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setInput(suggestion)}
+                  className="text-xs px-3 py-2 rounded-full bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {suggestion}
+                </button>
+              ))}
+            </div>
+          )}
           <div className="flex gap-3">
             <Input
               value={input}
