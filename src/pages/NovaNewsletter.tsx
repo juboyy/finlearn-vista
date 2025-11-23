@@ -55,12 +55,11 @@ export default function NovaNewsletter() {
   ];
 
   return (
-    <div className="flex min-h-screen bg-slate-50 overflow-hidden">
+    <div className="flex min-h-screen bg-slate-50">
       <SidebarFix />
 
-      <main className="flex-1 flex flex-col overflow-hidden">
-        {/* Header */}
-        <header className="bg-white border-b border-slate-200 shrink-0">
+      <main className="flex-1 flex flex-col min-w-0">{/* Header */}
+        <header className="bg-white border-b border-slate-200 shrink-0 sticky top-0 z-10">
           <div className="px-8 py-4 flex items-center justify-between">
             <div>
               <div className="flex items-center gap-2 text-sm text-slate-500 mb-1">
