@@ -242,10 +242,14 @@ export default function NovoDocumento() {
     if (draggedChart) {
       const chart = chartTypes.find(c => c.id === draggedChart);
       if (chart) {
-        // Insere o marcador do gráfico no markdown
-        const chartMarkdown = `\n\n### ${chart.name}\n\n![${chart.name}](chart:${chart.id})\n\n*${chart.description}*\n\n`;
-        setEditorContent(prev => prev + chartMarkdown);
+        if (isNewDocument) {
+          // Insere o marcador do gráfico no markdown
+          const chartMarkdown = `\n\n### ${chart.name}\n\n![${chart.name}](chart:${chart.id})\n\n*${chart.description}*\n\n`;
+          setEditorContent(prev => prev + chartMarkdown);
+        }
+        // Fecha o drawer e mostra mensagem de sucesso
         setChartDrawerOpen(false);
+        alert(`${chart.name} foi adicionado ao documento!`);
       }
     }
   };
@@ -825,7 +829,7 @@ export default function NovoDocumento() {
           <SheetHeader>
             <SheetTitle>Adicionar Gráfico</SheetTitle>
             <SheetDescription>
-              Arraste e solte o tipo de gráfico desejado no documento
+              Arraste e solte o tipo de gráfico desejado no documento ou clique duas vezes para adicionar
             </SheetDescription>
           </SheetHeader>
           
@@ -836,6 +840,14 @@ export default function NovoDocumento() {
                 draggable
                 onDragStart={() => handleDragStart(chart.id)}
                 onDragEnd={handleDragEnd}
+                onDoubleClick={() => {
+                  if (isNewDocument) {
+                    const chartMarkdown = `\n\n### ${chart.name}\n\n![${chart.name}](chart:${chart.id})\n\n*${chart.description}*\n\n`;
+                    setEditorContent(prev => prev + chartMarkdown);
+                  }
+                  setChartDrawerOpen(false);
+                  alert(`${chart.name} foi adicionado ao documento!`);
+                }}
                 className={`rounded-lg border-2 transition-all cursor-move overflow-hidden ${
                   draggedChart === chart.id 
                     ? 'opacity-30 scale-95 border-primary' 
