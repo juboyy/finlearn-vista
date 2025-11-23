@@ -565,8 +565,8 @@ export default function CriarNewsletter() {
                     <div className="grid grid-cols-12 gap-4 px-6 py-3 bg-slate-50 border-b border-slate-200">
                       <div className="col-span-3 text-xs font-semibold text-slate-600 uppercase">Assinante</div>
                       <div className="col-span-2 text-xs font-semibold text-slate-600 uppercase">Data Assinatura</div>
-                      <div className="col-span-1 text-xs font-semibold text-slate-600 uppercase text-center">Desconto</div>
                       <div className="col-span-1 text-xs font-semibold text-slate-600 uppercase">Última Abertura</div>
+                      <div className="col-span-1 text-xs font-semibold text-slate-600 uppercase text-center">Desconto</div>
                       <div className="col-span-1 text-xs font-semibold text-slate-600 uppercase">Tempo sem abrir</div>
                       <div className="col-span-1 text-xs font-semibold text-slate-600 uppercase text-center">Taxa</div>
                       <div className="col-span-2 text-xs font-semibold text-slate-600 uppercase">Canal</div>
@@ -612,6 +612,19 @@ export default function CriarNewsletter() {
                             </div>
                           </div>
 
+                          <div className="col-span-1">
+                            {subscriber.lastOpened ? (
+                              <div className="flex items-center gap-2">
+                                <Eye size={14} className="text-slate-400" />
+                                <span className="text-sm text-slate-700">
+                                  {new Date(subscriber.lastOpened).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })}
+                                </span>
+                              </div>
+                            ) : (
+                              <span className="text-sm text-slate-400">Nunca</span>
+                            )}
+                          </div>
+
                           <div className="col-span-1 text-center">
                             {subscriber.hasDiscount ? (
                               <span
@@ -626,19 +639,6 @@ export default function CriarNewsletter() {
                                 <XCircle size={12} />
                                 Não
                               </span>
-                            )}
-                          </div>
-
-                          <div className="col-span-1">
-                            {subscriber.lastOpened ? (
-                              <div className="flex items-center gap-2">
-                                <Eye size={14} className="text-slate-400" />
-                                <span className="text-sm text-slate-700">
-                                  {new Date(subscriber.lastOpened).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })}
-                                </span>
-                              </div>
-                            ) : (
-                              <span className="text-sm text-slate-400">Nunca</span>
                             )}
                           </div>
 
