@@ -37,8 +37,8 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "
 
 export default function NovoDocumento() {
   const [agentDropdownOpen, setAgentDropdownOpen] = useState(false);
-  const [isNewDocument, setIsNewDocument] = useState(false);
-  const [editorContent, setEditorContent] = useState("");
+  const [isNewDocument, setIsNewDocument] = useState(true); // Inicia como true para mostrar o editor
+  const [editorContent, setEditorContent] = useState("# Novo Documento\n\nComece a escrever aqui...\n\n");
   const [chartDrawerOpen, setChartDrawerOpen] = useState(false);
   const [draggedChart, setDraggedChart] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -322,9 +322,10 @@ export default function NovoDocumento() {
             <button 
               onClick={() => {
                 setIsNewDocument(true);
-                setEditorContent("");
+                setEditorContent("# Novo Documento\n\nComece a escrever aqui...\n\n");
               }}
-              className="w-8 h-8 bg-[hsl(206,35%,85%)] text-[hsl(220,15%,30%)] rounded-lg flex items-center justify-center hover:bg-opacity-80 transition"
+              className="w-8 h-8 bg-[hsl(206,35%,85%)] text-[hsl(220,15%,30%)] rounded-lg flex items-center justify-center hover:bg-opacity-80 transition shadow-sm"
+              title="Criar novo documento"
             >
               <Plus size={16} />
             </button>
@@ -351,8 +352,11 @@ export default function NovoDocumento() {
           {documents.map((doc, index) => (
             <div 
               key={index} 
+              onClick={() => {
+                setIsNewDocument(false);
+              }}
               className={`p-3 rounded-lg border border-border cursor-pointer transition ${
-                doc.isActive ? 'bg-[hsl(206,35%,85%)]' : 'bg-card hover:bg-muted'
+                doc.isActive && !isNewDocument ? 'bg-[hsl(206,35%,85%)]' : 'bg-card hover:bg-muted'
               }`}
             >
               <div className="flex items-start justify-between mb-2">
