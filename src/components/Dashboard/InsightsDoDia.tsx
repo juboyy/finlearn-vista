@@ -32,7 +32,7 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
 
         <div className="py-6 space-y-4">
           {/* Insight Principal */}
-          <div className="bg-gradient-to-br from-pastel-purple/20 to-pastel-pink/20 rounded-xl border-2 border-pastel-dark-gray p-5">
+          <div className="bg-gradient-to-br from-pastel-purple/20 to-pastel-pink/20 rounded-xl border-2 border-pastel-gray-dark p-5">
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 bg-pastel-purple rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
                 <Lightbulb className="text-pastel-dark-gray" size={24} />
@@ -65,7 +65,7 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
           </div>
 
           {/* Matéria em Alta */}
-          <div className="bg-white rounded-xl border-2 border-pastel-dark-gray p-4 hover:shadow-lg transition-shadow cursor-pointer">
+          <div className="bg-white rounded-xl border-2 border-pastel-gray-dark p-4 hover:shadow-lg transition-shadow cursor-pointer">
             <div className="flex items-start gap-4">
               <div className="w-10 h-10 bg-pastel-blue rounded-lg flex items-center justify-center flex-shrink-0">
                 <Flame className="text-pastel-dark-gray" size={20} />
@@ -99,7 +99,7 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
           </div>
 
           {/* Post de Seguidor em Destaque */}
-          <div className="bg-white rounded-xl border-2 border-pastel-dark-gray p-4 hover:shadow-lg transition-shadow cursor-pointer">
+          <div className="bg-white rounded-xl border-2 border-pastel-gray-dark p-4 hover:shadow-lg transition-shadow cursor-pointer">
             <div className="flex items-start gap-4">
               <div className="w-10 h-10 bg-pastel-green rounded-lg flex items-center justify-center flex-shrink-0">
                 <Users className="text-pastel-dark-gray" size={20} />
@@ -131,7 +131,7 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
           </div>
 
           {/* Lembrete de Curso */}
-          <div className="bg-white rounded-xl border-2 border-pastel-dark-gray p-4 hover:shadow-lg transition-shadow cursor-pointer">
+          <div className="bg-white rounded-xl border-2 border-pastel-gray-dark p-4 hover:shadow-lg transition-shadow cursor-pointer">
             <div className="flex items-start gap-4">
               <div className="w-10 h-10 bg-pastel-peach rounded-lg flex items-center justify-center flex-shrink-0">
                 <Clock className="text-pastel-dark-gray" size={20} />
@@ -166,7 +166,7 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
           </div>
 
           {/* Tema Sugerido */}
-          <div className="bg-white rounded-xl border-2 border-pastel-dark-gray p-4 hover:shadow-lg transition-shadow cursor-pointer">
+          <div className="bg-white rounded-xl border-2 border-pastel-gray-dark p-4 hover:shadow-lg transition-shadow cursor-pointer">
             <div className="flex items-start gap-4">
               <div className="w-10 h-10 bg-pastel-yellow/70 rounded-lg flex items-center justify-center flex-shrink-0">
                 <Target className="text-pastel-dark-gray" size={20} />
@@ -198,7 +198,7 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
           </div>
 
           {/* Resultado de Post */}
-          <div className="bg-gradient-to-br from-pastel-pink/20 to-pastel-peach/20 rounded-xl border-2 border-pastel-dark-gray p-4">
+          <div className="bg-gradient-to-br from-pastel-pink/20 to-pastel-peach/20 rounded-xl border-2 border-pastel-gray-dark p-4">
             <div className="flex items-start gap-4">
               <div className="w-10 h-10 bg-pastel-pink rounded-lg flex items-center justify-center flex-shrink-0">
                 <BarChart3 className="text-pastel-dark-gray" size={20} />
@@ -237,7 +237,7 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
           </div>
 
           {/* Evento Próximo */}
-          <div className="bg-white rounded-xl border-2 border-pastel-dark-gray p-4 hover:shadow-lg transition-shadow cursor-pointer">
+          <div className="bg-white rounded-xl border-2 border-pastel-gray-dark p-4 hover:shadow-lg transition-shadow cursor-pointer">
             <div className="flex items-start gap-4">
               <div className="w-10 h-10 bg-pastel-blue/70 rounded-lg flex items-center justify-center flex-shrink-0">
                 <Calendar className="text-pastel-dark-gray" size={20} />
@@ -263,7 +263,7 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
           </div>
 
           {/* Conquista */}
-          <div className="bg-gradient-to-br from-pastel-green/20 to-pastel-blue/20 rounded-xl border-2 border-pastel-dark-gray p-4">
+          <div className="bg-gradient-to-br from-pastel-green/20 to-pastel-blue/20 rounded-xl border-2 border-pastel-gray-dark p-4">
             <div className="flex items-start gap-4">
               <div className="w-10 h-10 bg-pastel-green rounded-lg flex items-center justify-center flex-shrink-0">
                 <Award className="text-pastel-dark-gray" size={20} />
@@ -291,7 +291,7 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
           </div>
 
           {/* Newsletter Recomendada */}
-          <div className="bg-white rounded-xl border-2 border-pastel-dark-gray p-4 hover:shadow-lg transition-shadow cursor-pointer">
+          <div className="bg-white rounded-xl border-2 border-pastel-gray-dark p-4 hover:shadow-lg transition-shadow cursor-pointer">
             <div className="flex items-start gap-4">
               <div className="w-10 h-10 bg-pastel-purple/70 rounded-lg flex items-center justify-center flex-shrink-0">
                 <Newspaper className="text-pastel-dark-gray" size={20} />
