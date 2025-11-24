@@ -187,7 +187,7 @@ export const HistoricoDocumentos = () => {
   return (
     <div className="flex gap-6">
       <aside className="w-80 space-y-6">
-        <section className="bg-white rounded-xl p-6 border border-slate-200">
+        <section className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
           <h2 className="text-lg font-semibold text-slate-800 mb-4">Estatísticas de Leitura</h2>
           <div className="space-y-4">
             <div className="flex items-center justify-between">
@@ -245,7 +245,7 @@ export const HistoricoDocumentos = () => {
           </div>
         </section>
 
-        <section className="bg-white rounded-xl p-6 border border-slate-200">
+        <section className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-slate-800">Categorias</h2>
             <button className="text-xs text-slate-500 hover:text-slate-700">Limpar</button>
@@ -271,7 +271,7 @@ export const HistoricoDocumentos = () => {
           </div>
         </section>
 
-        <section className="bg-white rounded-xl p-6 border border-slate-200">
+        <section className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
           <h2 className="text-lg font-semibold text-slate-800 mb-4">Fontes</h2>
           <div className="space-y-3">
             {sources.map((source) => (
@@ -288,7 +288,7 @@ export const HistoricoDocumentos = () => {
           </div>
         </section>
 
-        <section className="bg-white rounded-xl p-6 border border-slate-200">
+        <section className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
           <h2 className="text-lg font-semibold text-slate-800 mb-4">Atividade Recente</h2>
           <div className="space-y-3">
             {recentActivity.map((activity, index) => (
