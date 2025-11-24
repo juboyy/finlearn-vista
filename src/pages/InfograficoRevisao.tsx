@@ -96,6 +96,129 @@ export default function InfograficoRevisao() {
             {/* Chat Messages Scroll Area */}
             <div ref={chatScrollRef} className="flex-1 overflow-y-auto p-6 space-y-8 bg-muted/30">
               
+              {/* Mensagem 1: Usuário */}
+              <div className="flex gap-4 flex-row-reverse">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 border border-border bg-muted">
+                  <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" className="w-full h-full rounded-full object-cover" alt="User" />
+                </div>
+                <div className="max-w-[85%]">
+                  <div className="text-xs text-muted-foreground mb-1 mr-1 text-right">Você • 10:42 AM</div>
+                  <div className="p-4 rounded-2xl rounded-tr-none shadow-sm text-sm border relative chat-bubble-right whitespace-pre-wrap" style={{
+                    backgroundColor: 'hsl(var(--pastel-purple))',
+                    borderColor: 'hsl(var(--pastel-purple-btn))',
+                    color: 'hsl(var(--pastel-gray-dark))'
+                  }}>
+                    Gostaria de um infográfico comparando o crescimento do Pix versus Cartão de Crédito em 2024 para e-commerce.
+                  </div>
+                </div>
+              </div>
+
+              {/* Mensagem 2: Agente perguntando detalhes */}
+              <div className="flex gap-4">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 border" style={{ 
+                  backgroundColor: 'hsl(var(--pastel-purple))',
+                  borderColor: 'hsl(var(--pastel-purple-btn))',
+                  color: 'hsl(var(--pastel-gray-dark))'
+                }}>
+                  <Brain className="w-5 h-5" />
+                </div>
+                <div className="max-w-[85%]">
+                  <div className="text-xs text-muted-foreground mb-1 ml-1">Agente • 10:42 AM</div>
+                  <div className="bg-card p-4 rounded-2xl rounded-tl-none shadow-sm text-sm text-foreground border border-border relative chat-bubble-left">
+                    <p className="mb-2">Entendido. Para tornar o infográfico mais preciso, preciso de alguns detalhes:</p>
+                    <ul className="list-disc list-inside text-xs space-y-1 text-muted-foreground">
+                      <li>O foco é volume financeiro ou número de transações?</li>
+                      <li>Devo incluir projeções para 2025?</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Mensagem 3: Resposta do usuário */}
+              <div className="flex gap-4 flex-row-reverse">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 border border-border bg-muted">
+                  <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" className="w-full h-full rounded-full object-cover" alt="User" />
+                </div>
+                <div className="max-w-[85%]">
+                  <div className="text-xs text-muted-foreground mb-1 mr-1 text-right">Você • 10:44 AM</div>
+                  <div className="p-4 rounded-2xl rounded-tr-none shadow-sm text-sm border relative chat-bubble-right whitespace-pre-wrap" style={{
+                    backgroundColor: 'hsl(var(--pastel-purple))',
+                    borderColor: 'hsl(var(--pastel-purple-btn))',
+                    color: 'hsl(var(--pastel-gray-dark))'
+                  }}>
+                    Foco em volume financeiro (R$) e sim, inclua uma projeção para o Q1 de 2025.
+                  </div>
+                </div>
+              </div>
+
+              {/* Mensagem 4: Sistema confirmando */}
+              <div className="flex gap-4">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 border" style={{ 
+                  backgroundColor: 'hsl(var(--pastel-green))',
+                  borderColor: 'hsl(144 70% 70%)',
+                  color: 'hsl(var(--pastel-gray-dark))'
+                }}>
+                  <Check className="w-5 h-5" />
+                </div>
+                <div className="max-w-[85%]">
+                  <div className="text-xs text-muted-foreground mb-1 ml-1">Sistema • 10:45 AM</div>
+                  <div className="text-sm font-medium" style={{ color: 'hsl(var(--pastel-green-text))' }}>
+                    Infográfico gerado com sucesso!
+                  </div>
+                </div>
+              </div>
+
+              {/* Mensagem 5: Opções de ação do agente */}
+              <div className="flex gap-4">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 border" style={{ 
+                  backgroundColor: 'hsl(var(--pastel-purple))',
+                  borderColor: 'hsl(var(--pastel-purple-btn))',
+                  color: 'hsl(var(--pastel-gray-dark))'
+                }}>
+                  <Brain className="w-5 h-5" />
+                </div>
+                <div className="max-w-[85%]">
+                  <div className="text-xs text-muted-foreground mb-1 ml-1">Agente • 10:45 AM</div>
+                  <div className="bg-card p-4 rounded-2xl rounded-tl-none shadow-sm border border-border relative chat-bubble-left">
+                    <p className="text-sm font-medium text-foreground mb-3">Como você gostaria de prosseguir com o relatório?</p>
+                    <div className="space-y-2">
+                      <button className="w-full flex items-center justify-between px-4 py-3 bg-muted hover:bg-muted/80 border border-border rounded-lg text-sm font-medium text-foreground transition-all group">
+                        <span className="flex items-center gap-3">
+                          <FileText className="w-4 h-4" style={{ color: 'hsl(var(--pastel-pink))' }} />
+                          <span>Baixar em PDF</span>
+                        </span>
+                        <Download className="w-4 h-4 text-muted-foreground group-hover:text-foreground" />
+                      </button>
+                      
+                      <button className="w-full flex items-center justify-between px-4 py-3 bg-muted hover:bg-muted/80 border border-border rounded-lg text-sm font-medium text-foreground transition-all group">
+                        <span className="flex items-center gap-3">
+                          <Share2 className="w-4 h-4" style={{ color: 'hsl(var(--pastel-blue))' }} />
+                          <span>Compartilhar Relatório</span>
+                        </span>
+                        <i className="fa-solid fa-arrow-right text-sm text-muted-foreground group-hover:text-foreground"></i>
+                      </button>
+
+                      <button className="w-full flex items-center justify-between px-4 py-3 bg-muted hover:bg-muted/80 border border-border rounded-lg text-sm font-medium text-foreground transition-all group">
+                        <span className="flex items-center gap-3">
+                          <Edit className="w-4 h-4" style={{ color: 'hsl(var(--pastel-yellow))' }} />
+                          <span>Refinar Análise</span>
+                        </span>
+                        <i className="fa-solid fa-arrow-right text-sm text-muted-foreground group-hover:text-foreground"></i>
+                      </button>
+
+                      <button className="w-full flex items-center justify-between px-4 py-3 bg-muted hover:bg-muted/80 border border-border rounded-lg text-sm font-medium text-foreground transition-all group">
+                        <span className="flex items-center gap-3">
+                          <Bookmark className="w-4 h-4" style={{ color: 'hsl(var(--pastel-purple))' }} />
+                          <span>Salvar nos Projetos</span>
+                        </span>
+                        <i className="fa-solid fa-arrow-right text-sm text-muted-foreground group-hover:text-foreground"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Mensagens dinâmicas do chat */}
               {messages.map((message, index) => (
                 message.role === 'assistant' ? (
                   <div key={index} className="flex gap-4">
