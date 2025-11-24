@@ -204,10 +204,13 @@ export default function CriarInfografico() {
                 <button className="px-5 py-2.5 text-sm bg-muted hover:bg-muted/80 rounded-lg transition-colors text-foreground font-medium">
                   <Download className="w-4 h-4 inline mr-2" /> Exportar PNG
                 </button>
+                <button className="px-5 py-2.5 text-sm bg-muted hover:bg-muted/80 rounded-lg transition-colors text-foreground font-medium">
+                  <Save className="w-4 h-4 inline mr-2" /> Salvar Projeto
+                </button>
                 <button className="px-5 py-2.5 text-sm text-white rounded-lg transition-colors font-medium shadow-sm" style={{
                   backgroundColor: 'hsl(var(--pastel-purple-btn))'
                 }}>
-                  <Save className="w-4 h-4 inline mr-2" /> Salvar Projeto
+                  Avançar <ArrowLeft className="w-4 h-4 inline ml-2 rotate-180" />
                 </button>
               </div>
             </div>
