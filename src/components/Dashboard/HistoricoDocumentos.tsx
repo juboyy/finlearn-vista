@@ -387,9 +387,9 @@ export const HistoricoDocumentos = () => {
                   <div className="min-w-0 flex-1">
                     <h3 className="font-semibold text-slate-800 truncate flex items-center gap-2">
                       {article.progress === 100 ? (
-                        <CheckCircle2 className="text-pastel-green w-4 h-4 flex-shrink-0" />
+                        <CheckCircle2 className="w-4 h-4 flex-shrink-0" style={{ color: 'hsl(142, 35%, 50%)' }} />
                       ) : (
-                        <BookOpen className="text-pastel-blue w-4 h-4 flex-shrink-0" />
+                        <BookOpen className="w-4 h-4 flex-shrink-0" style={{ color: 'hsl(207, 35%, 50%)' }} />
                       )}
                       {article.title}
                       {article.saved && <Bookmark className="text-yellow-500 w-3 h-3 fill-current" />}
