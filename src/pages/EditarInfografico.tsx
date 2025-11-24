@@ -823,17 +823,17 @@ export default function EditarInfografico() {
             <section className="lg:col-span-4 space-y-6">
               
               {/* Edit Mode Card */}
-              <div className="bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl p-6 text-white shadow-lg">
+              <div className="rounded-2xl p-6 shadow-lg border border-border" style={{ backgroundColor: 'hsl(var(--pastel-purple))' }}>
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center backdrop-blur-sm" style={{ backgroundColor: 'hsl(var(--card))', color: 'hsl(var(--pastel-gray-dark))' }}>
                     <i className="fa-solid fa-wand-magic-sparkles text-2xl"></i>
                   </div>
                   <div>
-                    <h2 className="text-xl font-bold">Modo de Edição</h2>
-                    <p className="text-indigo-100 text-sm">Arraste as seções para reordenar</p>
+                    <h2 className="text-xl font-bold" style={{ color: 'hsl(var(--pastel-gray-dark))' }}>Modo de Edição</h2>
+                    <p className="text-sm" style={{ color: 'hsl(var(--pastel-gray-dark))' }}>Arraste as seções para reordenar</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-2 rounded-lg">
+                <div className="flex items-center gap-2 backdrop-blur-sm px-3 py-2 rounded-lg" style={{ backgroundColor: 'hsl(var(--card))', color: 'hsl(var(--pastel-gray-dark))' }}>
                   <i className="fa-solid fa-info-circle"></i>
                   <span className="text-sm">Use o ícone de arrastar para mover seções</span>
                 </div>
