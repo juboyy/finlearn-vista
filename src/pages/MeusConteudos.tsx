@@ -156,13 +156,9 @@ export default function MeusConteudos() {
         <div className="flex-1 flex overflow-hidden">
           {/* Main Content Area */}
           <main className="flex-1 overflow-y-auto bg-muted/30">
-            <div className="max-w-[1400px] mx-auto px-8 py-8">
-              <div className="mb-8">
-                
-                
-              </div>
+            <div className="max-w-[1400px] mx-auto px-8 py-4">
 
-              <div className="flex gap-6 mb-6">
+              <div className="flex gap-6 mb-4">
                 <div className="flex-1 flex gap-3 bg-card rounded-lg border border-border p-1">
                   <button 
                     onClick={() => setActiveFilter('todos')}
