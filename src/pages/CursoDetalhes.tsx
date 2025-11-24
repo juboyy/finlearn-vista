@@ -441,7 +441,7 @@ const CursoDetalhes = () => {
                             </div>
                             <div>
                               <h3 className="font-semibold text-slate-800">{quiz.title}</h3>
-                              <p className="text-sm text-slate-600 mt-1">{quiz.questions}</p>
+                              <p className="text-sm text-black mt-1">{quiz.questions}</p>
                             </div>
                           </div>
                           <span className={`px-3 py-1 ${quiz.statusColor} text-sm font-medium rounded-full`}>{quiz.status}</span>
@@ -457,7 +457,7 @@ const CursoDetalhes = () => {
                           </div>
                         </div>
                         {quiz.isFinal && (
-                          <p className="text-sm text-slate-600">Complete todos os módulos e questionários para desbloquear a prova final e receber seu certificado internacional.</p>
+                          <p className="text-sm text-black">Complete todos os módulos e questionários para desbloquear a prova final e receber seu certificado internacional.</p>
                         )}
                       </div>
                     ))}
@@ -635,7 +635,7 @@ const CursoDetalhes = () => {
                     <ShieldCheck className="text-slate-700" size={32} />
                   </div>
                   <h3 className="font-semibold text-slate-800 mb-2">Garantia de 30 Dias</h3>
-                  <p className="text-sm text-slate-600">Se não ficar satisfeito, devolvemos 100% do seu investimento sem perguntas</p>
+                  <p className="text-sm text-black">Se não ficar satisfeito, devolvemos 100% do seu investimento sem perguntas</p>
                 </div>
               </div>
             </div>
