@@ -326,26 +326,26 @@ const CursoDetalhes = () => {
               {/* Right Sidebar */}
               <div className="space-y-8">
                 {/* Introduction Card */}
-                <div className="bg-gradient-to-br from-pastel-blue to-pastel-purple rounded-xl border border-slate-200 px-5 pt-5 pb-3">
-                  <div className="flex items-start gap-3 mb-3">
-                    <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center flex-shrink-0">
-                      <ChartLine className="text-slate-700" size={20} />
+                <div className="bg-gradient-to-br from-pastel-blue to-pastel-purple rounded-xl border border-slate-200 px-4 pt-4 pb-3">
+                  <div className="flex items-start gap-2 mb-2">
+                    <div className="w-9 h-9 bg-white rounded-lg flex items-center justify-center flex-shrink-0">
+                      <ChartLine className="text-slate-700" size={18} />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-slate-800 mb-1">Introdução ao Mercado de Capitais</h3>
+                      <h3 className="font-semibold text-slate-800 text-sm mb-0.5">Introdução ao Mercado de Capitais</h3>
                       <p className="text-xs text-slate-600">Comece sua jornada aqui</p>
                     </div>
                   </div>
-                  <p className="text-sm text-slate-700 mb-3">
+                  <p className="text-xs text-slate-700 mb-2 leading-relaxed">
                     Descubra os fundamentos essenciais do mercado de capitais: estrutura, participantes, tipos de ativos e como funciona o ecossistema financeiro brasileiro e internacional.
                   </p>
                   <div className="flex items-center justify-between text-xs text-slate-600">
                     <span className="flex items-center gap-1">
-                      <Clock size={14} />
+                      <Clock size={13} />
                       Módulo 1
                     </span>
                     <span className="flex items-center gap-1">
-                      <PlayCircle size={14} />
+                      <PlayCircle size={13} />
                       Aula gratuita
                     </span>
                   </div>
