@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Bell, Send, Download, Share2, FileText, Bookmark, Edit, CreditCard, User, Check, Brain, RotateCw, Paperclip, Eye, Upload } from "lucide-react";
+import { ArrowLeft, Bell, Send, Download, Share2, FileText, Bookmark, Edit, CreditCard, User, Check, Brain, RotateCw, Paperclip, Eye, Upload, Image } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import Plot from "react-plotly.js";
@@ -87,6 +87,46 @@ export default function InfograficoRevisao() {
     } catch (error) {
       console.error("Erro ao gerar PDF:", error);
       toast.error("Erro ao gerar PDF. Tente novamente.");
+    } finally {
+      setIsGeneratingPDF(false);
+    }
+  };
+
+  const handleDownloadPNG = async () => {
+    if (!infographicRef.current) {
+      toast.error("Erro ao gerar PNG");
+      return;
+    }
+
+    setIsGeneratingPDF(true);
+    toast.info("Gerando PNG em alta resolução...");
+
+    try {
+      // Captura o elemento do infográfico com alta resolução
+      const canvas = await html2canvas(infographicRef.current, {
+        scale: 3, // Alta resolução
+        useCORS: true,
+        logging: false,
+        backgroundColor: '#ffffff'
+      });
+
+      // Converte para PNG
+      canvas.toBlob((blob) => {
+        if (blob) {
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = 'infografico-pagamentos-2024.png';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(url);
+          toast.success("PNG baixado com sucesso!");
+        }
+      }, 'image/png', 1.0); // Qualidade máxima
+    } catch (error) {
+      console.error("Erro ao gerar PNG:", error);
+      toast.error("Erro ao gerar PNG. Tente novamente.");
     } finally {
       setIsGeneratingPDF(false);
     }
@@ -247,14 +287,26 @@ export default function InfograficoRevisao() {
                       >
                         <span className="flex items-center gap-3">
                           <FileText className="w-4 h-4" style={{ color: 'hsl(var(--pastel-pink))' }} />
-                          <span>{isGeneratingPDF ? "Gerando PDF..." : "Baixar em PDF"}</span>
+                          <span>{isGeneratingPDF ? "Gerando..." : "Baixar em PDF"}</span>
+                        </span>
+                        <Download className="w-4 h-4 text-muted-foreground group-hover:text-foreground" />
+                      </button>
+
+                      <button 
+                        onClick={handleDownloadPNG}
+                        disabled={isGeneratingPDF}
+                        className="w-full flex items-center justify-between px-4 py-3 bg-muted hover:bg-muted/80 border border-border rounded-lg text-sm font-medium text-foreground transition-all group disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <span className="flex items-center gap-3">
+                          <Image className="w-4 h-4" style={{ color: 'hsl(var(--pastel-blue))' }} />
+                          <span>{isGeneratingPDF ? "Gerando..." : "Exportar como PNG"}</span>
                         </span>
                         <Download className="w-4 h-4 text-muted-foreground group-hover:text-foreground" />
                       </button>
                       
                       <button className="w-full flex items-center justify-between px-4 py-3 bg-muted hover:bg-muted/80 border border-border rounded-lg text-sm font-medium text-foreground transition-all group">
                         <span className="flex items-center gap-3">
-                          <Share2 className="w-4 h-4" style={{ color: 'hsl(var(--pastel-blue))' }} />
+                          <Share2 className="w-4 h-4" style={{ color: 'hsl(var(--pastel-yellow))' }} />
                           <span>Compartilhar Relatório</span>
                         </span>
                         <i className="fa-solid fa-arrow-right text-sm text-muted-foreground group-hover:text-foreground"></i>
