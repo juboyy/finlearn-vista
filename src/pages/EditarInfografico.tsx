@@ -90,7 +90,7 @@ export default function EditarInfografico() {
             onDragEnd={handleDragEnd}
             className={sectionWrapperClass}
           >
-            <div className="editable-section relative bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-10 text-white overflow-hidden group cursor-pointer hover:outline hover:outline-2 hover:outline-dashed hover:outline-primary hover:outline-offset-4 transition-all">
+            <div className="editable-section relative p-10 text-white overflow-hidden group cursor-pointer hover:outline hover:outline-2 hover:outline-dashed hover:outline-primary hover:outline-offset-4 transition-all" style={{ backgroundColor: 'hsl(270, 32%, 45%)' }}>
               <DragHandle />
               <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity z-50">
                 <button 
