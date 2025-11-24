@@ -300,14 +300,20 @@ export default function ContaEmpresarial() {
                   ref={combineRefs(empresaRef, fadeEmpresaRef)}
                   className="bg-white rounded-2xl border-2 border-slate-300 p-8 opacity-0"
                 >
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-12 h-12 bg-[#D4C5E8] rounded-xl flex items-center justify-center border-2 border-slate-300">
-                      <Building2 className="text-slate-700" size={24} />
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 bg-[#D4C5E8] rounded-xl flex items-center justify-center border-2 border-slate-300">
+                        <Building2 className="text-slate-700" size={24} />
+                      </div>
+                      <div>
+                        <h2 className="text-2xl font-bold text-slate-800">Dados da Empresa</h2>
+                        <p className="text-slate-600">Informações legais e documentação</p>
+                      </div>
                     </div>
-                    <div>
-                      <h2 className="text-2xl font-bold text-slate-800">Dados da Empresa</h2>
-                      <p className="text-slate-600">Informações legais e documentação</p>
-                    </div>
+                    <button className="px-4 py-2 bg-[#B8D4E8] border-2 border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-opacity-70 transition text-sm">
+                      <Building size={16} className="inline mr-2" />
+                      Página da Empresa
+                    </button>
                   </div>
 
                   <div className="space-y-6">
