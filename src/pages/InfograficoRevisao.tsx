@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Bell, Send, Download, Share2, FileText, Bookmark, Edit, CreditCard, User, Check, Brain, RotateCw, Paperclip, Eye } from "lucide-react";
+import { ArrowLeft, Bell, Send, Download, Share2, FileText, Bookmark, Edit, CreditCard, User, Check, Brain, RotateCw, Paperclip, Eye, Upload } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import Plot from "react-plotly.js";
@@ -272,6 +272,14 @@ export default function InfograficoRevisao() {
                         <span className="flex items-center gap-3">
                           <Bookmark className="w-4 h-4" style={{ color: 'hsl(var(--pastel-purple))' }} />
                           <span>Salvar nos Projetos</span>
+                        </span>
+                        <i className="fa-solid fa-arrow-right text-sm text-muted-foreground group-hover:text-foreground"></i>
+                      </button>
+
+                      <button className="w-full flex items-center justify-between px-4 py-3 bg-muted hover:bg-muted/80 border border-border rounded-lg text-sm font-medium text-foreground transition-all group">
+                        <span className="flex items-center gap-3">
+                          <Upload className="w-4 h-4" style={{ color: 'hsl(var(--pastel-green))' }} />
+                          <span>Publicar na Plataforma</span>
                         </span>
                         <i className="fa-solid fa-arrow-right text-sm text-muted-foreground group-hover:text-foreground"></i>
                       </button>
