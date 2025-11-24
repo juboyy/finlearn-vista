@@ -274,8 +274,8 @@ const MeusCertificados = () => {
                       className="w-full h-full object-cover opacity-40"
                     />
                     <div className="absolute top-4 left-4">
-                      <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg">
-                        <Award className="text-pastel-blue" size={40} />
+                      <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-lg">
+                        <Award className="text-pastel-blue" size={28} />
                       </div>
                     </div>
                     <div className="absolute top-4 right-4">
@@ -360,8 +360,8 @@ const MeusCertificados = () => {
                         className="w-full h-full object-cover opacity-50"
                       />
                       <div className="absolute top-2 left-2">
-                        <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg">
-                          <Award className="text-pastel-blue" size={24} />
+                        <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg">
+                          <Award className="text-pastel-blue" size={17} />
                         </div>
                       </div>
                     </div>
