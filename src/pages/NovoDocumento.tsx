@@ -8,7 +8,7 @@ import {
   Plus, Copy, Edit, TrendingUp, Landmark, Award, Target, BadgeCheck, Megaphone
 } from "lucide-react";
 
-export default function NovoDocumento() {
+function NovoDocumento() {
   const [documentTitle, setDocumentTitle] = useState("");
   const [selectedAgent, setSelectedAgent] = useState("");
   const [selectedSpecificAgent, setSelectedSpecificAgent] = useState("");
@@ -619,3 +619,5 @@ export default function NovoDocumento() {
     </div>
   );
 }
+
+export default NovoDocumento;
