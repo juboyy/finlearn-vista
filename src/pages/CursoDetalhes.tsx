@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
 
 const CursoDetalhes = () => {
   const navigate = useNavigate();
@@ -646,9 +647,7 @@ const CursoDetalhes = () => {
                   ].map((rating, idx) => (
                     <div key={idx} className="flex items-center gap-3">
                       <span className="text-sm text-slate-600 w-16">{rating.stars} estrelas</span>
-                      <div className="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden">
-                        <div className="h-full bg-yellow-500 rounded-full" style={{ width: `${rating.percentage}%` }}></div>
-                      </div>
+                      <Progress value={rating.percentage} className="flex-1 h-2" />
                       <span className="text-sm text-slate-500 w-12">{rating.percentage}%</span>
                     </div>
                   ))}
