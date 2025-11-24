@@ -1,9 +1,11 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Bell, Search, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const DescobrirNovos = () => {
   const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState<"seguindo" | "seguidores" | "descobrir">("descobrir");
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -277,20 +279,35 @@ const DescobrirNovos = () => {
               <section className="bg-white rounded-xl p-4 border border-slate-200">
                 <div className="flex items-center gap-3">
                   <button 
-                    onClick={() => navigate('/autores')}
-                    className="px-6 py-2.5 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2"
+                    onClick={() => setActiveTab("seguindo")}
+                    className={`px-6 py-2.5 text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200 ${
+                      activeTab === "seguindo"
+                        ? "bg-pastel-green"
+                        : "bg-pastel-blue hover:bg-pastel-pink"
+                    }`}
                   >
                     <i className="fas fa-user-check"></i>
                     <span>Seguindo</span>
                   </button>
                   <button 
-                    onClick={() => navigate('/seguidores')}
-                    className="px-6 py-2.5 bg-pastel-green text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2"
+                    onClick={() => setActiveTab("seguidores")}
+                    className={`px-6 py-2.5 text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200 ${
+                      activeTab === "seguidores"
+                        ? "bg-pastel-green"
+                        : "bg-pastel-blue hover:bg-pastel-pink"
+                    }`}
                   >
                     <i className="fas fa-users"></i>
                     <span>Seguidores</span>
                   </button>
-                  <button className="px-6 py-2.5 bg-pastel-purple text-slate-700 rounded-lg font-medium flex items-center gap-2">
+                  <button 
+                    onClick={() => setActiveTab("descobrir")}
+                    className={`px-6 py-2.5 text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200 ${
+                      activeTab === "descobrir"
+                        ? "bg-pastel-green"
+                        : "bg-pastel-blue hover:bg-pastel-pink"
+                    }`}
+                  >
                     <i className="fas fa-compass"></i>
                     <span>Descobrir Novos</span>
                   </button>
