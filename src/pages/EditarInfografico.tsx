@@ -517,6 +517,44 @@ export default function EditarInfografico() {
                       </div>
                     </div>
                   </div>
+
+                  <div className="border rounded-xl p-5" style={{
+                    borderColor: 'hsl(var(--pastel-yellow))',
+                    backgroundColor: 'hsl(var(--pastel-yellow))/20'
+                  }}>
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(var(--pastel-yellow))' }}>
+                          <i className="fa-solid fa-store text-lg" style={{ color: 'hsl(var(--pastel-gray-dark))' }}></i>
+                        </div>
+                        <div>
+                          <div className="font-bold text-foreground">Private Label</div>
+                          <div className="text-xs text-muted-foreground">Cartão Próprio</div>
+                        </div>
+                      </div>
+                      <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap" style={{
+                        backgroundColor: 'hsl(var(--pastel-yellow))',
+                        color: 'hsl(var(--pastel-yellow-text))'
+                      }}>
+                        <i className="fa-solid fa-arrow-trend-up"></i>
+                        <span>+12%</span>
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-3 gap-4">
+                      <div>
+                        <div className="text-xs text-muted-foreground mb-1">Volume</div>
+                        <div className="text-lg font-bold text-foreground">R$ 48Bi</div>
+                      </div>
+                      <div>
+                        <div className="text-xs text-muted-foreground mb-1">Transações</div>
+                        <div className="text-lg font-bold text-foreground">312M</div>
+                      </div>
+                      <div>
+                        <div className="text-xs text-muted-foreground mb-1">Ticket Médio</div>
+                        <div className="text-lg font-bold text-foreground">R$ 154</div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
