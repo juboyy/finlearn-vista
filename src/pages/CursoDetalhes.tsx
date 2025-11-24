@@ -1,6 +1,6 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { ArrowLeft, Share2, Heart, ShoppingCart, Gift, Video, Clock, FileText, Infinity, Smartphone, Award, Star, CheckCircle, PlayCircle, FileDown, Lock, Trophy, BadgeCheck, Briefcase, Users, Wrench, Headphones, RefreshCw, User, GraduationCap, ChartLine, Repeat, ShieldCheck } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,41 @@ import { Progress } from "@/components/ui/progress";
 const CursoDetalhes = () => {
   const navigate = useNavigate();
   const [expandedModule, setExpandedModule] = useState(1);
+  
+  // Countdown state - define end date (7 days from now for demo)
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  });
+
+  useEffect(() => {
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + 7); // 7 days from now
+    
+    const updateCountdown = () => {
+      const now = new Date().getTime();
+      const distance = targetDate.getTime() - now;
+
+      if (distance < 0) {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      setTimeLeft({ days, hours, minutes, seconds });
+    };
+
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -107,6 +142,39 @@ const CursoDetalhes = () => {
 
               {/* Pricing Sidebar */}
               <div className="bg-white rounded-xl border border-slate-200 p-6">
+                {/* Countdown Timer */}
+                <div className="mb-6 p-4 bg-gradient-to-r from-pastel-purple via-pastel-pink to-pastel-orange rounded-lg">
+                  <p className="text-center text-xs font-semibold text-pastel-gray-dark mb-3 uppercase tracking-wide">
+                    Oferta Especial Termina Em
+                  </p>
+                  <div className="grid grid-cols-4 gap-2">
+                    <div className="bg-white/90 backdrop-blur rounded-lg p-3 text-center">
+                      <div className="text-2xl font-bold text-pastel-gray-dark">
+                        {String(timeLeft.days).padStart(2, '0')}
+                      </div>
+                      <div className="text-xs text-slate-600 mt-1 font-medium">Dias</div>
+                    </div>
+                    <div className="bg-white/90 backdrop-blur rounded-lg p-3 text-center">
+                      <div className="text-2xl font-bold text-pastel-gray-dark">
+                        {String(timeLeft.hours).padStart(2, '0')}
+                      </div>
+                      <div className="text-xs text-slate-600 mt-1 font-medium">Horas</div>
+                    </div>
+                    <div className="bg-white/90 backdrop-blur rounded-lg p-3 text-center">
+                      <div className="text-2xl font-bold text-pastel-gray-dark">
+                        {String(timeLeft.minutes).padStart(2, '0')}
+                      </div>
+                      <div className="text-xs text-slate-600 mt-1 font-medium">Min</div>
+                    </div>
+                    <div className="bg-white/90 backdrop-blur rounded-lg p-3 text-center">
+                      <div className="text-2xl font-bold text-pastel-gray-dark">
+                        {String(timeLeft.seconds).padStart(2, '0')}
+                      </div>
+                      <div className="text-xs text-slate-600 mt-1 font-medium">Seg</div>
+                    </div>
+                  </div>
+                </div>
+
                 <div className="mb-6">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-xs text-slate-500 line-through">R$ 1.497,00</span>
