@@ -181,6 +181,9 @@ export const HistoricoDocumentos = () => {
     },
   ];
 
+  const completedCount = articles.filter(article => article.progress === 100).length;
+  const inProgressCount = articles.filter(article => article.progress < 100).length;
+
   return (
     <div className="flex gap-6">
       <aside className="w-80 space-y-6">
@@ -222,6 +225,22 @@ export const HistoricoDocumentos = () => {
                 <span className="text-sm text-slate-700">Salvos</span>
               </div>
               <span className="font-semibold text-slate-800">34</span>
+            </div>
+            <div className="pt-4 border-t border-slate-200">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4" style={{ color: 'hsl(142, 35%, 50%)' }} />
+                  <span className="text-sm text-slate-700">Completos</span>
+                </div>
+                <span className="font-semibold text-slate-800">{completedCount}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <BookOpen className="w-4 h-4" style={{ color: 'hsl(207, 35%, 50%)' }} />
+                  <span className="text-sm text-slate-700">Em Leitura</span>
+                </div>
+                <span className="font-semibold text-slate-800">{inProgressCount}</span>
+              </div>
             </div>
           </div>
         </section>
