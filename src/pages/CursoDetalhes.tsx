@@ -43,9 +43,9 @@ const CursoDetalhes = () => {
           </div>
         </header>
 
-        <div className="p-8">
+        <div className="p-4">
           {/* Hero Video Section */}
-          <section className="mb-8">
+          <section className="mb-4">
             <div className="grid grid-cols-3 gap-8">
               <div className="col-span-2">
                 <div className="bg-slate-900 rounded-xl overflow-hidden h-[480px] flex items-center justify-center relative">
@@ -130,7 +130,7 @@ const CursoDetalhes = () => {
           </section>
 
           {/* Course Overview */}
-          <section className="mb-8">
+          <section className="mb-4">
             <div className="grid grid-cols-3 gap-8">
               <div className="col-span-2 space-y-8">
                 {/* About Course */}
