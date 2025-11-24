@@ -972,14 +972,14 @@ export default function EditarInfografico() {
 
               {/* AI Assistant */}
               <div className="rounded-2xl p-5 border" style={{
-                backgroundColor: 'hsl(var(--pastel-purple))/20',
-                borderColor: 'hsl(var(--pastel-purple))'
+                backgroundColor: 'hsl(var(--pastel-purple))',
+                borderColor: 'hsl(var(--pastel-purple-text))'
               }}>
                 <div className="flex items-start gap-3 mb-4">
-                  <Sparkles className="w-5 h-5 mt-0.5" style={{ color: 'hsl(var(--pastel-purple-text))' }} />
+                  <Sparkles className="w-5 h-5 mt-0.5" style={{ color: 'hsl(var(--pastel-gray-dark))' }} />
                   <div className="flex-1">
-                    <h3 className="font-semibold text-foreground mb-1">Assistente IA</h3>
-                    <p className="text-sm text-muted-foreground">Peça ajuda para editar seu infográfico</p>
+                    <h3 className="font-semibold mb-1" style={{ color: 'hsl(var(--pastel-gray-dark))' }}>Assistente IA</h3>
+                    <p className="text-sm" style={{ color: 'hsl(var(--pastel-gray-dark))' }}>Peça ajuda para editar seu infográfico</p>
                   </div>
                 </div>
                 
@@ -997,16 +997,25 @@ export default function EditarInfografico() {
                     <Sparkles className="w-4 h-4 inline mr-2" />Aplicar com IA
                   </button>
                   
-                  <div className="pt-3 border-t border-border">
-                    <p className="text-xs text-muted-foreground mb-2">Sugestões rápidas:</p>
+                  <div className="pt-3 border-t" style={{ borderColor: 'hsl(var(--pastel-gray-dark))' }}>
+                    <p className="text-xs mb-2" style={{ color: 'hsl(var(--pastel-gray-dark))' }}>Sugestões rápidas:</p>
                     <div className="flex flex-wrap gap-2">
-                      <button className="px-3 py-1.5 bg-muted hover:bg-muted/80 rounded-lg text-xs text-foreground transition-colors">
+                      <button className="px-3 py-1.5 rounded-lg text-xs transition-colors" style={{
+                        backgroundColor: 'hsl(var(--card))',
+                        color: 'hsl(var(--pastel-gray-dark))'
+                      }}>
                         Adicionar Q2 2025
                       </button>
-                      <button className="px-3 py-1.5 bg-muted hover:bg-muted/80 rounded-lg text-xs text-foreground transition-colors">
+                      <button className="px-3 py-1.5 rounded-lg text-xs transition-colors" style={{
+                        backgroundColor: 'hsl(var(--card))',
+                        color: 'hsl(var(--pastel-gray-dark))'
+                      }}>
                         Mudar cores
                       </button>
-                      <button className="px-3 py-1.5 bg-muted hover:bg-muted/80 rounded-lg text-xs text-foreground transition-colors">
+                      <button className="px-3 py-1.5 rounded-lg text-xs transition-colors" style={{
+                        backgroundColor: 'hsl(var(--card))',
+                        color: 'hsl(var(--pastel-gray-dark))'
+                      }}>
                         Adicionar seção
                       </button>
                     </div>
@@ -1016,23 +1025,31 @@ export default function EditarInfografico() {
 
               {/* History Panel */}
               <div className="rounded-2xl p-5 border" style={{
-                backgroundColor: 'hsl(var(--pastel-yellow))/20',
-                borderColor: 'hsl(var(--pastel-yellow))'
+                backgroundColor: 'hsl(var(--pastel-purple))',
+                borderColor: 'hsl(var(--pastel-purple-text))'
               }}>
                 <div className="flex items-start gap-3">
-                  <History className="w-5 h-5 mt-0.5" style={{ color: 'hsl(var(--pastel-yellow-text))' }} />
+                  <History className="w-5 h-5 mt-0.5" style={{ color: 'hsl(var(--pastel-gray-dark))' }} />
                   <div className="flex-1">
-                    <h3 className="font-semibold text-foreground mb-2">Histórico de Alterações</h3>
-                    <div className="space-y-2 text-sm text-muted-foreground">
+                    <h3 className="font-semibold mb-2" style={{ color: 'hsl(var(--pastel-gray-dark))' }}>Histórico de Alterações</h3>
+                    <div className="space-y-2 text-sm" style={{ color: 'hsl(var(--pastel-gray-dark))' }}>
                       <div className="flex items-center justify-between">
                         <span>3 alterações não salvas</span>
-                        <button className="font-medium text-xs" style={{ color: 'hsl(var(--pastel-purple-text))' }}>Ver todas</button>
+                        <button className="font-medium text-xs" style={{ color: 'hsl(var(--pastel-gray-dark))' }}>Ver todas</button>
                       </div>
                       <div className="flex gap-2 mt-3">
-                        <button className="flex-1 px-3 py-2 bg-card hover:bg-muted rounded-lg text-xs font-medium transition-colors border border-border">
+                        <button className="flex-1 px-3 py-2 rounded-lg text-xs font-medium transition-colors border" style={{
+                          backgroundColor: 'hsl(var(--card))',
+                          borderColor: 'hsl(var(--border))',
+                          color: 'hsl(var(--pastel-gray-dark))'
+                        }}>
                           <Undo className="w-3 h-3 inline mr-1" />Desfazer
                         </button>
-                        <button className="flex-1 px-3 py-2 bg-card hover:bg-muted rounded-lg text-xs font-medium transition-colors border border-border">
+                        <button className="flex-1 px-3 py-2 rounded-lg text-xs font-medium transition-colors border" style={{
+                          backgroundColor: 'hsl(var(--card))',
+                          borderColor: 'hsl(var(--border))',
+                          color: 'hsl(var(--pastel-gray-dark))'
+                        }}>
                           <Redo className="w-3 h-3 inline mr-1" />Refazer
                         </button>
                       </div>
