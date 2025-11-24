@@ -243,15 +243,15 @@ const Autores = () => {
 
               <section className="bg-white rounded-xl p-4 border border-slate-200">
                 <div className="flex items-center gap-3">
-                  <button className="px-6 py-2.5 bg-pastel-blue text-slate-700 rounded-lg font-medium flex items-center gap-2">
+                  <button className="px-6 py-2.5 bg-pastel-blue text-slate-700 rounded-lg font-medium flex items-center gap-2 hover:bg-opacity-80 hover:shadow-md transition-all duration-200">
                     <i className="fas fa-user-check mr-2"></i>
                     Seguindo
                   </button>
-                  <button onClick={() => navigate('/seguidores')} className="px-6 py-2.5 bg-pastel-green text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                  <button onClick={() => navigate('/seguidores')} className="px-6 py-2.5 bg-pastel-green text-slate-700 rounded-lg font-medium hover:bg-opacity-80 hover:shadow-md transition-all duration-200">
                     <i className="fas fa-users mr-2"></i>
                     Seguidores
                   </button>
-                  <button onClick={() => navigate('/descobrir-novos')} className="px-6 py-2.5 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2">
+                  <button onClick={() => navigate('/descobrir-novos')} className="px-6 py-2.5 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 hover:shadow-md transition-all duration-200 flex items-center gap-2">
                     <i className="fas fa-compass mr-2"></i>
                     Descobrir Novos
                   </button>
