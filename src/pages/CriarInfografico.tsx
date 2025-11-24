@@ -195,7 +195,7 @@ export default function CriarInfografico() {
           <section className="hidden lg:flex flex-col flex-1 bg-muted/30 border-l border-border overflow-hidden relative">
             
             {/* Toolbar */}
-            <div className="h-[88px] bg-card border-b border-border flex items-center justify-between px-6 shadow-sm z-10">
+            <div className="h-[80px] bg-card border-b border-border flex items-center justify-between px-6 shadow-sm z-10">
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Eye className="w-4 h-4" />
                 <span className="font-medium">Visualização</span>
