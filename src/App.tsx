@@ -80,6 +80,7 @@ import CriarInfografico from "./pages/CriarInfografico";
 import InfograficoRevisao from "./pages/InfograficoRevisao";
 import EditarInfografico from "./pages/EditarInfografico";
 import NovoArtigo from "./pages/NovoArtigo";
+import CursoDetalhes from "./pages/CursoDetalhes";
 
 import NotFound from "./pages/NotFound";
 
@@ -113,6 +114,7 @@ const App = () => {
           <Route path="/biblioteca" element={<Biblioteca />} />
           <Route path="/marketplace" element={<Marketplace />} />
           <Route path="/aprendizado" element={<Aprendizado />} />
+          <Route path="/curso-detalhes" element={<CursoDetalhes />} />
           <Route path="/comunidade" element={<Comunidade />} />
           <Route path="/rankings" element={<Rankings />} />
           <Route path="/discussao/:id" element={<Discussao />} />
