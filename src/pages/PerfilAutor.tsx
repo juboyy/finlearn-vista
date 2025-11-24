@@ -1,19 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { 
-  ArrowLeft, 
-  Search, 
-  Bell, 
-  Share2, 
-  UserPlus, 
-  MessageCircle, 
-  Phone, 
-  Video, 
-  Award, 
-  Calendar, 
-  Clock, 
-  Check, 
-  X 
-} from "lucide-react";
+import { ArrowLeft, Search, Bell, Share2, UserPlus, MessageCircle, Phone, Video, Award, Calendar, Clock, Check, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
 
