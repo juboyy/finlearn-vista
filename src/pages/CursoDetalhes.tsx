@@ -143,7 +143,7 @@ const CursoDetalhes = () => {
               {/* Pricing Sidebar */}
               <div className="bg-white rounded-xl border border-slate-200 p-6">
                 {/* Countdown Timer */}
-                <div className="mb-6 p-4 bg-gradient-to-r from-pastel-purple via-pastel-pink to-pastel-orange rounded-lg">
+                <div className="mb-6 p-4 bg-[hsl(var(--pastel-blue))] rounded-lg">
                   <p className="text-center text-xs font-semibold text-pastel-gray-dark mb-3 uppercase tracking-wide">
                     Oferta Especial Termina Em
                   </p>
