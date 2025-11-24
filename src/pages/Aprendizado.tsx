@@ -373,6 +373,7 @@ const Aprendizado = () => {
           onHistoricoClick={() => {
             if (activeTab === 'documentos') {
               setShowHistorico(!showHistorico);
+              setShowAnalytics(false);
             }
           }}
           onAnalyticsClick={() => {
