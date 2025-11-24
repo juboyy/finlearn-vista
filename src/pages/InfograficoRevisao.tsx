@@ -1,6 +1,6 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { ArrowLeft, Bell, Send, Download, Share2, FileText, Bookmark, Edit, CreditCard, User, Check, Brain, RotateCw, Paperclip, Eye, Upload, Image } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import Plot from "react-plotly.js";
 import { useInfographicChat } from "@/hooks/useInfographicChat";
@@ -14,6 +14,7 @@ export default function InfograficoRevisao() {
   const [inputValue, setInputValue] = useState("");
   const { messages, sendMessage, isLoading } = useInfographicChat();
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (chatScrollRef.current) {
@@ -312,7 +313,10 @@ export default function InfograficoRevisao() {
                         <i className="fa-solid fa-arrow-right text-sm text-muted-foreground group-hover:text-foreground"></i>
                       </button>
 
-                      <button className="w-full flex items-center justify-between px-4 py-3 bg-muted hover:bg-muted/80 border border-border rounded-lg text-sm font-medium text-foreground transition-all group">
+                      <button 
+                        onClick={() => navigate('/editar-infografico')}
+                        className="w-full flex items-center justify-between px-4 py-3 bg-muted hover:bg-muted/80 border border-border rounded-lg text-sm font-medium text-foreground transition-all group"
+                      >
                         <span className="flex items-center gap-3">
                           <Edit className="w-4 h-4" style={{ color: 'hsl(var(--pastel-yellow))' }} />
                           <span>Refinar Análise</span>

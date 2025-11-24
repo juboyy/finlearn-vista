@@ -78,6 +78,7 @@ import NewsletterRevisao from "./pages/NewsletterRevisao";
 import NewsletterPreview from "./pages/NewsletterPreview";
 import CriarInfografico from "./pages/CriarInfografico";
 import InfograficoRevisao from "./pages/InfograficoRevisao";
+import EditarInfografico from "./pages/EditarInfografico";
 
 import NotFound from "./pages/NotFound";
 
@@ -171,6 +172,7 @@ const App = () => {
           <Route path="/newsletter-preview" element={<NewsletterPreview />} />
           <Route path="/criar-infografico" element={<CriarInfografico />} />
           <Route path="/infografico-revisao" element={<InfograficoRevisao />} />
+          <Route path="/editar-infografico" element={<EditarInfografico />} />
           
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
