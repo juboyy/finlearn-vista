@@ -631,9 +631,24 @@ const CursoDetalhes = () => {
                 <div className="col-span-1 text-center">
                   <div className="text-5xl font-bold text-slate-800 mb-2">4.9</div>
                   <div className="flex items-center justify-center gap-1 mb-2">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="text-yellow-500 fill-yellow-500" size={16} />
-                    ))}
+                    {[1, 2, 3, 4, 5].map((star) => {
+                      const rating = 4.9;
+                      const fillPercentage = Math.min(Math.max(rating - (star - 1), 0), 1) * 100;
+                      
+                      return (
+                        <div key={star} className="relative w-4 h-4">
+                          {/* Estrela de fundo (vazia) */}
+                          <Star className="absolute text-slate-200 fill-slate-200" size={16} />
+                          {/* Estrela preenchida com clip-path */}
+                          <div 
+                            className="absolute overflow-hidden" 
+                            style={{ width: `${fillPercentage}%` }}
+                          >
+                            <Star className="text-yellow-500 fill-yellow-500" size={16} />
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                   <p className="text-sm text-slate-500">2.847 avaliações</p>
                 </div>
