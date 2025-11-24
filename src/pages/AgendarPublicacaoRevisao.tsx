@@ -7,6 +7,7 @@ const AgendarPublicacaoRevisao = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [activeDetailModal, setActiveDetailModal] = useState<'spam' | 'seo' | 'geo' | null>(null);
 
   useEffect(() => {
     if (isModalOpen) {
@@ -17,6 +18,16 @@ const AgendarPublicacaoRevisao = () => {
       return () => clearTimeout(timer);
     }
   }, [isModalOpen]);
+
+  const handleButtonClick = (label: string) => {
+    if (label === "Palavras de Spam") {
+      setActiveDetailModal('spam');
+    } else if (label === "Otimização SEO") {
+      setActiveDetailModal('seo');
+    } else if (label === "Segmentação GEO") {
+      setActiveDetailModal('geo');
+    }
+  };
 
   const qualityItems = [
     { 
@@ -757,6 +768,7 @@ const AgendarPublicacaoRevisao = () => {
                               {!isLoading && (
                                 item.hasButton ? (
                                   <button 
+                                    onClick={() => handleButtonClick(item.label)}
                                     className="font-bold text-sm hover:underline shrink-0"
                                     style={{ color: 'hsl(var(--pastel-gray-dark))' }}
                                   >
@@ -774,6 +786,298 @@ const AgendarPublicacaoRevisao = () => {
                             </div>
                           );
                         })}
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+
+                {/* Detail Modals */}
+                {/* Spam Words Modal */}
+                <Dialog open={activeDetailModal === 'spam'} onOpenChange={() => setActiveDetailModal(null)}>
+                  <DialogContent className="max-w-2xl">
+                    <DialogHeader>
+                      <DialogTitle className="flex items-center gap-3 text-xl">
+                        <div 
+                          className="w-10 h-10 rounded-lg flex items-center justify-center"
+                          style={{ backgroundColor: 'hsl(44 78% 89%)' }}
+                        >
+                          <AlertTriangle size={20} style={{ color: 'hsl(44 45% 56%)' }} />
+                        </div>
+                        Revisar Palavras de Spam
+                      </DialogTitle>
+                    </DialogHeader>
+                    
+                    <div className="space-y-4 mt-4">
+                      <p className="text-sm" style={{ color: 'hsl(var(--muted-foreground))' }}>
+                        A palavra destacada abaixo pode reduzir a taxa de entrega da sua newsletter. Recomendamos substituir por alternativas.
+                      </p>
+                      
+                      <div className="p-4 rounded-xl border" style={{ 
+                        backgroundColor: 'hsl(44 78% 95%)',
+                        borderColor: 'hsl(44 45% 82%)'
+                      }}>
+                        <p className="text-sm mb-2 font-semibold" style={{ color: 'hsl(var(--foreground))' }}>
+                          Palavra detectada:
+                        </p>
+                        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg" style={{
+                          backgroundColor: 'hsl(44 45% 82%)',
+                          color: 'hsl(var(--pastel-gray-dark))'
+                        }}>
+                          <AlertTriangle size={14} />
+                          <span className="font-semibold">Grátis</span>
+                        </div>
+                      </div>
+
+                      <div className="p-4 rounded-xl border bg-white" style={{ borderColor: 'hsl(var(--border))' }}>
+                        <p className="text-sm mb-3 font-semibold" style={{ color: 'hsl(var(--foreground))' }}>
+                          Sugestões de substituição:
+                        </p>
+                        <div className="space-y-2">
+                          {['Sem custo', 'Incluso', 'Cortesia', 'Benefício incluído'].map((suggestion) => (
+                            <button
+                              key={suggestion}
+                              className="w-full text-left px-4 py-2 rounded-lg hover:bg-slate-50 transition border"
+                              style={{ borderColor: 'hsl(var(--border))' }}
+                            >
+                              <span className="text-sm" style={{ color: 'hsl(var(--foreground))' }}>
+                                {suggestion}
+                              </span>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="flex justify-end gap-3 pt-4">
+                        <button
+                          onClick={() => setActiveDetailModal(null)}
+                          className="px-4 py-2 rounded-lg font-medium hover:bg-slate-100 transition"
+                          style={{ color: 'hsl(var(--pastel-gray-dark))' }}
+                        >
+                          Fechar
+                        </button>
+                        <button
+                          onClick={() => {
+                            alert('Redirecionando para edição do conteúdo...');
+                            setActiveDetailModal(null);
+                          }}
+                          className="px-4 py-2 rounded-lg font-medium hover:opacity-90 transition"
+                          style={{
+                            backgroundColor: 'hsl(var(--pastel-purple-btn))',
+                            color: 'hsl(var(--pastel-gray-dark))'
+                          }}
+                        >
+                          Editar Conteúdo
+                        </button>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+
+                {/* SEO Details Modal */}
+                <Dialog open={activeDetailModal === 'seo'} onOpenChange={() => setActiveDetailModal(null)}>
+                  <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                    <DialogHeader>
+                      <DialogTitle className="flex items-center gap-3 text-xl">
+                        <div 
+                          className="w-10 h-10 rounded-lg flex items-center justify-center"
+                          style={{ backgroundColor: 'hsl(206 35% 79%)' }}
+                        >
+                          <Search size={20} style={{ color: 'hsl(var(--pastel-gray-dark))' }} />
+                        </div>
+                        Detalhes de Otimização SEO
+                      </DialogTitle>
+                    </DialogHeader>
+                    
+                    <div className="space-y-4 mt-4">
+                      <div className="p-4 rounded-xl border bg-white" style={{ borderColor: 'hsl(var(--border))' }}>
+                        <h3 className="font-semibold mb-3" style={{ color: 'hsl(var(--foreground))' }}>
+                          Meta Tags Configuradas
+                        </h3>
+                        <div className="space-y-3">
+                          <div>
+                            <p className="text-xs font-medium mb-1" style={{ color: 'hsl(var(--muted-foreground))' }}>
+                              Title Tag
+                            </p>
+                            <p className="text-sm px-3 py-2 rounded-lg" style={{ 
+                              backgroundColor: 'hsl(206 35% 95%)',
+                              color: 'hsl(var(--foreground))'
+                            }}>
+                              Transformação Digital nos Pagamentos | Edição Adquirência
+                            </p>
+                          </div>
+                          <div>
+                            <p className="text-xs font-medium mb-1" style={{ color: 'hsl(var(--muted-foreground))' }}>
+                              Meta Description
+                            </p>
+                            <p className="text-sm px-3 py-2 rounded-lg" style={{ 
+                              backgroundColor: 'hsl(206 35% 95%)',
+                              color: 'hsl(var(--foreground))'
+                            }}>
+                              Descubra as últimas tendências em pagamentos digitais, Pix, e inovações em adquirência. Análise completa com dados do mercado brasileiro.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="p-4 rounded-xl border bg-white" style={{ borderColor: 'hsl(var(--border))' }}>
+                        <h3 className="font-semibold mb-3" style={{ color: 'hsl(var(--foreground))' }}>
+                          Palavras-chave Principais
+                        </h3>
+                        <div className="flex flex-wrap gap-2">
+                          {['pagamentos digitais', 'Pix', 'adquirência', 'meios de pagamento', 'transformação digital', 'fintech'].map((keyword) => (
+                            <span
+                              key={keyword}
+                              className="px-3 py-1.5 rounded-lg text-sm font-medium"
+                              style={{
+                                backgroundColor: 'hsl(206 35% 79%)',
+                                color: 'hsl(var(--pastel-gray-dark))'
+                              }}
+                            >
+                              {keyword}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="p-4 rounded-xl border" style={{ 
+                        backgroundColor: 'hsl(152 32% 95%)',
+                        borderColor: 'hsl(152 32% 79%)'
+                      }}>
+                        <div className="flex items-center gap-2 mb-2">
+                          <CheckCircle size={18} style={{ color: 'hsl(var(--pastel-green))' }} />
+                          <p className="font-semibold text-sm" style={{ color: 'hsl(var(--foreground))' }}>
+                            Score SEO: 92/100
+                          </p>
+                        </div>
+                        <p className="text-xs" style={{ color: 'hsl(var(--muted-foreground))' }}>
+                          Sua newsletter está otimizada para mecanismos de busca e tem alta chance de ranqueamento.
+                        </p>
+                      </div>
+
+                      <div className="flex justify-end gap-3 pt-4">
+                        <button
+                          onClick={() => setActiveDetailModal(null)}
+                          className="px-4 py-2 rounded-lg font-medium hover:opacity-90 transition"
+                          style={{
+                            backgroundColor: 'hsl(var(--pastel-blue-btn))',
+                            color: 'hsl(var(--pastel-gray-dark))'
+                          }}
+                        >
+                          Entendido
+                        </button>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+
+                {/* GEO Segmentation Modal */}
+                <Dialog open={activeDetailModal === 'geo'} onOpenChange={() => setActiveDetailModal(null)}>
+                  <DialogContent className="max-w-2xl">
+                    <DialogHeader>
+                      <DialogTitle className="flex items-center gap-3 text-xl">
+                        <div 
+                          className="w-10 h-10 rounded-lg flex items-center justify-center"
+                          style={{ backgroundColor: 'hsl(152 32% 79%)' }}
+                        >
+                          <Globe size={20} style={{ color: 'hsl(var(--pastel-gray-dark))' }} />
+                        </div>
+                        Configurar Segmentação Geográfica
+                      </DialogTitle>
+                    </DialogHeader>
+                    
+                    <div className="space-y-4 mt-4">
+                      <p className="text-sm" style={{ color: 'hsl(var(--muted-foreground))' }}>
+                        Ajuste a distribuição geográfica dos destinatários da sua newsletter.
+                      </p>
+
+                      <div className="p-4 rounded-xl border bg-white" style={{ borderColor: 'hsl(var(--border))' }}>
+                        <h3 className="font-semibold mb-4" style={{ color: 'hsl(var(--foreground))' }}>
+                          Distribuição Atual
+                        </h3>
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{
+                                backgroundColor: 'hsl(var(--pastel-green))'
+                              }}>
+                                🇧🇷
+                              </div>
+                              <span className="font-medium" style={{ color: 'hsl(var(--foreground))' }}>
+                                Brasil
+                              </span>
+                            </div>
+                            <div className="text-right">
+                              <p className="font-bold" style={{ color: 'hsl(var(--foreground))' }}>95%</p>
+                              <p className="text-xs" style={{ color: 'hsl(var(--muted-foreground))' }}>11.828 destinatários</p>
+                            </div>
+                          </div>
+                          <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                            <div className="h-full rounded-full" style={{ 
+                              width: '95%',
+                              backgroundColor: 'hsl(var(--pastel-green))' 
+                            }} />
+                          </div>
+                        </div>
+
+                        <div className="space-y-3 mt-4">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{
+                                backgroundColor: 'hsl(var(--pastel-blue))'
+                              }}>
+                                🌎
+                              </div>
+                              <span className="font-medium" style={{ color: 'hsl(var(--foreground))' }}>
+                                Internacional
+                              </span>
+                            </div>
+                            <div className="text-right">
+                              <p className="font-bold" style={{ color: 'hsl(var(--foreground))' }}>5%</p>
+                              <p className="text-xs" style={{ color: 'hsl(var(--muted-foreground))' }}>622 destinatários</p>
+                            </div>
+                          </div>
+                          <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                            <div className="h-full rounded-full" style={{ 
+                              width: '5%',
+                              backgroundColor: 'hsl(var(--pastel-blue))' 
+                            }} />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="p-4 rounded-xl border" style={{ 
+                        backgroundColor: 'hsl(206 35% 95%)',
+                        borderColor: 'hsl(206 35% 79%)'
+                      }}>
+                        <div className="flex items-start gap-2">
+                          <Info size={18} className="shrink-0 mt-0.5" style={{ color: 'hsl(var(--pastel-blue))' }} />
+                          <p className="text-xs" style={{ color: 'hsl(var(--pastel-gray-dark))' }}>
+                            Para ajustar a segmentação, acesse Configurações → Audiência → Segmentação Geográfica
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex justify-end gap-3 pt-4">
+                        <button
+                          onClick={() => setActiveDetailModal(null)}
+                          className="px-4 py-2 rounded-lg font-medium hover:bg-slate-100 transition"
+                          style={{ color: 'hsl(var(--pastel-gray-dark))' }}
+                        >
+                          Fechar
+                        </button>
+                        <button
+                          onClick={() => {
+                            alert('Redirecionando para configurações de audiência...');
+                            setActiveDetailModal(null);
+                          }}
+                          className="px-4 py-2 rounded-lg font-medium hover:opacity-90 transition"
+                          style={{
+                            backgroundColor: 'hsl(var(--pastel-green-btn))',
+                            color: 'hsl(var(--pastel-gray-dark))'
+                          }}
+                        >
+                          Ir para Configurações
+                        </button>
                       </div>
                     </div>
                   </DialogContent>
