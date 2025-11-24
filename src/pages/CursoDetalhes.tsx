@@ -554,7 +554,7 @@ const CursoDetalhes = () => {
                     <p className="text-sm text-slate-500 mb-4">CFA, CNPI, PhD em Finanças</p>
                     <div className="flex items-center justify-center gap-4 text-sm text-slate-600 mb-4">
                       <div className="flex items-center gap-1">
-                        <Star className="text-yellow-500 fill-yellow-500" size={12} />
+                        <Star className="text-[hsl(var(--pastel-yellow))] fill-[hsl(var(--pastel-yellow))]" size={12} />
                         <span className="font-medium">4.9</span>
                       </div>
                       <div className="flex items-center gap-1">
@@ -599,7 +599,7 @@ const CursoDetalhes = () => {
                           <p className="text-xs text-slate-500 mb-2">{instructor.cert}</p>
                           <div className="flex items-center gap-3 text-xs text-slate-600 mb-2">
                             <div className="flex items-center gap-1">
-                              <Star className="text-yellow-500 fill-yellow-500" size={10} />
+                              <Star className="text-[hsl(var(--pastel-yellow))] fill-[hsl(var(--pastel-yellow))]" size={10} />
                               <span>{instructor.rating}</span>
                             </div>
                             <span>{instructor.students} alunos</span>
@@ -667,7 +667,7 @@ const CursoDetalhes = () => {
                     <h3 className="font-semibold text-slate-800 mb-2">{course.title}</h3>
                     <div className="flex items-center gap-2 mb-3 text-sm text-slate-600">
                       <div className="flex items-center gap-1">
-                        <Star className="text-yellow-500 fill-yellow-500" size={12} />
+                        <Star className="text-[hsl(var(--pastel-yellow))] fill-[hsl(var(--pastel-yellow))]" size={12} />
                         <span className="font-medium">{course.rating}</span>
                       </div>
                       <span className="text-slate-400">•</span>
@@ -712,7 +712,7 @@ const CursoDetalhes = () => {
                             className="absolute overflow-hidden" 
                             style={{ width: `${fillPercentage}%` }}
                           >
-                            <Star className="text-yellow-500 fill-yellow-500" size={16} />
+                            <Star className="text-[hsl(var(--pastel-yellow))] fill-[hsl(var(--pastel-yellow))]" size={16} />
                           </div>
                         </div>
                       );
@@ -754,7 +754,7 @@ const CursoDetalhes = () => {
                           </div>
                           <div className="flex items-center gap-1">
                             {[...Array(review.rating)].map((_, i) => (
-                              <Star key={i} className="text-yellow-500 fill-yellow-500" size={14} />
+                              <Star key={i} className="text-[hsl(var(--pastel-yellow))] fill-[hsl(var(--pastel-yellow))]" size={14} />
                             ))}
                           </div>
                         </div>
