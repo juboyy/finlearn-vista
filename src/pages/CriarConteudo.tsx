@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, X, Podcast, GraduationCap, Bot, Book, Video, Newspaper, TrendingUp, FileText, FlaskConical, FileBarChart } from "lucide-react";
+import { ArrowLeft, X, Podcast, GraduationCap, Bot, Book, Video, Newspaper, TrendingUp, FileText, FlaskConical, FileBarChart, PieChart } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function CriarConteudo() {
@@ -274,6 +274,20 @@ export default function CriarConteudo() {
                     <div className="flex-1">
                       <h3 className="text-sm font-bold text-foreground mb-0.5">Estudos Acadêmicos</h3>
                       <p className="text-xs text-muted-foreground">Publique teses e pesquisas aprofundadas.</p>
+                    </div>
+                    <div className="text-muted-foreground/30 group-hover:text-muted-foreground transition-colors">
+                      <i className="fa-solid fa-chevron-right text-sm"></i>
+                    </div>
+                  </button>
+
+                  {/* Option 11: Infográficos */}
+                  <button className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
+                    <div className="w-12 h-12 rounded-lg bg-[hsl(var(--pastel-purple))] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
+                      <PieChart className="w-6 h-6" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-sm font-bold text-foreground mb-0.5">Infográficos</h3>
+                      <p className="text-xs text-muted-foreground">Crie visualizações gráficas impactantes.</p>
                     </div>
                     <div className="text-muted-foreground/30 group-hover:text-muted-foreground transition-colors">
                       <i className="fa-solid fa-chevron-right text-sm"></i>
