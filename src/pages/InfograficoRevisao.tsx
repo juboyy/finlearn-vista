@@ -4,11 +4,16 @@ import { Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import Plot from "react-plotly.js";
 import { useInfographicChat } from "@/hooks/useInfographicChat";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+import { toast } from "sonner";
 
 export default function InfograficoRevisao() {
   const chatScrollRef = useRef<HTMLDivElement>(null);
+  const infographicRef = useRef<HTMLDivElement>(null);
   const [inputValue, setInputValue] = useState("");
   const { messages, sendMessage, isLoading } = useInfographicChat();
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
 
   useEffect(() => {
     if (chatScrollRef.current) {
@@ -32,6 +37,59 @@ export default function InfograficoRevisao() {
 
   const formatTime = (date: Date) => {
     return date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  };
+
+  const handleDownloadPDF = async () => {
+    if (!infographicRef.current) {
+      toast.error("Erro ao gerar PDF");
+      return;
+    }
+
+    setIsGeneratingPDF(true);
+    toast.info("Gerando PDF do infográfico...");
+
+    try {
+      // Captura o elemento do infográfico
+      const canvas = await html2canvas(infographicRef.current, {
+        scale: 2,
+        useCORS: true,
+        logging: false,
+        backgroundColor: '#ffffff'
+      });
+
+      const imgData = canvas.toDataURL('image/png');
+      
+      // Calcula dimensões para o PDF
+      const imgWidth = 210; // A4 width in mm
+      const pageHeight = 297; // A4 height in mm
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      
+      // Cria o PDF
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      let heightLeft = imgHeight;
+      let position = 0;
+
+      // Adiciona primeira página
+      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      // Adiciona páginas adicionais se necessário
+      while (heightLeft > 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+
+      // Faz o download
+      pdf.save('infografico-pagamentos-2024.pdf');
+      toast.success("PDF baixado com sucesso!");
+    } catch (error) {
+      console.error("Erro ao gerar PDF:", error);
+      toast.error("Erro ao gerar PDF. Tente novamente.");
+    } finally {
+      setIsGeneratingPDF(false);
+    }
   };
 
   return (
@@ -182,10 +240,14 @@ export default function InfograficoRevisao() {
                   <div className="bg-card p-4 rounded-2xl rounded-tl-none shadow-sm border border-border relative chat-bubble-left">
                     <p className="text-sm font-medium text-foreground mb-3">Como você gostaria de prosseguir com o relatório?</p>
                     <div className="space-y-2">
-                      <button className="w-full flex items-center justify-between px-4 py-3 bg-muted hover:bg-muted/80 border border-border rounded-lg text-sm font-medium text-foreground transition-all group">
+                      <button 
+                        onClick={handleDownloadPDF}
+                        disabled={isGeneratingPDF}
+                        className="w-full flex items-center justify-between px-4 py-3 bg-muted hover:bg-muted/80 border border-border rounded-lg text-sm font-medium text-foreground transition-all group disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
                         <span className="flex items-center gap-3">
                           <FileText className="w-4 h-4" style={{ color: 'hsl(var(--pastel-pink))' }} />
-                          <span>Baixar em PDF</span>
+                          <span>{isGeneratingPDF ? "Gerando PDF..." : "Baixar em PDF"}</span>
                         </span>
                         <Download className="w-4 h-4 text-muted-foreground group-hover:text-foreground" />
                       </button>
@@ -329,17 +391,22 @@ export default function InfograficoRevisao() {
                 <button className="px-3 py-1.5 bg-muted hover:bg-muted/80 rounded-lg text-sm text-foreground shadow-sm transition-all">
                   <Share2 className="w-3 h-3 inline mr-2" />Compartilhar
                 </button>
-                <button className="px-3 py-1.5 text-white rounded-lg text-sm hover:opacity-90 shadow-sm transition-all" style={{
-                  backgroundColor: 'hsl(var(--pastel-purple-btn))'
-                }}>
-                  <Download className="w-3 h-3 inline mr-2" />Baixar PDF
+                <button 
+                  onClick={handleDownloadPDF}
+                  disabled={isGeneratingPDF}
+                  className="px-3 py-1.5 text-white rounded-lg text-sm hover:opacity-90 shadow-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed" 
+                  style={{
+                    backgroundColor: 'hsl(var(--pastel-purple-btn))'
+                  }}
+                >
+                  <Download className="w-3 h-3 inline mr-2" />{isGeneratingPDF ? "Gerando..." : "Baixar PDF"}
                 </button>
               </div>
             </div>
 
             {/* Infographic Display */}
             <div className="flex-1 overflow-y-auto p-8">
-              <div className="bg-card rounded-2xl shadow-lg border border-border overflow-hidden max-w-6xl mx-auto">
+              <div ref={infographicRef} className="bg-card rounded-2xl shadow-lg border border-border overflow-hidden max-w-6xl mx-auto">
                 
                 {/* Info Header */}
                 <div className="p-10 text-white relative overflow-hidden" style={{
