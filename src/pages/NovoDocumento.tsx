@@ -14,6 +14,8 @@ export default function NovoDocumento() {
   const [visibility, setVisibility] = useState("Privado");
   const [tags, setTags] = useState<string[]>(["Mercado Financeiro", "CVM", "2025"]);
   const [newTag, setNewTag] = useState("");
+  const [generatedContent, setGeneratedContent] = useState("");
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const agentTypes = [
     { id: "analise", name: "Análise", icon: "fas fa-chart-line", color: "bg-[#B8D4E8]", description: "Relatórios e análises de mercado" },
@@ -38,6 +40,99 @@ export default function NovoDocumento() {
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       addTag();
+    }
+  };
+
+  const handleGenerateContent = async () => {
+    if (!contentPrompt.trim()) {
+      return;
+    }
+
+    setIsGenerating(true);
+    setGeneratedContent("");
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/generate-content`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+          },
+          body: JSON.stringify({
+            prompt: contentPrompt,
+            agentType: selectedAgent,
+            specificAgent: specificAgent,
+            tone: toneOfVoice,
+            contentSize: contentSize,
+          }),
+        }
+      );
+
+      if (!response.ok || !response.body) {
+        throw new Error("Falha ao gerar conteúdo");
+      }
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let textBuffer = "";
+      let streamDone = false;
+
+      while (!streamDone) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        textBuffer += decoder.decode(value, { stream: true });
+
+        let newlineIndex: number;
+        while ((newlineIndex = textBuffer.indexOf("\n")) !== -1) {
+          let line = textBuffer.slice(0, newlineIndex);
+          textBuffer = textBuffer.slice(newlineIndex + 1);
+
+          if (line.endsWith("\r")) line = line.slice(0, -1);
+          if (line.startsWith(":") || line.trim() === "") continue;
+          if (!line.startsWith("data: ")) continue;
+
+          const jsonStr = line.slice(6).trim();
+          if (jsonStr === "[DONE]") {
+            streamDone = true;
+            break;
+          }
+
+          try {
+            const parsed = JSON.parse(jsonStr);
+            const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+            if (content) {
+              setGeneratedContent((prev) => prev + content);
+            }
+          } catch {
+            textBuffer = line + "\n" + textBuffer;
+            break;
+          }
+        }
+      }
+
+      if (textBuffer.trim()) {
+        for (let raw of textBuffer.split("\n")) {
+          if (!raw) continue;
+          if (raw.endsWith("\r")) raw = raw.slice(0, -1);
+          if (raw.startsWith(":") || raw.trim() === "") continue;
+          if (!raw.startsWith("data: ")) continue;
+          const jsonStr = raw.slice(6).trim();
+          if (jsonStr === "[DONE]") continue;
+          try {
+            const parsed = JSON.parse(jsonStr);
+            const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+            if (content) {
+              setGeneratedContent((prev) => prev + content);
+            }
+          } catch {}
+        }
+      }
+    } catch (error) {
+      console.error("Error generating content:", error);
+    } finally {
+      setIsGenerating(false);
     }
   };
 
@@ -230,10 +325,23 @@ export default function NovoDocumento() {
                         </div>
                       </div>
 
-                      <button className="w-full py-3 bg-slate-800 text-white rounded-lg font-semibold hover:bg-slate-700 transition flex items-center justify-center gap-2">
+                  <button 
+                    onClick={handleGenerateContent}
+                    disabled={isGenerating || !contentPrompt.trim()}
+                    className="w-full py-3 bg-slate-800 text-white rounded-lg font-semibold hover:bg-slate-700 transition flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isGenerating ? (
+                      <>
+                        <i className="fas fa-spinner fa-spin"></i>
+                        <span>Gerando conteúdo...</span>
+                      </>
+                    ) : (
+                      <>
                         <i className="fas fa-wand-magic-sparkles"></i>
                         <span>Gerar Conteúdo com IA</span>
-                      </button>
+                      </>
+                    )}
+                  </button>
                     </div>
                   </div>
                 </div>
@@ -449,7 +557,11 @@ export default function NovoDocumento() {
 
                 <div className="p-8 min-h-[400px]">
                   <div className="prose prose-slate max-w-none">
-                    <p className="text-slate-400 italic">Comece a escrever ou use a IA para gerar conteúdo automaticamente...</p>
+                    {generatedContent ? (
+                      <div className="text-slate-700 whitespace-pre-wrap leading-relaxed">{generatedContent}</div>
+                    ) : (
+                      <p className="text-slate-400 italic">Comece a escrever ou use a IA para gerar conteúdo automaticamente...</p>
+                    )}
                   </div>
                 </div>
               </div>
