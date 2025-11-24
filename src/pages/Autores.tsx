@@ -243,7 +243,7 @@ const Autores = () => {
 
               <section className="bg-white rounded-xl p-4 border border-slate-200">
                 <div className="flex items-center gap-3">
-                  <button className="px-6 py-2.5 bg-pastel-blue text-slate-700 rounded-lg font-medium flex items-center gap-2 hover:bg-opacity-80 hover:shadow-md transition-all duration-200">
+                  <button className="relative px-6 py-2.5 bg-pastel-blue text-slate-700 rounded-lg font-medium flex items-center gap-2 hover:bg-opacity-80 hover:shadow-md transition-all duration-200 border-2 border-pastel-blue-dark shadow-md after:absolute after:bottom-0 after:left-0 after:right-0 after:h-1 after:bg-slate-700 after:rounded-b-lg">
                     <i className="fas fa-user-check mr-2"></i>
                     Seguindo
                   </button>
