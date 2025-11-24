@@ -563,12 +563,12 @@ export default function InfograficoRevisao() {
                         ]}
                         layout={{
                           title: { text: '', font: { size: 16 } },
-                          xaxis: { title: { text: 'Trimestre', standoff: 20 }, gridcolor: 'hsl(var(--border))' },
-                          yaxis: { title: { text: 'Volume (Bilhões R$)', standoff: 20 }, gridcolor: 'hsl(var(--border))' },
+                          xaxis: { title: { text: '', standoff: 20 }, gridcolor: 'hsl(var(--border))' },
+                          yaxis: { title: { text: '', standoff: 20 }, gridcolor: 'hsl(var(--border))' },
                           margin: { t: 20, r: 20, b: 60, l: 70 },
                           plot_bgcolor: 'hsl(var(--card))',
                           paper_bgcolor: 'transparent',
-                          showlegend: true,
+                          showlegend: false,
                           legend: { x: 0.02, y: 0.98 },
                           hovermode: 'x unified',
                           font: { color: 'hsl(var(--foreground))' }
@@ -595,7 +595,7 @@ export default function InfograficoRevisao() {
                             marker: {
                               colors: ['#BBF7D0', '#BFDBFE', '#E9D5FF', '#FEF08A']
                             },
-                            textinfo: 'label+percent',
+                            textinfo: 'none',
                             textposition: 'inside',
                             hovertemplate: '<b>%{label}</b><br>%{percent}<br>%{value}% do mercado<extra></extra>'
                           }]}
