@@ -794,7 +794,7 @@ const AgendarPublicacaoRevisao = () => {
                 {/* Detail Modals */}
                 {/* Spam Words Modal */}
                 <Dialog open={activeDetailModal === 'spam'} onOpenChange={() => setActiveDetailModal(null)}>
-                  <DialogContent className="max-w-2xl">
+                  <DialogContent className="max-w-2xl animate-in fade-in-0 zoom-in-95 duration-300">
                     <DialogHeader>
                       <DialogTitle className="flex items-center gap-3 text-xl">
                         <div 
@@ -875,7 +875,7 @@ const AgendarPublicacaoRevisao = () => {
 
                 {/* SEO Details Modal */}
                 <Dialog open={activeDetailModal === 'seo'} onOpenChange={() => setActiveDetailModal(null)}>
-                  <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                  <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto animate-in fade-in-0 zoom-in-95 duration-300">
                     <DialogHeader>
                       <DialogTitle className="flex items-center gap-3 text-xl">
                         <div 
@@ -972,7 +972,7 @@ const AgendarPublicacaoRevisao = () => {
 
                 {/* GEO Segmentation Modal */}
                 <Dialog open={activeDetailModal === 'geo'} onOpenChange={() => setActiveDetailModal(null)}>
-                  <DialogContent className="max-w-2xl">
+                  <DialogContent className="max-w-2xl animate-in fade-in-0 zoom-in-95 duration-300">
                     <DialogHeader>
                       <DialogTitle className="flex items-center gap-3 text-xl">
                         <div 
