@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, X, Podcast, GraduationCap, Bot, Book, Video, Newspaper, TrendingUp, FileText, FlaskConical, FileBarChart, PieChart } from "lucide-react";
+import { ArrowLeft, X, Podcast, GraduationCap, Bot, Book, Video, Newspaper, TrendingUp, FileText, FlaskConical, FileBarChart, PieChart, FileCheck, Presentation, Radio } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function CriarConteudo() {
@@ -121,7 +121,7 @@ export default function CriarConteudo() {
           {/* Modal Overlay - Centered Modal */}
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             {/* Modal Card */}
-            <div className="bg-card rounded-2xl shadow-2xl w-full max-w-md relative border border-border animate-fade-in overflow-hidden flex flex-col max-h-[90vh]">
+            <div className="bg-card rounded-2xl shadow-2xl w-full max-w-4xl relative border border-border animate-fade-in overflow-hidden flex flex-col max-h-[90vh]">
               
               {/* Modal Header */}
               <div className="px-6 py-5 border-b border-border flex items-center justify-between bg-card sticky top-0 z-10">
@@ -134,8 +134,8 @@ export default function CriarConteudo() {
               </div>
 
               {/* Modal Body: Options List */}
-              <div className="p-3 overflow-y-auto">
-                <div className="space-y-2">
+              <div className="p-6 overflow-y-auto">
+                <div className="grid grid-cols-2 gap-3">
                   
                   {/* Option 1: Podcast */}
                   <button className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
@@ -293,6 +293,48 @@ export default function CriarConteudo() {
                       <i className="fa-solid fa-chevron-right text-sm"></i>
                     </div>
                   </Link>
+
+                  {/* Option 12: Whitepapers */}
+                  <button className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
+                    <div className="w-12 h-12 rounded-lg bg-[hsl(var(--pastel-blue))] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
+                      <FileCheck className="w-6 h-6" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-sm font-bold text-foreground mb-0.5">Whitepapers</h3>
+                      <p className="text-xs text-muted-foreground">Crie documentos técnicos e pesquisas detalhadas.</p>
+                    </div>
+                    <div className="text-muted-foreground/30 group-hover:text-muted-foreground transition-colors">
+                      <i className="fa-solid fa-chevron-right text-sm"></i>
+                    </div>
+                  </button>
+
+                  {/* Option 13: Apresentações */}
+                  <button className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
+                    <div className="w-12 h-12 rounded-lg bg-[hsl(var(--pastel-green))] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
+                      <Presentation className="w-6 h-6" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-sm font-bold text-foreground mb-0.5">Apresentações</h3>
+                      <p className="text-xs text-muted-foreground">Desenvolva slides profissionais para seus eventos.</p>
+                    </div>
+                    <div className="text-muted-foreground/30 group-hover:text-muted-foreground transition-colors">
+                      <i className="fa-solid fa-chevron-right text-sm"></i>
+                    </div>
+                  </button>
+
+                  {/* Option 14: Live */}
+                  <button className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
+                    <div className="w-12 h-12 rounded-lg bg-[hsl(var(--pastel-pink))] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
+                      <Radio className="w-6 h-6" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-sm font-bold text-foreground mb-0.5">Live</h3>
+                      <p className="text-xs text-muted-foreground">Transmissões ao vivo com sua audiência.</p>
+                    </div>
+                    <div className="text-muted-foreground/30 group-hover:text-muted-foreground transition-colors">
+                      <i className="fa-solid fa-chevron-right text-sm"></i>
+                    </div>
+                  </button>
                 </div>
               </div>
 
