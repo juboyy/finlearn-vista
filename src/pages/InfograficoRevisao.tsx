@@ -831,11 +831,12 @@ export default function InfograficoRevisao() {
                                 <div className="text-xs text-muted-foreground">Marca Própria</div>
                               </div>
                             </div>
-                            <span className="px-3 py-1 rounded-full text-xs font-bold" style={{
+                            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap" style={{
                               backgroundColor: 'hsl(var(--pastel-green))',
                               color: 'hsl(var(--pastel-green-text))'
                             }}>
-                              <i className="fa-solid fa-arrow-trend-up mr-1"></i>+12%
+                              <i className="fa-solid fa-arrow-trend-up"></i>
+                              <span>+12%</span>
                             </span>
                           </div>
                           <div className="grid grid-cols-3 gap-4">
