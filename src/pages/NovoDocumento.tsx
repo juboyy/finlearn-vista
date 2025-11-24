@@ -1,10 +1,11 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { MarkdownEditor } from "@/components/MarkdownEditor";
 import { 
   ArrowLeft, Save, Eye, Share2, Download, Settings, FileText,
-  ChevronRight, Plus, X
+  ChevronRight, Plus, X, Bold, Italic, Heading1, List, ListOrdered,
+  Link, Image, Code, Quote
 } from "lucide-react";
 
 export default function NovoDocumento() {
@@ -15,6 +16,26 @@ export default function NovoDocumento() {
   const [newTag, setNewTag] = useState("");
   const [category, setCategory] = useState("Análise de Mercado");
   const [visibility, setVisibility] = useState("Privado");
+  const editorRef = useRef<HTMLTextAreaElement>(null);
+
+  const insertMarkdown = (before: string, after: string = "") => {
+    const textarea = editorRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const text = markdownContent;
+    const selectedText = text.substring(start, end);
+    
+    const newText = text.substring(0, start) + before + selectedText + after + text.substring(end);
+    setMarkdownContent(newText);
+    
+    setTimeout(() => {
+      textarea.focus();
+      const newPosition = start + before.length + selectedText.length;
+      textarea.setSelectionRange(newPosition, newPosition);
+    }, 0);
+  };
 
   const removeTag = (tagToRemove: string) => {
     setTags(tags.filter(tag => tag !== tagToRemove));
@@ -149,6 +170,79 @@ export default function NovoDocumento() {
                 <option>Compartilhado</option>
               </select>
             </div>
+          </div>
+        </div>
+
+        {/* Markdown Toolbar */}
+        <div className="bg-card border-b border-border px-8 py-3">
+          <div className="flex items-center gap-2 flex-wrap">
+            <button
+              onClick={() => insertMarkdown("**", "**")}
+              className="p-2 hover:bg-muted rounded-lg transition tooltip"
+              title="Negrito"
+            >
+              <Bold className="w-4 h-4 text-foreground" />
+            </button>
+            <button
+              onClick={() => insertMarkdown("*", "*")}
+              className="p-2 hover:bg-muted rounded-lg transition"
+              title="Itálico"
+            >
+              <Italic className="w-4 h-4 text-foreground" />
+            </button>
+            <div className="w-px h-6 bg-border mx-1" />
+            <button
+              onClick={() => insertMarkdown("## ", "")}
+              className="p-2 hover:bg-muted rounded-lg transition"
+              title="Título"
+            >
+              <Heading1 className="w-4 h-4 text-foreground" />
+            </button>
+            <div className="w-px h-6 bg-border mx-1" />
+            <button
+              onClick={() => insertMarkdown("- ", "")}
+              className="p-2 hover:bg-muted rounded-lg transition"
+              title="Lista"
+            >
+              <List className="w-4 h-4 text-foreground" />
+            </button>
+            <button
+              onClick={() => insertMarkdown("1. ", "")}
+              className="p-2 hover:bg-muted rounded-lg transition"
+              title="Lista Numerada"
+            >
+              <ListOrdered className="w-4 h-4 text-foreground" />
+            </button>
+            <div className="w-px h-6 bg-border mx-1" />
+            <button
+              onClick={() => insertMarkdown("[", "](url)")}
+              className="p-2 hover:bg-muted rounded-lg transition"
+              title="Link"
+            >
+              <Link className="w-4 h-4 text-foreground" />
+            </button>
+            <button
+              onClick={() => insertMarkdown("![](", ")")}
+              className="p-2 hover:bg-muted rounded-lg transition"
+              title="Imagem"
+            >
+              <Image className="w-4 h-4 text-foreground" />
+            </button>
+            <div className="w-px h-6 bg-border mx-1" />
+            <button
+              onClick={() => insertMarkdown("`", "`")}
+              className="p-2 hover:bg-muted rounded-lg transition"
+              title="Código"
+            >
+              <Code className="w-4 h-4 text-foreground" />
+            </button>
+            <button
+              onClick={() => insertMarkdown("> ", "")}
+              className="p-2 hover:bg-muted rounded-lg transition"
+              title="Citação"
+            >
+              <Quote className="w-4 h-4 text-foreground" />
+            </button>
           </div>
         </div>
 
