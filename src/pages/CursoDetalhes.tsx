@@ -109,7 +109,7 @@ const CursoDetalhes = () => {
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold text-slate-800 mb-2">Insights da IA sobre o curso</h3>
-                      <p className="text-sm text-slate-600 leading-relaxed">
+                      <p className="text-sm text-black leading-relaxed">
                         Este curso combina teoria e prática de forma excepcional, com foco em aplicações reais do mercado financeiro. O conteúdo está atualizado com as tendências de 2025 e oferece uma progressão pedagógica bem estruturada, do básico ao avançado.
                       </p>
                     </div>
