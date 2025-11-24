@@ -76,6 +76,7 @@ import Others from "./pages/Others";
 import NovaAssinatura from "./pages/NovaAssinatura";
 import NewsletterRevisao from "./pages/NewsletterRevisao";
 import NewsletterPreview from "./pages/NewsletterPreview";
+import CriarInfografico from "./pages/CriarInfografico";
 
 import NotFound from "./pages/NotFound";
 
@@ -167,6 +168,7 @@ const App = () => {
           <Route path="/nova-assinatura" element={<NovaAssinatura />} />
           <Route path="/newsletter-revisao" element={<NewsletterRevisao />} />
           <Route path="/newsletter-preview" element={<NewsletterPreview />} />
+          <Route path="/criar-infografico" element={<CriarInfografico />} />
           
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
