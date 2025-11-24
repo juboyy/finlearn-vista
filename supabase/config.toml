@@ -9,3 +9,6 @@ verify_jwt = false
 [functions.chat-infografico]
 verify_jwt = false
 
+[functions.generate-content]
+verify_jwt = false
+
