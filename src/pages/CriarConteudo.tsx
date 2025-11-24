@@ -139,7 +139,7 @@ export default function CriarConteudo() {
                   
                   {/* Option 1: Podcast */}
                   <button className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
-                    <div className="w-12 h-12 rounded-lg bg-[hsl(var(--pastel-purple))] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
+                    <div className="w-12 h-12 rounded-lg bg-[hsl(280,45%,65%)] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
                       <Podcast className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
@@ -153,7 +153,7 @@ export default function CriarConteudo() {
 
                   {/* Option 2: Cursos */}
                   <button className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
-                    <div className="w-12 h-12 rounded-lg bg-[hsl(var(--pastel-yellow))] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
+                    <div className="w-12 h-12 rounded-lg bg-[hsl(45,60%,75%)] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
                       <GraduationCap className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
@@ -167,7 +167,7 @@ export default function CriarConteudo() {
 
                   {/* Option 3: Avatar IA */}
                   <button className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
-                    <div className="w-12 h-12 rounded-lg bg-[hsl(var(--pastel-blue))] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
+                    <div className="w-12 h-12 rounded-lg bg-[hsl(210,50%,65%)] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
                       <Bot className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
@@ -184,7 +184,7 @@ export default function CriarConteudo() {
 
                   {/* Option 4: E-books */}
                   <button className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
-                    <div className="w-12 h-12 rounded-lg bg-[hsl(var(--pastel-peach))] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
+                    <div className="w-12 h-12 rounded-lg bg-[hsl(20,55%,75%)] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
                       <Book className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
@@ -198,7 +198,7 @@ export default function CriarConteudo() {
 
                   {/* Option 5: Webinars */}
                   <button className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
-                    <div className="w-12 h-12 rounded-lg bg-[hsl(var(--pastel-pink))] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
+                    <div className="w-12 h-12 rounded-lg bg-[hsl(340,50%,70%)] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
                       <Video className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
@@ -212,7 +212,7 @@ export default function CriarConteudo() {
 
                   {/* Option 6: Artigos */}
                   <Link to="/novo-artigo" className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
-                    <div className="w-12 h-12 rounded-lg bg-[hsl(var(--muted))] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
+                    <div className="w-12 h-12 rounded-lg bg-[hsl(200,40%,68%)] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
                       <Newspaper className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
@@ -226,7 +226,7 @@ export default function CriarConteudo() {
 
                   {/* Option 7: Análises */}
                   <button className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
-                    <div className="w-12 h-12 rounded-lg bg-[hsl(var(--pastel-green))] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
+                    <div className="w-12 h-12 rounded-lg bg-[hsl(150,45%,65%)] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
                       <TrendingUp className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
@@ -240,7 +240,7 @@ export default function CriarConteudo() {
 
                   {/* Option 8: Relatórios */}
                   <button className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
-                    <div className="w-12 h-12 rounded-lg bg-[hsl(var(--pastel-blue))] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
+                    <div className="w-12 h-12 rounded-lg bg-[hsl(260,50%,72%)] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
                       <FileBarChart className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
@@ -254,7 +254,7 @@ export default function CriarConteudo() {
 
                   {/* Option 9: Newspaper */}
                   <Link to="/novo-documento" className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
-                    <div className="w-12 h-12 rounded-lg bg-[hsl(var(--pastel-pink))] border border-border text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
+                    <div className="w-12 h-12 rounded-lg bg-[hsl(350,55%,75%)] border border-border text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
                       <Newspaper className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
@@ -268,7 +268,7 @@ export default function CriarConteudo() {
 
                   {/* Option 10: Estudos Acadêmicos */}
                   <button className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
-                    <div className="w-12 h-12 rounded-lg bg-[hsl(var(--pastel-orange))] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
+                    <div className="w-12 h-12 rounded-lg bg-[hsl(30,50%,68%)] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
                       <FlaskConical className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
@@ -282,7 +282,7 @@ export default function CriarConteudo() {
 
                   {/* Option 11: Infográficos */}
                   <Link to="/criar-infografico" className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
-                    <div className="w-12 h-12 rounded-lg bg-[hsl(var(--pastel-purple))] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
+                    <div className="w-12 h-12 rounded-lg bg-[hsl(170,45%,70%)] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
                       <PieChart className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
@@ -296,7 +296,7 @@ export default function CriarConteudo() {
 
                   {/* Option 12: Whitepapers */}
                   <button className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
-                    <div className="w-12 h-12 rounded-lg bg-[hsl(var(--pastel-blue))] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
+                    <div className="w-12 h-12 rounded-lg bg-[hsl(220,48%,65%)] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
                       <FileCheck className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
@@ -310,7 +310,7 @@ export default function CriarConteudo() {
 
                   {/* Option 13: Apresentações */}
                   <button className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
-                    <div className="w-12 h-12 rounded-lg bg-[hsl(var(--pastel-green))] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
+                    <div className="w-12 h-12 rounded-lg bg-[hsl(90,50%,72%)] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
                       <Presentation className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
@@ -324,7 +324,7 @@ export default function CriarConteudo() {
 
                   {/* Option 14: Live */}
                   <button className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
-                    <div className="w-12 h-12 rounded-lg bg-[hsl(var(--pastel-pink))] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
+                    <div className="w-12 h-12 rounded-lg bg-[hsl(10,52%,70%)] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
                       <Radio className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
