@@ -179,7 +179,7 @@ const PerfilAutor = () => {
           <section className="mb-8 space-y-8">
             <div>
               <h3 className="text-xs font-semibold uppercase text-muted-foreground mb-3">Contato Direto</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <button className="bg-card border border-border rounded-lg p-4 flex items-center justify-center gap-3 hover:bg-accent transition-colors">
                   <MessageCircle className="text-pastel-blue" />
                   <span className="font-medium text-foreground">Mensagem</span>
@@ -191,6 +191,10 @@ const PerfilAutor = () => {
                 <button className="bg-card border border-border rounded-lg p-4 flex items-center justify-center gap-3 hover:bg-accent transition-colors">
                   <Video className="text-pastel-purple" />
                   <span className="font-medium text-foreground">Vídeo</span>
+                </button>
+                <button className="bg-card border border-border rounded-lg p-4 flex items-center justify-center gap-3 hover:bg-accent transition-colors">
+                  <Calendar className="text-pastel-yellow" />
+                  <span className="font-medium text-foreground">Meus Certificados</span>
                 </button>
               </div>
             </div>
