@@ -2,7 +2,7 @@ import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { 
   Camera, IdCard, Edit, Briefcase, Plus, Star, Crown, GraduationCap, 
   Award, CheckCircle, CreditCard, Rocket, Shield, Eye, TrendingUp, 
-  Download, FileText, AlertTriangle, XCircle, X, Bell, User
+  Download, FileText, AlertTriangle, XCircle, X, Bell, User, Building2
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
@@ -273,6 +273,10 @@ export default function MinhaConta() {
                       </button>
                       <button className="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition">
                         Remover
+                      </button>
+                      <button className="px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                        <Building2 className="inline mr-2" size={16} />
+                        Conta Empresarial
                       </button>
                     </div>
                   </div>
