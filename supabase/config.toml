@@ -5,3 +5,7 @@ verify_jwt = false
 
 [functions.generate-reading-insights]
 verify_jwt = false
+
+[functions.chat-infografico]
+verify_jwt = false
+
