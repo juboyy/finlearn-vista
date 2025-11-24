@@ -5,7 +5,8 @@ import { MarkdownEditor } from "@/components/MarkdownEditor";
 import { 
   ArrowLeft, Save, Eye, Share2, Download, Settings, FileText,
   ChevronRight, Plus, X, Bold, Italic, Heading1, List, ListOrdered,
-  Link, Image, Code, Quote
+  Link, Image, Code, Quote, BarChart3, LineChart, PieChart, 
+  AreaChart, ScatterChart, TrendingUp
 } from "lucide-react";
 
 export default function NovoDocumento() {
@@ -16,7 +17,17 @@ export default function NovoDocumento() {
   const [newTag, setNewTag] = useState("");
   const [category, setCategory] = useState("Análise de Mercado");
   const [visibility, setVisibility] = useState("Privado");
+  const [showChartPanel, setShowChartPanel] = useState(false);
   const editorRef = useRef<HTMLTextAreaElement>(null);
+
+  const chartTypes = [
+    { id: 'bar', name: 'Barras', icon: BarChart3, color: 'hsl(var(--pastel-blue))' },
+    { id: 'line', name: 'Linha', icon: LineChart, color: 'hsl(var(--pastel-green))' },
+    { id: 'pie', name: 'Pizza', icon: PieChart, color: 'hsl(var(--pastel-purple))' },
+    { id: 'area', name: 'Área', icon: AreaChart, color: 'hsl(var(--pastel-yellow))' },
+    { id: 'scatter', name: 'Dispersão', icon: ScatterChart, color: 'hsl(var(--pastel-pink))' },
+    { id: 'trend', name: 'Tendência', icon: TrendingUp, color: 'hsl(var(--pastel-blue))' },
+  ];
 
   const insertMarkdown = (before: string, after: string = "") => {
     const textarea = editorRef.current;
@@ -35,6 +46,25 @@ export default function NovoDocumento() {
       const newPosition = start + before.length + selectedText.length;
       textarea.setSelectionRange(newPosition, newPosition);
     }, 0);
+  };
+
+  const handleChartDragStart = (e: React.DragEvent, chartType: string) => {
+    e.dataTransfer.setData('chartType', chartType);
+    e.dataTransfer.effectAllowed = 'copy';
+  };
+
+  const handleChartDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    const chartType = e.dataTransfer.getData('chartType');
+    if (chartType) {
+      const chartMarkdown = `\n\n![Gráfico de ${chartTypes.find(c => c.id === chartType)?.name}](chart:${chartType})\n\n`;
+      setMarkdownContent(markdownContent + chartMarkdown);
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'copy';
   };
 
   const removeTag = (tagToRemove: string) => {
@@ -243,15 +273,68 @@ export default function NovoDocumento() {
             >
               <Quote className="w-4 h-4 text-foreground" />
             </button>
+            <div className="w-px h-6 bg-border mx-1" />
+            <button
+              onClick={() => setShowChartPanel(!showChartPanel)}
+              className={`p-2 rounded-lg transition ${showChartPanel ? 'bg-[hsl(var(--pastel-blue))] text-[hsl(var(--pastel-gray-dark))]' : 'hover:bg-muted text-foreground'}`}
+              title="Gráficos"
+            >
+              <BarChart3 className="w-4 h-4" />
+            </button>
           </div>
         </div>
 
         {/* Main Content - Markdown Editor */}
-        <main className="flex-1 overflow-hidden">
-          <MarkdownEditor 
-            value={markdownContent}
-            onChange={setMarkdownContent}
-          />
+        <main className="flex-1 overflow-hidden relative">
+          <div 
+            className="h-full"
+            onDrop={handleChartDrop}
+            onDragOver={handleDragOver}
+          >
+            <MarkdownEditor 
+              value={markdownContent}
+              onChange={setMarkdownContent}
+            />
+          </div>
+
+          {/* Chart Panel */}
+          {showChartPanel && (
+            <div className="absolute top-0 right-0 h-full w-80 bg-card border-l border-border shadow-lg z-20">
+              <div className="p-4 border-b border-border flex items-center justify-between">
+                <h3 className="font-semibold text-foreground">Tipos de Gráficos</h3>
+                <button
+                  onClick={() => setShowChartPanel(false)}
+                  className="p-1 hover:bg-muted rounded transition"
+                >
+                  <X className="w-4 h-4 text-muted-foreground" />
+                </button>
+              </div>
+              <div className="p-4 space-y-3 overflow-y-auto h-[calc(100%-60px)]">
+                <p className="text-sm text-muted-foreground mb-4">
+                  Arraste e solte um gráfico no editor
+                </p>
+                {chartTypes.map((chart) => (
+                  <div
+                    key={chart.id}
+                    draggable
+                    onDragStart={(e) => handleChartDragStart(e, chart.id)}
+                    className="flex items-center gap-3 p-3 border border-border rounded-lg cursor-move hover:border-[hsl(var(--pastel-blue))] hover:bg-muted/50 transition group"
+                  >
+                    <div 
+                      className="p-2 rounded-lg"
+                      style={{ backgroundColor: chart.color }}
+                    >
+                      <chart.icon className="w-5 h-5 text-[hsl(var(--pastel-gray-dark))]" />
+                    </div>
+                    <div>
+                      <p className="font-medium text-foreground">{chart.name}</p>
+                      <p className="text-xs text-muted-foreground">Gráfico de {chart.name.toLowerCase()}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </main>
       </div>
     </div>
