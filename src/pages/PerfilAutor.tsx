@@ -2,59 +2,84 @@ import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { ArrowLeft, Search, Bell, Share2, UserPlus, MessageCircle, Phone, Video, Award, Calendar, Clock, Check, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
-
 const PerfilAutor = () => {
   const navigate = useNavigate();
   const engagementChartRef = useRef<HTMLDivElement>(null);
   const followerChartRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     // Load Plotly charts
     const loadCharts = async () => {
       // @ts-ignore
       if (typeof window.Plotly !== 'undefined') {
-        const commonConfig = { responsive: true, displayModeBar: false, displaylogo: false };
+        const commonConfig = {
+          responsive: true,
+          displayModeBar: false,
+          displaylogo: false
+        };
         const commonLayout = {
           plot_bgcolor: '#ffffff',
           paper_bgcolor: '#ffffff',
-          font: { family: 'Inter, sans-serif', color: 'hsl(215.4 16.3% 46.9%)' },
-          xaxis: { gridcolor: 'hsl(214 32% 91%)' },
-          yaxis: { gridcolor: 'hsl(214 32% 91%)' }
+          font: {
+            family: 'Inter, sans-serif',
+            color: 'hsl(215.4 16.3% 46.9%)'
+          },
+          xaxis: {
+            gridcolor: 'hsl(214 32% 91%)'
+          },
+          yaxis: {
+            gridcolor: 'hsl(214 32% 91%)'
+          }
         };
-
         try {
-          const engagementData = [
-            {
-              x: ['Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez', 'Jan', 'Fev', 'Mar'],
-              y: [12, 18, 24, 20, 28, 32, 25, 35, 42],
-              type: 'bar',
-              name: 'Visualizações (k)',
-              marker: { color: 'hsl(210, 35%, 85%)' }
-            },
-            {
-              x: ['Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez', 'Jan', 'Fev', 'Mar'],
-              y: [8, 12, 16, 14, 20, 24, 18, 28, 35],
-              type: 'scatter',
-              mode: 'lines',
-              name: 'Engajamento (k)',
-              line: { color: 'hsl(210, 35%, 60%)', width: 3 }
+          const engagementData = [{
+            x: ['Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez', 'Jan', 'Fev', 'Mar'],
+            y: [12, 18, 24, 20, 28, 32, 25, 35, 42],
+            type: 'bar',
+            name: 'Visualizações (k)',
+            marker: {
+              color: 'hsl(210, 35%, 85%)'
             }
-          ];
+          }, {
+            x: ['Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez', 'Jan', 'Fev', 'Mar'],
+            y: [8, 12, 16, 14, 20, 24, 18, 28, 35],
+            type: 'scatter',
+            mode: 'lines',
+            name: 'Engajamento (k)',
+            line: {
+              color: 'hsl(210, 35%, 60%)',
+              width: 3
+            }
+          }];
           const engagementLayout = {
             ...commonLayout,
-            title: { text: '', font: { size: 16 } },
-            margin: { t: 20, r: 20, b: 40, l: 50 },
+            title: {
+              text: '',
+              font: {
+                size: 16
+              }
+            },
+            margin: {
+              t: 20,
+              r: 20,
+              b: 40,
+              l: 50
+            },
             barmode: 'group',
             showlegend: true,
-            legend: { x: 0, y: 1.1, orientation: 'h' },
-            yaxis: { title: 'Milhares' }
+            legend: {
+              x: 0,
+              y: 1.1,
+              orientation: 'h'
+            },
+            yaxis: {
+              title: 'Milhares'
+            }
           };
           // @ts-ignore
           window.Plotly.newPlot(engagementChartRef.current, engagementData, engagementLayout, commonConfig);
-        } catch(e) {
+        } catch (e) {
           console.error('Error loading engagement chart:', e);
         }
-
         try {
           const followerData = [{
             x: ['Dez', 'Jan', 'Fev', 'Mar'],
@@ -63,17 +88,30 @@ const PerfilAutor = () => {
             mode: 'lines',
             fill: 'tozeroy',
             fillcolor: 'hsla(210, 35%, 60%, 0.1)',
-            line: { color: 'hsl(210, 35%, 60%)', width: 2.5 }
+            line: {
+              color: 'hsl(210, 35%, 60%)',
+              width: 2.5
+            }
           }];
           const followerLayout = {
             ...commonLayout,
-            margin: { t: 10, r: 10, b: 30, l: 40 },
-            xaxis: { visible: true, showgrid: false },
-            yaxis: { title: 'Seguidores (k)' }
+            margin: {
+              t: 10,
+              r: 10,
+              b: 30,
+              l: 40
+            },
+            xaxis: {
+              visible: true,
+              showgrid: false
+            },
+            yaxis: {
+              title: 'Seguidores (k)'
+            }
           };
           // @ts-ignore
           window.Plotly.newPlot(followerChartRef.current, followerData, followerLayout, commonConfig);
-        } catch(e) {
+        } catch (e) {
           console.error('Error loading follower chart:', e);
         }
       }
@@ -90,19 +128,14 @@ const PerfilAutor = () => {
       loadCharts();
     }
   }, []);
-
-  return (
-    <div className="flex h-screen overflow-hidden bg-background">
+  return <div className="flex h-screen overflow-hidden bg-background">
       <SidebarFix />
       
       <div className="flex-1 overflow-y-auto">
         <header className="bg-card/80 backdrop-blur-sm border-b border-border sticky top-0 z-40">
           <div className="px-8 h-20 flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <button 
-                onClick={() => navigate('/autores')}
-                className="p-2 text-muted-foreground hover:bg-accent rounded-lg transition-colors"
-              >
+              <button onClick={() => navigate('/autores')} className="p-2 text-muted-foreground hover:bg-accent rounded-lg transition-colors">
                 <ArrowLeft className="text-lg" />
               </button>
               <div>
@@ -113,11 +146,7 @@ const PerfilAutor = () => {
             
             <div className="flex items-center gap-4">
               <div className="relative">
-                <input 
-                  type="text" 
-                  placeholder="Buscar..." 
-                  className="w-72 pl-10 pr-4 py-2 bg-muted border border-input rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-ring transition-all"
-                />
+                <input type="text" placeholder="Buscar..." className="w-72 pl-10 pr-4 py-2 bg-muted border border-input rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-ring transition-all" />
                 <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground" size={16} />
               </div>
               
@@ -138,11 +167,7 @@ const PerfilAutor = () => {
           <section className="bg-card border border-border rounded-lg shadow-sm p-8 mb-8">
             <div className="flex items-start gap-8">
               <div className="relative flex-shrink-0">
-                <img 
-                  src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" 
-                  alt="Marina Santos" 
-                  className="w-36 h-36 rounded-lg object-cover"
-                />
+                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" alt="Marina Santos" className="w-36 h-36 rounded-lg object-cover" />
                 <div className="absolute -bottom-2 -right-2 bg-pastel-green text-pastel-dark-gray px-2.5 py-1 rounded-full text-xs font-bold flex items-center gap-1.5 border border-border">
                   <i className="fa-solid fa-trophy text-pastel-dark-gray"></i>
                   <span>#1</span>
@@ -152,7 +177,13 @@ const PerfilAutor = () => {
               <div className="flex-1">
                 <div className="flex items-start justify-between mb-3">
                   <div>
-                    <h1 className="text-3xl font-extrabold text-foreground mb-1.5">Marina Santos</h1>
+                    <h1 className="text-3xl font-extrabold text-foreground mb-1.5">Ana Costa
+
+
+
+
+
+                  </h1>
                     <p className="text-lg text-muted-foreground font-medium">Especialista em Pagamentos e Sistemas Financeiros</p>
                     <div className="flex items-center gap-6 text-sm text-muted-foreground mt-3">
                       <span><i className="fa-solid fa-map-marker-alt mr-2"></i>São Paulo, Brasil</span>
@@ -192,10 +223,7 @@ const PerfilAutor = () => {
                   <Video className="text-pastel-purple" />
                   <span className="font-medium text-foreground">Vídeo</span>
                 </button>
-                <button 
-                  onClick={() => navigate('/meus-certificados')}
-                  className="bg-card border border-border rounded-lg p-4 flex items-center justify-center gap-3 hover:bg-accent transition-colors"
-                >
+                <button onClick={() => navigate('/meus-certificados')} className="bg-card border border-border rounded-lg p-4 flex items-center justify-center gap-3 hover:bg-accent transition-colors">
                   <Award className="text-pastel-yellow" />
                   <span className="font-medium text-foreground">Meus Certificados</span>
                 </button>
@@ -229,11 +257,16 @@ const PerfilAutor = () => {
               </div>
             </div>
 
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-8 text-center" style={{ backgroundColor: 'hsl(210, 35%, 95%)', borderColor: 'hsl(210, 35%, 85%)' }}>
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-8 text-center" style={{
+            backgroundColor: 'hsl(210, 35%, 95%)',
+            borderColor: 'hsl(210, 35%, 85%)'
+          }}>
               <p className="text-sm font-semibold uppercase text-muted-foreground">Social Selling Score</p>
               <h2 className="text-7xl font-extrabold text-pastel-dark-gray my-2">94<span className="text-5xl text-muted-foreground">/100</span></h2>
               <p className="font-medium text-pastel-dark-gray">Desempenho Excepcional</p>
-              <div className="flex items-center justify-center gap-8 mt-6 pt-6 border-t" style={{ borderColor: 'hsl(210, 35%, 85%)' }}>
+              <div className="flex items-center justify-center gap-8 mt-6 pt-6 border-t" style={{
+              borderColor: 'hsl(210, 35%, 85%)'
+            }}>
                 <div className="text-sm">
                   <span className="font-bold text-pastel-dark-gray">4.9/5</span>
                   <span className="text-muted-foreground ml-1">Avaliação</span>
@@ -253,12 +286,16 @@ const PerfilAutor = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
             <section className="bg-card border border-border rounded-lg shadow-sm p-6">
               <h2 className="text-lg font-semibold text-foreground mb-6">Métricas de Engajamento</h2>
-              <div ref={engagementChartRef} style={{ height: '300px' }}></div>
+              <div ref={engagementChartRef} style={{
+              height: '300px'
+            }}></div>
             </section>
 
             <section className="bg-card border border-border rounded-lg shadow-sm p-6">
               <h2 className="text-lg font-semibold text-foreground mb-6">Crescimento de Seguidores</h2>
-              <div ref={followerChartRef} style={{ height: '300px' }}></div>
+              <div ref={followerChartRef} style={{
+              height: '300px'
+            }}></div>
             </section>
           </div>
 
@@ -469,28 +506,36 @@ const PerfilAutor = () => {
                       <span className="text-sm font-medium text-foreground">PIX e Pagamentos Instantâneos</span>
                       <span className="text-sm font-medium text-muted-foreground">95%</span>
                     </div>
-                    <div className="w-full bg-muted rounded-full h-2"><div className="bg-pastel-blue h-2 rounded-full" style={{ width: '95%' }}></div></div>
+                    <div className="w-full bg-muted rounded-full h-2"><div className="bg-pastel-blue h-2 rounded-full" style={{
+                      width: '95%'
+                    }}></div></div>
                   </div>
                   <div>
                     <div className="flex justify-between items-center mb-1">
                       <span className="text-sm font-medium text-foreground">Open Finance</span>
                       <span className="text-sm font-medium text-muted-foreground">88%</span>
                     </div>
-                    <div className="w-full bg-muted rounded-full h-2"><div className="bg-pastel-green h-2 rounded-full" style={{ width: '88%' }}></div></div>
+                    <div className="w-full bg-muted rounded-full h-2"><div className="bg-pastel-green h-2 rounded-full" style={{
+                      width: '88%'
+                    }}></div></div>
                   </div>
                   <div>
                     <div className="flex justify-between items-center mb-1">
                       <span className="text-sm font-medium text-foreground">Regulação Financeira</span>
                       <span className="text-sm font-medium text-muted-foreground">92%</span>
                     </div>
-                    <div className="w-full bg-muted rounded-full h-2"><div className="bg-pastel-purple h-2 rounded-full" style={{ width: '92%' }}></div></div>
+                    <div className="w-full bg-muted rounded-full h-2"><div className="bg-pastel-purple h-2 rounded-full" style={{
+                      width: '92%'
+                    }}></div></div>
                   </div>
                   <div>
                     <div className="flex justify-between items-center mb-1">
                       <span className="text-sm font-medium text-foreground">Sistemas de Pagamento</span>
                       <span className="text-sm font-medium text-muted-foreground">90%</span>
                     </div>
-                    <div className="w-full bg-muted rounded-full h-2"><div className="bg-gray-400 h-2 rounded-full" style={{ width: '90%' }}></div></div>
+                    <div className="w-full bg-muted rounded-full h-2"><div className="bg-gray-400 h-2 rounded-full" style={{
+                      width: '90%'
+                    }}></div></div>
                   </div>
                 </div>
               </section>
@@ -501,7 +546,11 @@ const PerfilAutor = () => {
                   <li>
                     <a href="#" className="flex items-center justify-between p-3 bg-muted rounded-lg hover:bg-accent transition-colors">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 flex items-center justify-center rounded-md" style={{ backgroundColor: 'hsl(210, 35%, 90%)' }}><i className="fa-brands fa-linkedin-in" style={{ color: 'hsl(210, 35%, 55%)' }}></i></div>
+                        <div className="w-8 h-8 flex items-center justify-center rounded-md" style={{
+                        backgroundColor: 'hsl(210, 35%, 90%)'
+                      }}><i className="fa-brands fa-linkedin-in" style={{
+                          color: 'hsl(210, 35%, 55%)'
+                        }}></i></div>
                         <span className="text-sm font-medium text-foreground">@marinasantos</span>
                       </div>
                       <i className="fa-solid fa-external-link-alt text-muted-foreground"></i>
@@ -510,7 +559,11 @@ const PerfilAutor = () => {
                   <li>
                     <a href="#" className="flex items-center justify-between p-3 bg-muted rounded-lg hover:bg-accent transition-colors">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 flex items-center justify-center rounded-md" style={{ backgroundColor: 'hsl(197, 50%, 90%)' }}><i className="fa-brands fa-twitter" style={{ color: 'hsl(197, 50%, 60%)' }}></i></div>
+                        <div className="w-8 h-8 flex items-center justify-center rounded-md" style={{
+                        backgroundColor: 'hsl(197, 50%, 90%)'
+                      }}><i className="fa-brands fa-twitter" style={{
+                          color: 'hsl(197, 50%, 60%)'
+                        }}></i></div>
                         <span className="text-sm font-medium text-foreground">@marinasantos_fin</span>
                       </div>
                       <i className="fa-solid fa-external-link-alt text-muted-foreground"></i>
@@ -519,7 +572,11 @@ const PerfilAutor = () => {
                   <li>
                     <a href="#" className="flex items-center justify-between p-3 bg-muted rounded-lg hover:bg-accent transition-colors">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 flex items-center justify-center rounded-md" style={{ backgroundColor: 'hsl(340, 60%, 90%)' }}><i className="fa-brands fa-instagram" style={{ color: 'hsl(340, 60%, 60%)' }}></i></div>
+                        <div className="w-8 h-8 flex items-center justify-center rounded-md" style={{
+                        backgroundColor: 'hsl(340, 60%, 90%)'
+                      }}><i className="fa-brands fa-instagram" style={{
+                          color: 'hsl(340, 60%, 60%)'
+                        }}></i></div>
                         <span className="text-sm font-medium text-foreground">@marinasantos.oficial</span>
                       </div>
                       <i className="fa-solid fa-external-link-alt text-muted-foreground"></i>
@@ -528,7 +585,11 @@ const PerfilAutor = () => {
                   <li>
                     <a href="#" className="flex items-center justify-between p-3 bg-muted rounded-lg hover:bg-accent transition-colors">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 flex items-center justify-center rounded-md" style={{ backgroundColor: 'hsl(0, 50%, 90%)' }}><i className="fa-brands fa-youtube" style={{ color: 'hsl(0, 50%, 60%)' }}></i></div>
+                        <div className="w-8 h-8 flex items-center justify-center rounded-md" style={{
+                        backgroundColor: 'hsl(0, 50%, 90%)'
+                      }}><i className="fa-brands fa-youtube" style={{
+                          color: 'hsl(0, 50%, 60%)'
+                        }}></i></div>
                         <span className="text-sm font-medium text-foreground">@marinasantos</span>
                       </div>
                       <i className="fa-solid fa-external-link-alt text-muted-foreground"></i>
@@ -537,7 +598,11 @@ const PerfilAutor = () => {
                   <li>
                     <a href="#" className="flex items-center justify-between p-3 bg-muted rounded-lg hover:bg-accent transition-colors">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 flex items-center justify-center rounded-md" style={{ backgroundColor: 'hsl(120, 25%, 90%)' }}><i className="fa-brands fa-medium" style={{ color: 'hsl(120, 25%, 45%)' }}></i></div>
+                        <div className="w-8 h-8 flex items-center justify-center rounded-md" style={{
+                        backgroundColor: 'hsl(120, 25%, 90%)'
+                      }}><i className="fa-brands fa-medium" style={{
+                          color: 'hsl(120, 25%, 45%)'
+                        }}></i></div>
                         <span className="text-sm font-medium text-foreground">@marinasantos</span>
                       </div>
                       <i className="fa-solid fa-external-link-alt text-muted-foreground"></i>
@@ -546,7 +611,11 @@ const PerfilAutor = () => {
                   <li>
                     <a href="#" className="flex items-center justify-between p-3 bg-muted rounded-lg hover:bg-accent transition-colors">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 flex items-center justify-center rounded-md" style={{ backgroundColor: 'hsl(140, 30%, 90%)' }}><i className="fa-solid fa-globe" style={{ color: 'hsl(140, 30%, 60%)' }}></i></div>
+                        <div className="w-8 h-8 flex items-center justify-center rounded-md" style={{
+                        backgroundColor: 'hsl(140, 30%, 90%)'
+                      }}><i className="fa-solid fa-globe" style={{
+                          color: 'hsl(140, 30%, 60%)'
+                        }}></i></div>
                         <span className="text-sm font-medium text-foreground">marinasantos.com.br</span>
                       </div>
                       <i className="fa-solid fa-external-link-alt text-muted-foreground"></i>
@@ -555,7 +624,11 @@ const PerfilAutor = () => {
                   <li>
                     <a href="#" className="flex items-center justify-between p-3 bg-muted rounded-lg hover:bg-accent transition-colors">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 flex items-center justify-center rounded-md" style={{ backgroundColor: 'hsl(0, 0%, 90%)' }}><i className="fa-brands fa-tiktok" style={{ color: 'hsl(0, 0%, 20%)' }}></i></div>
+                        <div className="w-8 h-8 flex items-center justify-center rounded-md" style={{
+                        backgroundColor: 'hsl(0, 0%, 90%)'
+                      }}><i className="fa-brands fa-tiktok" style={{
+                          color: 'hsl(0, 0%, 20%)'
+                        }}></i></div>
                         <span className="text-sm font-medium text-foreground">@marinasantos.fin</span>
                       </div>
                       <i className="fa-solid fa-external-link-alt text-muted-foreground"></i>
@@ -741,8 +814,6 @@ const PerfilAutor = () => {
           </div>
         </main>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default PerfilAutor;
