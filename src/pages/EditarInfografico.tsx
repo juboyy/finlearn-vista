@@ -594,7 +594,7 @@ export default function EditarInfografico() {
                   <Plot
                     data={[
                       {
-                        x: ['Pix', 'Cartão de Crédito', 'Cartão de Débito', 'Boleto'],
+                        x: ['Pix', 'Cartão<br>de Crédito', 'Cartão<br>de Débito', 'Boleto'],
                         y: [2.78, 0.92, 0.45, 0.31],
                         type: 'bar',
                         marker: { 
@@ -646,7 +646,7 @@ export default function EditarInfografico() {
                   <Plot
                     data={[
                       {
-                        x: ['Cartão de Crédito', 'Cartão de Débito', 'Pix', 'Boleto'],
+                        x: ['Cartão<br>de Crédito', 'Cartão<br>de Débito', 'Pix', 'Boleto'],
                         y: [215, 142, 103, 187],
                         type: 'bar',
                         marker: { 
