@@ -5,6 +5,7 @@ import {
   Download, FileText, AlertTriangle, XCircle, X, Bell, User, Building2
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
 import {
   Dialog,
@@ -19,6 +20,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 
 export default function MinhaConta() {
+  const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState("perfil");
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
@@ -253,7 +255,10 @@ export default function MinhaConta() {
                       <p className="text-sm text-slate-500">Atualize sua foto de perfil</p>
                     </div>
                   </div>
-                  <button className="px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                  <button 
+                    onClick={() => navigate("/conta-empresarial")}
+                    className="px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
+                  >
                     <Building2 className="inline mr-2" size={16} />
                     Conta Empresarial
                   </button>

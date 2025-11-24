@@ -82,6 +82,7 @@ import EditarInfografico from "./pages/EditarInfografico";
 import NovoArtigo from "./pages/NovoArtigo";
 import CursoDetalhes from "./pages/CursoDetalhes";
 import MeusCertificados from "./pages/MeusCertificados";
+import ContaEmpresarial from "./pages/ContaEmpresarial";
 
 import NotFound from "./pages/NotFound";
 
@@ -179,6 +180,7 @@ const App = () => {
           <Route path="/editar-infografico" element={<EditarInfografico />} />
           <Route path="/novo-artigo" element={<NovoArtigo />} />
           <Route path="/meus-certificados" element={<MeusCertificados />} />
+          <Route path="/conta-empresarial" element={<ContaEmpresarial />} />
           
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
