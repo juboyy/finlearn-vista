@@ -219,19 +219,101 @@ const CursoDetalhes = () => {
                   <h2 className="text-2xl font-semibold text-slate-800 mb-6">Conteúdo do Curso</h2>
                   <div className="space-y-4">
                     {[
-                      { id: 1, title: "Módulo 1: Fundamentos do Mercado de Capitais", lessons: "8 aulas • 3h 45min", level: "Iniciante", levelColor: "bg-white text-slate-700", expanded: true },
-                      { id: 2, title: "Módulo 2: Análise Fundamentalista", lessons: "10 aulas • 4h 20min", level: "Intermediário", levelColor: "bg-pastel-yellow text-slate-700", expanded: false },
-                      { id: 3, title: "Módulo 3: Valuation e Precificação", lessons: "8 aulas • 3h 55min", level: "Intermediário", levelColor: "bg-pastel-yellow text-slate-700", expanded: false },
-                      { id: 4, title: "Módulo 4: Gestão de Portfólios", lessons: "9 aulas • 4h 10min", level: "Avançado", levelColor: "bg-pastel-pink text-slate-700", expanded: false },
-                      { id: 5, title: "Módulo 5: Derivativos e Estratégias", lessons: "7 aulas • 3h 30min", level: "Avançado", levelColor: "bg-pastel-pink text-slate-700", expanded: false }
+                      { 
+                        id: 1, 
+                        title: "Módulo 1: Fundamentos do Mercado de Capitais", 
+                        lessons: "8 aulas • 3h 45min", 
+                        level: "Iniciante", 
+                        levelColor: "bg-white text-slate-700",
+                        content: [
+                          { title: "Introdução ao Mercado de Capitais", subtitle: "Conceitos básicos e estrutura do mercado", duration: "28:42", type: "video" },
+                          { title: "Participantes do Mercado", subtitle: "Bolsas, corretoras, investidores e reguladores", duration: "32:15", type: "video" },
+                          { title: "Tipos de Ativos Financeiros", subtitle: "Ações, títulos, derivativos e fundos", duration: "25:38", type: "video" },
+                          { title: "Sistema Financeiro Nacional", subtitle: "Estrutura e regulamentação do SFN", duration: "30:12", type: "video" },
+                          { title: "Mercado Primário vs Secundário", subtitle: "Diferenças e funcionamento", duration: "22:45", type: "video" },
+                          { title: "Índices de Mercado", subtitle: "Ibovespa, IBrX e outros indicadores", duration: "27:30", type: "video" },
+                          { title: "Introdução à Análise de Investimentos", subtitle: "Conceitos iniciais de análise", duration: "29:18", type: "video" },
+                          { title: "Material Complementar: Glossário", subtitle: "PDF com termos essenciais do mercado", duration: "PDF", type: "pdf" }
+                        ]
+                      },
+                      { 
+                        id: 2, 
+                        title: "Módulo 2: Análise Fundamentalista", 
+                        lessons: "10 aulas • 4h 20min", 
+                        level: "Intermediário", 
+                        levelColor: "bg-pastel-yellow text-slate-700",
+                        content: [
+                          { title: "Fundamentos da Análise Fundamentalista", subtitle: "Conceitos e metodologias", duration: "31:45", type: "video" },
+                          { title: "Análise de Balanços Patrimoniais", subtitle: "Interpretação e análise de demonstrações", duration: "35:20", type: "video" },
+                          { title: "DRE e Demonstração de Fluxo de Caixa", subtitle: "Análise de resultados e caixa", duration: "33:15", type: "video" },
+                          { title: "Indicadores de Liquidez", subtitle: "Liquidez corrente, seca e imediata", duration: "25:30", type: "video" },
+                          { title: "Indicadores de Rentabilidade", subtitle: "ROE, ROA, margem líquida", duration: "28:42", type: "video" },
+                          { title: "Indicadores de Endividamento", subtitle: "Análise da estrutura de capital", duration: "26:18", type: "video" },
+                          { title: "Múltiplos de Mercado", subtitle: "P/L, P/VP, EV/EBITDA", duration: "32:50", type: "video" },
+                          { title: "Análise Setorial", subtitle: "Como analisar diferentes setores", duration: "29:15", type: "video" },
+                          { title: "Análise Macroeconômica", subtitle: "Impactos macro nos investimentos", duration: "27:40", type: "video" },
+                          { title: "Material: Planilha de Análise", subtitle: "Excel com indicadores fundamentalistas", duration: "XLSX", type: "pdf" }
+                        ]
+                      },
+                      { 
+                        id: 3, 
+                        title: "Módulo 3: Valuation e Precificação", 
+                        lessons: "8 aulas • 3h 55min", 
+                        level: "Intermediário", 
+                        levelColor: "bg-pastel-yellow text-slate-700",
+                        content: [
+                          { title: "Introdução ao Valuation", subtitle: "Conceitos e metodologias de avaliação", duration: "30:25", type: "video" },
+                          { title: "Fluxo de Caixa Descontado (FCD)", subtitle: "Metodologia e aplicação prática", duration: "38:15", type: "video" },
+                          { title: "WACC e Custo de Capital", subtitle: "Cálculo e interpretação", duration: "32:40", type: "video" },
+                          { title: "Valuation por Múltiplos", subtitle: "Comparação com empresas similares", duration: "28:55", type: "video" },
+                          { title: "Valuation de Empresas em Crescimento", subtitle: "Técnicas para empresas de alto crescimento", duration: "31:20", type: "video" },
+                          { title: "Precificação de Títulos de Renda Fixa", subtitle: "Valor presente e yield", duration: "27:30", type: "video" },
+                          { title: "Análise de Sensibilidade", subtitle: "Cenários e análise de risco", duration: "25:45", type: "video" },
+                          { title: "Material: Modelo de Valuation", subtitle: "Planilha completa de FCD", duration: "XLSX", type: "pdf" }
+                        ]
+                      },
+                      { 
+                        id: 4, 
+                        title: "Módulo 4: Gestão de Portfólios", 
+                        lessons: "9 aulas • 4h 10min", 
+                        level: "Avançado", 
+                        levelColor: "bg-pastel-pink text-slate-700",
+                        content: [
+                          { title: "Teoria Moderna de Portfólios", subtitle: "Markowitz e fronteira eficiente", duration: "35:20", type: "video" },
+                          { title: "Diversificação e Correlação", subtitle: "Redução de risco através da diversificação", duration: "30:45", type: "video" },
+                          { title: "CAPM e Beta", subtitle: "Modelo de precificação de ativos", duration: "32:15", type: "video" },
+                          { title: "Construção de Carteiras Eficientes", subtitle: "Otimização de portfólios", duration: "36:40", type: "video" },
+                          { title: "Alocação de Ativos", subtitle: "Estratégias de alocação tática e estratégica", duration: "29:30", type: "video" },
+                          { title: "Rebalanceamento de Carteiras", subtitle: "Quando e como rebalancear", duration: "26:25", type: "video" },
+                          { title: "Gestão Ativa vs Passiva", subtitle: "Comparação de estratégias", duration: "28:15", type: "video" },
+                          { title: "Métricas de Performance", subtitle: "Sharpe, Sortino, Treynor", duration: "27:50", type: "video" },
+                          { title: "Material: Otimizador de Portfólio", subtitle: "Ferramenta de otimização", duration: "XLSX", type: "pdf" }
+                        ]
+                      },
+                      { 
+                        id: 5, 
+                        title: "Módulo 5: Derivativos e Estratégias", 
+                        lessons: "7 aulas • 3h 30min", 
+                        level: "Avançado", 
+                        levelColor: "bg-pastel-pink text-slate-700",
+                        content: [
+                          { title: "Introdução aos Derivativos", subtitle: "Conceitos e tipos de derivativos", duration: "32:45", type: "video" },
+                          { title: "Mercado de Opções", subtitle: "Call, Put e estratégias básicas", duration: "36:20", type: "video" },
+                          { title: "Estratégias com Opções", subtitle: "Straddle, Strangle, Butterfly", duration: "34:15", type: "video" },
+                          { title: "Mercado Futuro", subtitle: "Contratos futuros e hedge", duration: "31:40", type: "video" },
+                          { title: "Swaps e Forwards", subtitle: "Instrumentos de hedge customizado", duration: "28:30", type: "video" },
+                          { title: "Precificação de Opções", subtitle: "Black-Scholes e volatilidade implícita", duration: "33:25", type: "video" },
+                          { title: "Material: Calculadora de Opções", subtitle: "Ferramenta de pricing", duration: "XLSX", type: "pdf" }
+                        ]
+                      }
                     ].map((module) => (
                       <div key={module.id} className="border border-slate-200 rounded-lg overflow-hidden">
                         <div 
-                          className={`${module.expanded ? 'bg-pastel-blue' : 'bg-slate-50'} p-4 flex items-center justify-between cursor-pointer`}
-                          onClick={() => setExpandedModule(module.expanded ? 0 : module.id)}
+                          className={`${expandedModule === module.id ? 'bg-pastel-blue' : 'bg-slate-50'} p-4 flex items-center justify-between cursor-pointer transition-colors hover:bg-pastel-blue hover:bg-opacity-50`}
+                          onClick={() => setExpandedModule(expandedModule === module.id ? 0 : module.id)}
                         >
                           <div className="flex items-center gap-4">
-                            <i className={`fas fa-chevron-${module.expanded ? 'down' : 'right'} text-slate-700`}></i>
+                            <i className={`fas fa-chevron-${expandedModule === module.id ? 'down' : 'right'} text-slate-700 transition-transform duration-200`}></i>
                             <div>
                               <h3 className="font-semibold text-slate-800">{module.title}</h3>
                               <p className="text-sm text-slate-600 mt-1">{module.lessons}</p>
@@ -239,20 +321,21 @@ const CursoDetalhes = () => {
                           </div>
                           <span className={`px-3 py-1 ${module.levelColor} text-xs font-medium rounded-full`}>{module.level}</span>
                         </div>
-                        {module.expanded && (
+                        <div 
+                          className={`transition-all duration-300 ease-in-out ${
+                            expandedModule === module.id 
+                              ? 'max-h-[2000px] opacity-100' 
+                              : 'max-h-0 opacity-0'
+                          } overflow-hidden`}
+                        >
                           <div className="p-4 space-y-2">
-                            {[
-                              { title: "Introdução ao Mercado de Capitais", subtitle: "Conceitos básicos e estrutura do mercado", duration: "28:42", type: "video" },
-                              { title: "Participantes do Mercado", subtitle: "Bolsas, corretoras, investidores e reguladores", duration: "32:15", type: "video" },
-                              { title: "Tipos de Ativos Financeiros", subtitle: "Ações, títulos, derivativos e fundos", duration: "25:38", type: "video" },
-                              { title: "Material Complementar: Glossário", subtitle: "PDF com termos essenciais do mercado", duration: "PDF", type: "pdf" }
-                            ].map((lesson, idx) => (
-                              <div key={idx} className="flex items-center justify-between py-3 px-4 hover:bg-slate-50 rounded-lg transition">
+                            {module.content.map((lesson, idx) => (
+                              <div key={idx} className="flex items-center justify-between py-3 px-4 hover:bg-slate-50 rounded-lg transition-colors group cursor-pointer">
                                 <div className="flex items-center gap-3">
                                   {lesson.type === 'video' ? (
-                                    <PlayCircle className="text-pastel-blue" size={20} />
+                                    <PlayCircle className="text-pastel-blue group-hover:text-slate-700 transition-colors" size={20} />
                                   ) : (
-                                    <FileDown className="text-slate-400" size={20} />
+                                    <FileDown className="text-slate-400 group-hover:text-slate-700 transition-colors" size={20} />
                                   )}
                                   <div>
                                     <p className="text-sm font-medium text-slate-800">{lesson.title}</p>
@@ -261,12 +344,12 @@ const CursoDetalhes = () => {
                                 </div>
                                 <div className="flex items-center gap-4">
                                   <span className="text-xs text-slate-500">{lesson.duration}</span>
-                                  <Lock className="text-slate-300" size={16} />
+                                  <Lock className="text-slate-300 group-hover:text-slate-400 transition-colors" size={16} />
                                 </div>
                               </div>
                             ))}
                           </div>
-                        )}
+                        </div>
                       </div>
                     ))}
                   </div>
