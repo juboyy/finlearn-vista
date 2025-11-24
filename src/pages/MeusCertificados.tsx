@@ -273,7 +273,7 @@ const MeusCertificados = () => {
                       alt={cert.title}
                       className="w-full h-full object-cover opacity-40"
                     />
-                    <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="absolute top-4 left-4">
                       <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg">
                         <Award className="text-pastel-blue" size={40} />
                       </div>
@@ -359,7 +359,7 @@ const MeusCertificados = () => {
                         alt={cert.title}
                         className="w-full h-full object-cover opacity-50"
                       />
-                      <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="absolute top-2 left-2">
                         <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg">
                           <Award className="text-pastel-blue" size={24} />
                         </div>
