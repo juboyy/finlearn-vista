@@ -17,25 +17,25 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 215 20% 27%;
 
-    --primary: 225 84% 80%;
+    --primary: 225 70% 68%;
     --primary-foreground: 215 20% 27%;
 
-    --secondary: 220 14% 93%;
+    --secondary: 220 30% 75%;
     --secondary-foreground: 215 20% 27%;
 
     --muted: 210 40% 96%;
     --muted-foreground: 215 15% 45%;
 
-    --accent: 326 78% 90%;
+    --accent: 326 65% 72%;
     --accent-foreground: 215 20% 27%;
 
-    --success: 152 68% 80%;
+    --success: 152 60% 68%;
     --success-foreground: 164 76% 20%;
-    --success-light: 152 68% 90%;
+    --success-light: 152 60% 80%;
 
-    --warning: 48 96% 76%;
+    --warning: 48 85% 65%;
     --warning-foreground: 43 96% 26%;
-    --warning-light: 48 96% 88%;
+    --warning-light: 48 85% 78%;
     
     --primary-light: 206 49% 85%;
     --secondary-light: 152 35% 85%;
@@ -51,24 +51,24 @@ All colors MUST be HSL.
     --radius: 0.75rem;
 
     /* Pastel Colors - Dark Pastels (Soft) */
-    --pastel-blue: 206 35% 88%;
-    --pastel-blue-btn: 206 49% 90%;
+    --pastel-blue: 206 50% 72%;
+    --pastel-blue-btn: 206 55% 75%;
     --pastel-blue-text: 206 49% 35%;
-    --pastel-indigo: 239 32% 65%;
-    --pastel-purple: 270 32% 80%;
-    --pastel-purple-btn: 270 32% 76%;
+    --pastel-indigo: 239 45% 60%;
+    --pastel-purple: 270 45% 68%;
+    --pastel-purple-btn: 270 45% 65%;
     --pastel-purple-text: 270 32% 30%;
-    --pastel-pink: 322 32% 68%;
-    --pastel-pink-btn: 322 32% 60%;
+    --pastel-pink: 322 48% 62%;
+    --pastel-pink-btn: 322 48% 58%;
     --pastel-pink-text: 322 32% 30%;
-    --pastel-rose: 343 35% 66%;
-    --pastel-green: 152 32% 65%;
-    --pastel-green-btn: 152 32% 58%;
+    --pastel-rose: 343 45% 60%;
+    --pastel-green: 152 48% 58%;
+    --pastel-green-btn: 152 48% 55%;
     --pastel-green-text: 152 32% 28%;
-    --pastel-yellow: 44 78% 82%;
-    --pastel-peach: 24 48% 68%;
-    --pastel-orange: 30 35% 67%;
-    --pastel-orange-btn: 30 35% 60%;
+    --pastel-yellow: 44 70% 68%;
+    --pastel-peach: 24 55% 62%;
+    --pastel-orange: 30 50% 60%;
+    --pastel-orange-btn: 30 50% 56%;
     --pastel-orange-text: 30 35% 28%;
     
     /* Pastel Gray Dark for Icons */
@@ -98,25 +98,25 @@ All colors MUST be HSL.
     --popover: 220 15% 18%;
     --popover-foreground: 220 10% 70%;
 
-    --primary: 206 30% 85%;
+    --primary: 206 45% 70%;
     --primary-foreground: 220 10% 30%;
 
-    --secondary: 206 20% 85%;
+    --secondary: 206 35% 72%;
     --secondary-foreground: 220 10% 30%;
 
     --muted: 220 15% 22%;
     --muted-foreground: 220 10% 60%;
 
-    --accent: 152 45% 45%;
+    --accent: 152 55% 42%;
     --accent-foreground: 0 0% 98%;
 
-    --success: 152 45% 55%;
+    --success: 152 55% 50%;
     --success-foreground: 0 0% 100%;
-    --success-light: 152 45% 75%;
+    --success-light: 152 55% 68%;
 
-    --warning: 44 46% 63%;
+    --warning: 44 60% 58%;
     --warning-foreground: 220 10% 30%;
-    --warning-light: 44 46% 78%;
+    --warning-light: 44 60% 70%;
     
     --primary-light: 206 30% 75%;
     --secondary-light: 152 45% 75%;
@@ -129,24 +129,24 @@ All colors MUST be HSL.
     --input: 220 15% 25%;
     --ring: 206 49% 70%;
 
-    --pastel-blue: 206 32% 68%;
-    --pastel-blue-btn: 206 45% 70%;
+    --pastel-blue: 206 48% 62%;
+    --pastel-blue-btn: 206 50% 65%;
     --pastel-blue-text: 206 45% 35%;
-    --pastel-indigo: 239 32% 68%;
-    --pastel-purple: 270 32% 82%;
-    --pastel-purple-btn: 270 32% 77%;
+    --pastel-indigo: 239 45% 58%;
+    --pastel-purple: 270 45% 65%;
+    --pastel-purple-btn: 270 45% 62%;
     --pastel-purple-text: 270 32% 32%;
-    --pastel-pink: 322 35% 72%;
-    --pastel-pink-btn: 322 35% 64%;
+    --pastel-pink: 322 48% 60%;
+    --pastel-pink-btn: 322 48% 56%;
     --pastel-pink-text: 322 35% 32%;
-    --pastel-rose: 343 35% 70%;
-    --pastel-green: 152 35% 68%;
-    --pastel-green-btn: 152 35% 60%;
+    --pastel-rose: 343 45% 58%;
+    --pastel-green: 152 48% 56%;
+    --pastel-green-btn: 152 48% 52%;
     --pastel-green-text: 152 35% 30%;
-    --pastel-yellow: 44 38% 70%;
-    --pastel-peach: 24 36% 72%;
-    --pastel-orange: 30 38% 70%;
-    --pastel-orange-btn: 30 38% 62%;
+    --pastel-yellow: 44 58% 62%;
+    --pastel-peach: 24 50% 60%;
+    --pastel-orange: 30 50% 58%;
+    --pastel-orange-btn: 30 50% 54%;
     --pastel-orange-text: 30 38% 30%;
     
     /* Pastel Gray Dark for Icons */
