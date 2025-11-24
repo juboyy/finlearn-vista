@@ -22,13 +22,23 @@ export const useInfographicChat = () => {
     onDelta: (deltaText: string) => void,
     onDone: () => void
   ) => {
-    const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat-infografico`;
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+    const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+
+    if (!supabaseUrl || !supabaseKey) {
+      console.error('Supabase environment variables not configured');
+      toast.error('Configuração do Supabase não encontrada');
+      throw new Error('Supabase not configured');
+    }
+
+    const CHAT_URL = `${supabaseUrl}/functions/v1/chat-infografico`;
+    console.log('Calling chat function at:', CHAT_URL);
 
     const resp = await fetch(CHAT_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+        Authorization: `Bearer ${supabaseKey}`,
       },
       body: JSON.stringify({ 
         messages: [
@@ -37,6 +47,8 @@ export const useInfographicChat = () => {
         ] 
       }),
     });
+
+    console.log('Response status:', resp.status);
 
     if (!resp.ok) {
       if (resp.status === 429) {
@@ -47,6 +59,9 @@ export const useInfographicChat = () => {
         toast.error('Créditos insuficientes. Por favor, adicione créditos ao seu workspace.');
         throw new Error('Payment required');
       }
+      const errorText = await resp.text();
+      console.error('Chat error response:', errorText);
+      toast.error('Erro ao conectar com o chat');
       throw new Error('Failed to start stream');
     }
 
