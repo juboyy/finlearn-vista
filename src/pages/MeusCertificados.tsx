@@ -1,13 +1,24 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Download, Eye, Award, Calendar, TrendingUp, CheckCircle, Clock } from "lucide-react";
+import { ArrowLeft, Download, Eye, Award, Calendar, TrendingUp, CheckCircle, Clock, LayoutGrid, List } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
+// Import images
+import cursoAnaliseImage from "@/assets/curso-analise-tecnica-illustration.png";
+import ebookRiskImage from "@/assets/ebook-risk-management-pink.png";
+import newspaperStabilityImage from "@/assets/newspaper-financial-stability.png";
+import newspaperOpenFinanceImage from "@/assets/newspaper-open-finance.png";
+import newspaperRiskImage from "@/assets/newspaper-risk-management.png";
+import relatorioAnaliseImage from "@/assets/relatorio-analise-dados.png";
+import relatorioBIImage from "@/assets/relatorio-bi-dashboard.png";
+import creditoRuralImage from "@/assets/credito-rural-2025.png";
+
 const MeusCertificados = () => {
   const navigate = useNavigate();
   const [selectedFilter, setSelectedFilter] = useState("todos");
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
   const certificates = [
     {
@@ -19,7 +30,7 @@ const MeusCertificados = () => {
       duration: "40 horas",
       category: "Mercado de Capitais",
       status: "Concluído",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/c37907bb40-efb5c703a3adf9ca8913.png"
+      image: cursoAnaliseImage
     },
     {
       id: 2,
@@ -30,7 +41,7 @@ const MeusCertificados = () => {
       duration: "60 horas",
       category: "Gestão de Risco",
       status: "Concluído",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/c37907bb40-efb5c703a3adf9ca8913.png"
+      image: ebookRiskImage
     },
     {
       id: 3,
@@ -41,7 +52,7 @@ const MeusCertificados = () => {
       duration: "300 horas",
       category: "Certificação Internacional",
       status: "Concluído",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/c37907bb40-efb5c703a3adf9ca8913.png"
+      image: newspaperStabilityImage
     },
     {
       id: 4,
@@ -52,7 +63,7 @@ const MeusCertificados = () => {
       duration: "32 horas",
       category: "Derivativos",
       status: "Concluído",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/c37907bb40-efb5c703a3adf9ca8913.png"
+      image: newspaperOpenFinanceImage
     },
     {
       id: 5,
@@ -63,7 +74,7 @@ const MeusCertificados = () => {
       duration: "48 horas",
       category: "Valuation",
       status: "Concluído",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/c37907bb40-efb5c703a3adf9ca8913.png"
+      image: relatorioAnaliseImage
     },
     {
       id: 6,
@@ -74,7 +85,7 @@ const MeusCertificados = () => {
       duration: "24 horas",
       category: "Análise Técnica",
       status: "Concluído",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/c37907bb40-efb5c703a3adf9ca8913.png"
+      image: relatorioBIImage
     },
     {
       id: 7,
@@ -85,7 +96,7 @@ const MeusCertificados = () => {
       duration: "52 horas",
       category: "Compliance",
       status: "Em Progresso",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/c37907bb40-efb5c703a3adf9ca8913.png"
+      image: newspaperRiskImage
     },
     {
       id: 8,
@@ -96,7 +107,7 @@ const MeusCertificados = () => {
       duration: "36 horas",
       category: "ESG",
       status: "Em Progresso",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/c37907bb40-efb5c703a3adf9ca8913.png"
+      image: creditoRuralImage
     }
   ];
 
@@ -204,105 +215,223 @@ const MeusCertificados = () => {
             </div>
           </div>
 
-          {/* Filters */}
-          <div className="flex items-center gap-3 mb-8">
-            {filterCategories.map((filter) => (
+          {/* Filters and View Toggle */}
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-3">
+              {filterCategories.map((filter) => (
+                <button
+                  key={filter.id}
+                  onClick={() => setSelectedFilter(filter.id)}
+                  className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
+                    selectedFilter === filter.id
+                      ? "bg-pastel-green text-pastel-dark-gray"
+                      : "bg-pastel-blue text-slate-700 hover:bg-pastel-pink"
+                  }`}
+                >
+                  {filter.label}
+                  <span className="ml-2 opacity-75">({filter.count})</span>
+                </button>
+              ))}
+            </div>
+            
+            {/* View Mode Toggle */}
+            <div className="flex items-center gap-2 bg-slate-100 rounded-lg p-1">
               <button
-                key={filter.id}
-                onClick={() => setSelectedFilter(filter.id)}
-                className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
-                  selectedFilter === filter.id
+                onClick={() => setViewMode("grid")}
+                className={`p-2 rounded-lg transition-colors ${
+                  viewMode === "grid"
                     ? "bg-pastel-green text-pastel-dark-gray"
-                    : "bg-pastel-blue text-slate-700 hover:bg-pastel-pink"
+                    : "text-slate-600 hover:bg-slate-200"
                 }`}
               >
-                {filter.label}
-                <span className="ml-2 opacity-75">({filter.count})</span>
+                <LayoutGrid size={20} />
               </button>
-            ))}
-          </div>
-
-          {/* Certificates Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredCertificates.map((cert) => (
-              <div
-                key={cert.id}
-                className="bg-white border border-slate-200 rounded-xl overflow-hidden hover:shadow-lg transition-shadow"
+              <button
+                onClick={() => setViewMode("list")}
+                className={`p-2 rounded-lg transition-colors ${
+                  viewMode === "list"
+                    ? "bg-pastel-green text-pastel-dark-gray"
+                    : "text-slate-600 hover:bg-slate-200"
+                }`}
               >
-                <div className="relative h-48 bg-gradient-to-br from-pastel-blue/20 to-pastel-purple/20">
-                  <img
-                    src={cert.image}
-                    alt={cert.title}
-                    className="w-full h-full object-cover opacity-40"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg">
-                      <Award className="text-pastel-blue" size={40} />
-                    </div>
-                  </div>
-                  <div className="absolute top-4 right-4">
-                    <Badge
-                      className={
-                        cert.status === "Concluído"
-                          ? "bg-pastel-green text-pastel-dark-gray border-0"
-                          : "bg-pastel-yellow text-pastel-dark-gray border-0"
-                      }
-                    >
-                      {cert.status}
-                    </Badge>
-                  </div>
-                </div>
-
-                <div className="p-6">
-                  <h3 className="text-lg font-semibold text-slate-800 mb-2 line-clamp-2">
-                    {cert.title}
-                  </h3>
-                  <p className="text-sm text-slate-600 mb-4">{cert.institution}</p>
-
-                  <div className="space-y-2 mb-4">
-                    <div className="flex items-center gap-2 text-sm text-slate-600">
-                      <Calendar size={16} className="text-pastel-blue" />
-                      <span>{cert.date}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-slate-600">
-                      <Clock size={16} className="text-pastel-purple" />
-                      <span>{cert.duration}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-slate-600">
-                      <TrendingUp size={16} className="text-pastel-green" />
-                      <span>Nota: {cert.score}</span>
-                    </div>
-                  </div>
-
-                  <Badge className="bg-pastel-blue/50 text-pastel-dark-gray border-0 mb-4">
-                    {cert.category}
-                  </Badge>
-
-                  <div className="flex gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="flex-1 border-pastel-blue text-slate-700 hover:bg-pastel-blue hover:text-pastel-dark-gray"
-                      onClick={() => handleView(cert.id)}
-                      disabled={cert.status !== "Concluído"}
-                    >
-                      <Eye size={16} className="mr-2" />
-                      Visualizar
-                    </Button>
-                    <Button
-                      size="sm"
-                      className="flex-1 bg-pastel-green text-pastel-dark-gray hover:bg-pastel-green/80"
-                      onClick={() => handleDownload(cert.id)}
-                      disabled={cert.status !== "Concluído"}
-                    >
-                      <Download size={16} className="mr-2" />
-                      Baixar
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            ))}
+                <List size={20} />
+              </button>
+            </div>
           </div>
+
+          {/* Certificates Grid View */}
+          {viewMode === "grid" && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredCertificates.map((cert) => (
+                <div
+                  key={cert.id}
+                  className="bg-white rounded-xl overflow-hidden hover:shadow-lg transition-shadow"
+                >
+                  <div className="relative h-48 bg-gradient-to-br from-pastel-blue/20 to-pastel-purple/20">
+                    <img
+                      src={cert.image}
+                      alt={cert.title}
+                      className="w-full h-full object-cover opacity-40"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg">
+                        <Award className="text-pastel-blue" size={40} />
+                      </div>
+                    </div>
+                    <div className="absolute top-4 right-4">
+                      <Badge
+                        className={
+                          cert.status === "Concluído"
+                            ? "bg-pastel-green text-pastel-dark-gray border-0"
+                            : "bg-pastel-yellow text-pastel-dark-gray border-0"
+                        }
+                      >
+                        {cert.status}
+                      </Badge>
+                    </div>
+                  </div>
+
+                  <div className="p-6">
+                    <h3 className="text-lg font-semibold text-slate-800 mb-2 line-clamp-2">
+                      {cert.title}
+                    </h3>
+                    <p className="text-sm text-slate-600 mb-4">{cert.institution}</p>
+
+                    <div className="space-y-2 mb-4">
+                      <div className="flex items-center gap-2 text-sm text-slate-600">
+                        <Calendar size={16} className="text-pastel-blue" />
+                        <span>{cert.date}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-slate-600">
+                        <Clock size={16} className="text-pastel-purple" />
+                        <span>{cert.duration}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-slate-600">
+                        <TrendingUp size={16} className="text-pastel-green" />
+                        <span>Nota: {cert.score}</span>
+                      </div>
+                    </div>
+
+                    <Badge className="bg-pastel-blue/50 text-pastel-dark-gray border-0 mb-4">
+                      {cert.category}
+                    </Badge>
+
+                    <div className="flex gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="flex-1 border-pastel-blue text-slate-700 hover:bg-pastel-blue hover:text-pastel-dark-gray"
+                        onClick={() => handleView(cert.id)}
+                        disabled={cert.status !== "Concluído"}
+                      >
+                        <Eye size={16} className="mr-2" />
+                        Visualizar
+                      </Button>
+                      <Button
+                        size="sm"
+                        className="flex-1 bg-pastel-green text-pastel-dark-gray hover:bg-pastel-green/80"
+                        onClick={() => handleDownload(cert.id)}
+                        disabled={cert.status !== "Concluído"}
+                      >
+                        <Download size={16} className="mr-2" />
+                        Baixar
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Certificates List View */}
+          {viewMode === "list" && (
+            <div className="space-y-4">
+              {filteredCertificates.map((cert) => (
+                <div
+                  key={cert.id}
+                  className="bg-white rounded-xl overflow-hidden hover:shadow-lg transition-shadow"
+                >
+                  <div className="flex items-center gap-6 p-6">
+                    {/* Image */}
+                    <div className="relative w-32 h-32 flex-shrink-0 rounded-lg overflow-hidden bg-gradient-to-br from-pastel-blue/20 to-pastel-purple/20">
+                      <img
+                        src={cert.image}
+                        alt={cert.title}
+                        className="w-full h-full object-cover opacity-50"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg">
+                          <Award className="text-pastel-blue" size={24} />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-start justify-between mb-3">
+                        <div>
+                          <h3 className="text-xl font-semibold text-slate-800 mb-1">
+                            {cert.title}
+                          </h3>
+                          <p className="text-sm text-slate-600">{cert.institution}</p>
+                        </div>
+                        <Badge
+                          className={
+                            cert.status === "Concluído"
+                              ? "bg-pastel-green text-pastel-dark-gray border-0"
+                              : "bg-pastel-yellow text-pastel-dark-gray border-0"
+                          }
+                        >
+                          {cert.status}
+                        </Badge>
+                      </div>
+
+                      <div className="flex items-center gap-6 mb-3">
+                        <div className="flex items-center gap-2 text-sm text-slate-600">
+                          <Calendar size={16} className="text-pastel-blue" />
+                          <span>{cert.date}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-slate-600">
+                          <Clock size={16} className="text-pastel-purple" />
+                          <span>{cert.duration}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-slate-600">
+                          <TrendingUp size={16} className="text-pastel-green" />
+                          <span>Nota: {cert.score}</span>
+                        </div>
+                        <Badge className="bg-pastel-blue/50 text-pastel-dark-gray border-0">
+                          {cert.category}
+                        </Badge>
+                      </div>
+                    </div>
+
+                    {/* Actions */}
+                    <div className="flex gap-2 flex-shrink-0">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="border-pastel-blue text-slate-700 hover:bg-pastel-blue hover:text-pastel-dark-gray"
+                        onClick={() => handleView(cert.id)}
+                        disabled={cert.status !== "Concluído"}
+                      >
+                        <Eye size={16} className="mr-2" />
+                        Visualizar
+                      </Button>
+                      <Button
+                        size="sm"
+                        className="bg-pastel-green text-pastel-dark-gray hover:bg-pastel-green/80"
+                        onClick={() => handleDownload(cert.id)}
+                        disabled={cert.status !== "Concluído"}
+                      >
+                        <Download size={16} className="mr-2" />
+                        Baixar
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
 
           {filteredCertificates.length === 0 && (
             <div className="text-center py-16">
