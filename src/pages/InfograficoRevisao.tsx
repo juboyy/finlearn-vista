@@ -1,24 +1,37 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Bell, Send, Download, Share2, FileText, Bookmark, Edit, CreditCard, User, Check, Brain } from "lucide-react";
+import { ArrowLeft, Bell, Send, Download, Share2, FileText, Bookmark, Edit, CreditCard, User, Check, Brain, RotateCw, Paperclip, Eye } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Plot from "react-plotly.js";
+import { useInfographicChat } from "@/hooks/useInfographicChat";
 
 export default function InfograficoRevisao() {
-  const [refineInput, setRefineInput] = useState("");
+  const chatScrollRef = useRef<HTMLDivElement>(null);
+  const [inputValue, setInputValue] = useState("");
+  const { messages, sendMessage, isLoading } = useInfographicChat();
 
-  const handleRefine = () => {
-    if (refineInput.trim()) {
-      console.log("Refining with:", refineInput);
-      setRefineInput("");
+  useEffect(() => {
+    if (chatScrollRef.current) {
+      chatScrollRef.current.scrollTop = chatScrollRef.current.scrollHeight;
+    }
+  }, [messages]);
+
+  const handleSend = () => {
+    if (inputValue.trim() && !isLoading) {
+      sendMessage(inputValue);
+      setInputValue("");
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      handleRefine();
+      handleSend();
     }
+  };
+
+  const formatTime = (date: Date) => {
+    return date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
   };
 
   return (
@@ -53,209 +66,157 @@ export default function InfograficoRevisao() {
         </header>
 
         {/* Main Content */}
-        <div className="flex-1 overflow-y-auto p-6">
-          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div className="flex-1 flex overflow-hidden h-[calc(100vh-4rem)]">
+          
+          {/* Chat / Interaction Area (Left Side - Fixed) */}
+          <section className="flex flex-col w-full max-w-xl bg-card border-r border-border relative z-10 shadow-xl h-full">
             
-            {/* Left Column: Interaction History */}
-            <section className="lg:col-span-4 space-y-6">
-              
-              {/* Agent Card */}
-              <div className="bg-card rounded-2xl p-5 shadow-sm border border-border">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shrink-0" style={{ 
+            {/* Chat Header */}
+            <div className="p-4 border-b border-border bg-card/80 backdrop-blur-sm flex items-center justify-between shrink-0">
+              <div className="flex items-center gap-4">
+                <div className="relative">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shadow-lg" style={{ 
                     background: `linear-gradient(135deg, hsl(var(--pastel-purple)), hsl(var(--pastel-purple-btn)))` 
                   }}>
                     <CreditCard className="w-6 h-6" style={{ color: 'hsl(var(--pastel-gray-dark))' }} />
                   </div>
-                  <div>
-                    <h2 className="text-lg font-bold text-foreground">Especialista em Pagamentos</h2>
-                    <p className="text-sm text-muted-foreground mt-1">Expert em tendências de mercado, Pix, cartões e open finance.</p>
-                    <div className="flex gap-2 mt-3">
-                      <span className="px-2 py-1 rounded-md text-xs font-medium" style={{
-                        backgroundColor: 'hsl(var(--pastel-purple))',
-                        color: 'hsl(var(--pastel-gray-dark))'
-                      }}>Fintech</span>
-                      <span className="px-2 py-1 rounded-md text-xs font-medium" style={{
-                        backgroundColor: 'hsl(var(--pastel-blue))',
-                        color: 'hsl(var(--pastel-gray-dark))'
-                      }}>Brasil</span>
-                    </div>
-                  </div>
+                  <div className="absolute -bottom-1 -right-1 bg-green-500 w-4 h-4 rounded-full border-2 border-card" title="Online"></div>
+                </div>
+                <div>
+                  <h2 className="text-base font-bold text-foreground">Especialista em Pagamentos</h2>
+                  <p className="text-xs text-muted-foreground">IA treinada em dados do BACEN e ABECS</p>
                 </div>
               </div>
+              <button className="text-muted-foreground hover:text-foreground text-sm flex items-center gap-2 transition-colors">
+                <RotateCw className="w-4 h-4" />
+                <span className="hidden sm:inline">Reiniciar</span>
+              </button>
+            </div>
 
-              {/* Timeline / Chat History */}
-              <div className="bg-card rounded-2xl p-5 shadow-sm border border-border relative overflow-hidden">
-                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4">Histórico da Geração</h3>
-                
-                <div className="relative pl-2 space-y-6">
-                  {/* Step 1: User Prompt */}
-                  <div className="relative flex gap-4">
-                    <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-muted-foreground shrink-0 z-10 border-2 border-card">
-                      <User className="w-4 h-4" />
+            {/* Chat Messages Scroll Area */}
+            <div ref={chatScrollRef} className="flex-1 overflow-y-auto p-6 space-y-8 bg-muted/30">
+              
+              {messages.map((message, index) => (
+                message.role === 'assistant' ? (
+                  <div key={index} className="flex gap-4">
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 border" style={{ 
+                      backgroundColor: 'hsl(var(--pastel-purple))',
+                      borderColor: 'hsl(var(--pastel-purple-btn))',
+                      color: 'hsl(var(--pastel-gray-dark))'
+                    }}>
+                      <Brain className="w-5 h-5" />
                     </div>
-                    <div className="flex-1">
-                      <p className="text-xs text-muted-foreground mb-1">Você • 10:42 AM</p>
-                      <div className="bg-muted p-3 rounded-lg rounded-tl-none text-sm text-foreground border border-border">
-                        Gostaria de um infográfico comparando o crescimento do Pix versus Cartão de Crédito em 2024 para e-commerce.
+                    <div className="max-w-[85%]">
+                      <div className="text-xs text-muted-foreground mb-1 ml-1">Agente • {formatTime(message.timestamp)}</div>
+                      <div className="bg-card p-4 rounded-2xl rounded-tl-none shadow-sm text-sm text-foreground border border-border relative chat-bubble-left whitespace-pre-wrap">
+                        {message.content}
                       </div>
                     </div>
                   </div>
-
-                  {/* Step 2: AI Thinking */}
-                  <div className="relative flex gap-4">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 z-10 border-2 border-card" style={{ 
-                      backgroundColor: 'hsl(var(--pastel-purple))',
-                      borderColor: 'hsl(var(--pastel-purple-btn))'
-                    }}>
-                      <Brain className="w-4 h-4" style={{ color: 'hsl(var(--pastel-gray-dark))' }} />
+                ) : (
+                  <div key={index} className="flex gap-4 flex-row-reverse">
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 border border-border bg-muted">
+                      <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" className="w-full h-full rounded-full object-cover" alt="User" />
                     </div>
-                    <div className="flex-1">
-                      <p className="text-xs text-muted-foreground mb-1">Agente • 10:42 AM</p>
-                      <div className="p-3 rounded-lg rounded-tl-none text-sm border" style={{
+                    <div className="max-w-[85%]">
+                      <div className="text-xs text-muted-foreground mb-1 mr-1 text-right">Você • {formatTime(message.timestamp)}</div>
+                      <div className="p-4 rounded-2xl rounded-tr-none shadow-sm text-sm border relative chat-bubble-right whitespace-pre-wrap" style={{
                         backgroundColor: 'hsl(var(--pastel-purple))',
                         borderColor: 'hsl(var(--pastel-purple-btn))',
                         color: 'hsl(var(--pastel-gray-dark))'
                       }}>
-                        <p className="mb-2">Entendido. Para tornar o infográfico mais preciso, preciso de alguns detalhes:</p>
-                        <ul className="list-disc list-inside text-xs space-y-1">
-                          <li>O foco é volume financeiro ou número de transações?</li>
-                          <li>Devo incluir projeções para 2025?</li>
-                        </ul>
+                        {message.content}
                       </div>
                     </div>
                   </div>
+                )
+              ))}
 
-                  {/* Step 3: User Answer */}
-                  <div className="relative flex gap-4">
-                    <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-muted-foreground shrink-0 z-10 border-2 border-card">
-                      <User className="w-4 h-4" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-xs text-muted-foreground mb-1">Você • 10:44 AM</p>
-                      <div className="bg-muted p-3 rounded-lg rounded-tl-none text-sm text-foreground border border-border">
-                        Foco em volume financeiro (R$) e sim, inclua uma projeção para o Q1 de 2025.
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Step 4: Final Result */}
-                  <div className="relative flex gap-4">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 z-10 border-2 border-card" style={{
-                      backgroundColor: 'hsl(var(--pastel-green))',
-                      borderColor: 'hsl(144 70% 70%)'
-                    }}>
-                      <Check className="w-4 h-4" style={{ color: 'hsl(var(--pastel-gray-dark))' }} />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-xs text-muted-foreground mb-1">Sistema • 10:45 AM</p>
-                      <div className="text-sm font-medium" style={{ color: 'hsl(var(--pastel-green-text))' }}>
-                        Infográfico gerado com sucesso!
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Step 5: Agent Action Options */}
-                  <div className="relative flex gap-4">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 z-10 border-2 border-card" style={{ 
-                      backgroundColor: 'hsl(var(--pastel-purple))',
-                      borderColor: 'hsl(var(--pastel-purple-btn))'
-                    }}>
-                      <Brain className="w-4 h-4" style={{ color: 'hsl(var(--pastel-gray-dark))' }} />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-xs text-muted-foreground mb-1">Agente • 10:45 AM</p>
-                      <div className="p-4 rounded-lg rounded-tl-none border" style={{
-                        backgroundColor: 'hsl(var(--pastel-purple))',
-                        borderColor: 'hsl(var(--pastel-purple-btn))'
-                      }}>
-                        <p className="text-sm font-medium mb-3" style={{ color: 'hsl(var(--pastel-gray-dark))' }}>Como você gostaria de prosseguir com o relatório?</p>
-                        <div className="space-y-2">
-                          <button className="w-full flex items-center justify-between px-4 py-3 bg-card hover:bg-muted border border-border rounded-lg text-sm font-medium text-foreground transition-all group">
-                            <span className="flex items-center gap-3">
-                              <FileText className="w-4 h-4" style={{ color: 'hsl(var(--pastel-pink))' }} />
-                              <span>Baixar em PDF</span>
-                            </span>
-                            <Download className="w-4 h-4 text-muted-foreground group-hover:text-foreground" />
-                          </button>
-                          
-                          <button className="w-full flex items-center justify-between px-4 py-3 bg-card hover:bg-muted border border-border rounded-lg text-sm font-medium text-foreground transition-all group">
-                            <span className="flex items-center gap-3">
-                              <Share2 className="w-4 h-4" style={{ color: 'hsl(var(--pastel-blue))' }} />
-                              <span>Compartilhar Relatório</span>
-                            </span>
-                            <i className="fa-solid fa-arrow-right text-sm text-muted-foreground group-hover:text-foreground"></i>
-                          </button>
-
-                          <button className="w-full flex items-center justify-between px-4 py-3 bg-card hover:bg-muted border border-border rounded-lg text-sm font-medium text-foreground transition-all group">
-                            <span className="flex items-center gap-3">
-                              <Edit className="w-4 h-4" style={{ color: 'hsl(var(--pastel-yellow))' }} />
-                              <span>Refinar Análise</span>
-                            </span>
-                            <i className="fa-solid fa-arrow-right text-sm text-muted-foreground group-hover:text-foreground"></i>
-                          </button>
-
-                          <button className="w-full flex items-center justify-between px-4 py-3 bg-card hover:bg-muted border border-border rounded-lg text-sm font-medium text-foreground transition-all group">
-                            <span className="flex items-center gap-3">
-                              <Bookmark className="w-4 h-4" style={{ color: 'hsl(var(--pastel-purple))' }} />
-                              <span>Salvar nos Projetos</span>
-                            </span>
-                            <i className="fa-solid fa-arrow-right text-sm text-muted-foreground group-hover:text-foreground"></i>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* New Prompt Input */}
-                <div className="mt-8 pt-4 border-t border-border">
-                  <label className="text-xs font-semibold text-muted-foreground mb-2 block">Refinar Resultado</label>
-                  <div className="relative">
-                    <input 
-                      type="text" 
-                      value={refineInput}
-                      onChange={(e) => setRefineInput(e.target.value)}
-                      onKeyDown={handleKeyPress}
-                      placeholder="Ex: Adicionar dados de boletos..." 
-                      className="w-full pl-4 pr-10 py-2.5 bg-muted border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:border-transparent text-foreground placeholder:text-muted-foreground"
-                      style={{ '--tw-ring-color': 'hsl(var(--pastel-purple-btn))' } as React.CSSProperties}
-                    />
-                    <button 
-                      onClick={handleRefine}
-                      className="absolute right-2 top-2 p-1 hover:opacity-80 transition-opacity"
-                      style={{ color: 'hsl(var(--pastel-purple-btn))' }}
-                    >
-                      <Send className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            {/* Right Column: Generated Infographic */}
-            <section className="lg:col-span-8">
-              
-              {/* Toolbar */}
-              <div className="flex items-center justify-between mb-4">
-                <h1 className="text-2xl font-bold text-foreground">Resultado Gerado</h1>
-                <div className="flex gap-2">
-                  <button className="px-3 py-1.5 bg-card border border-border rounded-lg text-sm text-foreground hover:bg-muted shadow-sm transition-all">
-                    <Edit className="w-3 h-3 inline mr-2" />Editar
-                  </button>
-                  <button className="px-3 py-1.5 bg-card border border-border rounded-lg text-sm text-foreground hover:bg-muted shadow-sm transition-all">
-                    <Share2 className="w-3 h-3 inline mr-2" />Compartilhar
-                  </button>
-                  <button className="px-3 py-1.5 text-white rounded-lg text-sm hover:opacity-90 shadow-sm transition-all" style={{
-                    backgroundColor: 'hsl(var(--pastel-purple-btn))'
+              {isLoading && (
+                <div className="flex gap-4">
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 border" style={{ 
+                    backgroundColor: 'hsl(var(--pastel-purple))',
+                    borderColor: 'hsl(var(--pastel-purple-btn))',
+                    color: 'hsl(var(--pastel-gray-dark))'
                   }}>
-                    <Download className="w-3 h-3 inline mr-2" />Baixar PDF
-                  </button>
+                    <Brain className="w-5 h-5" />
+                  </div>
+                  <div className="max-w-[85%]">
+                    <div className="text-xs text-muted-foreground mb-1 ml-1">Agente • Agora</div>
+                    <div className="bg-card p-4 rounded-2xl rounded-tl-none shadow-sm text-sm text-foreground border border-border relative chat-bubble-left">
+                      <div className="flex items-center gap-2">
+                        <div className="flex space-x-1">
+                          <div className="w-2 h-2 rounded-full typing-dot" style={{ backgroundColor: 'hsl(var(--muted-foreground))' }}></div>
+                          <div className="w-2 h-2 rounded-full typing-dot" style={{ backgroundColor: 'hsl(var(--muted-foreground))' }}></div>
+                          <div className="w-2 h-2 rounded-full typing-dot" style={{ backgroundColor: 'hsl(var(--muted-foreground))' }}></div>
+                        </div>
+                        <span className="text-muted-foreground italic text-xs">Processando...</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              )}
+            </div>
 
-              {/* The Infographic Canvas */}
-              <div className="bg-card rounded-2xl shadow-lg border border-border overflow-hidden">
+            {/* Input Area */}
+            <div className="p-4 bg-card border-t border-border shrink-0">
+              <div className="relative flex items-end gap-2 bg-muted border rounded-xl p-2 focus-within:ring-2 focus-within:border-transparent transition-shadow shadow-inner focus-within:ring-[hsl(var(--pastel-purple))]">
+                <button className="p-2 text-muted-foreground hover:bg-muted-foreground/10 rounded-lg transition-colors" title="Anexar arquivo" style={{
+                  color: 'hsl(var(--pastel-purple-text))'
+                }}>
+                  <Paperclip className="w-4 h-4" />
+                </button>
+                <textarea 
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  onKeyDown={handleKeyPress}
+                  placeholder="Digite sua mensagem para refinar o infográfico..." 
+                  className="w-full bg-transparent border-none focus:ring-0 resize-none text-sm text-foreground max-h-32 py-2.5 focus:outline-none placeholder:text-muted-foreground" 
+                  rows={1}
+                  disabled={isLoading}
+                />
+                <button 
+                  onClick={handleSend}
+                  disabled={isLoading || !inputValue.trim()}
+                  className="p-2 text-white rounded-lg transition-colors shadow-sm mb-0.5 disabled:opacity-50 disabled:cursor-not-allowed" 
+                  style={{
+                    backgroundColor: 'hsl(var(--pastel-purple-btn))'
+                  }}
+                >
+                  <Send className="w-4 h-4" />
+                </button>
+              </div>
+              <p className="text-center text-[10px] text-muted-foreground mt-2">A IA pode cometer erros. Verifique informações importantes.</p>
+            </div>
+          </section>
+
+          {/* Result / Infographic Panel (Right Side) */}
+          <section className="hidden lg:flex flex-col flex-1 bg-muted/30 border-l border-border overflow-hidden relative">
+            
+            {/* Toolbar */}
+            <div className="h-[80px] bg-card border-b border-border flex items-center justify-between px-6 shadow-sm z-10">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Eye className="w-4 h-4" />
+                <span className="font-medium">Visualização</span>
+              </div>
+              <div className="flex gap-2">
+                <button className="px-3 py-1.5 bg-muted hover:bg-muted/80 rounded-lg text-sm text-foreground shadow-sm transition-all">
+                  <Edit className="w-3 h-3 inline mr-2" />Editar
+                </button>
+                <button className="px-3 py-1.5 bg-muted hover:bg-muted/80 rounded-lg text-sm text-foreground shadow-sm transition-all">
+                  <Share2 className="w-3 h-3 inline mr-2" />Compartilhar
+                </button>
+                <button className="px-3 py-1.5 text-white rounded-lg text-sm hover:opacity-90 shadow-sm transition-all" style={{
+                  backgroundColor: 'hsl(var(--pastel-purple-btn))'
+                }}>
+                  <Download className="w-3 h-3 inline mr-2" />Baixar PDF
+                </button>
+              </div>
+            </div>
+
+            {/* Infographic Display */}
+            <div className="flex-1 overflow-y-auto p-8">
+              <div className="bg-card rounded-2xl shadow-lg border border-border overflow-hidden max-w-6xl mx-auto">
                 
                 {/* Info Header */}
                 <div className="p-10 text-white relative overflow-hidden" style={{
@@ -668,11 +629,53 @@ export default function InfograficoRevisao() {
                 </div>
 
               </div>
-            </section>
+            </div>
+          </section>
 
-          </div>
         </div>
       </div>
+
+      <style>{`
+        /* Chat Bubble Triangles */
+        .chat-bubble-left::after {
+          content: '';
+          position: absolute;
+          left: -8px;
+          top: 12px;
+          width: 0;
+          height: 0;
+          border-top: 8px solid transparent;
+          border-bottom: 8px solid transparent;
+          border-right: 8px solid hsl(var(--card));
+        }
+        
+        .chat-bubble-right::after {
+          content: '';
+          position: absolute;
+          right: -8px;
+          top: 12px;
+          width: 0;
+          height: 0;
+          border-top: 8px solid transparent;
+          border-bottom: 8px solid transparent;
+          border-left: 8px solid hsl(var(--pastel-purple));
+        }
+
+        /* Typing Indicator Animation */
+        .typing-dot {
+          animation: typing 1.4s infinite;
+        }
+        .typing-dot:nth-child(2) {
+          animation-delay: 0.2s;
+        }
+        .typing-dot:nth-child(3) {
+          animation-delay: 0.4s;
+        }
+        @keyframes typing {
+          0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+          30% { opacity: 1; transform: translateY(-4px); }
+        }
+      `}</style>
     </div>
   );
 }
