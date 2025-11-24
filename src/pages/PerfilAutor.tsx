@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Search, Bell, Share2, UserPlus, MessageCircle, Phone, Video, Calendar, Clock, Check, X } from "lucide-react";
+import { ArrowLeft, Search, Bell, Share2, UserPlus, MessageCircle, Phone, Video, Award, Calendar, Clock, Check, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
 
@@ -192,8 +192,11 @@ const PerfilAutor = () => {
                   <Video className="text-pastel-purple" />
                   <span className="font-medium text-foreground">Vídeo</span>
                 </button>
-                <button className="bg-card border border-border rounded-lg p-4 flex items-center justify-center gap-3 hover:bg-accent transition-colors">
-                  <Calendar className="text-pastel-yellow" />
+                <button 
+                  onClick={() => navigate('/meus-certificados')}
+                  className="bg-card border border-border rounded-lg p-4 flex items-center justify-center gap-3 hover:bg-accent transition-colors"
+                >
+                  <Award className="text-pastel-yellow" />
                   <span className="font-medium text-foreground">Meus Certificados</span>
                 </button>
               </div>
