@@ -3,17 +3,36 @@ import { ArrowLeft, Bell, RotateCw, Paperclip, Send, Eye, Download, Save, Credit
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import Plot from "react-plotly.js";
+import { useInfographicChat } from "@/hooks/useInfographicChat";
 
 export default function CriarInfografico() {
-  const [isTyping, setIsTyping] = useState(false);
   const chatScrollRef = useRef<HTMLDivElement>(null);
+  const [inputValue, setInputValue] = useState("");
+  const { messages, sendMessage, isLoading } = useInfographicChat();
 
   useEffect(() => {
-    // Auto scroll to bottom when new messages arrive
     if (chatScrollRef.current) {
       chatScrollRef.current.scrollTop = chatScrollRef.current.scrollHeight;
     }
-  }, []);
+  }, [messages]);
+
+  const handleSend = () => {
+    if (inputValue.trim() && !isLoading) {
+      sendMessage(inputValue);
+      setInputValue("");
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
+  };
+
+  const formatTime = (date: Date) => {
+    return date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  };
 
   return (
     <div className="flex min-h-screen w-full bg-background overflow-hidden">
@@ -78,151 +97,66 @@ export default function CriarInfografico() {
             {/* Chat Messages Scroll Area */}
             <div ref={chatScrollRef} className="flex-1 overflow-y-auto p-6 space-y-8 bg-muted/30">
               
-              {/* Message 1: AI Greeting */}
-              <div className="flex gap-4">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 border" style={{ 
-                  backgroundColor: 'hsl(var(--pastel-purple))',
-                  borderColor: 'hsl(var(--pastel-purple-btn))',
-                  color: 'hsl(var(--pastel-gray-dark))'
-                }}>
-                  <Brain className="w-5 h-5" />
-                </div>
-                <div className="max-w-[85%]">
-                  <div className="text-xs text-muted-foreground mb-1 ml-1">Agente • 10:40</div>
-                  <div className="bg-card p-4 rounded-2xl rounded-tl-none shadow-sm text-sm text-foreground border border-border relative chat-bubble-left">
-                    <p>Olá, Ricardo! Sou seu especialista em mercado de pagamentos. Posso gerar infográficos detalhados sobre tendências, volumes de transação (Pix, Cartões, Boletos) e comparativos de taxas.</p>
-                    <p className="mt-2 font-medium">O que você gostaria de visualizar hoje?</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Message 2: User Prompt */}
-              <div className="flex gap-4 flex-row-reverse">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 border border-border bg-muted">
-                  <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" className="w-full h-full rounded-full object-cover" alt="User" />
-                </div>
-                <div className="max-w-[85%]">
-                  <div className="text-xs text-muted-foreground mb-1 mr-1 text-right">Você • 10:42</div>
-                  <div className="p-4 rounded-2xl rounded-tr-none shadow-sm text-sm border relative chat-bubble-right" style={{
-                    backgroundColor: 'hsl(var(--pastel-purple))',
-                    borderColor: 'hsl(var(--pastel-purple-btn))',
-                    color: 'hsl(var(--pastel-gray-dark))'
-                  }}>
-                    Gostaria de um infográfico comparando o crescimento do Pix versus Cartão de Crédito em 2024 para e-commerce.
-                  </div>
-                </div>
-              </div>
-
-              {/* Message 3: AI Thinking & Clarification */}
-              <div className="flex gap-4">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 border" style={{ 
-                  backgroundColor: 'hsl(var(--pastel-purple))',
-                  borderColor: 'hsl(var(--pastel-purple-btn))',
-                  color: 'hsl(var(--pastel-gray-dark))'
-                }}>
-                  <Brain className="w-5 h-5" />
-                </div>
-                <div className="max-w-[85%] space-y-3">
-                  <div className="text-xs text-muted-foreground mb-1 ml-1">Agente • 10:42</div>
-                  
-                  {/* Thinking Process */}
-                  <div className="bg-muted rounded-lg p-3 text-xs text-muted-foreground flex items-center gap-2 w-fit border cursor-pointer hover:bg-muted/80 transition-colors">
-                    <i className="fa-solid fa-microchip animate-pulse"></i>
-                    <span>Analisando base de dados do BACEN 2024...</span>
-                    <i className="fa-solid fa-chevron-down ml-2 text-muted-foreground"></i>
-                  </div>
-
-                  <div className="bg-card p-4 rounded-2xl rounded-tl-none shadow-sm text-sm text-foreground border border-border relative chat-bubble-left">
-                    <p className="mb-3">Entendido. Para construir um infográfico mais assertivo para sua necessidade, preciso esclarecer dois pontos:</p>
-                    
-                    <div className="space-y-3">
-                      <div className="flex items-start gap-3 bg-muted p-3 rounded-lg border">
-                        <div className="mt-0.5" style={{ color: 'hsl(var(--pastel-purple))' }}>
-                          <i className="fa-regular fa-circle-question"></i>
-                        </div>
-                        <div>
-                          <p className="font-medium text-foreground mb-1">Métrica Principal</p>
-                          <p className="text-xs text-muted-foreground mb-2">Você prefere focar no volume financeiro (R$) ou na quantidade de transações?</p>
-                          <div className="flex gap-2">
-                            <button className="px-3 py-1.5 bg-card border rounded text-xs hover:text-foreground transition-colors" style={{
-                              borderColor: 'hsl(var(--pastel-purple))',
-                              color: 'hsl(var(--pastel-purple-text))'
-                            }}>Volume (R$)</button>
-                            <button className="px-3 py-1.5 bg-card border rounded text-xs hover:text-foreground transition-colors" style={{
-                              borderColor: 'hsl(var(--pastel-purple))',
-                              color: 'hsl(var(--pastel-purple-text))'
-                            }}>Quantidade (#)</button>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="flex items-start gap-3 bg-muted p-3 rounded-lg border">
-                        <div className="mt-0.5" style={{ color: 'hsl(var(--pastel-purple))' }}>
-                          <i className="fa-regular fa-calendar"></i>
-                        </div>
-                        <div>
-                          <p className="font-medium text-foreground mb-1">Projeção Futura</p>
-                          <p className="text-xs text-muted-foreground mb-2">Deseja incluir uma projeção preditiva para o primeiro trimestre de 2025?</p>
-                          <div className="flex gap-2">
-                            <button className="px-3 py-1.5 text-white border rounded text-xs shadow-sm" style={{
-                              backgroundColor: 'hsl(var(--pastel-purple-btn))',
-                              borderColor: 'hsl(var(--pastel-purple-btn))'
-                            }}>Sim, incluir Q1 2025</button>
-                            <button className="px-3 py-1.5 bg-card border rounded text-xs hover:text-foreground transition-colors" style={{
-                              borderColor: 'hsl(var(--pastel-purple))',
-                              color: 'hsl(var(--pastel-purple-text))'
-                            }}>Não, apenas dados históricos</button>
-                          </div>
-                        </div>
+              {messages.map((message, index) => (
+                message.role === 'assistant' ? (
+                  <div key={index} className="flex gap-4">
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 border" style={{ 
+                      backgroundColor: 'hsl(var(--pastel-purple))',
+                      borderColor: 'hsl(var(--pastel-purple-btn))',
+                      color: 'hsl(var(--pastel-gray-dark))'
+                    }}>
+                      <Brain className="w-5 h-5" />
+                    </div>
+                    <div className="max-w-[85%]">
+                      <div className="text-xs text-muted-foreground mb-1 ml-1">Agente • {formatTime(message.timestamp)}</div>
+                      <div className="bg-card p-4 rounded-2xl rounded-tl-none shadow-sm text-sm text-foreground border border-border relative chat-bubble-left whitespace-pre-wrap">
+                        {message.content}
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
+                ) : (
+                  <div key={index} className="flex gap-4 flex-row-reverse">
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 border border-border bg-muted">
+                      <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" className="w-full h-full rounded-full object-cover" alt="User" />
+                    </div>
+                    <div className="max-w-[85%]">
+                      <div className="text-xs text-muted-foreground mb-1 mr-1 text-right">Você • {formatTime(message.timestamp)}</div>
+                      <div className="p-4 rounded-2xl rounded-tr-none shadow-sm text-sm border relative chat-bubble-right whitespace-pre-wrap" style={{
+                        backgroundColor: 'hsl(var(--pastel-purple))',
+                        borderColor: 'hsl(var(--pastel-purple-btn))',
+                        color: 'hsl(var(--pastel-gray-dark))'
+                      }}>
+                        {message.content}
+                      </div>
+                    </div>
+                  </div>
+                )
+              ))}
 
-              {/* Message 4: User Answer */}
-              <div className="flex gap-4 flex-row-reverse">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 border border-border bg-muted">
-                  <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" className="w-full h-full rounded-full object-cover" alt="User" />
-                </div>
-                <div className="max-w-[85%]">
-                  <div className="text-xs text-muted-foreground mb-1 mr-1 text-right">Você • 10:44</div>
-                  <div className="p-4 rounded-2xl rounded-tr-none shadow-sm text-sm border relative chat-bubble-right" style={{
+              {isLoading && (
+                <div className="flex gap-4">
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 border" style={{ 
                     backgroundColor: 'hsl(var(--pastel-purple))',
                     borderColor: 'hsl(var(--pastel-purple-btn))',
                     color: 'hsl(var(--pastel-gray-dark))'
                   }}>
-                    <p>Optei por <span className="font-semibold">Volume Financeiro (R$)</span> e sim, inclua a projeção para <span className="font-semibold">Q1 2025</span>.</p>
+                    <Brain className="w-5 h-5" />
                   </div>
-                </div>
-              </div>
-
-              {/* Message 5: Generation */}
-              <div className="flex gap-4">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 border" style={{ 
-                  backgroundColor: 'hsl(var(--pastel-purple))',
-                  borderColor: 'hsl(var(--pastel-purple-btn))',
-                  color: 'hsl(var(--pastel-gray-dark))'
-                }}>
-                  <Brain className="w-5 h-5" />
-                </div>
-                <div className="max-w-[85%] space-y-2">
-                  <div className="text-xs text-muted-foreground mb-1 ml-1">Agente • 10:45</div>
-                  <div className="bg-card p-4 rounded-2xl rounded-tl-none shadow-sm text-sm text-foreground border border-border relative chat-bubble-left">
-                    {isTyping && (
-                      <div className="flex items-center gap-2 mb-2">
+                  <div className="max-w-[85%]">
+                    <div className="text-xs text-muted-foreground mb-1 ml-1">Agente • Agora</div>
+                    <div className="bg-card p-4 rounded-2xl rounded-tl-none shadow-sm text-sm text-foreground border border-border relative chat-bubble-left">
+                      <div className="flex items-center gap-2">
                         <div className="flex space-x-1">
                           <div className="w-2 h-2 rounded-full typing-dot" style={{ backgroundColor: 'hsl(var(--muted-foreground))' }}></div>
                           <div className="w-2 h-2 rounded-full typing-dot" style={{ backgroundColor: 'hsl(var(--muted-foreground))' }}></div>
                           <div className="w-2 h-2 rounded-full typing-dot" style={{ backgroundColor: 'hsl(var(--muted-foreground))' }}></div>
                         </div>
-                        <span className="text-muted-foreground italic">Gerando visualização...</span>
+                        <span className="text-muted-foreground italic text-xs">Processando...</span>
                       </div>
-                    )}
-                    <p>Perfeito! Processei os dados. O infográfico foi gerado no painel ao lado.</p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
 
             {/* Input Area */}
@@ -234,13 +168,22 @@ export default function CriarInfografico() {
                   <Paperclip className="w-4 h-4" />
                 </button>
                 <textarea 
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  onKeyDown={handleKeyPress}
                   placeholder="Digite sua mensagem para refinar o infográfico..." 
                   className="w-full bg-transparent border-none focus:ring-0 resize-none text-sm text-foreground max-h-32 py-2.5 focus:outline-none placeholder:text-muted-foreground" 
                   rows={1}
+                  disabled={isLoading}
                 />
-                <button className="p-2 text-white rounded-lg transition-colors shadow-sm mb-0.5" style={{
-                  backgroundColor: 'hsl(var(--pastel-purple-btn))'
-                }}>
+                <button 
+                  onClick={handleSend}
+                  disabled={isLoading || !inputValue.trim()}
+                  className="p-2 text-white rounded-lg transition-colors shadow-sm mb-0.5 disabled:opacity-50 disabled:cursor-not-allowed" 
+                  style={{
+                    backgroundColor: 'hsl(var(--pastel-purple-btn))'
+                  }}
+                >
                   <Send className="w-4 h-4" />
                 </button>
               </div>
