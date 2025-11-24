@@ -185,7 +185,8 @@ export const HistoricoDocumentos = () => {
   const inProgressCount = articles.filter(article => article.progress < 100).length;
 
   return (
-    <div className="flex gap-6">
+    <div className="flex-1 p-8 pb-32">
+      <div className="flex gap-6">
       <aside className="w-80 space-y-6">
         <section className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
           <h2 className="text-lg font-semibold text-slate-800 mb-4">Estatísticas de Leitura</h2>
@@ -510,6 +511,7 @@ export const HistoricoDocumentos = () => {
           </div>
         </DialogContent>
       </Dialog>
+    </div>
     </div>
   );
 };
