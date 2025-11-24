@@ -449,7 +449,10 @@ export default function InfograficoRevisao() {
                 <span className="font-medium">Visualização</span>
               </div>
               <div className="flex gap-2">
-                <button className="px-3 py-1.5 bg-muted hover:bg-muted/80 rounded-lg text-sm text-foreground shadow-sm transition-all">
+                <button 
+                  onClick={() => navigate('/editar-infografico')}
+                  className="px-3 py-1.5 bg-muted hover:bg-muted/80 rounded-lg text-sm text-foreground shadow-sm transition-all"
+                >
                   <Edit className="w-3 h-3 inline mr-2" />Editar
                 </button>
                 <button className="px-3 py-1.5 bg-muted hover:bg-muted/80 rounded-lg text-sm text-foreground shadow-sm transition-all">
