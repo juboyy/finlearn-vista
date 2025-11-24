@@ -51,7 +51,7 @@ export default function CriarInfografico() {
         <div className="flex-1 flex overflow-hidden">
           
           {/* Chat / Interaction Area (Left Side - Fixed) */}
-          <section className="flex flex-col w-full max-w-3xl bg-card border-r border-border relative z-10 shadow-xl">
+          <section className="flex flex-col w-full max-w-xl bg-card border-r border-border relative z-10 shadow-xl">
             
             {/* Chat Header */}
             <div className="p-4 border-b border-border bg-card/80 backdrop-blur-sm flex items-center justify-between">
