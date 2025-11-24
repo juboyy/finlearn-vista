@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, Bell, Plus, MoreHorizontal, Bookmark, ChevronLeft, ChevronRight, Newspaper, Globe, Calendar, Clock, Star as StarIcon, Circle, X } from "lucide-react";
+import { Search, Bell, Plus, MoreHorizontal, Bookmark, ChevronLeft, ChevronRight, Newspaper, Globe, Calendar, Clock, Star as StarIcon, Circle, X, CheckCircle2, BookOpen } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -386,6 +386,11 @@ export const HistoricoDocumentos = () => {
                   </div>
                   <div className="min-w-0 flex-1">
                     <h3 className="font-semibold text-slate-800 truncate flex items-center gap-2">
+                      {article.progress === 100 ? (
+                        <CheckCircle2 className="text-pastel-green w-4 h-4 flex-shrink-0" />
+                      ) : (
+                        <BookOpen className="text-pastel-blue w-4 h-4 flex-shrink-0" />
+                      )}
                       {article.title}
                       {article.saved && <Bookmark className="text-yellow-500 w-3 h-3 fill-current" />}
                     </h3>
