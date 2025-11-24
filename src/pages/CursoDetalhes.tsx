@@ -64,6 +64,44 @@ const CursoDetalhes = () => {
                     <span className="px-3 py-1 bg-white text-slate-800 text-sm font-medium rounded-full">5:42</span>
                   </div>
                 </div>
+
+                {/* AI Insights Section */}
+                <div className="mt-6 bg-gradient-to-br from-pastel-purple to-pastel-blue rounded-xl border border-slate-200 p-6">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center flex-shrink-0">
+                      <i className="fas fa-brain text-slate-700 text-lg"></i>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-slate-800 mb-2">Insights da IA sobre o curso</h3>
+                      <p className="text-sm text-slate-600 leading-relaxed">
+                        Este curso combina teoria e prática de forma excepcional, com foco em aplicações reais do mercado financeiro. O conteúdo está atualizado com as tendências de 2025 e oferece uma progressão pedagógica bem estruturada, do básico ao avançado.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="bg-white bg-opacity-50 rounded-lg p-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Trophy className="text-slate-700" size={16} />
+                        <span className="text-xs font-medium text-slate-700">Nível de Qualidade</span>
+                      </div>
+                      <p className="text-2xl font-bold text-slate-800">9.2/10</p>
+                    </div>
+                    <div className="bg-white bg-opacity-50 rounded-lg p-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Clock className="text-slate-700" size={16} />
+                        <span className="text-xs font-medium text-slate-700">Tempo Estimado</span>
+                      </div>
+                      <p className="text-2xl font-bold text-slate-800">8 semanas</p>
+                    </div>
+                    <div className="bg-white bg-opacity-50 rounded-lg p-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <CheckCircle className="text-slate-700" size={16} />
+                        <span className="text-xs font-medium text-slate-700">Taxa de Conclusão</span>
+                      </div>
+                      <p className="text-2xl font-bold text-slate-800">87%</p>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* Pricing Sidebar */}
