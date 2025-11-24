@@ -46,6 +46,7 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
   const [chartTitle, setChartTitle] = useState("");
   const [chartLabels, setChartLabels] = useState("");
   const [chartValues, setChartValues] = useState("");
+  const [chartColor, setChartColor] = useState("#B8D4E8");
   const [uploadedFileName, setUploadedFileName] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -338,6 +339,29 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
   const handleEditChart = (chartId: string, chartData: any) => {
     setEditingChart({ id: chartId, title: chartData.title, data: chartData.data });
     
+    // Busca a cor no markdown se existir
+    const chartPattern = new RegExp(`!\\[.*?\\]\\(chart:${chartId}(?:\\?color=([^)]+))?\\)`, 'g');
+    const match = chartPattern.exec(value);
+    let extractedColor = "#B8D4E8";
+    
+    if (match && match[1]) {
+      extractedColor = decodeURIComponent(match[1]);
+    } else {
+      // Fallback: tenta extrair do objeto de dados
+      const firstDataset = chartData.data[0];
+      if (firstDataset) {
+        if (firstDataset.marker && firstDataset.marker.color) {
+          extractedColor = firstDataset.marker.color;
+        } else if (firstDataset.line && firstDataset.line.color) {
+          extractedColor = firstDataset.line.color;
+        } else if (firstDataset.marker && firstDataset.marker.colors && firstDataset.marker.colors[0]) {
+          extractedColor = firstDataset.marker.colors[0];
+        }
+      }
+    }
+    
+    setChartColor(extractedColor);
+    
     // Extrai dados do gráfico para o formulário
     const firstDataset = chartData.data[0];
     if (firstDataset) {
@@ -360,9 +384,9 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
   const handleSaveChart = () => {
     if (!editingChart) return;
     
-    // Atualiza o markdown com o novo título
-    const oldPattern = new RegExp(`!\\[.*?\\]\\(chart:${editingChart.id}\\)`, 'g');
-    const newMarkdown = value.replace(oldPattern, `![${chartTitle}](chart:${editingChart.id})`);
+    // Atualiza o markdown com o novo título e cor
+    const oldPattern = new RegExp(`!\\[.*?\\]\\(chart:${editingChart.id}(?:\\?color=[^)]*)?\\)`, 'g');
+    const newMarkdown = value.replace(oldPattern, `![${chartTitle}](chart:${editingChart.id}?color=${encodeURIComponent(chartColor)})`);
     onChange(newMarkdown);
     
     setEditingChart(null);
@@ -541,14 +565,28 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
             <div className="prose prose-slate dark:prose-invert max-w-none">
               {value.split(/(\!\[.*?\]\(chart:.*?\))/g).map((part, index) => {
                 // Verifica se é um marcador de gráfico
-                const chartMatch = part.match(/\!\[(.*?)\]\(chart:(.*?)\)/);
+                const chartMatch = part.match(/\!\[(.*?)\]\(chart:(.*?)(?:\?color=([^)]*))?\)/);
                 
                 if (chartMatch) {
                   const chartTitle = chartMatch[1];
                   const chartId = chartMatch[2];
+                  const customColor = chartMatch[3] ? decodeURIComponent(chartMatch[3]) : null;
                   const chart = chartData[chartId];
                   
                   if (chart) {
+                    // Aplica a cor customizada se disponível
+                    const chartDataWithColor = customColor ? [{
+                      ...chart.data[0],
+                      marker: chart.data[0].marker ? {
+                        ...chart.data[0].marker,
+                        color: customColor
+                      } : { color: customColor },
+                      line: chart.data[0].line ? {
+                        ...chart.data[0].line,
+                        color: customColor
+                      } : undefined
+                    }] : chart.data;
+
                     return (
                       <div 
                         key={index} 
@@ -559,7 +597,7 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
                           <Settings size={16} className="text-primary" />
                         </div>
                         <Plot
-                          data={chart.data}
+                          data={chartDataWithColor}
                           layout={{
                             title: chartTitle || chart.title,
                             margin: { t: 40, r: 20, b: 60, l: 60 },
@@ -661,6 +699,34 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
               </div>
             </div>
 
+            {/* Cor do Gráfico */}
+            <div className="rounded-lg p-4 border border-border" style={{ backgroundColor: '#F8F9FA' }}>
+              <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 mb-3">
+                <Settings size={16} />
+                Cor do Gráfico
+              </label>
+              <div className="flex items-center gap-4">
+                <input
+                  type="color"
+                  value={chartColor}
+                  onChange={(e) => setChartColor(e.target.value)}
+                  className="w-20 h-12 border-2 border-slate-200 rounded-lg cursor-pointer"
+                />
+                <div className="flex-1">
+                  <input
+                    type="text"
+                    value={chartColor}
+                    onChange={(e) => setChartColor(e.target.value)}
+                    placeholder="#B8D4E8"
+                    className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[hsl(206,35%,75%)] bg-white text-slate-800 font-mono"
+                  />
+                  <p className="text-xs text-slate-500 mt-2">
+                    Código hexadecimal da cor
+                  </p>
+                </div>
+              </div>
+            </div>
+
             {/* Upload de Arquivo */}
             <div className="rounded-lg border-2 border-dashed transition" style={{ 
               backgroundColor: uploadedFileName ? '#E8F5E9' : '#FAFBFC',
@@ -745,7 +811,17 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
                 </h4>
                 <div className="bg-white rounded-lg p-4 border border-slate-200">
                   <Plot
-                    data={editingChart.data}
+                    data={[{
+                      ...editingChart.data[0],
+                      marker: { 
+                        ...editingChart.data[0].marker,
+                        color: chartColor 
+                      },
+                      line: editingChart.data[0].line ? {
+                        ...editingChart.data[0].line,
+                        color: chartColor
+                      } : undefined
+                    }]}
                     layout={{
                       title: chartTitle || editingChart.title,
                       margin: { t: 40, r: 20, b: 60, l: 60 },
