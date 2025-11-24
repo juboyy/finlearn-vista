@@ -225,7 +225,7 @@ const CursoDetalhes = () => {
                     <span className="text-slate-600">4.9</span>
                     <div className="flex items-center gap-1">
                       {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="text-yellow-500 fill-yellow-500" size={12} />
+                        <Star key={i} className="text-[hsl(var(--pastel-yellow))] fill-[hsl(var(--pastel-yellow))]" size={12} />
                       ))}
                     </div>
                   </div>
