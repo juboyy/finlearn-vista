@@ -48,7 +48,7 @@ const CursoDetalhes = () => {
           <section className="mb-8">
             <div className="grid grid-cols-3 gap-8">
               <div className="col-span-2">
-                <div className="bg-slate-900 rounded-xl overflow-hidden h-[384px] flex items-center justify-center relative">
+                <div className="bg-slate-900 rounded-xl overflow-hidden h-[480px] flex items-center justify-center relative">
                   <img 
                     className="w-full h-full object-cover" 
                     src="https://storage.googleapis.com/uxpilot-auth.appspot.com/c37907bb40-efb5c703a3adf9ca8913.png" 
