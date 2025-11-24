@@ -823,7 +823,7 @@ export default function EditarInfografico() {
             <section className="lg:col-span-4 space-y-6">
               
               {/* Edit Mode Card */}
-              <div className="rounded-2xl p-6 shadow-lg border border-border" style={{ backgroundColor: 'hsl(var(--pastel-purple))' }}>
+              <div className="rounded-2xl p-6 shadow-lg border-2" style={{ borderColor: 'hsl(var(--pastel-purple))' }}>
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center backdrop-blur-sm" style={{ backgroundColor: 'hsl(var(--card))', color: 'hsl(var(--pastel-gray-dark))' }}>
                     <i className="fa-solid fa-wand-magic-sparkles text-2xl"></i>
