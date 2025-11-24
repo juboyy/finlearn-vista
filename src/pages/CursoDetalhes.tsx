@@ -325,6 +325,32 @@ const CursoDetalhes = () => {
 
               {/* Right Sidebar */}
               <div className="space-y-8">
+                {/* Introduction Card */}
+                <div className="bg-gradient-to-br from-pastel-blue to-pastel-purple rounded-xl border border-slate-200 p-6">
+                  <div className="flex items-start gap-3 mb-4">
+                    <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center flex-shrink-0">
+                      <ChartLine className="text-slate-700" size={20} />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-slate-800 mb-1">Introdução ao Mercado de Capitais</h3>
+                      <p className="text-xs text-slate-600">Comece sua jornada aqui</p>
+                    </div>
+                  </div>
+                  <p className="text-sm text-slate-700 mb-4">
+                    Descubra os fundamentos essenciais do mercado de capitais: estrutura, participantes, tipos de ativos e como funciona o ecossistema financeiro brasileiro e internacional.
+                  </p>
+                  <div className="flex items-center justify-between text-xs text-slate-600">
+                    <span className="flex items-center gap-1">
+                      <Clock size={14} />
+                      Módulo 1
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <PlayCircle size={14} />
+                      Aula gratuita
+                    </span>
+                  </div>
+                </div>
+
                 {/* Instructor Section */}
                 <div className="bg-white rounded-xl border border-slate-200 p-6">
                   <h2 className="text-xl font-semibold text-slate-800 mb-6">Instrutor Principal</h2>
