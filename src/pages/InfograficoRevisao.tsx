@@ -815,6 +815,44 @@ export default function InfograficoRevisao() {
                             </div>
                           </div>
                         </div>
+
+                        {/* Private Label Card Metrics */}
+                        <div className="border rounded-xl p-5" style={{
+                          borderColor: 'hsl(var(--pastel-yellow))',
+                          backgroundColor: 'hsl(var(--pastel-yellow))/20'
+                        }}>
+                          <div className="flex items-center justify-between mb-4">
+                            <div className="flex items-center gap-3">
+                              <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'hsl(var(--pastel-yellow))' }}>
+                                <i className="fa-solid fa-store text-lg" style={{ color: 'hsl(var(--pastel-gray-dark))' }}></i>
+                              </div>
+                              <div>
+                                <div className="font-bold text-foreground">Cartões Private Label</div>
+                                <div className="text-xs text-muted-foreground">Marca Própria</div>
+                              </div>
+                            </div>
+                            <span className="px-3 py-1 rounded-full text-xs font-bold" style={{
+                              backgroundColor: 'hsl(var(--pastel-green))',
+                              color: 'hsl(var(--pastel-green-text))'
+                            }}>
+                              <i className="fa-solid fa-arrow-trend-up mr-1"></i>+12%
+                            </span>
+                          </div>
+                          <div className="grid grid-cols-3 gap-4">
+                            <div>
+                              <div className="text-xs text-muted-foreground mb-1">Volume</div>
+                              <div className="text-lg font-bold text-foreground">R$ 34Bi</div>
+                            </div>
+                            <div>
+                              <div className="text-xs text-muted-foreground mb-1">Transações</div>
+                              <div className="text-lg font-bold text-foreground">287M</div>
+                            </div>
+                            <div>
+                              <div className="text-xs text-muted-foreground mb-1">Ticket Médio</div>
+                              <div className="text-lg font-bold text-foreground">R$ 118</div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
