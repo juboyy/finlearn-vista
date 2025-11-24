@@ -1,5 +1,5 @@
 import { BarChart3, Grid3x3, List, ChevronLeft, ChevronRight } from "lucide-react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'relatorios' | 'documentos' | 'estudos' | 'infograficos';
 interface MenutabbarFixProps {
   activeTab: TabType;
@@ -14,6 +14,8 @@ export const MenutabbarFix = ({
   onAnalyticsClick
 }: MenutabbarFixProps) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [activeActionButton, setActiveActionButton] = useState<'analytics' | 'historico' | null>(null);
+  
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
       const scrollAmount = 200;
@@ -101,15 +103,29 @@ export const MenutabbarFix = ({
           <span>Filtro Avançado</span>
         </button>
         <button 
-          onClick={onAnalyticsClick}
-          className="px-5 py-3 bg-pastel-green text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2 whitespace-nowrap"
+          onClick={() => {
+            setActiveActionButton('analytics');
+            onAnalyticsClick?.();
+          }}
+          className={`px-5 py-3 text-slate-700 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap ${
+            activeActionButton === 'analytics'
+              ? 'bg-pastel-green'
+              : 'bg-pastel-blue hover:bg-pastel-pink'
+          }`}
         >
           <BarChart3 size={18} />
           <span>Analytics</span>
         </button>
         <button 
-          onClick={onHistoricoClick}
-          className="px-5 py-3 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2 whitespace-nowrap"
+          onClick={() => {
+            setActiveActionButton('historico');
+            onHistoricoClick?.();
+          }}
+          className={`px-5 py-3 text-slate-700 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap ${
+            activeActionButton === 'historico'
+              ? 'bg-pastel-green'
+              : 'bg-pastel-blue hover:bg-pastel-pink'
+          }`}
         >
           <i className="fas fa-history"></i>
           <span>Histórico</span>
