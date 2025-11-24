@@ -279,7 +279,7 @@ const DescobrirNovos = () => {
               <section className="bg-white rounded-xl p-4 border border-slate-200">
                 <div className="flex items-center gap-3">
                   <button 
-                    onClick={() => setActiveTab("seguindo")}
+                    onClick={() => navigate('/autores')}
                     className={`px-6 py-2.5 text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200 ${
                       activeTab === "seguindo"
                         ? "bg-pastel-green"
@@ -290,7 +290,7 @@ const DescobrirNovos = () => {
                     <span>Seguindo</span>
                   </button>
                   <button 
-                    onClick={() => setActiveTab("seguidores")}
+                    onClick={() => navigate('/seguidores')}
                     className={`px-6 py-2.5 text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200 ${
                       activeTab === "seguidores"
                         ? "bg-pastel-green"
@@ -301,7 +301,7 @@ const DescobrirNovos = () => {
                     <span>Seguidores</span>
                   </button>
                   <button 
-                    onClick={() => setActiveTab("descobrir")}
+                    onClick={() => navigate('/descobrir-novos')}
                     className={`px-6 py-2.5 text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200 ${
                       activeTab === "descobrir"
                         ? "bg-pastel-green"
