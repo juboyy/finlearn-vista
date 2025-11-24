@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 const Autores = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<"seguindo" | "seguidores" | "descobrir">("seguindo");
+  const [activeTab, setActiveTab] = useState<"mentores" | "seguindo" | "seguidores" | "descobrir">("seguindo");
   const navigate = useNavigate();
   return <div className="flex h-screen overflow-hidden">
       <SidebarFix />
@@ -245,7 +245,18 @@ const Autores = () => {
               <section className="bg-white rounded-xl p-4 border border-slate-200">
                 <div className="flex items-center gap-3">
                   <button 
-                    onClick={() => navigate('/autores')}
+                    onClick={() => setActiveTab("mentores")}
+                    className={`px-6 py-2.5 text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200 ${
+                      activeTab === "mentores"
+                        ? "bg-pastel-green"
+                        : "bg-pastel-blue hover:bg-pastel-pink"
+                    }`}
+                  >
+                    <i className="fas fa-graduation-cap mr-2"></i>
+                    Mentores
+                  </button>
+                  <button 
+                    onClick={() => setActiveTab("seguindo")}
                     className={`px-6 py-2.5 text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200 ${
                       activeTab === "seguindo"
                         ? "bg-pastel-green"
@@ -256,7 +267,7 @@ const Autores = () => {
                     Seguindo
                   </button>
                   <button 
-                    onClick={() => navigate('/seguidores')}
+                    onClick={() => setActiveTab("seguidores")}
                     className={`px-6 py-2.5 text-slate-700 rounded-lg font-medium transition-all duration-200 ${
                       activeTab === "seguidores"
                         ? "bg-pastel-green"
@@ -267,7 +278,7 @@ const Autores = () => {
                     Seguidores
                   </button>
                   <button 
-                    onClick={() => navigate('/descobrir-novos')}
+                    onClick={() => setActiveTab("descobrir")}
                     className={`px-6 py-2.5 text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200 ${
                       activeTab === "descobrir"
                         ? "bg-pastel-green"
