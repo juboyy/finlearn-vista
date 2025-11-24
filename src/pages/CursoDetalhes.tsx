@@ -326,8 +326,8 @@ const CursoDetalhes = () => {
               {/* Right Sidebar */}
               <div className="space-y-8">
                 {/* Introduction Card */}
-                <div className="bg-gradient-to-br from-pastel-blue to-pastel-purple rounded-xl border border-slate-200 p-6">
-                  <div className="flex items-start gap-3 mb-4">
+                <div className="bg-gradient-to-br from-pastel-blue to-pastel-purple rounded-xl border border-slate-200 p-5">
+                  <div className="flex items-start gap-3 mb-3">
                     <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center flex-shrink-0">
                       <ChartLine className="text-slate-700" size={20} />
                     </div>
@@ -336,7 +336,7 @@ const CursoDetalhes = () => {
                       <p className="text-xs text-slate-600">Comece sua jornada aqui</p>
                     </div>
                   </div>
-                  <p className="text-sm text-slate-700 mb-4">
+                  <p className="text-sm text-slate-700 mb-3">
                     Descubra os fundamentos essenciais do mercado de capitais: estrutura, participantes, tipos de ativos e como funciona o ecossistema financeiro brasileiro e internacional.
                   </p>
                   <div className="flex items-center justify-between text-xs text-slate-600">
