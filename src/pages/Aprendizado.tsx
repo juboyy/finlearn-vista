@@ -1476,7 +1476,10 @@ const Aprendizado = () => {
                         </div>
                       </div>
                       <div className="flex items-center gap-4">
-                        <button className="px-8 py-3 bg-foreground text-background rounded-lg font-semibold hover:opacity-80 transition">
+                        <button 
+                          onClick={() => navigate('/curso-detalhes')}
+                          className="px-8 py-3 bg-foreground text-background rounded-lg font-semibold hover:opacity-80 transition"
+                        >
                           Inscrever-se Agora
                         </button>
                         <div className="flex flex-col">
