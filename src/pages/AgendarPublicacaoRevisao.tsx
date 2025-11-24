@@ -8,7 +8,6 @@ const AgendarPublicacaoRevisao = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [activeDetailModal, setActiveDetailModal] = useState<'spam' | 'seo' | 'geo' | null>(null);
-
   useEffect(() => {
     if (isModalOpen) {
       setIsLoading(true);
@@ -18,7 +17,6 @@ const AgendarPublicacaoRevisao = () => {
       return () => clearTimeout(timer);
     }
   }, [isModalOpen]);
-
   const handleButtonClick = (label: string) => {
     if (label === "Palavras de Spam") {
       setActiveDetailModal('spam');
@@ -28,79 +26,70 @@ const AgendarPublicacaoRevisao = () => {
       setActiveDetailModal('geo');
     }
   };
-
-  const qualityItems = [
-    { 
-      label: "Linha de Assunto Otimizada", 
-      status: "approved",
-      icon: CheckCircle,
-      color: "hsl(var(--pastel-green))",
-      bgColor: "hsl(152 32% 79%)",
-      description: "Taxa de abertura estimada: 28-32%",
-      statusText: "Aprovado",
-      hasButton: false
-    },
-    { 
-      label: "Links Funcionais", 
-      status: "approved",
-      icon: CheckCircle,
-      color: "hsl(var(--pastel-green))",
-      bgColor: "hsl(152 32% 79%)",
-      description: "Todos os 8 links foram verificados",
-      statusText: "Aprovado",
-      hasButton: false
-    },
-    { 
-      label: "Compatibilidade Mobile", 
-      status: "approved",
-      icon: CheckCircle,
-      color: "hsl(var(--pastel-green))",
-      bgColor: "hsl(152 32% 79%)",
-      description: "Design responsivo testado",
-      statusText: "Aprovado",
-      hasButton: false
-    },
-    { 
-      label: "Palavras de Spam", 
-      status: "warning",
-      icon: AlertTriangle,
-      color: "hsl(44 45% 56%)",
-      bgColor: "hsl(44 78% 89%)",
-      description: "1 palavra detectada: \"Grátis\"",
-      statusText: "Revisar",
-      hasButton: true
-    },
-    { 
-      label: "Conformidade LGPD", 
-      status: "approved",
-      icon: CheckCircle,
-      color: "hsl(var(--pastel-green))",
-      bgColor: "hsl(152 32% 79%)",
-      description: "Link de cancelamento incluído",
-      statusText: "Aprovado",
-      hasButton: false
-    },
-    { 
-      label: "Otimização SEO", 
-      status: "info",
-      icon: Search,
-      color: "hsl(var(--pastel-blue))",
-      bgColor: "hsl(206 35% 79%)",
-      description: "Meta tags e palavras-chave otimizadas",
-      statusText: "Detalhes",
-      hasButton: true
-    },
-    { 
-      label: "Segmentação GEO", 
-      status: "info",
-      icon: Globe,
-      color: "hsl(var(--pastel-green))",
-      bgColor: "hsl(152 32% 79%)",
-      description: "Brasil: 95% • Internacional: 5%",
-      statusText: "Configurar",
-      hasButton: true
-    },
-  ];
+  const qualityItems = [{
+    label: "Linha de Assunto Otimizada",
+    status: "approved",
+    icon: CheckCircle,
+    color: "hsl(var(--pastel-green))",
+    bgColor: "hsl(152 32% 79%)",
+    description: "Taxa de abertura estimada: 28-32%",
+    statusText: "Aprovado",
+    hasButton: false
+  }, {
+    label: "Links Funcionais",
+    status: "approved",
+    icon: CheckCircle,
+    color: "hsl(var(--pastel-green))",
+    bgColor: "hsl(152 32% 79%)",
+    description: "Todos os 8 links foram verificados",
+    statusText: "Aprovado",
+    hasButton: false
+  }, {
+    label: "Compatibilidade Mobile",
+    status: "approved",
+    icon: CheckCircle,
+    color: "hsl(var(--pastel-green))",
+    bgColor: "hsl(152 32% 79%)",
+    description: "Design responsivo testado",
+    statusText: "Aprovado",
+    hasButton: false
+  }, {
+    label: "Palavras de Spam",
+    status: "warning",
+    icon: AlertTriangle,
+    color: "hsl(44 45% 56%)",
+    bgColor: "hsl(44 78% 89%)",
+    description: "1 palavra detectada: \"Grátis\"",
+    statusText: "Revisar",
+    hasButton: true
+  }, {
+    label: "Conformidade LGPD",
+    status: "approved",
+    icon: CheckCircle,
+    color: "hsl(var(--pastel-green))",
+    bgColor: "hsl(152 32% 79%)",
+    description: "Link de cancelamento incluído",
+    statusText: "Aprovado",
+    hasButton: false
+  }, {
+    label: "Otimização SEO",
+    status: "info",
+    icon: Search,
+    color: "hsl(var(--pastel-blue))",
+    bgColor: "hsl(206 35% 79%)",
+    description: "Meta tags e palavras-chave otimizadas",
+    statusText: "Detalhes",
+    hasButton: true
+  }, {
+    label: "Segmentação GEO",
+    status: "info",
+    icon: Globe,
+    color: "hsl(var(--pastel-green))",
+    bgColor: "hsl(152 32% 79%)",
+    description: "Brasil: 95% • Internacional: 5%",
+    statusText: "Configurar",
+    hasButton: true
+  }];
   const [activeDevice, setActiveDevice] = useState<"desktop" | "mobile">("desktop");
   const handlePublish = () => {
     if (confirm("Tem certeza que deseja publicar esta newsletter para 12.450 destinatários?")) {
@@ -404,12 +393,7 @@ const AgendarPublicacaoRevisao = () => {
                           </div>
                         </div>
                         <div className="absolute inset-0 bg-purple-100 opacity-0 group-hover:opacity-10 transition flex items-center justify-center">
-                          <button className="px-4 py-2 bg-white rounded-lg border border-slate-200 font-semibold text-sm hover:bg-slate-50 transition opacity-0 group-hover:opacity-100" style={{
-                          color: 'hsl(var(--pastel-gray-dark))'
-                        }}>
-                            <Edit size={16} className="inline mr-2" />
-                            Editar Análise
-                          </button>
+                          
                         </div>
                       </div>
 
@@ -669,13 +653,10 @@ const AgendarPublicacaoRevisao = () => {
                     }}></div>
                     </div>
                   </div>
-                  <button 
-                    onClick={() => setIsModalOpen(true)}
-                    className="w-full py-3 rounded-xl font-semibold hover:opacity-80 transition border border-slate-200 flex items-center justify-center gap-2" 
-                    style={{
-                      backgroundColor: 'hsl(var(--pastel-purple-btn))',
-                      color: 'hsl(var(--pastel-gray-dark))'
-                    }}>
+                  <button onClick={() => setIsModalOpen(true)} className="w-full py-3 rounded-xl font-semibold hover:opacity-80 transition border border-slate-200 flex items-center justify-center gap-2" style={{
+                  backgroundColor: 'hsl(var(--pastel-purple-btn))',
+                  color: 'hsl(var(--pastel-gray-dark))'
+                }}>
                     <Info size={18} />
                     Gerar Verificação 
                   </button>
@@ -686,11 +667,12 @@ const AgendarPublicacaoRevisao = () => {
                   <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
                     <DialogHeader>
                       <DialogTitle className="flex items-center gap-3 text-xl">
-                        <div
-                          className="w-10 h-10 rounded-lg flex items-center justify-center"
-                          style={{ backgroundColor: 'hsl(var(--pastel-purple))' }}
-                        >
-                          <SpellCheck style={{ color: 'hsl(var(--pastel-gray-dark))' }} />
+                        <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{
+                        backgroundColor: 'hsl(var(--pastel-purple))'
+                      }}>
+                          <SpellCheck style={{
+                          color: 'hsl(var(--pastel-gray-dark))'
+                        }} />
                         </div>
                         Verificação de Qualidade
                       </DialogTitle>
@@ -700,92 +682,73 @@ const AgendarPublicacaoRevisao = () => {
                       {/* Score Section */}
                       <div className="bg-slate-50 rounded-xl p-6 border border-slate-200">
                         <div className="flex items-center justify-between mb-4">
-                          <span className="text-sm font-medium" style={{ color: 'hsl(var(--pastel-gray-dark))' }}>
+                          <span className="text-sm font-medium" style={{
+                          color: 'hsl(var(--pastel-gray-dark))'
+                        }}>
                             Score Geral
                           </span>
-                          <span className="text-4xl font-bold" style={{ color: 'hsl(var(--foreground))' }}>
-                            95<span className="text-xl" style={{ color: 'hsl(var(--muted-foreground))' }}>/100</span>
+                          <span className="text-4xl font-bold" style={{
+                          color: 'hsl(var(--foreground))'
+                        }}>
+                            95<span className="text-xl" style={{
+                            color: 'hsl(var(--muted-foreground))'
+                          }}>/100</span>
                           </span>
                         </div>
                         <div className="w-full bg-slate-200 rounded-full h-3">
-                          <div
-                            className="h-3 rounded-full transition-all duration-500"
-                            style={{ width: '95%', backgroundColor: 'hsl(var(--pastel-green))' }}
-                          ></div>
+                          <div className="h-3 rounded-full transition-all duration-500" style={{
+                          width: '95%',
+                          backgroundColor: 'hsl(var(--pastel-green))'
+                        }}></div>
                         </div>
                       </div>
 
                       {/* Quality Items */}
                       <div className="space-y-3">
                         {qualityItems.map((item, index) => {
-                          const Icon = item.icon;
-                          return (
-                            <div
-                              key={index}
-                              className="flex items-center justify-between p-4 rounded-xl border transition-all duration-300"
-                              style={{
-                                backgroundColor: isLoading ? 'hsl(220 13% 95%)' : item.bgColor,
-                                borderColor: isLoading ? 'hsl(220 13% 90%)' : 'hsl(var(--border))',
-                                opacity: isLoading ? 0.6 : 1
-                              }}
-                            >
+                        const Icon = item.icon;
+                        return <div key={index} className="flex items-center justify-between p-4 rounded-xl border transition-all duration-300" style={{
+                          backgroundColor: isLoading ? 'hsl(220 13% 95%)' : item.bgColor,
+                          borderColor: isLoading ? 'hsl(220 13% 90%)' : 'hsl(var(--border))',
+                          opacity: isLoading ? 0.6 : 1
+                        }}>
                               <div className="flex items-center gap-3">
                                 {/* Icon/Loader on the left */}
                                 <div className="shrink-0">
-                                  {isLoading ? (
-                                    <Loader2 
-                                      size={20} 
-                                      className="animate-spin" 
-                                      style={{ color: 'hsl(220 13% 70%)' }}
-                                    />
-                                  ) : (
-                                    <Icon size={20} style={{ color: 'hsl(var(--pastel-gray-dark))' }} />
-                                  )}
+                                  {isLoading ? <Loader2 size={20} className="animate-spin" style={{
+                                color: 'hsl(220 13% 70%)'
+                              }} /> : <Icon size={20} style={{
+                                color: 'hsl(var(--pastel-gray-dark))'
+                              }} />}
                                 </div>
 
                                 {/* Content */}
                                 <div>
-                                  <p 
-                                    className="font-medium text-sm mb-1"
-                                    style={{ 
-                                      color: isLoading ? 'hsl(220 13% 70%)' : 'hsl(var(--foreground))'
-                                    }}
-                                  >
+                                  <p className="font-medium text-sm mb-1" style={{
+                                color: isLoading ? 'hsl(220 13% 70%)' : 'hsl(var(--foreground))'
+                              }}>
                                     {item.label}
                                   </p>
-                                  <p 
-                                    className="text-xs"
-                                    style={{ 
-                                      color: isLoading ? 'hsl(220 13% 75%)' : 'hsl(var(--muted-foreground))'
-                                    }}
-                                  >
+                                  <p className="text-xs" style={{
+                                color: isLoading ? 'hsl(220 13% 75%)' : 'hsl(var(--muted-foreground))'
+                              }}>
                                     {isLoading ? 'Verificando...' : item.description}
                                   </p>
                                 </div>
                               </div>
 
                               {/* Status Text/Button */}
-                              {!isLoading && (
-                                item.hasButton ? (
-                                  <button 
-                                    onClick={() => handleButtonClick(item.label)}
-                                    className="font-bold text-sm hover:underline shrink-0"
-                                    style={{ color: 'hsl(var(--pastel-gray-dark))' }}
-                                  >
+                              {!isLoading && (item.hasButton ? <button onClick={() => handleButtonClick(item.label)} className="font-bold text-sm hover:underline shrink-0" style={{
+                            color: 'hsl(var(--pastel-gray-dark))'
+                          }}>
                                     {item.statusText}
-                                  </button>
-                                ) : (
-                                  <span 
-                                    className="font-bold text-sm shrink-0"
-                                    style={{ color: 'hsl(var(--pastel-gray-dark))' }}
-                                  >
+                                  </button> : <span className="font-bold text-sm shrink-0" style={{
+                            color: 'hsl(var(--pastel-gray-dark))'
+                          }}>
                                     {item.statusText}
-                                  </span>
-                                )
-                              )}
-                            </div>
-                          );
-                        })}
+                                  </span>)}
+                            </div>;
+                      })}
                       </div>
                     </div>
                   </DialogContent>
@@ -797,75 +760,76 @@ const AgendarPublicacaoRevisao = () => {
                   <DialogContent className="max-w-2xl animate-in fade-in-0 zoom-in-95 duration-300">
                     <DialogHeader>
                       <DialogTitle className="flex items-center gap-3 text-xl">
-                        <div 
-                          className="w-10 h-10 rounded-lg flex items-center justify-center"
-                          style={{ backgroundColor: 'hsl(44 78% 89%)' }}
-                        >
-                          <AlertTriangle size={20} style={{ color: 'hsl(44 45% 56%)' }} />
+                        <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{
+                        backgroundColor: 'hsl(44 78% 89%)'
+                      }}>
+                          <AlertTriangle size={20} style={{
+                          color: 'hsl(44 45% 56%)'
+                        }} />
                         </div>
                         Revisar Palavras de Spam
                       </DialogTitle>
                     </DialogHeader>
                     
                     <div className="space-y-4 mt-4">
-                      <p className="text-sm" style={{ color: 'hsl(var(--muted-foreground))' }}>
+                      <p className="text-sm" style={{
+                      color: 'hsl(var(--muted-foreground))'
+                    }}>
                         A palavra destacada abaixo pode reduzir a taxa de entrega da sua newsletter. Recomendamos substituir por alternativas.
                       </p>
                       
-                      <div className="p-4 rounded-xl border" style={{ 
-                        backgroundColor: 'hsl(44 78% 95%)',
-                        borderColor: 'hsl(44 45% 82%)'
+                      <div className="p-4 rounded-xl border" style={{
+                      backgroundColor: 'hsl(44 78% 95%)',
+                      borderColor: 'hsl(44 45% 82%)'
+                    }}>
+                        <p className="text-sm mb-2 font-semibold" style={{
+                        color: 'hsl(var(--foreground))'
                       }}>
-                        <p className="text-sm mb-2 font-semibold" style={{ color: 'hsl(var(--foreground))' }}>
                           Palavra detectada:
                         </p>
                         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg" style={{
-                          backgroundColor: 'hsl(44 45% 82%)',
-                          color: 'hsl(var(--pastel-gray-dark))'
-                        }}>
+                        backgroundColor: 'hsl(44 45% 82%)',
+                        color: 'hsl(var(--pastel-gray-dark))'
+                      }}>
                           <AlertTriangle size={14} />
                           <span className="font-semibold">Grátis</span>
                         </div>
                       </div>
 
-                      <div className="p-4 rounded-xl border bg-white" style={{ borderColor: 'hsl(var(--border))' }}>
-                        <p className="text-sm mb-3 font-semibold" style={{ color: 'hsl(var(--foreground))' }}>
+                      <div className="p-4 rounded-xl border bg-white" style={{
+                      borderColor: 'hsl(var(--border))'
+                    }}>
+                        <p className="text-sm mb-3 font-semibold" style={{
+                        color: 'hsl(var(--foreground))'
+                      }}>
                           Sugestões de substituição:
                         </p>
                         <div className="space-y-2">
-                          {['Sem custo', 'Incluso', 'Cortesia', 'Benefício incluído'].map((suggestion) => (
-                            <button
-                              key={suggestion}
-                              className="w-full text-left px-4 py-2 rounded-lg hover:bg-slate-50 transition border"
-                              style={{ borderColor: 'hsl(var(--border))' }}
-                            >
-                              <span className="text-sm" style={{ color: 'hsl(var(--foreground))' }}>
+                          {['Sem custo', 'Incluso', 'Cortesia', 'Benefício incluído'].map(suggestion => <button key={suggestion} className="w-full text-left px-4 py-2 rounded-lg hover:bg-slate-50 transition border" style={{
+                          borderColor: 'hsl(var(--border))'
+                        }}>
+                              <span className="text-sm" style={{
+                            color: 'hsl(var(--foreground))'
+                          }}>
                                 {suggestion}
                               </span>
-                            </button>
-                          ))}
+                            </button>)}
                         </div>
                       </div>
 
                       <div className="flex justify-end gap-3 pt-4">
-                        <button
-                          onClick={() => setActiveDetailModal(null)}
-                          className="px-4 py-2 rounded-lg font-medium hover:bg-slate-100 transition"
-                          style={{ color: 'hsl(var(--pastel-gray-dark))' }}
-                        >
+                        <button onClick={() => setActiveDetailModal(null)} className="px-4 py-2 rounded-lg font-medium hover:bg-slate-100 transition" style={{
+                        color: 'hsl(var(--pastel-gray-dark))'
+                      }}>
                           Fechar
                         </button>
-                        <button
-                          onClick={() => {
-                            alert('Redirecionando para edição do conteúdo...');
-                            setActiveDetailModal(null);
-                          }}
-                          className="px-4 py-2 rounded-lg font-medium hover:opacity-90 transition"
-                          style={{
-                            backgroundColor: 'hsl(var(--pastel-purple-btn))',
-                            color: 'hsl(var(--pastel-gray-dark))'
-                          }}
-                        >
+                        <button onClick={() => {
+                        alert('Redirecionando para edição do conteúdo...');
+                        setActiveDetailModal(null);
+                      }} className="px-4 py-2 rounded-lg font-medium hover:opacity-90 transition" style={{
+                        backgroundColor: 'hsl(var(--pastel-purple-btn))',
+                        color: 'hsl(var(--pastel-gray-dark))'
+                      }}>
                           Editar Conteúdo
                         </button>
                       </div>
@@ -878,91 +842,100 @@ const AgendarPublicacaoRevisao = () => {
                   <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto animate-in fade-in-0 zoom-in-95 duration-300">
                     <DialogHeader>
                       <DialogTitle className="flex items-center gap-3 text-xl">
-                        <div 
-                          className="w-10 h-10 rounded-lg flex items-center justify-center"
-                          style={{ backgroundColor: 'hsl(206 35% 79%)' }}
-                        >
-                          <Search size={20} style={{ color: 'hsl(var(--pastel-gray-dark))' }} />
+                        <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{
+                        backgroundColor: 'hsl(206 35% 79%)'
+                      }}>
+                          <Search size={20} style={{
+                          color: 'hsl(var(--pastel-gray-dark))'
+                        }} />
                         </div>
                         Detalhes de Otimização SEO
                       </DialogTitle>
                     </DialogHeader>
                     
                     <div className="space-y-4 mt-4">
-                      <div className="p-4 rounded-xl border bg-white" style={{ borderColor: 'hsl(var(--border))' }}>
-                        <h3 className="font-semibold mb-3" style={{ color: 'hsl(var(--foreground))' }}>
+                      <div className="p-4 rounded-xl border bg-white" style={{
+                      borderColor: 'hsl(var(--border))'
+                    }}>
+                        <h3 className="font-semibold mb-3" style={{
+                        color: 'hsl(var(--foreground))'
+                      }}>
                           Meta Tags Configuradas
                         </h3>
                         <div className="space-y-3">
                           <div>
-                            <p className="text-xs font-medium mb-1" style={{ color: 'hsl(var(--muted-foreground))' }}>
+                            <p className="text-xs font-medium mb-1" style={{
+                            color: 'hsl(var(--muted-foreground))'
+                          }}>
                               Title Tag
                             </p>
-                            <p className="text-sm px-3 py-2 rounded-lg" style={{ 
-                              backgroundColor: 'hsl(206 35% 95%)',
-                              color: 'hsl(var(--foreground))'
-                            }}>
+                            <p className="text-sm px-3 py-2 rounded-lg" style={{
+                            backgroundColor: 'hsl(206 35% 95%)',
+                            color: 'hsl(var(--foreground))'
+                          }}>
                               Transformação Digital nos Pagamentos | Edição Adquirência
                             </p>
                           </div>
                           <div>
-                            <p className="text-xs font-medium mb-1" style={{ color: 'hsl(var(--muted-foreground))' }}>
+                            <p className="text-xs font-medium mb-1" style={{
+                            color: 'hsl(var(--muted-foreground))'
+                          }}>
                               Meta Description
                             </p>
-                            <p className="text-sm px-3 py-2 rounded-lg" style={{ 
-                              backgroundColor: 'hsl(206 35% 95%)',
-                              color: 'hsl(var(--foreground))'
-                            }}>
+                            <p className="text-sm px-3 py-2 rounded-lg" style={{
+                            backgroundColor: 'hsl(206 35% 95%)',
+                            color: 'hsl(var(--foreground))'
+                          }}>
                               Descubra as últimas tendências em pagamentos digitais, Pix, e inovações em adquirência. Análise completa com dados do mercado brasileiro.
                             </p>
                           </div>
                         </div>
                       </div>
 
-                      <div className="p-4 rounded-xl border bg-white" style={{ borderColor: 'hsl(var(--border))' }}>
-                        <h3 className="font-semibold mb-3" style={{ color: 'hsl(var(--foreground))' }}>
+                      <div className="p-4 rounded-xl border bg-white" style={{
+                      borderColor: 'hsl(var(--border))'
+                    }}>
+                        <h3 className="font-semibold mb-3" style={{
+                        color: 'hsl(var(--foreground))'
+                      }}>
                           Palavras-chave Principais
                         </h3>
                         <div className="flex flex-wrap gap-2">
-                          {['pagamentos digitais', 'Pix', 'adquirência', 'meios de pagamento', 'transformação digital', 'fintech'].map((keyword) => (
-                            <span
-                              key={keyword}
-                              className="px-3 py-1.5 rounded-lg text-sm font-medium"
-                              style={{
-                                backgroundColor: 'hsl(206 35% 79%)',
-                                color: 'hsl(var(--pastel-gray-dark))'
-                              }}
-                            >
+                          {['pagamentos digitais', 'Pix', 'adquirência', 'meios de pagamento', 'transformação digital', 'fintech'].map(keyword => <span key={keyword} className="px-3 py-1.5 rounded-lg text-sm font-medium" style={{
+                          backgroundColor: 'hsl(206 35% 79%)',
+                          color: 'hsl(var(--pastel-gray-dark))'
+                        }}>
                               {keyword}
-                            </span>
-                          ))}
+                            </span>)}
                         </div>
                       </div>
 
-                      <div className="p-4 rounded-xl border" style={{ 
-                        backgroundColor: 'hsl(152 32% 95%)',
-                        borderColor: 'hsl(152 32% 79%)'
-                      }}>
+                      <div className="p-4 rounded-xl border" style={{
+                      backgroundColor: 'hsl(152 32% 95%)',
+                      borderColor: 'hsl(152 32% 79%)'
+                    }}>
                         <div className="flex items-center gap-2 mb-2">
-                          <CheckCircle size={18} style={{ color: 'hsl(var(--pastel-green))' }} />
-                          <p className="font-semibold text-sm" style={{ color: 'hsl(var(--foreground))' }}>
+                          <CheckCircle size={18} style={{
+                          color: 'hsl(var(--pastel-green))'
+                        }} />
+                          <p className="font-semibold text-sm" style={{
+                          color: 'hsl(var(--foreground))'
+                        }}>
                             Score SEO: 92/100
                           </p>
                         </div>
-                        <p className="text-xs" style={{ color: 'hsl(var(--muted-foreground))' }}>
+                        <p className="text-xs" style={{
+                        color: 'hsl(var(--muted-foreground))'
+                      }}>
                           Sua newsletter está otimizada para mecanismos de busca e tem alta chance de ranqueamento.
                         </p>
                       </div>
 
                       <div className="flex justify-end gap-3 pt-4">
-                        <button
-                          onClick={() => setActiveDetailModal(null)}
-                          className="px-4 py-2 rounded-lg font-medium hover:opacity-90 transition"
-                          style={{
-                            backgroundColor: 'hsl(var(--pastel-blue-btn))',
-                            color: 'hsl(var(--pastel-gray-dark))'
-                          }}
-                        >
+                        <button onClick={() => setActiveDetailModal(null)} className="px-4 py-2 rounded-lg font-medium hover:opacity-90 transition" style={{
+                        backgroundColor: 'hsl(var(--pastel-blue-btn))',
+                        color: 'hsl(var(--pastel-gray-dark))'
+                      }}>
                           Entendido
                         </button>
                       </div>
@@ -975,47 +948,60 @@ const AgendarPublicacaoRevisao = () => {
                   <DialogContent className="max-w-2xl animate-in fade-in-0 zoom-in-95 duration-300">
                     <DialogHeader>
                       <DialogTitle className="flex items-center gap-3 text-xl">
-                        <div 
-                          className="w-10 h-10 rounded-lg flex items-center justify-center"
-                          style={{ backgroundColor: 'hsl(152 32% 79%)' }}
-                        >
-                          <Globe size={20} style={{ color: 'hsl(var(--pastel-gray-dark))' }} />
+                        <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{
+                        backgroundColor: 'hsl(152 32% 79%)'
+                      }}>
+                          <Globe size={20} style={{
+                          color: 'hsl(var(--pastel-gray-dark))'
+                        }} />
                         </div>
                         Configurar Segmentação Geográfica
                       </DialogTitle>
                     </DialogHeader>
                     
                     <div className="space-y-4 mt-4">
-                      <p className="text-sm" style={{ color: 'hsl(var(--muted-foreground))' }}>
+                      <p className="text-sm" style={{
+                      color: 'hsl(var(--muted-foreground))'
+                    }}>
                         Ajuste a distribuição geográfica dos destinatários da sua newsletter.
                       </p>
 
-                      <div className="p-4 rounded-xl border bg-white" style={{ borderColor: 'hsl(var(--border))' }}>
-                        <h3 className="font-semibold mb-4" style={{ color: 'hsl(var(--foreground))' }}>
+                      <div className="p-4 rounded-xl border bg-white" style={{
+                      borderColor: 'hsl(var(--border))'
+                    }}>
+                        <h3 className="font-semibold mb-4" style={{
+                        color: 'hsl(var(--foreground))'
+                      }}>
                           Distribuição Atual
                         </h3>
                         <div className="space-y-3">
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-3">
                               <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{
-                                backgroundColor: 'hsl(var(--pastel-green))'
-                              }}>
+                              backgroundColor: 'hsl(var(--pastel-green))'
+                            }}>
                                 🇧🇷
                               </div>
-                              <span className="font-medium" style={{ color: 'hsl(var(--foreground))' }}>
+                              <span className="font-medium" style={{
+                              color: 'hsl(var(--foreground))'
+                            }}>
                                 Brasil
                               </span>
                             </div>
                             <div className="text-right">
-                              <p className="font-bold" style={{ color: 'hsl(var(--foreground))' }}>95%</p>
-                              <p className="text-xs" style={{ color: 'hsl(var(--muted-foreground))' }}>11.828 destinatários</p>
+                              <p className="font-bold" style={{
+                              color: 'hsl(var(--foreground))'
+                            }}>95%</p>
+                              <p className="text-xs" style={{
+                              color: 'hsl(var(--muted-foreground))'
+                            }}>11.828 destinatários</p>
                             </div>
                           </div>
                           <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                            <div className="h-full rounded-full" style={{ 
-                              width: '95%',
-                              backgroundColor: 'hsl(var(--pastel-green))' 
-                            }} />
+                            <div className="h-full rounded-full" style={{
+                            width: '95%',
+                            backgroundColor: 'hsl(var(--pastel-green))'
+                          }} />
                           </div>
                         </div>
 
@@ -1023,59 +1009,63 @@ const AgendarPublicacaoRevisao = () => {
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-3">
                               <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{
-                                backgroundColor: 'hsl(var(--pastel-blue))'
-                              }}>
+                              backgroundColor: 'hsl(var(--pastel-blue))'
+                            }}>
                                 🌎
                               </div>
-                              <span className="font-medium" style={{ color: 'hsl(var(--foreground))' }}>
+                              <span className="font-medium" style={{
+                              color: 'hsl(var(--foreground))'
+                            }}>
                                 Internacional
                               </span>
                             </div>
                             <div className="text-right">
-                              <p className="font-bold" style={{ color: 'hsl(var(--foreground))' }}>5%</p>
-                              <p className="text-xs" style={{ color: 'hsl(var(--muted-foreground))' }}>622 destinatários</p>
+                              <p className="font-bold" style={{
+                              color: 'hsl(var(--foreground))'
+                            }}>5%</p>
+                              <p className="text-xs" style={{
+                              color: 'hsl(var(--muted-foreground))'
+                            }}>622 destinatários</p>
                             </div>
                           </div>
                           <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                            <div className="h-full rounded-full" style={{ 
-                              width: '5%',
-                              backgroundColor: 'hsl(var(--pastel-blue))' 
-                            }} />
+                            <div className="h-full rounded-full" style={{
+                            width: '5%',
+                            backgroundColor: 'hsl(var(--pastel-blue))'
+                          }} />
                           </div>
                         </div>
                       </div>
 
-                      <div className="p-4 rounded-xl border" style={{ 
-                        backgroundColor: 'hsl(206 35% 95%)',
-                        borderColor: 'hsl(206 35% 79%)'
-                      }}>
+                      <div className="p-4 rounded-xl border" style={{
+                      backgroundColor: 'hsl(206 35% 95%)',
+                      borderColor: 'hsl(206 35% 79%)'
+                    }}>
                         <div className="flex items-start gap-2">
-                          <Info size={18} className="shrink-0 mt-0.5" style={{ color: 'hsl(var(--pastel-blue))' }} />
-                          <p className="text-xs" style={{ color: 'hsl(var(--pastel-gray-dark))' }}>
+                          <Info size={18} className="shrink-0 mt-0.5" style={{
+                          color: 'hsl(var(--pastel-blue))'
+                        }} />
+                          <p className="text-xs" style={{
+                          color: 'hsl(var(--pastel-gray-dark))'
+                        }}>
                             Para ajustar a segmentação, acesse Configurações → Audiência → Segmentação Geográfica
                           </p>
                         </div>
                       </div>
 
                       <div className="flex justify-end gap-3 pt-4">
-                        <button
-                          onClick={() => setActiveDetailModal(null)}
-                          className="px-4 py-2 rounded-lg font-medium hover:bg-slate-100 transition"
-                          style={{ color: 'hsl(var(--pastel-gray-dark))' }}
-                        >
+                        <button onClick={() => setActiveDetailModal(null)} className="px-4 py-2 rounded-lg font-medium hover:bg-slate-100 transition" style={{
+                        color: 'hsl(var(--pastel-gray-dark))'
+                      }}>
                           Fechar
                         </button>
-                        <button
-                          onClick={() => {
-                            alert('Redirecionando para configurações de audiência...');
-                            setActiveDetailModal(null);
-                          }}
-                          className="px-4 py-2 rounded-lg font-medium hover:opacity-90 transition"
-                          style={{
-                            backgroundColor: 'hsl(var(--pastel-green-btn))',
-                            color: 'hsl(var(--pastel-gray-dark))'
-                          }}
-                        >
+                        <button onClick={() => {
+                        alert('Redirecionando para configurações de audiência...');
+                        setActiveDetailModal(null);
+                      }} className="px-4 py-2 rounded-lg font-medium hover:opacity-90 transition" style={{
+                        backgroundColor: 'hsl(var(--pastel-green-btn))',
+                        color: 'hsl(var(--pastel-gray-dark))'
+                      }}>
                           Ir para Configurações
                         </button>
                       </div>
