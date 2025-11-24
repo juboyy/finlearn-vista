@@ -175,13 +175,13 @@ const CursoDetalhes = () => {
                 <div className="bg-white rounded-xl border border-slate-200 p-6">
                   <h2 className="text-xl font-semibold text-slate-800 mb-4">Sobre o Curso</h2>
                   <div className="prose prose-slate max-w-none">
-                    <p className="text-sm text-slate-600 mb-3">
+                    <p className="text-base text-slate-600 mb-3">
                       Este curso completo foi desenvolvido para profissionais que desejam dominar o mercado de capitais brasileiro e internacional. Com uma abordagem prática e atualizada, você aprenderá desde os fundamentos até as estratégias mais avançadas utilizadas por gestores de fundos de investimento.
                     </p>
-                    <p className="text-sm text-slate-600 mb-3">
+                    <p className="text-base text-slate-600 mb-3">
                       Ao longo de 28 horas de conteúdo exclusivo, você será guiado por especialistas renomados do mercado financeiro, que compartilharão suas experiências, técnicas e insights valiosos para que você possa tomar decisões de investimento mais assertivas e construir uma carreira sólida no mercado de capitais.
                     </p>
-                    <p className="text-sm text-slate-600">
+                    <p className="text-base text-slate-600">
                       O curso aborda tópicos essenciais como análise fundamentalista, valuation de empresas, estratégias de alocação de ativos, gestão de portfólios, análise de risco, mercado de ações, renda fixa, derivativos e muito mais. Além disso, você terá acesso a casos práticos reais, planilhas de análise e ferramentas profissionais utilizadas no dia a dia do mercado.
                     </p>
                   </div>
