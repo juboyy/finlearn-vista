@@ -35,12 +35,12 @@ export default function CriarInfografico() {
   };
 
   return (
-    <div className="flex min-h-screen w-full bg-background overflow-hidden">
+    <div className="flex h-screen w-full bg-background overflow-hidden">
       <SidebarFix />
 
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 h-screen">
         {/* Header */}
-        <header className="h-16 bg-card border-b border-border flex items-center justify-between px-6 sticky top-0 z-30 shadow-sm">
+        <header className="h-16 bg-card border-b border-border flex items-center justify-between px-6 shrink-0 z-30 shadow-sm">
           <div className="flex items-center gap-4">
             <Link to="/criar-conteudo" className="text-muted-foreground hover:text-foreground transition-colors">
               <ArrowLeft className="w-5 h-5" />
@@ -67,13 +67,13 @@ export default function CriarInfografico() {
         </header>
 
         {/* Main Workspace */}
-        <div className="flex-1 flex overflow-hidden">
+        <div className="flex-1 flex overflow-hidden h-[calc(100vh-4rem)]">
           
           {/* Chat / Interaction Area (Left Side - Fixed) */}
-          <section className="flex flex-col w-full max-w-xl bg-card border-r border-border relative z-10 shadow-xl">
+          <section className="flex flex-col w-full max-w-xl bg-card border-r border-border relative z-10 shadow-xl h-full">
             
             {/* Chat Header */}
-            <div className="p-4 border-b border-border bg-card/80 backdrop-blur-sm flex items-center justify-between">
+            <div className="p-4 border-b border-border bg-card/80 backdrop-blur-sm flex items-center justify-between shrink-0">
               <div className="flex items-center gap-4">
                 <div className="relative">
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shadow-lg" style={{ 
@@ -160,7 +160,7 @@ export default function CriarInfografico() {
             </div>
 
             {/* Input Area */}
-            <div className="p-4 bg-card border-t border-border">
+            <div className="p-4 bg-card border-t border-border shrink-0">
               <div className="relative flex items-end gap-2 bg-muted border rounded-xl p-2 focus-within:ring-2 focus-within:border-transparent transition-shadow shadow-inner focus-within:ring-[hsl(var(--pastel-purple))]">
                 <button className="p-2 text-muted-foreground hover:bg-muted-foreground/10 rounded-lg transition-colors" title="Anexar arquivo" style={{
                   color: 'hsl(var(--pastel-purple-text))'
