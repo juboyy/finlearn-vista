@@ -806,8 +806,18 @@ export default function EditarInfografico() {
                       <ImageIcon className="w-5 h-5 text-muted-foreground group-hover:text-primary" />
                     </div>
                     <div className="flex-1">
-                      <div className="font-semibold text-sm text-foreground">Adicionar Imagens</div>
-                      <div className="text-xs text-muted-foreground">Inserir elementos visuais</div>
+                      <div className="font-semibold text-sm text-foreground">Imagens</div>
+                      <div className="text-xs text-muted-foreground">Adicionar ou substituir</div>
+                    </div>
+                  </button>
+
+                  <button className="w-full flex items-center gap-3 px-4 py-3 bg-muted hover:bg-primary/10 rounded-lg transition-colors text-left group">
+                    <div className="w-10 h-10 bg-card group-hover:bg-primary/10 rounded-lg flex items-center justify-center border border-border group-hover:border-primary/20 transition-colors">
+                      <Sliders className="w-5 h-5 text-muted-foreground group-hover:text-primary" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="font-semibold text-sm text-foreground">Layout</div>
+                      <div className="text-xs text-muted-foreground">Reorganizar seções</div>
                     </div>
                   </button>
                 </div>
@@ -817,9 +827,9 @@ export default function EditarInfografico() {
               {showPropertiesPanel && (
                 <div className="bg-card rounded-2xl p-5 shadow-sm border border-border">
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider flex items-center gap-2">
+                    <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-2">
                       <Sliders className="w-4 h-4" />
-                      Propriedades
+                      Propriedades: {activeSection}
                     </h3>
                     <button 
                       onClick={() => setShowPropertiesPanel(false)}
@@ -831,82 +841,89 @@ export default function EditarInfografico() {
                   
                   <div className="space-y-4">
                     <div>
-                      <label className="text-xs font-semibold text-muted-foreground block mb-2">Título da Seção</label>
-                      <input type="text" className="w-full px-3 py-2 bg-muted border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary" />
+                      <label className="text-xs font-medium text-muted-foreground mb-2 block">Cor de Fundo</label>
+                      <div className="flex gap-2">
+                        <button className="w-8 h-8 rounded-lg border-2 border-border" style={{ backgroundColor: 'hsl(var(--pastel-purple))' }}></button>
+                        <button className="w-8 h-8 rounded-lg border-2 border-border" style={{ backgroundColor: 'hsl(var(--pastel-blue))' }}></button>
+                        <button className="w-8 h-8 rounded-lg border-2 border-border" style={{ backgroundColor: 'hsl(var(--pastel-green))' }}></button>
+                        <button className="w-8 h-8 rounded-lg border-2 border-border" style={{ backgroundColor: 'hsl(var(--pastel-yellow))' }}></button>
+                        <button className="w-8 h-8 rounded-lg border-2 border-border" style={{ backgroundColor: 'hsl(var(--pastel-pink))' }}></button>
+                      </div>
                     </div>
+
                     <div>
-                      <label className="text-xs font-semibold text-muted-foreground block mb-2">Conteúdo</label>
-                      <textarea rows={3} className="w-full px-3 py-2 bg-muted border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary resize-none"></textarea>
+                      <label className="text-xs font-medium text-muted-foreground mb-2 block">Tamanho do Texto</label>
+                      <select className="w-full px-3 py-2 bg-muted border border-border rounded-lg text-sm">
+                        <option>Pequeno</option>
+                        <option>Médio</option>
+                        <option>Grande</option>
+                      </select>
                     </div>
-                    <div className="pt-4 border-t border-border">
-                      <button 
-                        onClick={() => {
-                          toast.success("Alterações aplicadas!");
-                          setShowPropertiesPanel(false);
-                        }}
-                        className="w-full px-4 py-2 text-white rounded-lg text-sm font-medium" 
-                        style={{ backgroundColor: 'hsl(var(--pastel-purple-btn))' }}
-                      >
-                        <CheckCircle className="w-4 h-4 inline mr-2" />Aplicar Alterações
-                      </button>
+
+                    <div>
+                      <label className="text-xs font-medium text-muted-foreground mb-2 block">Alinhamento</label>
+                      <div className="flex gap-2">
+                        <button className="flex-1 px-3 py-2 bg-muted hover:bg-muted/80 rounded-lg text-xs">
+                          <i className="fa-solid fa-align-left"></i>
+                        </button>
+                        <button className="flex-1 px-3 py-2 bg-muted hover:bg-muted/80 rounded-lg text-xs">
+                          <i className="fa-solid fa-align-center"></i>
+                        </button>
+                        <button className="flex-1 px-3 py-2 bg-muted hover:bg-muted/80 rounded-lg text-xs">
+                          <i className="fa-solid fa-align-right"></i>
+                        </button>
+                      </div>
                     </div>
+
+                    <button className="w-full px-4 py-2 text-white rounded-lg text-sm font-medium transition-all" style={{
+                      backgroundColor: 'hsl(var(--pastel-purple-btn))'
+                    }}>
+                      <CheckCircle className="w-4 h-4 inline mr-2" />Aplicar Alterações
+                    </button>
                   </div>
                 </div>
               )}
 
               {/* AI Assistant */}
-              <div className="bg-card rounded-2xl p-5 shadow-sm border border-border">
-                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4 flex items-center gap-2">
-                  <i className="fa-solid fa-robot"></i>
-                  Assistente IA
-                </h3>
-                
-                <div className="space-y-3 mb-4">
-                  <div className="p-3 rounded-lg text-sm text-foreground border" style={{
-                    backgroundColor: 'hsl(var(--pastel-purple))/20',
-                    borderColor: 'hsl(var(--pastel-purple))'
-                  }}>
-                    <div className="flex items-start gap-2">
-                      <Sparkles className="w-4 h-4 mt-0.5" style={{ color: 'hsl(var(--pastel-purple-text))' }} />
-                      <p>Precisa de ajuda? Descreva o que deseja alterar e eu farei para você!</p>
-                    </div>
+              <div className="rounded-2xl p-5 border" style={{
+                backgroundColor: 'hsl(var(--pastel-purple))/20',
+                borderColor: 'hsl(var(--pastel-purple))'
+              }}>
+                <div className="flex items-start gap-3 mb-4">
+                  <Sparkles className="w-5 h-5 mt-0.5" style={{ color: 'hsl(var(--pastel-purple-text))' }} />
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-foreground mb-1">Assistente IA</h3>
+                    <p className="text-sm text-muted-foreground">Peça ajuda para editar seu infográfico</p>
                   </div>
                 </div>
-
-                <div className="relative">
+                
+                <div className="space-y-3">
                   <textarea 
+                    placeholder="Ex: Alterar cor do gráfico para azul..."
                     value={aiPrompt}
                     onChange={(e) => setAiPrompt(e.target.value)}
-                    placeholder="Ex: Alterar cor do gráfico para azul, adicionar dados de Q2 2025..."
-                    className="w-full px-4 py-3 bg-muted border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+                    className="w-full px-3 py-2 bg-card border border-border rounded-lg text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary/20"
                     rows={3}
-                  ></textarea>
-                  <button 
-                    onClick={() => {
-                      if (aiPrompt.trim()) {
-                        toast.info("Processando sua solicitação...");
-                        setAiPrompt("");
-                      }
-                    }}
-                    className="absolute bottom-3 right-3 px-3 py-1.5 text-white rounded-lg text-sm transition-colors" 
-                    style={{ backgroundColor: 'hsl(var(--pastel-purple-btn))' }}
-                  >
-                    <i className="fa-solid fa-paper-plane mr-1"></i>Aplicar
+                  />
+                  <button className="w-full px-4 py-2 text-white rounded-lg text-sm font-medium transition-all" style={{
+                    backgroundColor: 'hsl(var(--pastel-purple-btn))'
+                  }}>
+                    <Sparkles className="w-4 h-4 inline mr-2" />Aplicar com IA
                   </button>
-                </div>
-
-                <div className="mt-4 pt-4 border-t border-border">
-                  <div className="text-xs font-semibold text-muted-foreground mb-2">SUGESTÕES RÁPIDAS</div>
-                  <div className="flex flex-wrap gap-2">
-                    <button className="px-3 py-1.5 bg-muted hover:bg-muted/80 rounded-lg text-xs text-foreground transition-colors">
-                      Adicionar Q2 2025
-                    </button>
-                    <button className="px-3 py-1.5 bg-muted hover:bg-muted/80 rounded-lg text-xs text-foreground transition-colors">
-                      Mudar cores
-                    </button>
-                    <button className="px-3 py-1.5 bg-muted hover:bg-muted/80 rounded-lg text-xs text-foreground transition-colors">
-                      Adicionar seção
-                    </button>
+                  
+                  <div className="pt-3 border-t border-border">
+                    <p className="text-xs text-muted-foreground mb-2">Sugestões rápidas:</p>
+                    <div className="flex flex-wrap gap-2">
+                      <button className="px-3 py-1.5 bg-muted hover:bg-muted/80 rounded-lg text-xs text-foreground transition-colors">
+                        Adicionar Q2 2025
+                      </button>
+                      <button className="px-3 py-1.5 bg-muted hover:bg-muted/80 rounded-lg text-xs text-foreground transition-colors">
+                        Mudar cores
+                      </button>
+                      <button className="px-3 py-1.5 bg-muted hover:bg-muted/80 rounded-lg text-xs text-foreground transition-colors">
+                        Adicionar seção
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
