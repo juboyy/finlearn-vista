@@ -7,11 +7,14 @@ import { ContentCard } from "@/components/Dashboard/ContentCard";
 import { ProgressBar } from "@/components/Dashboard/ProgressBar";
 import { LearningProgressChart } from "@/components/Dashboard/LearningProgressChart";
 import { ContentDistributionChart } from "@/components/Dashboard/ContentDistributionChart";
+import { InsightsDoDia } from "@/components/Dashboard/InsightsDoDia";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Award, Clock, Flame, TrendingUp, Coins, Scale, Bot, Mic, Video, BookMarked, Bell, Plus, Clock as ClockIcon, Headphones, Play } from "lucide-react";
+import { BookOpen, Award, Clock, Flame, TrendingUp, Coins, Scale, Bot, Mic, Video, BookMarked, Bell, Plus, Clock as ClockIcon, Headphones, Play, Lightbulb } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const Index = () => {
+  const [insightsOpen, setInsightsOpen] = useState(false);
   return (
     <div className="flex h-screen overflow-hidden">
       <SidebarFix />
@@ -30,6 +33,13 @@ const Index = () => {
                   <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                 </button>
               </Link>
+              <Button 
+                onClick={() => setInsightsOpen(true)}
+                className="bg-pastel-blue hover:bg-pastel-pink text-foreground"
+              >
+                <Lightbulb size={18} className="mr-2" />
+                Insights do Dia
+              </Button>
               <Button className="bg-pastel-purple hover:bg-pastel-purple/80 text-foreground">
                 <Plus size={18} className="mr-2" />
                 Novo Conteúdo
@@ -256,6 +266,8 @@ const Index = () => {
           </section>
         </div>
       </main>
+      
+      <InsightsDoDia open={insightsOpen} onOpenChange={setInsightsOpen} />
     </div>
   );
 };
