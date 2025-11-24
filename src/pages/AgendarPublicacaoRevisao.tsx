@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Eye, Save, Send, Smartphone, Monitor, CheckCircle, AlertTriangle, Search, Globe, Rocket, Users, Settings as SettingsIcon, Download, ArrowLeft, Lightbulb, ChartBar, SpellCheck, Info, History, Undo, Clock, CreditCard, Store, Shield, Twitter, Linkedin, Instagram, Youtube, Edit, Loader2 } from "lucide-react";
@@ -8,6 +8,8 @@ const AgendarPublicacaoRevisao = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [activeDetailModal, setActiveDetailModal] = useState<'spam' | 'seo' | 'geo' | null>(null);
+  const [scrollY, setScrollY] = useState(0);
+  const previewContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (isModalOpen) {
@@ -18,6 +20,19 @@ const AgendarPublicacaoRevisao = () => {
       return () => clearTimeout(timer);
     }
   }, [isModalOpen]);
+
+  useEffect(() => {
+    const previewContainer = previewContainerRef.current;
+    if (!previewContainer) return;
+
+    const handleScroll = () => {
+      const scrollTop = previewContainer.scrollTop;
+      setScrollY(scrollTop);
+    };
+
+    previewContainer.addEventListener('scroll', handleScroll);
+    return () => previewContainer.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleButtonClick = (label: string) => {
     if (label === "Palavras de Spam") {
@@ -196,10 +211,16 @@ const AgendarPublicacaoRevisao = () => {
                   </div>
 
                   {/* Newsletter Preview */}
-                  <div className="p-8 bg-slate-50">
+                  <div ref={previewContainerRef} className="p-8 bg-slate-50 max-h-[800px] overflow-y-auto">
                     <div className="max-w-2xl mx-auto bg-white rounded-xl overflow-hidden border border-slate-200">
                       {/* Header Section */}
-                      <div className="relative group">
+                      <div 
+                        className="relative group" 
+                        style={{
+                          transform: `translateY(${scrollY * 0.3}px)`,
+                          transition: 'transform 0.1s ease-out'
+                        }}
+                      >
                         <div className="px-8 py-12 text-center" style={{
                         backgroundColor: 'hsl(var(--pastel-purple))'
                       }}>
@@ -247,7 +268,13 @@ const AgendarPublicacaoRevisao = () => {
                       </div>
 
                       {/* Insight Section */}
-                      <div className="relative group">
+                      <div 
+                        className="relative group"
+                        style={{
+                          transform: `translateY(${scrollY * 0.5}px)`,
+                          transition: 'transform 0.1s ease-out'
+                        }}
+                      >
                         <div className="px-8 py-6 border-l-4" style={{
                         backgroundColor: 'hsl(44 45% 82%)',
                         borderColor: 'hsl(44 45% 56%)'
@@ -287,7 +314,13 @@ const AgendarPublicacaoRevisao = () => {
                       </div>
 
                       {/* Main Content */}
-                      <div className="relative group">
+                      <div 
+                        className="relative group"
+                        style={{
+                          transform: `translateY(${scrollY * 0.7}px)`,
+                          transition: 'transform 0.1s ease-out'
+                        }}
+                      >
                         <div className="p-8">
                           <h2 className="text-xl font-bold mb-4 flex items-center gap-2" style={{
                           color: 'hsl(var(--foreground))'
@@ -358,7 +391,13 @@ const AgendarPublicacaoRevisao = () => {
                       </div>
 
                       {/* Analysis Section */}
-                      <div className="relative group">
+                      <div 
+                        className="relative group"
+                        style={{
+                          transform: `translateY(${scrollY * 0.9}px)`,
+                          transition: 'transform 0.1s ease-out'
+                        }}
+                      >
                         <div className="px-8 py-6" style={{
                         backgroundColor: 'hsl(var(--pastel-blue))'
                       }}>
@@ -414,7 +453,13 @@ const AgendarPublicacaoRevisao = () => {
                       </div>
 
                       {/* Footer */}
-                      <div className="relative group">
+                      <div 
+                        className="relative group"
+                        style={{
+                          transform: `translateY(${scrollY * 1.0}px)`,
+                          transition: 'transform 0.1s ease-out'
+                        }}
+                      >
                         <div className="p-8 bg-slate-100 text-center border-t border-slate-200">
                           <h3 className="font-bold text-lg mb-3" style={{
                           color: 'hsl(var(--foreground))'
