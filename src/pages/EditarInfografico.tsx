@@ -579,18 +579,104 @@ export default function EditarInfografico() {
                 borderColor: 'hsl(var(--pastel-green))'
               }}>
                 <DragHandle />
+                <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity z-50">
+                  <button 
+                    onClick={() => handleEditSection('transactions')}
+                    className="bg-white px-3 py-1.5 rounded-lg text-xs font-semibold shadow-lg transition-colors" 
+                    style={{ color: 'hsl(var(--pastel-purple-text))' }}
+                  >
+                    <BarChart3 className="w-3 h-3 inline mr-1" />Editar
+                  </button>
+                </div>
                 <h3 className="text-xl font-bold text-foreground mb-2">Número de Transações 2024</h3>
                 <p className="text-muted-foreground text-sm mb-6">Volume total de operações por método</p>
-                <div className="text-sm text-muted-foreground">[Gráfico de transações]</div>
+                <div style={{ height: '280px' }}>
+                  <Plot
+                    data={[
+                      {
+                        x: ['Pix', 'Cartão de Crédito', 'Cartão de Débito', 'Boleto'],
+                        y: [2.78, 0.92, 0.45, 0.31],
+                        type: 'bar',
+                        marker: { 
+                          color: ['#BBF7D0', '#BFDBFE', '#DDD6FE', '#FED7AA'],
+                        },
+                        text: ['2.78Bi', '0.92Bi', '0.45Bi', '0.31Bi'],
+                        textposition: 'outside',
+                        hovertemplate: '<b>%{x}</b><br>%{y:.2f} bilhões<extra></extra>'
+                      }
+                    ]}
+                    layout={{
+                      xaxis: { 
+                        title: { text: '' },
+                        tickangle: 0,
+                        gridcolor: 'hsl(var(--border))'
+                      },
+                      yaxis: { 
+                        title: { text: 'Bilhões', standoff: 20 },
+                        gridcolor: 'hsl(var(--border))'
+                      },
+                      margin: { t: 20, r: 20, b: 60, l: 60 },
+                      plot_bgcolor: 'transparent',
+                      paper_bgcolor: 'transparent',
+                      font: { color: 'hsl(var(--foreground))', size: 11 },
+                      showlegend: false
+                    }}
+                    config={{ responsive: true, displayModeBar: false, displaylogo: false }}
+                    style={{ width: '100%', height: '100%' }}
+                  />
+                </div>
               </div>
 
               <div className="editable-section relative p-8 rounded-3xl border group cursor-pointer hover:outline hover:outline-2 hover:outline-dashed hover:outline-primary hover:outline-offset-4 transition-all" style={{
                 background: 'linear-gradient(135deg, hsl(var(--pastel-blue))/20 0%, hsl(217 91% 70%)/20 100%)',
                 borderColor: 'hsl(var(--pastel-blue))'
               }}>
+                <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity z-50">
+                  <button 
+                    onClick={() => handleEditSection('ticket')}
+                    className="bg-white px-3 py-1.5 rounded-lg text-xs font-semibold shadow-lg transition-colors" 
+                    style={{ color: 'hsl(var(--pastel-purple-text))' }}
+                  >
+                    <BarChart3 className="w-3 h-3 inline mr-1" />Editar
+                  </button>
+                </div>
                 <h3 className="text-xl font-bold text-foreground mb-2">Ticket Médio por Método</h3>
                 <p className="text-muted-foreground text-sm mb-6">Valor médio por transação em R$</p>
-                <div className="text-sm text-muted-foreground">[Gráfico de ticket médio]</div>
+                <div style={{ height: '280px' }}>
+                  <Plot
+                    data={[
+                      {
+                        x: ['Cartão de Crédito', 'Cartão de Débito', 'Pix', 'Boleto'],
+                        y: [215, 142, 103, 187],
+                        type: 'bar',
+                        marker: { 
+                          color: ['#BFDBFE', '#DDD6FE', '#BBF7D0', '#FED7AA'],
+                        },
+                        text: ['R$ 215', 'R$ 142', 'R$ 103', 'R$ 187'],
+                        textposition: 'outside',
+                        hovertemplate: '<b>%{x}</b><br>R$ %{y}<extra></extra>'
+                      }
+                    ]}
+                    layout={{
+                      xaxis: { 
+                        title: { text: '' },
+                        tickangle: 0,
+                        gridcolor: 'hsl(var(--border))'
+                      },
+                      yaxis: { 
+                        title: { text: 'Reais (R$)', standoff: 20 },
+                        gridcolor: 'hsl(var(--border))'
+                      },
+                      margin: { t: 20, r: 20, b: 60, l: 60 },
+                      plot_bgcolor: 'transparent',
+                      paper_bgcolor: 'transparent',
+                      font: { color: 'hsl(var(--foreground))', size: 11 },
+                      showlegend: false
+                    }}
+                    config={{ responsive: true, displayModeBar: false, displaylogo: false }}
+                    style={{ width: '100%', height: '100%' }}
+                  />
+                </div>
               </div>
             </div>
           </div>
