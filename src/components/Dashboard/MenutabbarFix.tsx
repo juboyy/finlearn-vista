@@ -1,6 +1,6 @@
 import { BarChart3, Grid3x3, List, ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef } from "react";
-type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'relatorios' | 'documentos' | 'estudos';
+type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'relatorios' | 'documentos' | 'estudos' | 'infograficos';
 interface MenutabbarFixProps {
   activeTab: TabType;
   setActiveTab: (tab: TabType) => void;
@@ -75,6 +75,10 @@ export const MenutabbarFix = ({
           <button onClick={() => setActiveTab('estudos')} className={`px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm ${activeTab === 'estudos' ? 'bg-pastel-blue text-slate-800' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
             <i className="fas fa-flask"></i>
             <span>Estudos Acadêmicos</span>
+          </button>
+          <button onClick={() => setActiveTab('infograficos')} className={`px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 whitespace-nowrap text-sm ${activeTab === 'infograficos' ? 'bg-pastel-blue text-slate-800' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
+            <i className="fas fa-chart-pie"></i>
+            <span>Infográficos</span>
           </button>
         </div>
         <button onClick={() => scroll('right')} className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-white border border-slate-200 rounded-full flex items-center justify-center text-slate-600 hover:bg-slate-50 transition shadow-sm">

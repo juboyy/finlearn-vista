@@ -2,7 +2,7 @@ import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Bell } from "lucide-react";
 import { useState } from "react";
 
-type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'documentos' | 'estudos';
+type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'documentos' | 'estudos' | 'infograficos';
 
 const Podcasts = () => {
   const [activeTab, setActiveTab] = useState<TabType>('todos');
