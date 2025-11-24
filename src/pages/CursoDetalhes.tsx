@@ -447,7 +447,7 @@ const CursoDetalhes = () => {
               {/* Right Sidebar */}
               <div className="space-y-8">
                 {/* Introduction Card */}
-                <div className="bg-gradient-to-br from-pastel-blue to-pastel-purple rounded-xl border border-slate-200 px-4 pt-4 pb-3">
+                <div className="bg-white rounded-xl border border-slate-200 px-4 pt-4 pb-3">
                   <div className="flex items-start gap-2 mb-2">
                     <div className="w-9 h-9 bg-white rounded-lg flex items-center justify-center flex-shrink-0">
                       <ChartLine className="text-slate-700" size={18} />
