@@ -383,50 +383,10 @@ const Empresas = () => {
               </section>
             </aside>
 
-          {/* Main Content */}
-          <div className="flex-1 space-y-6">
-            {/* Navigation Tabs */}
-            <section className="bg-white rounded-xl p-4 border-2 border-slate-300">
-              <div className="flex items-center gap-3">
-                <button 
-                  onClick={() => navigate("/mentores")}
-                  className="px-6 py-2.5 bg-[hsl(207,35%,65%)] hover:bg-[hsl(330,35%,65%)] text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200"
-                >
-                  <i className="fas fa-graduation-cap mr-2"></i>
-                  Mentores
-                </button>
-                <button 
-                  onClick={() => navigate("/autores")}
-                  className="px-6 py-2.5 bg-[hsl(207,35%,65%)] hover:bg-[hsl(330,35%,65%)] text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200"
-                >
-                  <i className="fas fa-user-check mr-2"></i>
-                  Seguindo
-                </button>
-                <button 
-                  onClick={() => navigate("/seguidores")}
-                  className="px-6 py-2.5 bg-[hsl(207,35%,65%)] hover:bg-[hsl(330,35%,65%)] text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200"
-                >
-                  <Users size={18} />
-                  Seguidores
-                </button>
-                <button 
-                  onClick={() => navigate("/descobrir-novos")}
-                  className="px-6 py-2.5 bg-[hsl(207,35%,65%)] hover:bg-[hsl(330,35%,65%)] text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200"
-                >
-                  <Search size={18} />
-                  Descobrir Novos
-                </button>
-                <button 
-                  className="px-6 py-2.5 bg-[hsl(142,35%,65%)] text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200"
-                >
-                  <Building2 size={18} />
-                  Empresas
-                </button>
-              </div>
-            </section>
-
-            {/* Category Filters */}
-            <section className="bg-white rounded-xl p-4 border border-slate-200">
+            {/* Main Content */}
+            <div className="flex-1 space-y-6">
+              {/* Category Filters */}
+              <section className="bg-white rounded-xl p-4 border border-slate-200">
                 <div className="flex items-center gap-3">
                   <h3 className="text-sm font-semibold text-slate-700">Filtrar por categoria:</h3>
                   <div className="flex flex-wrap gap-2">

@@ -4,13 +4,10 @@ import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { 
   ArrowLeft, 
   Bell, 
-  Share2,
-  GraduationCap,
-  UserCheck,
-  Users,
-  Search,
+  Share2, 
   MapPin, 
   Calendar, 
+  Users, 
   Globe,
   Building,
   ChartBar,
@@ -18,6 +15,7 @@ import {
   Video,
   Book,
   Mic,
+  GraduationCap,
   TrendingUp,
   Newspaper,
   BookOpen,
@@ -74,49 +72,7 @@ export default function PerfilEmpresa() {
           </div>
         </header>
 
-        {/* Main Content Area */}
         <div className="p-8">
-          {/* Navigation Tabs */}
-          <section className="bg-white rounded-xl p-4 border-2 border-slate-300 mb-6">
-            <div className="flex items-center gap-3">
-              <button 
-                onClick={() => navigate("/mentores")}
-                className="px-6 py-2.5 bg-[hsl(207,35%,65%)] hover:bg-[hsl(330,35%,65%)] text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200"
-              >
-                <GraduationCap size={18} />
-                Mentores
-              </button>
-              <button 
-                onClick={() => navigate("/autores")}
-                className="px-6 py-2.5 bg-[hsl(207,35%,65%)] hover:bg-[hsl(330,35%,65%)] text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200"
-              >
-                <UserCheck size={18} />
-                Seguindo
-              </button>
-              <button 
-                onClick={() => navigate("/seguidores")}
-                className="px-6 py-2.5 bg-[hsl(207,35%,65%)] hover:bg-[hsl(330,35%,65%)] text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200"
-              >
-                <Users size={18} />
-                Seguidores
-              </button>
-              <button 
-                onClick={() => navigate("/descobrir-novos")}
-                className="px-6 py-2.5 bg-[hsl(207,35%,65%)] hover:bg-[hsl(330,35%,65%)] text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200"
-              >
-                <Search size={18} />
-                Descobrir Novos
-              </button>
-              <button 
-                onClick={() => navigate("/empresas")}
-                className="px-6 py-2.5 bg-[hsl(142,35%,65%)] text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200"
-              >
-                <Briefcase size={18} />
-                Empresas
-              </button>
-            </div>
-          </section>
-
           {/* Company Hero Section */}
           <section className="bg-white rounded-xl border border-slate-200 overflow-hidden mb-6">
             <div className="h-48 bg-[#F5D5B8]"></div>
