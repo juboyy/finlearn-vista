@@ -245,7 +245,10 @@ const Autores = () => {
               <section className="bg-white rounded-xl p-4 border border-slate-200">
                 <div className="flex items-center gap-3">
                   <button 
-                    onClick={() => setActiveTab("mentores")}
+                    onClick={() => {
+                      setActiveTab("mentores");
+                      navigate("/perfil-mentor");
+                    }}
                     className={`px-6 py-2.5 text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200 ${
                       activeTab === "mentores"
                         ? "bg-pastel-green"
