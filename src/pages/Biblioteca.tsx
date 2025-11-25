@@ -253,10 +253,12 @@ export function Biblioteca() {
                 />
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
               </div>
-              <button className="px-4 py-2 bg-[#F5C6E3] hover:bg-[#E0B0CF] text-slate-700 rounded-lg font-medium transition-colors">
-                <Wrench className="h-4 w-4 inline mr-2" />
-                Ferramentas
-              </button>
+              <Link to="/ferramentas">
+                <button className="px-4 py-2 bg-[#F5C6E3] hover:bg-[#E0B0CF] text-slate-700 rounded-lg font-medium transition-colors">
+                  <Wrench className="h-4 w-4 inline mr-2" />
+                  Ferramentas
+                </button>
+              </Link>
               <button
                 onClick={() => setShowModal(true)}
                 className="px-4 py-2 bg-[#F5C6E3] hover:bg-[#E0B0CF] text-slate-700 rounded-lg font-medium transition-colors"
