@@ -27,6 +27,22 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { SlideChart } from "@/components/SlideChart";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { SortableSlideItem } from "@/components/SortableSlideItem";
 
 interface Slide {
   id: string;
@@ -53,6 +69,13 @@ export default function EditorSlides() {
   const [showImageDialog, setShowImageDialog] = useState(false);
   const [showChartDialog, setShowChartDialog] = useState(false);
   const [showClearDialog, setShowClearDialog] = useState(false);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
 
   const currentSlide = slides[currentSlideIndex];
 
@@ -307,6 +330,38 @@ Exemplo para PIX:
     toast.success("Todos os slides foram removidos");
   };
 
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      setSlides((items) => {
+        const oldIndex = items.findIndex((item) => item.id === active.id);
+        const newIndex = items.findIndex((item) => item.id === over.id);
+        
+        const newSlides = arrayMove(items, oldIndex, newIndex);
+        
+        // Atualizar o índice atual se o slide selecionado foi movido
+        if (currentSlideIndex === oldIndex) {
+          setCurrentSlideIndex(newIndex);
+        } else if (
+          currentSlideIndex > oldIndex &&
+          currentSlideIndex <= newIndex
+        ) {
+          setCurrentSlideIndex(currentSlideIndex - 1);
+        } else if (
+          currentSlideIndex < oldIndex &&
+          currentSlideIndex >= newIndex
+        ) {
+          setCurrentSlideIndex(currentSlideIndex + 1);
+        }
+        
+        return newSlides;
+      });
+      
+      toast.success("Slides reordenados");
+    }
+  };
+
   return (
     <div className="flex h-screen bg-slate-50 w-full overflow-hidden">
       <SidebarFix />
@@ -473,39 +528,29 @@ Exemplo para PIX:
               </Button>
             </div>
           </div>
-          <div className="space-y-2">
-            {slides.map((slide, index) => (
-              <Card
-                key={slide.id}
-                className={`p-3 cursor-pointer transition ${
-                  index === currentSlideIndex
-                    ? "bg-[#E8D4C5] border-[#C9B88C]"
-                    : "bg-white hover:bg-slate-50"
-                }`}
-                onClick={() => setCurrentSlideIndex(index)}
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-slate-800 truncate">
-                      {slide.title}
-                    </p>
-                    <p className="text-xs text-slate-500">Slide {index + 1}</p>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      deleteSlide(slide.id);
-                    }}
-                    className="text-slate-400 hover:text-red-500"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </Button>
-                </div>
-              </Card>
-            ))}
-          </div>
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+          >
+            <SortableContext
+              items={slides.map((s) => s.id)}
+              strategy={verticalListSortingStrategy}
+            >
+              <div className="space-y-2">
+                {slides.map((slide, index) => (
+                  <SortableSlideItem
+                    key={slide.id}
+                    slide={slide}
+                    index={index}
+                    isActive={index === currentSlideIndex}
+                    onSelect={() => setCurrentSlideIndex(index)}
+                    onDelete={deleteSlide}
+                  />
+                ))}
+              </div>
+            </SortableContext>
+          </DndContext>
         </div>
 
         {/* Editor Area */}
