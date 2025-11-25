@@ -15,7 +15,15 @@ import {
   Download,
   XCircle,
   Star,
+  ChevronDown,
+  Check,
 } from "lucide-react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -432,57 +440,108 @@ Exemplo para PIX:
               <label className="text-sm font-medium text-slate-700 mb-3 block">
                 Escolha um Agente de IA (Opcional)
               </label>
-              <div className="relative">
-                <select
-                  value={selectedAgentId}
-                  onChange={(e) => setSelectedAgentId(e.target.value)}
-                  className="w-full px-4 py-3 bg-white border-2 border-slate-300 rounded-lg text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#7FA8C9] focus:border-[#7FA8C9] appearance-none cursor-pointer"
-                  style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E\")", backgroundPosition: "right 0.5rem center", backgroundRepeat: "no-repeat", backgroundSize: "1.5em 1.5em", paddingRight: "2.5rem" }}
-                >
-                  <option value="">Selecione um agente...</option>
-                  {agents.filter(a => a.is_active).map((agent) => (
-                    <option key={agent.id} value={agent.id}>
-                      {agent.agent_name} - {agent.agent_category} ⭐ {agent.rating}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              {selectedAgentId && (
-                <div className="mt-4 p-4 bg-slate-50 rounded-lg border-2 border-slate-200">
-                  {(() => {
-                    const selectedAgent = agents.find(a => a.id === selectedAgentId);
-                    if (!selectedAgent) return null;
-                    return (
-                      <div className="flex items-start gap-4">
-                        <div className={`w-16 h-16 rounded-lg ${selectedAgent.agent_bg_color} flex-shrink-0 overflow-hidden`}>
-                          <img
-                            src={selectedAgent.agent_image}
-                            alt={selectedAgent.agent_name}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        <div className="flex-1">
-                          <div className="font-semibold text-slate-800 mb-1">
-                            {selectedAgent.agent_name}
-                          </div>
-                          <div className="text-sm text-slate-600 mb-2">
-                            {selectedAgent.agent_category}
-                          </div>
-                          <div className="flex items-center gap-1 mb-2">
-                            <Star className="w-4 h-4 fill-[#E8D08C] text-[#E8D08C]" />
-                            <span className="text-sm font-medium text-slate-700">
-                              {selectedAgent.rating}
-                            </span>
-                          </div>
-                          <p className="text-xs text-slate-600">
-                            {selectedAgent.agent_description}
-                          </p>
-                        </div>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    role="combobox"
+                    className="w-full justify-between border-2 border-slate-300 bg-white hover:bg-slate-50 h-auto py-3"
+                  >
+                    {selectedAgentId ? (
+                      <div className="flex items-center gap-3">
+                        {(() => {
+                          const selected = agents.find(a => a.id === selectedAgentId);
+                          if (!selected) return "Selecione um agente...";
+                          return (
+                            <>
+                              <div className={`w-8 h-8 rounded-lg ${selected.agent_bg_color} flex-shrink-0 overflow-hidden`}>
+                                <img
+                                  src={selected.agent_image}
+                                  alt={selected.agent_name}
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                              <div className="flex flex-col items-start">
+                                <span className="font-medium text-slate-800">{selected.agent_name}</span>
+                                <span className="text-xs text-slate-600">{selected.agent_category}</span>
+                              </div>
+                            </>
+                          );
+                        })()}
                       </div>
-                    );
-                  })()}
-                </div>
-              )}
+                    ) : (
+                      <span className="text-slate-500">Selecione um agente...</span>
+                    )}
+                    <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-[500px] p-0 bg-white border-2 border-slate-300" align="start">
+                  <ScrollArea className="h-[400px]">
+                    <div className="p-2">
+                      {/* Option to clear selection */}
+                      <button
+                        onClick={() => setSelectedAgentId("")}
+                        className={`w-full p-3 rounded-lg text-left hover:bg-slate-50 transition-colors border-2 mb-2 ${
+                          !selectedAgentId ? "border-[#8CC99B] bg-[#C5E8D4]/20" : "border-transparent"
+                        }`}
+                      >
+                        <span className="text-sm text-slate-600 font-medium">Nenhum agente (usar IA padrão)</span>
+                      </button>
+                      
+                      {/* All agents */}
+                      {agents.map((agent) => (
+                        <button
+                          key={agent.id}
+                          onClick={() => setSelectedAgentId(agent.id)}
+                          disabled={!agent.is_active}
+                          className={`w-full p-3 rounded-lg text-left hover:bg-slate-50 transition-colors border-2 mb-2 ${
+                            selectedAgentId === agent.id 
+                              ? "border-[#8CC99B] bg-[#C5E8D4]/20" 
+                              : "border-transparent"
+                          } ${!agent.is_active ? "opacity-50 cursor-not-allowed" : ""}`}
+                        >
+                          <div className="flex items-start gap-3">
+                            <div className={`w-14 h-14 rounded-lg ${agent.agent_bg_color} flex-shrink-0 overflow-hidden`}>
+                              <img
+                                src={agent.agent_image}
+                                alt={agent.agent_name}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-start justify-between gap-2">
+                                <div className="flex-1 min-w-0">
+                                  <div className="font-semibold text-slate-800 mb-1 truncate">
+                                    {agent.agent_name}
+                                  </div>
+                                  <div className="text-xs text-slate-600 mb-2">
+                                    {agent.agent_category}
+                                  </div>
+                                </div>
+                                {selectedAgentId === agent.id && (
+                                  <Check className="w-5 h-5 text-[#8CC99B] flex-shrink-0" />
+                                )}
+                              </div>
+                              <div className="flex items-center gap-1 mb-2">
+                                <Star className="w-3.5 h-3.5 fill-[#E8D08C] text-[#E8D08C]" />
+                                <span className="text-sm font-medium text-slate-700">
+                                  {agent.rating}
+                                </span>
+                                <span className="text-xs text-slate-500 ml-2">
+                                  {agent.credits}/{agent.max_credits} créditos
+                                </span>
+                              </div>
+                              <p className="text-xs text-slate-600 line-clamp-2">
+                                {agent.agent_description}
+                              </p>
+                            </div>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </ScrollArea>
+                </PopoverContent>
+              </Popover>
             </div>
 
             <Button
