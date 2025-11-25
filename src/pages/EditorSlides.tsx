@@ -298,7 +298,7 @@ Exemplo para PIX:
   };
 
   return (
-    <div className="flex h-screen bg-slate-50 w-full">
+    <div className="flex h-screen bg-slate-50 w-full overflow-hidden">
       <SidebarFix />
 
       {/* Info Dialog */}
@@ -412,7 +412,7 @@ Exemplo para PIX:
       </Dialog>
 
       {/* Main Content */}
-      <div className="flex-1 flex ml-64 w-full">
+      <div className="flex-1 flex w-full">
         {/* Slides Sidebar */}
         <div className="w-80 bg-white border-r border-slate-200 p-4 overflow-y-auto flex-shrink-0">
           <div className="flex items-center justify-between mb-4">
