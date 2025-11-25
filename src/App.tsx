@@ -93,6 +93,7 @@ import PerfilEmpresaArtigos from "./pages/PerfilEmpresaArtigos";
 import PodcastDetalhes from "./pages/PodcastDetalhes";
 import Infograficos from "./pages/Infograficos";
 import EditorSlides from "./pages/EditorSlides";
+import Ferramentas from "./pages/Ferramentas";
 
 import NotFound from "./pages/NotFound";
 
@@ -201,6 +202,7 @@ const App = () => {
           <Route path="/podcast/:id" element={<PodcastDetalhes />} />
           <Route path="/infograficos" element={<Infograficos />} />
           <Route path="/editor-slides" element={<EditorSlides />} />
+          <Route path="/ferramentas" element={<Ferramentas />} />
           
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
