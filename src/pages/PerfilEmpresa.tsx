@@ -524,11 +524,11 @@ export default function PerfilEmpresa() {
                 <h3 className="text-lg font-semibold text-slate-800 mb-4">Redes Sociais</h3>
                 <div className="space-y-3">
                   {[
-                    { icon: "linkedin", text: "linkedin.com/company/itau", bg: "bg-pastel-purple", iconColor: "text-purple-600" },
-                    { icon: "twitter", text: "@itau", bg: "bg-pastel-purple", iconColor: "text-purple-600" },
-                    { icon: "instagram", text: "@itau", bg: "bg-pastel-purple", iconColor: "text-purple-600" },
-                    { icon: "youtube", text: "Itaú Unibanco", bg: "bg-pastel-purple", iconColor: "text-purple-600" },
-                    { icon: "globe", text: "www.itau.com.br", bg: "bg-pastel-purple", iconColor: "text-purple-600" }
+                    { icon: "linkedin", text: "linkedin.com/company/itau", bg: "bg-pastel-purple", iconColor: "text-slate-900" },
+                    { icon: "twitter", text: "@itau", bg: "bg-pastel-purple", iconColor: "text-slate-900" },
+                    { icon: "instagram", text: "@itau", bg: "bg-pastel-purple", iconColor: "text-slate-900" },
+                    { icon: "youtube", text: "Itaú Unibanco", bg: "bg-pastel-purple", iconColor: "text-slate-900" },
+                    { icon: "globe", text: "www.itau.com.br", bg: "bg-pastel-purple", iconColor: "text-slate-900" }
                   ].map((social, idx) => (
                     <a key={idx} href="#" className={`flex items-center gap-4 p-4 ${social.bg} rounded-lg transition-all hover:scale-105 hover:shadow-md group`}>
                       <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
