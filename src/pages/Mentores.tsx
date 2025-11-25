@@ -213,7 +213,7 @@ const Mentores = () => {
     <div className="min-h-screen bg-slate-50">
       <SidebarFix />
       
-      <main className="pl-64 overflow-y-auto">
+      <main className="pl-64 min-h-screen overflow-y-auto">
         {/* Header */}
         <header className="bg-white border-b-2 border-slate-300 sticky top-0 z-10">
           <div className="px-8 py-4 flex items-center justify-between">
