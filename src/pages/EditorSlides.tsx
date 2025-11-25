@@ -70,7 +70,6 @@ export default function EditorSlides() {
   const [showChartDialog, setShowChartDialog] = useState(false);
   const [showClearDialog, setShowClearDialog] = useState(false);
   const [activeMediaId, setActiveMediaId] = useState<string | null>(null);
-  const [generatingElementId, setGeneratingElementId] = useState<string | null>(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -263,46 +262,6 @@ LEMBRE-SE: Retorne NO MÍNIMO 10 slides diferentes, cada um focado em um aspecto
     );
     setSlides(newSlides);
     toast.success("Elemento removido");
-  };
-
-  const generateElementContent = async (elementId: string) => {
-    if (!currentSlide?.title) {
-      toast.error("Adicione um título ao slide primeiro");
-      return;
-    }
-
-    setGeneratingElementId(elementId);
-    try {
-      const { data, error } = await supabase.functions.invoke("generate-slides-content", {
-        body: {
-          prompt: `Crie conteúdo detalhado para um elemento de texto sobre: "${currentSlide.title}"
-
-Contexto da apresentação: ${projectInfo.title}
-Descrição: ${projectInfo.description}
-
-IMPORTANTE:
-- Crie conteúdo COMPLETO e DETALHADO
-- Use bullet points (•) quando apropriado
-- Inclua dados, estatísticas e exemplos do mercado financeiro brasileiro
-- Estruture em parágrafos claros quando necessário
-- O conteúdo deve ser conciso mas informativo (2-4 parágrafos ou 5-8 bullet points)
-
-Retorne apenas o texto do conteúdo, sem JSON, sem formatação markdown.`,
-        },
-      });
-
-      if (error) throw error;
-
-      if (data?.generatedText) {
-        updateElement(elementId, "content", data.generatedText.trim());
-        toast.success("Conteúdo gerado com sucesso");
-      }
-    } catch (error) {
-      console.error("Error generating element content:", error);
-      toast.error("Erro ao gerar conteúdo");
-    } finally {
-      setGeneratingElementId(null);
-    }
   };
 
   const deleteSlide = (id: string) => {
@@ -782,8 +741,6 @@ Exemplo para PIX:
                             element={element}
                             onUpdate={updateElement}
                             onDelete={deleteElement}
-                            onGenerate={generateElementContent}
-                            isGenerating={generatingElementId === element.id}
                           />
                         ))}
                       </div>

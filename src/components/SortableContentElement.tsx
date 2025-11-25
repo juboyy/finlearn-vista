@@ -1,6 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { GripVertical, Trash2, Sparkles } from "lucide-react";
+import { GripVertical, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { SlideChart } from "@/components/SlideChart";
@@ -17,16 +17,12 @@ interface SortableContentElementProps {
   element: SlideElement;
   onUpdate: (id: string, field: keyof SlideElement, value: any) => void;
   onDelete: (id: string) => void;
-  onGenerate?: (id: string) => void;
-  isGenerating?: boolean;
 }
 
 export function SortableContentElement({
   element,
   onUpdate,
   onDelete,
-  onGenerate,
-  isGenerating = false,
 }: SortableContentElementProps) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable({
@@ -52,31 +48,12 @@ export function SortableContentElement({
 
         <div className="flex-1 min-w-0">
           {element.type === "text" && (
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-slate-600">
-                  Texto
-                </span>
-                {onGenerate && (
-                  <Button
-                    onClick={() => onGenerate(element.id)}
-                    disabled={isGenerating}
-                    size="sm"
-                    variant="ghost"
-                    className="h-7 text-xs text-[#7FA8C9] hover:text-[#6B91B3] hover:bg-[#7FA8C9]/10"
-                  >
-                    <Sparkles className="w-3 h-3 mr-1" />
-                    {isGenerating ? "Gerando..." : "Gerar com IA"}
-                  </Button>
-                )}
-              </div>
-              <Textarea
-                value={element.content || ""}
-                onChange={(e) => onUpdate(element.id, "content", e.target.value)}
-                className="min-h-[120px] border-slate-300 bg-white resize-none"
-                placeholder="Digite o conteúdo do texto..."
-              />
-            </div>
+            <Textarea
+              value={element.content || ""}
+              onChange={(e) => onUpdate(element.id, "content", e.target.value)}
+              className="min-h-[120px] border-slate-300 bg-white resize-none"
+              placeholder="Digite o conteúdo do texto..."
+            />
           )}
 
           {element.type === "image" && element.imageUrl && (
