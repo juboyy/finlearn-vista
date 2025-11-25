@@ -499,19 +499,18 @@ export const InfograficosPendentes = () => {
                 <div className="w-28">
                   <p className="text-sm text-slate-600">{(infographic.views / 1000).toFixed(1)}k</p>
                 </div>
-                <div className="w-32">
-                  {infographic.accessType === "free" ? (
-                    <div className="flex items-center gap-2">
-                      <Unlock className="w-4 h-4 text-[#8CC99B]" />
-                      <span className="text-sm text-[#8CC99B] font-medium">{infographic.access}</span>
+                  <div className="w-32">
+                    <div className={`flex items-center gap-1 px-3 py-1 rounded-full ${
+                      infographic.accessType === "free" ? "bg-[#C5E8D4]" : "bg-[#E8E0C5]"
+                    }`}>
+                      {infographic.accessType === "free" ? (
+                        <Unlock className="text-slate-700 w-3 h-3" />
+                      ) : (
+                        <Crown className="text-slate-700 w-3 h-3" />
+                      )}
+                      <span className="text-xs font-medium text-slate-700">{infographic.access}</span>
                     </div>
-                  ) : (
-                    <div className="flex items-center gap-2">
-                      <Crown className="w-4 h-4 text-[#C9B88C]" />
-                      <span className="text-sm text-[#C9B88C] font-medium">{infographic.access}</span>
-                    </div>
-                  )}
-                </div>
+                  </div>
                 <div className="w-24 flex items-center justify-end gap-2">
                   <button className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition">
                     <Bookmark className={`w-4 h-4 ${infographic.saved ? "fill-current text-[#E8D4C5]" : ""}`} />
