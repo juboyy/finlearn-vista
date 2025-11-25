@@ -13,6 +13,7 @@ import {
   Save,
   Eye,
   Download,
+  XCircle,
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
@@ -23,6 +24,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import { SlideChart } from "@/components/SlideChart";
 
@@ -50,6 +52,7 @@ export default function EditorSlides() {
   const [chartPrompt, setChartPrompt] = useState("");
   const [showImageDialog, setShowImageDialog] = useState(false);
   const [showChartDialog, setShowChartDialog] = useState(false);
+  const [showClearDialog, setShowClearDialog] = useState(false);
 
   const currentSlide = slides[currentSlideIndex];
 
@@ -297,6 +300,13 @@ Exemplo para PIX:
     toast.success("Apresentação salva com sucesso");
   };
 
+  const clearAllSlides = () => {
+    setSlides([{ id: "1", title: "Slide 1", content: "" }]);
+    setCurrentSlideIndex(0);
+    setShowClearDialog(false);
+    toast.success("Todos os slides foram removidos");
+  };
+
   return (
     <div className="flex h-screen bg-slate-50 w-full overflow-hidden">
       <SidebarFix />
@@ -411,19 +421,57 @@ Exemplo para PIX:
         </DialogContent>
       </Dialog>
 
+      {/* Clear Confirmation Dialog */}
+      <Dialog open={showClearDialog} onOpenChange={setShowClearDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle className="text-slate-800">Limpar Todos os Slides?</DialogTitle>
+            <DialogDescription className="text-slate-600">
+              Esta ação removerá todos os slides da apresentação. Esta ação não pode ser desfeita.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="gap-2">
+            <Button
+              variant="outline"
+              onClick={() => setShowClearDialog(false)}
+              className="border-slate-300"
+            >
+              Cancelar
+            </Button>
+            <Button
+              onClick={clearAllSlides}
+              className="bg-red-500 hover:bg-red-600 text-white"
+            >
+              Limpar Tudo
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       {/* Main Content */}
       <div className="flex-1 flex w-full">
         {/* Slides Sidebar */}
         <div className="w-80 bg-white border-r border-slate-200 p-4 overflow-y-auto flex-shrink-0">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-slate-800">Slides</h2>
-            <Button
-              onClick={addSlide}
-              size="sm"
-              className="bg-[#C5E8D4] hover:bg-[#B0D4C0] text-slate-700"
-            >
-              <Plus className="w-4 h-4" />
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                onClick={() => setShowClearDialog(true)}
+                size="sm"
+                variant="outline"
+                className="border-slate-300 text-slate-600 hover:text-red-600 hover:border-red-400"
+                title="Limpar todos os slides"
+              >
+                <XCircle className="w-4 h-4" />
+              </Button>
+              <Button
+                onClick={addSlide}
+                size="sm"
+                className="bg-[#C5E8D4] hover:bg-[#B0D4C0] text-slate-700"
+              >
+                <Plus className="w-4 h-4" />
+              </Button>
+            </div>
           </div>
           <div className="space-y-2">
             {slides.map((slide, index) => (
