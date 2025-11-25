@@ -17,6 +17,8 @@ const PerfilMentor = () => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [selectedType, setSelectedType] = useState<string>("individual");
+  const [scheduleStep, setScheduleStep] = useState<1 | 2>(1);
+  const [paymentMethod, setPaymentMethod] = useState<string>("credit");
   const navigate = useNavigate();
 
   return (
@@ -631,179 +633,396 @@ const PerfilMentor = () => {
       </main>
 
       {/* Schedule Sheet */}
-      <Sheet open={isScheduleModalOpen} onOpenChange={setIsScheduleModalOpen}>
+      <Sheet open={isScheduleModalOpen} onOpenChange={(open) => {
+        setIsScheduleModalOpen(open);
+        if (!open) {
+          setScheduleStep(1);
+          setSelectedDate(undefined);
+          setSelectedTime("");
+        }
+      }}>
         <SheetContent className="w-[500px] sm:w-[600px] overflow-y-auto">
           <SheetHeader>
-            <SheetTitle className="text-2xl font-semibold text-slate-800">Agendar Mentoria</SheetTitle>
+            <SheetTitle className="text-2xl font-semibold text-slate-800">
+              {scheduleStep === 1 ? "Agendar Mentoria" : "Pagamento e Confirmação"}
+            </SheetTitle>
             <SheetDescription>
-              Escolha a data, horário e tipo de consultoria
+              {scheduleStep === 1 
+                ? "Escolha a data, horário e tipo de consultoria" 
+                : "Complete os dados de pagamento para finalizar"}
             </SheetDescription>
           </SheetHeader>
 
           <div className="mt-6 space-y-6">
-            {/* Mentor Info */}
-            <div className="flex items-center gap-4 p-4 bg-slate-50 border-2 border-slate-300 rounded-lg">
-              <img 
-                src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" 
-                alt="Dra. Ana Beatriz Costa" 
-                className="w-16 h-16 rounded-full object-cover"
-              />
-              <div>
-                <h4 className="font-semibold text-slate-800">Dra. Ana Beatriz Costa</h4>
-                <p className="text-sm text-slate-600">Diretora de Compliance - Banco Central</p>
-                <div className="flex items-center gap-2 mt-1">
-                  <Star size={12} className="fill-yellow-500 text-yellow-500" />
-                  <span className="text-sm text-slate-600">5.0 (128 avaliações)</span>
+            {scheduleStep === 1 ? (
+              <>
+                {/* Step 1: Seleção de Consultoria */}
+                {/* Mentor Info */}
+                <div className="flex items-center gap-4 p-4 bg-slate-50 border-2 border-slate-300 rounded-lg">
+                  <img 
+                    src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" 
+                    alt="Dra. Ana Beatriz Costa" 
+                    className="w-16 h-16 rounded-full object-cover"
+                  />
+                  <div>
+                    <h4 className="font-semibold text-slate-800">Dra. Ana Beatriz Costa</h4>
+                    <p className="text-sm text-slate-600">Diretora de Compliance - Banco Central</p>
+                    <div className="flex items-center gap-2 mt-1">
+                      <Star size={12} className="fill-yellow-500 text-yellow-500" />
+                      <span className="text-sm text-slate-600">5.0 (128 avaliações)</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
 
-            {/* Tipo de Consultoria */}
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-3">Tipo de Consultoria</label>
-              <div className="space-y-2">
-                <label 
-                  className={cn(
-                    "flex items-center justify-between p-4 border-2 rounded-lg cursor-pointer transition",
-                    selectedType === "individual" 
-                      ? "border-[#D4C5E8] bg-[#D4C5E8]/10" 
-                      : "border-slate-300 hover:border-[#D4C5E8]"
-                  )}
-                >
-                  <div className="flex items-center gap-3">
-                    <input 
-                      type="radio" 
-                      name="type" 
-                      value="individual"
-                      checked={selectedType === "individual"}
-                      onChange={(e) => setSelectedType(e.target.value)}
-                      className="w-4 h-4 text-[#D4C5E8]" 
-                    />
-                    <div>
-                      <div className="font-medium text-slate-800">Sessão Individual</div>
-                      <div className="text-xs text-slate-500">60 minutos</div>
-                    </div>
-                  </div>
-                  <span className="font-semibold text-slate-700">R$ 450</span>
-                </label>
-
-                <label 
-                  className={cn(
-                    "flex items-center justify-between p-4 border-2 rounded-lg cursor-pointer transition",
-                    selectedType === "pacote" 
-                      ? "border-[#D4C5E8] bg-[#D4C5E8]/10" 
-                      : "border-slate-300 hover:border-[#D4C5E8]"
-                  )}
-                >
-                  <div className="flex items-center gap-3">
-                    <input 
-                      type="radio" 
-                      name="type" 
-                      value="pacote"
-                      checked={selectedType === "pacote"}
-                      onChange={(e) => setSelectedType(e.target.value)}
-                      className="w-4 h-4 text-[#D4C5E8]" 
-                    />
-                    <div>
-                      <div className="font-medium text-slate-800">Pacote 5 Sessões</div>
-                      <div className="text-xs text-slate-500">5x 60 minutos (10% desconto)</div>
-                    </div>
-                  </div>
-                  <span className="font-semibold text-slate-700">R$ 2.025</span>
-                </label>
-
-                <label 
-                  className={cn(
-                    "flex items-center justify-between p-4 border-2 rounded-lg cursor-pointer transition",
-                    selectedType === "grupo" 
-                      ? "border-[#D4C5E8] bg-[#D4C5E8]/10" 
-                      : "border-slate-300 hover:border-[#D4C5E8]"
-                  )}
-                >
-                  <div className="flex items-center gap-3">
-                    <input 
-                      type="radio" 
-                      name="type" 
-                      value="grupo"
-                      checked={selectedType === "grupo"}
-                      onChange={(e) => setSelectedType(e.target.value)}
-                      className="w-4 h-4 text-[#D4C5E8]" 
-                    />
-                    <div>
-                      <div className="font-medium text-slate-800">Mentoria em Grupo</div>
-                      <div className="text-xs text-slate-500">90 minutos (máx 6 pessoas)</div>
-                    </div>
-                  </div>
-                  <span className="font-semibold text-slate-700">R$ 180</span>
-                </label>
-              </div>
-            </div>
-
-            {/* Calendário */}
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-3">Selecione uma data</label>
-              <div className="flex justify-center border-2 border-slate-300 rounded-lg p-4 bg-white">
-                <CalendarComponent
-                  mode="single"
-                  selected={selectedDate}
-                  onSelect={setSelectedDate}
-                  disabled={(date) => date < new Date() || date.getDay() === 0 || date.getDay() === 6}
-                  className={cn("pointer-events-auto")}
-                />
-              </div>
-            </div>
-
-            {/* Horários Disponíveis */}
-            {selectedDate && (
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-3">Horários disponíveis</label>
-                <div className="grid grid-cols-3 gap-2">
-                  {["09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00", "18:00"].map((time) => (
-                    <button
-                      key={time}
-                      onClick={() => setSelectedTime(time)}
+                {/* Tipo de Consultoria */}
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-3">Tipo de Consultoria</label>
+                  <div className="space-y-2">
+                    <label 
                       className={cn(
-                        "px-4 py-3 border-2 rounded-lg text-sm font-medium transition",
-                        selectedTime === time
-                          ? "border-[#D4C5E8] bg-[#D4C5E8] text-slate-700"
-                          : "border-slate-300 text-slate-700 hover:border-[#D4C5E8]"
+                        "flex items-center justify-between p-4 border-2 rounded-lg cursor-pointer transition",
+                        selectedType === "individual" 
+                          ? "border-[#D4C5E8] bg-[#D4C5E8]/10" 
+                          : "border-slate-300 hover:border-[#D4C5E8]"
                       )}
                     >
-                      <Clock size={14} className="inline mr-1" />
-                      {time}
-                    </button>
-                  ))}
+                      <div className="flex items-center gap-3">
+                        <input 
+                          type="radio" 
+                          name="type" 
+                          value="individual"
+                          checked={selectedType === "individual"}
+                          onChange={(e) => setSelectedType(e.target.value)}
+                          className="w-4 h-4 text-[#D4C5E8]" 
+                        />
+                        <div>
+                          <div className="font-medium text-slate-800">Sessão Individual</div>
+                          <div className="text-xs text-slate-500">60 minutos</div>
+                        </div>
+                      </div>
+                      <span className="font-semibold text-slate-700">R$ 450</span>
+                    </label>
+
+                    <label 
+                      className={cn(
+                        "flex items-center justify-between p-4 border-2 rounded-lg cursor-pointer transition",
+                        selectedType === "pacote" 
+                          ? "border-[#D4C5E8] bg-[#D4C5E8]/10" 
+                          : "border-slate-300 hover:border-[#D4C5E8]"
+                      )}
+                    >
+                      <div className="flex items-center gap-3">
+                        <input 
+                          type="radio" 
+                          name="type" 
+                          value="pacote"
+                          checked={selectedType === "pacote"}
+                          onChange={(e) => setSelectedType(e.target.value)}
+                          className="w-4 h-4 text-[#D4C5E8]" 
+                        />
+                        <div>
+                          <div className="font-medium text-slate-800">Pacote 5 Sessões</div>
+                          <div className="text-xs text-slate-500">5x 60 minutos (10% desconto)</div>
+                        </div>
+                      </div>
+                      <span className="font-semibold text-slate-700">R$ 2.025</span>
+                    </label>
+
+                    <label 
+                      className={cn(
+                        "flex items-center justify-between p-4 border-2 rounded-lg cursor-pointer transition",
+                        selectedType === "grupo" 
+                          ? "border-[#D4C5E8] bg-[#D4C5E8]/10" 
+                          : "border-slate-300 hover:border-[#D4C5E8]"
+                      )}
+                    >
+                      <div className="flex items-center gap-3">
+                        <input 
+                          type="radio" 
+                          name="type" 
+                          value="grupo"
+                          checked={selectedType === "grupo"}
+                          onChange={(e) => setSelectedType(e.target.value)}
+                          className="w-4 h-4 text-[#D4C5E8]" 
+                        />
+                        <div>
+                          <div className="font-medium text-slate-800">Mentoria em Grupo</div>
+                          <div className="text-xs text-slate-500">90 minutos (máx 6 pessoas)</div>
+                        </div>
+                      </div>
+                      <span className="font-semibold text-slate-700">R$ 180</span>
+                    </label>
+                  </div>
                 </div>
-              </div>
+
+                {/* Calendário */}
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-3">Selecione uma data</label>
+                  <div className="flex justify-center border-2 border-slate-300 rounded-lg p-4 bg-white">
+                    <CalendarComponent
+                      mode="single"
+                      selected={selectedDate}
+                      onSelect={setSelectedDate}
+                      disabled={(date) => date < new Date() || date.getDay() === 0 || date.getDay() === 6}
+                      className={cn("pointer-events-auto")}
+                    />
+                  </div>
+                </div>
+
+                {/* Horários Disponíveis */}
+                {selectedDate && (
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-3">Horários disponíveis</label>
+                    <div className="grid grid-cols-3 gap-2">
+                      {["09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00", "18:00"].map((time) => (
+                        <button
+                          key={time}
+                          onClick={() => setSelectedTime(time)}
+                          className={cn(
+                            "px-4 py-3 border-2 rounded-lg text-sm font-medium transition",
+                            selectedTime === time
+                              ? "border-[#D4C5E8] bg-[#D4C5E8] text-slate-700"
+                              : "border-slate-300 text-slate-700 hover:border-[#D4C5E8]"
+                          )}
+                        >
+                          <Clock size={14} className="inline mr-1" />
+                          {time}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Informação */}
+                <div className="p-4 bg-[#E8E0C5] border-2 border-slate-300 rounded-lg">
+                  <div className="flex items-start gap-3">
+                    <Info size={20} className="text-slate-700 mt-0.5 flex-shrink-0" />
+                    <div className="text-sm text-slate-700">
+                      <p className="font-medium mb-1">Importante:</p>
+                      <p>Você receberá um email de confirmação com o link para a sessão. Cancelamentos devem ser feitos com até 24h de antecedência.</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Botões Step 1 */}
+                <div className="flex gap-3 pt-4">
+                  <button 
+                    disabled={!selectedDate || !selectedTime}
+                    onClick={() => setScheduleStep(2)}
+                    className="flex-1 px-6 py-3 bg-[#D4C5E8] border-2 border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <Calendar size={16} className="inline mr-2" />
+                    Continuar para Pagamento
+                  </button>
+                  <button 
+                    onClick={() => setIsScheduleModalOpen(false)}
+                    className="px-6 py-3 border-2 border-slate-300 text-slate-600 rounded-lg font-medium hover:bg-slate-50 transition"
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                {/* Step 2: Pagamento e Dados Finais */}
+                {/* Resumo do Agendamento */}
+                <div className="p-4 bg-slate-50 border-2 border-slate-300 rounded-lg">
+                  <h4 className="font-semibold text-slate-800 mb-3">Resumo do Agendamento</h4>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-slate-600">Mentor:</span>
+                      <span className="font-medium text-slate-800">Dra. Ana Beatriz Costa</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-600">Tipo:</span>
+                      <span className="font-medium text-slate-800">
+                        {selectedType === "individual" && "Sessão Individual"}
+                        {selectedType === "pacote" && "Pacote 5 Sessões"}
+                        {selectedType === "grupo" && "Mentoria em Grupo"}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-600">Data:</span>
+                      <span className="font-medium text-slate-800">{selectedDate?.toLocaleDateString('pt-BR')}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-600">Horário:</span>
+                      <span className="font-medium text-slate-800">{selectedTime}</span>
+                    </div>
+                    <div className="flex justify-between pt-2 border-t border-slate-300">
+                      <span className="font-semibold text-slate-700">Total:</span>
+                      <span className="font-bold text-slate-800">
+                        {selectedType === "individual" && "R$ 450,00"}
+                        {selectedType === "pacote" && "R$ 2.025,00"}
+                        {selectedType === "grupo" && "R$ 180,00"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Dados Pessoais */}
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-3">Dados Pessoais</label>
+                  <div className="space-y-3">
+                    <div>
+                      <label className="block text-xs text-slate-600 mb-1">Nome Completo</label>
+                      <input 
+                        type="text" 
+                        className="w-full px-4 py-2.5 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4C5E8]"
+                        placeholder="Seu nome completo"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-slate-600 mb-1">Email</label>
+                      <input 
+                        type="email" 
+                        className="w-full px-4 py-2.5 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4C5E8]"
+                        placeholder="seu@email.com"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-slate-600 mb-1">Telefone</label>
+                      <input 
+                        type="tel" 
+                        className="w-full px-4 py-2.5 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4C5E8]"
+                        placeholder="(00) 00000-0000"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Forma de Pagamento */}
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-3">Forma de Pagamento</label>
+                  <div className="space-y-2">
+                    <label 
+                      className={cn(
+                        "flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition",
+                        paymentMethod === "credit" 
+                          ? "border-[#D4C5E8] bg-[#D4C5E8]/10" 
+                          : "border-slate-300 hover:border-[#D4C5E8]"
+                      )}
+                    >
+                      <input 
+                        type="radio" 
+                        name="payment" 
+                        value="credit"
+                        checked={paymentMethod === "credit"}
+                        onChange={(e) => setPaymentMethod(e.target.value)}
+                        className="w-4 h-4 text-[#D4C5E8]" 
+                      />
+                      <div>
+                        <div className="font-medium text-slate-800">Cartão de Crédito</div>
+                        <div className="text-xs text-slate-500">Visa, Mastercard, Elo, Amex</div>
+                      </div>
+                    </label>
+
+                    <label 
+                      className={cn(
+                        "flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition",
+                        paymentMethod === "pix" 
+                          ? "border-[#D4C5E8] bg-[#D4C5E8]/10" 
+                          : "border-slate-300 hover:border-[#D4C5E8]"
+                      )}
+                    >
+                      <input 
+                        type="radio" 
+                        name="payment" 
+                        value="pix"
+                        checked={paymentMethod === "pix"}
+                        onChange={(e) => setPaymentMethod(e.target.value)}
+                        className="w-4 h-4 text-[#D4C5E8]" 
+                      />
+                      <div>
+                        <div className="font-medium text-slate-800">PIX</div>
+                        <div className="text-xs text-slate-500">Pagamento instantâneo</div>
+                      </div>
+                    </label>
+
+                    <label 
+                      className={cn(
+                        "flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition",
+                        paymentMethod === "boleto" 
+                          ? "border-[#D4C5E8] bg-[#D4C5E8]/10" 
+                          : "border-slate-300 hover:border-[#D4C5E8]"
+                      )}
+                    >
+                      <input 
+                        type="radio" 
+                        name="payment" 
+                        value="boleto"
+                        checked={paymentMethod === "boleto"}
+                        onChange={(e) => setPaymentMethod(e.target.value)}
+                        className="w-4 h-4 text-[#D4C5E8]" 
+                      />
+                      <div>
+                        <div className="font-medium text-slate-800">Boleto Bancário</div>
+                        <div className="text-xs text-slate-500">Vencimento em 3 dias úteis</div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Dados do Cartão (se cartão selecionado) */}
+                {paymentMethod === "credit" && (
+                  <div className="space-y-3">
+                    <div>
+                      <label className="block text-xs text-slate-600 mb-1">Número do Cartão</label>
+                      <input 
+                        type="text" 
+                        className="w-full px-4 py-2.5 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4C5E8]"
+                        placeholder="0000 0000 0000 0000"
+                        maxLength={19}
+                      />
+                    </div>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-xs text-slate-600 mb-1">Validade</label>
+                        <input 
+                          type="text" 
+                          className="w-full px-4 py-2.5 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4C5E8]"
+                          placeholder="MM/AA"
+                          maxLength={5}
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs text-slate-600 mb-1">CVV</label>
+                        <input 
+                          type="text" 
+                          className="w-full px-4 py-2.5 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4C5E8]"
+                          placeholder="000"
+                          maxLength={4}
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-xs text-slate-600 mb-1">Nome no Cartão</label>
+                      <input 
+                        type="text" 
+                        className="w-full px-4 py-2.5 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4C5E8]"
+                        placeholder="Nome como está no cartão"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {/* Botões Step 2 */}
+                <div className="flex gap-3 pt-4">
+                  <button 
+                    onClick={() => setScheduleStep(1)}
+                    className="px-6 py-3 border-2 border-slate-300 text-slate-600 rounded-lg font-medium hover:bg-slate-50 transition"
+                  >
+                    Voltar
+                  </button>
+                  <button 
+                    className="flex-1 px-6 py-3 bg-[#D4C5E8] border-2 border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
+                  >
+                    <Check size={16} className="inline mr-2" />
+                    Confirmar e Pagar
+                  </button>
+                </div>
+              </>
             )}
-
-            {/* Informação */}
-            <div className="p-4 bg-[#E8E0C5] border-2 border-slate-300 rounded-lg">
-              <div className="flex items-start gap-3">
-                <Info size={20} className="text-slate-700 mt-0.5 flex-shrink-0" />
-                <div className="text-sm text-slate-700">
-                  <p className="font-medium mb-1">Importante:</p>
-                  <p>Você receberá um email de confirmação com o link para a sessão. Cancelamentos devem ser feitos com até 24h de antecedência.</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Botões */}
-            <div className="flex gap-3 pt-4">
-              <button 
-                disabled={!selectedDate || !selectedTime}
-                className="flex-1 px-6 py-3 bg-[#D4C5E8] border-2 border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <Calendar size={16} className="inline mr-2" />
-                Confirmar Agendamento
-              </button>
-              <button 
-                onClick={() => setIsScheduleModalOpen(false)}
-                className="px-6 py-3 border-2 border-slate-300 text-slate-600 rounded-lg font-medium hover:bg-slate-50 transition"
-              >
-                Cancelar
-              </button>
-            </div>
           </div>
         </SheetContent>
       </Sheet>
