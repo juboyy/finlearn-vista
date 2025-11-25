@@ -722,17 +722,19 @@ Exemplo para PIX:
                 {projectInfo.title || "Nova Apresentação"}
               </h1>
               <div className="flex gap-2">
-                {selectedAgentId && (
-                  <Button
-                    onClick={() => {
-                      setShowAgentChat(true);
-                    }}
-                    className="bg-[#F5C6E3] hover:bg-[#E0B0CF] text-slate-700"
-                  >
-                    <MessageSquare className="w-4 h-4 mr-2" />
-                    Chamar Agente
-                  </Button>
-                )}
+                <Button
+                  onClick={() => {
+                    if (!selectedAgentId) {
+                      toast.error("Selecione um agente primeiro no diálogo inicial");
+                      return;
+                    }
+                    setShowAgentChat(true);
+                  }}
+                  className="bg-[#F5C6E3] hover:bg-[#E0B0CF] text-slate-700"
+                >
+                  <MessageSquare className="w-4 h-4 mr-2" />
+                  Chamar Agente
+                </Button>
                 <Button
                   onClick={() => setShowImageDialog(true)}
                   className="bg-[#F5C6E3] hover:bg-[#E0B0CF] text-slate-700"
