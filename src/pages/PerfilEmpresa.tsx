@@ -66,7 +66,10 @@ export default function PerfilEmpresa() {
                 <BarChart3 size={18} />
                 Estatísticas
               </button>
-              <button className="px-4 py-2 bg-[hsl(207,35%,78%)] hover:bg-[hsl(142,35%,65%)] text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200">
+              <button 
+                onClick={() => navigate("/perfil-empresa/1/materiais")}
+                className="px-4 py-2 bg-[hsl(207,35%,78%)] hover:bg-[hsl(142,35%,65%)] text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200"
+              >
                 <FileText size={18} />
                 Materiais
               </button>

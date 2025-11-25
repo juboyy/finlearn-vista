@@ -87,6 +87,7 @@ import CursoDetalhes from "./pages/CursoDetalhes";
 import MeusCertificados from "./pages/MeusCertificados";
 import ContaEmpresarial from "./pages/ContaEmpresarial";
 import PerfilEmpresa from "./pages/PerfilEmpresa";
+import PerfilEmpresaMateriais from "./pages/PerfilEmpresaMateriais";
 
 import NotFound from "./pages/NotFound";
 
@@ -134,6 +135,7 @@ const App = () => {
           <Route path="/descobrir-novos" element={<DescobrirNovos />} />
           <Route path="/empresas" element={<Empresas />} />
           <Route path="/perfil-empresa/:id" element={<PerfilEmpresa />} />
+          <Route path="/perfil-empresa/:id/materiais" element={<PerfilEmpresaMateriais />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/checkout/payment" element={<CheckoutPayment />} />
           <Route path="/podcasts" element={<Podcasts />} />
