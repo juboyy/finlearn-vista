@@ -210,10 +210,10 @@ const Mentores = () => {
   ];
 
   return (
-    <div className="min-h-screen flex bg-slate-50">
+    <div className="min-h-screen bg-slate-50">
       <SidebarFix />
       
-      <main className="flex-1 ml-64 overflow-y-auto">
+      <main className="pl-64 overflow-y-auto">
         {/* Header */}
         <header className="bg-white border-b-2 border-slate-300 sticky top-0 z-10">
           <div className="px-8 py-4 flex items-center justify-between">
