@@ -270,7 +270,10 @@ const Autores = () => {
                     Seguindo
                   </button>
                   <button 
-                    onClick={() => setActiveTab("seguidores")}
+                    onClick={() => {
+                      setActiveTab("seguidores");
+                      navigate("/seguidores");
+                    }}
                     className={`px-6 py-2.5 text-slate-700 rounded-lg font-medium transition-all duration-200 ${
                       activeTab === "seguidores"
                         ? "bg-pastel-green"
@@ -281,7 +284,10 @@ const Autores = () => {
                     Seguidores
                   </button>
                   <button 
-                    onClick={() => setActiveTab("descobrir")}
+                    onClick={() => {
+                      setActiveTab("descobrir");
+                      navigate("/descobrir-novos");
+                    }}
                     className={`px-6 py-2.5 text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200 ${
                       activeTab === "descobrir"
                         ? "bg-pastel-green"
