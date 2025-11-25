@@ -79,12 +79,13 @@ INSTRUÇÕES CRÍTICAS:
 - O conteúdo de cada slide deve ser estruturado em tópicos ou parágrafos
 - Inclua dados, estatísticas e exemplos quando relevante
 - Adicione insights e análises específicas do mercado financeiro
+- SUGIRA automaticamente onde adicionar imagens e gráficos
 
 Estrutura sugerida:
 1. Slide de introdução/contexto
 2-3. Slides sobre aspectos fundamentais
-4-6. Slides com análises e dados detalhados
-7-8. Slides com exemplos práticos e casos de uso
+4-6. Slides com análises e dados detalhados (sugerir gráficos)
+7-8. Slides com exemplos práticos e casos de uso (sugerir imagens)
 9. Slide de tendências/futuro
 10. Slide de conclusão/próximos passos
 
@@ -93,14 +94,20 @@ Retorne um JSON com MÚLTIPLOS slides neste formato exato:
   "slides": [
     {
       "title": "Título do Slide 1",
-      "content": "Conteúdo detalhado do primeiro tema com múltiplos parágrafos ou tópicos. Use bullet points quando apropriado:\n\n• Ponto 1 com detalhes completos\n• Ponto 2 com análises e dados\n• Ponto 3 com exemplos práticos\n\nInclua parágrafos explicativos quando necessário."
-    },
-    {
-      "title": "Título do Slide 2",
-      "content": "Conteúdo do segundo tema..."
+      "content": "Conteúdo detalhado...",
+      "suggestedImagePrompt": "Descrição da imagem sugerida para este slide" (opcional),
+      "suggestedChartType": "bar" ou "line" ou "pie" (opcional),
+      "suggestedChartPrompt": "Descrição dos dados para o gráfico" (opcional)
     }
   ]
 }
+
+IMPORTANTE SOBRE SUGESTÕES:
+- Sugira imagens para slides com conceitos visuais, exemplos práticos, casos de uso
+- Sugira gráficos para slides com dados, estatísticas, comparações, tendências
+- Não coloque imagens e gráficos em todos os slides - seja estratégico
+- Use "suggestedImagePrompt" para descrever que tipo de imagem seria ideal
+- Use "suggestedChartType" e "suggestedChartPrompt" para gráficos relevantes
 
 LEMBRE-SE: Retorne NO MÍNIMO 10 slides diferentes, cada um focado em um aspecto específico.`,
         },
@@ -129,22 +136,28 @@ LEMBRE-SE: Retorne NO MÍNIMO 10 slides diferentes, cada um focado em um aspecto
         ];
         
         const newSlides = slidesData.slides.map((slide: any, index: number) => {
-          // Adicionar imagem em slides estratégicos (a cada 2-3 slides)
-          const shouldAddImage = index > 0 && (index % 3 === 0 || index === 2);
-          const imageUrl = shouldAddImage 
+          // Se a IA sugeriu uma imagem, adicionar uma imagem do sistema
+          const imageUrl = slide.suggestedImagePrompt 
             ? systemImages[Math.floor(Math.random() * systemImages.length)]
             : undefined;
+          
+          // Se a IA sugeriu um gráfico, criar dados de placeholder
+          const chartData = slide.suggestedChartType ? {
+            type: slide.suggestedChartType,
+            description: slide.suggestedChartPrompt || "Gráfico sugerido pela IA"
+          } : undefined;
           
           return {
             id: `${index + 1}`,
             title: slide.title,
             content: slide.content,
             imageUrl,
+            chartData,
           };
         });
         
         setSlides(newSlides);
-        toast.success(`${newSlides.length} slides gerados com sucesso`);
+        toast.success(`${newSlides.length} slides gerados com sugestões de mídia`);
       }
     } catch (error) {
       console.error("Error generating slides:", error);
