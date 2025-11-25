@@ -4,7 +4,7 @@ import {
   MessageCircle, UsersRound, BookOpen, FileText, Calendar, Clock, Trophy, 
   Bot, Check, Mail, Linkedin, Globe, Award, X, Send, Info
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
@@ -25,6 +25,7 @@ const PerfilMentor = () => {
   const [cardCvv, setCardCvv] = useState<string>("");
   const [showNewCardForm, setShowNewCardForm] = useState<boolean>(false);
   const [selectedSavedCard, setSelectedSavedCard] = useState<number | null>(1);
+  const sheetContentRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   const savedCards = [
@@ -43,6 +44,12 @@ const PerfilMentor = () => {
       expiry: "08/27"
     }
   ];
+
+  useEffect(() => {
+    if (scheduleStep === 2 && sheetContentRef.current) {
+      sheetContentRef.current.scrollTop = 0;
+    }
+  }, [scheduleStep]);
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -670,13 +677,7 @@ const PerfilMentor = () => {
           setSelectedSavedCard(1);
         }
       }}>
-        <SheetContent className="w-[500px] sm:w-[600px] overflow-y-auto" onOpenAutoFocus={(e) => {
-          if (scheduleStep === 2) {
-            e.preventDefault();
-            const element = e.currentTarget as HTMLElement;
-            setTimeout(() => element.scrollTop = 0, 0);
-          }
-        }}>
+        <SheetContent ref={sheetContentRef} className="w-[500px] sm:w-[600px] overflow-y-auto">
           <SheetHeader>
             <SheetTitle className="text-2xl font-semibold text-slate-800">
               {scheduleStep === 1 ? "Agendar Mentoria" : "Pagamento e Confirmação"}
