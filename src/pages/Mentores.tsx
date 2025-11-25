@@ -23,7 +23,9 @@ import {
   ChevronLeft,
   ChevronRight,
   X,
-  UserCheck
+  UserCheck,
+  Info,
+  Calendar
 } from "lucide-react";
 import {
   Select,
@@ -38,6 +40,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import { cn } from "@/lib/utils";
 
 const Mentores = () => {
   const navigate = useNavigate();
@@ -46,6 +51,10 @@ const Mentores = () => {
   const [viewMode, setViewMode] = useState<"grid" | "list">("list");
   const [activeFilter, setActiveFilter] = useState<"todos" | "favoritos" | "top-rated">("todos");
   const [showRequestModal, setShowRequestModal] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+  const [selectedTime, setSelectedTime] = useState<string>("");
+  const [selectedType, setSelectedType] = useState<string>("individual");
+  const [selectedMentor, setSelectedMentor] = useState<number | null>(null);
 
   const mentores = [
     {
@@ -609,6 +618,7 @@ const Mentores = () => {
                         <Button
                           onClick={(e) => {
                             e.stopPropagation();
+                            setSelectedMentor(mentor.id);
                             setShowRequestModal(true);
                           }}
                           className="px-3 py-1.5 bg-[hsl(270,35%,65%)] hover:bg-[hsl(270,35%,60%)] text-slate-700 rounded-lg text-sm font-medium transition"
@@ -644,61 +654,190 @@ const Mentores = () => {
         </div>
       </main>
 
-      {/* Request Mentorship Modal */}
-      <Dialog open={showRequestModal} onOpenChange={setShowRequestModal}>
-        <DialogContent className="max-w-md">
-          <DialogHeader>
-            <DialogTitle className="text-xl font-semibold text-slate-800">Solicitar Mentoria</DialogTitle>
-          </DialogHeader>
-          <div className="space-y-4 py-4">
+      {/* Schedule Sheet */}
+      <Sheet open={showRequestModal} onOpenChange={setShowRequestModal}>
+        <SheetContent className="w-[500px] sm:w-[600px] overflow-y-auto">
+          <SheetHeader>
+            <SheetTitle className="text-2xl font-semibold text-slate-800">Agendar Mentoria</SheetTitle>
+            <SheetDescription>
+              Escolha a data, horário e tipo de consultoria
+            </SheetDescription>
+          </SheetHeader>
+
+          <div className="mt-6 space-y-6">
+            {/* Mentor Info */}
+            {selectedMentor && (() => {
+              const mentor = mentores.find(m => m.id === selectedMentor);
+              if (!mentor) return null;
+              
+              return (
+                <div className="flex items-center gap-4 p-4 bg-slate-50 border-2 border-slate-300 rounded-lg">
+                  <img 
+                    src={mentor.image} 
+                    alt={mentor.name} 
+                    className="w-16 h-16 rounded-full object-cover"
+                  />
+                  <div>
+                    <h4 className="font-semibold text-slate-800">{mentor.name}</h4>
+                    <p className="text-sm text-slate-600">{mentor.title}</p>
+                    <div className="flex items-center gap-2 mt-1">
+                      <Star size={12} className="fill-yellow-500 text-yellow-500" />
+                      <span className="text-sm text-slate-600">{mentor.rating.toFixed(1)} ({mentor.reviews} avaliações)</span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
+
+            {/* Tipo de Consultoria */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">Selecione o Mentor</label>
-              <Select>
-                <SelectTrigger className="w-full border-2 border-slate-300">
-                  <SelectValue placeholder="Escolha um mentor" />
-                </SelectTrigger>
-                <SelectContent>
-                  {mentores.map((mentor) => (
-                    <SelectItem key={mentor.id} value={mentor.id.toString()}>
-                      {mentor.name}
-                    </SelectItem>
+              <label className="block text-sm font-medium text-slate-700 mb-3">Tipo de Consultoria</label>
+              <div className="space-y-2">
+                <label 
+                  className={cn(
+                    "flex items-center justify-between p-4 border-2 rounded-lg cursor-pointer transition",
+                    selectedType === "individual" 
+                      ? "border-[hsl(270,35%,65%)] bg-[hsl(270,35%,65%)]/10" 
+                      : "border-slate-300 hover:border-[hsl(270,35%,65%)]"
+                  )}
+                >
+                  <div className="flex items-center gap-3">
+                    <input 
+                      type="radio" 
+                      name="type" 
+                      value="individual"
+                      checked={selectedType === "individual"}
+                      onChange={(e) => setSelectedType(e.target.value)}
+                      className="w-4 h-4 text-[hsl(270,35%,65%)]" 
+                    />
+                    <div>
+                      <div className="font-medium text-slate-800">Sessão Individual</div>
+                      <div className="text-xs text-slate-500">60 minutos</div>
+                    </div>
+                  </div>
+                  <span className="font-semibold text-slate-700">R$ 450</span>
+                </label>
+
+                <label 
+                  className={cn(
+                    "flex items-center justify-between p-4 border-2 rounded-lg cursor-pointer transition",
+                    selectedType === "pacote" 
+                      ? "border-[hsl(270,35%,65%)] bg-[hsl(270,35%,65%)]/10" 
+                      : "border-slate-300 hover:border-[hsl(270,35%,65%)]"
+                  )}
+                >
+                  <div className="flex items-center gap-3">
+                    <input 
+                      type="radio" 
+                      name="type" 
+                      value="pacote"
+                      checked={selectedType === "pacote"}
+                      onChange={(e) => setSelectedType(e.target.value)}
+                      className="w-4 h-4 text-[hsl(270,35%,65%)]" 
+                    />
+                    <div>
+                      <div className="font-medium text-slate-800">Pacote 5 Sessões</div>
+                      <div className="text-xs text-slate-500">5x 60 minutos (10% desconto)</div>
+                    </div>
+                  </div>
+                  <span className="font-semibold text-slate-700">R$ 2.025</span>
+                </label>
+
+                <label 
+                  className={cn(
+                    "flex items-center justify-between p-4 border-2 rounded-lg cursor-pointer transition",
+                    selectedType === "grupo" 
+                      ? "border-[hsl(270,35%,65%)] bg-[hsl(270,35%,65%)]/10" 
+                      : "border-slate-300 hover:border-[hsl(270,35%,65%)]"
+                  )}
+                >
+                  <div className="flex items-center gap-3">
+                    <input 
+                      type="radio" 
+                      name="type" 
+                      value="grupo"
+                      checked={selectedType === "grupo"}
+                      onChange={(e) => setSelectedType(e.target.value)}
+                      className="w-4 h-4 text-[hsl(270,35%,65%)]" 
+                    />
+                    <div>
+                      <div className="font-medium text-slate-800">Mentoria em Grupo</div>
+                      <div className="text-xs text-slate-500">90 minutos (máx 6 pessoas)</div>
+                    </div>
+                  </div>
+                  <span className="font-semibold text-slate-700">R$ 180</span>
+                </label>
+              </div>
+            </div>
+
+            {/* Calendário */}
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-3">Selecione uma data</label>
+              <div className="flex justify-center border-2 border-slate-300 rounded-lg p-4 bg-white">
+                <CalendarComponent
+                  mode="single"
+                  selected={selectedDate}
+                  onSelect={setSelectedDate}
+                  disabled={(date) => date < new Date() || date.getDay() === 0 || date.getDay() === 6}
+                  className={cn("pointer-events-auto")}
+                />
+              </div>
+            </div>
+
+            {/* Horários Disponíveis */}
+            {selectedDate && (
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-3">Horários disponíveis</label>
+                <div className="grid grid-cols-3 gap-2">
+                  {["09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00", "18:00"].map((time) => (
+                    <button
+                      key={time}
+                      onClick={() => setSelectedTime(time)}
+                      className={cn(
+                        "px-4 py-3 border-2 rounded-lg text-sm font-medium transition",
+                        selectedTime === time
+                          ? "border-[hsl(270,35%,65%)] bg-[hsl(270,35%,65%)] text-slate-700"
+                          : "border-slate-300 text-slate-700 hover:border-[hsl(270,35%,65%)]"
+                      )}
+                    >
+                      <Clock size={14} className="inline mr-1" />
+                      {time}
+                    </button>
                   ))}
-                </SelectContent>
-              </Select>
+                </div>
+              </div>
+            )}
+
+            {/* Informação */}
+            <div className="p-4 bg-[hsl(42,35%,75%)] border-2 border-slate-300 rounded-lg">
+              <div className="flex items-start gap-3">
+                <Info size={20} className="text-slate-700 mt-0.5 flex-shrink-0" />
+                <div className="text-sm text-slate-700">
+                  <p className="font-medium mb-1">Importante:</p>
+                  <p>Você receberá um email de confirmação com o link para a sessão. Cancelamentos devem ser feitos com até 24h de antecedência.</p>
+                </div>
+              </div>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">Data Preferencial</label>
-              <Input type="date" className="w-full border-2 border-slate-300" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">Horário</label>
-              <Input type="time" className="w-full border-2 border-slate-300" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">Mensagem</label>
-              <textarea
-                rows={4}
-                className="w-full p-3 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[hsl(270,35%,65%)] focus:border-transparent resize-none"
-                placeholder="Descreva brevemente o que você gostaria de discutir na mentoria..."
-              />
-            </div>
+
+            {/* Botões */}
             <div className="flex gap-3 pt-4">
-              <Button
+              <button 
+                disabled={!selectedDate || !selectedTime}
+                className="flex-1 px-6 py-3 bg-[hsl(270,35%,65%)] border-2 border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <Calendar size={16} className="inline mr-2" />
+                Confirmar Agendamento
+              </button>
+              <button 
                 onClick={() => setShowRequestModal(false)}
-                className="flex-1 px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg font-medium transition"
+                className="px-6 py-3 border-2 border-slate-300 text-slate-600 rounded-lg font-medium hover:bg-slate-50 transition"
               >
                 Cancelar
-              </Button>
-              <Button
-                onClick={() => setShowRequestModal(false)}
-                className="flex-1 px-4 py-2 bg-[hsl(270,35%,65%)] hover:bg-[hsl(270,35%,60%)] text-slate-700 rounded-lg font-medium transition"
-              >
-                Enviar Solicitação
-              </Button>
+              </button>
             </div>
           </div>
-        </DialogContent>
-      </Dialog>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 };
