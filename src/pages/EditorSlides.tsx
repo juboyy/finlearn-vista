@@ -15,6 +15,7 @@ import {
   Download,
   XCircle,
   Star,
+  MessageSquare,
 } from "lucide-react";
 import {
   Select,
@@ -52,6 +53,7 @@ import {
 } from "@dnd-kit/sortable";
 import { SortableSlideItem } from "@/components/SortableSlideItem";
 import { useUserAgents } from "@/hooks/useUserAgents";
+import { AgentChat } from "@/components/AgentChat";
 
 interface Slide {
   id: string;
@@ -80,6 +82,7 @@ export default function EditorSlides() {
   const [showChartDialog, setShowChartDialog] = useState(false);
   const [showClearDialog, setShowClearDialog] = useState(false);
   const [selectedAgentId, setSelectedAgentId] = useState<string>("");
+  const [showAgentChat, setShowAgentChat] = useState(false);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -382,6 +385,19 @@ Exemplo para PIX:
     <div className="flex h-screen bg-slate-50 w-full overflow-hidden">
       <SidebarFix />
 
+      {/* Agent Chat */}
+      {showAgentChat && selectedAgentId && (() => {
+        const selectedAgent = agents.find(a => a.id === selectedAgentId);
+        if (!selectedAgent) return null;
+        return (
+          <AgentChat
+            agentName={selectedAgent.agent_name}
+            agentImage={selectedAgent.agent_image}
+            onClose={() => setShowAgentChat(false)}
+          />
+        );
+      })()}
+
       {/* Info Dialog */}
       <Dialog open={showInfoDialog} onOpenChange={setShowInfoDialog}>
         <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
@@ -399,54 +415,69 @@ Exemplo para PIX:
               <label className="text-sm font-medium text-slate-700 mb-3 block">
                 Escolha um Agente de IA (Opcional)
               </label>
-              <Select value={selectedAgentId} onValueChange={setSelectedAgentId}>
-                <SelectTrigger className="w-full border-2 border-slate-300">
-                  <SelectValue placeholder="Escolha um especialista..." />
-                </SelectTrigger>
-                <SelectContent className="bg-white border-2 border-slate-300 z-[60] max-h-[650px] overflow-y-auto">
-                  {agents.map((agent) => {
-                    // Extract HSL color from bg class
-                    const bgColor = agent.agent_bg_color.includes('hsl') 
-                      ? agent.agent_bg_color.match(/hsl\([^)]+\)/)?.[0] 
-                      : 'hsl(206,35%,85%)';
-                    
-                    return (
-                      <SelectItem 
-                        key={agent.id} 
-                        value={agent.id}
-                        disabled={!agent.is_active}
-                        className="cursor-pointer"
-                      >
-                        <div className="flex items-center gap-3 py-2">
-                          <img 
-                            src={agent.agent_image} 
-                            alt={agent.agent_name}
-                            className="w-10 h-10 rounded-full object-cover"
-                          />
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-1">
-                              <div className="font-semibold text-slate-800">{agent.agent_name}</div>
-                              <div className="flex items-center gap-1.5">
-                                <span 
-                                  className="text-xs px-2 py-0.5 rounded-full font-medium text-slate-700"
-                                  style={{ backgroundColor: bgColor }}
-                                >
-                                  {agent.agent_category}
-                                </span>
-                                <span className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-full font-semibold bg-[hsl(45,78%,88%)] text-[hsl(45,78%,35%)]">
-                                  <Star size={10} fill="currentColor" />
-                                  {agent.rating}
-                                </span>
+              <div className="flex gap-2">
+                <Select value={selectedAgentId} onValueChange={setSelectedAgentId}>
+                  <SelectTrigger className="flex-1 border-2 border-slate-300">
+                    <SelectValue placeholder="Escolha um especialista..." />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white border-2 border-slate-300 z-[60] max-h-[650px] overflow-y-auto">
+                    {agents.map((agent) => {
+                      // Extract HSL color from bg class
+                      const bgColor = agent.agent_bg_color.includes('hsl') 
+                        ? agent.agent_bg_color.match(/hsl\([^)]+\)/)?.[0] 
+                        : 'hsl(206,35%,85%)';
+                      
+                      return (
+                        <SelectItem 
+                          key={agent.id} 
+                          value={agent.id}
+                          disabled={!agent.is_active}
+                          className="cursor-pointer"
+                        >
+                          <div className="flex items-center gap-3 py-2">
+                            <img 
+                              src={agent.agent_image} 
+                              alt={agent.agent_name}
+                              className="w-10 h-10 rounded-full object-cover"
+                            />
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2 mb-1">
+                                <div className="font-semibold text-slate-800">{agent.agent_name}</div>
+                                <div className="flex items-center gap-1.5">
+                                  <span 
+                                    className="text-xs px-2 py-0.5 rounded-full font-medium text-slate-700"
+                                    style={{ backgroundColor: bgColor }}
+                                  >
+                                    {agent.agent_category}
+                                  </span>
+                                  <span className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-full font-semibold bg-[hsl(45,78%,88%)] text-[hsl(45,78%,35%)]">
+                                    <Star size={10} fill="currentColor" />
+                                    {agent.rating}
+                                  </span>
+                                </div>
                               </div>
+                              <div className="text-xs text-slate-600 line-clamp-1">{agent.agent_description}</div>
                             </div>
-                            <div className="text-xs text-slate-600 line-clamp-1">{agent.agent_description}</div>
                           </div>
-                        </div>
-                      </SelectItem>
-                    );
-                  })}
-                </SelectContent>
-              </Select>
+                        </SelectItem>
+                      );
+                    })}
+                  </SelectContent>
+                </Select>
+                <Button
+                  onClick={() => {
+                    if (!selectedAgentId) {
+                      toast.error("Selecione um agente primeiro");
+                      return;
+                    }
+                    setShowAgentChat(true);
+                  }}
+                  className="bg-[#7FA8C9] hover:bg-[#6B91B3] text-white"
+                >
+                  <MessageSquare className="w-4 h-4 mr-2" />
+                  Chamar Agente
+                </Button>
+              </div>
             </div>
 
             <div>
@@ -685,53 +716,48 @@ Exemplo para PIX:
                     className="min-h-[400px] border-slate-300 font-normal text-base leading-relaxed"
                     placeholder="Digite o conteúdo do slide..."
                   />
+                  
+                  {/* Images and Charts inline */}
+                  <div className="mt-4 space-y-3">
+                    {currentSlide?.imageUrl && (
+                      <div className="relative inline-block">
+                        <img
+                          src={currentSlide.imageUrl}
+                          alt="Slide"
+                          className="w-64 h-auto rounded-lg border-2 border-slate-200"
+                        />
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => updateSlide("imageUrl", undefined)}
+                          className="absolute top-1 right-1 bg-white/90 hover:bg-white h-7 w-7 p-0"
+                        >
+                          <Trash2 className="w-3 h-3 text-red-500" />
+                        </Button>
+                      </div>
+                    )}
+                    
+                    {currentSlide?.chartData && (
+                      <div className="relative inline-block w-80">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => updateSlide("chartData", undefined)}
+                          className="absolute top-1 right-1 bg-white/90 hover:bg-white h-7 w-7 p-0 z-10"
+                        >
+                          <Trash2 className="w-3 h-3 text-red-500" />
+                        </Button>
+                        <div className="scale-75 origin-top-left">
+                          <SlideChart
+                            type={currentSlide.chartData.type}
+                            data={currentSlide.chartData.data}
+                            title={currentSlide.chartData.title}
+                          />
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
-
-                {currentSlide?.imageUrl && (
-                  <div>
-                    <label className="text-sm font-medium text-slate-700 mb-2 block">
-                      Imagem
-                    </label>
-                    <div className="relative">
-                      <img
-                        src={currentSlide.imageUrl}
-                        alt="Slide"
-                        className="w-full rounded-lg border border-slate-200"
-                      />
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => updateSlide("imageUrl", undefined)}
-                        className="absolute top-2 right-2 bg-white/90 hover:bg-white"
-                      >
-                        <Trash2 className="w-4 h-4 text-red-500" />
-                      </Button>
-                    </div>
-                  </div>
-                )}
-
-                {currentSlide?.chartData && (
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <label className="text-sm font-medium text-slate-700">
-                        Gráfico
-                      </label>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => updateSlide("chartData", undefined)}
-                        className="text-slate-400 hover:text-red-500"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
-                    <SlideChart
-                      type={currentSlide.chartData.type}
-                      data={currentSlide.chartData.data}
-                      title={currentSlide.chartData.title}
-                    />
-                  </div>
-                )}
               </div>
             </div>
           </div>
