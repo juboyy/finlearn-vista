@@ -192,7 +192,7 @@ Contexto: Mercado financeiro brasileiro.`,
   };
 
   return (
-    <div className="flex h-screen bg-slate-50">
+    <div className="flex h-screen bg-slate-50 w-full">
       <SidebarFix />
 
       {/* Info Dialog */}
@@ -306,9 +306,9 @@ Contexto: Mercado financeiro brasileiro.`,
       </Dialog>
 
       {/* Main Content */}
-      <div className="flex-1 flex ml-64">
+      <div className="flex-1 flex ml-64 w-full">
         {/* Slides Sidebar */}
-        <div className="w-72 bg-white border-r border-slate-200 p-4 overflow-y-auto">
+        <div className="w-80 bg-white border-r border-slate-200 p-4 overflow-y-auto flex-shrink-0">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-slate-800">Slides</h2>
             <Button
@@ -355,10 +355,10 @@ Contexto: Mercado financeiro brasileiro.`,
         </div>
 
         {/* Editor Area */}
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col w-full">
           {/* Toolbar */}
-          <div className="bg-white border-b border-slate-200 p-4">
-            <div className="flex items-center justify-between">
+          <div className="bg-white border-b border-slate-200 p-4 w-full">
+            <div className="flex items-center justify-between w-full">
               <h1 className="text-xl font-semibold text-slate-800">
                 {projectInfo.title || "Nova Apresentação"}
               </h1>
@@ -389,8 +389,8 @@ Contexto: Mercado financeiro brasileiro.`,
           </div>
 
           {/* Slide Editor */}
-          <div className="flex-1 p-8 overflow-y-auto">
-            <Card className="max-w-4xl mx-auto p-8 bg-white">
+          <div className="flex-1 p-8 overflow-y-auto w-full">
+            <div className="w-full p-8 bg-white border border-slate-200 rounded-lg">
               <div className="space-y-6">
                 <div>
                   <label className="text-sm font-medium text-slate-700 mb-2 block">
@@ -444,18 +444,18 @@ Contexto: Mercado financeiro brasileiro.`,
                     <label className="text-sm font-medium text-slate-700 mb-2 block">
                       Gráfico
                     </label>
-                    <Card className="p-6 bg-slate-50 border border-slate-200">
+                    <div className="p-6 bg-slate-50 border border-slate-200 rounded-lg">
                       <div className="flex items-center justify-center h-64">
                         <BarChart3 className="w-16 h-16 text-slate-400" />
                         <p className="ml-4 text-slate-600">
                           Gráfico: {currentSlide.chartData.type}
                         </p>
                       </div>
-                    </Card>
+                    </div>
                   </div>
                 )}
               </div>
-            </Card>
+            </div>
           </div>
         </div>
       </div>
