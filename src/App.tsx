@@ -89,6 +89,7 @@ import ContaEmpresarial from "./pages/ContaEmpresarial";
 import PerfilEmpresa from "./pages/PerfilEmpresa";
 import PerfilEmpresaMateriais from "./pages/PerfilEmpresaMateriais";
 import PerfilEmpresaEstatisticas from "./pages/PerfilEmpresaEstatisticas";
+import PerfilEmpresaArtigos from "./pages/PerfilEmpresaArtigos";
 
 import NotFound from "./pages/NotFound";
 
@@ -138,6 +139,7 @@ const App = () => {
           <Route path="/perfil-empresa/:id" element={<PerfilEmpresa />} />
           <Route path="/perfil-empresa/:id/materiais" element={<PerfilEmpresaMateriais />} />
           <Route path="/perfil-empresa/:id/estatisticas" element={<PerfilEmpresaEstatisticas />} />
+          <Route path="/perfil-empresa/:id/artigos" element={<PerfilEmpresaArtigos />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/checkout/payment" element={<CheckoutPayment />} />
           <Route path="/podcasts" element={<Podcasts />} />
