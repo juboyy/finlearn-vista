@@ -524,16 +524,18 @@ export default function PerfilEmpresa() {
                 <h3 className="text-lg font-semibold text-slate-800 mb-4">Redes Sociais</h3>
                 <div className="space-y-3">
                   {[
-                    { icon: "linkedin", text: "linkedin.com/company/itau" },
-                    { icon: "twitter", text: "@itau" },
-                    { icon: "instagram", text: "@itau" },
-                    { icon: "youtube", text: "Itaú Unibanco" },
-                    { icon: "globe", text: "www.itau.com.br" }
+                    { icon: "linkedin", text: "linkedin.com/company/itau", bg: "bg-pastel-blue", iconColor: "text-blue-600" },
+                    { icon: "twitter", text: "@itau", bg: "bg-pastel-blue", iconColor: "text-sky-500" },
+                    { icon: "instagram", text: "@itau", bg: "bg-pastel-pink", iconColor: "text-pink-600" },
+                    { icon: "youtube", text: "Itaú Unibanco", bg: "bg-pastel-peach", iconColor: "text-red-600" },
+                    { icon: "globe", text: "www.itau.com.br", bg: "bg-pastel-purple", iconColor: "text-purple-600" }
                   ].map((social, idx) => (
-                    <a key={idx} href="#" className="flex items-center gap-3 p-3 hover:bg-slate-50 rounded-lg transition">
-                      {social.icon === "globe" ? <Globe className="w-5 h-5 text-slate-600" /> : 
-                       <i className={`fab fa-${social.icon} text-slate-600 text-lg`}></i>}
-                      <span className="text-sm text-slate-700">{social.text}</span>
+                    <a key={idx} href="#" className={`flex items-center gap-4 p-4 ${social.bg} rounded-lg transition-all hover:scale-105 hover:shadow-md group`}>
+                      <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
+                        {social.icon === "globe" ? <Globe className={`w-6 h-6 ${social.iconColor}`} /> : 
+                         <i className={`fab fa-${social.icon} ${social.iconColor} text-xl`}></i>}
+                      </div>
+                      <span className="text-sm font-medium text-slate-700 group-hover:text-slate-900">{social.text}</span>
                     </a>
                   ))}
                 </div>
