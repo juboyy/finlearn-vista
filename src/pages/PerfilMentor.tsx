@@ -1,0 +1,826 @@
+import { SidebarFix } from "@/components/Dashboard/SidebarFix";
+import { 
+  Bell, Share2, ArrowLeft, MapPin, Briefcase, Users, Star, Video, Mic, 
+  MessageCircle, UsersRound, BookOpen, FileText, Calendar, Clock, Trophy, 
+  Bot, Check, Mail, Linkedin, Globe, Award, X, Send, Info
+} from "lucide-react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+const PerfilMentor = () => {
+  const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
+  const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<"mentores" | "seguindo" | "seguidores" | "descobrir">("mentores");
+  const navigate = useNavigate();
+
+  return (
+    <div className="flex h-screen overflow-hidden">
+      <SidebarFix />
+      
+      <main className="flex-1 overflow-y-auto">
+        <header className="bg-white border-b-2 border-slate-300 sticky top-0 z-10">
+          <div className="px-8 py-4 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <button onClick={() => navigate(-1)} className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
+                <ArrowLeft size={20} />
+              </button>
+              <div>
+                <h1 className="text-2xl font-semibold text-slate-800">Perfil do Mentor</h1>
+                <p className="text-sm text-slate-500 mt-1">Informações profissionais e serviços disponíveis</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-4">
+              <button className="relative p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
+                <Bell size={20} />
+                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+              </button>
+              <button className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
+                <Share2 size={20} />
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <div className="p-8">
+          {/* Hero Section */}
+          <section className="bg-white rounded-2xl border-2 border-slate-300 overflow-hidden mb-6">
+            <div className="h-48 bg-[#D4C5E8]"></div>
+            <div className="px-8 pb-8">
+              <div className="flex items-start gap-6 -mt-16">
+                <img 
+                  src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" 
+                  alt="Dra. Ana Beatriz Costa" 
+                  className="w-32 h-32 rounded-2xl object-cover border-4 border-white shadow-lg"
+                />
+                <div className="flex-1 pt-20">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <div className="flex items-center gap-3 mb-2">
+                        <h2 className="text-3xl font-bold text-slate-800">Dra. Ana Beatriz Costa</h2>
+                        <Award className="text-[#D4C5E8]" size={24} />
+                        <span className="px-3 py-1 bg-[#C5E8D4] text-slate-700 rounded-full text-sm font-medium border-2 border-slate-300">
+                          Disponível
+                        </span>
+                      </div>
+                      <p className="text-lg text-slate-600 mb-3">Diretora de Compliance - Banco Central</p>
+                      <div className="flex items-center gap-6 text-sm text-slate-600">
+                        <div className="flex items-center gap-2">
+                          <MapPin size={16} className="text-slate-400" />
+                          <span>São Paulo, SP</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Briefcase size={16} className="text-slate-400" />
+                          <span>15 anos de experiência</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Users size={16} className="text-slate-400" />
+                          <span>156 mentorias realizadas</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <button className="px-6 py-3 border-2 border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-slate-50 transition">
+                        <Star size={16} className="inline mr-2" />
+                        Favoritar
+                      </button>
+                      <button 
+                        onClick={() => setIsScheduleModalOpen(true)}
+                        className="px-6 py-3 bg-[#D4C5E8] border-2 border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
+                      >
+                        <Calendar size={16} className="inline mr-2" />
+                        Agendar Mentoria
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <div className="grid grid-cols-3 gap-6">
+            {/* Left Column - 2/3 width */}
+            <div className="col-span-2 space-y-6">
+              {/* About Section */}
+              <section className="bg-white rounded-2xl p-6 border-2 border-slate-300">
+                <h3 className="text-xl font-semibold text-slate-800 mb-4 flex items-center gap-2">
+                  <Users size={20} className="text-slate-600" />
+                  Sobre o Mentor
+                </h3>
+                <p className="text-slate-700 leading-relaxed mb-4">
+                  Profissional com mais de 15 anos de experiência em Compliance e Regulação no mercado financeiro brasileiro. Atualmente, atua como Diretora de Compliance no Banco Central do Brasil, onde lidera iniciativas estratégicas de governança e conformidade regulatória.
+                </p>
+                <p className="text-slate-700 leading-relaxed">
+                  Especialista em normas CVM, BACEN e regulamentações do Sistema Financeiro Nacional. Possui ampla experiência em implementação de programas de compliance, gestão de riscos regulatórios e relacionamento com órgãos reguladores. Mestre em Direito Econômico e Financeiro pela USP e certificações CPA-20, CEA e CNPI.
+                </p>
+              </section>
+
+              {/* Professional Experience */}
+              <section className="bg-white rounded-2xl p-6 border-2 border-slate-300">
+                <h3 className="text-xl font-semibold text-slate-800 mb-6 flex items-center gap-2">
+                  <Briefcase size={20} className="text-slate-600" />
+                  Experiência Profissional
+                </h3>
+                <div className="space-y-6">
+                  <div className="flex gap-4">
+                    <div className="w-12 h-12 bg-[#D4C5E8] border-2 border-slate-300 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Briefcase size={20} className="text-slate-700" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-start justify-between mb-2">
+                        <div>
+                          <h4 className="font-semibold text-slate-800">Diretora de Compliance</h4>
+                          <p className="text-slate-600">Banco Central do Brasil</p>
+                        </div>
+                        <span className="text-sm text-slate-500">2019 - Atual</span>
+                      </div>
+                      <p className="text-sm text-slate-600 leading-relaxed">
+                        Liderança de equipe multidisciplinar responsável pela governança e conformidade regulatória. Implementação de políticas de compliance alinhadas às diretrizes do CMN e CVM.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-4">
+                    <div className="w-12 h-12 bg-[#B8D4E8] border-2 border-slate-300 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Briefcase size={20} className="text-slate-700" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-start justify-between mb-2">
+                        <div>
+                          <h4 className="font-semibold text-slate-800">Gerente Sênior de Compliance</h4>
+                          <p className="text-slate-600">Itaú Unibanco</p>
+                        </div>
+                        <span className="text-sm text-slate-500">2015 - 2019</span>
+                      </div>
+                      <p className="text-sm text-slate-600 leading-relaxed">
+                        Gestão de processos de compliance para produtos de investimentos e mercado de capitais. Relacionamento com CVM e B3.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-4">
+                    <div className="w-12 h-12 bg-[#C5E8D4] border-2 border-slate-300 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Briefcase size={20} className="text-slate-700" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-start justify-between mb-2">
+                        <div>
+                          <h4 className="font-semibold text-slate-800">Analista de Compliance Pleno</h4>
+                          <p className="text-slate-600">Bradesco S.A.</p>
+                        </div>
+                        <span className="text-sm text-slate-500">2012 - 2015</span>
+                      </div>
+                      <p className="text-sm text-slate-600 leading-relaxed">
+                        Análise de conformidade regulatória de produtos financeiros. Elaboração de pareceres técnicos e suporte a auditorias.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-4">
+                    <div className="w-12 h-12 bg-[#E8E0C5] border-2 border-slate-300 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Briefcase size={20} className="text-slate-700" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-start justify-between mb-2">
+                        <div>
+                          <h4 className="font-semibold text-slate-800">Analista Júnior</h4>
+                          <p className="text-slate-600">CVM - Comissão de Valores Mobiliários</p>
+                        </div>
+                        <span className="text-sm text-slate-500">2009 - 2012</span>
+                      </div>
+                      <p className="text-sm text-slate-600 leading-relaxed">
+                        Análise de processos regulatórios e fiscalização de instituições financeiras. Suporte técnico em normatização.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* Mentoring Channels */}
+              <section className="bg-white rounded-2xl p-6 border-2 border-slate-300">
+                <h3 className="text-xl font-semibold text-slate-800 mb-6 flex items-center gap-2">
+                  <MessageCircle size={20} className="text-slate-600" />
+                  Canais de Mentoria Disponíveis
+                </h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="p-4 border-2 border-slate-300 rounded-lg hover:border-[#D4C5E8] transition cursor-pointer">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="w-10 h-10 bg-[#D4C5E8] border-2 border-slate-300 rounded-lg flex items-center justify-center">
+                        <Video size={20} className="text-slate-700" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-slate-800">Videoconferência</h4>
+                        <p className="text-xs text-slate-500">Sessões ao vivo</p>
+                      </div>
+                    </div>
+                    <p className="text-sm text-slate-600">Mentorias individuais por vídeo com compartilhamento de tela</p>
+                  </div>
+
+                  <div className="p-4 border-2 border-slate-300 rounded-lg hover:border-[#B8D4E8] transition cursor-pointer">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="w-10 h-10 bg-[#B8D4E8] border-2 border-slate-300 rounded-lg flex items-center justify-center">
+                        <Mic size={20} className="text-slate-700" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-slate-800">Áudio</h4>
+                        <p className="text-xs text-slate-500">Chamadas de voz</p>
+                      </div>
+                    </div>
+                    <p className="text-sm text-slate-600">Sessões por áudio para discussões focadas</p>
+                  </div>
+
+                  <div className="p-4 border-2 border-slate-300 rounded-lg hover:border-[#C5E8D4] transition cursor-pointer">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="w-10 h-10 bg-[#C5E8D4] border-2 border-slate-300 rounded-lg flex items-center justify-center">
+                        <MessageCircle size={20} className="text-slate-700" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-slate-800">Chat</h4>
+                        <p className="text-xs text-slate-500">Mensagens de texto</p>
+                      </div>
+                    </div>
+                    <p className="text-sm text-slate-600">Suporte assíncrono via mensagens</p>
+                  </div>
+
+                  <div className="p-4 border-2 border-slate-300 rounded-lg hover:border-[#E8E0C5] transition cursor-pointer">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="w-10 h-10 bg-[#E8E0C5] border-2 border-slate-300 rounded-lg flex items-center justify-center">
+                        <UsersRound size={20} className="text-slate-700" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-slate-800">Grupo</h4>
+                        <p className="text-xs text-slate-500">Sessões coletivas</p>
+                      </div>
+                    </div>
+                    <p className="text-sm text-slate-600">Mentorias em grupo com até 5 pessoas</p>
+                  </div>
+                </div>
+              </section>
+
+              {/* Published Content */}
+              <section className="bg-white rounded-2xl p-6 border-2 border-slate-300">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-xl font-semibold text-slate-800 flex items-center gap-2">
+                    <BookOpen size={20} className="text-slate-600" />
+                    Conteúdos Publicados
+                  </h3>
+                  <button className="text-sm text-slate-600 hover:text-slate-800 font-medium">Ver todos</button>
+                </div>
+                <div className="grid grid-cols-4 gap-4 mb-6">
+                  <div className="text-center p-4 bg-[#D4C5E8] border-2 border-slate-300 rounded-lg">
+                    <div className="text-3xl font-bold text-slate-800 mb-1">48</div>
+                    <div className="text-xs text-slate-600">Artigos</div>
+                  </div>
+                  <div className="text-center p-4 bg-[#B8D4E8] border-2 border-slate-300 rounded-lg">
+                    <div className="text-3xl font-bold text-slate-800 mb-1">12</div>
+                    <div className="text-xs text-slate-600">Webinars</div>
+                  </div>
+                  <div className="text-center p-4 bg-[#C5E8D4] border-2 border-slate-300 rounded-lg">
+                    <div className="text-3xl font-bold text-slate-800 mb-1">5</div>
+                    <div className="text-xs text-slate-600">E-books</div>
+                  </div>
+                  <div className="text-center p-4 bg-[#E8E0C5] border-2 border-slate-300 rounded-lg">
+                    <div className="text-3xl font-bold text-slate-800 mb-1">23</div>
+                    <div className="text-xs text-slate-600">Podcasts</div>
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-4 p-3 border-2 border-slate-300 rounded-lg hover:border-[#D4C5E8] transition cursor-pointer">
+                    <div className="w-16 h-16 bg-[#D4C5E8] border-2 border-slate-300 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <FileText size={24} className="text-slate-700" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-semibold text-slate-800 truncate">Novas Diretrizes CVM para Gestoras</h4>
+                      <p className="text-sm text-slate-600 truncate">Análise das mudanças regulatórias de 2024</p>
+                      <div className="flex items-center gap-3 mt-1">
+                        <span className="text-xs text-slate-500">Há 2 dias</span>
+                        <span className="text-xs text-slate-500">•</span>
+                        <span className="text-xs text-slate-500">1.2k visualizações</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-4 p-3 border-2 border-slate-300 rounded-lg hover:border-[#B8D4E8] transition cursor-pointer">
+                    <div className="w-16 h-16 bg-[#B8D4E8] border-2 border-slate-300 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Video size={24} className="text-slate-700" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-semibold text-slate-800 truncate">Webinar: Compliance em Pagamentos Instantâneos</h4>
+                      <p className="text-sm text-slate-600 truncate">Desafios e oportunidades do PIX para instituições</p>
+                      <div className="flex items-center gap-3 mt-1">
+                        <span className="text-xs text-slate-500">Há 1 semana</span>
+                        <span className="text-xs text-slate-500">•</span>
+                        <span className="text-xs text-slate-500">856 participantes</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-4 p-3 border-2 border-slate-300 rounded-lg hover:border-[#C5E8D4] transition cursor-pointer">
+                    <div className="w-16 h-16 bg-[#C5E8D4] border-2 border-slate-300 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <BookOpen size={24} className="text-slate-700" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-semibold text-slate-800 truncate">E-book: Guia Completo de Compliance Bancário</h4>
+                      <p className="text-sm text-slate-600 truncate">Manual prático para profissionais do setor</p>
+                      <div className="flex items-center gap-3 mt-1">
+                        <span className="text-xs text-slate-500">Há 2 semanas</span>
+                        <span className="text-xs text-slate-500">•</span>
+                        <span className="text-xs text-slate-500">645 downloads</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* Testimonials */}
+              <section className="bg-white rounded-2xl p-6 border-2 border-slate-300">
+                <h3 className="text-xl font-semibold text-slate-800 mb-6 flex items-center gap-2">
+                  <MessageCircle size={20} className="text-slate-600" />
+                  Avaliações de Mentorados
+                </h3>
+                <div className="space-y-4">
+                  <div className="p-4 bg-slate-50 border-2 border-slate-300 rounded-lg">
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-3">
+                        <img 
+                          src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" 
+                          alt="Carlos Eduardo" 
+                          className="w-10 h-10 rounded-full object-cover"
+                        />
+                        <div>
+                          <h4 className="font-semibold text-slate-800 text-sm">Carlos Eduardo Silva</h4>
+                          <p className="text-xs text-slate-500">Analista de Compliance - BTG Pactual</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} size={12} className="fill-yellow-500 text-yellow-500" />
+                        ))}
+                      </div>
+                    </div>
+                    <p className="text-sm text-slate-700 leading-relaxed">
+                      Mentoria excepcional! A Dra. Ana tem um conhecimento profundo sobre regulamentação e conseguiu me ajudar a estruturar todo o programa de compliance da nossa área. Recomendo fortemente!
+                    </p>
+                    <p className="text-xs text-slate-500 mt-2">Há 3 dias</p>
+                  </div>
+
+                  <div className="p-4 bg-slate-50 border-2 border-slate-300 rounded-lg">
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-3">
+                        <img 
+                          src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg" 
+                          alt="Mariana Santos" 
+                          className="w-10 h-10 rounded-full object-cover"
+                        />
+                        <div>
+                          <h4 className="font-semibold text-slate-800 text-sm">Mariana Santos</h4>
+                          <p className="text-xs text-slate-500">Gerente de Riscos - Santander</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} size={12} className="fill-yellow-500 text-yellow-500" />
+                        ))}
+                      </div>
+                    </div>
+                    <p className="text-sm text-slate-700 leading-relaxed">
+                      Profissional extremamente competente e didática. As sessões foram fundamentais para minha transição de carreira para a área de compliance.
+                    </p>
+                    <p className="text-xs text-slate-500 mt-2">Há 1 semana</p>
+                  </div>
+
+                  <div className="p-4 bg-slate-50 border-2 border-slate-300 rounded-lg">
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-3">
+                        <img 
+                          src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg" 
+                          alt="Fernando Lima" 
+                          className="w-10 h-10 rounded-full object-cover"
+                        />
+                        <div>
+                          <h4 className="font-semibold text-slate-800 text-sm">Fernando Lima</h4>
+                          <p className="text-xs text-slate-500">Coordenador - Banco do Brasil</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} size={12} className="fill-yellow-500 text-yellow-500" />
+                        ))}
+                      </div>
+                    </div>
+                    <p className="text-sm text-slate-700 leading-relaxed">
+                      Excelente mentora! Me ajudou muito na preparação para certificações e no entendimento prático das normas CVM.
+                    </p>
+                    <p className="text-xs text-slate-500 mt-2">Há 2 semanas</p>
+                  </div>
+                </div>
+              </section>
+            </div>
+
+            {/* Right Column - 1/3 width */}
+            <div className="space-y-6">
+              {/* Statistics */}
+              <section className="bg-white rounded-2xl p-6 border-2 border-slate-300">
+                <h3 className="text-lg font-semibold text-slate-800 mb-4">Estatísticas</h3>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between p-3 bg-slate-50 border-2 border-slate-300 rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-[#D4C5E8] border-2 border-slate-300 rounded-lg flex items-center justify-center">
+                        <Users size={20} className="text-slate-700" />
+                      </div>
+                      <span className="text-sm text-slate-700">Mentorados</span>
+                    </div>
+                    <span className="text-lg font-bold text-slate-800">156</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-slate-50 border-2 border-slate-300 rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-[#B8D4E8] border-2 border-slate-300 rounded-lg flex items-center justify-center">
+                        <Clock size={20} className="text-slate-700" />
+                      </div>
+                      <span className="text-sm text-slate-700">Horas Totais</span>
+                    </div>
+                    <span className="text-lg font-bold text-slate-800">234h</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-slate-50 border-2 border-slate-300 rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-[#C5E8D4] border-2 border-slate-300 rounded-lg flex items-center justify-center">
+                        <Star size={20} className="text-slate-700" />
+                      </div>
+                      <span className="text-sm text-slate-700">Avaliação</span>
+                    </div>
+                    <span className="text-lg font-bold text-slate-800">5.0</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-slate-50 border-2 border-slate-300 rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-[#E8E0C5] border-2 border-slate-300 rounded-lg flex items-center justify-center">
+                        <Trophy size={20} className="text-slate-700" />
+                      </div>
+                      <span className="text-sm text-slate-700">Pontuação</span>
+                    </div>
+                    <span className="text-lg font-bold text-slate-800">98/100</span>
+                  </div>
+                </div>
+              </section>
+
+              {/* AI Avatar */}
+              <section className="bg-white rounded-2xl p-6 border-2 border-slate-300">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 bg-[#D4C5E8] border-2 border-slate-300 rounded-lg flex items-center justify-center">
+                    <Bot size={24} className="text-slate-700" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-slate-800">Avatar IA Disponível</h3>
+                    <span className="inline-block px-2 py-0.5 bg-[#C5E8D4] border border-slate-300 text-slate-700 rounded text-xs font-medium">
+                      24/7 Disponível
+                    </span>
+                  </div>
+                </div>
+                <p className="text-sm text-slate-600 mb-4 leading-relaxed">
+                  Consulte o avatar digital da Dra. Ana a qualquer momento. Obtenha respostas instantâneas sobre compliance, regulação e melhores práticas.
+                </p>
+                <div className="space-y-3 mb-4">
+                  <div className="flex items-center gap-2 text-sm text-slate-700">
+                    <Check size={16} className="text-[#C5E8D4]" />
+                    <span>Respostas baseadas na expertise real</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-slate-700">
+                    <Check size={16} className="text-[#C5E8D4]" />
+                    <span>Disponível 24 horas por dia</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-slate-700">
+                    <Check size={16} className="text-[#C5E8D4]" />
+                    <span>Histórico de conversas salvo</span>
+                  </div>
+                </div>
+                <button 
+                  onClick={() => setIsAvatarModalOpen(true)}
+                  className="w-full px-4 py-2 bg-[#D4C5E8] border-2 border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition mb-3"
+                >
+                  <MessageCircle size={16} className="inline mr-2" />
+                  Testar Avatar Gratuitamente
+                </button>
+                <div className="p-3 bg-slate-50 border-2 border-slate-300 rounded-lg">
+                  <div className="text-xs text-slate-500 mb-2">Planos de Acesso:</div>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-slate-700">Por Crédito</span>
+                      <span className="text-sm font-semibold text-slate-800">R$ 15/consulta</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-slate-700">Mensal Ilimitado</span>
+                      <span className="text-sm font-semibold text-slate-800">R$ 149/mês</span>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* Specialties */}
+              <section className="bg-white rounded-2xl p-6 border-2 border-slate-300">
+                <h3 className="text-lg font-semibold text-slate-800 mb-4">Especialidades</h3>
+                <div className="flex flex-wrap gap-2">
+                  {["Compliance", "Regulação CVM", "BACEN", "Governança", "Gestão de Riscos", "Auditoria", "Controles Internos", "PLD/FT"].map((specialty) => (
+                    <span key={specialty} className="px-3 py-1.5 bg-slate-400 text-white rounded-full text-sm border-2 border-slate-300">
+                      {specialty}
+                    </span>
+                  ))}
+                </div>
+              </section>
+
+              {/* Certifications */}
+              <section className="bg-white rounded-2xl p-6 border-2 border-slate-300">
+                <h3 className="text-lg font-semibold text-slate-800 mb-4">Certificações</h3>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 p-3 bg-slate-50 border-2 border-slate-300 rounded-lg">
+                    <Award className="text-[#D4C5E8]" size={20} />
+                    <div>
+                      <p className="text-sm font-medium text-slate-800">CPA-20</p>
+                      <p className="text-xs text-slate-500">ANBIMA</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-slate-50 border-2 border-slate-300 rounded-lg">
+                    <Award className="text-[#B8D4E8]" size={20} />
+                    <div>
+                      <p className="text-sm font-medium text-slate-800">CEA</p>
+                      <p className="text-xs text-slate-500">ANBIMA</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-slate-50 border-2 border-slate-300 rounded-lg">
+                    <Award className="text-[#C5E8D4]" size={20} />
+                    <div>
+                      <p className="text-sm font-medium text-slate-800">CNPI</p>
+                      <p className="text-xs text-slate-500">APIMEC</p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* Availability */}
+              <section className="bg-white rounded-2xl p-6 border-2 border-slate-300">
+                <h3 className="text-lg font-semibold text-slate-800 mb-4">Disponibilidade</h3>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-3 bg-slate-50 border-2 border-slate-300 rounded-lg">
+                    <span className="text-sm text-slate-700">Próxima vaga</span>
+                    <span className="text-sm font-semibold text-slate-800">15/12/2024</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-slate-50 border-2 border-slate-300 rounded-lg">
+                    <span className="text-sm text-slate-700">Horário preferencial</span>
+                    <span className="text-sm font-semibold text-slate-800">14h - 18h</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-slate-50 border-2 border-slate-300 rounded-lg">
+                    <span className="text-sm text-slate-700">Duração sessão</span>
+                    <span className="text-sm font-semibold text-slate-800">60 minutos</span>
+                  </div>
+                </div>
+              </section>
+
+              {/* Pricing */}
+              <section className="bg-white rounded-2xl p-6 border-2 border-slate-300">
+                <h3 className="text-lg font-semibold text-slate-800 mb-4">Investimento</h3>
+                <div className="space-y-3">
+                  <div className="p-4 border-2 border-[#D4C5E8] rounded-lg">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium text-slate-700">Sessão Individual</span>
+                      <span className="text-xs bg-[#D4C5E8] text-slate-700 px-2 py-1 rounded-full border border-slate-300">Popular</span>
+                    </div>
+                    <div className="text-2xl font-bold text-slate-800 mb-1">R$ 450</div>
+                    <p className="text-xs text-slate-500">por hora</p>
+                  </div>
+                  <div className="p-4 border-2 border-slate-300 rounded-lg">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium text-slate-700">Pacote 5 Sessões</span>
+                    </div>
+                    <div className="text-2xl font-bold text-slate-800 mb-1">R$ 2.025</div>
+                    <p className="text-xs text-slate-500">R$ 405/hora - Economia de 10%</p>
+                  </div>
+                  <div className="p-4 border-2 border-slate-300 rounded-lg">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium text-slate-700">Mentoria em Grupo</span>
+                    </div>
+                    <div className="text-2xl font-bold text-slate-800 mb-1">R$ 180</div>
+                    <p className="text-xs text-slate-500">por pessoa/hora (até 5 pessoas)</p>
+                  </div>
+                </div>
+              </section>
+
+              {/* Contact */}
+              <section className="bg-white rounded-2xl p-6 border-2 border-slate-300">
+                <h3 className="text-lg font-semibold text-slate-800 mb-4">Contato</h3>
+                <div className="space-y-3">
+                  <a href="#" className="flex items-center gap-3 p-3 hover:bg-slate-50 rounded-lg transition">
+                    <Mail size={16} className="text-slate-600" />
+                    <span className="text-sm text-slate-700">ana.costa@finlearn.com</span>
+                  </a>
+                  <a href="#" className="flex items-center gap-3 p-3 hover:bg-slate-50 rounded-lg transition">
+                    <Linkedin size={16} className="text-slate-600" />
+                    <span className="text-sm text-slate-700">linkedin.com/in/anabcosta</span>
+                  </a>
+                  <a href="#" className="flex items-center gap-3 p-3 hover:bg-slate-50 rounded-lg transition">
+                    <Globe size={16} className="text-slate-600" />
+                    <span className="text-sm text-slate-700">anabcosta.com.br</span>
+                  </a>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      {/* Schedule Modal */}
+      {isScheduleModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={() => setIsScheduleModalOpen(false)}>
+          <div className="bg-white rounded-2xl p-8 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto border-2 border-slate-300" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-2xl font-semibold text-slate-800">Agendar Mentoria</h3>
+              <button onClick={() => setIsScheduleModalOpen(false)} className="p-2 text-slate-400 hover:text-slate-600 rounded-lg transition">
+                <X size={24} />
+              </button>
+            </div>
+            <div className="space-y-6">
+              <div className="flex items-center gap-4 p-4 bg-slate-50 border-2 border-slate-300 rounded-lg">
+                <img 
+                  src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" 
+                  alt="Dra. Ana Beatriz Costa" 
+                  className="w-16 h-16 rounded-full object-cover"
+                />
+                <div>
+                  <h4 className="font-semibold text-slate-800">Dra. Ana Beatriz Costa</h4>
+                  <p className="text-sm text-slate-600">Diretora de Compliance - Banco Central</p>
+                  <div className="flex items-center gap-2 mt-1">
+                    <Star size={12} className="fill-yellow-500 text-yellow-500" />
+                    <span className="text-sm text-slate-600">5.0 (128 avaliações)</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Tipo de Mentoria</label>
+                <select className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4C5E8]">
+                  <option>Sessão Individual (R$ 450/hora)</option>
+                  <option>Pacote 5 Sessões (R$ 2.025)</option>
+                  <option>Mentoria em Grupo (R$ 180/pessoa)</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Canal de Comunicação</label>
+                <div className="grid grid-cols-2 gap-3">
+                  <label className="flex items-center gap-3 p-4 border-2 border-slate-300 rounded-lg cursor-pointer hover:border-[#D4C5E8] transition">
+                    <input type="radio" name="channel" className="w-4 h-4 text-[#D4C5E8]" defaultChecked />
+                    <div>
+                      <div className="font-medium text-slate-800 text-sm">Videoconferência</div>
+                      <div className="text-xs text-slate-500">Sessão ao vivo</div>
+                    </div>
+                  </label>
+                  <label className="flex items-center gap-3 p-4 border-2 border-slate-300 rounded-lg cursor-pointer hover:border-[#D4C5E8] transition">
+                    <input type="radio" name="channel" className="w-4 h-4 text-[#D4C5E8]" />
+                    <div>
+                      <div className="font-medium text-slate-800 text-sm">Áudio</div>
+                      <div className="text-xs text-slate-500">Chamada de voz</div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Área de Interesse</label>
+                <select className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4C5E8]">
+                  <option>Compliance Regulatório</option>
+                  <option>Gestão de Riscos</option>
+                  <option>Governança Corporativa</option>
+                  <option>Controles Internos</option>
+                  <option>PLD/FT</option>
+                  <option>Auditoria</option>
+                </select>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">Data</label>
+                  <input type="date" className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4C5E8]" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">Horário</label>
+                  <select className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4C5E8]">
+                    <option>14:00</option>
+                    <option>15:00</option>
+                    <option>16:00</option>
+                    <option>17:00</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Duração</label>
+                <select className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4C5E8]">
+                  <option>60 minutos (R$ 450)</option>
+                  <option>90 minutos (R$ 675)</option>
+                  <option>120 minutos (R$ 900)</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Objetivo da Mentoria</label>
+                <textarea 
+                  rows={4} 
+                  placeholder="Descreva seus objetivos, desafios atuais e o que espera alcançar com esta mentoria..." 
+                  className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4C5E8] resize-none"
+                ></textarea>
+              </div>
+
+              <div className="p-4 bg-[#E8E0C5] border-2 border-slate-300 rounded-lg">
+                <div className="flex items-start gap-3">
+                  <Info size={20} className="text-slate-700 mt-0.5" />
+                  <div className="text-sm text-slate-700">
+                    <p className="font-medium mb-1">Importante:</p>
+                    <p>Você receberá um email de confirmação com o link para a sessão. Cancelamentos devem ser feitos com até 24h de antecedência.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex gap-3 pt-4">
+                <button className="flex-1 px-6 py-3 bg-[#D4C5E8] border-2 border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                  <Calendar size={16} className="inline mr-2" />
+                  Confirmar Agendamento
+                </button>
+                <button 
+                  onClick={() => setIsScheduleModalOpen(false)}
+                  className="flex-1 px-6 py-3 border-2 border-slate-300 text-slate-600 rounded-lg font-medium hover:bg-slate-50 transition"
+                >
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Avatar Test Modal */}
+      {isAvatarModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={() => setIsAvatarModalOpen(false)}>
+          <div className="bg-white rounded-2xl p-8 max-w-lg w-full mx-4 border-2 border-slate-300" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xl font-semibold text-slate-800">Testar Avatar IA</h3>
+              <button onClick={() => setIsAvatarModalOpen(false)} className="p-2 text-slate-400 hover:text-slate-600 rounded-lg transition">
+                <X size={20} />
+              </button>
+            </div>
+            <div className="space-y-6">
+              <div className="flex items-center gap-4 p-4 bg-[#D4C5E8] border-2 border-slate-300 rounded-lg">
+                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center">
+                  <Bot size={32} className="text-[#D4C5E8]" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-slate-800">Avatar da Dra. Ana</h4>
+                  <p className="text-sm text-slate-700">Disponível agora para consultas</p>
+                </div>
+              </div>
+
+              <div className="p-4 bg-slate-50 border-2 border-slate-300 rounded-lg">
+                <p className="text-sm text-slate-700 mb-3">
+                  <strong>Teste gratuito:</strong> Faça até 3 perguntas sem custo para conhecer o avatar.
+                </p>
+                <div className="space-y-2 text-sm text-slate-600">
+                  <div className="flex items-center gap-2">
+                    <Check size={16} className="text-[#C5E8D4]" />
+                    <span>Respostas instantâneas</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check size={16} className="text-[#C5E8D4]" />
+                    <span>Baseado em conhecimento real</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check size={16} className="text-[#C5E8D4]" />
+                    <span>Sem compromisso</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Sua primeira pergunta:</label>
+                <textarea 
+                  rows={3} 
+                  placeholder="Ex: Quais são as principais mudanças na regulamentação CVM para 2024?" 
+                  className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4C5E8] resize-none"
+                ></textarea>
+              </div>
+
+              <div className="flex gap-3">
+                <button className="flex-1 px-4 py-3 bg-[#D4C5E8] border-2 border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                  <Send size={16} className="inline mr-2" />
+                  Iniciar Conversa
+                </button>
+                <button 
+                  onClick={() => setIsAvatarModalOpen(false)}
+                  className="flex-1 px-4 py-3 border-2 border-slate-300 text-slate-600 rounded-lg font-medium hover:bg-slate-50 transition"
+                >
+                  Fechar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default PerfilMentor;
