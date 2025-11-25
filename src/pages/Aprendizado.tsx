@@ -4,6 +4,7 @@ import { HistoricoDocumentos } from "@/components/Dashboard/HistoricoDocumentos"
 import { RelatoriosPendentes } from "@/components/Dashboard/RelatoriosPendentes";
 import { InfograficosPendentes } from "@/components/Dashboard/InfograficosPendentes";
 import { WhitepapersPendentes } from "@/components/Dashboard/WhitepapersPendentes";
+import { ApresentacoesPendentes } from "@/components/Dashboard/ApresentacoesPendentes";
 import { NewspapersNaoLidas } from "@/components/Dashboard/NewspapersNaoLidas";
 import { NewspaperAnalytics } from "@/components/Dashboard/NewspaperAnalytics";
 import { Bell, Play, Clock, BookOpen, TrendingUp, Headphones, Calendar, Users, MessageCircle, Star, BookMarked, Video, Award, Heart, CheckCircle, PlayCircle, Trophy, ChartLine, Shield, Bitcoin, Gavel, PieChart, Repeat, Globe, Leaf, Plus, BookOpenCheck, CreditCard, FileText, Bookmark, Quote, Download, Share2, Bot, Eye, Percent, DollarSign, Lightbulb, AlertTriangle, Coins, Mic, Search, ChevronLeft, ChevronRight, Circle } from "lucide-react";
@@ -3389,6 +3390,8 @@ const Aprendizado = () => {
           {activeTab === 'infograficos' && <InfograficosPendentes />}
 
           {activeTab === 'whitepaper' && <WhitepapersPendentes />}
+
+          {activeTab === 'apresentacoes' && <ApresentacoesPendentes />}
 
           {activeTab === 'estudos' && <>
               <div className="grid grid-cols-4 gap-6 mb-8">
