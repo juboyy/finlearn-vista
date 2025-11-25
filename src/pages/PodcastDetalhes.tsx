@@ -227,7 +227,7 @@ export default function PodcastDetalhes() {
         {/* Scrollable Content */}
         <div className="flex-1 overflow-y-auto">
           {/* Hero Section */}
-          <section className="bg-gradient-to-br from-[hsl(206,35%,75%)] to-[hsl(270,40%,65%)] px-8 py-12">
+          <section className="bg-gradient-to-br from-[hsl(206,35%,75%)] to-[hsl(270,45%,52%)] px-8 py-12">
             <div className="max-w-7xl mx-auto">
               <div className="grid grid-cols-12 gap-8 items-center">
                 {/* Podcast Cover */}
