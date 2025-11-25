@@ -39,7 +39,7 @@ const PerfilMentor = () => {
     {
       id: 2,
       lastDigits: "8765",
-      brand: "MASTERCARD",
+      brand: "Rod",
       holderName: "JOÃO SILVA",
       expiry: "08/27"
     }
