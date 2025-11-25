@@ -604,65 +604,15 @@ Exemplo para PIX:
                 </div>
 
                 <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <label className="text-sm font-medium text-slate-700">
-                      Conteúdo
-                    </label>
-                    <Button
-                      onClick={async () => {
-                        if (!currentSlide?.title) {
-                          toast.error("Adicione um título primeiro");
-                          return;
-                        }
-                        setIsGenerating(true);
-                        try {
-                          const { data, error } = await supabase.functions.invoke("generate-slides-content", {
-                            body: {
-                              prompt: `Crie conteúdo detalhado para um slide sobre: "${currentSlide.title}"
-
-Contexto da apresentação: ${projectInfo.title}
-Descrição: ${projectInfo.description}
-
-IMPORTANTE:
-- Crie conteúdo COMPLETO e DETALHADO
-- Use bullet points (•) quando apropriado
-- Inclua dados, estatísticas e exemplos do mercado financeiro brasileiro
-- Estruture em parágrafos claros quando necessário
-
-Retorne apenas o texto do conteúdo, sem JSON, sem formatação markdown.`,
-                            },
-                          });
-
-                          if (error) throw error;
-
-                          if (data?.generatedText) {
-                            updateSlide("content", data.generatedText.trim());
-                            toast.success("Conteúdo gerado com sucesso");
-                          }
-                        } catch (error) {
-                          console.error("Error generating content:", error);
-                          toast.error("Erro ao gerar conteúdo");
-                        } finally {
-                          setIsGenerating(false);
-                        }
-                      }}
-                      disabled={isGenerating}
-                      size="sm"
-                      className="bg-[#7FA8C9] hover:bg-[#6B91B3] text-white"
-                    >
-                      <Sparkles className="w-4 h-4 mr-2" />
-                      {isGenerating ? "Gerando..." : "Gerar com IA"}
-                    </Button>
-                  </div>
+                  <label className="text-sm font-medium text-slate-700 mb-2 block">
+                    Conteúdo
+                  </label>
                   <Textarea
                     value={currentSlide?.content || ""}
                     onChange={(e) => updateSlide("content", e.target.value)}
                     className="min-h-[400px] border-slate-300 font-normal text-base leading-relaxed"
-                    placeholder="Digite o conteúdo do slide ou use a IA para gerar..."
+                    placeholder="Digite o conteúdo do slide..."
                   />
-                  <p className="text-xs text-slate-500 mt-2">
-                    Dica: Use bullet points (•) ou parágrafos para estruturar o conteúdo
-                  </p>
                 </div>
 
                 {currentSlide?.imageUrl && (
