@@ -39,7 +39,7 @@ import {
 export default function PerfilEmpresa() {
   const navigate = useNavigate();
   const [isFollowing, setIsFollowing] = useState(false);
-
+  
   return (
     <div className="flex h-screen overflow-hidden bg-slate-50">
       <SidebarFix />
