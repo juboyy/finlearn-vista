@@ -63,7 +63,7 @@ export default function PodcastDetalhes() {
       date: "20/01/2025",
       plays: "12.4k",
       status: "playing",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png"
+      image: "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=400&h=400&fit=crop"
     },
     {
       id: 141,
@@ -74,7 +74,7 @@ export default function PodcastDetalhes() {
       date: "13/01/2025",
       plays: "15.2k",
       status: "played",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png"
+      image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=400&h=400&fit=crop"
     },
     {
       id: 140,
@@ -85,7 +85,7 @@ export default function PodcastDetalhes() {
       date: "06/01/2025",
       plays: "18.9k",
       status: "played",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png"
+      image: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=400&h=400&fit=crop"
     },
     {
       id: 139,
@@ -96,7 +96,7 @@ export default function PodcastDetalhes() {
       date: "30/12/2024",
       plays: "11.8k",
       status: "unplayed",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png"
+      image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&h=400&fit=crop"
     },
     {
       id: 138,
@@ -107,7 +107,7 @@ export default function PodcastDetalhes() {
       date: "23/12/2024",
       plays: "16.5k",
       status: "unplayed",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png"
+      image: "https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=400&h=400&fit=crop"
     },
     {
       id: 137,
@@ -118,7 +118,7 @@ export default function PodcastDetalhes() {
       date: "16/12/2024",
       plays: "13.7k",
       status: "unplayed",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png"
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=400&fit=crop"
     },
     {
       id: 136,
@@ -129,7 +129,7 @@ export default function PodcastDetalhes() {
       date: "09/12/2024",
       plays: "14.2k",
       status: "unplayed",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png"
+      image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=400&h=400&fit=crop"
     },
     {
       id: 135,
@@ -140,7 +140,7 @@ export default function PodcastDetalhes() {
       date: "02/12/2024",
       plays: "10.9k",
       status: "unplayed",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png"
+      image: "https://images.unsplash.com/photo-1556742400-b5a7c1c6e9c2?w=400&h=400&fit=crop"
     }
   ];
 
@@ -234,7 +234,7 @@ export default function PodcastDetalhes() {
                 <div className="col-span-4">
                   <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
                     <img 
-                      src={currentEpisode.image}
+                      src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=800&h=800&fit=crop"
                       alt="Mercados em Foco"
                       className="w-full aspect-square object-cover"
                     />
@@ -247,11 +247,26 @@ export default function PodcastDetalhes() {
                     <Headphones className="w-3 h-3 mr-1.5" /> Podcast
                   </Badge>
                   <h2 className="text-4xl font-bold text-white mb-4">Mercados em Foco</h2>
-                  <p className="text-lg text-white/90 mb-6 leading-relaxed">
+                  <p className="text-lg text-slate-700 mb-6 leading-relaxed">
                     Análises semanais dos principais movimentos do mercado financeiro brasileiro. 
                     Discussões aprofundadas sobre macroeconomia, investimentos, regulação e tendências do setor.
                   </p>
                   
+                  {/* Online Listeners */}
+                  <div className="flex items-center gap-6 mb-6">
+                    <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2 border border-white/20">
+                      <div className="relative">
+                        <div className="w-2 h-2 bg-[hsl(142,70%,60%)] rounded-full animate-pulse"></div>
+                        <div className="absolute inset-0 w-2 h-2 bg-[hsl(142,70%,60%)] rounded-full animate-ping"></div>
+                      </div>
+                      <span className="text-sm text-white font-semibold">327 ouvindo agora</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Headphones className="w-4 h-4 text-white/80" />
+                      <span className="text-sm text-white/90 font-semibold">2.3M reproduções totais</span>
+                    </div>
+                  </div>
+
                   {/* Stats */}
                   <div className="grid grid-cols-4 gap-4 mb-6">
                     <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
