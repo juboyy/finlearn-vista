@@ -428,6 +428,75 @@ Exemplo para PIX:
                 className="border-slate-300"
               />
             </div>
+            
+            <div>
+              <label className="text-sm font-medium text-slate-700 mb-3 block">
+                Escolha o tipo de agente de IA:
+              </label>
+              <div className="grid grid-cols-3 gap-3">
+                {agentTypes.map((agent) => (
+                  <button
+                    key={agent.id}
+                    type="button"
+                    onClick={() => setSelectedAgent(agent.id)}
+                    className={`p-4 rounded-lg border-2 transition-all ${
+                      selectedAgent === agent.id
+                        ? 'border-[#7FA8C9] bg-[#7FA8C9]/10'
+                        : 'border-slate-200 hover:border-[#7FA8C9]/50'
+                    }`}
+                  >
+                    <div className="text-2xl mb-2">{agent.icon}</div>
+                    <div className="text-sm font-semibold text-slate-700">{agent.name}</div>
+                    <div className="text-xs text-slate-500 mt-1">{agent.description}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <label className="text-sm font-medium text-slate-700 mb-2 block">
+                Escolha um agente específico (opcional):
+              </label>
+              <select
+                value={specificAgent}
+                onChange={(e) => setSpecificAgent(e.target.value)}
+                className="w-full px-4 py-3 bg-white border-2 border-slate-200 rounded-lg text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#7FA8C9]"
+              >
+                <option value="">Selecione um agente...</option>
+                <optgroup label="Análise de Mercado">
+                  <option value="analista-acoes">📊 Analista de Ações - Especialista em renda variável</option>
+                  <option value="analista-renda-fixa">📈 Analista de Renda Fixa - Títulos e bonds</option>
+                  <option value="analista-macro">🌍 Analista Macroeconômico - Cenários e tendências</option>
+                </optgroup>
+                <optgroup label="Compliance e Regulatório">
+                  <option value="compliance-cvm">⚖️ Especialista CVM - Normas e regulamentações</option>
+                  <option value="compliance-bacen">🏦 Especialista BACEN - Regulação bancária</option>
+                  <option value="compliance-anbima">📋 Especialista ANBIMA - Certificações e normas</option>
+                </optgroup>
+                <optgroup label="Educacional">
+                  <option value="professor-financas">🎓 Professor de Finanças - Conceitos fundamentais</option>
+                  <option value="instrutor-investimentos">💼 Instrutor de Investimentos - Produtos financeiros</option>
+                  <option value="mentor-certificacoes">📚 Mentor de Certificações - Preparação para provas</option>
+                </optgroup>
+                <optgroup label="Estratégia">
+                  <option value="estrategista-fundos">💡 Estrategista de Fundos - Gestão de carteiras</option>
+                  <option value="planejador-financeiro">📊 Planejador Financeiro - Alocação de ativos</option>
+                  <option value="consultor-risco">⚠️ Consultor de Risco - Gestão e mitigação</option>
+                </optgroup>
+                <optgroup label="Jurídico">
+                  <option value="advogado-mercado-capitais">⚖️ Advogado Mercado de Capitais - Operações estruturadas</option>
+                  <option value="especialista-contratos">📄 Especialista em Contratos - Documentação legal</option>
+                </optgroup>
+                <optgroup label="Comunicação">
+                  <option value="redator-relatorios">✍️ Redator de Relatórios - Comunicação executiva</option>
+                  <option value="analista-ri">📢 Analista de RI - Relações com investidores</option>
+                </optgroup>
+              </select>
+              <p className="text-xs text-slate-500 mt-2">
+                Ao selecionar um agente específico, o conteúdo será personalizado com a expertise dele
+              </p>
+            </div>
+            
             <Button
               onClick={handleInfoSubmit}
               className="w-full bg-[#7FA8C9] hover:bg-[#6B91B3] text-white"
