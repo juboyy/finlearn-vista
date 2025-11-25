@@ -2,10 +2,12 @@ import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { 
   Bell, Share2, ArrowLeft, MapPin, Briefcase, Users, Star, Video, Mic, 
   MessageCircle, UsersRound, BookOpen, FileText, Calendar, Clock, Trophy, 
-  Bot, Check, Mail, Linkedin, Globe, Award, X, Send, Info
+  Bot, Check, Mail, Linkedin, Globe, Award, X, Send, Info, Download
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
@@ -27,7 +29,9 @@ const PerfilMentor = () => {
   const [selectedSavedCard, setSelectedSavedCard] = useState<number | null>(1);
   const [isProcessingPayment, setIsProcessingPayment] = useState<boolean>(false);
   const [paymentSuccess, setPaymentSuccess] = useState<boolean>(false);
+  const [showReceipt, setShowReceipt] = useState<boolean>(false);
   const sheetContentRef = useRef<HTMLDivElement>(null);
+  const receiptRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   const savedCards = [
@@ -52,6 +56,23 @@ const PerfilMentor = () => {
       sheetContentRef.current.scrollTop = 0;
     }
   }, [scheduleStep]);
+
+  const handleDownloadReceipt = async () => {
+    if (!receiptRef.current) return;
+    
+    const canvas = await html2canvas(receiptRef.current, {
+      scale: 2,
+      backgroundColor: '#ffffff'
+    });
+    
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+    
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    pdf.save(`recibo-mentoria-${new Date().getTime()}.pdf`);
+  };
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -679,24 +700,168 @@ const PerfilMentor = () => {
           setSelectedSavedCard(1);
           setIsProcessingPayment(false);
           setPaymentSuccess(false);
+          setShowReceipt(false);
         }
       }}>
         <SheetContent ref={sheetContentRef} className="w-[500px] sm:w-[600px] overflow-y-auto">
           <SheetHeader>
             <SheetTitle className="text-2xl font-semibold text-slate-800">
-              {paymentSuccess ? "Pagamento Aprovado" : scheduleStep === 1 ? "Agendar Mentoria" : "Pagamento e Confirmação"}
+              {showReceipt ? "Recibo de Pagamento" : paymentSuccess ? "Pagamento Aprovado" : scheduleStep === 1 ? "Agendar Mentoria" : "Pagamento e Confirmação"}
             </SheetTitle>
             <SheetDescription>
-              {paymentSuccess 
-                ? "Sua mentoria foi agendada com sucesso" 
-                : scheduleStep === 1 
-                  ? "Escolha a data, horário e tipo de consultoria" 
-                  : "Complete os dados de pagamento para finalizar"}
+              {showReceipt 
+                ? "Detalhes da transação e comprovante"
+                : paymentSuccess 
+                  ? "Sua mentoria foi agendada com sucesso" 
+                  : scheduleStep === 1 
+                    ? "Escolha a data, horário e tipo de consultoria" 
+                    : "Complete os dados de pagamento para finalizar"}
             </SheetDescription>
           </SheetHeader>
 
           <div className="mt-6 space-y-6">
-            {paymentSuccess ? (
+            {showReceipt ? (
+              <>
+                {/* Recibo */}
+                <div ref={receiptRef} className="bg-white p-8 space-y-6">
+                  {/* Cabeçalho do Recibo */}
+                  <div className="text-center border-b-2 border-slate-300 pb-6">
+                    <h2 className="text-3xl font-bold text-slate-800 mb-2">RECIBO DE PAGAMENTO</h2>
+                    <p className="text-sm text-slate-600">Comprovante de Agendamento de Mentoria</p>
+                  </div>
+
+                  {/* Informações da Empresa */}
+                  <div className="border-2 border-slate-300 rounded-lg p-4 bg-slate-50">
+                    <h3 className="font-semibold text-slate-800 mb-2">FinLearn - Plataforma de Educação Financeira</h3>
+                    <p className="text-sm text-slate-600">CNPJ: 12.345.678/0001-90</p>
+                    <p className="text-sm text-slate-600">Endereço: Av. Paulista, 1000 - São Paulo, SP</p>
+                    <p className="text-sm text-slate-600">contato@finlearn.com</p>
+                  </div>
+
+                  {/* Dados do Cliente */}
+                  <div className="border-2 border-slate-300 rounded-lg p-4">
+                    <h3 className="font-semibold text-slate-800 mb-3">Dados do Cliente</h3>
+                    <div className="space-y-1 text-sm">
+                      <p><span className="font-medium">Nome:</span> João Silva</p>
+                      <p><span className="font-medium">CPF:</span> 123.456.789-00</p>
+                      <p><span className="font-medium">Email:</span> joao.silva@email.com</p>
+                    </div>
+                  </div>
+
+                  {/* Detalhes da Transação */}
+                  <div className="border-2 border-slate-300 rounded-lg p-4">
+                    <h3 className="font-semibold text-slate-800 mb-3">Detalhes da Transação</h3>
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-slate-600">Nº do Recibo:</span>
+                        <span className="font-mono font-medium text-slate-800">#{Math.random().toString(36).substr(2, 9).toUpperCase()}</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-slate-600">Data da Transação:</span>
+                        <span className="font-medium text-slate-800">{new Date().toLocaleDateString('pt-BR')} às {new Date().toLocaleTimeString('pt-BR')}</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-slate-600">Forma de Pagamento:</span>
+                        <span className="font-medium text-slate-800">
+                          {paymentMethod === "credit" && "Cartão de Crédito"}
+                          {paymentMethod === "pix" && "PIX"}
+                          {paymentMethod === "boleto" && "Boleto Bancário"}
+                        </span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-slate-600">Status:</span>
+                        <span className="font-medium text-[#C5E8D4]">APROVADO</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Serviço Contratado */}
+                  <div className="border-2 border-slate-300 rounded-lg p-4">
+                    <h3 className="font-semibold text-slate-800 mb-3">Serviço Contratado</h3>
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-slate-600">Serviço:</span>
+                        <span className="font-medium text-slate-800">Mentoria Individual</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-slate-600">Mentor:</span>
+                        <span className="font-medium text-slate-800">Dra. Ana Beatriz Costa</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-slate-600">Data Agendada:</span>
+                        <span className="font-medium text-slate-800">{selectedDate?.toLocaleDateString('pt-BR')}</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-slate-600">Horários:</span>
+                        <span className="font-medium text-slate-800">{selectedTimes.join(', ')}</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-slate-600">Quantidade de Sessões:</span>
+                        <span className="font-medium text-slate-800">{selectedTimes.length}x</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Valores */}
+                  <div className="border-2 border-slate-300 rounded-lg p-4 bg-slate-50">
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-slate-600">Valor unitário:</span>
+                        <span className="text-slate-800">
+                          {selectedType === "individual" && "R$ 450,00"}
+                          {selectedType === "pacote" && "R$ 405,00"}
+                          {selectedType === "grupo" && "R$ 180,00"}
+                        </span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-slate-600">Quantidade:</span>
+                        <span className="text-slate-800">{selectedTimes.length}</span>
+                      </div>
+                      <div className="flex justify-between pt-2 border-t-2 border-slate-300">
+                        <span className="font-bold text-slate-800">VALOR TOTAL:</span>
+                        <span className="font-bold text-slate-800 text-lg">
+                          {selectedType === "individual" && `R$ ${(450 * selectedTimes.length).toFixed(2).replace('.', ',')}`}
+                          {selectedType === "pacote" && "R$ 2.025,00"}
+                          {selectedType === "grupo" && `R$ ${(180 * selectedTimes.length).toFixed(2).replace('.', ',')}`}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Observações */}
+                  <div className="border-2 border-slate-300 rounded-lg p-4 text-xs text-slate-600">
+                    <p className="mb-2"><strong>Observações:</strong></p>
+                    <p>- Este recibo é válido como comprovante de pagamento.</p>
+                    <p>- Você receberá um email com o link para a sessão 24h antes do horário agendado.</p>
+                    <p>- Cancelamentos devem ser realizados com até 24h de antecedência.</p>
+                    <p>- Em caso de dúvidas, entre em contato pelo email: suporte@finlearn.com</p>
+                  </div>
+
+                  {/* Assinatura Digital */}
+                  <div className="text-center pt-4 border-t-2 border-slate-300">
+                    <p className="text-xs text-slate-500">Documento gerado eletronicamente em {new Date().toLocaleDateString('pt-BR')} às {new Date().toLocaleTimeString('pt-BR')}</p>
+                    <p className="text-xs text-slate-500 mt-1">FinLearn - Todos os direitos reservados</p>
+                  </div>
+                </div>
+
+                {/* Botões do Recibo */}
+                <div className="flex gap-3">
+                  <button 
+                    onClick={() => setShowReceipt(false)}
+                    className="flex-1 px-6 py-3 border-2 border-slate-300 text-slate-600 rounded-lg font-medium hover:bg-slate-50 transition"
+                  >
+                    ← Voltar
+                  </button>
+                  <button 
+                    onClick={handleDownloadReceipt}
+                    className="flex-1 px-6 py-3 bg-[#D4C5E8] border-2 border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
+                  >
+                    <Download size={16} className="inline mr-2" />
+                    Baixar PDF
+                  </button>
+                </div>
+              </>
+            ) : paymentSuccess ? (
               <>
                 {/* Tela de Sucesso */}
                 <div className="flex flex-col items-center justify-center py-8 space-y-6">
@@ -739,9 +904,16 @@ const PerfilMentor = () => {
 
                   <button 
                     onClick={() => setIsScheduleModalOpen(false)}
-                    className="w-full px-6 py-3 bg-[#D4C5E8] border-2 border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
+                    className="w-full px-4 py-2 border-2 border-slate-300 text-slate-600 rounded-lg font-medium hover:bg-slate-50 transition"
                   >
                     Fechar
+                  </button>
+                  <button 
+                    onClick={() => setShowReceipt(true)}
+                    className="w-full px-6 py-3 bg-[#D4C5E8] border-2 border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
+                  >
+                    <FileText size={16} className="inline mr-2" />
+                    Ver Recibo
                   </button>
                 </div>
               </>
