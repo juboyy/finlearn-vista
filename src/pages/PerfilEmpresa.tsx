@@ -63,6 +63,13 @@ export default function PerfilEmpresa() {
             </div>
             <div className="flex items-center gap-2">
               <button 
+                onClick={() => navigate("/perfil-empresa/1/artigos")}
+                className="px-4 py-2 bg-[hsl(207,35%,78%)] hover:bg-[hsl(142,35%,65%)] text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200"
+              >
+                <Newspaper size={18} />
+                Artigos
+              </button>
+              <button 
                 onClick={() => navigate("/perfil-empresa/1/estatisticas")}
                 className="px-4 py-2 bg-[hsl(207,35%,78%)] hover:bg-[hsl(142,35%,65%)] text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200"
               >
