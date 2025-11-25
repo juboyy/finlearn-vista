@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search, Bell, Plus, Filter, Layers, Unlock, Crown, Bookmark, Presentation, CheckCircle, Building, ThumbsUp, MoreHorizontal, FileCheck, Star, User } from "lucide-react";
 import { Circle } from "lucide-react";
 import {
@@ -8,6 +8,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { PresentationPreviewModal } from "./PresentationPreviewModal";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 export const ApresentacoesPendentes = () => {
   const [viewType, setViewType] = useState("list");
@@ -15,6 +17,65 @@ export const ApresentacoesPendentes = () => {
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [previewOpen, setPreviewOpen] = useState(false);
   const [selectedPresentation, setSelectedPresentation] = useState<any>(null);
+  const [presentations, setPresentations] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchPresentations();
+  }, []);
+
+  const fetchPresentations = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('presentations')
+        .select('*')
+        .eq('status', 'published')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+
+      // Transform data to match component format
+      const transformedData = data?.map((p: any, index: number) => ({
+        id: p.id,
+        title: p.title,
+        category: p.topic || 'Geral',
+        categoryColor: getCategoryColor(p.topic),
+        iconColor: getCategoryColor(p.topic),
+        author: p.author_name,
+        authorType: p.author_type,
+        publishDate: new Date(p.created_at).toLocaleDateString('pt-BR', { month: 'short', year: 'numeric' }),
+        slides: Array.isArray(p.slides) ? p.slides.length : 0,
+        access: "Gratuito",
+        accessType: "free",
+        saved: false,
+        views: p.views,
+        rating: p.rating || 0,
+        slidesList: Array.isArray(p.slides) ? p.slides.map((s: any, i: number) => ({
+          id: i + 1,
+          content: s.title
+        })) : [],
+      })) || [];
+
+      setPresentations(transformedData);
+    } catch (error) {
+      console.error("Error fetching presentations:", error);
+      toast.error("Erro ao carregar apresentações");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getCategoryColor = (topic: string | null) => {
+    const colors: Record<string, string> = {
+      'Estratégia': 'bg-[#7FA8C9]',
+      'Dados & BI': 'bg-[#A68CC9]',
+      'Produtos': 'bg-[#8CC99B]',
+      'Compliance': 'bg-[#C9B88C]',
+      'Tecnologia': 'bg-[#C99B8C]',
+      'Geral': 'bg-[#E8D4C5]',
+    };
+    return colors[topic || 'Geral'] || 'bg-[#E8D4C5]';
+  };
 
   const stats = [
     { icon: Presentation, label: "Pendentes", value: "31", color: "bg-[#E8D4C5]" },
@@ -43,225 +104,6 @@ export const ApresentacoesPendentes = () => {
     { type: "add", title: "Nova apresentação adicionada", description: "Estratégia Digital 2025", time: "1 hora atrás", bgColor: "bg-[#E8D4C5]" },
     { type: "save", title: "Apresentação salva", description: "Dashboard Executivo BI", time: "2 dias atrás", bgColor: "bg-[#D4C5E8]" },
     { type: "complete", title: "Visualização concluída", description: "Produtos Inovadores", time: "4 dias atrás", bgColor: "bg-[#C5E8D4]" },
-  ];
-
-  const presentations = [
-    {
-      id: 1,
-      title: "Estratégia Digital para o Mercado Financeiro 2025",
-      category: "Estratégia",
-      categoryColor: "bg-[#7FA8C9]",
-      iconColor: "bg-[#7FA8C9]",
-      author: "Itaú Unibanco",
-      authorType: "company",
-      publishDate: "Jan 2025",
-      slides: 42,
-      access: "Gratuito",
-      accessType: "free",
-      saved: true,
-      views: 3200,
-      slidesList: [
-        { id: 1, content: "Estratégia Digital 2025 - Transformando o Mercado Financeiro" },
-        { id: 2, content: "Tendências Tecnológicas - IA, Blockchain e Cloud Computing" },
-        { id: 3, content: "Experiência do Cliente - Omnicanalidade e Personalização" },
-        { id: 4, content: "Produtos Digitais - Novos lançamentos e roadmap" },
-        { id: 5, content: "Open Banking - Oportunidades e desafios de integração" },
-      ],
-    },
-    {
-      id: 2,
-      title: "Dashboard Executivo: Métricas de Performance Bancária",
-      category: "Dados & BI",
-      categoryColor: "bg-[#A68CC9]",
-      iconColor: "bg-[#A68CC9]",
-      author: "Ana Costa",
-      authorType: "person",
-      authorAvatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg",
-      publishDate: "Jan 2025",
-      slides: 28,
-      access: "R$ 129,00",
-      accessType: "premium",
-      saved: false,
-      views: 2800,
-      slidesList: [
-        { id: 1, content: "KPIs Estratégicos - Métricas essenciais para performance bancária" },
-        { id: 2, content: "Indicadores Financeiros - ROE, ROA, Margem Líquida" },
-        { id: 3, content: "Eficiência Operacional - Razão de eficiência e produtividade" },
-        { id: 4, content: "Qualidade de Carteira - Inadimplência e provisões" },
-      ],
-    },
-    {
-      id: 3,
-      title: "Lançamento de Novos Produtos Digitais",
-      category: "Produtos",
-      categoryColor: "bg-[#8CC99B]",
-      iconColor: "bg-[#8CC99B]",
-      author: "Nubank",
-      authorType: "company",
-      publishDate: "Dez 2024",
-      slides: 35,
-      access: "Gratuito",
-      accessType: "free",
-      saved: true,
-      views: 4100,
-      slidesList: [
-        { id: 1, content: "Portfólio de Produtos - Visão geral dos lançamentos 2025" },
-        { id: 2, content: "Conta Digital Premium - Benefícios e diferenciais" },
-        { id: 3, content: "Cartão de Crédito Internacional - Features e cashback" },
-        { id: 4, content: "Investimentos Automatizados - Robo-advisor e estratégias" },
-        { id: 5, content: "Seguros Digitais - Vida, auto e residencial" },
-      ],
-    },
-    {
-      id: 4,
-      title: "Compliance e Governança Corporativa em Fintechs",
-      category: "Compliance",
-      categoryColor: "bg-[#C9B88C]",
-      iconColor: "bg-[#C9B88C]",
-      author: "Roberto Lima",
-      authorType: "person",
-      authorAvatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg",
-      publishDate: "Dez 2024",
-      slides: 51,
-      access: "R$ 179,00",
-      accessType: "premium",
-      saved: false,
-      views: 2300,
-      slidesList: [
-        { id: 1, content: "Introdução ao Compliance - Fundamentos e importância para fintechs" },
-        { id: 2, content: "Framework Regulatório - BACEN, CVM e normas aplicáveis" },
-        { id: 3, content: "Gestão de Riscos - Identificação e mitigação de riscos" },
-        { id: 4, content: "Governança Corporativa - Estrutura e comitês" },
-      ],
-    },
-    {
-      id: 5,
-      title: "Arquitetura de Microserviços para Banking as a Service",
-      category: "Tecnologia",
-      categoryColor: "bg-[#C99B8C]",
-      iconColor: "bg-[#C99B8C]",
-      author: "Itaú Unibanco",
-      authorType: "company",
-      publishDate: "Nov 2024",
-      slides: 47,
-      access: "Gratuito",
-      accessType: "free",
-      saved: false,
-      views: 3600,
-      slidesList: [
-        { id: 1, content: "Arquitetura de Microserviços - Conceitos e benefícios" },
-        { id: 2, content: "Banking as a Service - Modelos de negócio e casos de uso" },
-        { id: 3, content: "APIs e Integrações - Design e melhores práticas" },
-        { id: 4, content: "Escalabilidade - Estratégias de deployment e orquestração" },
-      ],
-    },
-    {
-      id: 6,
-      title: "Análise de Crédito com Machine Learning",
-      category: "Dados & BI",
-      categoryColor: "bg-[#A68CC9]",
-      iconColor: "bg-[#A68CC9]",
-      author: "Ana Costa",
-      authorType: "person",
-      authorAvatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg",
-      publishDate: "Nov 2024",
-      slides: 39,
-      access: "R$ 149,00",
-      accessType: "premium",
-      saved: true,
-      views: 2900,
-      slidesList: [
-        { id: 1, content: "Machine Learning em Crédito - Visão geral e aplicações" },
-        { id: 2, content: "Modelos Preditivos - Algoritmos e técnicas utilizadas" },
-        { id: 3, content: "Feature Engineering - Criação e seleção de variáveis" },
-        { id: 4, content: "Avaliação de Modelos - Métricas e validação" },
-      ],
-    },
-    {
-      id: 7,
-      title: "Planejamento Estratégico: Expansão Regional",
-      category: "Estratégia",
-      categoryColor: "bg-[#7FA8C9]",
-      iconColor: "bg-[#7FA8C9]",
-      author: "Nubank",
-      authorType: "company",
-      publishDate: "Out 2024",
-      slides: 44,
-      access: "Gratuito",
-      accessType: "free",
-      saved: true,
-      views: 3800,
-      slidesList: [
-        { id: 1, content: "Análise de Mercado - Oportunidades regionais identificadas" },
-        { id: 2, content: "Estratégia de Expansão - Fases e cronograma" },
-        { id: 3, content: "Adaptação Local - Produtos e serviços customizados" },
-        { id: 4, content: "Metas e KPIs - Indicadores de sucesso da expansão" },
-      ],
-    },
-    {
-      id: 8,
-      title: "Roadmap de Produtos 2025: Inovação e Crescimento",
-      category: "Produtos",
-      categoryColor: "bg-[#8CC99B]",
-      iconColor: "bg-[#8CC99B]",
-      author: "Roberto Lima",
-      authorType: "person",
-      authorAvatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg",
-      publishDate: "Out 2024",
-      slides: 33,
-      access: "R$ 99,00",
-      accessType: "premium",
-      saved: false,
-      views: 2500,
-      slidesList: [
-        { id: 1, content: "Visão de Produto 2025 - Direção estratégica e prioridades" },
-        { id: 2, content: "Novos Lançamentos - Pipeline de produtos Q1-Q4" },
-        { id: 3, content: "Inovações Tecnológicas - IA, automação e personalização" },
-      ],
-    },
-    {
-      id: 9,
-      title: "Framework de Gestão de Riscos Operacionais",
-      category: "Compliance",
-      categoryColor: "bg-[#C9B88C]",
-      iconColor: "bg-[#C9B88C]",
-      author: "Itaú Unibanco",
-      authorType: "company",
-      publishDate: "Set 2024",
-      slides: 56,
-      access: "Gratuito",
-      accessType: "free",
-      saved: false,
-      views: 4300,
-      slidesList: [
-        { id: 1, content: "Gestão de Riscos Operacionais - Framework e metodologia" },
-        { id: 2, content: "Identificação de Riscos - Mapeamento e classificação" },
-        { id: 3, content: "Controles e Mitigação - Estratégias e ferramentas" },
-        { id: 4, content: "Monitoramento - Indicadores e reporting" },
-      ],
-    },
-    {
-      id: 10,
-      title: "API Gateway e Integração de Sistemas Bancários",
-      category: "Tecnologia",
-      categoryColor: "bg-[#C99B8C]",
-      iconColor: "bg-[#C99B8C]",
-      author: "Ana Costa",
-      authorType: "person",
-      authorAvatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg",
-      publishDate: "Set 2024",
-      slides: 41,
-      access: "R$ 159,00",
-      accessType: "premium",
-      saved: false,
-      views: 2700,
-      slidesList: [
-        { id: 1, content: "API Gateway - Conceitos e arquitetura" },
-        { id: 2, content: "Padrões de Integração - REST, GraphQL e mensageria" },
-        { id: 3, content: "Segurança - Autenticação, autorização e criptografia" },
-        { id: 4, content: "Implementação - Casos práticos e melhores práticas" },
-      ],
-    },
   ];
 
   const featuredPresentations = [
@@ -536,113 +378,125 @@ export const ApresentacoesPendentes = () => {
           </section>
 
           {/* Tabela de Apresentações */}
-          <section className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-            <div className="border-b border-slate-200 bg-slate-50">
-              <div className="flex items-center py-3 px-6">
-                <div className="flex-1 text-xs font-semibold text-slate-700 uppercase tracking-wide">Apresentação</div>
-                <div className="w-40 text-xs font-semibold text-slate-700 uppercase tracking-wide">Autora</div>
-                <div className="w-32 text-xs font-semibold text-slate-700 uppercase tracking-wide">Publicação</div>
-                <div className="w-24 text-xs font-semibold text-slate-700 uppercase tracking-wide">Slides</div>
-                <div className="w-28 text-xs font-semibold text-slate-700 uppercase tracking-wide">Visualizações</div>
-                <div className="w-32 text-xs font-semibold text-slate-700 uppercase tracking-wide">Acesso</div>
-                <div className="w-24 text-xs font-semibold text-slate-700 uppercase tracking-wide"></div>
+          {loading ? (
+            <section className="bg-white rounded-xl border border-slate-200 p-12 text-center">
+              <p className="text-slate-600">Carregando apresentações...</p>
+            </section>
+          ) : presentations.length === 0 ? (
+            <section className="bg-white rounded-xl border border-slate-200 p-12 text-center">
+              <Presentation className="w-12 h-12 text-slate-300 mx-auto mb-4" />
+              <p className="text-slate-600 mb-2">Nenhuma apresentação encontrada</p>
+              <p className="text-sm text-slate-500">Crie sua primeira apresentação no Editor de Slides</p>
+            </section>
+          ) : (
+            <section className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+              <div className="border-b border-slate-200 bg-slate-50">
+                <div className="flex items-center py-3 px-6">
+                  <div className="flex-1 text-xs font-semibold text-slate-700 uppercase tracking-wide">Apresentação</div>
+                  <div className="w-40 text-xs font-semibold text-slate-700 uppercase tracking-wide">Autora</div>
+                  <div className="w-32 text-xs font-semibold text-slate-700 uppercase tracking-wide">Publicação</div>
+                  <div className="w-24 text-xs font-semibold text-slate-700 uppercase tracking-wide">Slides</div>
+                  <div className="w-28 text-xs font-semibold text-slate-700 uppercase tracking-wide">Visualizações</div>
+                  <div className="w-32 text-xs font-semibold text-slate-700 uppercase tracking-wide">Acesso</div>
+                  <div className="w-24 text-xs font-semibold text-slate-700 uppercase tracking-wide"></div>
+                </div>
               </div>
-            </div>
-            <div className="divide-y divide-slate-200">
-              {presentations.map((presentation) => (
-                <div 
-                  key={presentation.id} 
-                  className="flex items-center py-4 px-6 hover:bg-slate-50 transition group cursor-pointer"
-                  onClick={() => {
-                    setSelectedPresentation(presentation);
-                    setPreviewOpen(true);
-                  }}
-                >
-                  <div className="flex-1 flex items-center gap-4">
-                    <div className={`w-10 h-10 ${presentation.iconColor} rounded-lg flex items-center justify-center flex-shrink-0`}>
-                      <Presentation className="text-slate-700 w-5 h-5" />
-                    </div>
-                    <div className="min-w-0">
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <h3 className="text-sm font-medium text-slate-800 cursor-default">
-                            {presentation.title.length > 40 
-                              ? presentation.title.substring(0, 40) + "..." 
-                              : presentation.title}
-                          </h3>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p className="max-w-xs">{presentation.title}</p>
-                        </TooltipContent>
-                      </Tooltip>
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className={`text-xs px-2 py-0.5 ${presentation.categoryColor} rounded-full font-medium text-slate-700`}>
-                          {presentation.category}
-                        </span>
+              <div className="divide-y divide-slate-200">
+                {presentations.map((presentation) => (
+                  <div 
+                    key={presentation.id} 
+                    className="flex items-center py-4 px-6 hover:bg-slate-50 transition group cursor-pointer"
+                    onClick={() => {
+                      setSelectedPresentation(presentation);
+                      setPreviewOpen(true);
+                    }}
+                  >
+                    <div className="flex-1 flex items-center gap-4">
+                      <div className={`w-10 h-10 ${presentation.iconColor} rounded-lg flex items-center justify-center flex-shrink-0`}>
+                        <Presentation className="text-slate-700 w-5 h-5" />
+                      </div>
+                      <div className="min-w-0">
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <h3 className="text-sm font-medium text-slate-800 cursor-default">
+                              {presentation.title.length > 40 
+                                ? presentation.title.substring(0, 40) + "..." 
+                                : presentation.title}
+                            </h3>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p className="max-w-xs">{presentation.title}</p>
+                          </TooltipContent>
+                        </Tooltip>
+                        <div className="flex items-center gap-2 mt-1">
+                          <span className={`text-xs px-2 py-0.5 ${presentation.categoryColor} rounded-full font-medium text-slate-700`}>
+                            {presentation.category}
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="w-40">
-                    <div className="flex items-center gap-2">
-                      {presentation.authorType === "person" ? (
-                        <img 
-                          src={presentation.authorAvatar} 
-                          alt={presentation.author}
-                          className="w-6 h-6 rounded-full object-cover"
-                        />
-                      ) : (
-                        <div className="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center flex-shrink-0">
-                          <span className="text-[10px] font-bold text-slate-700">{presentation.author.charAt(0)}</span>
-                        </div>
-                      )}
-                      <a 
-                        href="#" 
-                        className="text-sm text-slate-800 font-medium hover:text-[#7FA8C9] hover:underline transition-colors truncate"
+                    <div className="w-40">
+                      <div className="flex items-center gap-2">
+                        {presentation.authorType === "person" ? (
+                          <img 
+                            src={presentation.authorAvatar} 
+                            alt={presentation.author}
+                            className="w-6 h-6 rounded-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center flex-shrink-0">
+                            <span className="text-[10px] font-bold text-slate-700">{presentation.author.charAt(0)}</span>
+                          </div>
+                        )}
+                        <a 
+                          href="#" 
+                          className="text-sm text-slate-800 font-medium hover:text-[#7FA8C9] hover:underline transition-colors truncate"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          {presentation.author}
+                        </a>
+                      </div>
+                    </div>
+                    <div className="w-32">
+                      <p className="text-sm text-slate-600">{presentation.publishDate}</p>
+                    </div>
+                    <div className="w-24">
+                      <p className="text-sm text-slate-600">{presentation.slides} slides</p>
+                    </div>
+                    <div className="w-28">
+                      <p className="text-sm text-slate-600">{(presentation.views / 1000).toFixed(1)}k</p>
+                    </div>
+                    <div className="w-32">
+                      <div className={`flex items-center gap-1 px-3 py-1 rounded-full ${
+                        presentation.accessType === "free" ? "bg-[#C5E8D4]" : "bg-[#E8E0C5]"
+                      }`}>
+                        {presentation.accessType === "free" ? (
+                          <Unlock className="text-slate-700 w-3 h-3" />
+                        ) : (
+                          <Crown className="text-slate-700 w-3 h-3" />
+                        )}
+                        <span className="text-xs font-medium text-slate-700">{presentation.access}</span>
+                      </div>
+                    </div>
+                    <div className="w-24 flex items-center justify-end gap-2">
+                      <button 
+                        className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        {presentation.author}
-                      </a>
+                        <Bookmark className={`w-4 h-4 ${presentation.saved ? "fill-current text-[#D4C5E8]" : ""}`} />
+                      </button>
+                      <button 
+                        className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <MoreHorizontal className="w-4 h-4" />
+                      </button>
                     </div>
                   </div>
-                  <div className="w-32">
-                    <p className="text-sm text-slate-600">{presentation.publishDate}</p>
-                  </div>
-                  <div className="w-24">
-                    <p className="text-sm text-slate-600">{presentation.slides} slides</p>
-                  </div>
-                  <div className="w-28">
-                    <p className="text-sm text-slate-600">{(presentation.views / 1000).toFixed(1)}k</p>
-                  </div>
-                  <div className="w-32">
-                    <div className={`flex items-center gap-1 px-3 py-1 rounded-full ${
-                      presentation.accessType === "free" ? "bg-[#C5E8D4]" : "bg-[#E8E0C5]"
-                    }`}>
-                      {presentation.accessType === "free" ? (
-                        <Unlock className="text-slate-700 w-3 h-3" />
-                      ) : (
-                        <Crown className="text-slate-700 w-3 h-3" />
-                      )}
-                      <span className="text-xs font-medium text-slate-700">{presentation.access}</span>
-                    </div>
-                  </div>
-                  <div className="w-24 flex items-center justify-end gap-2">
-                    <button 
-                      className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <Bookmark className={`w-4 h-4 ${presentation.saved ? "fill-current text-[#D4C5E8]" : ""}`} />
-                    </button>
-                    <button 
-                      className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <MoreHorizontal className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
+                ))}
+              </div>
+            </section>
+          )}
 
           {/* Em Destaque */}
           <section>

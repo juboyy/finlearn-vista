@@ -382,8 +382,34 @@ Exemplo para PIX:
     }
   };
 
-  const savePresentation = () => {
-    toast.success("Apresentação salva com sucesso");
+  const savePresentation = async () => {
+    if (!projectInfo.title) {
+      toast.error("Adicione um título antes de salvar");
+      return;
+    }
+
+    try {
+      const { data, error } = await supabase
+        .from('presentations')
+        .insert({
+          title: projectInfo.title,
+          description: projectInfo.description || null,
+          target_audience: projectInfo.targetAudience || null,
+          slides: slides as any,
+          status: 'published',
+          author_name: 'Usuário',
+          topic: 'Geral'
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      toast.success("Apresentação salva com sucesso!");
+    } catch (error) {
+      console.error("Error saving presentation:", error);
+      toast.error("Erro ao salvar apresentação");
+    }
   };
 
   const clearAllSlides = () => {

@@ -14,7 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      presentations: {
+        Row: {
+          author_name: string
+          author_type: string
+          created_at: string
+          description: string | null
+          id: string
+          rating: number | null
+          slides: Json
+          status: string
+          target_audience: string | null
+          title: string
+          topic: string | null
+          updated_at: string
+          views: number
+        }
+        Insert: {
+          author_name?: string
+          author_type?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          rating?: number | null
+          slides?: Json
+          status?: string
+          target_audience?: string | null
+          title: string
+          topic?: string | null
+          updated_at?: string
+          views?: number
+        }
+        Update: {
+          author_name?: string
+          author_type?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          rating?: number | null
+          slides?: Json
+          status?: string
+          target_audience?: string | null
+          title?: string
+          topic?: string | null
+          updated_at?: string
+          views?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
