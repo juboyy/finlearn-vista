@@ -67,7 +67,7 @@ export default function PerfilEmpresaArtigos() {
       topic: "Banking",
       topicColor: "bg-[hsl(206,35%,75%)] text-[hsl(206,45%,30%)]",
       views: "12.4k",
-      date: "15 Jan 2024",
+      date: "15/01/24",
       rating: 4.8,
       status: "read",
       saved: true,
@@ -86,7 +86,7 @@ export default function PerfilEmpresaArtigos() {
       topic: "ESG",
       topicColor: "bg-[hsl(142,35%,75%)] text-[hsl(142,45%,28%)]",
       views: "8.9k",
-      date: "12 Jan 2024",
+      date: "12/01/24",
       rating: 4.9,
       status: "unread",
       saved: false,
@@ -104,7 +104,7 @@ export default function PerfilEmpresaArtigos() {
       topic: "Inovação",
       topicColor: "bg-[hsl(270,35%,78%)] text-[hsl(270,45%,30%)]",
       views: "15.2k",
-      date: "08 Jan 2024",
+      date: "08/01/24",
       rating: 5.0,
       status: "read",
       saved: true,
@@ -123,7 +123,7 @@ export default function PerfilEmpresaArtigos() {
       topic: "Segurança",
       topicColor: "bg-[hsl(322,35%,78%)] text-[hsl(322,45%,30%)]",
       views: "11.7k",
-      date: "05 Jan 2024",
+      date: "05/01/24",
       rating: 4.7,
       status: "unread",
       saved: false,
@@ -141,7 +141,7 @@ export default function PerfilEmpresaArtigos() {
       topic: "Crédito",
       topicColor: "bg-[hsl(30,40%,78%)] text-[hsl(30,45%,28%)]",
       views: "9.3k",
-      date: "02 Jan 2024",
+      date: "02/01/24",
       rating: 4.9,
       status: "read",
       saved: true,
@@ -159,7 +159,7 @@ export default function PerfilEmpresaArtigos() {
       topic: "Investimentos",
       topicColor: "bg-[hsl(44,40%,78%)] text-[hsl(44,45%,28%)]",
       views: "18.5k",
-      date: "28 Dez 2023",
+      date: "28/12/23",
       rating: 5.0,
       status: "unread",
       saved: false,
@@ -178,7 +178,7 @@ export default function PerfilEmpresaArtigos() {
       topic: "Regulação",
       topicColor: "bg-[hsl(24,40%,78%)] text-[hsl(24,45%,28%)]",
       views: "7.2k",
-      date: "25 Dez 2023",
+      date: "25/12/23",
       rating: 4.6,
       status: "read",
       saved: true,
@@ -196,7 +196,7 @@ export default function PerfilEmpresaArtigos() {
       topic: "Inovação",
       topicColor: "bg-[hsl(270,35%,78%)] text-[hsl(270,45%,30%)]",
       views: "10.1k",
-      date: "22 Dez 2023",
+      date: "22/12/23",
       rating: 4.8,
       status: "unread",
       saved: false,
@@ -476,9 +476,8 @@ export default function PerfilEmpresaArtigos() {
                     <th className="text-left px-6 py-4 text-xs font-bold text-slate-700 uppercase tracking-wider w-[30%]">Título</th>
                     <th className="text-left px-6 py-4 text-xs font-bold text-slate-700 uppercase tracking-wider">Co-Autor</th>
                     <th className="text-left px-6 py-4 text-xs font-bold text-slate-700 uppercase tracking-wider">Tópico</th>
-                    <th className="text-left px-6 py-4 text-xs font-bold text-slate-700 uppercase tracking-wider">Tempo</th>
+                    <th className="text-left px-6 py-4 text-xs font-bold text-slate-700 uppercase tracking-wider">Tempo / Data</th>
                     <th className="text-left px-6 py-4 text-xs font-bold text-slate-700 uppercase tracking-wider">Views</th>
-                    <th className="text-left px-6 py-4 text-xs font-bold text-slate-700 uppercase tracking-wider">Data</th>
                     <th className="text-left px-6 py-4 text-xs font-bold text-slate-700 uppercase tracking-wider">Rating</th>
                     <th className="text-left px-6 py-4 text-xs font-bold text-slate-700 uppercase tracking-wider">Ações</th>
                   </tr>
@@ -491,11 +490,11 @@ export default function PerfilEmpresaArtigos() {
                       </td>
                       <td className="px-6 py-4">
                         {article.status === "read" ? (
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[hsl(206,35%,75%)]/30 text-[hsl(206,45%,30%)] rounded-lg text-xs font-bold">
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[hsl(142,35%,65%)] text-[hsl(142,55%,20%)] rounded-lg text-xs font-bold">
                             <CheckCircle2 className="w-3.5 h-3.5" /> Lido
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 text-slate-600 rounded-lg text-xs font-bold">
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[hsl(44,40%,65%)] text-[hsl(44,55%,20%)] rounded-lg text-xs font-bold">
                             <Circle className="w-3.5 h-3.5" /> Não Lido
                           </span>
                         )}
@@ -503,8 +502,8 @@ export default function PerfilEmpresaArtigos() {
                       <td className="px-6 py-4">
                         <div className="flex items-start gap-2">
                           <div className="flex-1 min-w-0">
-                            <h4 className="font-bold text-slate-800 text-sm mb-1 group-hover:text-slate-900 transition-colors truncate">
-                              {article.title}
+                            <h4 className="font-bold text-slate-800 text-sm mb-1 group-hover:text-slate-900 transition-colors line-clamp-1 max-w-[280px]">
+                              {article.title.length > 45 ? article.title.substring(0, 45) + "..." : article.title}
                             </h4>
                             <p className="text-xs text-slate-600 line-clamp-1">{article.description}</p>
                           </div>
@@ -528,9 +527,12 @@ export default function PerfilEmpresaArtigos() {
                         </span>
                       </td>
                       <td className="px-6 py-4">
-                        <div className="flex items-center gap-1.5">
-                          <Clock className="text-slate-700 w-3.5 h-3.5" />
-                          <span className="text-sm text-slate-700 font-medium">{article.readingTime}</span>
+                        <div className="flex flex-col gap-1">
+                          <div className="flex items-center gap-1.5">
+                            <Clock className="text-slate-700 w-3.5 h-3.5" />
+                            <span className="text-xs text-slate-700 font-medium">{article.readingTime}</span>
+                          </div>
+                          <span className="text-xs text-slate-600 font-medium">{article.date}</span>
                         </div>
                       </td>
                       <td className="px-6 py-4">
@@ -538,9 +540,6 @@ export default function PerfilEmpresaArtigos() {
                           <Eye className="text-slate-700 w-3.5 h-3.5" />
                           <span className="text-sm text-slate-800 font-bold">{article.views}</span>
                         </div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <span className="text-sm text-slate-600 font-medium">{article.date}</span>
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-1.5">
