@@ -491,11 +491,11 @@ export default function PerfilEmpresaArtigos() {
                       </td>
                       <td className="px-6 py-4">
                         {article.status === "read" ? (
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[hsl(142,70%,75%)] text-[hsl(142,70%,25%)] rounded-lg text-xs font-bold">
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[hsl(142,70%,75%)] text-[hsl(142,70%,25%)] rounded-lg text-xs font-bold whitespace-nowrap">
                             <CheckCircle2 className="w-3.5 h-3.5" /> Lido
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[hsl(48,75%,70%)] text-[hsl(48,75%,25%)] rounded-lg text-xs font-bold">
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[hsl(48,75%,70%)] text-[hsl(48,75%,25%)] rounded-lg text-xs font-bold whitespace-nowrap">
                             <Circle className="w-3.5 h-3.5" /> Não Lido
                           </span>
                         )}
