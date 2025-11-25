@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from "recharts";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { 
   ArrowLeft, 
@@ -32,6 +33,15 @@ import {
 
 export default function PerfilEmpresaMateriais() {
   const navigate = useNavigate();
+  
+  const chartData = [
+    { name: 'Artigos', value: 324, color: '#B8D4E8' },
+    { name: 'Podcasts', value: 156, color: '#D4C5E8' },
+    { name: 'Webinars', value: 87, color: '#E8C5D8' },
+    { name: 'E-books', value: 45, color: '#F5D5B8' },
+    { name: 'Cursos', value: 23, color: '#E8E0C5' },
+    { name: 'Análises', value: 112, color: '#C5E8D4' }
+  ];
   
   return (
     <div className="flex h-screen overflow-hidden bg-slate-50">
@@ -521,11 +531,35 @@ export default function PerfilEmpresaMateriais() {
             {/* Right: Filters & Trending */}
             <div className="col-span-12 lg:col-span-4 space-y-6">
               
-              {/* Chart Section - Placeholder */}
+              {/* Chart Section */}
               <section className="bg-white rounded-xl p-6 border border-slate-200">
                 <h3 className="text-lg font-bold text-slate-800 mb-4">Distribuição de Conteúdo</h3>
-                <div className="h-[250px] flex items-center justify-center bg-slate-50 rounded-lg">
-                  <p className="text-sm text-slate-400">Gráfico de distribuição</p>
+                <div className="h-[250px]">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={chartData}
+                        cx="50%"
+                        cy="45%"
+                        innerRadius={60}
+                        outerRadius={80}
+                        paddingAngle={2}
+                        dataKey="value"
+                      >
+                        {chartData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={entry.color} />
+                        ))}
+                      </Pie>
+                      <Legend 
+                        verticalAlign="bottom" 
+                        height={36}
+                        iconType="circle"
+                        formatter={(value, entry: any) => (
+                          <span className="text-xs text-slate-600">{value}</span>
+                        )}
+                      />
+                    </PieChart>
+                  </ResponsiveContainer>
                 </div>
               </section>
 
