@@ -53,7 +53,7 @@ export default function PerfilEmpresaMateriais() {
           <div className="px-8 py-4 flex items-center justify-between">
             <div className="flex items-center gap-4">
               <button 
-                onClick={() => navigate(-1)}
+                onClick={() => navigate('/perfil-empresa/1')}
                 className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition"
               >
                 <ArrowLeft className="w-5 h-5" />
