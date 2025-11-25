@@ -249,29 +249,165 @@ const Empresas = () => {
         </header>
 
         <div className="p-8">
-          {/* Category Filters */}
-          <section className="mb-6">
-            <div className="flex items-center gap-3 mb-4">
-              <h3 className="text-sm font-semibold text-slate-700">Filtrar por categoria:</h3>
-              <div className="flex flex-wrap gap-2">
-                {categories.map((category, index) => (
-                  <button
-                    key={category}
-                    className={`px-4 py-1.5 rounded-full text-sm font-medium transition ${
-                      index === 0
-                        ? "bg-[#F5D5B8] text-slate-700 hover:bg-opacity-80"
-                        : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-                    }`}
-                  >
-                    {category}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </section>
+          <div className="flex gap-6">
+            {/* Sidebar Filters */}
+            <aside className="w-80 space-y-6">
+              {/* Tipo de Empresa */}
+              <section className="bg-white rounded-xl p-6 border border-slate-200">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-lg font-semibold text-slate-800">Tipo de Empresa</h2>
+                  <button className="text-xs text-slate-500 hover:text-slate-700">Limpar</button>
+                </div>
+                <div className="mb-4">
+                  <select className="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-pastel-blue bg-white text-slate-700">
+                    <option value="">Selecione o tipo</option>
+                    <option value="banco-comercial">Banco Comercial</option>
+                    <option value="banco-investimento">Banco de Investimento</option>
+                    <option value="banco-digital">Banco Digital</option>
+                    <option value="fintech">Fintech</option>
+                    <option value="seguradora">Seguradora</option>
+                    <option value="corretora">Corretora</option>
+                    <option value="processadora">Processadora de Pagamentos</option>
+                    <option value="adquirente">Adquirente</option>
+                    <option value="bolsa">Bolsa de Valores</option>
+                    <option value="regulador">Órgão Regulador</option>
+                  </select>
+                </div>
+                <div className="space-y-2">
+                  {[
+                    { name: 'Banking', count: 156, color: '#7FA8C9' },
+                    { name: 'Fintechs', count: 234, color: '#A68CC9' },
+                    { name: 'Investimentos', count: 124, color: '#8CC99B' },
+                    { name: 'Seguros', count: 89, color: '#C9B88C' },
+                    { name: 'Meios de Pagamento', count: 143, color: '#C99B8C' },
+                    { name: 'Mercado de Capitais', count: 67, color: '#E8C5D8' }
+                  ].map((type) => (
+                    <label key={type.name} className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-100 cursor-pointer transition">
+                      <input type="checkbox" className="w-4 h-4 text-pastel-blue rounded focus:ring-2 focus:ring-pastel-blue" />
+                      <i className="fas fa-circle" style={{ fontSize: '8px', color: type.color }}></i>
+                      <span className="text-sm text-slate-700 flex-1">{type.name}</span>
+                      <span className="text-xs text-slate-500">{type.count}</span>
+                    </label>
+                  ))}
+                </div>
+              </section>
 
-          {/* Navigation Tabs */}
-          <section className="bg-white rounded-xl p-4 border-2 border-slate-300 mb-6">
+              {/* Porte da Empresa */}
+              <section className="bg-white rounded-xl p-6 border border-slate-200">
+                <h2 className="text-lg font-semibold text-slate-800 mb-4">Porte da Empresa</h2>
+                <div className="mb-4">
+                  <select className="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-pastel-blue bg-white text-slate-700">
+                    <option value="">Selecione o porte</option>
+                    <option value="startup">Startup (1-50 funcionários)</option>
+                    <option value="pequeno">Pequeno Porte (51-200)</option>
+                    <option value="medio">Médio Porte (201-1000)</option>
+                    <option value="grande">Grande Porte (1000+)</option>
+                  </select>
+                </div>
+                <div className="space-y-2">
+                  {[
+                    { name: 'Startup', count: 145 },
+                    { name: 'Pequeno Porte', count: 89 },
+                    { name: 'Médio Porte', count: 134 },
+                    { name: 'Grande Porte', count: 98 }
+                  ].map((size) => (
+                    <label key={size.name} className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-100 cursor-pointer transition">
+                      <input type="checkbox" className="w-4 h-4 text-pastel-blue rounded focus:ring-2 focus:ring-pastel-blue" />
+                      <span className="text-sm text-slate-700 flex-1">{size.name}</span>
+                      <span className="text-xs text-slate-500">{size.count}</span>
+                    </label>
+                  ))}
+                </div>
+              </section>
+
+              {/* Localização */}
+              <section className="bg-white rounded-xl p-6 border border-slate-200">
+                <h2 className="text-lg font-semibold text-slate-800 mb-4">Localização</h2>
+                <div className="mb-4">
+                  <select className="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-pastel-blue bg-white text-slate-700">
+                    <option value="">Selecione a cidade</option>
+                    <option value="sp">São Paulo, SP</option>
+                    <option value="rj">Rio de Janeiro, RJ</option>
+                    <option value="bh">Belo Horizonte, MG</option>
+                    <option value="bsb">Brasília, DF</option>
+                    <option value="cwb">Curitiba, PR</option>
+                    <option value="poa">Porto Alegre, RS</option>
+                    <option value="ssa">Salvador, BA</option>
+                    <option value="rec">Recife, PE</option>
+                  </select>
+                </div>
+                <div className="space-y-2">
+                  {[
+                    { name: 'São Paulo, SP', count: 234 },
+                    { name: 'Rio de Janeiro, RJ', count: 89 },
+                    { name: 'Belo Horizonte, MG', count: 56 },
+                    { name: 'Brasília, DF', count: 43 },
+                    { name: 'Curitiba, PR', count: 38 }
+                  ].map((location) => (
+                    <label key={location.name} className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-100 cursor-pointer transition">
+                      <input type="checkbox" className="w-4 h-4 text-pastel-blue rounded focus:ring-2 focus:ring-pastel-blue" />
+                      <span className="text-sm text-slate-700 flex-1">{location.name}</span>
+                      <span className="text-xs text-slate-500">{location.count}</span>
+                    </label>
+                  ))}
+                </div>
+              </section>
+
+              {/* Ano de Fundação */}
+              <section className="bg-white rounded-xl p-6 border border-slate-200">
+                <h2 className="text-lg font-semibold text-slate-800 mb-4">Ano de Fundação</h2>
+                <div className="mb-4">
+                  <select className="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-pastel-blue bg-white text-slate-700">
+                    <option value="">Selecione o período</option>
+                    <option value="2020s">2020 em diante</option>
+                    <option value="2010s">2010 - 2019</option>
+                    <option value="2000s">2000 - 2009</option>
+                    <option value="1990s">1990 - 1999</option>
+                    <option value="antes-1990">Antes de 1990</option>
+                  </select>
+                </div>
+                <div className="space-y-2">
+                  {[
+                    { name: '2020 em diante', count: 78 },
+                    { name: '2010 - 2019', count: 156 },
+                    { name: '2000 - 2009', count: 89 },
+                    { name: 'Antes de 2000', count: 143 }
+                  ].map((period) => (
+                    <label key={period.name} className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-100 cursor-pointer transition">
+                      <input type="checkbox" className="w-4 h-4 text-pastel-blue rounded focus:ring-2 focus:ring-pastel-blue" />
+                      <span className="text-sm text-slate-700 flex-1">{period.name}</span>
+                      <span className="text-xs text-slate-500">{period.count}</span>
+                    </label>
+                  ))}
+                </div>
+              </section>
+            </aside>
+
+            {/* Main Content */}
+            <div className="flex-1 space-y-6">
+              {/* Category Filters */}
+              <section className="bg-white rounded-xl p-4 border border-slate-200">
+                <div className="flex items-center gap-3">
+                  <h3 className="text-sm font-semibold text-slate-700">Filtrar por categoria:</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {categories.map((category, index) => (
+                      <button
+                        key={category}
+                        className={`px-4 py-1.5 rounded-full text-sm font-medium transition ${
+                          index === 0
+                            ? "bg-[#F5D5B8] text-slate-700 hover:bg-opacity-80"
+                            : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                        }`}
+                      >
+                        {category}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </section>
+
+              {/* Navigation Tabs */}
+              <section className="bg-white rounded-xl p-4 border-2 border-slate-300">
             <div className="flex items-center gap-3">
               <button 
                 onClick={() => navigate("/mentores")}
@@ -310,8 +446,8 @@ const Empresas = () => {
             </div>
           </section>
 
-          {/* Companies List */}
-          <section className="space-y-4">
+              {/* Companies List */}
+              <section className="space-y-4">
             {empresas.map((empresa) => (
               <div
                 key={empresa.id}
@@ -388,8 +524,8 @@ const Empresas = () => {
             ))}
           </section>
 
-          {/* Pagination */}
-          <section className="mt-8 flex items-center justify-center gap-2">
+              {/* Pagination */}
+              <section className="mt-8 flex items-center justify-center gap-2">
             <button
               className="px-4 py-2 border border-slate-200 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-50 transition disabled:opacity-50 disabled:cursor-not-allowed"
               disabled
@@ -407,7 +543,9 @@ const Empresas = () => {
               Próximo
               <ChevronRight size={14} className="inline ml-2" />
             </button>
-          </section>
+              </section>
+            </div>
+          </div>
         </div>
       </main>
     </div>
