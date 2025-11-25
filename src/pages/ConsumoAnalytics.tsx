@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { Bell, TrendingUp, Download, Mic, Pen, Video, Coins, Receipt, Wallet, Info, ShoppingCart, Percent, Gift, Plus, Edit, Trash, Ticket } from "lucide-react";
+import { Bell, TrendingUp, Download, Mic, Pen, Video, Coins, Receipt, Wallet, Info, ShoppingCart, Percent, Gift, Plus, Edit, Trash, Ticket, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
@@ -14,9 +14,17 @@ export default function ConsumoAnalytics() {
       <main className="flex-1 overflow-y-auto">
         <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
           <div className="px-8 py-4 flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-semibold text-slate-800">Cobrança e Assinatura</h1>
-              <p className="text-sm text-slate-500 mt-1">Gerencie suas assinaturas, créditos e histórico de consumo</p>
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => navigate('/analytics')}
+                className="w-10 h-10 rounded-lg border border-slate-200 bg-white flex items-center justify-center text-slate-600 hover:bg-slate-50 hover:text-slate-700 transition-colors shadow-sm"
+              >
+                <i className="fa-solid fa-arrow-left"></i>
+              </button>
+              <div>
+                <h1 className="text-2xl font-semibold text-slate-800">Cobrança e Assinatura</h1>
+                <p className="text-sm text-slate-500 mt-1">Gerencie suas assinaturas, créditos e histórico de consumo</p>
+              </div>
             </div>
             <div className="flex items-center gap-4">
               <button className="relative p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
