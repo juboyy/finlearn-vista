@@ -723,15 +723,15 @@ const PerfilMentor = () => {
             {showReceipt ? (
               <>
                 {/* Recibo */}
-                <div ref={receiptRef} className="bg-white p-8 space-y-6">
+                <div ref={receiptRef} className="bg-white space-y-6">
                   {/* Cabeçalho do Recibo */}
-                  <div className="text-center border-b-2 border-slate-300 pb-6">
+                  <div className="text-center border-b-2 border-slate-300 pb-6 px-8 pt-6">
                     <h2 className="text-3xl font-bold text-slate-800 mb-2">RECIBO DE PAGAMENTO</h2>
                     <p className="text-sm text-slate-600">Comprovante de Agendamento de Mentoria</p>
                   </div>
 
                   {/* Informações da Empresa */}
-                  <div className="border-2 border-slate-300 rounded-lg p-4 bg-slate-50">
+                  <div className="border-2 border-slate-300 rounded-lg p-4 bg-slate-50 mx-8">
                     <h3 className="font-semibold text-slate-800 mb-2">FinLearn - Plataforma de Educação Financeira</h3>
                     <p className="text-sm text-slate-600">CNPJ: 12.345.678/0001-90</p>
                     <p className="text-sm text-slate-600">Endereço: Av. Paulista, 1000 - São Paulo, SP</p>
@@ -739,7 +739,7 @@ const PerfilMentor = () => {
                   </div>
 
                   {/* Dados do Cliente */}
-                  <div className="border-2 border-slate-300 rounded-lg p-4">
+                  <div className="border-2 border-slate-300 rounded-lg p-4 mx-8">
                     <h3 className="font-semibold text-slate-800 mb-3">Dados do Cliente</h3>
                     <div className="space-y-1 text-sm">
                       <p><span className="font-medium">Nome:</span> João Silva</p>
@@ -749,7 +749,7 @@ const PerfilMentor = () => {
                   </div>
 
                   {/* Detalhes da Transação */}
-                  <div className="border-2 border-slate-300 rounded-lg p-4">
+                  <div className="border-2 border-slate-300 rounded-lg p-4 mx-8">
                     <h3 className="font-semibold text-slate-800 mb-3">Detalhes da Transação</h3>
                     <div className="space-y-2">
                       <div className="flex justify-between text-sm">
@@ -776,7 +776,7 @@ const PerfilMentor = () => {
                   </div>
 
                   {/* Serviço Contratado */}
-                  <div className="border-2 border-slate-300 rounded-lg p-4">
+                  <div className="border-2 border-slate-300 rounded-lg p-4 mx-8">
                     <h3 className="font-semibold text-slate-800 mb-3">Serviço Contratado</h3>
                     <div className="space-y-2">
                       <div className="flex justify-between text-sm">
@@ -803,7 +803,7 @@ const PerfilMentor = () => {
                   </div>
 
                   {/* Valores */}
-                  <div className="border-2 border-slate-300 rounded-lg p-4 bg-slate-50">
+                  <div className="border-2 border-slate-300 rounded-lg p-4 bg-slate-50 mx-8">
                     <div className="space-y-2">
                       <div className="flex justify-between text-sm">
                         <span className="text-slate-600">Valor unitário:</span>
@@ -829,7 +829,7 @@ const PerfilMentor = () => {
                   </div>
 
                   {/* Observações */}
-                  <div className="border-2 border-slate-300 rounded-lg p-4 text-xs text-slate-600">
+                  <div className="border-2 border-slate-300 rounded-lg p-4 text-xs text-slate-600 mx-8">
                     <p className="mb-2"><strong>Observações:</strong></p>
                     <p>- Este recibo é válido como comprovante de pagamento.</p>
                     <p>- Você receberá um email com o link para a sessão 24h antes do horário agendado.</p>
@@ -838,7 +838,7 @@ const PerfilMentor = () => {
                   </div>
 
                   {/* Assinatura Digital */}
-                  <div className="text-center pt-4 border-t-2 border-slate-300">
+                  <div className="text-center pt-4 border-t-2 border-slate-300 px-8 pb-6">
                     <p className="text-xs text-slate-500">Documento gerado eletronicamente em {new Date().toLocaleDateString('pt-BR')} às {new Date().toLocaleTimeString('pt-BR')}</p>
                     <p className="text-xs text-slate-500 mt-1">FinLearn - Todos os direitos reservados</p>
                   </div>
