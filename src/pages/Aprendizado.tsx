@@ -836,7 +836,10 @@ const Aprendizado = () => {
             </div>
 
             <div className="grid grid-cols-4 gap-6">
-              <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
+              <div 
+                onClick={() => navigate('/podcast/mercados-em-foco')}
+                className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition cursor-pointer"
+              >
                 <div className="h-40 bg-pastel-blue overflow-hidden">
                   <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png" alt="illustration of a microphone with sound waves for a podcast cover, financial market theme, pastel colors, outlined style" className="w-full h-full object-cover" />
                 </div>
@@ -1131,7 +1134,10 @@ const Aprendizado = () => {
                   <a href="#" className="text-sm text-slate-600 hover:text-slate-800 font-medium">Ver todos</a>
                 </div>
                 <div className="grid grid-cols-3 gap-6">
-                  <div className="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-lg transition">
+                  <div 
+                    onClick={() => navigate('/podcast/mercados-em-foco')}
+                    className="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-lg transition cursor-pointer"
+                  >
                     <div className="flex gap-4">
                       <div className="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-pastel-blue">
                         <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png" alt="podcast cover" className="w-full h-full object-cover" />
@@ -1242,7 +1248,10 @@ const Aprendizado = () => {
                   <a href="#" className="text-sm text-slate-600 hover:text-slate-800 font-medium">Ver todos</a>
                 </div>
                 <div className="grid grid-cols-3 gap-6">
-                  <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
+                  <div 
+                    onClick={() => navigate('/podcast/mercados-em-foco')}
+                    className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition cursor-pointer"
+                  >
                     <div className="h-48 bg-pastel-blue overflow-hidden relative">
                       <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png" alt="podcast cover" className="w-full h-full object-cover" />
                     </div>
@@ -1322,7 +1331,10 @@ const Aprendizado = () => {
                   <a href="#" className="text-sm text-slate-600 hover:text-slate-800 font-medium">Ver todos</a>
                 </div>
                 <div className="space-y-4">
-                  <div className="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-lg transition">
+                  <div 
+                    onClick={() => navigate('/podcast/mercados-em-foco')}
+                    className="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-lg transition cursor-pointer"
+                  >
                     <div className="flex gap-4">
                       <div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-pastel-pink">
                         <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png" alt="podcast cover" className="w-full h-full object-cover" />
