@@ -1,17 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { MenutabbarFix } from "@/components/Dashboard/MenutabbarFix";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Star, MapPin, Briefcase, Calendar } from "lucide-react";
-
-type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'relatorios' | 'documentos' | 'estudos' | 'infograficos' | 'whitepaper' | 'apresentacoes' | 'live';
+import { Search, Star, MapPin, Briefcase, Calendar, Bell, Plus } from "lucide-react";
 
 const Mentores = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeTab, setActiveTab] = useState<TabType>("todos");
 
   const mentores = [
     {
@@ -94,62 +90,70 @@ const Mentores = () => {
   );
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-b from-slate-50 to-white">
+    <div className="flex h-screen overflow-hidden">
       <SidebarFix />
       
-      <div className="pl-64">
-        <MenutabbarFix activeTab={activeTab} setActiveTab={setActiveTab} />
-        
-        <main className="p-8">
-          {/* Header */}
-          <div className="mb-8">
-            <h1 className="text-4xl font-bold text-slate-800 mb-2">Mentores</h1>
-            <p className="text-slate-600">Conecte-se com especialistas do mercado financeiro</p>
+      <main className="flex-1 overflow-y-auto bg-gradient-to-b from-slate-50 to-white">
+        {/* Header */}
+        <header className="bg-white border-b-2 border-slate-300 sticky top-0 z-10">
+          <div className="px-8 py-4 flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-semibold text-slate-800">Mentores</h1>
+              <p className="text-sm text-slate-500 mt-1">Conecte-se com especialistas do mercado financeiro</p>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Buscar mentores..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-80 pl-10 pr-4 py-2 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={16} />
+              </div>
+              <button className="relative p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
+                <Bell size={20} />
+                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+              </button>
+              <button className="px-4 py-2 bg-purple-200 text-slate-700 rounded-lg font-medium hover:bg-purple-300 transition border-2 border-slate-400">
+                <Plus size={16} className="inline mr-2" />
+                Adicionar Mentor
+              </button>
+            </div>
           </div>
+        </header>
 
+        <div className="p-8">
           {/* Menu de navegação */}
           <div className="flex gap-3 mb-8">
             <Button
               variant="outline"
               onClick={() => navigate("/autores")}
-              className="bg-blue-200 hover:bg-pink-200 text-slate-700 border-2 border-slate-400"
+              className="bg-blue-200 hover:bg-pink-200 text-slate-700 border-2 border-slate-400 font-medium"
             >
               Creators
             </Button>
             <Button
               variant="outline"
-              className="bg-pink-200 text-slate-700 border-2 border-slate-400"
+              className="bg-pink-200 text-slate-700 border-2 border-slate-400 font-medium"
             >
               Mentores
             </Button>
             <Button
               variant="outline"
               onClick={() => navigate("/rankings")}
-              className="bg-blue-200 hover:bg-pink-200 text-slate-700 border-2 border-slate-400"
+              className="bg-blue-200 hover:bg-pink-200 text-slate-700 border-2 border-slate-400 font-medium"
             >
               Rankings
             </Button>
             <Button
               variant="outline"
               onClick={() => navigate("/seguidores")}
-              className="bg-blue-200 hover:bg-pink-200 text-slate-700 border-2 border-slate-400"
+              className="bg-blue-200 hover:bg-pink-200 text-slate-700 border-2 border-slate-400 font-medium"
             >
               Seguidores
             </Button>
-          </div>
-
-          {/* Barra de busca */}
-          <div className="mb-8">
-            <div className="relative max-w-xl">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
-              <Input
-                type="text"
-                placeholder="Buscar mentores por nome ou especialidade..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 border-2 border-slate-300 bg-white"
-              />
-            </div>
           </div>
 
           {/* Grid de mentores */}
@@ -200,15 +204,15 @@ const Mentores = () => {
                     <p className="text-slate-500 text-xs">A partir de</p>
                     <p className="font-bold text-slate-800 text-lg">{mentor.price}/hora</p>
                   </div>
-                  <Button className="bg-blue-200 hover:bg-pink-200 text-slate-700 border-2 border-slate-400">
+                  <Button className="bg-blue-200 hover:bg-pink-200 text-slate-700 border-2 border-slate-400 font-medium">
                     Ver Perfil
                   </Button>
                 </div>
               </div>
             ))}
           </div>
-        </main>
-      </div>
+        </div>
+      </main>
     </div>
   );
 };
