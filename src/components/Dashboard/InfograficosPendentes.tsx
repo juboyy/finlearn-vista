@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { Search, Bell, Plus, Filter, Layers, Unlock, Crown, Bookmark, BarChart3, CheckCircle, Building, ThumbsUp, MoreHorizontal, FileCheck, Star } from "lucide-react";
 import { Circle } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export const InfograficosPendentes = () => {
   const [viewType, setViewType] = useState("list");
@@ -243,7 +249,8 @@ export const InfograficosPendentes = () => {
   ];
 
   return (
-    <div className="flex gap-6">
+    <TooltipProvider>
+      <div className="flex gap-6">
       {/* Sidebar */}
       <aside className="w-80 space-y-6">
         {/* Estatísticas */}
@@ -455,7 +462,16 @@ export const InfograficosPendentes = () => {
                     <BarChart3 className="text-slate-700 w-5 h-5" />
                   </div>
                   <div className="min-w-0">
-                    <h3 className="text-sm font-medium text-slate-800 truncate">{infographic.title}</h3>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <h3 className="text-sm font-medium text-slate-800 truncate max-w-md cursor-default">
+                          {infographic.title}
+                        </h3>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p className="max-w-xs">{infographic.title}</p>
+                      </TooltipContent>
+                    </Tooltip>
                     <div className="flex items-center gap-2 mt-1">
                       <span className={`text-xs px-2 py-0.5 ${infographic.categoryColor} rounded-full font-medium text-slate-700`}>
                         {infographic.category}
@@ -528,7 +544,16 @@ export const InfograficosPendentes = () => {
                       <Unlock className="w-3 h-3 text-[#8CC99B]" />
                     )}
                   </div>
-                  <h3 className="text-sm font-semibold text-slate-800 mb-2 line-clamp-2">{infographic.title}</h3>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <h3 className="text-sm font-semibold text-slate-800 mb-2 line-clamp-2 cursor-default">
+                        {infographic.title}
+                      </h3>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p className="max-w-xs">{infographic.title}</p>
+                    </TooltipContent>
+                  </Tooltip>
                   <div className="flex items-center justify-between text-xs text-slate-600">
                     <span>{infographic.publisher}</span>
                     <span>{infographic.sections} seções</span>
@@ -544,5 +569,6 @@ export const InfograficosPendentes = () => {
         </section>
       </div>
     </div>
+    </TooltipProvider>
   );
 };
