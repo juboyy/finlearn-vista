@@ -62,6 +62,25 @@ const Mentores = () => {
   const [cardName, setCardName] = useState<string>("");
   const [cardExpiry, setCardExpiry] = useState<string>("");
   const [cardCvv, setCardCvv] = useState<string>("");
+  const [showNewCardForm, setShowNewCardForm] = useState<boolean>(false);
+  const [selectedSavedCard, setSelectedSavedCard] = useState<number | null>(1);
+
+  const savedCards = [
+    {
+      id: 1,
+      lastDigits: "4532",
+      brand: "VISA",
+      holderName: "JOÃO SILVA",
+      expiry: "12/26"
+    },
+    {
+      id: 2,
+      lastDigits: "8765",
+      brand: "MASTERCARD",
+      holderName: "JOÃO SILVA",
+      expiry: "08/27"
+    }
+  ];
 
   const mentores = [
     {
@@ -673,6 +692,8 @@ const Mentores = () => {
           setCardName("");
           setCardExpiry("");
           setCardCvv("");
+          setShowNewCardForm(false);
+          setSelectedSavedCard(1);
         }
       }}>
         <SheetContent className="w-[500px] sm:w-[600px] overflow-y-auto">
@@ -1006,8 +1027,54 @@ const Mentores = () => {
                   </div>
                 </div>
 
-                {/* Dados do Cartão (se cartão selecionado) */}
-                {paymentMethod === "credit" && (
+                {/* Cartões Salvos e Novo Cartão */}
+                {paymentMethod === "credit" && !showNewCardForm && (
+                  <div className="space-y-4">
+                    <label className="block text-sm font-medium text-slate-700">Cartões Salvos</label>
+                    <div className="space-y-3">
+                      {savedCards.map((card) => (
+                        <label
+                          key={card.id}
+                          className={cn(
+                            "flex items-center justify-between p-4 border-2 rounded-lg cursor-pointer transition",
+                            selectedSavedCard === card.id
+                              ? "border-[hsl(270,35%,65%)] bg-[hsl(270,35%,65%)]/10"
+                              : "border-slate-300 hover:border-[hsl(270,35%,65%)]"
+                          )}
+                        >
+                          <div className="flex items-center gap-4">
+                            <input
+                              type="radio"
+                              name="savedCard"
+                              value={card.id}
+                              checked={selectedSavedCard === card.id}
+                              onChange={() => setSelectedSavedCard(card.id)}
+                              className="w-4 h-4 text-[hsl(270,35%,65%)]"
+                            />
+                            <div className="flex items-center gap-3">
+                              <div className="w-12 h-8 bg-gradient-to-br from-[#B5A0D4] to-[#9580B8] rounded flex items-center justify-center text-white text-xs font-bold border border-slate-300">
+                                {card.brand}
+                              </div>
+                              <div>
+                                <div className="font-medium text-slate-800">•••• •••• •••• {card.lastDigits}</div>
+                                <div className="text-xs text-slate-500">{card.holderName} - Vence em {card.expiry}</div>
+                              </div>
+                            </div>
+                          </div>
+                        </label>
+                      ))}
+                    </div>
+                    <button
+                      onClick={() => setShowNewCardForm(true)}
+                      className="w-full px-4 py-3 border-2 border-dashed border-slate-300 text-slate-600 rounded-lg font-medium hover:border-[hsl(270,35%,65%)] hover:text-[hsl(270,35%,65%)] transition"
+                    >
+                      + Adicionar Novo Cartão
+                    </button>
+                  </div>
+                )}
+
+                {/* Formulário de Novo Cartão */}
+                {paymentMethod === "credit" && showNewCardForm && (
                   <div className="space-y-4">
                     {/* Cartão Visual */}
                     <div className="relative h-48 bg-gradient-to-br from-[#B5A0D4] to-[#9580B8] rounded-2xl p-6 border-2 border-slate-300 shadow-lg">
@@ -1094,6 +1161,12 @@ const Mentores = () => {
                         />
                       </div>
                     </div>
+                    <button
+                      onClick={() => setShowNewCardForm(false)}
+                      className="w-full px-4 py-2 text-sm text-slate-600 hover:text-slate-800 font-medium transition"
+                    >
+                      ← Voltar para cartões salvos
+                    </button>
                   </div>
                 )}
 
