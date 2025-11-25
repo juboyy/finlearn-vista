@@ -18,9 +18,13 @@ export type Database = {
         Row: {
           author_name: string
           author_type: string
+          cover_image: string | null
           created_at: string
           description: string | null
           id: string
+          is_paid: boolean | null
+          payment_methods: Json | null
+          price: number | null
           rating: number | null
           slides: Json
           status: string
@@ -33,9 +37,13 @@ export type Database = {
         Insert: {
           author_name?: string
           author_type?: string
+          cover_image?: string | null
           created_at?: string
           description?: string | null
           id?: string
+          is_paid?: boolean | null
+          payment_methods?: Json | null
+          price?: number | null
           rating?: number | null
           slides?: Json
           status?: string
@@ -48,9 +56,13 @@ export type Database = {
         Update: {
           author_name?: string
           author_type?: string
+          cover_image?: string | null
           created_at?: string
           description?: string | null
           id?: string
+          is_paid?: boolean | null
+          payment_methods?: Json | null
+          price?: number | null
           rating?: number | null
           slides?: Json
           status?: string
