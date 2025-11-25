@@ -309,18 +309,18 @@ export default function CriarConteudo() {
                   </button>
 
                   {/* Option 13: Apresentações */}
-                  <button className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
+                  <Link to="/editor-slides" className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
                     <div className="w-12 h-12 rounded-lg bg-[hsl(90,50%,72%)] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
                       <Presentation className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
                       <h3 className="text-sm font-bold text-foreground mb-0.5">Apresentações</h3>
-                      <p className="text-xs text-muted-foreground">Desenvolva slides profissionais para seus eventos.</p>
+                      <p className="text-xs text-muted-foreground">Desenvolva slides profissionais com ajuda da IA.</p>
                     </div>
                     <div className="text-muted-foreground/30 group-hover:text-muted-foreground transition-colors">
                       <i className="fa-solid fa-chevron-right text-sm"></i>
                     </div>
-                  </button>
+                  </Link>
 
                   {/* Option 14: Live */}
                   <button className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
