@@ -58,6 +58,8 @@ export default function EditorSlides() {
     description: "",
     targetAudience: "",
   });
+  const [selectedAgent, setSelectedAgent] = useState("");
+  const [specificAgent, setSpecificAgent] = useState("");
   const [showInfoDialog, setShowInfoDialog] = useState(true);
   const [slides, setSlides] = useState<Slide[]>([
     { id: "1", title: "Slide 1", content: "" },
@@ -69,6 +71,15 @@ export default function EditorSlides() {
   const [showImageDialog, setShowImageDialog] = useState(false);
   const [showChartDialog, setShowChartDialog] = useState(false);
   const [showClearDialog, setShowClearDialog] = useState(false);
+
+  const agentTypes = [
+    { id: "analise", name: "Análise", icon: "📊", color: "bg-[#B8D4E8]", description: "Relatórios e análises de mercado" },
+    { id: "compliance", name: "Compliance", icon: "⚖️", color: "bg-[#C5E8D4]", description: "Documentos regulatórios" },
+    { id: "educacional", name: "Educacional", icon: "🎓", color: "bg-[#D4C5E8]", description: "Conteúdo didático" },
+    { id: "estrategia", name: "Estratégia", icon: "💡", color: "bg-[#E8E0C5]", description: "Planejamento e insights" },
+    { id: "juridico", name: "Jurídico", icon: "📄", color: "bg-[#E8C5D8]", description: "Documentos legais" },
+    { id: "comunicacao", name: "Comunicação", icon: "💬", color: "bg-[#E8D4C5]", description: "Relatórios executivos" }
+  ];
 
   const sensors = useSensors(
     useSensor(PointerSensor),
