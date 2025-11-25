@@ -92,6 +92,7 @@ import PerfilEmpresaEstatisticas from "./pages/PerfilEmpresaEstatisticas";
 import PerfilEmpresaArtigos from "./pages/PerfilEmpresaArtigos";
 import PodcastDetalhes from "./pages/PodcastDetalhes";
 import Infograficos from "./pages/Infograficos";
+import EditorSlides from "./pages/EditorSlides";
 
 import NotFound from "./pages/NotFound";
 
@@ -199,6 +200,7 @@ const App = () => {
           <Route path="/conta-empresarial" element={<ContaEmpresarial />} />
           <Route path="/podcast/:id" element={<PodcastDetalhes />} />
           <Route path="/infograficos" element={<Infograficos />} />
+          <Route path="/editor-slides" element={<EditorSlides />} />
           
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
