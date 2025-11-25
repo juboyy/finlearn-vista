@@ -16,6 +16,8 @@ import {
   XCircle,
   Star,
   MessageSquare,
+  Settings,
+  Upload,
 } from "lucide-react";
 import {
   Select,
@@ -54,6 +56,9 @@ import {
 import { SortableSlideItem } from "@/components/SortableSlideItem";
 import { useUserAgents } from "@/hooks/useUserAgents";
 import { AgentChat } from "@/components/AgentChat";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 interface Slide {
   id: string;
@@ -83,6 +88,15 @@ export default function EditorSlides() {
   const [showClearDialog, setShowClearDialog] = useState(false);
   const [selectedAgentId, setSelectedAgentId] = useState<string>("");
   const [showAgentChat, setShowAgentChat] = useState(false);
+  const [showSettingsSheet, setShowSettingsSheet] = useState(false);
+  const [presentationSettings, setPresentationSettings] = useState({
+    isPaid: false,
+    price: "",
+    paymentMethods: [] as string[],
+    coAuthors: "",
+    summary: "",
+    coverImage: "",
+  });
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -389,17 +403,31 @@ Exemplo para PIX:
     }
 
     try {
+      const presentationData: any = {
+        title: projectInfo.title,
+        description: presentationSettings.summary || projectInfo.description || null,
+        target_audience: projectInfo.targetAudience || null,
+        slides: slides as any,
+        status: 'published',
+        author_name: presentationSettings.coAuthors || 'Usuário',
+        topic: 'Geral'
+      };
+
+      // Add payment info if applicable
+      if (presentationSettings.isPaid) {
+        presentationData.is_paid = true;
+        presentationData.price = parseFloat(presentationSettings.price) || 0;
+        presentationData.payment_methods = presentationSettings.paymentMethods;
+      }
+
+      // Add cover image if provided
+      if (presentationSettings.coverImage) {
+        presentationData.cover_image = presentationSettings.coverImage;
+      }
+
       const { data, error } = await supabase
         .from('presentations')
-        .insert({
-          title: projectInfo.title,
-          description: projectInfo.description || null,
-          target_audience: projectInfo.targetAudience || null,
-          slides: slides as any,
-          status: 'published',
-          author_name: 'Usuário',
-          topic: 'Geral'
-        })
+        .insert(presentationData)
         .select()
         .single();
 
@@ -636,6 +664,150 @@ Exemplo para PIX:
         </DialogContent>
       </Dialog>
 
+      {/* Settings Sheet */}
+      <Sheet open={showSettingsSheet} onOpenChange={setShowSettingsSheet}>
+        <SheetContent side="right" className="w-[400px] overflow-y-auto">
+          <SheetHeader>
+            <SheetTitle className="text-slate-800">Configurações da Apresentação</SheetTitle>
+            <SheetDescription className="text-slate-600">
+              Configure informações adicionais sobre sua apresentação
+            </SheetDescription>
+          </SheetHeader>
+
+          <div className="space-y-6 mt-6">
+            {/* Tipo de Acesso */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="isPaid" className="text-sm font-medium text-slate-700">
+                  Apresentação Paga
+                </Label>
+                <Switch
+                  id="isPaid"
+                  checked={presentationSettings.isPaid}
+                  onCheckedChange={(checked) =>
+                    setPresentationSettings({ ...presentationSettings, isPaid: checked })
+                  }
+                />
+              </div>
+            </div>
+
+            {/* Campos exibidos apenas se for pago */}
+            {presentationSettings.isPaid && (
+              <>
+                <div className="space-y-2">
+                  <Label htmlFor="price" className="text-sm font-medium text-slate-700">
+                    Valor (R$)
+                  </Label>
+                  <Input
+                    id="price"
+                    type="number"
+                    placeholder="0.00"
+                    value={presentationSettings.price}
+                    onChange={(e) =>
+                      setPresentationSettings({ ...presentationSettings, price: e.target.value })
+                    }
+                    className="border-slate-300"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-slate-700">
+                    Formas de Pagamento
+                  </Label>
+                  <div className="space-y-2">
+                    {["Cartão de Crédito", "PIX", "Boleto"].map((method) => (
+                      <div key={method} className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          id={method}
+                          checked={presentationSettings.paymentMethods.includes(method)}
+                          onChange={(e) => {
+                            const methods = e.target.checked
+                              ? [...presentationSettings.paymentMethods, method]
+                              : presentationSettings.paymentMethods.filter((m) => m !== method);
+                            setPresentationSettings({ ...presentationSettings, paymentMethods: methods });
+                          }}
+                          className="rounded border-slate-300"
+                        />
+                        <Label htmlFor={method} className="text-sm text-slate-700 cursor-pointer">
+                          {method}
+                        </Label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
+
+            {/* Co-autores */}
+            <div className="space-y-2">
+              <Label htmlFor="coAuthors" className="text-sm font-medium text-slate-700">
+                Co-autores
+              </Label>
+              <Input
+                id="coAuthors"
+                placeholder="Separe os nomes por vírgula"
+                value={presentationSettings.coAuthors}
+                onChange={(e) =>
+                  setPresentationSettings({ ...presentationSettings, coAuthors: e.target.value })
+                }
+                className="border-slate-300"
+              />
+            </div>
+
+            {/* Resumo */}
+            <div className="space-y-2">
+              <Label htmlFor="summary" className="text-sm font-medium text-slate-700">
+                Resumo da Apresentação
+              </Label>
+              <Textarea
+                id="summary"
+                placeholder="Breve descrição sobre o conteúdo..."
+                value={presentationSettings.summary}
+                onChange={(e) =>
+                  setPresentationSettings({ ...presentationSettings, summary: e.target.value })
+                }
+                className="border-slate-300 min-h-[100px]"
+              />
+            </div>
+
+            {/* Imagem de Capa */}
+            <div className="space-y-2">
+              <Label htmlFor="coverImage" className="text-sm font-medium text-slate-700">
+                Imagem de Capa (URL)
+              </Label>
+              <Input
+                id="coverImage"
+                placeholder="https://..."
+                value={presentationSettings.coverImage}
+                onChange={(e) =>
+                  setPresentationSettings({ ...presentationSettings, coverImage: e.target.value })
+                }
+                className="border-slate-300"
+              />
+              {presentationSettings.coverImage && (
+                <img
+                  src={presentationSettings.coverImage}
+                  alt="Preview"
+                  className="w-full h-32 object-cover rounded-lg border-2 border-slate-200 mt-2"
+                />
+              )}
+            </div>
+
+            {/* Botão Salvar */}
+            <Button
+              onClick={() => {
+                setShowSettingsSheet(false);
+                toast.success("Configurações salvas");
+              }}
+              className="w-full bg-[#F5C6E3] hover:bg-[#E0B0CF] text-slate-700"
+            >
+              Salvar Configurações
+            </Button>
+          </div>
+        </SheetContent>
+      </Sheet>
+
       {/* Clear Confirmation Dialog */}
       <Dialog open={showClearDialog} onOpenChange={setShowClearDialog}>
         <DialogContent>
@@ -722,6 +894,13 @@ Exemplo para PIX:
                 {projectInfo.title || "Nova Apresentação"}
               </h1>
               <div className="flex gap-2">
+                <Button
+                  onClick={() => setShowSettingsSheet(true)}
+                  size="icon"
+                  className="bg-[#F5C6E3] hover:bg-[#E0B0CF] text-slate-700"
+                >
+                  <Settings className="w-4 h-4" />
+                </Button>
                 <Button
                   onClick={() => {
                     if (!selectedAgentId) {
