@@ -14,6 +14,7 @@ import {
   Eye,
   Download,
   XCircle,
+  Star,
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
@@ -43,6 +44,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { SortableSlideItem } from "@/components/SortableSlideItem";
+import { useUserAgents } from "@/hooks/useUserAgents";
 
 interface Slide {
   id: string;
@@ -53,6 +55,7 @@ interface Slide {
 }
 
 export default function EditorSlides() {
+  const { agents } = useUserAgents();
   const [projectInfo, setProjectInfo] = useState({
     title: "",
     description: "",
@@ -69,6 +72,7 @@ export default function EditorSlides() {
   const [showImageDialog, setShowImageDialog] = useState(false);
   const [showChartDialog, setShowChartDialog] = useState(false);
   const [showClearDialog, setShowClearDialog] = useState(false);
+  const [selectedAgentId, setSelectedAgentId] = useState<string>("");
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -91,12 +95,17 @@ export default function EditorSlides() {
   const generateInitialSlides = async () => {
     setIsGenerating(true);
     try {
+      const selectedAgent = agents.find(a => a.id === selectedAgentId);
+      const agentContext = selectedAgent 
+        ? `\nAgente especializado: ${selectedAgent.agent_name} - ${selectedAgent.agent_description}\nCategoria: ${selectedAgent.agent_category}`
+        : "";
+
       const { data, error } = await supabase.functions.invoke("generate-slides-content", {
         body: {
           prompt: `Crie uma apresentação completa e detalhada sobre: ${projectInfo.title}. 
 Descrição: ${projectInfo.description}. 
 Público-alvo: ${projectInfo.targetAudience}.
-Contexto: Mercado financeiro brasileiro.
+Contexto: Mercado financeiro brasileiro.${agentContext}
 
 INSTRUÇÕES CRÍTICAS:
 - OBRIGATÓRIO: Crie NO MÍNIMO 10 slides SEPARADOS
@@ -368,7 +377,7 @@ Exemplo para PIX:
 
       {/* Info Dialog */}
       <Dialog open={showInfoDialog} onOpenChange={setShowInfoDialog}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-2xl text-slate-800">
               Informações da Apresentação
@@ -377,7 +386,7 @@ Exemplo para PIX:
               Conte-nos sobre o assunto da apresentação para que a IA possa te ajudar melhor
             </DialogDescription>
           </DialogHeader>
-          <div className="space-y-4 pt-4">
+          <div className="space-y-6 pt-4">
             <div>
               <label className="text-sm font-medium text-slate-700 mb-2 block">
                 Título da Apresentação
@@ -417,6 +426,56 @@ Exemplo para PIX:
                 className="border-slate-300"
               />
             </div>
+
+            {/* Agent Selection */}
+            <div>
+              <label className="text-sm font-medium text-slate-700 mb-3 block">
+                Escolha um Agente de IA (Opcional)
+              </label>
+              <div className="grid grid-cols-2 gap-3">
+                {agents.filter(a => a.is_active).map((agent) => (
+                  <button
+                    key={agent.id}
+                    onClick={() => setSelectedAgentId(agent.id === selectedAgentId ? "" : agent.id)}
+                    className={`p-4 rounded-xl border-2 transition-all ${
+                      selectedAgentId === agent.id
+                        ? "border-[#8CC99B] bg-[#C5E8D4]/30"
+                        : "border-slate-200 hover:border-slate-300 bg-white"
+                    }`}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className={`w-12 h-12 rounded-lg ${agent.agent_bg_color} flex-shrink-0 overflow-hidden`}>
+                        <img
+                          src={agent.agent_image}
+                          alt={agent.agent_name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="flex-1 text-left">
+                        <div className="font-semibold text-slate-800 text-sm mb-1">
+                          {agent.agent_name}
+                        </div>
+                        <div className="text-xs text-slate-600 mb-2">
+                          {agent.agent_category}
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Star className="w-3 h-3 fill-[#E8D08C] text-[#E8D08C]" />
+                          <span className="text-xs font-medium text-slate-700">
+                            {agent.rating}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+              {selectedAgentId && (
+                <p className="text-xs text-slate-600 mt-3">
+                  {agents.find(a => a.id === selectedAgentId)?.agent_description}
+                </p>
+              )}
+            </div>
+
             <Button
               onClick={handleInfoSubmit}
               className="w-full bg-[#7FA8C9] hover:bg-[#6B91B3] text-white"
