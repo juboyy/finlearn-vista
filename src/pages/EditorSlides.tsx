@@ -432,47 +432,56 @@ Exemplo para PIX:
               <label className="text-sm font-medium text-slate-700 mb-3 block">
                 Escolha um Agente de IA (Opcional)
               </label>
-              <div className="grid grid-cols-2 gap-3">
-                {agents.filter(a => a.is_active).map((agent) => (
-                  <button
-                    key={agent.id}
-                    onClick={() => setSelectedAgentId(agent.id === selectedAgentId ? "" : agent.id)}
-                    className={`p-4 rounded-xl border-2 transition-all ${
-                      selectedAgentId === agent.id
-                        ? "border-[#8CC99B] bg-[#C5E8D4]/30"
-                        : "border-slate-200 hover:border-slate-300 bg-white"
-                    }`}
-                  >
-                    <div className="flex items-start gap-3">
-                      <div className={`w-12 h-12 rounded-lg ${agent.agent_bg_color} flex-shrink-0 overflow-hidden`}>
-                        <img
-                          src={agent.agent_image}
-                          alt={agent.agent_name}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div className="flex-1 text-left">
-                        <div className="font-semibold text-slate-800 text-sm mb-1">
-                          {agent.agent_name}
-                        </div>
-                        <div className="text-xs text-slate-600 mb-2">
-                          {agent.agent_category}
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <Star className="w-3 h-3 fill-[#E8D08C] text-[#E8D08C]" />
-                          <span className="text-xs font-medium text-slate-700">
-                            {agent.rating}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </button>
-                ))}
+              <div className="relative">
+                <select
+                  value={selectedAgentId}
+                  onChange={(e) => setSelectedAgentId(e.target.value)}
+                  className="w-full px-4 py-3 bg-white border-2 border-slate-300 rounded-lg text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#7FA8C9] focus:border-[#7FA8C9] appearance-none cursor-pointer"
+                  style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E\")", backgroundPosition: "right 0.5rem center", backgroundRepeat: "no-repeat", backgroundSize: "1.5em 1.5em", paddingRight: "2.5rem" }}
+                >
+                  <option value="">Selecione um agente...</option>
+                  {agents.filter(a => a.is_active).map((agent) => (
+                    <option key={agent.id} value={agent.id}>
+                      {agent.agent_name} - {agent.agent_category} ⭐ {agent.rating}
+                    </option>
+                  ))}
+                </select>
               </div>
               {selectedAgentId && (
-                <p className="text-xs text-slate-600 mt-3">
-                  {agents.find(a => a.id === selectedAgentId)?.agent_description}
-                </p>
+                <div className="mt-4 p-4 bg-slate-50 rounded-lg border-2 border-slate-200">
+                  {(() => {
+                    const selectedAgent = agents.find(a => a.id === selectedAgentId);
+                    if (!selectedAgent) return null;
+                    return (
+                      <div className="flex items-start gap-4">
+                        <div className={`w-16 h-16 rounded-lg ${selectedAgent.agent_bg_color} flex-shrink-0 overflow-hidden`}>
+                          <img
+                            src={selectedAgent.agent_image}
+                            alt={selectedAgent.agent_name}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div className="flex-1">
+                          <div className="font-semibold text-slate-800 mb-1">
+                            {selectedAgent.agent_name}
+                          </div>
+                          <div className="text-sm text-slate-600 mb-2">
+                            {selectedAgent.agent_category}
+                          </div>
+                          <div className="flex items-center gap-1 mb-2">
+                            <Star className="w-4 h-4 fill-[#E8D08C] text-[#E8D08C]" />
+                            <span className="text-sm font-medium text-slate-700">
+                              {selectedAgent.rating}
+                            </span>
+                          </div>
+                          <p className="text-xs text-slate-600">
+                            {selectedAgent.agent_description}
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })()}
+                </div>
               )}
             </div>
 
