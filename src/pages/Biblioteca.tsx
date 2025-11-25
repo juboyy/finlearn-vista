@@ -240,9 +240,14 @@ export function Biblioteca() {
         {/* Header */}
         <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
           <div className="px-8 py-4 flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-semibold text-slate-800">Minha Biblioteca</h1>
-              <p className="text-sm text-slate-500 mt-1">Organize seu conhecimento e anotações</p>
+            <div className="flex items-center gap-4">
+              <div>
+                <h1 className="text-2xl font-semibold text-slate-800">Minha Biblioteca</h1>
+                <p className="text-sm text-slate-500 mt-1">Organize seu conhecimento e anotações</p>
+              </div>
+              <button className="px-4 py-2 bg-[#F5C6E3] hover:bg-[#E0B0CF] text-slate-700 rounded-lg font-medium transition-colors">
+                Ferramentas
+              </button>
             </div>
             <div className="flex items-center gap-4">
               <div className="relative">
