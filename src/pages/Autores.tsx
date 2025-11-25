@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { Bell, Search, Plus, Users, Newspaper, Star, ChevronLeft, ChevronRight, X, UserCheck } from "lucide-react";
+import { Bell, Search, Plus, Users, Newspaper, Star, ChevronLeft, ChevronRight, X, UserCheck, Building2 } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 const Autores = () => {
@@ -296,6 +296,15 @@ const Autores = () => {
                   >
                     <i className="fas fa-compass mr-2"></i>
                     Descobrir Novos
+                  </button>
+                  <button 
+                    onClick={() => {
+                      navigate("/empresas");
+                    }}
+                    className="px-6 py-2.5 bg-pastel-blue hover:bg-pastel-pink text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200"
+                  >
+                    <Building2 size={18} />
+                    Empresas
                   </button>
                 </div>
               </section>

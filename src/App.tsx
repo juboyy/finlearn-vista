@@ -29,6 +29,7 @@ import Estatisticas from "./pages/Estatisticas";
 import PerfilAutor from "./pages/PerfilAutor";
 import Seguidores from "./pages/Seguidores";
 import DescobrirNovos from "./pages/DescobrirNovos";
+import Empresas from "./pages/Empresas";
 import Checkout from "./pages/Checkout";
 import CheckoutPayment from "./pages/CheckoutPayment";
 import Podcasts from "./pages/Podcasts";
@@ -130,6 +131,7 @@ const App = () => {
           <Route path="/perfil-autor/:id" element={<PerfilAutor />} />
           <Route path="/seguidores" element={<Seguidores />} />
           <Route path="/descobrir-novos" element={<DescobrirNovos />} />
+          <Route path="/empresas" element={<Empresas />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/checkout/payment" element={<CheckoutPayment />} />
           <Route path="/podcasts" element={<Podcasts />} />
