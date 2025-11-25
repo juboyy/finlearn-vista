@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { Search, Bell, Plus, Folder, FolderOpen, Star, MoreHorizontal, FileText, Mic, Link as LinkIcon, ChevronLeft, ChevronRight, StickyNote, X, CalendarCheck } from "lucide-react";
+import { Search, Bell, Plus, Folder, FolderOpen, Star, MoreHorizontal, FileText, Mic, Link as LinkIcon, ChevronLeft, ChevronRight, StickyNote, X, CalendarCheck, Wrench } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -253,16 +253,16 @@ export function Biblioteca() {
                 />
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
               </div>
+              <button className="px-4 py-2 bg-[#F5C6E3] hover:bg-[#E0B0CF] text-slate-700 rounded-lg font-medium transition-colors">
+                <Wrench className="h-4 w-4 inline mr-2" />
+                Ferramentas
+              </button>
               <button
                 onClick={() => setShowModal(true)}
-                className="px-4 py-2 rounded-lg font-medium hover:bg-opacity-80 transition text-slate-700"
-                style={{ backgroundColor: '#D4C5E8' }}
+                className="px-4 py-2 bg-[#F5C6E3] hover:bg-[#E0B0CF] text-slate-700 rounded-lg font-medium transition-colors"
               >
                 <Plus className="h-4 w-4 inline mr-2" />
                 Novo Item
-              </button>
-              <button className="px-4 py-2 bg-[#F5C6E3] hover:bg-[#E0B0CF] text-slate-700 rounded-lg font-medium transition-colors">
-                Ferramentas
               </button>
               <button className="relative p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
                 <Bell className="h-5 w-5" />
