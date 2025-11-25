@@ -185,7 +185,7 @@ LEMBRE-SE: Retorne NO MÍNIMO 10 slides diferentes, cada um com sua própria ima
                 const { data: imageData } = await supabase.functions.invoke("generate-slides-content", {
                   body: {
                     type: "image",
-                    prompt: `${slide.imagePrompt}. Estilo: Profissional, corporativo, mercado financeiro brasileiro.`,
+                    prompt: `${slide.imagePrompt}. ESTILO OBRIGATÓRIO: Ilustração minimalista, cores pastel claras (tons suaves de azul, rosa, verde, roxo), traços limpos e simples, estilo flat design, visual corporativo mas leve, sem detalhes excessivos, fundo limpo ou gradiente suave em pastel.`,
                   },
                 });
                 
@@ -295,7 +295,7 @@ Retorne APENAS um JSON válido neste formato exato:
       const { data, error } = await supabase.functions.invoke("generate-slides-content", {
         body: {
           type: "image",
-          prompt: `${imagePrompt}. Estilo: Profissional, corporativo, mercado financeiro brasileiro.`,
+          prompt: `${imagePrompt}. ESTILO OBRIGATÓRIO: Ilustração minimalista, cores pastel claras (tons suaves de azul, rosa, verde, roxo), traços limpos e simples, estilo flat design, visual corporativo mas leve, sem detalhes excessivos, fundo limpo ou gradiente suave em pastel.`,
         },
       });
 
@@ -759,46 +759,48 @@ Exemplo para PIX:
                     placeholder="Digite o conteúdo do slide..."
                   />
                   
-                  {/* Images and Charts inline */}
-                  <div className="mt-4 space-y-3">
-                    {currentSlide?.imageUrl && (
-                      <div className="relative inline-block">
-                        <img
-                          src={currentSlide.imageUrl}
-                          alt="Slide"
-                          className="w-64 h-auto rounded-lg border-2 border-slate-200"
-                        />
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => updateSlide("imageUrl", undefined)}
-                          className="absolute top-1 right-1 bg-white/90 hover:bg-white h-7 w-7 p-0"
-                        >
-                          <Trash2 className="w-3 h-3 text-red-500" />
-                        </Button>
-                      </div>
-                    )}
-                    
-                    {currentSlide?.chartData && (
-                      <div className="relative inline-block w-80">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => updateSlide("chartData", undefined)}
-                          className="absolute top-1 right-1 bg-white/90 hover:bg-white h-7 w-7 p-0 z-10"
-                        >
-                          <Trash2 className="w-3 h-3 text-red-500" />
-                        </Button>
-                        <div className="scale-75 origin-top-left">
-                          <SlideChart
-                            type={currentSlide.chartData.type}
-                            data={currentSlide.chartData.data}
-                            title={currentSlide.chartData.title}
+                  {/* Images and Charts side by side */}
+                  {(currentSlide?.imageUrl || currentSlide?.chartData) && (
+                    <div className="mt-6 flex gap-4 items-start">
+                      {currentSlide?.imageUrl && (
+                        <div className="relative flex-shrink-0">
+                          <img
+                            src={currentSlide.imageUrl}
+                            alt="Slide"
+                            className="w-80 h-auto rounded-lg border-2 border-slate-200"
                           />
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => updateSlide("imageUrl", undefined)}
+                            className="absolute top-2 right-2 bg-white/90 hover:bg-white h-8 w-8 p-0"
+                          >
+                            <Trash2 className="w-4 h-4 text-red-500" />
+                          </Button>
                         </div>
-                      </div>
-                    )}
-                  </div>
+                      )}
+                      
+                      {currentSlide?.chartData && (
+                        <div className="relative flex-1">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => updateSlide("chartData", undefined)}
+                            className="absolute top-2 right-2 bg-white/90 hover:bg-white h-8 w-8 p-0 z-10"
+                          >
+                            <Trash2 className="w-4 h-4 text-red-500" />
+                          </Button>
+                          <div className="w-full">
+                            <SlideChart
+                              type={currentSlide.chartData.type}
+                              data={currentSlide.chartData.data}
+                              title={currentSlide.chartData.title}
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
