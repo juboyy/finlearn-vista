@@ -306,83 +306,66 @@ export default function PodcastDetalhes() {
 
           {/* Audio Player Section */}
           <section className="sticky top-0 bg-white border-b border-[hsl(215,20%,85%)] shadow-lg z-20">
-            <div className="px-8 py-6">
+            <div className="px-8 py-3">
               <div className="max-w-7xl mx-auto">
-                {/* Currently Playing Info */}
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
-                    <img src={currentEpisode.image} alt="episode" className="w-full h-full object-cover" />
+                <div className="flex items-center gap-6">
+                  {/* Currently Playing Info */}
+                  <div className="flex items-center gap-3 flex-1 min-w-0">
+                    <div className="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
+                      <img src={currentEpisode.image} alt="episode" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs text-slate-500">Episódio #{currentEpisode.number}</p>
+                      <h3 className="text-sm font-bold text-slate-800 truncate">{currentEpisode.title}</h3>
+                    </div>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs text-slate-500 mb-1">Episódio #{currentEpisode.number}</p>
-                    <h3 className="font-bold text-slate-800 truncate">{currentEpisode.title}</h3>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Badge className="bg-[hsl(206,35%,75%)]/20 text-[hsl(206,45%,30%)] border-[hsl(206,35%,75%)]/30">
-                      <Clock className="w-3 h-3 mr-1" /> {currentEpisode.duration}
-                    </Badge>
-                    <Badge className="bg-[hsl(142,35%,75%)]/20 text-[hsl(142,45%,28%)] border-[hsl(142,35%,75%)]/30">
-                      <Headphones className="w-3 h-3 mr-1" /> {currentEpisode.plays}
-                    </Badge>
-                  </div>
-                </div>
 
-                {/* Progress Bar */}
-                <div className="mb-4">
-                  <input
-                    type="range"
-                    min="0"
-                    max={duration}
-                    value={currentTime}
-                    onChange={handleProgressChange}
-                    className="w-full h-2 bg-slate-200 rounded-full appearance-none cursor-pointer"
-                    style={{
-                      background: `linear-gradient(to right, hsl(206, 35%, 75%) 0%, hsl(206, 35%, 75%) ${(currentTime / duration) * 100}%, hsl(215, 20%, 85%) ${(currentTime / duration) * 100}%, hsl(215, 20%, 85%) 100%)`
-                    }}
-                  />
-                  <div className="flex items-center justify-between mt-2">
-                    <span className="text-xs text-slate-600 font-medium">{formatTime(currentTime)}</span>
-                    <span className="text-xs text-slate-600 font-medium">{formatTime(duration)}</span>
-                  </div>
-                </div>
-
-                {/* Player Controls */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4 flex-1">
-                    <button className="p-2 text-slate-700 hover:bg-slate-100 rounded-lg transition-all">
-                      <Bookmark className="w-5 h-5" />
+                  {/* Player Controls */}
+                  <div className="flex items-center gap-3">
+                    <button className="p-1.5 text-slate-700 hover:bg-slate-100 rounded-lg transition-all">
+                      <Bookmark className="w-4 h-4" />
                     </button>
-                    <button className="p-2 text-slate-700 hover:bg-slate-100 rounded-lg transition-all">
-                      <MoreVertical className="w-5 h-5" />
-                    </button>
-                  </div>
-
-                  {/* Main Controls */}
-                  <div className="flex items-center gap-4">
                     <button 
                       onClick={skipBackward}
-                      className="p-3 text-slate-700 hover:bg-slate-100 rounded-xl transition-all"
+                      className="p-2 text-slate-700 hover:bg-slate-100 rounded-lg transition-all"
                     >
-                      <SkipBack className="w-5 h-5" />
+                      <SkipBack className="w-4 h-4" />
                     </button>
                     <button 
                       onClick={togglePlayPause}
-                      className="p-4 bg-slate-800 text-white rounded-full hover:bg-slate-700 transition-all shadow-lg"
+                      className="p-3 bg-slate-800 text-white rounded-full hover:bg-slate-700 transition-all shadow-lg"
                     >
-                      {isPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6 ml-0.5" />}
+                      {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-0.5" />}
                     </button>
                     <button 
                       onClick={skipForward}
-                      className="p-3 text-slate-700 hover:bg-slate-100 rounded-xl transition-all"
+                      className="p-2 text-slate-700 hover:bg-slate-100 rounded-lg transition-all"
                     >
-                      <SkipForward className="w-5 h-5" />
+                      <SkipForward className="w-4 h-4" />
                     </button>
                   </div>
 
-                  {/* Volume Controls */}
-                  <div className="flex items-center gap-3 flex-1 justify-end">
-                    <button onClick={toggleMute} className="p-2 text-slate-700 hover:bg-slate-100 rounded-lg transition-all">
-                      {isMuted || volume === 0 ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+                  {/* Progress Bar with Time */}
+                  <div className="flex items-center gap-3 flex-[2] min-w-0">
+                    <span className="text-xs text-slate-600 font-medium whitespace-nowrap">{formatTime(currentTime)}</span>
+                    <input
+                      type="range"
+                      min="0"
+                      max={duration}
+                      value={currentTime}
+                      onChange={handleProgressChange}
+                      className="flex-1 h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer"
+                      style={{
+                        background: `linear-gradient(to right, hsl(206, 35%, 75%) 0%, hsl(206, 35%, 75%) ${(currentTime / duration) * 100}%, hsl(215, 20%, 85%) ${(currentTime / duration) * 100}%, hsl(215, 20%, 85%) 100%)`
+                      }}
+                    />
+                    <span className="text-xs text-slate-600 font-medium whitespace-nowrap">{formatTime(duration)}</span>
+                  </div>
+
+                  {/* Volume Controls and Badges */}
+                  <div className="flex items-center gap-3">
+                    <button onClick={toggleMute} className="p-1.5 text-slate-700 hover:bg-slate-100 rounded-lg transition-all">
+                      {isMuted || volume === 0 ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
                     </button>
                     <input
                       type="range"
@@ -391,11 +374,19 @@ export default function PodcastDetalhes() {
                       step="0.01"
                       value={isMuted ? 0 : volume}
                       onChange={handleVolumeChange}
-                      className="w-24 h-2 bg-slate-200 rounded-full appearance-none cursor-pointer"
+                      className="w-20 h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer"
                       style={{
                         background: `linear-gradient(to right, hsl(206, 35%, 75%) 0%, hsl(206, 35%, 75%) ${(isMuted ? 0 : volume) * 100}%, hsl(215, 20%, 85%) ${(isMuted ? 0 : volume) * 100}%, hsl(215, 20%, 85%) 100%)`
                       }}
                     />
+                    <div className="flex items-center gap-2 ml-2">
+                      <Badge className="bg-[hsl(206,35%,75%)]/20 text-[hsl(206,45%,30%)] border-[hsl(206,35%,75%)]/30">
+                        <Clock className="w-3 h-3 mr-1" /> {currentEpisode.duration}
+                      </Badge>
+                      <Badge className="bg-[hsl(142,35%,75%)]/20 text-[hsl(142,45%,28%)] border-[hsl(142,35%,75%)]/30">
+                        <Headphones className="w-3 h-3 mr-1" /> {currentEpisode.plays}
+                      </Badge>
+                    </div>
                   </div>
                 </div>
               </div>
