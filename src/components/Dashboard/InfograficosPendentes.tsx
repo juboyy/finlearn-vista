@@ -465,8 +465,8 @@ export const InfograficosPendentes = () => {
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <h3 className="text-sm font-medium text-slate-800 cursor-default">
-                          {infographic.title.length > 50 
-                            ? infographic.title.substring(0, 50) + "..." 
+                          {infographic.title.length > 40 
+                            ? infographic.title.substring(0, 40) + "..." 
                             : infographic.title}
                         </h3>
                       </TooltipTrigger>
