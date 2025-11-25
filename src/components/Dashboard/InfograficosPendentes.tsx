@@ -326,23 +326,23 @@ export const InfograficosPendentes = () => {
           </div>
         </section>
 
-        {/* Editoras */}
-        <section className="bg-white rounded-xl p-6 border border-slate-200">
-          <h2 className="text-lg font-semibold text-slate-800 mb-4">Editoras</h2>
-          <div className="space-y-3">
-            {publishers.map((publisher) => (
-              <div key={publisher.name} className="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer transition">
-                <div className="w-8 h-8 bg-slate-200 rounded-full flex items-center justify-center">
-                  <Building className="text-slate-600 w-4 h-4" />
+          {/* Autores */}
+          <section className="bg-white rounded-xl p-6 border border-slate-200">
+            <h2 className="text-lg font-semibold text-slate-800 mb-4">Autores</h2>
+            <div className="space-y-3">
+              {publishers.map((publisher) => (
+                <div key={publisher.name} className="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 cursor-pointer transition">
+                  <div className="w-8 h-8 bg-slate-200 rounded-full flex items-center justify-center">
+                    <Building className="text-slate-600 w-4 h-4" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-slate-800">{publisher.name}</p>
+                    <p className="text-xs text-slate-500">{publisher.count} infográficos</p>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-slate-800">{publisher.name}</p>
-                  <p className="text-xs text-slate-500">{publisher.count} infográficos</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+              ))}
+            </div>
+          </section>
 
         {/* Atividade Recente */}
         <section className="bg-white rounded-xl p-6 border border-slate-200">
@@ -446,7 +446,7 @@ export const InfograficosPendentes = () => {
           <div className="border-b border-slate-200 bg-slate-50">
             <div className="flex items-center py-3 px-6">
               <div className="flex-1 text-xs font-semibold text-slate-700 uppercase tracking-wide">Infográfico</div>
-              <div className="w-32 text-xs font-semibold text-slate-700 uppercase tracking-wide">Editora</div>
+              <div className="w-32 text-xs font-semibold text-slate-700 uppercase tracking-wide">Autora</div>
               <div className="w-32 text-xs font-semibold text-slate-700 uppercase tracking-wide">Publicação</div>
               <div className="w-24 text-xs font-semibold text-slate-700 uppercase tracking-wide">Seções</div>
               <div className="w-28 text-xs font-semibold text-slate-700 uppercase tracking-wide">Visualizações</div>
@@ -482,7 +482,13 @@ export const InfograficosPendentes = () => {
                   </div>
                 </div>
                 <div className="w-32">
-                  <p className="text-sm text-slate-800 font-medium">{infographic.publisher}</p>
+                  <a 
+                    href="#" 
+                    className="text-sm text-slate-800 font-medium hover:text-[#A68CC9] hover:underline transition-colors"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {infographic.publisher}
+                  </a>
                 </div>
                 <div className="w-32">
                   <p className="text-sm text-slate-600">{infographic.publishDate}</p>
