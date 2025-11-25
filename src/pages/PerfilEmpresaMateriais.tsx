@@ -252,7 +252,10 @@ export default function PerfilEmpresaMateriais() {
 
                   {/* Artigos */}
                   <div 
-                    onClick={() => navigate('/perfil-empresa/1/artigos')}
+                    onClick={() => {
+                      console.log('Navegando para artigos...');
+                      navigate('/perfil-empresa/1/artigos');
+                    }}
                     className="bg-white p-4 rounded-xl border border-slate-200 hover:border-[#B8D4E8] hover:shadow-md transition cursor-pointer flex items-center gap-4 group"
                   >
                     <div className="w-14 h-14 bg-slate-200 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
