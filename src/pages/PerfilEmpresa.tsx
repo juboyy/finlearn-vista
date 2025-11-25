@@ -524,10 +524,10 @@ export default function PerfilEmpresa() {
                 <h3 className="text-lg font-semibold text-slate-800 mb-4">Redes Sociais</h3>
                 <div className="space-y-3">
                   {[
-                    { icon: "linkedin", text: "linkedin.com/company/itau", bg: "bg-pastel-blue", iconColor: "text-blue-600" },
-                    { icon: "twitter", text: "@itau", bg: "bg-pastel-blue", iconColor: "text-sky-500" },
-                    { icon: "instagram", text: "@itau", bg: "bg-pastel-pink", iconColor: "text-pink-600" },
-                    { icon: "youtube", text: "Itaú Unibanco", bg: "bg-pastel-peach", iconColor: "text-red-600" },
+                    { icon: "linkedin", text: "linkedin.com/company/itau", bg: "bg-pastel-purple", iconColor: "text-purple-600" },
+                    { icon: "twitter", text: "@itau", bg: "bg-pastel-purple", iconColor: "text-purple-600" },
+                    { icon: "instagram", text: "@itau", bg: "bg-pastel-purple", iconColor: "text-purple-600" },
+                    { icon: "youtube", text: "Itaú Unibanco", bg: "bg-pastel-purple", iconColor: "text-purple-600" },
                     { icon: "globe", text: "www.itau.com.br", bg: "bg-pastel-purple", iconColor: "text-purple-600" }
                   ].map((social, idx) => (
                     <a key={idx} href="#" className={`flex items-center gap-4 p-4 ${social.bg} rounded-lg transition-all hover:scale-105 hover:shadow-md group`}>
