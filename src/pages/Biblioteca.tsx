@@ -240,14 +240,9 @@ export function Biblioteca() {
         {/* Header */}
         <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
           <div className="px-8 py-4 flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div>
-                <h1 className="text-2xl font-semibold text-slate-800">Minha Biblioteca</h1>
-                <p className="text-sm text-slate-500 mt-1">Organize seu conhecimento e anotações</p>
-              </div>
-              <button className="px-4 py-2 bg-[#F5C6E3] hover:bg-[#E0B0CF] text-slate-700 rounded-lg font-medium transition-colors">
-                Ferramentas
-              </button>
+            <div>
+              <h1 className="text-2xl font-semibold text-slate-800">Minha Biblioteca</h1>
+              <p className="text-sm text-slate-500 mt-1">Organize seu conhecimento e anotações</p>
             </div>
             <div className="flex items-center gap-4">
               <div className="relative">
@@ -258,10 +253,6 @@ export function Biblioteca() {
                 />
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
               </div>
-              <button className="relative p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
-                <Bell className="h-5 w-5" />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-              </button>
               <button
                 onClick={() => setShowModal(true)}
                 className="px-4 py-2 rounded-lg font-medium hover:bg-opacity-80 transition text-slate-700"
@@ -269,6 +260,13 @@ export function Biblioteca() {
               >
                 <Plus className="h-4 w-4 inline mr-2" />
                 Novo Item
+              </button>
+              <button className="px-4 py-2 bg-[#F5C6E3] hover:bg-[#E0B0CF] text-slate-700 rounded-lg font-medium transition-colors">
+                Ferramentas
+              </button>
+              <button className="relative p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
+                <Bell className="h-5 w-5" />
+                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
               </button>
             </div>
           </div>
