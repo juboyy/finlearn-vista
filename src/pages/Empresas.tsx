@@ -250,135 +250,135 @@ const Empresas = () => {
 
         <div className="p-8">
           <div className="flex gap-6">
-            {/* Sidebar Filters */}
+            {/* Sidebar Cards */}
             <aside className="w-80 space-y-6">
-              {/* Tipo de Empresa */}
+              {/* Empresas que Você Segue */}
+              <section className="bg-white rounded-xl p-6 border border-slate-200">
+                <h2 className="text-lg font-semibold text-slate-800 mb-4">Suas Empresas</h2>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
+                    <div>
+                      <p className="text-2xl font-bold text-slate-800">12</p>
+                      <p className="text-sm text-slate-600">Empresas seguindo</p>
+                    </div>
+                    <div className="w-12 h-12 bg-[#B8D4E8] rounded-lg flex items-center justify-center">
+                      <i className="fas fa-star text-slate-700 text-xl"></i>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
+                    <div>
+                      <p className="text-2xl font-bold text-slate-800">847</p>
+                      <p className="text-sm text-slate-600">Conteúdos lidos</p>
+                    </div>
+                    <div className="w-12 h-12 bg-[#C5E8D4] rounded-lg flex items-center justify-center">
+                      <i className="fas fa-book-open text-slate-700 text-xl"></i>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* Empresa Mais Lida */}
+              <section className="bg-white rounded-xl p-6 border border-slate-200">
+                <h2 className="text-lg font-semibold text-slate-800 mb-4">Mais Lida por Você</h2>
+                <div className="flex items-center gap-4 p-4 bg-slate-50 rounded-lg">
+                  <div className="w-16 h-16 bg-[#B8D4E8] rounded-xl flex items-center justify-center flex-shrink-0">
+                    <div className="text-2xl font-bold text-slate-700">B</div>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-slate-800">Banco do Brasil</h3>
+                    <p className="text-xs text-slate-600">156 conteúdos lidos</p>
+                    <div className="mt-2 flex items-center gap-1">
+                      <div className="flex-1 bg-slate-200 rounded-full h-2">
+                        <div className="h-2 rounded-full bg-[#B8D4E8]" style={{ width: '75%' }}></div>
+                      </div>
+                      <span className="text-xs text-slate-600">75%</span>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* Trends - Empresas em Alta */}
               <section className="bg-white rounded-xl p-6 border border-slate-200">
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-semibold text-slate-800">Tipo de Empresa</h2>
-                  <button className="text-xs text-slate-500 hover:text-slate-700">Limpar</button>
+                  <h2 className="text-lg font-semibold text-slate-800">Trends - Em Alta</h2>
+                  <i className="fas fa-fire text-[#F5D5B8]"></i>
                 </div>
-                <div className="mb-4">
-                  <select className="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-pastel-blue bg-white text-slate-700">
-                    <option value="">Selecione o tipo</option>
-                    <option value="banco-comercial">Banco Comercial</option>
-                    <option value="banco-investimento">Banco de Investimento</option>
-                    <option value="banco-digital">Banco Digital</option>
-                    <option value="fintech">Fintech</option>
-                    <option value="seguradora">Seguradora</option>
-                    <option value="corretora">Corretora</option>
-                    <option value="processadora">Processadora de Pagamentos</option>
-                    <option value="adquirente">Adquirente</option>
-                    <option value="bolsa">Bolsa de Valores</option>
-                    <option value="regulador">Órgão Regulador</option>
-                  </select>
-                </div>
-                <div className="space-y-2">
+                <div className="space-y-3">
                   {[
-                    { name: 'Banking', count: 156, color: '#7FA8C9' },
-                    { name: 'Fintechs', count: 234, color: '#A68CC9' },
-                    { name: 'Investimentos', count: 124, color: '#8CC99B' },
-                    { name: 'Seguros', count: 89, color: '#C9B88C' },
-                    { name: 'Meios de Pagamento', count: 143, color: '#C99B8C' },
-                    { name: 'Mercado de Capitais', count: 67, color: '#E8C5D8' }
-                  ].map((type) => (
-                    <label key={type.name} className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-100 cursor-pointer transition">
-                      <input type="checkbox" className="w-4 h-4 text-pastel-blue rounded focus:ring-2 focus:ring-pastel-blue" />
-                      <i className="fas fa-circle" style={{ fontSize: '8px', color: type.color }}></i>
-                      <span className="text-sm text-slate-700 flex-1">{type.name}</span>
-                      <span className="text-xs text-slate-500">{type.count}</span>
-                    </label>
+                    { name: 'Nubank', growth: '+45%', color: '#C5E8D4', followers: '215.7k' },
+                    { name: 'Stone', growth: '+32%', color: '#E8C5D8', followers: '89.4k' },
+                    { name: 'Inter', growth: '+28%', color: '#C5E8D4', followers: '92.1k' },
+                    { name: 'XP Investimentos', growth: '+24%', color: '#E8E0C5', followers: '156.8k' }
+                  ].map((trend) => (
+                    <div key={trend.name} className="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 cursor-pointer transition">
+                      <div className="flex items-center gap-3">
+                        <div className="w-2 h-2 rounded-full" style={{ backgroundColor: trend.color }}></div>
+                        <div>
+                          <p className="text-sm font-medium text-slate-800">{trend.name}</p>
+                          <p className="text-xs text-slate-500">{trend.followers} seguidores</p>
+                        </div>
+                      </div>
+                      <span className="text-xs font-semibold text-[#C5E8D4]">{trend.growth}</span>
+                    </div>
                   ))}
                 </div>
               </section>
 
-              {/* Porte da Empresa */}
+              {/* Tags Populares */}
               <section className="bg-white rounded-xl p-6 border border-slate-200">
-                <h2 className="text-lg font-semibold text-slate-800 mb-4">Porte da Empresa</h2>
-                <div className="mb-4">
-                  <select className="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-pastel-blue bg-white text-slate-700">
-                    <option value="">Selecione o porte</option>
-                    <option value="startup">Startup (1-50 funcionários)</option>
-                    <option value="pequeno">Pequeno Porte (51-200)</option>
-                    <option value="medio">Médio Porte (201-1000)</option>
-                    <option value="grande">Grande Porte (1000+)</option>
-                  </select>
-                </div>
+                <h2 className="text-lg font-semibold text-slate-800 mb-4">Tags Populares</h2>
                 <div className="space-y-2">
                   {[
-                    { name: 'Startup', count: 145 },
-                    { name: 'Pequeno Porte', count: 89 },
-                    { name: 'Médio Porte', count: 134 },
-                    { name: 'Grande Porte', count: 98 }
-                  ].map((size) => (
-                    <label key={size.name} className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-100 cursor-pointer transition">
-                      <input type="checkbox" className="w-4 h-4 text-pastel-blue rounded focus:ring-2 focus:ring-pastel-blue" />
-                      <span className="text-sm text-slate-700 flex-1">{size.name}</span>
-                      <span className="text-xs text-slate-500">{size.count}</span>
-                    </label>
+                    { tag: 'Banking', count: 156, color: '#7FA8C9' },
+                    { tag: 'Fintechs', count: 234, color: '#A68CC9' },
+                    { tag: 'Investimentos', count: 124, color: '#8CC99B' },
+                    { tag: 'Meios de Pagamento', count: 143, color: '#C99B8C' },
+                    { tag: 'Seguros', count: 89, color: '#C9B88C' },
+                    { tag: 'Mercado de Capitais', count: 67, color: '#E8C5D8' }
+                  ].map((item) => (
+                    <div key={item.tag} className="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 cursor-pointer transition">
+                      <div className="flex items-center gap-3">
+                        <i className="fas fa-circle" style={{ fontSize: '8px', color: item.color }}></i>
+                        <span className="text-sm text-slate-700">{item.tag}</span>
+                      </div>
+                      <span className="text-xs font-semibold text-slate-500">{item.count}</span>
+                    </div>
                   ))}
                 </div>
               </section>
 
-              {/* Localização */}
+              {/* Empresas Verificadas */}
               <section className="bg-white rounded-xl p-6 border border-slate-200">
-                <h2 className="text-lg font-semibold text-slate-800 mb-4">Localização</h2>
-                <div className="mb-4">
-                  <select className="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-pastel-blue bg-white text-slate-700">
-                    <option value="">Selecione a cidade</option>
-                    <option value="sp">São Paulo, SP</option>
-                    <option value="rj">Rio de Janeiro, RJ</option>
-                    <option value="bh">Belo Horizonte, MG</option>
-                    <option value="bsb">Brasília, DF</option>
-                    <option value="cwb">Curitiba, PR</option>
-                    <option value="poa">Porto Alegre, RS</option>
-                    <option value="ssa">Salvador, BA</option>
-                    <option value="rec">Recife, PE</option>
-                  </select>
-                </div>
-                <div className="space-y-2">
-                  {[
-                    { name: 'São Paulo, SP', count: 234 },
-                    { name: 'Rio de Janeiro, RJ', count: 89 },
-                    { name: 'Belo Horizonte, MG', count: 56 },
-                    { name: 'Brasília, DF', count: 43 },
-                    { name: 'Curitiba, PR', count: 38 }
-                  ].map((location) => (
-                    <label key={location.name} className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-100 cursor-pointer transition">
-                      <input type="checkbox" className="w-4 h-4 text-pastel-blue rounded focus:ring-2 focus:ring-pastel-blue" />
-                      <span className="text-sm text-slate-700 flex-1">{location.name}</span>
-                      <span className="text-xs text-slate-500">{location.count}</span>
-                    </label>
-                  ))}
-                </div>
-              </section>
-
-              {/* Ano de Fundação */}
-              <section className="bg-white rounded-xl p-6 border border-slate-200">
-                <h2 className="text-lg font-semibold text-slate-800 mb-4">Ano de Fundação</h2>
-                <div className="mb-4">
-                  <select className="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-pastel-blue bg-white text-slate-700">
-                    <option value="">Selecione o período</option>
-                    <option value="2020s">2020 em diante</option>
-                    <option value="2010s">2010 - 2019</option>
-                    <option value="2000s">2000 - 2009</option>
-                    <option value="1990s">1990 - 1999</option>
-                    <option value="antes-1990">Antes de 1990</option>
-                  </select>
-                </div>
-                <div className="space-y-2">
-                  {[
-                    { name: '2020 em diante', count: 78 },
-                    { name: '2010 - 2019', count: 156 },
-                    { name: '2000 - 2009', count: 89 },
-                    { name: 'Antes de 2000', count: 143 }
-                  ].map((period) => (
-                    <label key={period.name} className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-100 cursor-pointer transition">
-                      <input type="checkbox" className="w-4 h-4 text-pastel-blue rounded focus:ring-2 focus:ring-pastel-blue" />
-                      <span className="text-sm text-slate-700 flex-1">{period.name}</span>
-                      <span className="text-xs text-slate-500">{period.count}</span>
-                    </label>
-                  ))}
+                <h2 className="text-lg font-semibold text-slate-800 mb-4">Estatísticas</h2>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                    <div className="flex items-center gap-2">
+                      <i className="fas fa-certificate text-[#B8D4E8]"></i>
+                      <span className="text-sm text-slate-700">Verificadas</span>
+                    </div>
+                    <span className="text-sm font-semibold text-slate-800">466</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                    <div className="flex items-center gap-2">
+                      <i className="fas fa-building text-[#D4C5E8]"></i>
+                      <span className="text-sm text-slate-700">Total Empresas</span>
+                    </div>
+                    <span className="text-sm font-semibold text-slate-800">612</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                    <div className="flex items-center gap-2">
+                      <i className="fas fa-file-alt text-[#C5E8D4]"></i>
+                      <span className="text-sm text-slate-700">Conteúdos</span>
+                    </div>
+                    <span className="text-sm font-semibold text-slate-800">8,942</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                    <div className="flex items-center gap-2">
+                      <i className="fas fa-users text-[#E8C5D8]"></i>
+                      <span className="text-sm text-slate-700">Seguidores Total</span>
+                    </div>
+                    <span className="text-sm font-semibold text-slate-800">2.1M</span>
+                  </div>
                 </div>
               </section>
             </aside>
