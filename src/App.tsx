@@ -23,6 +23,7 @@ import Rankings from "./pages/Rankings";
 import Discussao from "./pages/Discussao";
 import ArtigoCreditoRural from "./pages/ArtigoCreditoRural";
 import Autores from "./pages/Autores";
+import Mentores from "./pages/Mentores";
 import PerfilMentor from "./pages/PerfilMentor";
 import Estatisticas from "./pages/Estatisticas";
 import PerfilAutor from "./pages/PerfilAutor";
@@ -123,6 +124,7 @@ const App = () => {
           <Route path="/discussao/:id" element={<Discussao />} />
           <Route path="/artigo/credito-rural" element={<ArtigoCreditoRural />} />
           <Route path="/autores" element={<Autores />} />
+          <Route path="/mentores" element={<Mentores />} />
           <Route path="/perfil-mentor" element={<PerfilMentor />} />
           <Route path="/estatisticas" element={<Estatisticas />} />
           <Route path="/perfil-autor/:id" element={<PerfilAutor />} />
