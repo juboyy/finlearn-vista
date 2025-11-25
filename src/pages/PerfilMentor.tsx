@@ -129,7 +129,7 @@ const PerfilMentor = () => {
                       <div className="flex items-start justify-between mb-2">
                         <div>
                           <h4 className="font-semibold text-slate-800">Diretora de Compliance</h4>
-                          <p className="text-slate-600">Banco Central do Brasil</p>
+                          <p className="text-lg font-bold text-slate-800">Banco Central do Brasil</p>
                         </div>
                         <span className="text-sm text-slate-500">2019 - Atual</span>
                       </div>
@@ -147,7 +147,7 @@ const PerfilMentor = () => {
                       <div className="flex items-start justify-between mb-2">
                         <div>
                           <h4 className="font-semibold text-slate-800">Gerente Sênior de Compliance</h4>
-                          <p className="text-slate-600">Itaú Unibanco</p>
+                          <p className="text-lg font-bold text-slate-800">Itaú Unibanco</p>
                         </div>
                         <span className="text-sm text-slate-500">2015 - 2019</span>
                       </div>
@@ -165,7 +165,7 @@ const PerfilMentor = () => {
                       <div className="flex items-start justify-between mb-2">
                         <div>
                           <h4 className="font-semibold text-slate-800">Analista de Compliance Pleno</h4>
-                          <p className="text-slate-600">Bradesco S.A.</p>
+                          <p className="text-lg font-bold text-slate-800">Bradesco S.A.</p>
                         </div>
                         <span className="text-sm text-slate-500">2012 - 2015</span>
                       </div>
@@ -183,7 +183,7 @@ const PerfilMentor = () => {
                       <div className="flex items-start justify-between mb-2">
                         <div>
                           <h4 className="font-semibold text-slate-800">Analista Júnior</h4>
-                          <p className="text-slate-600">CVM - Comissão de Valores Mobiliários</p>
+                          <p className="text-lg font-bold text-slate-800">CVM - Comissão de Valores Mobiliários</p>
                         </div>
                         <span className="text-sm text-slate-500">2009 - 2012</span>
                       </div>
