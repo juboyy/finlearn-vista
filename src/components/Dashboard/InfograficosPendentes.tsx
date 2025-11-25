@@ -464,8 +464,10 @@ export const InfograficosPendentes = () => {
                   <div className="min-w-0">
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <h3 className="text-sm font-medium text-slate-800 truncate max-w-md cursor-default">
-                          {infographic.title}
+                        <h3 className="text-sm font-medium text-slate-800 cursor-default">
+                          {infographic.title.length > 50 
+                            ? infographic.title.substring(0, 50) + "..." 
+                            : infographic.title}
                         </h3>
                       </TooltipTrigger>
                       <TooltipContent>
@@ -505,10 +507,10 @@ export const InfograficosPendentes = () => {
                   )}
                 </div>
                 <div className="w-24 flex items-center justify-end gap-2">
-                  <button className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition opacity-0 group-hover:opacity-100">
+                  <button className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition">
                     <Bookmark className={`w-4 h-4 ${infographic.saved ? "fill-current text-[#E8D4C5]" : ""}`} />
                   </button>
-                  <button className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition opacity-0 group-hover:opacity-100">
+                  <button className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition">
                     <MoreHorizontal className="w-4 h-4" />
                   </button>
                 </div>
