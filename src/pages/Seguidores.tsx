@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { Bell, Search, Download, UserPlus, Check, MoreHorizontal, ChevronLeft, ChevronRight, Users, ArrowUp, Eye, TrendingUp, Heart, MessageCircle, Share2, Circle } from "lucide-react";
+import { Bell, Search, Download, UserPlus, Check, MoreHorizontal, ChevronLeft, ChevronRight, Users, ArrowUp, Eye, TrendingUp, Heart, MessageCircle, Share2, Circle, GraduationCap, UserCheck } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -260,10 +260,6 @@ const Seguidores = () => {
                       <span>Todos</span>
                     </button>
                     <button className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition flex items-center gap-2 font-medium">
-                      <i className="far fa-star"></i>
-                      <span>Favoritos</span>
-                    </button>
-                    <button className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm transition flex items-center gap-2 font-medium">
                       <i className="far fa-bell"></i>
                       <span>Com Notificação</span>
                     </button>
@@ -271,40 +267,35 @@ const Seguidores = () => {
                 </div>
               </section>
 
-              <section className="bg-card rounded-xl p-4 border border-border">
+              {/* Navigation Tabs */}
+              <section className="bg-white rounded-xl p-4 border-2 border-slate-300">
                 <div className="flex items-center gap-3">
                   <button 
-                    onClick={() => navigate('/autores')}
-                    className={`px-6 py-2.5 text-slate-700 rounded-lg font-medium transition flex items-center gap-2 ${
-                      activeTab === "seguindo" 
-                        ? "bg-pastel-green" 
-                        : "bg-pastel-blue hover:bg-pastel-pink"
-                    }`}
+                    onClick={() => navigate("/mentores")}
+                    className="px-6 py-2.5 bg-[hsl(207,35%,65%)] hover:bg-[hsl(330,35%,65%)] text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200"
                   >
-                    <Check size={18} />
-                    <span>Seguindo</span>
+                    <GraduationCap size={18} />
+                    Mentores
                   </button>
                   <button 
-                    onClick={() => navigate('/seguidores')}
-                    className={`px-6 py-2.5 text-slate-700 rounded-lg font-medium transition flex items-center gap-2 ${
-                      activeTab === "seguidores" 
-                        ? "bg-pastel-green" 
-                        : "bg-pastel-blue hover:bg-pastel-pink"
-                    }`}
+                    onClick={() => navigate("/autores")}
+                    className="px-6 py-2.5 bg-[hsl(207,35%,65%)] hover:bg-[hsl(330,35%,65%)] text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200"
+                  >
+                    <UserCheck size={18} />
+                    Seguindo
+                  </button>
+                  <button 
+                    className="px-6 py-2.5 bg-[hsl(142,35%,65%)] text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200"
                   >
                     <Users size={18} />
-                    <span>Seguidores</span>
+                    Seguidores
                   </button>
                   <button 
-                    onClick={() => navigate('/descobrir-novos')}
-                    className={`px-6 py-2.5 text-slate-700 rounded-lg font-medium transition flex items-center gap-2 ${
-                      activeTab === "descobrir" 
-                        ? "bg-pastel-green" 
-                        : "bg-pastel-blue hover:bg-pastel-pink"
-                    }`}
+                    onClick={() => navigate("/descobrir-novos")}
+                    className="px-6 py-2.5 bg-[hsl(207,35%,65%)] hover:bg-[hsl(330,35%,65%)] text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200"
                   >
-                    <i className="fas fa-compass"></i>
-                    <span>Descobrir Novos</span>
+                    <Search size={18} />
+                    Descobrir Novos
                   </button>
                 </div>
               </section>
