@@ -451,8 +451,7 @@ const Empresas = () => {
             {empresas.map((empresa) => (
               <div
                 key={empresa.id}
-                onClick={() => empresa.name === "Itaú Unibanco" && navigate('/perfil-empresa/1')}
-                className={`bg-white rounded-xl border border-slate-200 p-6 hover:${getBorderColor(empresa.color)} transition cursor-pointer`}
+                className={`bg-white rounded-xl border border-slate-200 p-6 hover:${getBorderColor(empresa.color)} transition`}
               >
                 <div className="flex items-start gap-6">
                   {/* Company Logo/Initial */}
