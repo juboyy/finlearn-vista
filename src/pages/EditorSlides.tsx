@@ -66,25 +66,64 @@ export default function EditorSlides() {
     try {
       const { data, error } = await supabase.functions.invoke("generate-slides-content", {
         body: {
-          prompt: `Crie uma estrutura de apresentação sobre: ${projectInfo.title}. 
+          prompt: `Crie uma apresentação completa e detalhada sobre: ${projectInfo.title}. 
 Descrição: ${projectInfo.description}. 
 Público-alvo: ${projectInfo.targetAudience}.
 Contexto: Mercado financeiro brasileiro.
-Retorne um JSON com array de slides, cada um com 'title' e 'content'.`,
+
+IMPORTANTE:
+- Crie entre 8 e 12 slides
+- Cada slide deve ter um título claro e conteúdo COMPLETO e DETALHADO
+- O conteúdo deve ser estruturado em tópicos ou parágrafos
+- Inclua dados, estatísticas e exemplos quando relevante
+- Adicione insights e análises específicas do mercado financeiro
+
+Retorne um JSON com este formato exato:
+{
+  "slides": [
+    {
+      "title": "Título do slide",
+      "content": "Conteúdo detalhado com múltiplos parágrafos ou tópicos. Use bullet points quando apropriado:\n\n• Ponto 1 com detalhes completos\n• Ponto 2 com análises e dados\n• Ponto 3 com exemplos práticos\n\nInclua parágrafos explicativos quando necessário."
+    }
+  ]
+}`,
         },
       });
 
       if (error) throw error;
 
       if (data?.generatedText) {
-        const slidesData = JSON.parse(data.generatedText);
-        const newSlides = slidesData.slides.map((slide: any, index: number) => ({
-          id: `${index + 1}`,
-          title: slide.title,
-          content: slide.content,
-        }));
+        // Remove markdown code blocks if present
+        let cleanedText = data.generatedText.trim();
+        cleanedText = cleanedText.replace(/^```json\n?/, '').replace(/\n?```$/, '');
+        
+        const slidesData = JSON.parse(cleanedText);
+        
+        // Imagens padrão do sistema
+        const systemImages = [
+          "/src/assets/relatorio-analise-dados.png",
+          "/src/assets/relatorio-bi-dashboard.png",
+          "/src/assets/credito-rural-2025.png",
+          "/src/assets/curso-analise-tecnica-illustration.png",
+        ];
+        
+        const newSlides = slidesData.slides.map((slide: any, index: number) => {
+          // Adicionar imagem em slides estratégicos (a cada 2-3 slides)
+          const shouldAddImage = index > 0 && (index % 3 === 0 || index === 2);
+          const imageUrl = shouldAddImage 
+            ? systemImages[Math.floor(Math.random() * systemImages.length)]
+            : undefined;
+          
+          return {
+            id: `${index + 1}`,
+            title: slide.title,
+            content: slide.content,
+            imageUrl,
+          };
+        });
+        
         setSlides(newSlides);
-        toast.success("Slides iniciais gerados com sucesso");
+        toast.success(`${newSlides.length} slides gerados com sucesso`);
       }
     } catch (error) {
       console.error("Error generating slides:", error);
@@ -405,15 +444,65 @@ Contexto: Mercado financeiro brasileiro.`,
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium text-slate-700 mb-2 block">
-                    Conteúdo
-                  </label>
+                  <div className="flex items-center justify-between mb-2">
+                    <label className="text-sm font-medium text-slate-700">
+                      Conteúdo
+                    </label>
+                    <Button
+                      onClick={async () => {
+                        if (!currentSlide?.title) {
+                          toast.error("Adicione um título primeiro");
+                          return;
+                        }
+                        setIsGenerating(true);
+                        try {
+                          const { data, error } = await supabase.functions.invoke("generate-slides-content", {
+                            body: {
+                              prompt: `Crie conteúdo detalhado para um slide sobre: "${currentSlide.title}"
+
+Contexto da apresentação: ${projectInfo.title}
+Descrição: ${projectInfo.description}
+
+IMPORTANTE:
+- Crie conteúdo COMPLETO e DETALHADO
+- Use bullet points (•) quando apropriado
+- Inclua dados, estatísticas e exemplos do mercado financeiro brasileiro
+- Estruture em parágrafos claros quando necessário
+
+Retorne apenas o texto do conteúdo, sem JSON, sem formatação markdown.`,
+                            },
+                          });
+
+                          if (error) throw error;
+
+                          if (data?.generatedText) {
+                            updateSlide("content", data.generatedText.trim());
+                            toast.success("Conteúdo gerado com sucesso");
+                          }
+                        } catch (error) {
+                          console.error("Error generating content:", error);
+                          toast.error("Erro ao gerar conteúdo");
+                        } finally {
+                          setIsGenerating(false);
+                        }
+                      }}
+                      disabled={isGenerating}
+                      size="sm"
+                      className="bg-[#7FA8C9] hover:bg-[#6B91B3] text-white"
+                    >
+                      <Sparkles className="w-4 h-4 mr-2" />
+                      {isGenerating ? "Gerando..." : "Gerar com IA"}
+                    </Button>
+                  </div>
                   <Textarea
                     value={currentSlide?.content || ""}
                     onChange={(e) => updateSlide("content", e.target.value)}
-                    className="min-h-[300px] border-slate-300"
-                    placeholder="Digite o conteúdo do slide..."
+                    className="min-h-[400px] border-slate-300 font-normal text-base leading-relaxed"
+                    placeholder="Digite o conteúdo do slide ou use a IA para gerar..."
                   />
+                  <p className="text-xs text-slate-500 mt-2">
+                    Dica: Use bullet points (•) ou parágrafos para estruturar o conteúdo
+                  </p>
                 </div>
 
                 {currentSlide?.imageUrl && (
