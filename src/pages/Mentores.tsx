@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { MenutabbarFix } from "@/components/Dashboard/MenutabbarFix";
-import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, Star, MapPin, Briefcase, Calendar } from "lucide-react";
@@ -11,7 +10,6 @@ type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webin
 
 const Mentores = () => {
   const navigate = useNavigate();
-  const heroRef = useFadeInOnScroll<HTMLDivElement>();
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState<TabType>("todos");
 
@@ -104,7 +102,7 @@ const Mentores = () => {
         
         <main className="p-8">
           {/* Header */}
-          <div ref={heroRef} className="mb-8 opacity-0">
+          <div className="mb-8">
             <h1 className="text-4xl font-bold text-slate-800 mb-2">Mentores</h1>
             <p className="text-slate-600">Conecte-se com especialistas do mercado financeiro</p>
           </div>
