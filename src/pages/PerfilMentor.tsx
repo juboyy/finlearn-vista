@@ -15,7 +15,7 @@ const PerfilMentor = () => {
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"mentores" | "seguindo" | "seguidores" | "descobrir">("mentores");
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
-  const [selectedTime, setSelectedTime] = useState<string>("");
+  const [selectedTimes, setSelectedTimes] = useState<string[]>([]);
   const [selectedType, setSelectedType] = useState<string>("individual");
   const [scheduleStep, setScheduleStep] = useState<1 | 2>(1);
   const [paymentMethod, setPaymentMethod] = useState<string>("credit");
@@ -661,7 +661,7 @@ const PerfilMentor = () => {
         if (!open) {
           setScheduleStep(1);
           setSelectedDate(undefined);
-          setSelectedTime("");
+          setSelectedTimes([]);
           setCardNumber("");
           setCardName("");
           setCardExpiry("");
@@ -670,7 +670,13 @@ const PerfilMentor = () => {
           setSelectedSavedCard(1);
         }
       }}>
-        <SheetContent className="w-[500px] sm:w-[600px] overflow-y-auto">
+        <SheetContent className="w-[500px] sm:w-[600px] overflow-y-auto" onOpenAutoFocus={(e) => {
+          if (scheduleStep === 2) {
+            e.preventDefault();
+            const element = e.currentTarget as HTMLElement;
+            setTimeout(() => element.scrollTop = 0, 0);
+          }
+        }}>
           <SheetHeader>
             <SheetTitle className="text-2xl font-semibold text-slate-800">
               {scheduleStep === 1 ? "Agendar Mentoria" : "Pagamento e Confirmação"}
@@ -801,15 +807,23 @@ const PerfilMentor = () => {
                 {/* Horários Disponíveis */}
                 {selectedDate && (
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-3">Horários disponíveis</label>
+                    <label className="block text-sm font-medium text-slate-700 mb-3">
+                      Horários disponíveis {selectedTimes.length > 0 && `(${selectedTimes.length} selecionado${selectedTimes.length > 1 ? 's' : ''})`}
+                    </label>
                     <div className="grid grid-cols-3 gap-2">
                       {["09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00", "18:00"].map((time) => (
                         <button
                           key={time}
-                          onClick={() => setSelectedTime(time)}
+                          onClick={() => {
+                            setSelectedTimes(prev => 
+                              prev.includes(time) 
+                                ? prev.filter(t => t !== time)
+                                : [...prev, time]
+                            );
+                          }}
                           className={cn(
                             "px-4 py-3 border-2 rounded-lg text-sm font-medium transition",
-                            selectedTime === time
+                            selectedTimes.includes(time)
                               ? "border-[#D4C5E8] bg-[#D4C5E8] text-slate-700"
                               : "border-slate-300 text-slate-700 hover:border-[#D4C5E8]"
                           )}
@@ -836,7 +850,7 @@ const PerfilMentor = () => {
                 {/* Botões Step 1 */}
                 <div className="flex gap-3 pt-4">
                   <button 
-                    disabled={!selectedDate || !selectedTime}
+                    disabled={!selectedDate || selectedTimes.length === 0}
                     onClick={() => setScheduleStep(2)}
                     className="flex-1 px-6 py-3 bg-[#D4C5E8] border-2 border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition disabled:opacity-50 disabled:cursor-not-allowed"
                   >
@@ -875,15 +889,21 @@ const PerfilMentor = () => {
                       <span className="font-medium text-slate-800">{selectedDate?.toLocaleDateString('pt-BR')}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-600">Horário:</span>
-                      <span className="font-medium text-slate-800">{selectedTime}</span>
+                      <span className="text-slate-600">Horários:</span>
+                      <span className="font-medium text-slate-800">{selectedTimes.join(', ')}</span>
                     </div>
+                    {selectedTimes.length > 1 && (
+                      <div className="flex justify-between text-xs">
+                        <span className="text-slate-500">Quantidade de sessões:</span>
+                        <span className="text-slate-600">{selectedTimes.length}x</span>
+                      </div>
+                    )}
                     <div className="flex justify-between pt-2 border-t border-slate-300">
                       <span className="font-semibold text-slate-700">Total:</span>
                       <span className="font-bold text-slate-800">
-                        {selectedType === "individual" && "R$ 450,00"}
+                        {selectedType === "individual" && `R$ ${(450 * selectedTimes.length).toFixed(2).replace('.', ',')}`}
                         {selectedType === "pacote" && "R$ 2.025,00"}
-                        {selectedType === "grupo" && "R$ 180,00"}
+                        {selectedType === "grupo" && `R$ ${(180 * selectedTimes.length).toFixed(2).replace('.', ',')}`}
                       </span>
                     </div>
                   </div>
