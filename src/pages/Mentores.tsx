@@ -64,6 +64,8 @@ const Mentores = () => {
   const [cardCvv, setCardCvv] = useState<string>("");
   const [showNewCardForm, setShowNewCardForm] = useState<boolean>(false);
   const [selectedSavedCard, setSelectedSavedCard] = useState<number | null>(1);
+  const [isProcessingPayment, setIsProcessingPayment] = useState<boolean>(false);
+  const [paymentSuccess, setPaymentSuccess] = useState<boolean>(false);
   const sheetContentRef = useRef<HTMLDivElement>(null);
 
   const savedCards = [
@@ -701,22 +703,79 @@ const Mentores = () => {
           setCardCvv("");
           setShowNewCardForm(false);
           setSelectedSavedCard(1);
+          setIsProcessingPayment(false);
+          setPaymentSuccess(false);
         }
       }}>
         <SheetContent ref={sheetContentRef} className="w-[500px] sm:w-[600px] overflow-y-auto">
           <SheetHeader>
             <SheetTitle className="text-2xl font-semibold text-slate-800">
-              {scheduleStep === 1 ? "Agendar Mentoria" : "Pagamento e Confirmação"}
+              {paymentSuccess ? "Pagamento Aprovado" : scheduleStep === 1 ? "Agendar Mentoria" : "Pagamento e Confirmação"}
             </SheetTitle>
             <SheetDescription>
-              {scheduleStep === 1 
-                ? "Escolha a data, horário e tipo de consultoria" 
-                : "Complete os dados de pagamento para finalizar"}
+              {paymentSuccess 
+                ? "Sua mentoria foi agendada com sucesso" 
+                : scheduleStep === 1 
+                  ? "Escolha a data, horário e tipo de consultoria" 
+                  : "Complete os dados de pagamento para finalizar"}
             </SheetDescription>
           </SheetHeader>
 
           <div className="mt-6 space-y-6">
-            {scheduleStep === 1 ? (
+            {paymentSuccess ? (
+              <>
+                {/* Tela de Sucesso */}
+                <div className="flex flex-col items-center justify-center py-8 space-y-6">
+                  <div className="w-24 h-24 bg-[#C5E8D4] border-2 border-slate-300 rounded-full flex items-center justify-center">
+                    <Check size={48} className="text-slate-700" />
+                  </div>
+                  
+                  <div className="text-center space-y-2">
+                    <h3 className="text-2xl font-bold text-slate-800">Transação Aprovada!</h3>
+                    <p className="text-slate-600">Seu pagamento foi processado com sucesso</p>
+                  </div>
+
+                  <div className="w-full p-4 bg-slate-50 border-2 border-slate-300 rounded-lg space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-600">Mentor:</span>
+                      <span className="font-medium text-slate-800">{mentores.find(m => m.id === selectedMentor)?.name}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-600">Data:</span>
+                      <span className="font-medium text-slate-800">{selectedDate?.toLocaleDateString('pt-BR')}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-600">Horários:</span>
+                      <span className="font-medium text-slate-800">{selectedTimes.join(', ')}</span>
+                    </div>
+                    <div className="flex justify-between text-sm pt-2 border-t border-slate-300">
+                      <span className="font-semibold text-slate-700">Total pago:</span>
+                      <span className="font-bold text-slate-800">
+                        {selectedType === "individual" && `R$ ${(450 * selectedTimes.length).toFixed(2).replace('.', ',')}`}
+                        {selectedType === "pacote" && "R$ 2.025,00"}
+                        {selectedType === "grupo" && `R$ ${(180 * selectedTimes.length).toFixed(2).replace('.', ',')}`}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="p-4 bg-[#E8E0C5] border-2 border-slate-300 rounded-lg w-full">
+                    <div className="flex items-start gap-3">
+                      <Info size={20} className="text-slate-700 mt-0.5 flex-shrink-0" />
+                      <p className="text-sm text-slate-700">
+                        Você receberá um email de confirmação com o link para a sessão em breve.
+                      </p>
+                    </div>
+                  </div>
+
+                  <button 
+                    onClick={() => setShowRequestModal(false)}
+                    className="w-full px-6 py-3 bg-[hsl(270,35%,65%)] border-2 border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
+                  >
+                    Fechar
+                  </button>
+                </div>
+              </>
+            ) : scheduleStep === 1 ? (
               <>
                 {/* Step 1: Seleção de Consultoria */}
                 {/* Mentor Info */}
@@ -1200,10 +1259,32 @@ const Mentores = () => {
                     Voltar
                   </button>
                   <button 
-                    className="flex-1 px-6 py-3 bg-[hsl(270,35%,65%)] border-2 border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
+                    onClick={async () => {
+                      setIsProcessingPayment(true);
+                      await new Promise(resolve => setTimeout(resolve, 2000));
+                      setIsProcessingPayment(false);
+                      setPaymentSuccess(true);
+                      if (sheetContentRef.current) {
+                        sheetContentRef.current.scrollTop = 0;
+                      }
+                    }}
+                    disabled={isProcessingPayment}
+                    className="flex-1 px-6 py-3 bg-[hsl(270,35%,65%)] border-2 border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    <Check size={16} className="inline mr-2" />
-                    Confirmar e Pagar
+                    {isProcessingPayment ? (
+                      <>
+                        <svg className="inline mr-2 w-4 h-4 animate-spin" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Processando...
+                      </>
+                    ) : (
+                      <>
+                        <Check size={16} className="inline mr-2" />
+                        Confirmar e Pagar
+                      </>
+                    )}
                   </button>
                 </div>
               </>
