@@ -35,6 +35,7 @@ import {
   useSensor,
   useSensors,
   DragEndEvent,
+  DragOverlay,
 } from "@dnd-kit/core";
 import {
   arrayMove,
@@ -43,6 +44,8 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { SortableSlideItem } from "@/components/SortableSlideItem";
+import { DraggableMedia } from "@/components/DraggableMedia";
+import { DroppableContentArea } from "@/components/DroppableContentArea";
 
 interface Slide {
   id: string;
@@ -69,9 +72,14 @@ export default function EditorSlides() {
   const [showImageDialog, setShowImageDialog] = useState(false);
   const [showChartDialog, setShowChartDialog] = useState(false);
   const [showClearDialog, setShowClearDialog] = useState(false);
+  const [activeMediaId, setActiveMediaId] = useState<string | null>(null);
 
   const sensors = useSensors(
-    useSensor(PointerSensor),
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     })
@@ -332,42 +340,60 @@ Exemplo para PIX:
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
+    setActiveMediaId(null);
 
-    if (over && active.id !== over.id) {
-      setSlides((items) => {
-        const oldIndex = items.findIndex((item) => item.id === active.id);
-        const newIndex = items.findIndex((item) => item.id === over.id);
+    // Handle slide reordering
+    if (active.data.current?.type !== "image" && active.data.current?.type !== "chart") {
+      if (over && active.id !== over.id) {
+        setSlides((items) => {
+          const oldIndex = items.findIndex((item) => item.id === active.id);
+          const newIndex = items.findIndex((item) => item.id === over.id);
+          
+          const newSlides = arrayMove(items, oldIndex, newIndex);
+          
+          if (currentSlideIndex === oldIndex) {
+            setCurrentSlideIndex(newIndex);
+          } else if (
+            currentSlideIndex > oldIndex &&
+            currentSlideIndex <= newIndex
+          ) {
+            setCurrentSlideIndex(currentSlideIndex - 1);
+          } else if (
+            currentSlideIndex < oldIndex &&
+            currentSlideIndex >= newIndex
+          ) {
+            setCurrentSlideIndex(currentSlideIndex + 1);
+          }
+          
+          return newSlides;
+        });
         
-        const newSlides = arrayMove(items, oldIndex, newIndex);
-        
-        // Atualizar o índice atual se o slide selecionado foi movido
-        if (currentSlideIndex === oldIndex) {
-          setCurrentSlideIndex(newIndex);
-        } else if (
-          currentSlideIndex > oldIndex &&
-          currentSlideIndex <= newIndex
-        ) {
-          setCurrentSlideIndex(currentSlideIndex - 1);
-        } else if (
-          currentSlideIndex < oldIndex &&
-          currentSlideIndex >= newIndex
-        ) {
-          setCurrentSlideIndex(currentSlideIndex + 1);
-        }
-        
-        return newSlides;
-      });
-      
-      toast.success("Slides reordenados");
+        toast.success("Slides reordenados");
+      }
+    }
+
+    // Handle media drag and drop (placeholder for now)
+    if ((active.data.current?.type === "image" || active.data.current?.type === "chart") && over) {
+      toast.info("Recurso de reposicionamento de mídia em desenvolvimento");
     }
   };
 
-  return (
-    <div className="flex h-screen bg-slate-50 w-full overflow-hidden">
-      <SidebarFix />
+  const handleDragStart = (event: DragEndEvent) => {
+    setActiveMediaId(event.active.id as string);
+  };
 
-      {/* Info Dialog */}
-      <Dialog open={showInfoDialog} onOpenChange={setShowInfoDialog}>
+  return (
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
+    >
+      <div className="flex h-screen bg-slate-50 w-full overflow-hidden">
+        <SidebarFix />
+
+        {/* Info Dialog */}
+        <Dialog open={showInfoDialog} onOpenChange={setShowInfoDialog}>
         <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle className="text-2xl text-slate-800">
@@ -528,29 +554,23 @@ Exemplo para PIX:
               </Button>
             </div>
           </div>
-          <DndContext
-            sensors={sensors}
-            collisionDetection={closestCenter}
-            onDragEnd={handleDragEnd}
+          <SortableContext
+            items={slides.map((s) => s.id)}
+            strategy={verticalListSortingStrategy}
           >
-            <SortableContext
-              items={slides.map((s) => s.id)}
-              strategy={verticalListSortingStrategy}
-            >
-              <div className="space-y-2">
-                {slides.map((slide, index) => (
-                  <SortableSlideItem
-                    key={slide.id}
-                    slide={slide}
-                    index={index}
-                    isActive={index === currentSlideIndex}
-                    onSelect={() => setCurrentSlideIndex(index)}
-                    onDelete={deleteSlide}
-                  />
-                ))}
-              </div>
-            </SortableContext>
-          </DndContext>
+            <div className="space-y-2">
+              {slides.map((slide, index) => (
+                <SortableSlideItem
+                  key={slide.id}
+                  slide={slide}
+                  index={index}
+                  isActive={index === currentSlideIndex}
+                  onSelect={() => setCurrentSlideIndex(index)}
+                  onDelete={deleteSlide}
+                />
+              ))}
+            </div>
+          </SortableContext>
         </div>
 
         {/* Editor Area */}
@@ -666,55 +686,64 @@ Retorne apenas o texto do conteúdo, sem JSON, sem formatação markdown.`,
                 </div>
 
                 {currentSlide?.imageUrl && (
-                  <div>
-                    <label className="text-sm font-medium text-slate-700 mb-2 block">
-                      Imagem
-                    </label>
-                    <div className="relative">
-                      <img
-                        src={currentSlide.imageUrl}
-                        alt="Slide"
-                        className="w-full rounded-lg border border-slate-200"
-                      />
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => updateSlide("imageUrl", undefined)}
-                        className="absolute top-2 right-2 bg-white/90 hover:bg-white"
-                      >
-                        <Trash2 className="w-4 h-4 text-red-500" />
-                      </Button>
+                  <DraggableMedia id="current-image" type="image">
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <label className="text-sm font-medium text-slate-700">
+                          Imagem
+                        </label>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => updateSlide("imageUrl", undefined)}
+                          className="text-slate-400 hover:text-red-500"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+                      <div className="relative">
+                        <img
+                          src={currentSlide.imageUrl}
+                          alt="Slide"
+                          className="w-full max-w-md h-auto rounded-lg border border-slate-200 object-cover"
+                        />
+                      </div>
                     </div>
-                  </div>
+                  </DraggableMedia>
                 )}
 
                 {currentSlide?.chartData && (
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <label className="text-sm font-medium text-slate-700">
-                        Gráfico
-                      </label>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => updateSlide("chartData", undefined)}
-                        className="text-slate-400 hover:text-red-500"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
+                  <DraggableMedia id="current-chart" type="chart">
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <label className="text-sm font-medium text-slate-700">
+                          Gráfico
+                        </label>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => updateSlide("chartData", undefined)}
+                          className="text-slate-400 hover:text-red-500"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+                      <div className="max-w-md">
+                        <SlideChart
+                          type={currentSlide.chartData.type}
+                          data={currentSlide.chartData.data}
+                          title={currentSlide.chartData.title}
+                        />
+                      </div>
                     </div>
-                    <SlideChart
-                      type={currentSlide.chartData.type}
-                      data={currentSlide.chartData.data}
-                      title={currentSlide.chartData.title}
-                    />
-                  </div>
+                  </DraggableMedia>
                 )}
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </DndContext>
   );
 }

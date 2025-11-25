@@ -32,8 +32,8 @@ const COLORS = [
 export function SlideChart({ type, data, title }: SlideChartProps) {
   if (!data || data.length === 0) {
     return (
-      <div className="flex items-center justify-center h-64 bg-slate-50 border border-slate-200 rounded-lg">
-        <p className="text-slate-500">Nenhum dado disponível</p>
+      <div className="flex items-center justify-center h-40 bg-slate-50 border border-slate-200 rounded-lg">
+        <p className="text-slate-500 text-sm">Nenhum dado disponível</p>
       </div>
     );
   }
@@ -46,22 +46,22 @@ export function SlideChart({ type, data, title }: SlideChartProps) {
         <CartesianGrid strokeDasharray="3 3" stroke="hsl(215, 20%, 85%)" />
         <XAxis 
           dataKey="name" 
-          tick={{ fill: "hsl(215, 16%, 47%)", fontSize: 12 }}
+          tick={{ fill: "hsl(215, 16%, 47%)", fontSize: 10 }}
           angle={-45}
           textAnchor="end"
-          height={80}
+          height={60}
         />
-        <YAxis tick={{ fill: "hsl(215, 16%, 47%)", fontSize: 12 }} />
+        <YAxis tick={{ fill: "hsl(215, 16%, 47%)", fontSize: 10 }} />
         <Tooltip 
           contentStyle={{ 
             backgroundColor: "white", 
             border: "1px solid hsl(215, 20%, 85%)",
             borderRadius: "8px",
-            fontSize: "12px"
+            fontSize: "11px"
           }}
         />
-        <Legend wrapperStyle={{ fontSize: "12px" }} />
-        <Bar dataKey="value" fill={COLORS[0]} radius={[8, 8, 0, 0]} />
+        <Legend wrapperStyle={{ fontSize: "10px" }} />
+        <Bar dataKey="value" fill={COLORS[0]} radius={[6, 6, 0, 0]} />
       </BarChart>
     );
   } else if (type === "line") {
@@ -70,27 +70,27 @@ export function SlideChart({ type, data, title }: SlideChartProps) {
         <CartesianGrid strokeDasharray="3 3" stroke="hsl(215, 20%, 85%)" />
         <XAxis 
           dataKey="name" 
-          tick={{ fill: "hsl(215, 16%, 47%)", fontSize: 12 }}
+          tick={{ fill: "hsl(215, 16%, 47%)", fontSize: 10 }}
           angle={-45}
           textAnchor="end"
-          height={80}
+          height={60}
         />
-        <YAxis tick={{ fill: "hsl(215, 16%, 47%)", fontSize: 12 }} />
+        <YAxis tick={{ fill: "hsl(215, 16%, 47%)", fontSize: 10 }} />
         <Tooltip 
           contentStyle={{ 
             backgroundColor: "white", 
             border: "1px solid hsl(215, 20%, 85%)",
             borderRadius: "8px",
-            fontSize: "12px"
+            fontSize: "11px"
           }}
         />
-        <Legend wrapperStyle={{ fontSize: "12px" }} />
+        <Legend wrapperStyle={{ fontSize: "10px" }} />
         <Line 
           type="monotone" 
           dataKey="value" 
           stroke={COLORS[0]} 
-          strokeWidth={3}
-          dot={{ fill: COLORS[0], r: 5 }}
+          strokeWidth={2}
+          dot={{ fill: COLORS[0], r: 4 }}
         />
       </LineChart>
     );
@@ -105,7 +105,7 @@ export function SlideChart({ type, data, title }: SlideChartProps) {
           label={({ name, percent }) => 
             `${name}: ${(percent * 100).toFixed(0)}%`
           }
-          outerRadius={100}
+          outerRadius={70}
           fill="#8884d8"
           dataKey="value"
         >
@@ -118,7 +118,7 @@ export function SlideChart({ type, data, title }: SlideChartProps) {
             backgroundColor: "white", 
             border: "1px solid hsl(215, 20%, 85%)",
             borderRadius: "8px",
-            fontSize: "12px"
+            fontSize: "11px"
           }}
         />
       </PieChart>
@@ -126,12 +126,12 @@ export function SlideChart({ type, data, title }: SlideChartProps) {
   }
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-2">
       {title && (
-        <h4 className="text-sm font-medium text-slate-700">{title}</h4>
+        <h4 className="text-xs font-medium text-slate-700">{title}</h4>
       )}
-      <div className="bg-white border border-slate-200 rounded-lg p-6">
-        <ResponsiveContainer width="100%" height={300}>
+      <div className="bg-white border border-slate-200 rounded-lg p-4">
+        <ResponsiveContainer width="100%" height={200}>
           {chartElement}
         </ResponsiveContainer>
       </div>
