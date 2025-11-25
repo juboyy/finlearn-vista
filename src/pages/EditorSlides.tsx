@@ -709,21 +709,21 @@ Exemplo para PIX:
                 )}
                 <Button
                   onClick={() => setShowImageDialog(true)}
-                  className="bg-[#A68CC9] hover:bg-[#8F7AB3] text-white"
+                  className="bg-[#F5C6E3] hover:bg-[#E0B0CF] text-slate-700"
                 >
                   <ImageIcon className="w-4 h-4 mr-2" />
                   Gerar Imagem
                 </Button>
                 <Button
                   onClick={() => setShowChartDialog(true)}
-                  className="bg-[#8CC99B] hover:bg-[#7AB389] text-white"
+                  className="bg-[#F5C6E3] hover:bg-[#E0B0CF] text-slate-700"
                 >
                   <BarChart3 className="w-4 h-4 mr-2" />
                   Gerar Gráfico
                 </Button>
                 <Button
                   onClick={savePresentation}
-                  className="bg-[#7FA8C9] hover:bg-[#6B91B3] text-white"
+                  className="bg-[#F5C6E3] hover:bg-[#E0B0CF] text-slate-700"
                 >
                   <Save className="w-4 h-4 mr-2" />
                   Salvar
