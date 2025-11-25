@@ -543,7 +543,7 @@ export default function PerfilEmpresaMateriais() {
                         cy="45%"
                         innerRadius={60}
                         outerRadius={80}
-                        paddingAngle={2}
+                        paddingAngle={0}
                         dataKey="value"
                       >
                         {chartData.map((entry, index) => (
