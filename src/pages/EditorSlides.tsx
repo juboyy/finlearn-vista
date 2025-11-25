@@ -44,15 +44,12 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { SortableSlideItem } from "@/components/SortableSlideItem";
-import { DraggableMedia } from "@/components/DraggableMedia";
-import { DroppableContentArea } from "@/components/DroppableContentArea";
+import { SortableContentElement, SlideElement } from "@/components/SortableContentElement";
 
 interface Slide {
   id: string;
   title: string;
-  content: string;
-  imageUrl?: string;
-  chartData?: any;
+  elements: SlideElement[];
 }
 
 export default function EditorSlides() {
@@ -63,7 +60,7 @@ export default function EditorSlides() {
   });
   const [showInfoDialog, setShowInfoDialog] = useState(true);
   const [slides, setSlides] = useState<Slide[]>([
-    { id: "1", title: "Slide 1", content: "" },
+    { id: "1", title: "Slide 1", elements: [] },
   ]);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -171,23 +168,43 @@ LEMBRE-SE: Retorne NO MÍNIMO 10 slides diferentes, cada um focado em um aspecto
         ];
         
         const newSlides = slidesData.slides.map((slide: any, index: number) => {
+          const elements: SlideElement[] = [];
+          
+          // Adicionar conteúdo de texto
+          if (slide.content) {
+            elements.push({
+              id: `${index + 1}-text-1`,
+              type: "text",
+              content: slide.content,
+            });
+          }
+          
           // Se a IA sugeriu uma imagem, adicionar uma imagem do sistema
-          const imageUrl = slide.suggestedImagePrompt 
-            ? systemImages[Math.floor(Math.random() * systemImages.length)]
-            : undefined;
+          if (slide.suggestedImagePrompt) {
+            const imageUrl = systemImages[Math.floor(Math.random() * systemImages.length)];
+            elements.push({
+              id: `${index + 1}-image-1`,
+              type: "image",
+              imageUrl,
+            });
+          }
           
           // Se a IA sugeriu um gráfico, criar dados de placeholder
-          const chartData = slide.suggestedChartType ? {
-            type: slide.suggestedChartType,
-            description: slide.suggestedChartPrompt || "Gráfico sugerido pela IA"
-          } : undefined;
+          if (slide.suggestedChartType) {
+            elements.push({
+              id: `${index + 1}-chart-1`,
+              type: "chart",
+              chartData: {
+                type: slide.suggestedChartType,
+                description: slide.suggestedChartPrompt || "Gráfico sugerido pela IA"
+              },
+            });
+          }
           
           return {
             id: `${index + 1}`,
             title: slide.title,
-            content: slide.content,
-            imageUrl,
-            chartData,
+            elements,
           };
         });
         
@@ -206,10 +223,45 @@ LEMBRE-SE: Retorne NO MÍNIMO 10 slides diferentes, cada um focado em um aspecto
     const newSlide: Slide = {
       id: `${slides.length + 1}`,
       title: `Slide ${slides.length + 1}`,
-      content: "",
+      elements: [],
     };
     setSlides([...slides, newSlide]);
     setCurrentSlideIndex(slides.length);
+  };
+
+  const addElement = (type: "text" | "image" | "chart") => {
+    const newElement: SlideElement = {
+      id: `${currentSlide.id}-${type}-${Date.now()}`,
+      type,
+      content: type === "text" ? "" : undefined,
+    };
+    
+    const newSlides = [...slides];
+    newSlides[currentSlideIndex].elements.push(newElement);
+    setSlides(newSlides);
+  };
+
+  const updateElement = (elementId: string, field: keyof SlideElement, value: any) => {
+    const newSlides = [...slides];
+    const elementIndex = newSlides[currentSlideIndex].elements.findIndex(
+      (el) => el.id === elementId
+    );
+    if (elementIndex !== -1) {
+      newSlides[currentSlideIndex].elements[elementIndex] = {
+        ...newSlides[currentSlideIndex].elements[elementIndex],
+        [field]: value,
+      };
+      setSlides(newSlides);
+    }
+  };
+
+  const deleteElement = (elementId: string) => {
+    const newSlides = [...slides];
+    newSlides[currentSlideIndex].elements = newSlides[currentSlideIndex].elements.filter(
+      (el) => el.id !== elementId
+    );
+    setSlides(newSlides);
+    toast.success("Elemento removido");
   };
 
   const deleteSlide = (id: string) => {
@@ -249,8 +301,17 @@ LEMBRE-SE: Retorne NO MÍNIMO 10 slides diferentes, cada um focado em um aspecto
 
       if (error) throw error;
 
-      // Placeholder - em produção, você integraria com API de geração de imagens
-      updateSlide("imageUrl", "https://placehold.co/800x450/7FA8C9/white?text=Imagem+Gerada");
+      // Adicionar nova imagem como elemento
+      const newElement: SlideElement = {
+        id: `${currentSlide.id}-image-${Date.now()}`,
+        type: "image",
+        imageUrl: "https://placehold.co/800x450/7FA8C9/white?text=Imagem+Gerada",
+      };
+      
+      const newSlides = [...slides];
+      newSlides[currentSlideIndex].elements.push(newElement);
+      setSlides(newSlides);
+      
       toast.success("Imagem gerada com sucesso");
       setShowImageDialog(false);
       setImagePrompt("");
@@ -314,7 +375,18 @@ Exemplo para PIX:
         cleanedText = cleanedText.replace(/^```json\n?/, '').replace(/\n?```$/, '');
         
         const chartData = JSON.parse(cleanedText);
-        updateSlide("chartData", chartData);
+        
+        // Adicionar novo gráfico como elemento
+        const newElement: SlideElement = {
+          id: `${currentSlide.id}-chart-${Date.now()}`,
+          type: "chart",
+          chartData,
+        };
+        
+        const newSlides = [...slides];
+        newSlides[currentSlideIndex].elements.push(newElement);
+        setSlides(newSlides);
+        
         toast.success("Gráfico gerado com sucesso");
         setShowChartDialog(false);
         setChartPrompt("");
@@ -332,7 +404,7 @@ Exemplo para PIX:
   };
 
   const clearAllSlides = () => {
-    setSlides([{ id: "1", title: "Slide 1", content: "" }]);
+    setSlides([{ id: "1", title: "Slide 1", elements: [] }]);
     setCurrentSlideIndex(0);
     setShowClearDialog(false);
     toast.success("Todos os slides foram removidos");
@@ -342,39 +414,51 @@ Exemplo para PIX:
     const { active, over } = event;
     setActiveMediaId(null);
 
-    // Handle slide reordering
-    if (active.data.current?.type !== "image" && active.data.current?.type !== "chart") {
-      if (over && active.id !== over.id) {
-        setSlides((items) => {
-          const oldIndex = items.findIndex((item) => item.id === active.id);
-          const newIndex = items.findIndex((item) => item.id === over.id);
-          
-          const newSlides = arrayMove(items, oldIndex, newIndex);
-          
-          if (currentSlideIndex === oldIndex) {
-            setCurrentSlideIndex(newIndex);
-          } else if (
-            currentSlideIndex > oldIndex &&
-            currentSlideIndex <= newIndex
-          ) {
-            setCurrentSlideIndex(currentSlideIndex - 1);
-          } else if (
-            currentSlideIndex < oldIndex &&
-            currentSlideIndex >= newIndex
-          ) {
-            setCurrentSlideIndex(currentSlideIndex + 1);
-          }
-          
-          return newSlides;
-        });
+    if (!over) return;
+
+    // Check if we're dragging slides in the sidebar
+    const isSlideReorder = slides.some((s) => s.id === active.id);
+    
+    if (isSlideReorder && active.id !== over.id) {
+      setSlides((items) => {
+        const oldIndex = items.findIndex((item) => item.id === active.id);
+        const newIndex = items.findIndex((item) => item.id === over.id);
         
-        toast.success("Slides reordenados");
-      }
+        const newSlides = arrayMove(items, oldIndex, newIndex);
+        
+        if (currentSlideIndex === oldIndex) {
+          setCurrentSlideIndex(newIndex);
+        } else if (
+          currentSlideIndex > oldIndex &&
+          currentSlideIndex <= newIndex
+        ) {
+          setCurrentSlideIndex(currentSlideIndex - 1);
+        } else if (
+          currentSlideIndex < oldIndex &&
+          currentSlideIndex >= newIndex
+        ) {
+          setCurrentSlideIndex(currentSlideIndex + 1);
+        }
+        
+        return newSlides;
+      });
+      
+      toast.success("Slides reordenados");
+      return;
     }
 
-    // Handle media drag and drop (placeholder for now)
-    if ((active.data.current?.type === "image" || active.data.current?.type === "chart") && over) {
-      toast.info("Recurso de reposicionamento de mídia em desenvolvimento");
+    // Handle element reordering within slide content
+    if (active.id !== over.id) {
+      const newSlides = [...slides];
+      const elements = newSlides[currentSlideIndex].elements;
+      const oldIndex = elements.findIndex((el) => el.id === active.id);
+      const newIndex = elements.findIndex((el) => el.id === over.id);
+      
+      if (oldIndex !== -1 && newIndex !== -1) {
+        newSlides[currentSlideIndex].elements = arrayMove(elements, oldIndex, newIndex);
+        setSlides(newSlides);
+        toast.success("Elementos reordenados");
+      }
     }
   };
 
@@ -617,7 +701,11 @@ Exemplo para PIX:
                   </label>
                   <Input
                     value={currentSlide?.title || ""}
-                    onChange={(e) => updateSlide("title", e.target.value)}
+                    onChange={(e) => {
+                      const newSlides = [...slides];
+                      newSlides[currentSlideIndex].title = e.target.value;
+                      setSlides(newSlides);
+                    }}
                     className="text-2xl font-bold border-slate-300"
                     placeholder="Título do slide"
                   />
@@ -626,118 +714,59 @@ Exemplo para PIX:
                 <div>
                   <div className="flex items-center justify-between mb-2">
                     <label className="text-sm font-medium text-slate-700">
-                      Conteúdo
+                      Elementos do Slide
                     </label>
-                    <Button
-                      onClick={async () => {
-                        if (!currentSlide?.title) {
-                          toast.error("Adicione um título primeiro");
-                          return;
-                        }
-                        setIsGenerating(true);
-                        try {
-                          const { data, error } = await supabase.functions.invoke("generate-slides-content", {
-                            body: {
-                              prompt: `Crie conteúdo detalhado para um slide sobre: "${currentSlide.title}"
-
-Contexto da apresentação: ${projectInfo.title}
-Descrição: ${projectInfo.description}
-
-IMPORTANTE:
-- Crie conteúdo COMPLETO e DETALHADO
-- Use bullet points (•) quando apropriado
-- Inclua dados, estatísticas e exemplos do mercado financeiro brasileiro
-- Estruture em parágrafos claros quando necessário
-
-Retorne apenas o texto do conteúdo, sem JSON, sem formatação markdown.`,
-                            },
-                          });
-
-                          if (error) throw error;
-
-                          if (data?.generatedText) {
-                            updateSlide("content", data.generatedText.trim());
-                            toast.success("Conteúdo gerado com sucesso");
-                          }
-                        } catch (error) {
-                          console.error("Error generating content:", error);
-                          toast.error("Erro ao gerar conteúdo");
-                        } finally {
-                          setIsGenerating(false);
-                        }
-                      }}
-                      disabled={isGenerating}
-                      size="sm"
-                      className="bg-[#7FA8C9] hover:bg-[#6B91B3] text-white"
-                    >
-                      <Sparkles className="w-4 h-4 mr-2" />
-                      {isGenerating ? "Gerando..." : "Gerar com IA"}
-                    </Button>
+                    <div className="flex gap-2">
+                      <Button
+                        onClick={() => addElement("text")}
+                        size="sm"
+                        variant="outline"
+                        className="border-slate-300 text-slate-600 hover:border-[#7FA8C9] hover:text-[#7FA8C9]"
+                      >
+                        <FileText className="w-4 h-4 mr-2" />
+                        Adicionar Texto
+                      </Button>
+                    </div>
                   </div>
-                  <Textarea
-                    value={currentSlide?.content || ""}
-                    onChange={(e) => updateSlide("content", e.target.value)}
-                    className="min-h-[400px] border-slate-300 font-normal text-base leading-relaxed"
-                    placeholder="Digite o conteúdo do slide ou use a IA para gerar..."
-                  />
-                  <p className="text-xs text-slate-500 mt-2">
-                    Dica: Use bullet points (•) ou parágrafos para estruturar o conteúdo
-                  </p>
+
+                  {currentSlide?.elements && currentSlide.elements.length > 0 ? (
+                    <SortableContext
+                      items={currentSlide.elements.map((el) => el.id)}
+                      strategy={verticalListSortingStrategy}
+                    >
+                      <div className="space-y-3">
+                        {currentSlide.elements.map((element) => (
+                          <SortableContentElement
+                            key={element.id}
+                            element={element}
+                            onUpdate={updateElement}
+                            onDelete={deleteElement}
+                          />
+                        ))}
+                      </div>
+                    </SortableContext>
+                  ) : (
+                    <div className="flex items-center justify-center h-64 border-2 border-dashed border-slate-300 rounded-lg bg-slate-50">
+                      <div className="text-center">
+                        <FileText className="w-12 h-12 text-slate-400 mx-auto mb-3" />
+                        <p className="text-slate-600 font-medium mb-2">
+                          Slide vazio
+                        </p>
+                        <p className="text-sm text-slate-500 mb-4">
+                          Adicione elementos de texto, imagens ou gráficos
+                        </p>
+                        <Button
+                          onClick={() => addElement("text")}
+                          size="sm"
+                          className="bg-[#7FA8C9] hover:bg-[#6B91B3] text-white"
+                        >
+                          <Plus className="w-4 h-4 mr-2" />
+                          Adicionar Texto
+                        </Button>
+                      </div>
+                    </div>
+                  )}
                 </div>
-
-                {currentSlide?.imageUrl && (
-                  <DraggableMedia id="current-image" type="image">
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <label className="text-sm font-medium text-slate-700">
-                          Imagem
-                        </label>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => updateSlide("imageUrl", undefined)}
-                          className="text-slate-400 hover:text-red-500"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                      <div className="relative">
-                        <img
-                          src={currentSlide.imageUrl}
-                          alt="Slide"
-                          className="w-full max-w-md h-auto rounded-lg border border-slate-200 object-cover"
-                        />
-                      </div>
-                    </div>
-                  </DraggableMedia>
-                )}
-
-                {currentSlide?.chartData && (
-                  <DraggableMedia id="current-chart" type="chart">
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <label className="text-sm font-medium text-slate-700">
-                          Gráfico
-                        </label>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => updateSlide("chartData", undefined)}
-                          className="text-slate-400 hover:text-red-500"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                      <div className="max-w-md">
-                        <SlideChart
-                          type={currentSlide.chartData.type}
-                          data={currentSlide.chartData.data}
-                          title={currentSlide.chartData.title}
-                        />
-                      </div>
-                    </div>
-                  </DraggableMedia>
-                )}
               </div>
             </div>
           </div>
