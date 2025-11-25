@@ -26,7 +26,8 @@ import {
   Users,
   CalendarDays,
   Target,
-  Sparkles
+  Sparkles,
+  FileText
 } from "lucide-react";
 
 interface Article {
@@ -469,9 +470,7 @@ export default function PerfilEmpresaArtigos() {
               <table className="w-full">
                 <thead className="bg-slate-50 border-b border-[hsl(215,20%,85%)]">
                   <tr>
-                    <th className="text-left px-6 py-4 text-xs font-bold text-slate-700 uppercase tracking-wider w-12">
-                      <input type="checkbox" className="rounded border-slate-300 text-slate-700 focus:ring-slate-700" />
-                    </th>
+                    <th className="text-left px-6 py-4 text-xs font-bold text-slate-700 uppercase tracking-wider w-16"></th>
                     <th className="text-left px-6 py-4 text-xs font-bold text-slate-700 uppercase tracking-wider">Status</th>
                     <th className="text-left px-6 py-4 text-xs font-bold text-slate-700 uppercase tracking-wider w-[30%]">Título</th>
                     <th className="text-left px-6 py-4 text-xs font-bold text-slate-700 uppercase tracking-wider">Co-Autor</th>
@@ -486,7 +485,9 @@ export default function PerfilEmpresaArtigos() {
                   {articles.map((article) => (
                     <tr key={article.id} className="hover:bg-slate-50 transition-all cursor-pointer group">
                       <td className="px-6 py-4">
-                        <input type="checkbox" className="rounded border-slate-300 text-slate-700 focus:ring-slate-700" />
+                        <div className={`w-10 h-10 ${article.topicColor.split(' ')[0]} rounded-lg flex items-center justify-center shadow-sm`}>
+                          <FileText className="text-slate-700 w-5 h-5" />
+                        </div>
                       </td>
                       <td className="px-6 py-4">
                         {article.status === "read" ? (
