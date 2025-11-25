@@ -15,15 +15,14 @@ import {
   Download,
   XCircle,
   Star,
-  ChevronDown,
-  Check,
 } from "lucide-react";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { ScrollArea } from "@/components/ui/scroll-area";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -400,133 +399,54 @@ Exemplo para PIX:
               <label className="text-sm font-medium text-slate-700 mb-3 block">
                 Escolha um Agente de IA (Opcional)
               </label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    role="combobox"
-                    className="w-full justify-between border-2 border-slate-300 bg-white hover:bg-slate-50 h-auto py-3"
-                  >
-                    {selectedAgentId ? (
-                      <div className="flex items-center gap-3">
-                        {(() => {
-                          const selected = agents.find(a => a.id === selectedAgentId);
-                          if (!selected) return "Selecione um agente...";
-                          return (
-                            <>
-                              <div className="w-10 h-10 rounded-full flex-shrink-0 overflow-hidden">
-                                <img
-                                  src={selected.agent_image}
-                                  alt={selected.agent_name}
-                                  className="w-full h-full object-cover"
-                                />
-                              </div>
-                              <div className="flex flex-col items-start">
-                                <span className="font-semibold text-slate-800">{selected.agent_name}</span>
-                                <span className="text-xs text-slate-600">{selected.agent_category}</span>
-                              </div>
-                            </>
-                          );
-                        })()}
-                      </div>
-                    ) : (
-                      <span className="text-slate-500">Selecione um agente...</span>
-                    )}
-                    <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-[480px] p-0 bg-white border-2 border-slate-300" align="start">
-                  <ScrollArea className="h-[420px]">
-                    <div className="p-3">
-                      {/* Show selected agent at top with expanded card */}
-                      {selectedAgentId && (() => {
-                        const selected = agents.find(a => a.id === selectedAgentId);
-                        if (!selected) return null;
-                        return (
-                          <div className={`${selected.agent_bg_color} rounded-xl p-4 mb-3 border-2 border-slate-300`}>
-                            <div className="flex items-start gap-3">
-                              <div className="w-12 h-12 rounded-full flex-shrink-0 overflow-hidden bg-white">
-                                <img
-                                  src={selected.agent_image}
-                                  alt={selected.agent_name}
-                                  className="w-full h-full object-cover"
-                                />
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <div className="flex items-center gap-2 mb-1">
-                                  <span className="font-semibold text-slate-800">
-                                    {selected.agent_name}
-                                  </span>
-                                  <span className="px-2 py-0.5 bg-white/60 rounded text-xs font-medium text-slate-700">
-                                    {selected.agent_category}
-                                  </span>
-                                  <div className="flex items-center gap-1 ml-auto">
-                                    <Star className="w-3.5 h-3.5 fill-[#E8D08C] text-[#E8D08C]" />
-                                    <span className="text-sm font-semibold text-slate-800">
-                                      {selected.rating}
-                                    </span>
-                                  </div>
-                                </div>
-                                <p className="text-xs text-slate-700">
-                                  {selected.agent_description}
-                                </p>
+              <Select value={selectedAgentId} onValueChange={setSelectedAgentId}>
+                <SelectTrigger className="w-full border-2 border-slate-300">
+                  <SelectValue placeholder="Escolha um especialista..." />
+                </SelectTrigger>
+                <SelectContent className="bg-white border-2 border-slate-300 z-[60] max-h-[400px]">
+                  {agents.map((agent) => {
+                    // Extract HSL color from bg class
+                    const bgColor = agent.agent_bg_color.includes('hsl') 
+                      ? agent.agent_bg_color.match(/hsl\([^)]+\)/)?.[0] 
+                      : 'hsl(206,35%,85%)';
+                    
+                    return (
+                      <SelectItem 
+                        key={agent.id} 
+                        value={agent.id}
+                        disabled={!agent.is_active}
+                        className="cursor-pointer"
+                      >
+                        <div className="flex items-center gap-3 py-2">
+                          <img 
+                            src={agent.agent_image} 
+                            alt={agent.agent_name}
+                            className="w-10 h-10 rounded-full object-cover"
+                          />
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-1">
+                              <div className="font-semibold text-slate-800">{agent.agent_name}</div>
+                              <div className="flex items-center gap-1.5">
+                                <span 
+                                  className="text-xs px-2 py-0.5 rounded-full font-medium text-slate-700"
+                                  style={{ backgroundColor: bgColor }}
+                                >
+                                  {agent.agent_category}
+                                </span>
+                                <span className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-full font-semibold bg-[hsl(45,78%,88%)] text-[hsl(45,78%,35%)]">
+                                  <Star size={10} fill="currentColor" />
+                                  {agent.rating}
+                                </span>
                               </div>
                             </div>
+                            <div className="text-xs text-slate-600 line-clamp-1">{agent.agent_description}</div>
                           </div>
-                        );
-                      })()}
-                      
-                      {/* All agents list */}
-                      <div className="space-y-2">
-                        {agents.map((agent) => {
-                          const isSelected = selectedAgentId === agent.id;
-                          if (isSelected) return null; // Don't show selected agent in list
-                          
-                          return (
-                            <button
-                              key={agent.id}
-                              onClick={() => setSelectedAgentId(agent.id)}
-                              disabled={!agent.is_active}
-                              className={`w-full p-3 rounded-xl text-left hover:bg-slate-50 transition-colors border-2 border-transparent hover:border-slate-200 ${
-                                !agent.is_active ? "opacity-50 cursor-not-allowed" : ""
-                              }`}
-                            >
-                              <div className="flex items-start gap-3">
-                                <div className="w-10 h-10 rounded-full flex-shrink-0 overflow-hidden bg-slate-100">
-                                  <img
-                                    src={agent.agent_image}
-                                    alt={agent.agent_name}
-                                    className="w-full h-full object-cover"
-                                  />
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                  <div className="flex items-center gap-2 mb-1">
-                                    <span className="font-semibold text-slate-800">
-                                      {agent.agent_name}
-                                    </span>
-                                    <span className={`px-2 py-0.5 ${agent.agent_bg_color} rounded text-xs font-medium text-slate-700`}>
-                                      {agent.agent_category}
-                                    </span>
-                                    <div className="flex items-center gap-1 ml-auto">
-                                      <Star className="w-3.5 h-3.5 fill-[#E8D08C] text-[#E8D08C]" />
-                                      <span className="text-sm font-semibold text-slate-800">
-                                        {agent.rating}
-                                      </span>
-                                    </div>
-                                  </div>
-                                  <p className="text-xs text-slate-600">
-                                    {agent.agent_description}
-                                  </p>
-                                </div>
-                              </div>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  </ScrollArea>
-                </PopoverContent>
-              </Popover>
+                        </div>
+                      </SelectItem>
+                    );
+                  })}
+                </SelectContent>
+              </Select>
             </div>
 
             <div>
