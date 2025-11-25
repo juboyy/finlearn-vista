@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { 
-  Search, 
+  Search,
+  Building2,
   Bell, 
   CalendarPlus, 
   CalendarCheck, 
@@ -575,6 +576,13 @@ const Mentores = () => {
                   >
                     <Search size={18} />
                     Descobrir Novos
+                  </button>
+                  <button 
+                    onClick={() => navigate("/empresas")}
+                    className="px-6 py-2.5 bg-[hsl(207,35%,65%)] hover:bg-[hsl(330,35%,65%)] text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200"
+                  >
+                    <Building2 size={18} />
+                    Empresas
                   </button>
                 </div>
               </section>
