@@ -110,6 +110,7 @@ export default function EditorSlides() {
         ? `\nAgente especializado: ${selectedAgent.agent_name} - ${selectedAgent.agent_description}\nCategoria: ${selectedAgent.agent_category}`
         : "";
 
+      // Primeiro, gerar a estrutura dos slides
       const { data, error } = await supabase.functions.invoke("generate-slides-content", {
         body: {
           prompt: `Crie uma apresentação completa e detalhada sobre: ${projectInfo.title}. 
@@ -125,13 +126,13 @@ INSTRUÇÕES CRÍTICAS:
 - O conteúdo de cada slide deve ser estruturado em tópicos ou parágrafos
 - Inclua dados, estatísticas e exemplos quando relevante
 - Adicione insights e análises específicas do mercado financeiro
-- SUGIRA automaticamente onde adicionar imagens e gráficos
+- TODOS os slides devem ter uma imagem E um gráfico únicos e específicos
 
 Estrutura sugerida:
 1. Slide de introdução/contexto
 2-3. Slides sobre aspectos fundamentais
-4-6. Slides com análises e dados detalhados (sugerir gráficos)
-7-8. Slides com exemplos práticos e casos de uso (sugerir imagens)
+4-6. Slides com análises e dados detalhados
+7-8. Slides com exemplos práticos e casos de uso
 9. Slide de tendências/futuro
 10. Slide de conclusão/próximos passos
 
@@ -141,69 +142,108 @@ Retorne um JSON com MÚLTIPLOS slides neste formato exato:
     {
       "title": "Título do Slide 1",
       "content": "Conteúdo detalhado...",
-      "suggestedImagePrompt": "Descrição da imagem sugerida para este slide" (opcional),
-      "suggestedChartType": "bar" ou "line" ou "pie" (opcional),
-      "suggestedChartPrompt": "Descrição dos dados para o gráfico" (opcional)
+      "imagePrompt": "Descrição específica e detalhada da imagem para este slide, relacionada ao mercado financeiro",
+      "chartType": "bar" ou "line" ou "pie",
+      "chartPrompt": "Descrição específica dos dados para o gráfico deste slide"
     }
   ]
 }
 
-IMPORTANTE SOBRE SUGESTÕES:
-- Sugira imagens para slides com conceitos visuais, exemplos práticos, casos de uso
-- Sugira gráficos para slides com dados, estatísticas, comparações, tendências
-- Não coloque imagens e gráficos em todos os slides - seja estratégico
-- Use "suggestedImagePrompt" para descrever que tipo de imagem seria ideal
-- Use "suggestedChartType" e "suggestedChartPrompt" para gráficos relevantes
+OBRIGATÓRIO:
+- TODOS os slides DEVEM ter "imagePrompt" com descrição específica
+- TODOS os slides DEVEM ter "chartType" e "chartPrompt" com dados específicos
+- Cada imagem deve ser única e relacionada ao conteúdo específico do slide
+- Cada gráfico deve mostrar dados diferentes e relevantes ao conteúdo do slide
 
-LEMBRE-SE: Retorne NO MÍNIMO 10 slides diferentes, cada um focado em um aspecto específico.`,
+LEMBRE-SE: Retorne NO MÍNIMO 10 slides diferentes, cada um com sua própria imagem e gráfico únicos.`,
         },
       });
 
       if (error) throw error;
 
       if (data?.generatedText) {
-        // Remove markdown code blocks if present
         let cleanedText = data.generatedText.trim();
         cleanedText = cleanedText.replace(/^```json\n?/, '').replace(/\n?```$/, '');
         
         const slidesData = JSON.parse(cleanedText);
         
-        // Validar que múltiplos slides foram gerados
         if (!slidesData.slides || slidesData.slides.length < 5) {
           throw new Error("A IA não gerou slides suficientes. Tente novamente.");
         }
+
+        toast.info(`Gerando ${slidesData.slides.length} slides com imagens e gráficos únicos...`);
         
-        // Imagens padrão do sistema
-        const systemImages = [
-          "/src/assets/relatorio-analise-dados.png",
-          "/src/assets/relatorio-bi-dashboard.png",
-          "/src/assets/credito-rural-2025.png",
-          "/src/assets/curso-analise-tecnica-illustration.png",
-        ];
+        // Gerar imagens e gráficos para cada slide
+        const generatedSlides = await Promise.all(
+          slidesData.slides.map(async (slide: any, index: number) => {
+            let imageUrl: string | undefined;
+            let chartData: any | undefined;
+
+            // Gerar imagem se tiver prompt
+            if (slide.imagePrompt) {
+              try {
+                const { data: imageData } = await supabase.functions.invoke("generate-slides-content", {
+                  body: {
+                    type: "image",
+                    prompt: `${slide.imagePrompt}. Estilo: Profissional, corporativo, mercado financeiro brasileiro.`,
+                  },
+                });
+                
+                if (imageData?.imageUrl) {
+                  imageUrl = imageData.imageUrl;
+                }
+              } catch (err) {
+                console.error(`Erro ao gerar imagem para slide ${index + 1}:`, err);
+              }
+            }
+
+            // Gerar dados do gráfico se tiver prompt
+            if (slide.chartPrompt && slide.chartType) {
+              try {
+                const { data: chartDataResponse } = await supabase.functions.invoke("generate-slides-content", {
+                  body: {
+                    prompt: `Você é um especialista em mercado financeiro. Baseado no prompt: "${slide.chartPrompt}", 
+gere dados REALISTAS e FICTÍCIOS para um gráfico ${slide.chartType}.
+
+INSTRUÇÕES:
+- Gere entre 5 e 8 pontos de dados relevantes
+- Os valores devem ser realistas para o contexto financeiro brasileiro
+- Use nomes descritivos e específicos nos labels
+
+Retorne APENAS um JSON válido neste formato exato:
+{
+  "type": "${slide.chartType}",
+  "title": "Título do gráfico",
+  "data": [
+    { "name": "Label 1", "value": 123 },
+    { "name": "Label 2", "value": 456 }
+  ]
+}`,
+                  },
+                });
+
+                if (chartDataResponse?.generatedText) {
+                  let chartCleanedText = chartDataResponse.generatedText.trim();
+                  chartCleanedText = chartCleanedText.replace(/^```json\n?/, '').replace(/\n?```$/, '');
+                  chartData = JSON.parse(chartCleanedText);
+                }
+              } catch (err) {
+                console.error(`Erro ao gerar gráfico para slide ${index + 1}:`, err);
+              }
+            }
+
+            return {
+              id: `${index + 1}`,
+              title: slide.title,
+              content: slide.content,
+              imageUrl,
+              chartData,
+            };
+          })
+        );
         
-        const newSlides = slidesData.slides.map((slide: any, index: number) => {
-          // Se a IA sugeriu uma imagem, adicionar uma imagem do sistema
-          const imageUrl = slide.suggestedImagePrompt 
-            ? systemImages[Math.floor(Math.random() * systemImages.length)]
-            : undefined;
-          
-          // Se a IA sugeriu um gráfico, criar dados de placeholder
-          const chartData = slide.suggestedChartType ? {
-            type: slide.suggestedChartType,
-            description: slide.suggestedChartPrompt || "Gráfico sugerido pela IA"
-          } : undefined;
-          
-          return {
-            id: `${index + 1}`,
-            title: slide.title,
-            content: slide.content,
-            imageUrl,
-            chartData,
-          };
-        });
-        
-        setSlides(newSlides);
-        toast.success(`${newSlides.length} slides gerados com sugestões de mídia`);
+        setSlides(generatedSlides);
+        toast.success(`${generatedSlides.length} slides gerados com imagens e gráficos únicos!`);
       }
     } catch (error) {
       console.error("Error generating slides:", error);
@@ -254,17 +294,21 @@ LEMBRE-SE: Retorne NO MÍNIMO 10 slides diferentes, cada um focado em um aspecto
     try {
       const { data, error } = await supabase.functions.invoke("generate-slides-content", {
         body: {
-          prompt: `Gere uma imagem sobre: ${imagePrompt}. Contexto: Mercado financeiro, gráficos, dados, análises.`,
+          type: "image",
+          prompt: `${imagePrompt}. Estilo: Profissional, corporativo, mercado financeiro brasileiro.`,
         },
       });
 
       if (error) throw error;
 
-      // Placeholder - em produção, você integraria com API de geração de imagens
-      updateSlide("imageUrl", "https://placehold.co/800x450/7FA8C9/white?text=Imagem+Gerada");
-      toast.success("Imagem gerada com sucesso");
-      setShowImageDialog(false);
-      setImagePrompt("");
+      if (data?.imageUrl) {
+        updateSlide("imageUrl", data.imageUrl);
+        toast.success("Imagem gerada com sucesso");
+        setShowImageDialog(false);
+        setImagePrompt("");
+      } else {
+        throw new Error("Nenhuma imagem foi gerada");
+      }
     } catch (error) {
       console.error("Error generating image:", error);
       toast.error("Erro ao gerar imagem");
