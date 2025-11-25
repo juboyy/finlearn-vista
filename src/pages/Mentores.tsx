@@ -497,9 +497,9 @@ const Mentores = () => {
                   </button>
                   <button 
                     onClick={() => navigate("/seguidores")}
-                    className="px-6 py-2.5 bg-[hsl(207,35%,65%)] hover:bg-[hsl(330,35%,65%)] text-slate-700 rounded-lg font-medium transition-all duration-200"
+                    className="px-6 py-2.5 bg-[hsl(207,35%,65%)] hover:bg-[hsl(330,35%,65%)] text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200"
                   >
-                    <Users size={18} className="mr-2" />
+                    <Users size={18} />
                     Seguidores
                   </button>
                   <button 
