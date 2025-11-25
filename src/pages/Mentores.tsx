@@ -402,39 +402,6 @@ const Mentores = () => {
 
             {/* Main Content */}
             <div className="flex-1 space-y-6">
-              {/* Navigation Tabs */}
-              <section className="bg-white rounded-xl p-4 border-2 border-slate-300">
-                <div className="flex items-center gap-3">
-                  <button 
-                    className="px-6 py-2.5 bg-[hsl(142,35%,65%)] text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200"
-                  >
-                    <GraduationCap size={18} />
-                    Mentores
-                  </button>
-                  <button 
-                    onClick={() => navigate("/autores")}
-                    className="px-6 py-2.5 bg-[hsl(207,35%,65%)] hover:bg-[hsl(330,35%,65%)] text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200"
-                  >
-                    <UserCheck size={18} />
-                    Seguindo
-                  </button>
-                  <button 
-                    onClick={() => navigate("/seguidores")}
-                    className="px-6 py-2.5 bg-[hsl(207,35%,65%)] hover:bg-[hsl(330,35%,65%)] text-slate-700 rounded-lg font-medium transition-all duration-200"
-                  >
-                    <Users size={18} className="mr-2" />
-                    Seguidores
-                  </button>
-                  <button 
-                    onClick={() => navigate("/descobrir-novos")}
-                    className="px-6 py-2.5 bg-[hsl(207,35%,65%)] hover:bg-[hsl(330,35%,65%)] text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200"
-                  >
-                    <Search size={18} />
-                    Descobrir Novos
-                  </button>
-                </div>
-              </section>
-
               {/* Toolbar */}
               <section className="bg-white rounded-xl p-4 border-2 border-slate-300">
                 <div className="flex items-center justify-between">
@@ -509,6 +476,39 @@ const Mentores = () => {
                       <span>Top Rated</span>
                     </Button>
                   </div>
+                </div>
+              </section>
+
+              {/* Navigation Tabs */}
+              <section className="bg-white rounded-xl p-4 border-2 border-slate-300">
+                <div className="flex items-center gap-3">
+                  <button 
+                    className="px-6 py-2.5 bg-[hsl(142,35%,65%)] text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200"
+                  >
+                    <GraduationCap size={18} />
+                    Mentores
+                  </button>
+                  <button 
+                    onClick={() => navigate("/autores")}
+                    className="px-6 py-2.5 bg-[hsl(207,35%,65%)] hover:bg-[hsl(330,35%,65%)] text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200"
+                  >
+                    <UserCheck size={18} />
+                    Seguindo
+                  </button>
+                  <button 
+                    onClick={() => navigate("/seguidores")}
+                    className="px-6 py-2.5 bg-[hsl(207,35%,65%)] hover:bg-[hsl(330,35%,65%)] text-slate-700 rounded-lg font-medium transition-all duration-200"
+                  >
+                    <Users size={18} className="mr-2" />
+                    Seguidores
+                  </button>
+                  <button 
+                    onClick={() => navigate("/descobrir-novos")}
+                    className="px-6 py-2.5 bg-[hsl(207,35%,65%)] hover:bg-[hsl(330,35%,65%)] text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200"
+                  >
+                    <Search size={18} />
+                    Descobrir Novos
+                  </button>
                 </div>
               </section>
 
