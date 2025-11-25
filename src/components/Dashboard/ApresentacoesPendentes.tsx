@@ -7,11 +7,14 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { PresentationPreviewModal } from "./PresentationPreviewModal";
 
 export const ApresentacoesPendentes = () => {
   const [viewType, setViewType] = useState("list");
   const [filterType, setFilterType] = useState("Todos");
   const [selectedCategory, setSelectedCategory] = useState("Todos");
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [selectedPresentation, setSelectedPresentation] = useState<any>(null);
 
   const stats = [
     { icon: Presentation, label: "Pendentes", value: "31", color: "bg-[#E8D4C5]" },
@@ -57,6 +60,13 @@ export const ApresentacoesPendentes = () => {
       accessType: "free",
       saved: true,
       views: 3200,
+      slidesList: [
+        { id: 1, content: "Estratégia Digital 2025 - Transformando o Mercado Financeiro" },
+        { id: 2, content: "Tendências Tecnológicas - IA, Blockchain e Cloud Computing" },
+        { id: 3, content: "Experiência do Cliente - Omnicanalidade e Personalização" },
+        { id: 4, content: "Produtos Digitais - Novos lançamentos e roadmap" },
+        { id: 5, content: "Open Banking - Oportunidades e desafios de integração" },
+      ],
     },
     {
       id: 2,
@@ -73,6 +83,12 @@ export const ApresentacoesPendentes = () => {
       accessType: "premium",
       saved: false,
       views: 2800,
+      slidesList: [
+        { id: 1, content: "KPIs Estratégicos - Métricas essenciais para performance bancária" },
+        { id: 2, content: "Indicadores Financeiros - ROE, ROA, Margem Líquida" },
+        { id: 3, content: "Eficiência Operacional - Razão de eficiência e produtividade" },
+        { id: 4, content: "Qualidade de Carteira - Inadimplência e provisões" },
+      ],
     },
     {
       id: 3,
@@ -88,6 +104,13 @@ export const ApresentacoesPendentes = () => {
       accessType: "free",
       saved: true,
       views: 4100,
+      slidesList: [
+        { id: 1, content: "Portfólio de Produtos - Visão geral dos lançamentos 2025" },
+        { id: 2, content: "Conta Digital Premium - Benefícios e diferenciais" },
+        { id: 3, content: "Cartão de Crédito Internacional - Features e cashback" },
+        { id: 4, content: "Investimentos Automatizados - Robo-advisor e estratégias" },
+        { id: 5, content: "Seguros Digitais - Vida, auto e residencial" },
+      ],
     },
     {
       id: 4,
@@ -104,6 +127,12 @@ export const ApresentacoesPendentes = () => {
       accessType: "premium",
       saved: false,
       views: 2300,
+      slidesList: [
+        { id: 1, content: "Introdução ao Compliance - Fundamentos e importância para fintechs" },
+        { id: 2, content: "Framework Regulatório - BACEN, CVM e normas aplicáveis" },
+        { id: 3, content: "Gestão de Riscos - Identificação e mitigação de riscos" },
+        { id: 4, content: "Governança Corporativa - Estrutura e comitês" },
+      ],
     },
     {
       id: 5,
@@ -119,6 +148,12 @@ export const ApresentacoesPendentes = () => {
       accessType: "free",
       saved: false,
       views: 3600,
+      slidesList: [
+        { id: 1, content: "Arquitetura de Microserviços - Conceitos e benefícios" },
+        { id: 2, content: "Banking as a Service - Modelos de negócio e casos de uso" },
+        { id: 3, content: "APIs e Integrações - Design e melhores práticas" },
+        { id: 4, content: "Escalabilidade - Estratégias de deployment e orquestração" },
+      ],
     },
     {
       id: 6,
@@ -135,6 +170,12 @@ export const ApresentacoesPendentes = () => {
       accessType: "premium",
       saved: true,
       views: 2900,
+      slidesList: [
+        { id: 1, content: "Machine Learning em Crédito - Visão geral e aplicações" },
+        { id: 2, content: "Modelos Preditivos - Algoritmos e técnicas utilizadas" },
+        { id: 3, content: "Feature Engineering - Criação e seleção de variáveis" },
+        { id: 4, content: "Avaliação de Modelos - Métricas e validação" },
+      ],
     },
     {
       id: 7,
@@ -150,6 +191,12 @@ export const ApresentacoesPendentes = () => {
       accessType: "free",
       saved: true,
       views: 3800,
+      slidesList: [
+        { id: 1, content: "Análise de Mercado - Oportunidades regionais identificadas" },
+        { id: 2, content: "Estratégia de Expansão - Fases e cronograma" },
+        { id: 3, content: "Adaptação Local - Produtos e serviços customizados" },
+        { id: 4, content: "Metas e KPIs - Indicadores de sucesso da expansão" },
+      ],
     },
     {
       id: 8,
@@ -166,6 +213,11 @@ export const ApresentacoesPendentes = () => {
       accessType: "premium",
       saved: false,
       views: 2500,
+      slidesList: [
+        { id: 1, content: "Visão de Produto 2025 - Direção estratégica e prioridades" },
+        { id: 2, content: "Novos Lançamentos - Pipeline de produtos Q1-Q4" },
+        { id: 3, content: "Inovações Tecnológicas - IA, automação e personalização" },
+      ],
     },
     {
       id: 9,
@@ -181,6 +233,12 @@ export const ApresentacoesPendentes = () => {
       accessType: "free",
       saved: false,
       views: 4300,
+      slidesList: [
+        { id: 1, content: "Gestão de Riscos Operacionais - Framework e metodologia" },
+        { id: 2, content: "Identificação de Riscos - Mapeamento e classificação" },
+        { id: 3, content: "Controles e Mitigação - Estratégias e ferramentas" },
+        { id: 4, content: "Monitoramento - Indicadores e reporting" },
+      ],
     },
     {
       id: 10,
@@ -197,6 +255,12 @@ export const ApresentacoesPendentes = () => {
       accessType: "premium",
       saved: false,
       views: 2700,
+      slidesList: [
+        { id: 1, content: "API Gateway - Conceitos e arquitetura" },
+        { id: 2, content: "Padrões de Integração - REST, GraphQL e mensageria" },
+        { id: 3, content: "Segurança - Autenticação, autorização e criptografia" },
+        { id: 4, content: "Implementação - Casos práticos e melhores práticas" },
+      ],
     },
   ];
 
@@ -486,7 +550,14 @@ export const ApresentacoesPendentes = () => {
             </div>
             <div className="divide-y divide-slate-200">
               {presentations.map((presentation) => (
-                <div key={presentation.id} className="flex items-center py-4 px-6 hover:bg-slate-50 transition group">
+                <div 
+                  key={presentation.id} 
+                  className="flex items-center py-4 px-6 hover:bg-slate-50 transition group cursor-pointer"
+                  onClick={() => {
+                    setSelectedPresentation(presentation);
+                    setPreviewOpen(true);
+                  }}
+                >
                   <div className="flex-1 flex items-center gap-4">
                     <div className={`w-10 h-10 ${presentation.iconColor} rounded-lg flex items-center justify-center flex-shrink-0`}>
                       <Presentation className="text-slate-700 w-5 h-5" />
@@ -555,10 +626,16 @@ export const ApresentacoesPendentes = () => {
                     </div>
                   </div>
                   <div className="w-24 flex items-center justify-end gap-2">
-                    <button className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition">
+                    <button 
+                      className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition"
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       <Bookmark className={`w-4 h-4 ${presentation.saved ? "fill-current text-[#D4C5E8]" : ""}`} />
                     </button>
-                    <button className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition">
+                    <button 
+                      className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition"
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       <MoreHorizontal className="w-4 h-4" />
                     </button>
                   </div>
@@ -632,6 +709,18 @@ export const ApresentacoesPendentes = () => {
           </section>
         </div>
       </div>
+
+      {selectedPresentation && (
+        <PresentationPreviewModal
+          isOpen={previewOpen}
+          onClose={() => {
+            setPreviewOpen(false);
+            setSelectedPresentation(null);
+          }}
+          title={selectedPresentation.title}
+          slides={selectedPresentation.slidesList || []}
+        />
+      )}
     </TooltipProvider>
   );
 };
