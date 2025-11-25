@@ -629,7 +629,7 @@ Exemplo para PIX:
             </Button>
             <Button
               onClick={clearAllSlides}
-              className="bg-red-500 hover:bg-red-600 text-white"
+              className="bg-red-500 hover:bg-red-600 text-slate-700"
             >
               Limpar Tudo
             </Button>
