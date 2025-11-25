@@ -30,6 +30,14 @@ import {
   Circle
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import ep142Image from "@/assets/podcast-ep142-volatilidade.png";
+import ep141Image from "@/assets/podcast-ep141-selic.png";
+import ep140Image from "@/assets/podcast-ep140-tendencias-2025.png";
+import ep139Image from "@/assets/podcast-ep139-bancos-fintechs.png";
+import ep138Image from "@/assets/podcast-ep138-cripto.png";
+import ep137Image from "@/assets/podcast-ep137-open-finance.png";
+import ep136Image from "@/assets/podcast-ep136-esg.png";
+import ep135Image from "@/assets/podcast-ep135-cartoes.png";
 
 interface Episode {
   id: number;
@@ -63,7 +71,7 @@ export default function PodcastDetalhes() {
       date: "20/01/2025",
       plays: "12.4k",
       status: "playing",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png"
+      image: ep142Image
     },
     {
       id: 141,
@@ -74,7 +82,7 @@ export default function PodcastDetalhes() {
       date: "13/01/2025",
       plays: "15.2k",
       status: "played",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png"
+      image: ep141Image
     },
     {
       id: 140,
@@ -85,7 +93,7 @@ export default function PodcastDetalhes() {
       date: "06/01/2025",
       plays: "18.9k",
       status: "played",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png"
+      image: ep140Image
     },
     {
       id: 139,
@@ -96,7 +104,7 @@ export default function PodcastDetalhes() {
       date: "30/12/2024",
       plays: "11.8k",
       status: "unplayed",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png"
+      image: ep139Image
     },
     {
       id: 138,
@@ -107,7 +115,7 @@ export default function PodcastDetalhes() {
       date: "23/12/2024",
       plays: "16.5k",
       status: "unplayed",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png"
+      image: ep138Image
     },
     {
       id: 137,
@@ -118,7 +126,7 @@ export default function PodcastDetalhes() {
       date: "16/12/2024",
       plays: "13.7k",
       status: "unplayed",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png"
+      image: ep137Image
     },
     {
       id: 136,
@@ -129,7 +137,7 @@ export default function PodcastDetalhes() {
       date: "09/12/2024",
       plays: "14.2k",
       status: "unplayed",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png"
+      image: ep136Image
     },
     {
       id: 135,
@@ -140,7 +148,7 @@ export default function PodcastDetalhes() {
       date: "02/12/2024",
       plays: "10.9k",
       status: "unplayed",
-      image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png"
+      image: ep135Image
     }
   ];
 
