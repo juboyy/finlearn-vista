@@ -19,6 +19,10 @@ const PerfilMentor = () => {
   const [selectedType, setSelectedType] = useState<string>("individual");
   const [scheduleStep, setScheduleStep] = useState<1 | 2>(1);
   const [paymentMethod, setPaymentMethod] = useState<string>("credit");
+  const [cardNumber, setCardNumber] = useState<string>("");
+  const [cardName, setCardName] = useState<string>("");
+  const [cardExpiry, setCardExpiry] = useState<string>("");
+  const [cardCvv, setCardCvv] = useState<string>("");
   const navigate = useNavigate();
 
   return (
@@ -639,6 +643,10 @@ const PerfilMentor = () => {
           setScheduleStep(1);
           setSelectedDate(undefined);
           setSelectedTime("");
+          setCardNumber("");
+          setCardName("");
+          setCardExpiry("");
+          setCardCvv("");
         }
       }}>
         <SheetContent className="w-[500px] sm:w-[600px] overflow-y-auto">
@@ -965,43 +973,91 @@ const PerfilMentor = () => {
 
                 {/* Dados do Cartão (se cartão selecionado) */}
                 {paymentMethod === "credit" && (
-                  <div className="space-y-3">
-                    <div>
-                      <label className="block text-xs text-slate-600 mb-1">Número do Cartão</label>
-                      <input 
-                        type="text" 
-                        className="w-full px-4 py-2.5 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4C5E8]"
-                        placeholder="0000 0000 0000 0000"
-                        maxLength={19}
-                      />
+                  <div className="space-y-4">
+                    {/* Cartão Visual */}
+                    <div className="relative h-48 bg-gradient-to-br from-[#B5A0D4] to-[#9580B8] rounded-2xl p-6 border-2 border-slate-300 shadow-lg">
+                      <div className="flex flex-col justify-between h-full">
+                        <div className="flex justify-between items-start">
+                          <div className="w-12 h-10 bg-yellow-400 rounded opacity-80"></div>
+                          <div className="text-white text-sm font-medium">VISA</div>
+                        </div>
+                        <div>
+                          <div className="text-white text-xl tracking-wider font-mono mb-4">
+                            {cardNumber || "•••• •••• •••• ••••"}
+                          </div>
+                          <div className="flex justify-between items-end">
+                            <div>
+                              <div className="text-white text-xs opacity-70 mb-1">Nome do Titular</div>
+                              <div className="text-white text-sm font-medium uppercase">
+                                {cardName || "SEU NOME"}
+                              </div>
+                            </div>
+                            <div>
+                              <div className="text-white text-xs opacity-70 mb-1">Validade</div>
+                              <div className="text-white text-sm font-medium">
+                                {cardExpiry || "MM/AA"}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div className="grid grid-cols-2 gap-3">
+
+                    {/* Campos de Entrada */}
+                    <div className="space-y-3">
                       <div>
-                        <label className="block text-xs text-slate-600 mb-1">Validade</label>
+                        <label className="block text-xs text-slate-600 mb-1">Número do Cartão</label>
                         <input 
                           type="text" 
+                          value={cardNumber}
+                          onChange={(e) => {
+                            const value = e.target.value.replace(/\s/g, '');
+                            const formatted = value.match(/.{1,4}/g)?.join(' ') || value;
+                            setCardNumber(formatted);
+                          }}
                           className="w-full px-4 py-2.5 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4C5E8]"
-                          placeholder="MM/AA"
-                          maxLength={5}
+                          placeholder="0000 0000 0000 0000"
+                          maxLength={19}
                         />
+                      </div>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-xs text-slate-600 mb-1">Validade</label>
+                          <input 
+                            type="text" 
+                            value={cardExpiry}
+                            onChange={(e) => {
+                              const value = e.target.value.replace(/\D/g, '');
+                              const formatted = value.length >= 2 ? `${value.slice(0, 2)}/${value.slice(2, 4)}` : value;
+                              setCardExpiry(formatted);
+                            }}
+                            className="w-full px-4 py-2.5 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4C5E8]"
+                            placeholder="MM/AA"
+                            maxLength={5}
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs text-slate-600 mb-1">CVV</label>
+                          <input 
+                            type="text" 
+                            value={cardCvv}
+                            onChange={(e) => setCardCvv(e.target.value.replace(/\D/g, ''))}
+                            className="w-full px-4 py-2.5 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4C5E8]"
+                            placeholder="000"
+                            maxLength={4}
+                          />
+                        </div>
                       </div>
                       <div>
-                        <label className="block text-xs text-slate-600 mb-1">CVV</label>
+                        <label className="block text-xs text-slate-600 mb-1">Nome no Cartão</label>
                         <input 
                           type="text" 
+                          value={cardName}
+                          onChange={(e) => setCardName(e.target.value.toUpperCase())}
                           className="w-full px-4 py-2.5 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4C5E8]"
-                          placeholder="000"
-                          maxLength={4}
+                          placeholder="Nome como está no cartão"
                         />
                       </div>
-                    </div>
-                    <div>
-                      <label className="block text-xs text-slate-600 mb-1">Nome no Cartão</label>
-                      <input 
-                        type="text" 
-                        className="w-full px-4 py-2.5 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4C5E8]"
-                        placeholder="Nome como está no cartão"
-                      />
                     </div>
                   </div>
                 )}
