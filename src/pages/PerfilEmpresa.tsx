@@ -33,7 +33,8 @@ import {
   Medal,
   Phone,
   Mail,
-  BadgeCheck
+  BadgeCheck,
+  BarChart3
 } from "lucide-react";
 
 export default function PerfilEmpresa() {
@@ -58,6 +59,16 @@ export default function PerfilEmpresa() {
               <div>
                 <h1 className="text-2xl font-semibold text-slate-800">Perfil da Empresa</h1>
                 <p className="text-sm text-slate-500 mt-1">Informações institucionais e conteúdos publicados</p>
+              </div>
+              <div className="flex items-center gap-2 ml-6">
+                <button className="px-4 py-2 bg-[hsl(207,35%,65%)] hover:bg-[hsl(142,35%,65%)] text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200">
+                  <BarChart3 size={18} />
+                  Estatísticas
+                </button>
+                <button className="px-4 py-2 bg-[hsl(207,35%,65%)] hover:bg-[hsl(142,35%,65%)] text-slate-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-200">
+                  <FileText size={18} />
+                  Materiais
+                </button>
               </div>
             </div>
             <div className="flex items-center gap-4">
