@@ -24,6 +24,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
+import { SlideChart } from "@/components/SlideChart";
 
 interface Slide {
   id: string;
@@ -237,16 +238,48 @@ LEMBRE-SE: Retorne NO MÍNIMO 10 slides diferentes, cada um focado em um aspecto
     try {
       const { data, error } = await supabase.functions.invoke("generate-slides-content", {
         body: {
-          prompt: `Gere dados para um gráfico sobre: ${chartPrompt}. 
-Retorne um JSON com: type (bar/line/pie), labels (array), datasets (array de objetos com label e data).
-Contexto: Mercado financeiro brasileiro.`,
+          prompt: `Você é um especialista em mercado financeiro. Baseado no prompt: "${chartPrompt}", 
+gere dados REALISTAS e FICTÍCIOS para um gráfico.
+
+INSTRUÇÕES:
+- Determine o tipo de gráfico mais apropriado: bar (barras), line (linha) ou pie (pizza)
+- Gere entre 5 e 8 pontos de dados relevantes
+- Os valores devem ser realistas para o contexto financeiro brasileiro
+- Use nomes descritivos e específicos nos labels
+
+Retorne APENAS um JSON válido neste formato exato:
+{
+  "type": "bar" ou "line" ou "pie",
+  "title": "Título do gráfico",
+  "data": [
+    { "name": "Label 1", "value": 123 },
+    { "name": "Label 2", "value": 456 }
+  ]
+}
+
+Exemplo para PIX:
+{
+  "type": "bar",
+  "title": "Crescimento de Transações PIX (Bilhões)",
+  "data": [
+    { "name": "2020", "value": 1.5 },
+    { "name": "2021", "value": 15.2 },
+    { "name": "2022", "value": 33.8 },
+    { "name": "2023", "value": 55.4 },
+    { "name": "2024", "value": 78.9 },
+    { "name": "2025 (proj)", "value": 102.3 }
+  ]
+}`,
         },
       });
 
       if (error) throw error;
 
       if (data?.generatedText) {
-        const chartData = JSON.parse(data.generatedText);
+        let cleanedText = data.generatedText.trim();
+        cleanedText = cleanedText.replace(/^```json\n?/, '').replace(/\n?```$/, '');
+        
+        const chartData = JSON.parse(cleanedText);
         updateSlide("chartData", chartData);
         toast.success("Gráfico gerado com sucesso");
         setShowChartDialog(false);
@@ -564,17 +597,24 @@ Retorne apenas o texto do conteúdo, sem JSON, sem formatação markdown.`,
 
                 {currentSlide?.chartData && (
                   <div>
-                    <label className="text-sm font-medium text-slate-700 mb-2 block">
-                      Gráfico
-                    </label>
-                    <div className="p-6 bg-slate-50 border border-slate-200 rounded-lg">
-                      <div className="flex items-center justify-center h-64">
-                        <BarChart3 className="w-16 h-16 text-slate-400" />
-                        <p className="ml-4 text-slate-600">
-                          Gráfico: {currentSlide.chartData.type}
-                        </p>
-                      </div>
+                    <div className="flex items-center justify-between mb-2">
+                      <label className="text-sm font-medium text-slate-700">
+                        Gráfico
+                      </label>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => updateSlide("chartData", undefined)}
+                        className="text-slate-400 hover:text-red-500"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
                     </div>
+                    <SlideChart
+                      type={currentSlide.chartData.type}
+                      data={currentSlide.chartData.data}
+                      title={currentSlide.chartData.title}
+                    />
                   </div>
                 )}
               </div>
