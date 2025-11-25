@@ -71,22 +71,38 @@ Descrição: ${projectInfo.description}.
 Público-alvo: ${projectInfo.targetAudience}.
 Contexto: Mercado financeiro brasileiro.
 
-IMPORTANTE:
-- Crie entre 8 e 12 slides
+INSTRUÇÕES CRÍTICAS:
+- OBRIGATÓRIO: Crie NO MÍNIMO 10 slides SEPARADOS
+- Cada slide deve abordar UM aspecto específico do tema
+- DIVIDA o conteúdo em múltiplos slides - NÃO coloque tudo em um único slide
 - Cada slide deve ter um título claro e conteúdo COMPLETO e DETALHADO
-- O conteúdo deve ser estruturado em tópicos ou parágrafos
+- O conteúdo de cada slide deve ser estruturado em tópicos ou parágrafos
 - Inclua dados, estatísticas e exemplos quando relevante
 - Adicione insights e análises específicas do mercado financeiro
 
-Retorne um JSON com este formato exato:
+Estrutura sugerida:
+1. Slide de introdução/contexto
+2-3. Slides sobre aspectos fundamentais
+4-6. Slides com análises e dados detalhados
+7-8. Slides com exemplos práticos e casos de uso
+9. Slide de tendências/futuro
+10. Slide de conclusão/próximos passos
+
+Retorne um JSON com MÚLTIPLOS slides neste formato exato:
 {
   "slides": [
     {
-      "title": "Título do slide",
-      "content": "Conteúdo detalhado com múltiplos parágrafos ou tópicos. Use bullet points quando apropriado:\n\n• Ponto 1 com detalhes completos\n• Ponto 2 com análises e dados\n• Ponto 3 com exemplos práticos\n\nInclua parágrafos explicativos quando necessário."
+      "title": "Título do Slide 1",
+      "content": "Conteúdo detalhado do primeiro tema com múltiplos parágrafos ou tópicos. Use bullet points quando apropriado:\n\n• Ponto 1 com detalhes completos\n• Ponto 2 com análises e dados\n• Ponto 3 com exemplos práticos\n\nInclua parágrafos explicativos quando necessário."
+    },
+    {
+      "title": "Título do Slide 2",
+      "content": "Conteúdo do segundo tema..."
     }
   ]
-}`,
+}
+
+LEMBRE-SE: Retorne NO MÍNIMO 10 slides diferentes, cada um focado em um aspecto específico.`,
         },
       });
 
@@ -98,6 +114,11 @@ Retorne um JSON com este formato exato:
         cleanedText = cleanedText.replace(/^```json\n?/, '').replace(/\n?```$/, '');
         
         const slidesData = JSON.parse(cleanedText);
+        
+        // Validar que múltiplos slides foram gerados
+        if (!slidesData.slides || slidesData.slides.length < 5) {
+          throw new Error("A IA não gerou slides suficientes. Tente novamente.");
+        }
         
         // Imagens padrão do sistema
         const systemImages = [
