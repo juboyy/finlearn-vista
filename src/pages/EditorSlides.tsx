@@ -403,7 +403,7 @@ Exemplo para PIX:
                 <SelectTrigger className="w-full border-2 border-slate-300">
                   <SelectValue placeholder="Escolha um especialista..." />
                 </SelectTrigger>
-                <SelectContent className="bg-white border-2 border-slate-300 z-[60] max-h-[400px]">
+                <SelectContent className="bg-white border-2 border-slate-300 z-[60] max-h-[500px] overflow-y-auto">
                   {agents.map((agent) => {
                     // Extract HSL color from bg class
                     const bgColor = agent.agent_bg_color.includes('hsl') 
