@@ -6,11 +6,17 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import { cn } from "@/lib/utils";
 
 const PerfilMentor = () => {
   const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"mentores" | "seguindo" | "seguidores" | "descobrir">("mentores");
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+  const [selectedTime, setSelectedTime] = useState<string>("");
+  const [selectedType, setSelectedType] = useState<string>("individual");
   const navigate = useNavigate();
 
   return (
@@ -624,134 +630,183 @@ const PerfilMentor = () => {
         </div>
       </main>
 
-      {/* Schedule Modal */}
-      {isScheduleModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={() => setIsScheduleModalOpen(false)}>
-          <div className="bg-white rounded-2xl p-8 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto border-2 border-slate-300" onClick={(e) => e.stopPropagation()}>
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-2xl font-semibold text-slate-800">Agendar Mentoria</h3>
-              <button onClick={() => setIsScheduleModalOpen(false)} className="p-2 text-slate-400 hover:text-slate-600 rounded-lg transition">
-                <X size={24} />
+      {/* Schedule Sheet */}
+      <Sheet open={isScheduleModalOpen} onOpenChange={setIsScheduleModalOpen}>
+        <SheetContent className="w-[500px] sm:w-[600px] overflow-y-auto">
+          <SheetHeader>
+            <SheetTitle className="text-2xl font-semibold text-slate-800">Agendar Mentoria</SheetTitle>
+            <SheetDescription>
+              Escolha a data, horário e tipo de consultoria
+            </SheetDescription>
+          </SheetHeader>
+
+          <div className="mt-6 space-y-6">
+            {/* Mentor Info */}
+            <div className="flex items-center gap-4 p-4 bg-slate-50 border-2 border-slate-300 rounded-lg">
+              <img 
+                src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" 
+                alt="Dra. Ana Beatriz Costa" 
+                className="w-16 h-16 rounded-full object-cover"
+              />
+              <div>
+                <h4 className="font-semibold text-slate-800">Dra. Ana Beatriz Costa</h4>
+                <p className="text-sm text-slate-600">Diretora de Compliance - Banco Central</p>
+                <div className="flex items-center gap-2 mt-1">
+                  <Star size={12} className="fill-yellow-500 text-yellow-500" />
+                  <span className="text-sm text-slate-600">5.0 (128 avaliações)</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Tipo de Consultoria */}
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-3">Tipo de Consultoria</label>
+              <div className="space-y-2">
+                <label 
+                  className={cn(
+                    "flex items-center justify-between p-4 border-2 rounded-lg cursor-pointer transition",
+                    selectedType === "individual" 
+                      ? "border-[#D4C5E8] bg-[#D4C5E8]/10" 
+                      : "border-slate-300 hover:border-[#D4C5E8]"
+                  )}
+                >
+                  <div className="flex items-center gap-3">
+                    <input 
+                      type="radio" 
+                      name="type" 
+                      value="individual"
+                      checked={selectedType === "individual"}
+                      onChange={(e) => setSelectedType(e.target.value)}
+                      className="w-4 h-4 text-[#D4C5E8]" 
+                    />
+                    <div>
+                      <div className="font-medium text-slate-800">Sessão Individual</div>
+                      <div className="text-xs text-slate-500">60 minutos</div>
+                    </div>
+                  </div>
+                  <span className="font-semibold text-slate-700">R$ 450</span>
+                </label>
+
+                <label 
+                  className={cn(
+                    "flex items-center justify-between p-4 border-2 rounded-lg cursor-pointer transition",
+                    selectedType === "pacote" 
+                      ? "border-[#D4C5E8] bg-[#D4C5E8]/10" 
+                      : "border-slate-300 hover:border-[#D4C5E8]"
+                  )}
+                >
+                  <div className="flex items-center gap-3">
+                    <input 
+                      type="radio" 
+                      name="type" 
+                      value="pacote"
+                      checked={selectedType === "pacote"}
+                      onChange={(e) => setSelectedType(e.target.value)}
+                      className="w-4 h-4 text-[#D4C5E8]" 
+                    />
+                    <div>
+                      <div className="font-medium text-slate-800">Pacote 5 Sessões</div>
+                      <div className="text-xs text-slate-500">5x 60 minutos (10% desconto)</div>
+                    </div>
+                  </div>
+                  <span className="font-semibold text-slate-700">R$ 2.025</span>
+                </label>
+
+                <label 
+                  className={cn(
+                    "flex items-center justify-between p-4 border-2 rounded-lg cursor-pointer transition",
+                    selectedType === "grupo" 
+                      ? "border-[#D4C5E8] bg-[#D4C5E8]/10" 
+                      : "border-slate-300 hover:border-[#D4C5E8]"
+                  )}
+                >
+                  <div className="flex items-center gap-3">
+                    <input 
+                      type="radio" 
+                      name="type" 
+                      value="grupo"
+                      checked={selectedType === "grupo"}
+                      onChange={(e) => setSelectedType(e.target.value)}
+                      className="w-4 h-4 text-[#D4C5E8]" 
+                    />
+                    <div>
+                      <div className="font-medium text-slate-800">Mentoria em Grupo</div>
+                      <div className="text-xs text-slate-500">90 minutos (máx 6 pessoas)</div>
+                    </div>
+                  </div>
+                  <span className="font-semibold text-slate-700">R$ 180</span>
+                </label>
+              </div>
+            </div>
+
+            {/* Calendário */}
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-3">Selecione uma data</label>
+              <div className="flex justify-center border-2 border-slate-300 rounded-lg p-4 bg-white">
+                <CalendarComponent
+                  mode="single"
+                  selected={selectedDate}
+                  onSelect={setSelectedDate}
+                  disabled={(date) => date < new Date() || date.getDay() === 0 || date.getDay() === 6}
+                  className={cn("pointer-events-auto")}
+                />
+              </div>
+            </div>
+
+            {/* Horários Disponíveis */}
+            {selectedDate && (
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-3">Horários disponíveis</label>
+                <div className="grid grid-cols-3 gap-2">
+                  {["09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00", "18:00"].map((time) => (
+                    <button
+                      key={time}
+                      onClick={() => setSelectedTime(time)}
+                      className={cn(
+                        "px-4 py-3 border-2 rounded-lg text-sm font-medium transition",
+                        selectedTime === time
+                          ? "border-[#D4C5E8] bg-[#D4C5E8] text-slate-700"
+                          : "border-slate-300 text-slate-700 hover:border-[#D4C5E8]"
+                      )}
+                    >
+                      <Clock size={14} className="inline mr-1" />
+                      {time}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Informação */}
+            <div className="p-4 bg-[#E8E0C5] border-2 border-slate-300 rounded-lg">
+              <div className="flex items-start gap-3">
+                <Info size={20} className="text-slate-700 mt-0.5 flex-shrink-0" />
+                <div className="text-sm text-slate-700">
+                  <p className="font-medium mb-1">Importante:</p>
+                  <p>Você receberá um email de confirmação com o link para a sessão. Cancelamentos devem ser feitos com até 24h de antecedência.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Botões */}
+            <div className="flex gap-3 pt-4">
+              <button 
+                disabled={!selectedDate || !selectedTime}
+                className="flex-1 px-6 py-3 bg-[#D4C5E8] border-2 border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <Calendar size={16} className="inline mr-2" />
+                Confirmar Agendamento
+              </button>
+              <button 
+                onClick={() => setIsScheduleModalOpen(false)}
+                className="px-6 py-3 border-2 border-slate-300 text-slate-600 rounded-lg font-medium hover:bg-slate-50 transition"
+              >
+                Cancelar
               </button>
             </div>
-            <div className="space-y-6">
-              <div className="flex items-center gap-4 p-4 bg-slate-50 border-2 border-slate-300 rounded-lg">
-                <img 
-                  src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" 
-                  alt="Dra. Ana Beatriz Costa" 
-                  className="w-16 h-16 rounded-full object-cover"
-                />
-                <div>
-                  <h4 className="font-semibold text-slate-800">Dra. Ana Beatriz Costa</h4>
-                  <p className="text-sm text-slate-600">Diretora de Compliance - Banco Central</p>
-                  <div className="flex items-center gap-2 mt-1">
-                    <Star size={12} className="fill-yellow-500 text-yellow-500" />
-                    <span className="text-sm text-slate-600">5.0 (128 avaliações)</span>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">Tipo de Mentoria</label>
-                <select className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4C5E8]">
-                  <option>Sessão Individual (R$ 450/hora)</option>
-                  <option>Pacote 5 Sessões (R$ 2.025)</option>
-                  <option>Mentoria em Grupo (R$ 180/pessoa)</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">Canal de Comunicação</label>
-                <div className="grid grid-cols-2 gap-3">
-                  <label className="flex items-center gap-3 p-4 border-2 border-slate-300 rounded-lg cursor-pointer hover:border-[#D4C5E8] transition">
-                    <input type="radio" name="channel" className="w-4 h-4 text-[#D4C5E8]" defaultChecked />
-                    <div>
-                      <div className="font-medium text-slate-800 text-sm">Videoconferência</div>
-                      <div className="text-xs text-slate-500">Sessão ao vivo</div>
-                    </div>
-                  </label>
-                  <label className="flex items-center gap-3 p-4 border-2 border-slate-300 rounded-lg cursor-pointer hover:border-[#D4C5E8] transition">
-                    <input type="radio" name="channel" className="w-4 h-4 text-[#D4C5E8]" />
-                    <div>
-                      <div className="font-medium text-slate-800 text-sm">Áudio</div>
-                      <div className="text-xs text-slate-500">Chamada de voz</div>
-                    </div>
-                  </label>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">Área de Interesse</label>
-                <select className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4C5E8]">
-                  <option>Compliance Regulatório</option>
-                  <option>Gestão de Riscos</option>
-                  <option>Governança Corporativa</option>
-                  <option>Controles Internos</option>
-                  <option>PLD/FT</option>
-                  <option>Auditoria</option>
-                </select>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2">Data</label>
-                  <input type="date" className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4C5E8]" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2">Horário</label>
-                  <select className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4C5E8]">
-                    <option>14:00</option>
-                    <option>15:00</option>
-                    <option>16:00</option>
-                    <option>17:00</option>
-                  </select>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">Duração</label>
-                <select className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4C5E8]">
-                  <option>60 minutos (R$ 450)</option>
-                  <option>90 minutos (R$ 675)</option>
-                  <option>120 minutos (R$ 900)</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">Objetivo da Mentoria</label>
-                <textarea 
-                  rows={4} 
-                  placeholder="Descreva seus objetivos, desafios atuais e o que espera alcançar com esta mentoria..." 
-                  className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4C5E8] resize-none"
-                ></textarea>
-              </div>
-
-              <div className="p-4 bg-[#E8E0C5] border-2 border-slate-300 rounded-lg">
-                <div className="flex items-start gap-3">
-                  <Info size={20} className="text-slate-700 mt-0.5" />
-                  <div className="text-sm text-slate-700">
-                    <p className="font-medium mb-1">Importante:</p>
-                    <p>Você receberá um email de confirmação com o link para a sessão. Cancelamentos devem ser feitos com até 24h de antecedência.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex gap-3 pt-4">
-                <button className="flex-1 px-6 py-3 bg-[#D4C5E8] border-2 border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
-                  <Calendar size={16} className="inline mr-2" />
-                  Confirmar Agendamento
-                </button>
-                <button 
-                  onClick={() => setIsScheduleModalOpen(false)}
-                  className="flex-1 px-6 py-3 border-2 border-slate-300 text-slate-600 rounded-lg font-medium hover:bg-slate-50 transition"
-                >
-                  Cancelar
-                </button>
-              </div>
-            </div>
           </div>
-        </div>
-      )}
+        </SheetContent>
+      </Sheet>
 
       {/* Avatar Test Modal */}
       {isAvatarModalOpen && (
