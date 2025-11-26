@@ -6,6 +6,22 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
+import * as XLSX from "xlsx";
+import {
+  BarChart as RechartsBarChart,
+  LineChart as RechartsLineChart,
+  PieChart as RechartsPieChart,
+  Bar,
+  Line,
+  Pie,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
 const specializedAgents = [
   {
@@ -110,12 +126,27 @@ const specializedAgents = [
   },
 ];
 
+interface ChartData {
+  [key: string]: string | number;
+}
+
+const CHART_COLORS = [
+  "hsl(207, 50%, 65%)",
+  "hsl(142, 50%, 65%)",
+  "hsl(322, 50%, 65%)",
+  "hsl(280, 50%, 65%)",
+  "hsl(45, 50%, 65%)",
+  "hsl(15, 50%, 65%)",
+];
+
 export default function TransformarTabelas() {
   const [file, setFile] = useState<File | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [chartType, setChartType] = useState<"bar" | "line" | "pie">("bar");
   const [selectedAgent, setSelectedAgent] = useState(specializedAgents[0].id);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [chartData, setChartData] = useState<ChartData[]>([]);
+  const [dataKeys, setDataKeys] = useState<string[]>([]);
   const { toast } = useToast();
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -173,6 +204,41 @@ export default function TransformarTabelas() {
 
   const handleRemoveFile = () => {
     setFile(null);
+    setChartData([]);
+    setDataKeys([]);
+  };
+
+  const processExcelFile = (arrayBuffer: ArrayBuffer) => {
+    try {
+      const workbook = XLSX.read(arrayBuffer, { type: "array" });
+      const firstSheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[firstSheetName];
+      const jsonData = XLSX.utils.sheet_to_json(worksheet) as ChartData[];
+
+      if (jsonData.length === 0) {
+        throw new Error("O arquivo está vazio ou não contém dados válidos.");
+      }
+
+      // Extrair as chaves (colunas) dos dados
+      const keys = Object.keys(jsonData[0]).filter(key => key !== "");
+      
+      setChartData(jsonData);
+      setDataKeys(keys);
+
+      toast({
+        title: "Gráfico gerado com sucesso",
+        description: `Processadas ${jsonData.length} linhas de dados com ${keys.length} colunas.`,
+      });
+    } catch (error: any) {
+      console.error("Error processing file:", error);
+      toast({
+        title: "Erro ao processar arquivo",
+        description: error.message || "Não foi possível processar o arquivo.",
+        variant: "destructive",
+      });
+      setChartData([]);
+      setDataKeys([]);
+    }
   };
 
   const handleGenerateChart = async () => {
@@ -187,14 +253,168 @@ export default function TransformarTabelas() {
 
     setIsProcessing(true);
 
-    // Simular processamento
-    setTimeout(() => {
-      setIsProcessing(false);
+    try {
+      const reader = new FileReader();
+      
+      reader.onload = (e) => {
+        const arrayBuffer = e.target?.result as ArrayBuffer;
+        processExcelFile(arrayBuffer);
+        setIsProcessing(false);
+      };
+
+      reader.onerror = () => {
+        toast({
+          title: "Erro ao ler arquivo",
+          description: "Não foi possível ler o arquivo selecionado.",
+          variant: "destructive",
+        });
+        setIsProcessing(false);
+      };
+
+      reader.readAsArrayBuffer(file);
+    } catch (error: any) {
+      console.error("Error reading file:", error);
       toast({
-        title: "Gráfico gerado com sucesso",
-        description: "A visualização foi criada a partir dos seus dados.",
+        title: "Erro ao processar arquivo",
+        description: error.message || "Ocorreu um erro ao processar o arquivo.",
+        variant: "destructive",
       });
-    }, 3000);
+      setIsProcessing(false);
+    }
+  };
+
+  const renderChart = () => {
+    if (chartData.length === 0 || dataKeys.length === 0) {
+      return (
+        <div className="border-2 border-dashed border-slate-300 rounded-lg p-12 text-center">
+          <BarChart3 className="w-16 h-16 mx-auto mb-4 text-slate-300" />
+          <p className="text-slate-500 text-sm">
+            Faça upload de um arquivo e clique em "Gerar Gráfico"
+          </p>
+        </div>
+      );
+    }
+
+    // Primeira coluna é usada como label/categoria
+    const labelKey = dataKeys[0];
+    // Demais colunas são valores numéricos
+    const valueKeys = dataKeys.slice(1).filter(key => {
+      // Verificar se a coluna contém valores numéricos
+      return chartData.some(row => typeof row[key] === "number" || !isNaN(Number(row[key])));
+    });
+
+    if (valueKeys.length === 0) {
+      return (
+        <div className="border-2 border-dashed border-slate-300 rounded-lg p-12 text-center">
+          <BarChart3 className="w-16 h-16 mx-auto mb-4 text-slate-300" />
+          <p className="text-slate-500 text-sm">
+            Não foram encontradas colunas numéricas nos dados.
+          </p>
+        </div>
+      );
+    }
+
+    // Para gráfico de pizza, usar apenas a primeira coluna numérica
+    if (chartType === "pie") {
+      const pieData = chartData.map((row, index) => ({
+        name: String(row[labelKey]),
+        value: Number(row[valueKeys[0]]) || 0,
+        fill: CHART_COLORS[index % CHART_COLORS.length],
+      }));
+
+      return (
+        <ResponsiveContainer width="100%" height={400}>
+          <RechartsPieChart>
+            <Pie
+              data={pieData}
+              cx="50%"
+              cy="50%"
+              labelLine={false}
+              label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+              outerRadius={120}
+              fill="#8884d8"
+              dataKey="value"
+            >
+              {pieData.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.fill} />
+              ))}
+            </Pie>
+            <Tooltip />
+            <Legend />
+          </RechartsPieChart>
+        </ResponsiveContainer>
+      );
+    }
+
+    if (chartType === "line") {
+      return (
+        <ResponsiveContainer width="100%" height={400}>
+          <RechartsLineChart data={chartData}>
+            <CartesianGrid strokeDasharray="3 3" stroke="hsl(215, 20%, 85%)" />
+            <XAxis 
+              dataKey={labelKey} 
+              tick={{ fill: "hsl(215, 20%, 40%)" }}
+              angle={-45}
+              textAnchor="end"
+              height={80}
+            />
+            <YAxis tick={{ fill: "hsl(215, 20%, 40%)" }} />
+            <Tooltip 
+              contentStyle={{
+                backgroundColor: "white",
+                border: "2px solid hsl(215, 20%, 85%)",
+                borderRadius: "8px",
+              }}
+            />
+            <Legend />
+            {valueKeys.map((key, index) => (
+              <Line
+                key={key}
+                type="monotone"
+                dataKey={key}
+                stroke={CHART_COLORS[index % CHART_COLORS.length]}
+                strokeWidth={2}
+                dot={{ r: 4 }}
+                activeDot={{ r: 6 }}
+              />
+            ))}
+          </RechartsLineChart>
+        </ResponsiveContainer>
+      );
+    }
+
+    // Bar chart (default)
+    return (
+      <ResponsiveContainer width="100%" height={400}>
+        <RechartsBarChart data={chartData}>
+          <CartesianGrid strokeDasharray="3 3" stroke="hsl(215, 20%, 85%)" />
+          <XAxis 
+            dataKey={labelKey} 
+            tick={{ fill: "hsl(215, 20%, 40%)" }}
+            angle={-45}
+            textAnchor="end"
+            height={80}
+          />
+          <YAxis tick={{ fill: "hsl(215, 20%, 40%)" }} />
+          <Tooltip 
+            contentStyle={{
+              backgroundColor: "white",
+              border: "2px solid hsl(215, 20%, 85%)",
+              borderRadius: "8px",
+            }}
+          />
+          <Legend />
+          {valueKeys.map((key, index) => (
+            <Bar
+              key={key}
+              dataKey={key}
+              fill={CHART_COLORS[index % CHART_COLORS.length]}
+              radius={[4, 4, 0, 0]}
+            />
+          ))}
+        </RechartsBarChart>
+      </ResponsiveContainer>
+    );
   };
 
   return (
@@ -331,15 +551,10 @@ export default function TransformarTabelas() {
                     <div className="flex flex-col items-center justify-center py-16">
                       <Loader2 className="h-16 w-16 text-[hsl(142,35%,65%)] animate-spin mb-4" />
                       <p className="text-slate-600 font-medium">Processando dados...</p>
-                      <p className="text-sm text-slate-500 mt-2">Gerando visualização gráfica</p>
+                      <p className="text-sm text-slate-500 mt-2">Lendo e analisando arquivo</p>
                     </div>
                   ) : (
-                    <div className="border-2 border-dashed border-slate-300 rounded-lg p-12 text-center">
-                      <BarChart3 className="w-16 h-16 mx-auto mb-4 text-slate-300" />
-                      <p className="text-slate-500 text-sm">
-                        Faça upload de um arquivo e clique em "Gerar Gráfico"
-                      </p>
-                    </div>
+                    renderChart()
                   )}
                 </div>
               </div>
