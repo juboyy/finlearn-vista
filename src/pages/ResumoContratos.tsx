@@ -416,7 +416,11 @@ export default function ResumoContratos() {
                       <button
                         key={agent.id}
                         onClick={() => setSelectedAgent(agent.id)}
-                        style={{ backgroundColor: agent.bgColor }}
+                        style={{ 
+                          backgroundColor: selectedAgent === agent.id 
+                            ? "hsl(322, 48%, 75%)" 
+                            : agent.bgColor 
+                        }}
                         className={`w-full p-4 rounded-xl border-2 transition-all text-left ${
                           selectedAgent === agent.id 
                             ? 'border-slate-400 shadow-lg scale-[1.02]' 
