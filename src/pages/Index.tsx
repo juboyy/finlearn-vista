@@ -8,6 +8,7 @@ import { ProgressBar } from "@/components/Dashboard/ProgressBar";
 import { LearningProgressChart } from "@/components/Dashboard/LearningProgressChart";
 import { ContentDistributionChart } from "@/components/Dashboard/ContentDistributionChart";
 import { InsightsSuggestions } from "@/components/Dashboard/InsightsSuggestions";
+import { InsightsDoDia } from "@/components/Dashboard/InsightsDoDia";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Award, Clock, Flame, TrendingUp, Coins, Scale, Bot, Mic, Video, BookMarked, Bell, Plus, Clock as ClockIcon, Headphones, Play, Lightbulb } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -16,6 +17,7 @@ import { useUserAgents } from "@/hooks/useUserAgents";
 
 const Index = () => {
   const [insightsOpen, setInsightsOpen] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
   const { agents } = useUserAgents();
   
   const anaAgent = agents.find(a => a.agent_key === "ana-analista-tecnica");
@@ -139,7 +141,7 @@ const Index = () => {
                   title="Chat com IA"
                   description="Tire suas dúvidas"
                   bgColor="bg-pastel-blue"
-                  onClick={() => setInsightsOpen(true)}
+                  onClick={() => setChatOpen(true)}
                 />
                 <QuickActionCard
                   icon={Mic}
@@ -297,6 +299,7 @@ const Index = () => {
       </main>
       
       <InsightsSuggestions open={insightsOpen} onOpenChange={setInsightsOpen} />
+      <InsightsDoDia open={chatOpen} onOpenChange={setChatOpen} />
     </div>
   );
 };
