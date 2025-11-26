@@ -546,7 +546,7 @@ export default function NovoEbookEtapa3() {
                         </div>
                       </div>
 
-                      <div className="bg-accent/25 rounded-lg p-5">
+                      <div className="bg-accent/[0.125] rounded-lg p-5">
                         <p className="text-sm font-medium text-foreground mb-3">Simulação de Parcelamento</p>
                         <div className="space-y-2 text-sm">
                           <div className="flex items-center justify-between py-2 border-b border-border">
