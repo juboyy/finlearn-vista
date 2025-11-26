@@ -538,7 +538,7 @@ export default function NovoEbookEtapa2() {
 
               {/* Sidebar */}
               <div className="col-span-1">
-                <div className="sticky top-24 space-y-6">
+                <div className="sticky top-8 space-y-6">
                   {/* Progress Card */}
                   <div className="bg-card rounded-xl border border-border p-6">
                     <h3 className="text-lg font-semibold text-foreground mb-4">Progresso da Etapa 2</h3>
