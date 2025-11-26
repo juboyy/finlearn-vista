@@ -41,14 +41,24 @@ serve(async (req) => {
 
 ${summaryPrompts[summaryType as keyof typeof summaryPrompts]}
 
-Estruture o resumo de forma clara e profissional, usando:
-- Introdução contextual
-- Pontos principais do contrato
-- Cláusulas críticas
-- Riscos identificados
-- Recomendações práticas
+Estruture o resumo de forma clara e profissional em formato Markdown, usando:
 
-Use linguagem técnica mas acessível. Seja objetivo e prático.`;
+## Estrutura Obrigatória:
+- Use ## para títulos de seções
+- Use ### para subtítulos
+- Use - para listas e tópicos (SEMPRE use listas para organizar informações)
+- Deixe linhas em branco entre parágrafos e seções
+- Use **negrito** para termos importantes
+- Use *itálico* para ênfases secundárias
+
+## Seções que devem estar no resumo:
+1. **Contexto Geral** - Visão geral do contrato
+2. **Pontos Principais** - Lista com os aspectos mais importantes
+3. **Cláusulas Críticas** - Lista das cláusulas que merecem atenção
+4. **Riscos Identificados** - Lista de potenciais riscos
+5. **Recomendações** - Lista de ações sugeridas
+
+Use linguagem técnica mas acessível. Seja objetivo e prático. SEMPRE organize em listas com - quando apresentar múltiplos pontos.`;
 
     const userPrompt = `Analise o seguinte documento contratual (${fileName}) e crie um resumo conforme solicitado:
 
