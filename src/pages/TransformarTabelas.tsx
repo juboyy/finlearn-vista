@@ -237,6 +237,27 @@ export default function TransformarTabelas() {
     }
 
     setFile(file);
+    
+    // Processar arquivo automaticamente após seleção
+    setIsProcessing(true);
+    const reader = new FileReader();
+    
+    reader.onload = (e) => {
+      const arrayBuffer = e.target?.result as ArrayBuffer;
+      processExcelFile(arrayBuffer);
+      setIsProcessing(false);
+    };
+
+    reader.onerror = () => {
+      toast({
+        title: "Erro ao ler arquivo",
+        description: "Não foi possível ler o arquivo selecionado.",
+        variant: "destructive",
+      });
+      setIsProcessing(false);
+    };
+
+    reader.readAsArrayBuffer(file);
   };
 
   const handleRemoveFile = () => {
@@ -310,36 +331,10 @@ export default function TransformarTabelas() {
       return;
     }
 
-    setIsProcessing(true);
-
-    try {
-      const reader = new FileReader();
-      
-      reader.onload = (e) => {
-        const arrayBuffer = e.target?.result as ArrayBuffer;
-        processExcelFile(arrayBuffer);
-        setIsProcessing(false);
-      };
-
-      reader.onerror = () => {
-        toast({
-          title: "Erro ao ler arquivo",
-          description: "Não foi possível ler o arquivo selecionado.",
-          variant: "destructive",
-        });
-        setIsProcessing(false);
-      };
-
-      reader.readAsArrayBuffer(file);
-    } catch (error: any) {
-      console.error("Error reading file:", error);
-      toast({
-        title: "Erro ao processar arquivo",
-        description: error.message || "Ocorreu um erro ao processar o arquivo.",
-        variant: "destructive",
-      });
-      setIsProcessing(false);
-    }
+    toast({
+      title: "Gráfico atualizado",
+      description: "Visualização gerada com sucesso.",
+    });
   };
 
   const toggleColumnSelection = (column: string) => {
@@ -1082,8 +1077,8 @@ export default function TransformarTabelas() {
                     </>
                   ) : (
                     <>
-                      <Upload className="mr-2 h-5 w-5" />
-                      Carregar Arquivo
+                      <BarChart3 className="mr-2 h-5 w-5" />
+                      Atualizar Visualização
                     </>
                   )}
                 </Button>
