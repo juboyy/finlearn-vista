@@ -394,7 +394,7 @@ export default function NovoEbookEtapa3() {
                 </div>
 
                 <div className="space-y-4">
-                  <label className={`flex items-center justify-between p-5 border-2 rounded-lg cursor-pointer ${creditCard ? 'border-foreground bg-accent/50' : 'border-border hover:border-muted-foreground'}`}>
+                  <label className={`flex items-center justify-between p-5 border-2 rounded-lg cursor-pointer ${creditCard ? 'border-foreground bg-accent/25' : 'border-border hover:border-muted-foreground'}`}>
                     <div className="flex items-start gap-4">
                       <div className="w-12 h-12 bg-[hsl(142,35%,85%)] rounded-lg flex items-center justify-center flex-shrink-0">
                         <CreditCard className="w-6 h-6 text-[hsl(215,20%,40%)]" />
@@ -416,7 +416,7 @@ export default function NovoEbookEtapa3() {
                     />
                   </label>
 
-                  <label className={`flex items-center justify-between p-5 border-2 rounded-lg cursor-pointer ${pix ? 'border-foreground bg-accent/50' : 'border-border hover:border-muted-foreground'}`}>
+                  <label className={`flex items-center justify-between p-5 border-2 rounded-lg cursor-pointer ${pix ? 'border-foreground bg-accent/25' : 'border-border hover:border-muted-foreground'}`}>
                     <div className="flex items-start gap-4">
                       <div className="w-12 h-12 bg-[hsl(207,35%,92%)] rounded-lg flex items-center justify-center flex-shrink-0">
                         <Barcode className="w-6 h-6 text-[hsl(215,20%,40%)]" />
@@ -546,7 +546,7 @@ export default function NovoEbookEtapa3() {
                         </div>
                       </div>
 
-                      <div className="bg-accent/50 rounded-lg p-5">
+                      <div className="bg-accent/25 rounded-lg p-5">
                         <p className="text-sm font-medium text-foreground mb-3">Simulação de Parcelamento</p>
                         <div className="space-y-2 text-sm">
                           <div className="flex items-center justify-between py-2 border-b border-border">
@@ -587,7 +587,7 @@ export default function NovoEbookEtapa3() {
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-3">Método de Recebimento</label>
                     <div className="grid grid-cols-2 gap-4">
-                      <label className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer ${payoutMethod === 'bank' ? 'border-foreground bg-accent/50' : 'border-border hover:border-muted-foreground'}`}>
+                      <label className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer ${payoutMethod === 'bank' ? 'border-foreground bg-accent/25' : 'border-border hover:border-muted-foreground'}`}>
                         <input 
                           type="radio" 
                           name="payout-method" 
@@ -600,7 +600,7 @@ export default function NovoEbookEtapa3() {
                           <p className="text-xs text-muted-foreground mt-1">TED/PIX para sua conta</p>
                         </div>
                       </label>
-                      <label className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer ${payoutMethod === 'wallet' ? 'border-foreground bg-accent/50' : 'border-border hover:border-muted-foreground'}`}>
+                      <label className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer ${payoutMethod === 'wallet' ? 'border-foreground bg-accent/25' : 'border-border hover:border-muted-foreground'}`}>
                         <input 
                           type="radio" 
                           name="payout-method" 
@@ -699,7 +699,7 @@ export default function NovoEbookEtapa3() {
                           <p className="text-xs text-muted-foreground mt-1">Toda sexta-feira</p>
                         </div>
                       </label>
-                      <label className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer ${payoutFrequency === 'quinzenal' ? 'border-foreground bg-accent/50' : 'border-border hover:border-muted-foreground'}`}>
+                      <label className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer ${payoutFrequency === 'quinzenal' ? 'border-foreground bg-accent/25' : 'border-border hover:border-muted-foreground'}`}>
                         <input 
                           type="radio" 
                           name="payout-frequency" 
@@ -841,22 +841,22 @@ export default function NovoEbookEtapa3() {
                 <div className="bg-card rounded-xl border border-border p-6">
                   <h3 className="text-lg font-semibold text-foreground mb-4">Formas Aceitas</h3>
                   <div className="space-y-3">
-                    <div className={`flex items-center gap-3 p-3 rounded-lg ${creditCard ? 'bg-accent/50' : 'bg-card border border-border opacity-50'}`}>
+                    <div className={`flex items-center gap-3 p-3 rounded-lg ${creditCard ? 'bg-accent/25' : 'bg-card border border-border opacity-50'}`}>
                       <CreditCard className={`w-5 h-5 ${creditCard ? 'text-foreground' : 'text-muted-foreground'}`} />
                       <span className={`text-sm ${creditCard ? 'text-foreground' : 'text-muted-foreground'}`}>Cartão de Crédito</span>
                       {creditCard && <Check className="w-5 h-5 text-[hsl(142,50%,45%)] ml-auto" />}
                     </div>
-                    <div className={`flex items-center gap-3 p-3 rounded-lg ${pix ? 'bg-accent/50' : 'bg-card border border-border opacity-50'}`}>
+                    <div className={`flex items-center gap-3 p-3 rounded-lg ${pix ? 'bg-accent/25' : 'bg-card border border-border opacity-50'}`}>
                       <Barcode className={`w-5 h-5 ${pix ? 'text-foreground' : 'text-muted-foreground'}`} />
                       <span className={`text-sm ${pix ? 'text-foreground' : 'text-muted-foreground'}`}>PIX</span>
                       {pix && <Check className="w-5 h-5 text-[hsl(142,50%,45%)] ml-auto" />}
                     </div>
-                    <div className={`flex items-center gap-3 p-3 rounded-lg ${boleto ? 'bg-accent/50' : 'bg-card border border-border opacity-50'}`}>
+                    <div className={`flex items-center gap-3 p-3 rounded-lg ${boleto ? 'bg-accent/25' : 'bg-card border border-border opacity-50'}`}>
                       <DollarSign className={`w-5 h-5 ${boleto ? 'text-foreground' : 'text-muted-foreground'}`} />
                       <span className={`text-sm ${boleto ? 'text-foreground' : 'text-muted-foreground'}`}>Boleto</span>
                       {boleto && <Check className="w-5 h-5 text-[hsl(142,50%,45%)] ml-auto" />}
                     </div>
-                    <div className={`flex items-center gap-3 p-3 rounded-lg ${digitalWallet ? 'bg-accent/50' : 'bg-card border border-border opacity-50'}`}>
+                    <div className={`flex items-center gap-3 p-3 rounded-lg ${digitalWallet ? 'bg-accent/25' : 'bg-card border border-border opacity-50'}`}>
                       <Wallet className={`w-5 h-5 ${digitalWallet ? 'text-foreground' : 'text-muted-foreground'}`} />
                       <span className={`text-sm ${digitalWallet ? 'text-foreground' : 'text-muted-foreground'}`}>Carteiras Digitais</span>
                       {digitalWallet && <Check className="w-5 h-5 text-[hsl(142,50%,45%)] ml-auto" />}
