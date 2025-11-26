@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Upload, FileText, Loader2, Download, ChartLine, Landmark, Bitcoin, GraduationCap, TrendingUp, CreditCard, Database, Settings, BarChart3, PieChart, LineChart } from "lucide-react";
+import { ArrowLeft, Upload, FileText, Loader2, Download, ChartLine, Landmark, Bitcoin, GraduationCap, TrendingUp, CreditCard, Database, Settings, BarChart3, PieChart, LineChart, GripVertical } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -22,6 +22,23 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+  useSortable,
+} from "@dnd-kit/sortable";
+import { SortableChartItem } from "@/components/SortableChartItem";
 
 const specializedAgents = [
   {
@@ -161,6 +178,13 @@ export default function TransformarTabelas() {
   const [showChartBuilder, setShowChartBuilder] = useState(false);
   const [currentChart, setCurrentChart] = useState<CustomChart | null>(null);
   const { toast } = useToast();
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -391,6 +415,24 @@ export default function TransformarTabelas() {
   const cancelChartBuilder = () => {
     setCurrentChart(null);
     setShowChartBuilder(false);
+  };
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      setCustomCharts((items) => {
+        const oldIndex = items.findIndex((item) => item.id === active.id);
+        const newIndex = items.findIndex((item) => item.id === over.id);
+
+        return arrayMove(items, oldIndex, newIndex);
+      });
+
+      toast({
+        title: "Gráfico reordenado",
+        description: "A ordem dos gráficos foi atualizada.",
+      });
+    }
   };
 
   const renderSingleChart = (columns: string[], chartTitle?: string, chartTypeOverride?: "bar" | "line" | "pie") => {
@@ -887,41 +929,27 @@ export default function TransformarTabelas() {
                       </div>
 
                       {customCharts.length > 0 ? (
-                        <div className="space-y-2">
-                          {customCharts.map((chart) => (
-                            <div
-                              key={chart.id}
-                              className="p-3 border-2 border-slate-200 rounded-lg hover:border-[hsl(142,35%,75%)] transition-colors"
-                            >
-                              <div className="flex items-center justify-between">
-                                <div className="flex-1">
-                                  <p className="font-semibold text-sm text-slate-800">{chart.title}</p>
-                                  <p className="text-xs text-slate-500 mt-1">
-                                    {chart.columns.length} coluna(s) • {chart.type === "bar" ? "Barras" : chart.type === "line" ? "Linha" : "Pizza"}
-                                  </p>
-                                </div>
-                                <div className="flex gap-2">
-                                  <Button
-                                    size="sm"
-                                    variant="ghost"
-                                    onClick={() => editChart(chart)}
-                                    className="h-8 px-2"
-                                  >
-                                    <i className="fas fa-edit text-slate-600"></i>
-                                  </Button>
-                                  <Button
-                                    size="sm"
-                                    variant="ghost"
-                                    onClick={() => deleteChart(chart.id)}
-                                    className="h-8 px-2 hover:text-red-600"
-                                  >
-                                    <i className="fas fa-trash text-slate-600"></i>
-                                  </Button>
-                                </div>
-                              </div>
+                        <DndContext
+                          sensors={sensors}
+                          collisionDetection={closestCenter}
+                          onDragEnd={handleDragEnd}
+                        >
+                          <SortableContext
+                            items={customCharts.map(c => c.id)}
+                            strategy={verticalListSortingStrategy}
+                          >
+                            <div className="space-y-2">
+                              {customCharts.map((chart) => (
+                                <SortableChartItem
+                                  key={chart.id}
+                                  chart={chart}
+                                  onEdit={editChart}
+                                  onDelete={deleteChart}
+                                />
+                              ))}
                             </div>
-                          ))}
-                        </div>
+                          </SortableContext>
+                        </DndContext>
                       ) : (
                         <p className="text-sm text-slate-500 text-center py-4">
                           Nenhum gráfico personalizado criado ainda
