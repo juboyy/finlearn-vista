@@ -14,13 +14,22 @@ import { useRecommendations } from "@/hooks/useRecommendations";
 import { useNotifications } from "@/hooks/useNotifications";
 import { NotificationsPanel } from "@/components/NotificationsPanel";
 import { Skeleton } from "@/components/ui/skeleton";
+import { supabase } from "@/integrations/supabase/client";
 
 const Marketplace = () => {
   const navigate = useNavigate();
-  const mockUserId = "user-123"; // In production, get from auth context
-  const { recommendations, isLoading } = useRecommendations(mockUserId);
-  const { unreadCount } = useNotifications(mockUserId);
+  const [userId, setUserId] = useState<string | null>(null);
+  const { recommendations, isLoading } = useRecommendations(userId);
+  const { unreadCount } = useNotifications(userId);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
+  
+  useEffect(() => {
+    const getCurrentUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUserId(user?.id || null);
+    };
+    getCurrentUser();
+  }, []);
   
   return (
     <div className="flex h-screen overflow-hidden">
@@ -745,7 +754,7 @@ const Marketplace = () => {
       <NotificationsPanel 
         open={notificationsOpen}
         onOpenChange={setNotificationsOpen}
-        userId={mockUserId}
+        userId={userId}
       />
     </div>
   );
