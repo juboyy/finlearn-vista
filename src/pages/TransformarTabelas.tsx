@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Upload, FileText, Loader2, Download, ChartLine, Landmark, Bitcoin, GraduationCap, TrendingUp, CreditCard, Database, Settings, BarChart3, PieChart, LineChart, GripVertical } from "lucide-react";
+import { ArrowLeft, Upload, FileText, Loader2, Download, ChartLine, Landmark, Bitcoin, GraduationCap, TrendingUp, CreditCard, Database, Settings, BarChart3, PieChart, LineChart, GripVertical, Lightbulb, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import * as XLSX from "xlsx";
 import {
   BarChart as RechartsBarChart,
@@ -177,6 +179,14 @@ export default function TransformarTabelas() {
   const [customCharts, setCustomCharts] = useState<CustomChart[]>([]);
   const [showChartBuilder, setShowChartBuilder] = useState(false);
   const [currentChart, setCurrentChart] = useState<CustomChart | null>(null);
+  const [showExplanationPanel, setShowExplanationPanel] = useState(false);
+  const [explanation, setExplanation] = useState<{
+    summary: string;
+    representation: string;
+    attention_points: string[];
+    recommendations: string[];
+  } | null>(null);
+  const [isExplaining, setIsExplaining] = useState(false);
   const { toast } = useToast();
 
   const sensors = useSensors(
@@ -552,6 +562,60 @@ export default function TransformarTabelas() {
     );
   };
 
+  const handleExplainChart = async () => {
+    if (chartData.length === 0) {
+      toast({
+        title: "Nenhum dado para explicar",
+        description: "Faça upload de um arquivo primeiro.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsExplaining(true);
+    setShowExplanationPanel(true);
+    setExplanation(null);
+
+    try {
+      const { data, error } = await supabase.functions.invoke('explain-chart', {
+        body: {
+          chartData: chartData,
+          chartType: chartType,
+        }
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      setExplanation({
+        summary: data.summary,
+        representation: data.representation,
+        attention_points: data.attention_points,
+        recommendations: data.recommendations,
+      });
+
+      toast({
+        title: "Explicação gerada",
+        description: "A análise do gráfico foi criada com sucesso.",
+      });
+    } catch (error: any) {
+      console.error('Erro ao explicar gráfico:', error);
+      toast({
+        title: "Erro ao gerar explicação",
+        description: error.message || "Não foi possível gerar a explicação do gráfico.",
+        variant: "destructive",
+      });
+      setShowExplanationPanel(false);
+    } finally {
+      setIsExplaining(false);
+    }
+  };
+
   const renderChart = () => {
     if (chartData.length === 0 || dataKeys.length === 0) {
       return (
@@ -689,9 +753,21 @@ export default function TransformarTabelas() {
                     </div>
                     <Button
                       variant="outline"
-                      className="bg-[hsl(142,35%,65%)] hover:bg-[hsl(142,35%,55%)] text-slate-700 font-medium border-2 border-[hsl(142,35%,65%)]"
+                      onClick={handleExplainChart}
+                      disabled={isExplaining || chartData.length === 0}
+                      className="bg-[hsl(142,35%,65%)] hover:bg-[hsl(142,35%,55%)] text-slate-700 font-medium border-2 border-[hsl(142,35%,65%)] disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      Explicar Gráfico
+                      {isExplaining ? (
+                        <>
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                          Analisando...
+                        </>
+                      ) : (
+                        <>
+                          <Lightbulb className="h-4 w-4 mr-2" />
+                          Explicar Gráfico
+                        </>
+                      )}
                     </Button>
                   </div>
                   
@@ -1091,6 +1167,91 @@ export default function TransformarTabelas() {
           </div>
         </div>
       </main>
+
+      {/* Painel Lateral de Explicação */}
+      <Sheet open={showExplanationPanel} onOpenChange={setShowExplanationPanel}>
+        <SheetContent side="right" className="w-full sm:max-w-xl overflow-y-auto">
+          <SheetHeader className="mb-6">
+            <SheetTitle className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+              <Lightbulb className="h-6 w-6 text-[hsl(142,35%,65%)]" />
+              Explicação do Gráfico
+            </SheetTitle>
+          </SheetHeader>
+
+          {isExplaining ? (
+            <div className="flex flex-col items-center justify-center py-16">
+              <Loader2 className="h-16 w-16 text-[hsl(142,35%,65%)] animate-spin mb-4" />
+              <p className="text-slate-600 font-medium">Analisando dados...</p>
+              <p className="text-sm text-slate-500 mt-2">Gerando insights com IA</p>
+            </div>
+          ) : explanation ? (
+            <div className="space-y-6">
+              {/* Resumo */}
+              <div className="bg-[hsl(206,35%,95%)] border-2 border-[hsl(206,35%,75%)] rounded-xl p-6">
+                <h3 className="font-bold text-slate-800 mb-3 flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-[hsl(206,35%,75%)] flex items-center justify-center">
+                    <i className="fas fa-chart-line text-slate-700 text-sm"></i>
+                  </div>
+                  Resumo
+                </h3>
+                <p className="text-slate-700 leading-relaxed">{explanation.summary}</p>
+              </div>
+
+              {/* Representação */}
+              <div className="bg-[hsl(280,35%,95%)] border-2 border-[hsl(280,35%,75%)] rounded-xl p-6">
+                <h3 className="font-bold text-slate-800 mb-3 flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-[hsl(280,35%,75%)] flex items-center justify-center">
+                    <i className="fas fa-info-circle text-slate-700 text-sm"></i>
+                  </div>
+                  O que representa
+                </h3>
+                <p className="text-slate-700 leading-relaxed">{explanation.representation}</p>
+              </div>
+
+              {/* Pontos de Atenção */}
+              <div className="bg-[hsl(45,40%,95%)] border-2 border-[hsl(45,40%,75%)] rounded-xl p-6">
+                <h3 className="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-[hsl(45,40%,75%)] flex items-center justify-center">
+                    <i className="fas fa-exclamation-triangle text-slate-700 text-sm"></i>
+                  </div>
+                  Pontos de Atenção
+                </h3>
+                <ul className="space-y-3">
+                  {explanation.attention_points.map((point, index) => (
+                    <li key={index} className="flex gap-3">
+                      <span className="text-[hsl(45,40%,55%)] font-bold flex-shrink-0">{index + 1}.</span>
+                      <span className="text-slate-700">{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Recomendações */}
+              <div className="bg-[hsl(142,35%,95%)] border-2 border-[hsl(142,35%,75%)] rounded-xl p-6">
+                <h3 className="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-[hsl(142,35%,75%)] flex items-center justify-center">
+                    <i className="fas fa-lightbulb text-slate-700 text-sm"></i>
+                  </div>
+                  Recomendações
+                </h3>
+                <ul className="space-y-3">
+                  {explanation.recommendations.map((rec, index) => (
+                    <li key={index} className="flex gap-3">
+                      <span className="text-[hsl(142,35%,55%)] font-bold flex-shrink-0">{index + 1}.</span>
+                      <span className="text-slate-700">{rec}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center py-16 text-center">
+              <Lightbulb className="h-16 w-16 text-slate-300 mb-4" />
+              <p className="text-slate-500">Nenhuma explicação disponível</p>
+            </div>
+          )}
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }
