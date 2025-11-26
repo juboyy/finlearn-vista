@@ -66,6 +66,7 @@ import AgendarPublicacaoRevisao from "./pages/AgendarPublicacaoRevisao";
 import RecursosAdicionais from "./pages/RecursosAdicionais";
 import Analytics from "./pages/Analytics";
 import PerfilAnalytics from "./pages/PerfilAnalytics";
+import UserPreferencesAnalytics from "./pages/UserPreferencesAnalytics";
 import ConsumoAnalytics from "./pages/ConsumoAnalytics";
 import PerformanceSEO from "./pages/PerformanceSEO";
 import AgentesAnalytics from "./pages/AgentesAnalytics";
@@ -183,6 +184,7 @@ const App = () => {
             <Route path="/recursos-adicionais" element={<RecursosAdicionais />} />
             <Route path="/analytics" element={<Analytics />} />
             <Route path="/perfil-analytics" element={<PerfilAnalytics />} />
+            <Route path="/user-preferences-analytics" element={<UserPreferencesAnalytics />} />
             <Route path="/consumo-analytics" element={<ConsumoAnalytics />} />
           <Route path="/performance-seo" element={<PerformanceSEO />} />
           <Route path="/agentes-analytics" element={<AgentesAnalytics />} />

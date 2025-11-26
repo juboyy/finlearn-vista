@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { Bell, Shield, Monitor, Clock, Palette, Languages, Plus, Smartphone, Key, Fingerprint, Mail, Laptop, Tablet, LogOut, Calendar, CalendarDays, Sun, Moon, SunMoon, MoreVertical, Newspaper, Chrome, Download, Settings } from "lucide-react";
+import { Bell, Shield, Monitor, Clock, Palette, Languages, Plus, Smartphone, Key, Fingerprint, Mail, Laptop, Tablet, LogOut, Calendar, CalendarDays, Sun, Moon, SunMoon, MoreVertical, Newspaper, Chrome, Download, Settings, BarChart3 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
 import { useNavigate } from "react-router-dom";
@@ -591,14 +591,23 @@ export default function Configuracoes() {
               </section>
 
               <section ref={preferencesRef} data-section="preferencias" className="bg-white rounded-xl border border-slate-200 p-6 opacity-0">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 bg-pastel-pink rounded-lg flex items-center justify-center">
-                    <Settings className="text-slate-700" size={24} />
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-pastel-pink rounded-lg flex items-center justify-center">
+                      <Settings className="text-slate-700" size={24} />
+                    </div>
+                    <div>
+                      <h2 className="text-lg font-semibold text-slate-800">Preferências de Recomendação</h2>
+                      <p className="text-sm text-slate-500">Personalize suas recomendações de conteúdo</p>
+                    </div>
                   </div>
-                  <div>
-                    <h2 className="text-lg font-semibold text-slate-800">Preferências de Recomendação</h2>
-                    <p className="text-sm text-slate-500">Personalize suas recomendações de conteúdo</p>
-                  </div>
+                  <button
+                    onClick={() => navigate('/user-preferences-analytics')}
+                    className="px-4 py-2 bg-pastel-green text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2"
+                  >
+                    <BarChart3 size={18} />
+                    <span>Ver Analytics</span>
+                  </button>
                 </div>
 
                 <UserPreferencesForm />
