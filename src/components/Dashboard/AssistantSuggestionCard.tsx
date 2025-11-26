@@ -1,6 +1,7 @@
-import { Clock, Newspaper, Lightbulb, BookOpen, MoreVertical, Brain } from "lucide-react";
+import { Clock, Newspaper, Lightbulb, BookOpen, MoreVertical, Brain, User } from "lucide-react";
 import { AssistantSuggestion } from "@/hooks/useAssistantSuggestions";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Progress } from "@/components/ui/progress";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import auxiliarAvatar from "@/assets/auxiliar-do-dia-avatar.png";
@@ -79,7 +80,30 @@ export const AssistantSuggestionCard = ({ suggestion, onMarkAsRead }: AssistantS
               )}
             </div>
             <h3 className="text-sm font-semibold text-slate-800 mb-1">{suggestion.title}</h3>
-            <p className="text-sm text-slate-600">{suggestion.content}</p>
+            <p className="text-sm text-slate-600 mb-2">{suggestion.content}</p>
+            
+            {/* Show author info if metadata has it */}
+            {suggestion.metadata?.showAuthor && suggestion.metadata?.authorName && (
+              <div className="flex items-center gap-2 mt-2 px-3 py-2 bg-pastel-blue/20 rounded-lg">
+                <User size={14} className="text-slate-600" />
+                <span className="text-xs text-slate-700 font-medium">{suggestion.metadata.authorName}</span>
+              </div>
+            )}
+            
+            {/* Show progress bar if metadata has it */}
+            {suggestion.metadata?.showProgress && suggestion.metadata?.progressValue && (
+              <div className="mt-3 space-y-2">
+                <div className="flex justify-between text-xs">
+                  <span className="text-slate-600 font-medium">
+                    {suggestion.metadata.progressLabel || "Progresso"}
+                  </span>
+                  <span className="text-slate-700 font-semibold">
+                    {suggestion.metadata.progressValue}%
+                  </span>
+                </div>
+                <Progress value={suggestion.metadata.progressValue} className="h-2" />
+              </div>
+            )}
           </div>
           <div className="flex flex-col items-end gap-2">
             <button className="text-slate-400 hover:text-slate-600">
