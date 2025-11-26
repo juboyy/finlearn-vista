@@ -8,12 +8,16 @@ interface SlideCanvasEditorProps {
   initialData?: any;
   onUpdate: (canvasData: any) => void;
   onAddChart?: () => void;
+  slideText?: string;
+  slideImage?: string;
+  slideChart?: any;
 }
 
-export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart }: SlideCanvasEditorProps) => {
+export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText, slideImage, slideChart }: SlideCanvasEditorProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [fabricCanvas, setFabricCanvas] = useState<FabricCanvas | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isContentLoaded, setIsContentLoaded] = useState(false);
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -47,6 +51,74 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart }: SlideCa
       canvas.dispose();
     };
   }, []);
+
+  // Adicionar conteúdo gerado pela IA automaticamente ao canvas
+  useEffect(() => {
+    if (!fabricCanvas || isContentLoaded) return;
+
+    const addGeneratedContent = async () => {
+      // Limpar canvas antes de adicionar novo conteúdo
+      fabricCanvas.clear();
+      fabricCanvas.backgroundColor = "#ffffff";
+
+      let yPosition = 50;
+
+      // Adicionar texto gerado
+      if (slideText) {
+        const textBox = new Textbox(slideText, {
+          left: 50,
+          top: yPosition,
+          width: 500,
+          fontSize: 16,
+          fill: "#1e293b",
+          fontFamily: "Arial",
+        });
+        fabricCanvas.add(textBox);
+        yPosition += 200;
+      }
+
+      // Adicionar imagem gerada
+      if (slideImage) {
+        try {
+          const img = await FabricImage.fromURL(slideImage);
+          img.scaleToWidth(300);
+          img.set({
+            left: 50,
+            top: yPosition,
+          });
+          fabricCanvas.add(img);
+        } catch (error) {
+          console.error("Erro ao adicionar imagem ao canvas:", error);
+        }
+      }
+
+      // Adicionar gráfico (como imagem ou placeholder)
+      if (slideChart) {
+        const chartText = new Textbox(`Gráfico: ${slideChart.title || 'Sem título'}`, {
+          left: 550,
+          top: yPosition,
+          width: 400,
+          fontSize: 14,
+          fill: "#475569",
+          fontFamily: "Arial",
+          fontStyle: "italic",
+        });
+        fabricCanvas.add(chartText);
+      }
+
+      fabricCanvas.renderAll();
+      setIsContentLoaded(true);
+    };
+
+    if (slideText || slideImage || slideChart) {
+      addGeneratedContent();
+    }
+  }, [fabricCanvas, slideText, slideImage, slideChart, isContentLoaded]);
+
+  // Reset content loaded when slide changes
+  useEffect(() => {
+    setIsContentLoaded(false);
+  }, [slideText, slideImage, slideChart]);
 
   const handleAddText = () => {
     if (!fabricCanvas) return;

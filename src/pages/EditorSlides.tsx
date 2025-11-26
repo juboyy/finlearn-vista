@@ -1067,6 +1067,9 @@ Exemplo para PIX:
                     initialData={currentSlide?.canvasData}
                     onUpdate={(canvasData) => updateSlide("canvasData", canvasData)}
                     onAddChart={() => setShowChartDialog(true)}
+                    slideText={currentSlide?.content}
+                    slideImage={currentSlide?.imageUrl}
+                    slideChart={currentSlide?.chartData}
                   />
                 </div>
               </div>
