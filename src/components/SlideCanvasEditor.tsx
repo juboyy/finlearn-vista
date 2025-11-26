@@ -19,6 +19,31 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [saveStatus, setSaveStatus] = useState<"saved" | "saving" | "idle">("idle");
   const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const lastSaveRef = useRef<string>("");
+
+  // Função de salvamento manual
+  const handleManualSave = () => {
+    if (!fabricCanvas) return;
+    
+    const json = fabricCanvas.toJSON();
+    const jsonString = JSON.stringify(json);
+    
+    // Verificar se houve mudanças desde o último save
+    if (jsonString === lastSaveRef.current) {
+      toast.info("Nenhuma alteração para salvar");
+      return;
+    }
+    
+    setSaveStatus("saving");
+    onUpdate(json);
+    lastSaveRef.current = jsonString;
+    
+    setTimeout(() => {
+      setSaveStatus("saved");
+      toast.success("Slide salvo manualmente!");
+      setTimeout(() => setSaveStatus("idle"), 2000);
+    }, 200);
+  };
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -48,6 +73,8 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
       }
       
       const json = canvas.toJSON();
+      const jsonString = JSON.stringify(json);
+      lastSaveRef.current = jsonString;
       onUpdate(json);
       
       // Mostrar "salvo" após um breve delay
@@ -175,6 +202,19 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
 
     addGeneratedContent();
   }, [fabricCanvas, slideText, slideImage, slideChart, initialData]);
+
+  // Atalho Ctrl+S para salvamento manual
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        e.preventDefault();
+        handleManualSave();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [fabricCanvas]);
 
   // Adicionar atalhos de teclado para deletar
   useEffect(() => {
@@ -486,6 +526,7 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
           <li>Redimensione elementos arrastando os cantos</li>
           <li>Selecione um elemento e clique em "Excluir Selecionado" para removê-lo</li>
           <li>Use "Exportar PNG" para salvar o slide como imagem</li>
+          <li><strong>Pressione Ctrl+S (ou Cmd+S no Mac) para salvar manualmente</strong></li>
         </ul>
       </div>
     </div>
