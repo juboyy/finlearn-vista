@@ -65,7 +65,6 @@ export const StatCard = ({
               </Avatar>
               <div>
                 <p className="text-sm font-semibold text-foreground">{agentName}</p>
-                <p className="text-xs text-muted-foreground">Assistente IA</p>
               </div>
             </div>
           )}
