@@ -3,6 +3,14 @@ import { Canvas as FabricCanvas, FabricImage, Rect, Textbox, util, Line, Circle,
 import { Button } from "@/components/ui/button";
 import { ImageIcon, BarChart3, Type, Trash2, Download, Eye } from "lucide-react";
 import { toast } from "sonner";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface ChartData {
   type: "bar" | "line" | "pie" | "donut" | "area" | "scatter";
@@ -701,17 +709,22 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
     reader.readAsDataURL(file);
   };
 
-  const handleAddChart = async () => {
+  const handleAddChart = async (chartType: ChartData["type"]) => {
     if (!fabricCanvas) return;
 
-    // Escolher tipo aleatório para demonstração
-    const types: ChartData["type"][] = ["bar", "line", "area", "scatter", "pie", "donut"];
-    const randomType = types[Math.floor(Math.random() * types.length)];
+    const chartNames = {
+      bar: "de Barras",
+      line: "de Linhas",
+      area: "de Área",
+      scatter: "de Dispersão",
+      pie: "de Pizza",
+      donut: "Donut"
+    };
 
     // Dados de exemplo para o gráfico
     const chartData: ChartData = {
-      type: randomType,
-      title: `Gráfico ${randomType === "bar" ? "de Barras" : randomType === "line" ? "de Linhas" : randomType === "area" ? "de Área" : randomType === "scatter" ? "de Dispersão" : randomType === "pie" ? "de Pizza" : "Donut"}`,
+      type: chartType,
+      title: `Gráfico ${chartNames[chartType]}`,
       data: [
         { name: "A", value: 450, color: "hsl(206, 70%, 60%)" },
         { name: "B", value: 680, color: "hsl(226, 70%, 60%)" },
@@ -721,7 +734,7 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
     };
 
     renderNativeChart(chartData, 350, 40);
-    toast.success(`Gráfico ${randomType} adicionado ao canvas`);
+    toast.success(`Gráfico ${chartNames[chartType]} adicionado`);
   };
 
   const handleDeleteSelected = () => {
@@ -821,16 +834,81 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
         </Button>
 
         {onAddChart && (
-          <Button
-            type="button"
-            size="sm"
-            onClick={handleAddChart}
-            className="bg-[hsl(142,35%,75%)] hover:bg-[hsl(142,35%,65%)] text-slate-800"
-            title="Tipos: Barras, Linhas, Área, Dispersão, Pizza, Donut"
-          >
-            <BarChart3 className="h-4 w-4 mr-2" />
-            Adicionar Gráfico
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                type="button"
+                size="sm"
+                className="bg-[hsl(142,35%,75%)] hover:bg-[hsl(142,35%,65%)] text-slate-800"
+              >
+                <BarChart3 className="h-4 w-4 mr-2" />
+                Adicionar Gráfico
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56 bg-white dark:bg-slate-800 z-50">
+              <DropdownMenuLabel>Escolha o tipo de gráfico</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem 
+                onClick={() => handleAddChart("bar")}
+                className="cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700"
+              >
+                <BarChart3 className="mr-2 h-4 w-4" />
+                <span>Gráfico de Barras</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem 
+                onClick={() => handleAddChart("line")}
+                className="cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700"
+              >
+                <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+                </svg>
+                <span>Gráfico de Linhas</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem 
+                onClick={() => handleAddChart("area")}
+                className="cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700"
+              >
+                <svg className="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M3 13h2l2-4 3 6 3-6 3 4 2-2v6H3v-4z" opacity="0.5"/>
+                  <path d="M3 13l2-4 2 4 3-6 3 6 3-4 2 2" fill="none" stroke="currentColor" strokeWidth="2"/>
+                </svg>
+                <span>Gráfico de Área</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem 
+                onClick={() => handleAddChart("scatter")}
+                className="cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700"
+              >
+                <svg className="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                  <circle cx="6" cy="8" r="2"/>
+                  <circle cx="10" cy="14" r="2"/>
+                  <circle cx="14" cy="10" r="2"/>
+                  <circle cx="18" cy="16" r="2"/>
+                </svg>
+                <span>Gráfico de Dispersão</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem 
+                onClick={() => handleAddChart("pie")}
+                className="cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700"
+              >
+                <svg className="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2v10l8.66 5A10 10 0 1 1 12 2z" opacity="0.5"/>
+                  <path d="M12 2a10 10 0 0 1 8.66 15L12 12V2z"/>
+                </svg>
+                <span>Gráfico de Pizza</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem 
+                onClick={() => handleAddChart("donut")}
+                className="cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700"
+              >
+                <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="9" strokeWidth="2"/>
+                  <circle cx="12" cy="12" r="5" strokeWidth="2"/>
+                  <path d="M12 3v4M12 17v4" strokeWidth="2"/>
+                </svg>
+                <span>Gráfico Donut</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         )}
 
         <div className="flex-1" />
