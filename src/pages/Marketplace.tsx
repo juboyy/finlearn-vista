@@ -134,6 +134,193 @@ const Marketplace = () => {
             </div>
           </section>
 
+          {/* Recomendadas para o seu perfil */}
+          <section className="mb-8">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h2 className="text-xl font-semibold text-slate-800">Recomendadas para o seu perfil</h2>
+                <p className="text-sm text-slate-500 mt-1">Conteúdos selecionados com base nos seus interesses e aprendizado</p>
+              </div>
+              <button className="text-sm text-slate-600 hover:text-slate-800 font-medium">
+                Ver todas
+              </button>
+            </div>
+            
+            <div className="grid grid-cols-4 gap-5">
+              {/* Recommended Card 1 */}
+              <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-xl transition group cursor-pointer" onClick={() => navigate('/ebook/1')}>
+                <div className="relative">
+                  <div className="h-40 overflow-hidden bg-pastel-blue">
+                    <img
+                      className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                      src="https://storage.googleapis.com/uxpilot-auth.appspot.com/de72874cc5-bcb1610580017fd3cfe5.png"
+                      alt="Risk Management"
+                    />
+                  </div>
+                  <span className="absolute top-3 left-3 px-3 py-1 bg-pastel-purple/90 text-slate-700 text-xs font-medium rounded-full">
+                    eBook
+                  </span>
+                  <div className="absolute top-3 right-3 w-8 h-8 bg-pastel-green/90 backdrop-blur-sm rounded-full flex items-center justify-center">
+                    <i className="fas fa-check text-slate-700 text-xs"></i>
+                  </div>
+                </div>
+                <div className="p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <img
+                      src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg"
+                      className="w-5 h-5 rounded-full object-cover"
+                      alt="Author"
+                    />
+                    <span className="text-xs text-slate-500">Ana Silva</span>
+                  </div>
+                  <h3 className="font-semibold text-slate-800 mb-2 text-sm line-clamp-2 h-10">
+                    Gestão de Riscos Financeiros
+                  </h3>
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="flex items-center gap-1 text-xs">
+                      <i className="fas fa-star text-yellow-500"></i>
+                      <span className="font-medium text-slate-700">4.9</span>
+                    </div>
+                    <span className="text-slate-300">•</span>
+                    <span className="px-2 py-0.5 bg-pastel-blue/30 text-slate-700 text-xs rounded-full">95% Match</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-lg font-bold text-slate-800">R$ 89</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Recommended Card 2 */}
+              <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-xl transition group cursor-pointer" onClick={() => navigate('/curso/1')}>
+                <div className="relative">
+                  <div className="h-40 overflow-hidden bg-pastel-green">
+                    <img
+                      className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                      src="https://storage.googleapis.com/uxpilot-auth.appspot.com/aa9b09b858-0994d5433f7f20c4839e.png"
+                      alt="Análise Técnica"
+                    />
+                  </div>
+                  <span className="absolute top-3 left-3 px-3 py-1 bg-pastel-yellow/90 text-slate-700 text-xs font-medium rounded-full">
+                    Curso
+                  </span>
+                  <div className="absolute top-3 right-3 w-8 h-8 bg-pastel-green/90 backdrop-blur-sm rounded-full flex items-center justify-center">
+                    <i className="fas fa-check text-slate-700 text-xs"></i>
+                  </div>
+                </div>
+                <div className="p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <img
+                      src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg"
+                      className="w-5 h-5 rounded-full object-cover"
+                      alt="Author"
+                    />
+                    <span className="text-xs text-slate-500">Pedro Santos</span>
+                  </div>
+                  <h3 className="font-semibold text-slate-800 mb-2 text-sm line-clamp-2 h-10">
+                    Análise Técnica Avançada
+                  </h3>
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="flex items-center gap-1 text-xs">
+                      <i className="fas fa-star text-yellow-500"></i>
+                      <span className="font-medium text-slate-700">4.8</span>
+                    </div>
+                    <span className="text-slate-300">•</span>
+                    <span className="px-2 py-0.5 bg-pastel-green/30 text-slate-700 text-xs rounded-full">92% Match</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-lg font-bold text-slate-800">R$ 197</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Recommended Card 3 */}
+              <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-xl transition group cursor-pointer" onClick={() => navigate('/ebook/2')}>
+                <div className="relative">
+                  <div className="h-40 overflow-hidden bg-pastel-pink">
+                    <img
+                      className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                      src="https://storage.googleapis.com/uxpilot-auth.appspot.com/de72874cc5-bcb1610580017fd3cfe5.png"
+                      alt="Compliance"
+                    />
+                  </div>
+                  <span className="absolute top-3 left-3 px-3 py-1 bg-pastel-purple/90 text-slate-700 text-xs font-medium rounded-full">
+                    eBook
+                  </span>
+                  <div className="absolute top-3 right-3 w-8 h-8 bg-pastel-green/90 backdrop-blur-sm rounded-full flex items-center justify-center">
+                    <i className="fas fa-check text-slate-700 text-xs"></i>
+                  </div>
+                </div>
+                <div className="p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <img
+                      src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg"
+                      className="w-5 h-5 rounded-full object-cover"
+                      alt="Author"
+                    />
+                    <span className="text-xs text-slate-500">Julia Ferreira</span>
+                  </div>
+                  <h3 className="font-semibold text-slate-800 mb-2 text-sm line-clamp-2 h-10">
+                    Compliance e Regulação Bancária
+                  </h3>
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="flex items-center gap-1 text-xs">
+                      <i className="fas fa-star text-yellow-500"></i>
+                      <span className="font-medium text-slate-700">4.7</span>
+                    </div>
+                    <span className="text-slate-300">•</span>
+                    <span className="px-2 py-0.5 bg-pastel-pink/30 text-slate-700 text-xs rounded-full">90% Match</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-lg font-bold text-slate-800">R$ 69</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Recommended Card 4 */}
+              <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-xl transition group cursor-pointer" onClick={() => navigate('/curso/2')}>
+                <div className="relative">
+                  <div className="h-40 overflow-hidden bg-pastel-yellow">
+                    <img
+                      className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                      src="https://storage.googleapis.com/uxpilot-auth.appspot.com/aa9b09b858-0994d5433f7f20c4839e.png"
+                      alt="Open Finance"
+                    />
+                  </div>
+                  <span className="absolute top-3 left-3 px-3 py-1 bg-pastel-yellow/90 text-slate-700 text-xs font-medium rounded-full">
+                    Curso
+                  </span>
+                  <div className="absolute top-3 right-3 w-8 h-8 bg-pastel-green/90 backdrop-blur-sm rounded-full flex items-center justify-center">
+                    <i className="fas fa-check text-slate-700 text-xs"></i>
+                  </div>
+                </div>
+                <div className="p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <img
+                      src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg"
+                      className="w-5 h-5 rounded-full object-cover"
+                      alt="Author"
+                    />
+                    <span className="text-xs text-slate-500">Roberto Lima</span>
+                  </div>
+                  <h3 className="font-semibold text-slate-800 mb-2 text-sm line-clamp-2 h-10">
+                    Open Finance na Prática
+                  </h3>
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="flex items-center gap-1 text-xs">
+                      <i className="fas fa-star text-yellow-500"></i>
+                      <span className="font-medium text-slate-700">4.9</span>
+                    </div>
+                    <span className="text-slate-300">•</span>
+                    <span className="px-2 py-0.5 bg-pastel-yellow/30 text-slate-700 text-xs rounded-full">88% Match</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-lg font-bold text-slate-800">R$ 149</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
           {/* Category Tabs */}
           <section className="mb-8">
             <div className="flex items-center gap-3 overflow-x-auto pb-2">
