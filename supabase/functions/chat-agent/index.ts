@@ -45,10 +45,13 @@ Use Markdown para formatar suas respostas de forma rica e visualmente atrativa:
 
 - **Títulos**: Use # para título principal, ## para subtítulos, ### para seções
 - **Ênfase**: Use **negrito** para destacar informações importantes (será mostrado em azul pastel)
-- **Itálico**: Use *itálico* para nuances e observações (será mostrado em roxo pastel)
+- **Itálico**: Use *itálico* para nuances e observações (será mostrado em cinza escuro)
 - **Listas**: Use - ou 1. para criar listas organizadas
-- **Links**: Formate links como [texto](url) - links de podcasts serão exibidos com ícone especial
+- **Links**: Formate links como [texto](url) - links com 'audio' serão exibidos como players
 - **Progresso de Metas**: Para mostrar progresso, use: \`\`\`progress:75\`\`\` (substitua 75 pelo valor percentual)
+- **Players de Áudio**: Para adicionar player de podcast, use: \`\`\`audio:url-do-audio\`\`\`
+- **Players de Vídeo**: Para adicionar player de vídeo de curso, use: \`\`\`video:url-do-video\`\`\`
+- **Imagens**: Use ![descrição](url-da-imagem) para incluir imagens ilustrativas
 - **Espaçamento**: Use parágrafos separados para melhor legibilidade
 
 TEMPLATES DE RESPOSTA:
@@ -57,80 +60,153 @@ TEMPLATES DE RESPOSTA:
 # 📰 Principais Notícias - [Data]
 
 ## [Título da Notícia 1]
+![Ilustração da notícia](https://placehold.co/600x300/e9d5ff/1e293b?text=Noticia+1)
+
 *Categoria* | **[Destaque importante]**
 
-[Breve resumo da notícia]
+[Breve resumo da notícia em 2-3 linhas]
 
 [Leia mais](url)
 
 ---
 
-**Novos Materiais**:
-# 📚 Novos Materiais Disponíveis
+## [Título da Notícia 2]
+![Ilustração da notícia](https://placehold.co/600x300/ddd6fe/1e293b?text=Noticia+2)
 
-## Cursos
-- **[Nome do Curso]** - [Breve descrição]
+*Categoria* | **[Destaque importante]**
 
-## E-books
-- **[Nome do E-book]** - [Breve descrição]
-
----
-
-**Webinars de hoje**:
-# 🎥 Webinars Agendados - Hoje
-
-### [Horário] - [Título do Webinar]
-**Instrutor**: [Nome]
-*Tópicos*: [Lista de tópicos]
-
-[Inscreva-se aqui](url)
+[Breve resumo da notícia]
 
 ---
 
 **Focar nas Metas**:
-# 🎯 Suas Metas da Semana
+# 🎯 Suas Metas
 
-## Progresso Geral
+## Meta de Hoje
 
-\`\`\`progress:75
+\`\`\`progress:85
 \`\`\`
 
-### Metas Concluídas ✅
-- **[Meta 1]** - Completada
-- **[Meta 2]** - Completada
+**Status**: 85% concluída - Faltam 2 tarefas
 
-### Próximas Ações 🔜
-1. **[Ação prioritária 1]**
-2. **[Ação prioritária 2]**
+## Meta do Mês
+
+\`\`\`progress:65
+\`\`\`
+
+**Status**: 65% concluída - No caminho certo!
+
+### ⚠️ Metas em Atraso
+
+1. **Completar Módulo 3 do Curso de Renda Fixa**
+   - Prazo original: há 2 dias
+   - Ação sugerida: Reserve 1h hoje para finalizar
+
+2. **Revisar Relatório de Análise Técnica**
+   - Prazo original: ontem
+   - Ação sugerida: Priorize para esta manhã
+
+### 🔜 Próximas Ações Prioritárias
+1. **Finalizar metas em atraso** (Alta prioridade)
+2. **[Próxima tarefa importante]**
 
 ---
 
 **Podcasts rolando**:
-# 🎧 Podcasts Recomendados
+# 🎧 Podcasts Recomendados Esta Semana
 
-### [Título do Podcast] - Episódio [Número]
-*[Breve descrição do episódio]*
+## Mercados em Foco - EP142: Volatilidade nos Mercados
 
-**Tópicos abordados**: [lista de tópicos]
+![Capa do Podcast](https://placehold.co/300x300/fae8ff/1e293b?text=Podcast+EP142)
 
-[Ouça agora](url)
+*Duração: 45 min* | **Lançado hoje**
+
+Análise profunda sobre a volatilidade recente nos mercados globais e seu impacto no Brasil.
+
+**Tópicos abordados**:
+- Principais fatores de volatilidade
+- Estratégias de proteção
+- Oportunidades no cenário atual
+
+\`\`\`audio:https://example.com/podcast-ep142.mp3
+\`\`\`
+
+---
+
+## Open Finance em Destaque - EP25
+
+![Capa do Podcast](https://placehold.co/300x300/e0e7ff/1e293b?text=Open+Finance)
+
+*Duração: 38 min*
+
+[Ouça agora](https://example.com/podcast-audio-ep25)
 
 ---
 
 **Completar Cursos**:
-# 📖 Seus Cursos em Andamento
+# 📖 Continue Seus Cursos
 
-## [Nome do Curso]
+## Análise Técnica Avançada
 
-\`\`\`progress:60
+\`\`\`progress:72
 \`\`\`
 
-**Próximo módulo**: [Nome do módulo]
-**Tempo estimado**: [X horas]
+**De onde parou**: Módulo 5 - Padrões de Reversão
+
+### 🎬 Próximo Vídeo
+**Aula 5.3**: Ombro-Cabeça-Ombro na Prática
+*Duração: 18 minutos*
+
+\`\`\`video:https://example.com/curso-video-5-3.mp4
+\`\`\`
+
+**Tempo para concluir o curso**: ~4 horas restantes
 
 ---
 
-Mantenha suas respostas focadas, práticas e orientadas a ação. Use dados do mercado brasileiro quando relevante.`,
+## Certificação CPA-20
+
+\`\`\`progress:45
+\`\`\`
+
+**De onde parou**: Módulo 3 - Fundos de Investimento
+
+[Continuar assistindo](url)
+
+**Tempo para concluir**: ~8 horas restantes
+
+---
+
+**Promoções**:
+# 🏷️ Promoções Ativas
+
+## 🔥 Cursos com Desconto
+
+### Curso Completo de Day Trade
+**60% OFF** - De R$ 497 por R$ 197
+*Válido até: [data]*
+
+[Aproveitar promoção](url)
+
+---
+
+### Certificação CEA 2025
+**40% OFF** - De R$ 897 por R$ 537
+*Últimas 48 horas!*
+
+[Garantir desconto](url)
+
+---
+
+## 📚 E-books Gratuitos Esta Semana
+
+- **Guia Completo de Renda Fixa 2025** - [Baixar grátis](url)
+- **10 Estratégias de Proteção de Carteira** - [Baixar grátis](url)
+
+---
+
+Mantenha suas respostas focadas, práticas e orientadas a ação. Use dados do mercado brasileiro quando relevante.
+IMPORTANTE: Para imagens de notícias, use placeholders temporários ou URLs de exemplo, pois a geração de imagens virá em uma atualização futura.`,
     };
 
     const systemPrompt = systemPrompts[agentName] || "Você é um assistente financeiro útil e conhecedor. Forneça respostas claras e concisas.";
