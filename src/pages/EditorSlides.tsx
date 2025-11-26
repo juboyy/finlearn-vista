@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -275,18 +275,21 @@ Retorne JSON:
     toast.success("Slide removido");
   };
 
-  const updateSlide = (field: keyof Slide, value: any) => {
+  const updateSlide = useCallback((field: keyof Slide, value: any) => {
     setSlides(prevSlides => {
       const newSlides = [...prevSlides];
-      if (newSlides[currentSlideIndex]) {
-        newSlides[currentSlideIndex] = {
-          ...newSlides[currentSlideIndex],
+      const currentIndex = currentSlideIndex;
+      
+      if (newSlides[currentIndex]) {
+        newSlides[currentIndex] = {
+          ...newSlides[currentIndex],
           [field]: value,
         };
+        console.log(`Slide ${newSlides[currentIndex].id} - Campo ${field} atualizado`);
       }
       return newSlides;
     });
-  };
+  }, [currentSlideIndex]);
 
   const clearAllSlides = () => {
     const newSlide: Slide = {
