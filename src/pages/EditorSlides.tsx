@@ -135,65 +135,63 @@ export default function EditorSlides() {
       // Primeiro, gerar a estrutura dos slides
       const { data, error } = await supabase.functions.invoke("generate-slides-content", {
         body: {
-          prompt: `Crie uma apresentação completa e detalhada sobre: ${projectInfo.title}. 
-Descrição: ${projectInfo.description}. 
-Público-alvo: ${projectInfo.targetAudience}.
-Contexto: Mercado financeiro brasileiro.${agentContext}
+          prompt: `VOCÊ DEVE GERAR EXATAMENTE 10 SLIDES. ESTA É UMA EXIGÊNCIA ABSOLUTA.
 
-INSTRUÇÕES CRÍTICAS:
-- OBRIGATÓRIO: Crie NO MÍNIMO 10 slides SEPARADOS
-- Cada slide deve abordar UM aspecto específico do tema
-- DIVIDA o conteúdo em múltiplos slides - NÃO coloque tudo em um único slide
-- Cada slide deve ter um título claro e conteúdo COMPLETO e DETALHADO
-- O conteúdo de cada slide deve ser estruturado em tópicos ou parágrafos
-- Inclua dados, estatísticas e exemplos quando relevante
-- Adicione insights e análises específicas do mercado financeiro
-- TODOS os slides devem ter uma imagem E um gráfico únicos e específicos
+Tema: ${projectInfo.title}
+Descrição: ${projectInfo.description}
+Público-alvo: ${projectInfo.targetAudience}
+Contexto: Mercado financeiro brasileiro${agentContext}
 
-IMPORTANTE: Você DEVE criar EXATAMENTE 10 ou MAIS slides. Não crie menos de 10 slides.
+ANTES DE RETORNAR, CONTE OS SLIDES E CERTIFIQUE-SE QUE SÃO EXATAMENTE 10.
 
-Estrutura OBRIGATÓRIA (mínimo 10 slides):
-1. Slide de introdução/contexto
-2. Slide sobre fundamentos - parte 1
-3. Slide sobre fundamentos - parte 2
-4. Slide com análise detalhada - parte 1
-5. Slide com análise detalhada - parte 2
-6. Slide com análise detalhada - parte 3
-7. Slide com exemplos práticos - parte 1
-8. Slide com exemplos práticos - parte 2
-9. Slide de tendências/futuro
-10. Slide de conclusão/próximos passos
-(Você pode adicionar mais slides além desses 10)
+ESTRUTURA OBRIGATÓRIA - CRIE TODOS ESTES 10 SLIDES:
 
-Retorne um JSON com NO MÍNIMO 10 slides neste formato exato:
+1. SLIDE 1 - Introdução: Apresente o tema, contexto e relevância para o mercado
+2. SLIDE 2 - Fundamentos Parte 1: Conceitos básicos e definições principais  
+3. SLIDE 3 - Fundamentos Parte 2: Características e aspectos técnicos
+4. SLIDE 4 - Dados de Mercado: Estatísticas, números e informações atuais
+5. SLIDE 5 - Análise de Tendências: Movimentos e comportamentos recentes
+6. SLIDE 6 - Projeções: Perspectivas e expectativas futuras
+7. SLIDE 7 - Casos Práticos: Exemplos reais e aplicações concretas
+8. SLIDE 8 - Mercado Brasileiro: Especificidades e particularidades nacionais
+9. SLIDE 9 - Inovações: Tecnologias e mudanças emergentes
+10. SLIDE 10 - Conclusão: Síntese, takeaways e próximos passos
+
+Retorne EXATAMENTE este JSON com 10 slides:
 {
   "slides": [
     {
       "title": "Título do Slide 1",
-      "content": "Conteúdo detalhado em texto...",
-      "imagePrompt": "Descrição específica e detalhada da imagem para este slide no estilo sketch/desenho com cores pastel claras",
-      "chartType": "bar" ou "line" ou "pie",
-      "chartPrompt": "Descrição específica dos dados para o gráfico deste slide"
+      "content": "Conteúdo completo e detalhado do slide 1...",
+      "imagePrompt": "Prompt para imagem única do slide 1 (estilo sketch/desenho, cores pastel claras)",
+      "chartType": "bar",
+      "chartPrompt": "Dados específicos para o gráfico do slide 1"
     },
     {
       "title": "Título do Slide 2",
-      "content": "Conteúdo detalhado em texto...",
-      "imagePrompt": "Descrição específica e detalhada da imagem para este slide no estilo sketch/desenho com cores pastel claras",
-      "chartType": "bar" ou "line" ou "pie",
-      "chartPrompt": "Descrição específica dos dados para o gráfico deste slide"
+      "content": "Conteúdo completo e detalhado do slide 2...",
+      "imagePrompt": "Prompt para imagem única do slide 2 (estilo sketch/desenho, cores pastel claras)",
+      "chartType": "line",
+      "chartPrompt": "Dados específicos para o gráfico do slide 2"
+    },
+    ... CONTINUE ATÉ O SLIDE 10 ...
+    {
+      "title": "Título do Slide 10",
+      "content": "Conteúdo completo e detalhado do slide 10...",
+      "imagePrompt": "Prompt para imagem única do slide 10 (estilo sketch/desenho, cores pastel claras)",
+      "chartType": "pie",
+      "chartPrompt": "Dados específicos para o gráfico do slide 10"
     }
-    ... até completar NO MÍNIMO 10 slides
   ]
 }
 
-REGRAS OBRIGATÓRIAS:
-- Gere NO MÍNIMO 10 slides (pode ser mais, mas NUNCA menos de 10)
-- TODOS os slides DEVEM ter "title", "content", "imagePrompt", "chartType" e "chartPrompt"
-- Cada "imagePrompt" deve ser único e no estilo sketch/desenho com cores pastel claras
-- Cada "chartPrompt" deve conter dados diferentes e relevantes
-- O "content" de cada slide deve ter texto substantivo e detalhado
+VALIDAÇÃO FINAL:
+- Antes de retornar, CONTE quantos slides você criou
+- Se tiver menos de 10, ADICIONE mais slides
+- TODOS os 10 slides devem ter: title, content, imagePrompt, chartType, chartPrompt
+- Cada slide deve ser ÚNICO com conteúdo DIFERENTE dos outros
 
-CRITICAL: Se você gerar menos de 10 slides, sua resposta será rejeitada. GERE NO MÍNIMO 10 SLIDES.`,
+ATENÇÃO: Se você retornar menos de 10 slides, sua resposta será REJEITADA e você terá que tentar novamente.`,
         },
       });
 
@@ -203,10 +201,19 @@ CRITICAL: Se você gerar menos de 10 slides, sua resposta será rejeitada. GERE 
         let cleanedText = data.generatedText.trim();
         cleanedText = cleanedText.replace(/^```json\n?/, '').replace(/\n?```$/, '');
         
+        console.log("Resposta da IA (texto limpo):", cleanedText.substring(0, 500));
+        
         const slidesData = JSON.parse(cleanedText);
         
-        if (!slidesData.slides || slidesData.slides.length < 10) {
-          throw new Error("A IA deve gerar no mínimo 10 slides. Tente novamente.");
+        console.log("Número de slides gerados:", slidesData.slides?.length || 0);
+        
+        if (!slidesData.slides || !Array.isArray(slidesData.slides)) {
+          throw new Error("Formato de resposta inválido da IA");
+        }
+        
+        if (slidesData.slides.length < 10) {
+          console.error("Apenas", slidesData.slides.length, "slides foram gerados");
+          throw new Error(`A IA gerou apenas ${slidesData.slides.length} slides. São necessários no mínimo 10 slides. Por favor, tente novamente.`);
         }
 
         toast.info(`Gerando ${slidesData.slides.length} slides com imagens e gráficos únicos...`);
@@ -280,8 +287,9 @@ Retorne APENAS um JSON válido neste formato exato:
           })
         );
         
+        console.log("Total de slides processados:", generatedSlides.length);
         setSlides(generatedSlides);
-        toast.success(`${generatedSlides.length} slides gerados com imagens e gráficos únicos!`);
+        toast.success(`✅ ${generatedSlides.length} slides gerados com sucesso!`);
       }
     } catch (error) {
       console.error("Error generating slides:", error);
