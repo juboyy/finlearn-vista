@@ -7,11 +7,15 @@ interface EventCardProps {
   title: string;
   time: string;
   bgColor: string;
+  onClick?: () => void;
 }
 
-export const EventCard = ({ day, month, title, time, bgColor }: EventCardProps) => {
+export const EventCard = ({ day, month, title, time, bgColor, onClick }: EventCardProps) => {
   return (
-    <div className={cn("p-4 rounded-lg", bgColor)}>
+    <div 
+      className={cn("p-4 rounded-lg cursor-pointer hover:opacity-80 transition-opacity", bgColor)}
+      onClick={onClick}
+    >
       <div className="flex items-start gap-3 mb-2">
         <div className="w-10 h-10 bg-card rounded-lg flex flex-col items-center justify-center flex-shrink-0">
           <span className="text-xs text-muted-foreground font-medium">{month}</span>
