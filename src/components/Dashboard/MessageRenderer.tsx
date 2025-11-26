@@ -3,7 +3,8 @@ import remarkGfm from "remark-gfm";
 import { Progress } from "@/components/ui/progress";
 import { ChatImageRenderer } from "@/components/Dashboard/ChatImageRenderer";
 import { ChatChartRenderer } from "@/components/Dashboard/ChatChartRenderer";
-import { Headphones, ExternalLink } from "lucide-react";
+import { Headphones, ExternalLink, Download } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface MessageRendererProps {
   content: string;
@@ -48,13 +49,11 @@ export const MessageRenderer = ({ content }: MessageRendererProps) => {
   };
 
   const parts = parseContentWithImages(content);
-  console.log("🎨 Parsed content into", parts.length, "parts");
 
   return (
     <>
       {parts.map((part, index) => {
         if (part.type === 'image') {
-          console.log("🖼️ Rendering image part:", part.content);
           return (
             <ChatImageRenderer 
               key={index} 
@@ -118,22 +117,42 @@ export const MessageRenderer = ({ content }: MessageRendererProps) => {
                 
                 if (className === 'language-audio') {
                   return (
-                    <div className="my-3 bg-muted rounded-lg p-4 border-2 border-pastel-purple/30">
+                    <div className="relative group my-3 bg-muted rounded-lg p-4 border-2 border-pastel-purple/30">
                       <audio controls className="w-full">
                         <source src={content} type="audio/mpeg" />
                         Seu navegador não suporta o elemento de áudio.
                       </audio>
+                      <a
+                        href={content}
+                        download
+                        className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <Button size="sm" variant="secondary" className="bg-background/80 backdrop-blur-sm hover:bg-background">
+                          <Download size={16} className="mr-1" />
+                          Baixar
+                        </Button>
+                      </a>
                     </div>
                   );
                 }
                 
                 if (className === 'language-video') {
                   return (
-                    <div className="my-3 bg-muted rounded-lg overflow-hidden border-2 border-pastel-purple/30">
+                    <div className="relative group my-3 bg-muted rounded-lg overflow-hidden border-2 border-pastel-purple/30">
                       <video controls className="w-full">
                         <source src={content} type="video/mp4" />
                         Seu navegador não suporta o elemento de vídeo.
                       </video>
+                      <a
+                        href={content}
+                        download
+                        className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity z-10"
+                      >
+                        <Button size="sm" variant="secondary" className="bg-background/80 backdrop-blur-sm hover:bg-background">
+                          <Download size={16} className="mr-1" />
+                          Baixar
+                        </Button>
+                      </a>
                     </div>
                   );
                 }

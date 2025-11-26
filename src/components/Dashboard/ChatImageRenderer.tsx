@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import { Loader2 } from "lucide-react";
+import { Loader2, Download } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 interface ChatImageRendererProps {
   src: string;
@@ -11,6 +13,7 @@ export const ChatImageRenderer = ({ src, alt }: ChatImageRendererProps) => {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
     console.log("ChatImageRenderer: src received:", src);
@@ -75,11 +78,49 @@ export const ChatImageRenderer = ({ src, alt }: ChatImageRendererProps) => {
 
   if (!imageUrl) return null;
 
+  const handleDownload = async () => {
+    try {
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `imagem-gerada-${Date.now()}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      
+      toast({
+        title: "Download iniciado",
+        description: "A imagem está sendo baixada.",
+      });
+    } catch (error) {
+      console.error("Error downloading image:", error);
+      toast({
+        title: "Erro ao baixar",
+        description: "Não foi possível baixar a imagem.",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
-    <img 
-      src={imageUrl} 
-      alt={alt} 
-      className="rounded-lg my-3 max-w-full h-auto border-2 border-pastel-purple/30 shadow-sm" 
-    />
+    <div className="relative group my-3 inline-block">
+      <img 
+        src={imageUrl} 
+        alt={alt} 
+        className="rounded-lg max-w-full h-auto border-2 border-pastel-purple/30 shadow-sm" 
+      />
+      <Button
+        onClick={handleDownload}
+        size="sm"
+        className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-background/80 backdrop-blur-sm hover:bg-background"
+        variant="secondary"
+      >
+        <Download size={16} className="mr-1" />
+        Baixar
+      </Button>
+    </div>
   );
 };
