@@ -79,27 +79,34 @@ const recommendedPodcasts: Podcast[] = [
 ];
 
 const PodcastCard = ({ podcast }: { podcast: Podcast }) => (
-  <div className="flex items-center gap-3 p-3 rounded-lg border border-border bg-card hover:bg-accent/10 transition-colors">
-    <img
-      src={podcast.image}
-      alt={podcast.title}
-      className="w-16 h-16 rounded-md object-cover"
-    />
-    <div className="flex-1 min-w-0">
-      <h4 className="font-medium text-sm text-foreground truncate">
-        {podcast.title}
-      </h4>
-      <p className="text-xs text-muted-foreground truncate">{podcast.topic}</p>
-    </div>
-    <div className="flex flex-col gap-2 shrink-0">
-      <Button size="icon" variant="ghost" className="h-12 w-12 hover:bg-primary/10">
-        <Play className="h-5 w-5" />
-      </Button>
-      <div className="w-12 flex flex-col items-center gap-1">
-        <div className="w-full h-1 bg-slate-800 rounded-full overflow-hidden">
-          <div className="h-full bg-primary w-[60%]"></div>
+  <div className="group relative flex flex-col gap-3 p-4 rounded-xl border-2 border-border bg-gradient-to-br from-card to-card/50 hover:shadow-lg hover:border-pastel-purple/50 transition-all duration-300 hover:scale-[1.02]">
+    <div className="flex items-start gap-4">
+      <div className="relative shrink-0">
+        <img
+          src={podcast.image}
+          alt={podcast.title}
+          className="w-20 h-20 rounded-lg object-cover shadow-md ring-2 ring-pastel-purple/20 group-hover:ring-pastel-pink/40 transition-all"
+        />
+        <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-pastel-purple/90 rounded-full flex items-center justify-center shadow-md backdrop-blur-sm">
+          <Play className="h-3 w-3 text-white fill-white" />
         </div>
-        <span className="text-[10px] text-muted-foreground">24:30</span>
+      </div>
+      <div className="flex-1 min-w-0">
+        <h4 className="font-semibold text-base text-foreground mb-1 line-clamp-2 group-hover:text-pastel-purple transition-colors">
+          {podcast.title}
+        </h4>
+        <p className="text-sm text-muted-foreground mb-3">{podcast.topic}</p>
+        
+        {/* Progress bar */}
+        <div className="space-y-1.5">
+          <div className="flex items-center justify-between text-xs text-muted-foreground">
+            <span>Em reprodução</span>
+            <span className="font-medium">24:30</span>
+          </div>
+          <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
+            <div className="h-full bg-gradient-to-r from-pastel-purple to-pastel-pink w-[60%] rounded-full transition-all duration-500"></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -108,17 +115,23 @@ const PodcastCard = ({ podcast }: { podcast: Podcast }) => (
 export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right" className="w-[400px] sm:w-[500px] overflow-y-auto">
-        <SheetHeader>
-          <SheetTitle>Podcasts</SheetTitle>
+      <SheetContent side="right" className="w-[400px] sm:w-[540px] overflow-y-auto bg-gradient-to-b from-background to-muted/20">
+        <SheetHeader className="pb-6 border-b border-border/50">
+          <SheetTitle className="text-2xl font-bold bg-gradient-to-r from-pastel-purple to-pastel-pink bg-clip-text text-transparent">
+            Podcasts
+          </SheetTitle>
+          <p className="text-sm text-muted-foreground mt-1">Seu conteúdo de áudio favorito</p>
         </SheetHeader>
 
-        <div className="mt-6 space-y-6">
+        <div className="mt-8 space-y-8">
           {/* Rolando agora */}
-          <div className="px-12">
-            <h3 className="text-sm font-semibold text-foreground mb-3">
-              Rolando agora
-            </h3>
+          <div className="px-12 animate-fade-in">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-2 h-2 bg-pastel-pink rounded-full animate-pulse"></div>
+              <h3 className="text-base font-bold text-foreground">
+                Rolando agora
+              </h3>
+            </div>
             <Carousel className="w-full">
               <CarouselContent>
                 {nowPlayingPodcasts.map((podcast) => (
@@ -133,10 +146,13 @@ export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
           </div>
 
           {/* Continuar de onde parou */}
-          <div className="px-12">
-            <h3 className="text-sm font-semibold text-foreground mb-3">
-              Continuar de onde parou
-            </h3>
+          <div className="px-12 animate-fade-in" style={{ animationDelay: "0.1s" }}>
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-2 h-2 bg-pastel-blue rounded-full"></div>
+              <h3 className="text-base font-bold text-foreground">
+                Continuar de onde parou
+              </h3>
+            </div>
             <Carousel className="w-full">
               <CarouselContent>
                 {continuePodcasts.map((podcast) => (
@@ -151,10 +167,13 @@ export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
           </div>
 
           {/* Recomendadas para você */}
-          <div className="px-12">
-            <h3 className="text-sm font-semibold text-foreground mb-3">
-              Recomendadas para você
-            </h3>
+          <div className="px-12 animate-fade-in" style={{ animationDelay: "0.2s" }}>
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-2 h-2 bg-pastel-green rounded-full"></div>
+              <h3 className="text-base font-bold text-foreground">
+                Recomendadas para você
+              </h3>
+            </div>
             <Carousel className="w-full">
               <CarouselContent>
                 {recommendedPodcasts.map((podcast) => (
