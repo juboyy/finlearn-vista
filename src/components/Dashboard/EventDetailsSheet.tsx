@@ -65,46 +65,46 @@ export const EventDetailsSheet = ({ open, onOpenChange, event }: EventDetailsShe
 
         <div className="mt-6 space-y-6">
           {/* Event Info */}
-          <div className="grid grid-cols-1 gap-4">
-            <div className="bg-[hsl(206,50%,90%)] rounded-xl border-2 border-[hsl(206,50%,75%)] p-5 hover:border-[hsl(206,50%,65%)] transition-all">
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 bg-[hsl(206,60%,75%)] rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Calendar className="text-white" size={24} />
+          <div className="grid grid-cols-1 gap-3">
+            <div className="bg-[hsl(206,50%,90%)] rounded-xl border-2 border-[hsl(206,50%,75%)] p-3 hover:border-[hsl(206,50%,65%)] transition-all">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-[hsl(206,60%,75%)] rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Calendar className="text-white" size={18} />
                 </div>
                 <div className="flex-1">
-                  <p className="text-xs font-medium text-muted-foreground mb-1">Data do Evento</p>
-                  <p className="text-base font-bold text-foreground">{event.date}</p>
+                  <p className="text-xs font-medium text-muted-foreground mb-0.5">Data do Evento</p>
+                  <p className="text-sm font-bold text-foreground">{event.date}</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-[hsl(340,50%,90%)] rounded-xl border-2 border-[hsl(340,50%,75%)] p-5 hover:border-[hsl(340,50%,65%)] transition-all">
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 bg-[hsl(340,60%,75%)] rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Clock className="text-white" size={24} />
+            <div className="bg-[hsl(340,50%,90%)] rounded-xl border-2 border-[hsl(340,50%,75%)] p-3 hover:border-[hsl(340,50%,65%)] transition-all">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-[hsl(340,60%,75%)] rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Clock className="text-white" size={18} />
                 </div>
                 <div className="flex-1">
-                  <p className="text-xs font-medium text-muted-foreground mb-1">Horário e Duração</p>
-                  <p className="text-base font-bold text-foreground">{event.time}</p>
-                  <p className="text-sm font-medium text-muted-foreground">{event.duration}</p>
+                  <p className="text-xs font-medium text-muted-foreground mb-0.5">Horário e Duração</p>
+                  <p className="text-sm font-bold text-foreground">{event.time}</p>
+                  <p className="text-xs font-medium text-muted-foreground">{event.duration}</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-[hsl(142,50%,90%)] rounded-xl border-2 border-[hsl(142,50%,75%)] p-5 hover:border-[hsl(142,50%,65%)] transition-all">
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 bg-[hsl(142,60%,70%)] rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Users className="text-white" size={24} />
+            <div className="bg-[hsl(142,50%,90%)] rounded-xl border-2 border-[hsl(142,50%,75%)] p-3 hover:border-[hsl(142,50%,65%)] transition-all">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-[hsl(142,60%,70%)] rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Users className="text-white" size={18} />
                 </div>
                 <div className="flex-1">
-                  <p className="text-xs font-medium text-muted-foreground mb-1">Participantes</p>
-                  <p className="text-base font-bold text-foreground">
+                  <p className="text-xs font-medium text-muted-foreground mb-0.5">Participantes</p>
+                  <p className="text-sm font-bold text-foreground">
                     {event.confirmedAttendees} confirmados
-                    {event.capacity && <span className="text-sm font-normal text-muted-foreground ml-1">de {event.capacity} vagas</span>}
+                    {event.capacity && <span className="text-xs font-normal text-muted-foreground ml-1">de {event.capacity} vagas</span>}
                   </p>
                   {event.capacity && (
-                    <div className="mt-2">
-                      <div className="h-2 bg-muted rounded-full overflow-hidden">
+                    <div className="mt-1.5">
+                      <div className="h-1.5 bg-muted rounded-full overflow-hidden">
                         <div 
                           className="h-full bg-[hsl(142,60%,70%)] transition-all duration-500"
                           style={{ width: `${(event.confirmedAttendees / event.capacity) * 100}%` }}
