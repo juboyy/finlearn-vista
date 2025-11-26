@@ -149,6 +149,7 @@ export default function TransformarTabelas() {
   const [dataKeys, setDataKeys] = useState<string[]>([]);
   const [selectedColumns, setSelectedColumns] = useState<string[]>([]);
   const [labelColumn, setLabelColumn] = useState<string>("");
+  const [columnsPerChart, setColumnsPerChart] = useState<number>(2);
   const { toast } = useToast();
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -445,11 +446,11 @@ export default function TransformarTabelas() {
 
     // Se houver mais de 3 colunas, dividir em múltiplos gráficos
     const chartsToRender = [];
-    for (let i = 0; i < selectedColumns.length; i += 2) {
-      const columnsForChart = selectedColumns.slice(i, i + 2);
+    for (let i = 0; i < selectedColumns.length; i += columnsPerChart) {
+      const columnsForChart = selectedColumns.slice(i, i + columnsPerChart);
       chartsToRender.push(
         <div key={i} className="mb-8">
-          {renderSingleChart(columnsForChart, `Gráfico ${Math.floor(i / 2) + 1}`)}
+          {renderSingleChart(columnsForChart, `Gráfico ${Math.floor(i / columnsPerChart) + 1}`)}
         </div>
       );
     }
@@ -633,6 +634,28 @@ export default function TransformarTabelas() {
                       </Label>
                     </div>
                   </RadioGroup>
+                  
+                  {selectedColumns.length > 3 && (
+                    <div className="mt-6 pt-6 border-t-2 border-slate-200">
+                      <Label className="text-sm font-semibold text-slate-700 mb-2 block">
+                        Colunas por Gráfico
+                      </Label>
+                      <select
+                        value={columnsPerChart}
+                        onChange={(e) => setColumnsPerChart(Number(e.target.value))}
+                        className="w-full p-2 border-2 border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(142,35%,75%)]"
+                      >
+                        <option value={1}>1 coluna</option>
+                        <option value={2}>2 colunas</option>
+                        <option value={3}>3 colunas</option>
+                        <option value={4}>4 colunas</option>
+                        <option value={5}>5 colunas</option>
+                      </select>
+                      <p className="text-xs text-slate-500 mt-2">
+                        Serão criados {Math.ceil(selectedColumns.length / columnsPerChart)} gráfico(s)
+                      </p>
+                    </div>
+                  )}
                 </div>
 
 {dataKeys.length > 0 && (
