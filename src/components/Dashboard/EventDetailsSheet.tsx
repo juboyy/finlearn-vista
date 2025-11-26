@@ -66,9 +66,9 @@ export const EventDetailsSheet = ({ open, onOpenChange, event }: EventDetailsShe
         <div className="mt-6 space-y-6">
           {/* Event Info */}
           <div className="grid grid-cols-1 gap-4">
-            <div className="bg-gradient-to-br from-[hsl(206,50%,90%)] via-card to-card rounded-2xl border-2 border-[hsl(206,50%,75%)] p-5 shadow-lg hover:shadow-xl transition-all">
+            <div className="bg-[hsl(206,50%,90%)] rounded-xl border-2 border-[hsl(206,50%,75%)] p-5 hover:border-[hsl(206,50%,65%)] transition-all">
               <div className="flex items-center gap-4">
-                <div className="w-14 h-14 bg-gradient-to-br from-[hsl(206,60%,70%)] to-[hsl(206,60%,85%)] rounded-xl flex items-center justify-center shadow-md flex-shrink-0">
+                <div className="w-14 h-14 bg-[hsl(206,60%,75%)] rounded-xl flex items-center justify-center flex-shrink-0">
                   <Calendar className="text-white" size={24} />
                 </div>
                 <div className="flex-1">
@@ -78,9 +78,9 @@ export const EventDetailsSheet = ({ open, onOpenChange, event }: EventDetailsShe
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-[hsl(340,50%,90%)] via-card to-card rounded-2xl border-2 border-[hsl(340,50%,75%)] p-5 shadow-lg hover:shadow-xl transition-all">
+            <div className="bg-[hsl(340,50%,90%)] rounded-xl border-2 border-[hsl(340,50%,75%)] p-5 hover:border-[hsl(340,50%,65%)] transition-all">
               <div className="flex items-center gap-4">
-                <div className="w-14 h-14 bg-gradient-to-br from-[hsl(340,60%,70%)] to-[hsl(340,60%,85%)] rounded-xl flex items-center justify-center shadow-md flex-shrink-0">
+                <div className="w-14 h-14 bg-[hsl(340,60%,75%)] rounded-xl flex items-center justify-center flex-shrink-0">
                   <Clock className="text-white" size={24} />
                 </div>
                 <div className="flex-1">
@@ -91,9 +91,9 @@ export const EventDetailsSheet = ({ open, onOpenChange, event }: EventDetailsShe
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-[hsl(142,50%,90%)] via-card to-card rounded-2xl border-2 border-[hsl(142,50%,75%)] p-5 shadow-lg hover:shadow-xl transition-all">
+            <div className="bg-[hsl(142,50%,90%)] rounded-xl border-2 border-[hsl(142,50%,75%)] p-5 hover:border-[hsl(142,50%,65%)] transition-all">
               <div className="flex items-center gap-4">
-                <div className="w-14 h-14 bg-gradient-to-br from-[hsl(142,60%,65%)] to-[hsl(142,60%,80%)] rounded-xl flex items-center justify-center shadow-md flex-shrink-0">
+                <div className="w-14 h-14 bg-[hsl(142,60%,70%)] rounded-xl flex items-center justify-center flex-shrink-0">
                   <Users className="text-white" size={24} />
                 </div>
                 <div className="flex-1">
@@ -106,7 +106,7 @@ export const EventDetailsSheet = ({ open, onOpenChange, event }: EventDetailsShe
                     <div className="mt-2">
                       <div className="h-2 bg-muted rounded-full overflow-hidden">
                         <div 
-                          className="h-full bg-gradient-to-r from-[hsl(142,60%,65%)] to-[hsl(142,60%,75%)] transition-all duration-500"
+                          className="h-full bg-[hsl(142,60%,70%)] transition-all duration-500"
                           style={{ width: `${(event.confirmedAttendees / event.capacity) * 100}%` }}
                         />
                       </div>
