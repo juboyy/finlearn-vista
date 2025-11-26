@@ -37,7 +37,7 @@ export const StatCard = ({
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
-        <div className="bg-card rounded-xl p-6 border border-border hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+        <div className="bg-card rounded-xl p-6 border border-border hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer min-h-[180px] flex flex-col justify-between">
           <div className="flex items-center justify-between mb-4">
             <div className={cn("w-12 h-12 rounded-lg flex items-center justify-center transition-transform hover:scale-110 duration-300", bgColor)}>
               <Icon className="text-foreground" size={24} />
@@ -55,7 +55,7 @@ export const StatCard = ({
           <p className="text-sm text-muted-foreground">{label}</p>
         </div>
       </HoverCardTrigger>
-      <HoverCardContent className="w-[500px] p-0 z-50 bg-card" side="top" align="center">
+      <HoverCardContent className="w-[500px] p-0 z-[100] bg-card shadow-xl" side="top" align="center">
         <div className="p-4">
           {agentImage && agentName && (
             <div className="flex items-center gap-3 pb-2 border-b border-border mb-3">
