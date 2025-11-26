@@ -284,7 +284,7 @@ Retorne APENAS um JSON válido neste formato exato:
             }
 
             const generatedSlide: Slide = {
-              id: `${index + 1}`,
+              id: `slide-${Date.now()}-${index}`,
               title: slide.title,
               content: slide.content,
               imageUrl,
@@ -295,9 +295,18 @@ Retorne APENAS um JSON válido neste formato exato:
           }
         
         console.log("Total de slides processados:", generatedSlides.length);
-        setSlides(generatedSlides);
+        console.log("Slides gerados:", generatedSlides.map(s => s.id));
+        
+        // Filtrar slides inválidos antes de salvar
+        const validSlides = generatedSlides.filter(s => s && s.id && s.title);
+        
+        if (validSlides.length === 0) {
+          throw new Error("Nenhum slide válido foi gerado");
+        }
+        
+        setSlides(validSlides);
         setGenerationProgress({ current: 0, total: 0 });
-        toast.success(`✅ ${generatedSlides.length} slides gerados com sucesso!`);
+        toast.success(`✅ ${validSlides.length} slides gerados com sucesso!`);
       }
     } catch (error) {
       console.error("Error generating slides:", error);
@@ -488,7 +497,12 @@ Exemplo para PIX:
   };
 
   const clearAllSlides = () => {
-    setSlides([{ id: "1", title: "Slide 1", content: "" }]);
+    const newSlide: Slide = {
+      id: `slide-${Date.now()}`,
+      title: "Slide 1",
+      content: ""
+    };
+    setSlides([newSlide]);
     setCurrentSlideIndex(0);
     setShowClearDialog(false);
     toast.success("Todos os slides foram removidos");
@@ -499,10 +513,18 @@ Exemplo para PIX:
 
     if (over && active.id !== over.id) {
       setSlides((items) => {
-        const oldIndex = items.findIndex((item) => item.id === active.id);
-        const newIndex = items.findIndex((item) => item.id === over.id);
+        // Filtrar slides válidos
+        const validItems = items.filter(item => item && item.id);
         
-        const newSlides = arrayMove(items, oldIndex, newIndex);
+        const oldIndex = validItems.findIndex((item) => item.id === active.id);
+        const newIndex = validItems.findIndex((item) => item.id === over.id);
+        
+        if (oldIndex === -1 || newIndex === -1) {
+          console.error("Índice inválido ao reordenar slides");
+          return items;
+        }
+        
+        const newSlides = arrayMove(validItems, oldIndex, newIndex);
         
         // Atualizar o índice atual se o slide selecionado foi movido
         if (currentSlideIndex === oldIndex) {
@@ -1009,11 +1031,11 @@ Exemplo para PIX:
             onDragEnd={handleDragEnd}
           >
             <SortableContext
-              items={slides.map((s) => s.id)}
+              items={slides.filter(s => s && s.id).map((s) => s.id)}
               strategy={verticalListSortingStrategy}
             >
               <div className="space-y-2">
-                {slides.map((slide, index) => (
+                {slides.filter(s => s && s.id).map((slide, index) => (
                   <SortableSlideItem
                     key={slide.id}
                     slide={slide}
