@@ -2,7 +2,6 @@ import { useState } from "react";
 import { X } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
-import { useAssistantSuggestions } from "@/hooks/useAssistantSuggestions";
 import { AssistantSuggestionCard } from "@/components/Dashboard/AssistantSuggestionCard";
 import {
   Sheet,
@@ -16,17 +15,103 @@ interface InsightsSuggestionsProps {
   onOpenChange: (open: boolean) => void;
 }
 
+// Mock data - insights do Auxiliar do dia
+const mockInsights = [
+  {
+    id: "1",
+    user_id: "mock-user",
+    title: "Nova tendência em Open Banking",
+    content: "O setor de pagamentos digitais está crescendo 45% ao ano. Considere explorar este tema nos seus próximos conteúdos.",
+    suggestion_type: "insights" as const,
+    priority: "high" as const,
+    is_read: false,
+    metadata: {},
+    created_at: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+    updated_at: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: "2",
+    user_id: "mock-user",
+    title: "Oportunidade: Curso de DeFi",
+    content: "Você já completou 80% do curso 'Fundamentos de Finanças Descentralizadas'. Finalize para obter sua certificação!",
+    suggestion_type: "learning" as const,
+    priority: "medium" as const,
+    is_read: false,
+    metadata: {},
+    created_at: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString(),
+    updated_at: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: "3",
+    user_id: "mock-user",
+    title: "Bacen divulga nova regulamentação PIX",
+    content: "O Banco Central anunciou novas regras para o PIX que entram em vigor em 30 dias. Veja o resumo completo no artigo destacado.",
+    suggestion_type: "news" as const,
+    priority: "high" as const,
+    is_read: false,
+    metadata: {},
+    created_at: new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString(),
+    updated_at: new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: "4",
+    user_id: "mock-user",
+    title: "Lembrete: Webinar hoje às 15h",
+    content: "Não perca o webinar 'Estratégias de Investimento em Renda Fixa' com Ricardo Silva. Começa em 3 horas.",
+    suggestion_type: "reminders" as const,
+    priority: "high" as const,
+    is_read: false,
+    metadata: {},
+    created_at: new Date(Date.now() - 1 * 60 * 60 * 1000).toISOString(),
+    updated_at: new Date(Date.now() - 1 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: "5",
+    user_id: "mock-user",
+    title: "Meta de estudos atingida!",
+    content: "Parabéns! Você completou sua meta semanal de 12 horas de estudo. Continue assim!",
+    suggestion_type: "insights" as const,
+    priority: "low" as const,
+    is_read: true,
+    metadata: {},
+    created_at: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+    updated_at: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: "6",
+    user_id: "mock-user",
+    title: "Artigo em alta: Análise Técnica Avançada",
+    content: "O artigo sobre padrões candlestick que você salvou está entre os mais lidos da semana. Ótima escolha!",
+    suggestion_type: "insights" as const,
+    priority: "low" as const,
+    is_read: true,
+    metadata: {},
+    created_at: new Date(Date.now() - 36 * 60 * 60 * 1000).toISOString(),
+    updated_at: new Date(Date.now() - 36 * 60 * 60 * 1000).toISOString(),
+  },
+];
+
 export const InsightsSuggestions = ({ open, onOpenChange }: InsightsSuggestionsProps) => {
   const [activeTab, setActiveTab] = useState("todas");
-  const { suggestions, loading, unreadCount, markAsRead, markAllAsRead } = useAssistantSuggestions();
+  const [insights, setInsights] = useState(mockInsights);
 
-  const filteredSuggestions = activeTab === "nao-lidas" 
-    ? suggestions.filter(s => !s.is_read)
+  const unreadCount = insights.filter(i => !i.is_read).length;
+
+  const filteredInsights = activeTab === "nao-lidas" 
+    ? insights.filter(s => !s.is_read)
     : activeTab === "insights"
-    ? suggestions.filter(s => s.suggestion_type === "insights")
+    ? insights.filter(s => s.suggestion_type === "insights")
     : activeTab === "lembretes"
-    ? suggestions.filter(s => s.suggestion_type === "reminders")
-    : suggestions;
+    ? insights.filter(s => s.suggestion_type === "reminders")
+    : insights;
+
+  const handleMarkAsRead = (id: string) => {
+    setInsights(prev => prev.map(i => i.id === id ? { ...i, is_read: true } : i));
+  };
+
+  const handleMarkAllAsRead = () => {
+    setInsights(prev => prev.map(i => ({ ...i, is_read: true })));
+  };
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -40,7 +125,7 @@ export const InsightsSuggestions = ({ open, onOpenChange }: InsightsSuggestionsP
               <Button 
                 variant="ghost" 
                 size="sm"
-                onClick={markAllAsRead}
+                onClick={handleMarkAllAsRead}
                 className="text-sm text-pastel-blue hover:text-pastel-purple"
               >
                 Marcar todas como lidas
@@ -86,17 +171,13 @@ export const InsightsSuggestions = ({ open, onOpenChange }: InsightsSuggestionsP
         </SheetHeader>
 
         <ScrollArea className="h-[calc(100vh-180px)] px-6 py-4">
-          {loading ? (
-            <div className="text-center py-12 text-muted-foreground">
-              Carregando insights...
-            </div>
-          ) : filteredSuggestions.length > 0 ? (
+          {filteredInsights.length > 0 ? (
             <div className="space-y-4">
-              {filteredSuggestions.map((suggestion) => (
+              {filteredInsights.map((suggestion) => (
                 <AssistantSuggestionCard
                   key={suggestion.id}
                   suggestion={suggestion}
-                  onMarkAsRead={markAsRead}
+                  onMarkAsRead={handleMarkAsRead}
                 />
               ))}
             </div>
