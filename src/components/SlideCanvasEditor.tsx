@@ -21,28 +21,42 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
   const [saveStatus, setSaveStatus] = useState<"saved" | "saving" | "idle">("idle");
   const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const lastSaveRef = useRef<string>("");
-  const contentLoadedRef = useRef(false);
-  const currentSlideIdRef = useRef<string>("");
+  const previousSlideIdRef = useRef<string>("");
+  const isInitializedRef = useRef(false);
 
-  // Detectar mudança de slide e recarregar canvas
+  // Detectar mudança de slide e recarregar canvas corretamente
   useEffect(() => {
     if (!fabricCanvas || !slideId) return;
     
-    // Se mudou de slide
-    if (currentSlideIdRef.current !== slideId) {
-      currentSlideIdRef.current = slideId;
-      contentLoadedRef.current = false;
+    // Mudança de slide detectada
+    const slideChanged = previousSlideIdRef.current !== slideId;
+    
+    if (slideChanged) {
+      console.log(`Trocando de slide: ${previousSlideIdRef.current} -> ${slideId}`);
+      previousSlideIdRef.current = slideId;
+      isInitializedRef.current = false;
       
       // Limpar canvas
-      fabricCanvas.clear();
-      fabricCanvas.backgroundColor = "#ffffff";
-      
-      // Carregar dados salvos se existirem
-      if (initialData) {
-        fabricCanvas.loadFromJSON(initialData, () => {
-          fabricCanvas.renderAll();
-          contentLoadedRef.current = true;
-        });
+      try {
+        if (fabricCanvas.getContext()) {
+          fabricCanvas.clear();
+          fabricCanvas.backgroundColor = "#ffffff";
+          
+          // Carregar dados salvos se existirem
+          if (initialData && Object.keys(initialData).length > 0) {
+            console.log(`Carregando dados salvos para slide ${slideId}`);
+            fabricCanvas.loadFromJSON(initialData, () => {
+              fabricCanvas.renderAll();
+              isInitializedRef.current = true;
+            });
+          } else {
+            console.log(`Slide ${slideId} vazio - pronto para edição`);
+            isInitializedRef.current = true;
+            fabricCanvas.renderAll();
+          }
+        }
+      } catch (error) {
+        console.error("Erro ao trocar slide:", error);
       }
     }
   }, [fabricCanvas, slideId, initialData]);
@@ -81,13 +95,17 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
     });
 
     setFabricCanvas(canvas);
+    console.log("Canvas inicializado");
 
     // Load initial data if provided (dados salvos previamente)
-    if (initialData) {
+    if (initialData && Object.keys(initialData).length > 0) {
+      console.log("Carregando dados iniciais no canvas");
       canvas.loadFromJSON(initialData, () => {
         canvas.renderAll();
-        contentLoadedRef.current = true;
+        isInitializedRef.current = true;
       });
+    } else {
+      isInitializedRef.current = true;
     }
 
     // Setup autosave
@@ -120,36 +138,35 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
       if (saveTimeoutRef.current) {
         clearTimeout(saveTimeoutRef.current);
       }
-      contentLoadedRef.current = false;
+      isInitializedRef.current = false;
+      previousSlideIdRef.current = "";
       canvas.dispose();
     };
   }, []);
 
-  // Adicionar conteúdo gerado pela IA automaticamente ao canvas (apenas se não houver dados salvos)
+  // Adicionar conteúdo gerado pela IA apenas para slides novos que têm conteúdo gerado
   useEffect(() => {
-    if (!fabricCanvas) return;
+    if (!fabricCanvas || !isInitializedRef.current) return;
     
-    // Se já carregou conteúdo (ou dados salvos), não adicionar novamente
-    if (contentLoadedRef.current) return;
-    
-    // Se já existe initialData salvo, não sobrescrever com conteúdo gerado
-    if (initialData) return;
+    // Se já tem dados salvos no canvas, não sobrescrever
+    const hasCanvasData = initialData && Object.keys(initialData).length > 0;
+    if (hasCanvasData) {
+      console.log("Slide já tem dados salvos, não adicionar conteúdo gerado");
+      return;
+    }
     
     // Se não há conteúdo gerado pela IA, não fazer nada
-    if (!slideText && !slideImage && !slideChart) return;
+    if (!slideText && !slideImage && !slideChart) {
+      console.log("Sem conteúdo gerado pela IA para adicionar");
+      return;
+    }
 
+    console.log("Adicionando conteúdo gerado pela IA ao slide");
     const addGeneratedContent = async () => {
       try {
-        // Verificar se o canvas está pronto antes de limpar
+        // Verificar se o canvas está pronto
         if (!fabricCanvas.getContext()) return;
         
-        // Marcar que estamos carregando conteúdo
-        contentLoadedRef.current = true;
-        
-        // Limpar canvas antes de adicionar novo conteúdo
-        fabricCanvas.clear();
-        fabricCanvas.backgroundColor = "#ffffff";
-
         let yPosition = 50;
 
       // Adicionar texto gerado
@@ -238,7 +255,7 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
     };
 
     addGeneratedContent();
-  }, [fabricCanvas, slideText, slideImage, slideChart, initialData]);
+  }, [fabricCanvas, isInitializedRef.current, slideText, slideImage, slideChart, initialData]);
 
   // Atalho Ctrl+S para salvamento manual
   useEffect(() => {

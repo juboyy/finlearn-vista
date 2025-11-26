@@ -310,12 +310,15 @@ Retorne APENAS um JSON válido neste formato exato:
 
   const addSlide = () => {
     const newSlide: Slide = {
-      id: `${slides.length + 1}`,
+      id: `slide-${Date.now()}`, // ID único baseado em timestamp
       title: `Slide ${slides.length + 1}`,
       content: "",
     };
-    setSlides([...slides, newSlide]);
-    setCurrentSlideIndex(slides.length);
+    console.log("Adicionando novo slide:", newSlide);
+    const newSlides = [...slides, newSlide];
+    setSlides(newSlides);
+    setCurrentSlideIndex(newSlides.length - 1);
+    toast.success("Novo slide adicionado");
   };
 
   const deleteSlide = (id: string) => {
@@ -331,12 +334,15 @@ Retorne APENAS um JSON válido neste formato exato:
   };
 
   const updateSlide = (field: keyof Slide, value: any) => {
-    const newSlides = [...slides];
-    newSlides[currentSlideIndex] = {
-      ...newSlides[currentSlideIndex],
-      [field]: value,
-    };
-    setSlides(newSlides);
+    console.log(`Atualizando slide ${currentSlideIndex}, campo: ${field}`);
+    setSlides(prevSlides => {
+      const newSlides = [...prevSlides];
+      newSlides[currentSlideIndex] = {
+        ...newSlides[currentSlideIndex],
+        [field]: value,
+      };
+      return newSlides;
+    });
   };
 
   const generateImage = async () => {
