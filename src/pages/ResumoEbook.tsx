@@ -178,7 +178,7 @@ export default function ResumoEbook() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <button 
-                  onClick={() => navigate(`/novo-ebook-etapa-3?productId=${productId}`)}
+                  onClick={() => navigate(`/novo-ebook/etapa-3?productId=${productId}`)}
                   className="p-2 text-muted-foreground hover:bg-accent rounded-lg transition"
                 >
                   <ChevronLeft className="w-5 h-5" />
@@ -189,7 +189,7 @@ export default function ResumoEbook() {
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <Button variant="outline" onClick={() => navigate(`/novo-ebook-etapa-3?productId=${productId}`)}>
+                <Button variant="outline" onClick={() => navigate(`/novo-ebook/etapa-3?productId=${productId}`)}>
                   Voltar para Edição
                 </Button>
                 <Button onClick={handlePublish}>
