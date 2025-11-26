@@ -15,3 +15,6 @@ verify_jwt = false
 [functions.generate-slides-content]
 verify_jwt = false
 
+[functions.resumir-contrato]
+verify_jwt = false
+
