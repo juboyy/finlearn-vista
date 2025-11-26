@@ -160,7 +160,8 @@ export default function NovoEbook() {
       if (error) throw error;
       
       toast.success("Etapa 1 concluída!");
-      // Navigate to step 2 (to be created)
+      // Navigate to step 2
+      navigate(`/novo-ebook/etapa-2?productId=${data.id}`);
     } catch (error) {
       console.error('Error saving:', error);
       toast.error("Erro ao salvar");
