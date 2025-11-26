@@ -11,7 +11,7 @@ serve(async (req) => {
   }
 
   try {
-    const { fileName, fileContent, summaryType, agent } = await req.json();
+    const { fileName, fileContent, summaryType, agent, specificAgent } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
 
     if (!LOVABLE_API_KEY) {
@@ -29,13 +29,17 @@ serve(async (req) => {
     };
 
     // Definir personalidade do agente
-    const agentPersonalities = {
+    const agentPersonalities: Record<string, string> = {
+      analise: "Você é um especialista em análise de contratos com foco em identificar riscos e oportunidades. Destaque métricas, dados financeiros e implicações estratégicas.",
       juridico: "Você é um especialista jurídico com foco em análise legal de contratos. Destaque aspectos legais, conformidade e riscos jurídicos.",
       compliance: "Você é um especialista em compliance e regulamentação. Foque em conformidade regulatória, requisitos legais e riscos de não conformidade.",
       estrategia: "Você é um analista estratégico de negócios. Analise os termos contratuais sob perspectiva estratégica, identificando oportunidades e riscos para o negócio."
     };
 
-    const systemPrompt = `${agentPersonalities[agent as keyof typeof agentPersonalities]}
+    // Personalidade adicional se um agente específico foi selecionado
+    const specificAgentContext = specificAgent ? `\n\nVocê está atuando como: ${specificAgent}. Adapte sua análise com base nesta especialidade específica.` : "";
+
+    const systemPrompt = `${agentPersonalities[agent as keyof typeof agentPersonalities]}${specificAgentContext}
 
 ${summaryPrompts[summaryType as keyof typeof summaryPrompts]}
 
