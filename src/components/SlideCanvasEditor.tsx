@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Canvas as FabricCanvas, FabricImage, Rect, Textbox, util, Line, Circle, Group, Path, Polygon } from "fabric";
 import { Button } from "@/components/ui/button";
-import { ImageIcon, BarChart3, Type, Trash2, Download, Eye, Columns3 } from "lucide-react";
+import { ImageIcon, BarChart3, Type, Trash2, Download, Eye, Columns3, Presentation } from "lucide-react";
 import { toast } from "sonner";
 import {
   Tooltip,
@@ -438,12 +438,6 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
   const handleViewSlide = () => {
     if (!fabricCanvas) return;
     
-    // Se onViewSlide foi fornecido, chama ele para abrir o modal de preview
-    if (onViewSlide) {
-      onViewSlide();
-      return;
-    }
-    
     const objects = fabricCanvas.getObjects();
     
     if (objects.length === 0) {
@@ -471,6 +465,12 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
     if (otherCount > 0) message += `, ${otherCount} outro(s)`;
     
     toast.success(message);
+  };
+
+  const handlePreviewPresentation = () => {
+    if (onViewSlide) {
+      onViewSlide();
+    }
   };
 
   useEffect(() => {
@@ -1022,6 +1022,26 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
             </TooltipTrigger>
             <TooltipContent>
               <p>Adicionar Coluna</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
+        <div className="w-px h-6 bg-slate-300" />
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                type="button"
+                size="icon"
+                onClick={handlePreviewPresentation}
+                className="bg-[#F5C6E3] hover:bg-[#E0B0CF] text-slate-700 border-none w-10 h-10"
+              >
+                <Presentation className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Preview da Apresentação</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
