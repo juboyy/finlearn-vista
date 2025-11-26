@@ -104,8 +104,8 @@ export default function NovoEbookEtapa2() {
     }
 
     await handleSaveDraft();
-    // Navigate to step 3 (to be created)
     toast.success("Avançando para Etapa 3!");
+    navigate(`/novo-ebook/etapa-3?productId=${productId}`);
   };
 
   return (
