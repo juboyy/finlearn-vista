@@ -13,33 +13,41 @@ export const ChatImageRenderer = ({ src, alt }: ChatImageRendererProps) => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
+    console.log("ChatImageRenderer: src received:", src);
     // Check if this is an IMAGE_GENERATE: directive
     if (src.startsWith("IMAGE_GENERATE:")) {
       const prompt = src.replace("IMAGE_GENERATE:", "").trim();
+      console.log("ChatImageRenderer: Generating image with prompt:", prompt);
       generateImage(prompt);
     } else {
+      console.log("ChatImageRenderer: Using direct URL:", src);
       setImageUrl(src);
     }
   }, [src]);
 
   const generateImage = async (prompt: string) => {
+    console.log("ChatImageRenderer: Starting image generation...");
     setIsLoading(true);
     setError(false);
     
     try {
+      console.log("ChatImageRenderer: Calling generate-chat-image function");
       const { data, error: genError } = await supabase.functions.invoke('generate-chat-image', {
         body: { prompt }
       });
       
+      console.log("ChatImageRenderer: Function response:", { data, error: genError });
+      
       if (genError) throw genError;
       
       if (data?.imageUrl) {
+        console.log("ChatImageRenderer: Image generated successfully");
         setImageUrl(data.imageUrl);
       } else {
         throw new Error("No image URL returned");
       }
     } catch (err) {
-      console.error("Error generating image:", err);
+      console.error("ChatImageRenderer: Error generating image:", err);
       setError(true);
     } finally {
       setIsLoading(false);
