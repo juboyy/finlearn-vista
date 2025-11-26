@@ -1,4 +1,9 @@
+import { useRef } from "react";
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { Button } from "@/components/ui/button";
+import { Download } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import html2canvas from "html2canvas";
 
 interface ChatChartRendererProps {
   type: "bar" | "line" | "pie";
@@ -9,6 +14,9 @@ interface ChatChartRendererProps {
 }
 
 export const ChatChartRenderer = ({ type, data, dataKey = "value", xKey = "name", colors }: ChatChartRendererProps) => {
+  const chartRef = useRef<HTMLDivElement>(null);
+  const { toast } = useToast();
+  
   const defaultColors = [
     "hsl(207, 45%, 70%)",
     "hsl(271, 45%, 70%)",
@@ -19,9 +27,54 @@ export const ChatChartRenderer = ({ type, data, dataKey = "value", xKey = "name"
 
   const chartColors = colors || defaultColors;
 
+  const handleDownload = async () => {
+    if (!chartRef.current) return;
+    
+    try {
+      const canvas = await html2canvas(chartRef.current, {
+        backgroundColor: '#ffffff',
+        scale: 2,
+      });
+      
+      canvas.toBlob((blob) => {
+        if (!blob) return;
+        
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `grafico-${type}-${Date.now()}.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+        
+        toast({
+          title: "Download iniciado",
+          description: "O gráfico está sendo baixado.",
+        });
+      });
+    } catch (error) {
+      console.error("Error downloading chart:", error);
+      toast({
+        title: "Erro ao baixar",
+        description: "Não foi possível baixar o gráfico.",
+        variant: "destructive",
+      });
+    }
+  };
+
   if (type === "bar") {
     return (
-      <div className="my-3 bg-muted rounded-lg p-4 border-2 border-pastel-purple/30">
+      <div ref={chartRef} className="relative group my-3 bg-muted rounded-lg p-4 border-2 border-pastel-purple/30">
+        <Button
+          onClick={handleDownload}
+          size="sm"
+          className="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity bg-background/80 backdrop-blur-sm hover:bg-background"
+          variant="secondary"
+        >
+          <Download size={16} className="mr-1" />
+          Baixar
+        </Button>
         <ResponsiveContainer width="100%" height={250}>
           <BarChart data={data}>
             <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
@@ -44,7 +97,16 @@ export const ChatChartRenderer = ({ type, data, dataKey = "value", xKey = "name"
 
   if (type === "line") {
     return (
-      <div className="my-3 bg-muted rounded-lg p-4 border-2 border-pastel-purple/30">
+      <div ref={chartRef} className="relative group my-3 bg-muted rounded-lg p-4 border-2 border-pastel-purple/30">
+        <Button
+          onClick={handleDownload}
+          size="sm"
+          className="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity bg-background/80 backdrop-blur-sm hover:bg-background"
+          variant="secondary"
+        >
+          <Download size={16} className="mr-1" />
+          Baixar
+        </Button>
         <ResponsiveContainer width="100%" height={250}>
           <LineChart data={data}>
             <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
@@ -67,7 +129,16 @@ export const ChatChartRenderer = ({ type, data, dataKey = "value", xKey = "name"
 
   if (type === "pie") {
     return (
-      <div className="my-3 bg-muted rounded-lg p-4 border-2 border-pastel-purple/30">
+      <div ref={chartRef} className="relative group my-3 bg-muted rounded-lg p-4 border-2 border-pastel-purple/30">
+        <Button
+          onClick={handleDownload}
+          size="sm"
+          className="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity bg-background/80 backdrop-blur-sm hover:bg-background"
+          variant="secondary"
+        >
+          <Download size={16} className="mr-1" />
+          Baixar
+        </Button>
         <ResponsiveContainer width="100%" height={250}>
           <PieChart>
             <Pie

@@ -88,8 +88,6 @@ export const useAgentChat = (agentName: string) => {
 
       const upsertAssistant = (nextChunk: string) => {
         assistantSoFar += nextChunk;
-        console.log("🔄 Stream chunk received:", nextChunk);
-        console.log("📊 Total content so far:", assistantSoFar.length, "chars");
         setMessages(prev => {
           const last = prev[prev.length - 1];
           if (last?.role === "assistant") {
@@ -131,8 +129,6 @@ export const useAgentChat = (agentName: string) => {
       }
 
       // Flush final buffer
-      console.log("🏁 Stream ended. Final content length:", assistantSoFar.length);
-      console.log("📄 Final message preview:", assistantSoFar.substring(0, 300));
       if (textBuffer.trim()) {
         for (let raw of textBuffer.split("\n")) {
           if (!raw) continue;
