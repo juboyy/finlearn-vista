@@ -23,6 +23,7 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
   const lastSaveRef = useRef<string>("");
   const previousSlideIdRef = useRef<string>("");
   const isInitializedRef = useRef(false);
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 
   // Detectar mudança de slide e recarregar canvas corretamente
   useEffect(() => {
@@ -35,6 +36,7 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
       console.log(`Trocando de slide: ${previousSlideIdRef.current} -> ${slideId}`);
       previousSlideIdRef.current = slideId;
       isInitializedRef.current = false;
+      setHasUnsavedChanges(false); // Reset ao trocar de slide
       
       // Limpar canvas
       try {
@@ -48,10 +50,12 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
             fabricCanvas.loadFromJSON(initialData, () => {
               fabricCanvas.renderAll();
               isInitializedRef.current = true;
+              lastSaveRef.current = JSON.stringify(fabricCanvas.toJSON());
             });
           } else {
             console.log(`Slide ${slideId} vazio - pronto para edição`);
             isInitializedRef.current = true;
+            lastSaveRef.current = JSON.stringify(fabricCanvas.toJSON());
             fabricCanvas.renderAll();
           }
         }
@@ -65,22 +69,22 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
   const handleManualSave = () => {
     if (!fabricCanvas) return;
     
-    const json = fabricCanvas.toJSON();
-    const jsonString = JSON.stringify(json);
-    
-    // Verificar se houve mudanças desde o último save
-    if (jsonString === lastSaveRef.current) {
-      toast.info("Nenhuma alteração para salvar");
+    if (!hasUnsavedChanges) {
+      toast.info("Não há alterações para salvar");
       return;
     }
+    
+    const json = fabricCanvas.toJSON();
+    const jsonString = JSON.stringify(json);
     
     setSaveStatus("saving");
     onUpdate(json);
     lastSaveRef.current = jsonString;
+    setHasUnsavedChanges(false);
     
     setTimeout(() => {
       setSaveStatus("saved");
-      toast.success("Slide salvo manualmente!");
+      toast.success("Slide salvo com sucesso!");
       setTimeout(() => setSaveStatus("idle"), 2000);
     }, 200);
   };
@@ -108,7 +112,7 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
       isInitializedRef.current = true;
     }
 
-    // Setup autosave - salvar imediatamente após cada modificação
+    // Setup autosave - detectar mudanças
     const handleModified = () => {
       const json = canvas.toJSON();
       const jsonString = JSON.stringify(json);
@@ -118,24 +122,25 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
         return;
       }
       
-      console.log(`🔄 Salvando alterações do canvas automaticamente...`);
+      console.log(`🔄 Alteração detectada no canvas`);
+      setHasUnsavedChanges(true);
       setSaveStatus("saving");
-      lastSaveRef.current = jsonString;
-      
-      // Salvar imediatamente
-      onUpdate(json);
       
       // Limpar timeout anterior
       if (saveTimeoutRef.current) {
         clearTimeout(saveTimeoutRef.current);
       }
       
-      // Mostrar feedback de "salvo"
+      // Salvar automaticamente após 1 segundo sem mudanças
       saveTimeoutRef.current = setTimeout(() => {
+        console.log(`💾 Salvando automaticamente...`);
+        onUpdate(json);
+        lastSaveRef.current = jsonString;
+        setHasUnsavedChanges(false);
         setSaveStatus("saved");
-        console.log(`✅ Canvas salvo com sucesso`);
+        toast.success("Alterações salvas automaticamente");
         setTimeout(() => setSaveStatus("idle"), 2000);
-      }, 100);
+      }, 1000);
     };
 
     canvas.on("object:modified", handleModified);
@@ -501,7 +506,12 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
           type="button"
           size="sm"
           onClick={handleManualSave}
-          className="bg-[hsl(142,35%,65%)] hover:bg-[hsl(142,35%,55%)] text-slate-800 font-semibold"
+          disabled={!hasUnsavedChanges}
+          className={`font-semibold transition-all ${
+            hasUnsavedChanges 
+              ? 'bg-[hsl(142,35%,65%)] hover:bg-[hsl(142,35%,55%)] text-slate-800' 
+              : 'bg-slate-200 text-slate-400 cursor-not-allowed'
+          }`}
         >
           <Save className="h-4 w-4 mr-2" />
           Salvar Slide
