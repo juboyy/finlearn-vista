@@ -57,7 +57,7 @@ const Index = () => {
         </header>
         
         <div className="p-8">
-          <section className="grid grid-cols-4 gap-6 mb-8">
+          <section className="grid grid-cols-4 gap-4 mb-8">
             <div className="animate-fade-in" style={{ animationDelay: "0.1s" }}>
               <StatCard
                 icon={BookOpen}
