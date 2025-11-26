@@ -56,11 +56,15 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
     if (!fabricCanvas) return;
 
     const addGeneratedContent = async () => {
-      // Limpar canvas antes de adicionar novo conteúdo
-      fabricCanvas.clear();
-      fabricCanvas.backgroundColor = "#ffffff";
+      try {
+        // Verificar se o canvas está pronto antes de limpar
+        if (!fabricCanvas.getContext()) return;
+        
+        // Limpar canvas antes de adicionar novo conteúdo
+        fabricCanvas.clear();
+        fabricCanvas.backgroundColor = "#ffffff";
 
-      let yPosition = 50;
+        let yPosition = 50;
 
       // Adicionar texto gerado
       if (slideText) {
@@ -142,6 +146,9 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
       }
 
       fabricCanvas.renderAll();
+    } catch (error) {
+      console.error("Erro ao adicionar conteúdo ao canvas:", error);
+    }
     };
 
     addGeneratedContent();

@@ -1097,6 +1097,7 @@ Exemplo para PIX:
                     Conteúdo Visual
                   </label>
                   <SlideCanvasEditor
+                    key={currentSlideIndex}
                     initialData={currentSlide?.canvasData}
                     onUpdate={(canvasData) => updateSlide("canvasData", canvasData)}
                     onAddChart={() => setShowChartDialog(true)}
