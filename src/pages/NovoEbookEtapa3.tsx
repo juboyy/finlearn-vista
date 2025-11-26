@@ -291,7 +291,7 @@ export default function NovoEbookEtapa3() {
                     <h3 className="text-xl font-semibold text-foreground">Definir Preço</h3>
                     <p className="text-sm text-muted-foreground mt-1">Configure o valor de venda do seu eBook</p>
                   </div>
-                  <span className="px-3 py-1 bg-[hsl(340,50%,85%,0.5)] text-[hsl(215,20%,40%)] text-xs font-medium rounded-full">Obrigatório</span>
+                  <span className="px-3 py-1 bg-[hsl(340,40%,92%)] text-[hsl(215,20%,40%)] text-xs font-medium rounded-full">Obrigatório</span>
                 </div>
                 
                 <div className="space-y-6">
@@ -390,7 +390,7 @@ export default function NovoEbookEtapa3() {
                     <h3 className="text-xl font-semibold text-foreground">Formas de Pagamento</h3>
                     <p className="text-sm text-muted-foreground mt-1">Selecione as opções que seus compradores poderão usar</p>
                   </div>
-                  <span className="px-3 py-1 bg-[hsl(340,50%,85%,0.5)] text-[hsl(215,20%,40%)] text-xs font-medium rounded-full">Obrigatório</span>
+                  <span className="px-3 py-1 bg-[hsl(340,40%,92%)] text-[hsl(215,20%,40%)] text-xs font-medium rounded-full">Obrigatório</span>
                 </div>
 
                 <div className="space-y-4">
