@@ -287,11 +287,13 @@ export default function TransformarTabelas() {
       setChartData(jsonData);
       setDataKeys(keys);
       
-      // Definir automaticamente a primeira coluna como label e todas as outras como selecionadas
+      // Definir automaticamente a primeira coluna como label e todas as colunas como selecionadas
       if (keys.length > 0) {
         setLabelColumn(keys[0]);
         setSelectedColumns(keys);
       }
+
+      console.log('Arquivo processado:', { keys, selectedColumns: keys });
 
       toast({
         title: "Arquivo carregado com sucesso",
@@ -335,6 +337,8 @@ export default function TransformarTabelas() {
   };
 
   const toggleColumnSelection = (column: string) => {
+    console.log('Toggle column:', column, 'Current selected:', selectedColumns);
+    
     if (currentChart) {
       setCurrentChart(prev => prev ? {
         ...prev,
@@ -343,11 +347,13 @@ export default function TransformarTabelas() {
           : [...prev.columns, column]
       } : null);
     } else {
-      setSelectedColumns(prev => 
-        prev.includes(column) 
+      setSelectedColumns(prev => {
+        const newSelection = prev.includes(column) 
           ? prev.filter(c => c !== column)
-          : [...prev, column]
-      );
+          : [...prev, column];
+        console.log('New selection:', newSelection);
+        return newSelection;
+      });
     }
   };
 
