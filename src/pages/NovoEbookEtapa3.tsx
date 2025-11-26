@@ -318,7 +318,7 @@ export default function NovoEbookEtapa3() {
                     </div>
                   </div>
 
-                  <div className="bg-accent/50 rounded-lg p-5">
+                  <div className="bg-accent/25 rounded-lg p-5">
                     <div className="flex items-center justify-between mb-4">
                       <span className="text-sm font-medium text-foreground">Detalhamento</span>
                     </div>
