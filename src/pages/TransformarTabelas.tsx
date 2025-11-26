@@ -689,7 +689,7 @@ export default function TransformarTabelas() {
                     </div>
                     <Button
                       variant="outline"
-                      className="border-2 border-slate-300 hover:border-[hsl(142,35%,65%)] hover:bg-[hsl(142,35%,95%)] text-slate-700 font-medium"
+                      className="bg-[hsl(142,35%,65%)] hover:bg-[hsl(142,35%,55%)] text-white font-medium border-2 border-[hsl(142,35%,65%)]"
                     >
                       Explicar Gráfico
                     </Button>
