@@ -1,7 +1,8 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { Search, Bell, ArrowLeft, Wrench, FileText, TrendingUp, Scale, Calculator, Megaphone, Target } from "lucide-react";
+import { Search, Bell, ArrowLeft, Wrench, FileText, TrendingUp, Scale, Calculator, Megaphone, Target, Store } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 const ferramentas = [
   {
@@ -114,6 +115,12 @@ export default function Ferramentas() {
                 />
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
               </div>
+              <Button 
+                className="bg-[#F5C6E3] hover:bg-[#E0B0CF] text-slate-700 gap-2"
+              >
+                <Store className="h-4 w-4" />
+                Marketplace
+              </Button>
               <button className="relative p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
                 <Bell className="h-5 w-5" />
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
