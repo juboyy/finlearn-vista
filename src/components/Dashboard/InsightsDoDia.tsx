@@ -1,11 +1,12 @@
 import { useState, useRef, useEffect } from "react";
-import { Send, Loader2, Newspaper, BookOpen, Video, Target, Headphones, Award, Sparkles } from "lucide-react";
+import { Send, Loader2, Newspaper, BookOpen, Video, Target, Headphones, Award, Sparkles, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAgentChat } from "@/hooks/useAgentChat";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import ReactMarkdown from "react-markdown";
 import {
   Sheet,
   SheetContent,
@@ -30,7 +31,7 @@ const quickActions = [
 export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
   const [input, setInput] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
-  const { messages, sendMessage, isLoading } = useAgentChat("Auxiliar do dia");
+  const { messages, sendMessage, isLoading, clearMessages } = useAgentChat("Auxiliar do dia");
   const { toast } = useToast();
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -75,6 +76,14 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
     } finally {
       setIsGenerating(false);
     }
+  };
+
+  const handleClearChat = () => {
+    clearMessages();
+    toast({
+      title: "Conversa limpa",
+      description: "O histórico de mensagens foi removido.",
+    });
   };
 
   return (
@@ -125,24 +134,35 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
                   </SheetTitle>
                   <p className="text-sm text-muted-foreground">Chat em tempo real</p>
                 </div>
-                <Button
-                  onClick={handleGenerateSuggestions}
-                  disabled={isGenerating}
-                  className="bg-pastel-purple hover:bg-pastel-pink text-foreground"
-                  size="sm"
-                >
-                  {isGenerating ? (
-                    <>
-                      <Loader2 className="animate-spin mr-2" size={16} />
-                      Gerando...
-                    </>
-                  ) : (
-                    <>
-                      <Sparkles className="mr-2" size={16} />
-                      Gerar Sugestões
-                    </>
-                  )}
-                </Button>
+                <div className="flex gap-2">
+                  <Button
+                    onClick={handleClearChat}
+                    disabled={messages.length === 0}
+                    variant="outline"
+                    size="sm"
+                  >
+                    <Trash2 className="mr-2" size={16} />
+                    Limpar
+                  </Button>
+                  <Button
+                    onClick={handleGenerateSuggestions}
+                    disabled={isGenerating}
+                    className="bg-pastel-purple hover:bg-pastel-pink text-foreground"
+                    size="sm"
+                  >
+                    {isGenerating ? (
+                      <>
+                        <Loader2 className="animate-spin mr-2" size={16} />
+                        Gerando...
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles className="mr-2" size={16} />
+                        Gerar Sugestões
+                      </>
+                    )}
+                  </Button>
+                </div>
               </div>
             </SheetHeader>
 
@@ -176,7 +196,9 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
                           : "bg-muted text-foreground"
                       }`}
                     >
-                      <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
+                      <div className="text-sm prose prose-sm max-w-none dark:prose-invert">
+                        <ReactMarkdown>{msg.content}</ReactMarkdown>
+                      </div>
                     </div>
                   </div>
                 ))}
