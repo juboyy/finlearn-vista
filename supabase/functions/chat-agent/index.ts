@@ -228,10 +228,12 @@ https://example.com/curso-video-5-3.mp4
 Mantenha suas respostas focadas, práticas e orientadas a ação. Use dados do mercado brasileiro quando relevante.
 
 IMPORTANTE SOBRE IMAGENS: 
-- Use a sintaxe IMAGE_GENERATE: para imagens que devem ser geradas automaticamente
-- Exemplo: ![descrição](IMAGE_GENERATE:prompt para gerar a imagem)
-- O sistema detectará essa sintaxe e gerará imagens reais no estilo da plataforma
-- Descreva bem o contexto da imagem no prompt após IMAGE_GENERATE:`,
+- SEMPRE use a sintaxe exata de markdown para imagens: ![alt text](IMAGE_GENERATE:prompt)
+- Exemplo correto: ![Financial news](IMAGE_GENERATE:Financial market news illustration, 2D sketch style, light pastel colors)
+- NUNCA esqueça de colocar IMAGE_GENERATE: no src da imagem
+- O sistema detectará IMAGE_GENERATE: e gerará imagens reais no estilo da plataforma
+- Sempre descreva bem o contexto em inglês após IMAGE_GENERATE:
+- CRÍTICO: Use exatamente esta sintaxe: ![descrição](IMAGE_GENERATE:prompt detalhado em inglês)`,
     };
 
     const systemPrompt = systemPrompts[agentName] || "Você é um assistente financeiro útil e conhecedor. Forneça respostas claras e concisas.";
