@@ -344,6 +344,12 @@ export default function ResumoContratos() {
                 <h1 className="text-2xl font-semibold text-slate-800">Resumo de Contratos</h1>
               </div>
             </div>
+            <Link to="/historico-resumos">
+              <Button variant="outline" className="border-2 border-slate-300 hover:bg-slate-50">
+                <History className="h-4 w-4 mr-2" />
+                Ver Histórico Completo
+              </Button>
+            </Link>
           </div>
         </header>
 

@@ -95,6 +95,7 @@ import Infograficos from "./pages/Infograficos";
 import EditorSlides from "./pages/EditorSlides";
 import Ferramentas from "./pages/Ferramentas";
 import ResumoContratos from "./pages/ResumoContratos";
+import HistoricoResumos from "./pages/HistoricoResumos";
 
 import NotFound from "./pages/NotFound";
 
@@ -205,6 +206,7 @@ const App = () => {
           <Route path="/editor-slides" element={<EditorSlides />} />
           <Route path="/ferramentas" element={<Ferramentas />} />
           <Route path="/resumo-contratos" element={<ResumoContratos />} />
+          <Route path="/historico-resumos" element={<HistoricoResumos />} />
           
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
