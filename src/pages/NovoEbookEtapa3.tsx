@@ -902,7 +902,7 @@ export default function NovoEbookEtapa3() {
                 </div>
 
                 {/* Help Card */}
-                <div className="bg-[hsl(270,10%,97%)] rounded-xl border border-border p-6">
+                <div className="bg-[hsl(270,20%,48%,0.5)] rounded-xl border border-border p-6">
                   <div className="flex items-start gap-3 mb-4">
                     <HelpCircle className="w-5 h-5 text-[hsl(215,20%,40%)] flex-shrink-0 mt-0.5" />
                     <h3 className="text-lg font-semibold text-foreground">Precisa de Ajuda?</h3>
