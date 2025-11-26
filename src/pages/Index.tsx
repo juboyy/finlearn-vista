@@ -290,7 +290,7 @@ const Index = () => {
                   icon={Video}
                   title="Webinars"
                   description="Ao vivo e gravados"
-                  bgColor="bg-pastel-purple"
+                  bgColor="bg-pastel-pink"
                 />
                 <QuickActionCard
                   icon={BookMarked}
