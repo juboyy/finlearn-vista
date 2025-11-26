@@ -1082,6 +1082,22 @@ Exemplo para PIX:
       {isGenerating && (
         <div className="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 flex items-center justify-center">
           <div className="flex flex-col items-center gap-6 animate-fade-in">
+            {/* Agent Profile Image */}
+            {selectedAgentId && agents.find(a => a.id === selectedAgentId) && (
+              <div className="relative">
+                <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-xl">
+                  <img
+                    src={agents.find(a => a.id === selectedAgentId)?.agent_image || "/placeholder.svg"}
+                    alt="Agent"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg">
+                  <Sparkles className="h-5 w-5 text-purple-500" />
+                </div>
+              </div>
+            )}
+            
             {/* Pensando text */}
             <h2 className="text-5xl font-bold text-white tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
               Pensando
