@@ -330,6 +330,9 @@ export default function HistoricoResumos() {
                       <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
                         Nome do Documento
                       </th>
+                      <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider w-56">
+                        Agente de IA
+                      </th>
                       <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider w-40">
                         Data de Criação
                       </th>
@@ -355,6 +358,25 @@ export default function HistoricoResumos() {
                           </div>
                           <div className="text-sm text-slate-500 mt-1">
                             {(item.file_size / 1024 / 1024).toFixed(2)} MB
+                          </div>
+                        </td>
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-lg overflow-hidden bg-[hsl(206,35%,75%)] flex-shrink-0 ring-2 ring-[hsl(206,35%,90%)]">
+                              <img 
+                                src={getAgentImage(item.agent_id)} 
+                                alt={item.agent_name}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-medium text-slate-800 truncate">
+                                {item.agent_name}
+                              </p>
+                              <p className="text-xs text-slate-500 truncate">
+                                {getAgentCategory(item.agent_id)}
+                              </p>
+                            </div>
                           </div>
                         </td>
                         <td className="px-6 py-4 text-sm text-slate-600">
