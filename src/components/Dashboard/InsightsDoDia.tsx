@@ -193,16 +193,16 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
             
             <ScrollArea className="flex-1 -mx-6 px-6">
               {!showHistory ? (
-                <div className="flex flex-col gap-3 pb-4">
+                <div className="flex flex-col gap-2 pb-4">
                   {quickActions.map((action) => (
                     <Button
                       key={action.label}
                       onClick={() => handleQuickAction(action)}
-                      className={`${action.color} hover:bg-pastel-pink text-foreground justify-start h-auto py-3 px-4 transition-colors`}
+                      className={`${action.color} hover:bg-pastel-pink text-foreground justify-start h-auto py-2 px-3 transition-colors text-xs`}
                       disabled={isLoading}
                     >
-                      <action.icon size={18} className="mr-3 flex-shrink-0" />
-                      <span className="text-sm text-left">{action.label}</span>
+                      <action.icon size={14} className="mr-2 flex-shrink-0" />
+                      <span className="text-left leading-tight">{action.label}</span>
                     </Button>
                   ))}
                   
@@ -210,10 +210,10 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
                     onClick={handleClearChat}
                     disabled={messages.length === 0}
                     variant="outline"
-                    className="justify-start h-auto py-3 px-4 mt-2"
+                    className="justify-start h-auto py-2 px-3 mt-1 text-xs"
                   >
-                    <Trash2 size={18} className="mr-3 flex-shrink-0" />
-                    <span className="text-sm text-left">Salvar e Nova Conversa</span>
+                    <Trash2 size={14} className="mr-2 flex-shrink-0" />
+                    <span className="text-left leading-tight">Salvar e Nova Conversa</span>
                   </Button>
                 </div>
               ) : (
