@@ -38,6 +38,14 @@ const ferramentas = [
   },
   {
     id: 5,
+    nome: "Modelos de envio de Informes Legais",
+    descricao: "Templates e estruturas para envio de informações regulatórias obrigatórias",
+    area: "Jurídico",
+    icon: FileText,
+    color: "hsl(142, 35%, 75%)"
+  },
+  {
+    id: 6,
     nome: "Notas Explicativas de artigos Bacen",
     descricao: "Interpretação e contextualização de normativos do Banco Central",
     area: "Jurídico",
@@ -45,7 +53,15 @@ const ferramentas = [
     color: "hsl(142, 35%, 75%)"
   },
   {
-    id: 6,
+    id: 7,
+    nome: "Notas Explicativas de artigo CVM",
+    descricao: "Interpretação e contextualização de normativos da Comissão de Valores Mobiliários",
+    area: "Jurídico",
+    icon: FileText,
+    color: "hsl(142, 35%, 75%)"
+  },
+  {
+    id: 8,
     nome: "PRD de Features",
     descricao: "Criação de Product Requirement Documents para novas funcionalidades",
     area: "Marketing",
@@ -53,7 +69,7 @@ const ferramentas = [
     color: "hsl(280, 35%, 75%)"
   },
   {
-    id: 7,
+    id: 9,
     nome: "Análise de Concorrentes",
     descricao: "Estudo comparativo de posicionamento e estratégias competitivas",
     area: "Marketing",
@@ -116,7 +132,7 @@ export default function Ferramentas() {
                   <span className="text-slate-600 text-sm">Total de Ferramentas</span>
                   <Wrench className="h-5 w-5 text-slate-400" />
                 </div>
-                <p className="text-3xl font-semibold text-slate-800">7</p>
+                <p className="text-3xl font-semibold text-slate-800">9</p>
               </div>
               
               <div className="bg-white rounded-lg p-6 border border-slate-200">
@@ -124,7 +140,7 @@ export default function Ferramentas() {
                   <span className="text-slate-600 text-sm">Área Jurídica</span>
                   <Scale className="h-5 w-5 text-slate-400" />
                 </div>
-                <p className="text-3xl font-semibold text-slate-800">3</p>
+                <p className="text-3xl font-semibold text-slate-800">5</p>
               </div>
               
               <div className="bg-white rounded-lg p-6 border border-slate-200">
