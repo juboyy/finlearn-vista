@@ -287,13 +287,10 @@ export default function TransformarTabelas() {
       setChartData(jsonData);
       setDataKeys(keys);
       
-      // Definir automaticamente a primeira coluna como label e as demais como selecionadas
+      // Definir automaticamente a primeira coluna como label e todas as outras como selecionadas
       if (keys.length > 0) {
         setLabelColumn(keys[0]);
-        const numericKeys = keys.slice(1).filter(key => {
-          return jsonData.some(row => typeof row[key] === "number" || !isNaN(Number(row[key])));
-        });
-        setSelectedColumns(numericKeys);
+        setSelectedColumns(keys);
       }
 
       toast({
@@ -434,6 +431,21 @@ export default function TransformarTabelas() {
     if (!labelColumn) return null;
 
     const type = chartTypeOverride || chartType;
+    
+    // Filtrar a labelColumn das colunas de dados para não renderizar a mesma coluna no eixo X e como série
+    const dataColumns = columns.filter(col => col !== labelColumn);
+    
+    // Se não houver colunas de dados após filtrar, retornar mensagem
+    if (dataColumns.length === 0) {
+      return (
+        <div className="border-2 border-dashed border-slate-300 rounded-lg p-12 text-center">
+          <BarChart3 className="w-16 h-16 mx-auto mb-4 text-slate-300" />
+          <p className="text-slate-500 text-sm">
+            Selecione colunas diferentes da coluna do eixo X para visualizar
+          </p>
+        </div>
+      );
+    }
 
     return (
       <div className="space-y-4">
@@ -447,7 +459,7 @@ export default function TransformarTabelas() {
               <Pie
                 data={chartData.map((row, index) => ({
                   name: String(row[labelColumn]),
-                  value: Number(row[columns[0]]) || 0,
+                  value: Number(row[dataColumns[0]]) || 0,
                   fill: CHART_COLORS[index % CHART_COLORS.length],
                 }))}
                 cx="50%"
@@ -486,7 +498,7 @@ export default function TransformarTabelas() {
                 }}
               />
               <Legend />
-              {columns.map((key, index) => (
+              {dataColumns.map((key, index) => (
                 <Line
                   key={key}
                   type="monotone"
@@ -519,7 +531,7 @@ export default function TransformarTabelas() {
                 }}
               />
               <Legend />
-              {columns.map((key, index) => (
+              {dataColumns.map((key, index) => (
                 <Bar
                   key={key}
                   dataKey={key}
@@ -583,6 +595,19 @@ export default function TransformarTabelas() {
           <BarChart3 className="w-16 h-16 mx-auto mb-4 text-slate-300" />
           <p className="text-slate-500 text-sm">
             Selecione pelo menos uma coluna para visualizar
+          </p>
+        </div>
+      );
+    }
+    
+    // Verificar se há colunas de dados diferentes da labelColumn
+    const dataColumns = selectedColumns.filter(col => col !== labelColumn);
+    if (dataColumns.length === 0) {
+      return (
+        <div className="border-2 border-dashed border-slate-300 rounded-lg p-12 text-center">
+          <BarChart3 className="w-16 h-16 mx-auto mb-4 text-slate-300" />
+          <p className="text-slate-500 text-sm">
+            Selecione colunas diferentes da coluna do eixo X para visualizar
           </p>
         </div>
       );
@@ -755,32 +780,22 @@ export default function TransformarTabelas() {
                           Selecionar Colunas para Cruzar
                         </Label>
                         <div className="space-y-2 max-h-64 overflow-y-auto pr-2">
-                          {dataKeys
-                            .filter(key => key !== labelColumn)
-                            .map((key) => {
-                              const isNumeric = chartData.some(row => 
-                                typeof row[key] === "number" || !isNaN(Number(row[key]))
-                              );
-                              
-                              if (!isNumeric) return null;
-
-                              return (
-                                <label
-                                  key={key}
-                                  className="flex items-center gap-3 p-3 rounded-lg border-2 border-slate-200 hover:border-[hsl(142,35%,75%)] transition-colors cursor-pointer"
-                                >
-                                  <input
-                                    type="checkbox"
-                                    checked={currentChart.columns.includes(key)}
-                                    onChange={() => toggleColumnSelection(key)}
-                                    className="w-4 h-4 text-[hsl(142,35%,65%)] focus:ring-[hsl(142,35%,75%)] border-slate-300 rounded"
-                                  />
-                                  <span className="text-sm font-medium text-slate-700 flex-1">
-                                    {key}
-                                  </span>
-                                </label>
-                              );
-                            })}
+                          {dataKeys.map((key) => (
+                            <label
+                              key={key}
+                              className="flex items-center gap-3 p-3 rounded-lg border-2 border-slate-200 hover:border-[hsl(142,35%,75%)] transition-colors cursor-pointer"
+                            >
+                              <input
+                                type="checkbox"
+                                checked={currentChart.columns.includes(key)}
+                                onChange={() => toggleColumnSelection(key)}
+                                className="w-4 h-4 text-[hsl(142,35%,65%)] focus:ring-[hsl(142,35%,75%)] border-slate-300 rounded"
+                              />
+                              <span className="text-sm font-medium text-slate-700 flex-1">
+                                {key}
+                              </span>
+                            </label>
+                          ))}
                         </div>
                         <p className="text-xs text-slate-500 mt-2">
                           {currentChart.columns.length} coluna(s) selecionada(s)
@@ -968,32 +983,22 @@ export default function TransformarTabelas() {
                           Colunas de Dados (Valores)
                         </Label>
                         <div className="space-y-2 max-h-64 overflow-y-auto pr-2">
-                          {dataKeys
-                            .filter(key => key !== labelColumn)
-                            .map((key) => {
-                              const isNumeric = chartData.some(row => 
-                                typeof row[key] === "number" || !isNaN(Number(row[key]))
-                              );
-                              
-                              if (!isNumeric) return null;
-
-                              return (
-                                <label
-                                  key={key}
-                                  className="flex items-center gap-3 p-3 rounded-lg border-2 border-slate-200 hover:border-[hsl(142,35%,75%)] transition-colors cursor-pointer"
-                                >
-                                  <input
-                                    type="checkbox"
-                                    checked={selectedColumns.includes(key)}
-                                    onChange={() => toggleColumnSelection(key)}
-                                    className="w-4 h-4 text-[hsl(142,35%,65%)] focus:ring-[hsl(142,35%,75%)] border-slate-300 rounded"
-                                  />
-                                  <span className="text-sm font-medium text-slate-700 flex-1">
-                                    {key}
-                                  </span>
-                                </label>
-                              );
-                            })}
+                          {dataKeys.map((key) => (
+                            <label
+                              key={key}
+                              className="flex items-center gap-3 p-3 rounded-lg border-2 border-slate-200 hover:border-[hsl(142,35%,75%)] transition-colors cursor-pointer"
+                            >
+                              <input
+                                type="checkbox"
+                                checked={selectedColumns.includes(key)}
+                                onChange={() => toggleColumnSelection(key)}
+                                className="w-4 h-4 text-[hsl(142,35%,65%)] focus:ring-[hsl(142,35%,75%)] border-slate-300 rounded"
+                              />
+                              <span className="text-sm font-medium text-slate-700 flex-1">
+                                {key}
+                              </span>
+                            </label>
+                          ))}
                         </div>
                         <p className="text-xs text-slate-500 mt-2">
                           {selectedColumns.length} coluna(s) selecionada(s)
