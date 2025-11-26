@@ -125,7 +125,7 @@ export default function MeusConteudos() {
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
         <header className="bg-card border-b border-border">
-          <div className="px-8 py-4">
+          <div className="px-8 py-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <Link to="/aprendizado" className="text-muted-foreground hover:text-foreground transition-colors">
