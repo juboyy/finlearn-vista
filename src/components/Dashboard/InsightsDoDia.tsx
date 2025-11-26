@@ -7,11 +7,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useAgentChat } from "@/hooks/useAgentChat";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import { Progress } from "@/components/ui/progress";
-import { ChatImageRenderer } from "@/components/Dashboard/ChatImageRenderer";
-import { ChatChartRenderer } from "@/components/Dashboard/ChatChartRenderer";
+import { MessageRenderer } from "@/components/Dashboard/MessageRenderer";
 import auxiliarAvatar from "@/assets/auxiliar-do-dia-avatar.png";
 import {
   Sheet,
@@ -211,127 +207,8 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
                           : "bg-muted text-foreground"
                       }`}
                     >
-                      {(() => {
-                        console.log("📝 Rendering message:", msg.content.substring(0, 200));
-                        
-                        // Check if message contains image syntax
-                        const hasImage = msg.content.includes('![') && msg.content.includes('](IMAGE_GENERATE:');
-                        if (hasImage) {
-                          console.log("🖼️ MESSAGE CONTAINS IMAGE SYNTAX!");
-                        }
-                        
-                        return null;
-                      })()}
                       <div className="prose prose-sm max-w-none dark:prose-invert chat-markdown">
-                        <ReactMarkdown
-                          remarkPlugins={[remarkGfm]}
-                          components={{
-                            h1: ({ children }) => <h1 className="text-2xl font-bold text-foreground mb-4 mt-2">{children}</h1>,
-                            h2: ({ children }) => <h2 className="text-xl font-semibold text-foreground mb-3 mt-2">{children}</h2>,
-                            h3: ({ children }) => <h3 className="text-lg font-medium text-foreground mb-2 mt-2">{children}</h3>,
-                            p: ({ children }) => <p className="text-sm text-foreground mb-2 leading-relaxed">{children}</p>,
-                            ul: ({ children }) => <ul className="list-disc list-inside mb-2 space-y-1">{children}</ul>,
-                            ol: ({ children }) => <ol className="list-decimal list-inside mb-2 space-y-1">{children}</ol>,
-                            strong: ({ children }) => <strong className="font-semibold text-pastel-blue">{children}</strong>,
-                            em: ({ children }) => <em className="italic text-slate-700">{children}</em>,
-                            a: ({ href, children }) => {
-                              // Detect podcast links
-                              if (href?.includes('podcast') || href?.includes('audio')) {
-                                return (
-                                  <a href={href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-3 py-2 my-1 bg-pastel-pink rounded-lg hover:bg-pastel-purple transition-colors text-foreground no-underline">
-                                    <Headphones size={16} />
-                                    <span className="text-sm font-medium">{children}</span>
-                                    <ExternalLink size={14} />
-                                  </a>
-                                );
-                              }
-                              return (
-                                <a href={href} target="_blank" rel="noopener noreferrer" className="text-blue-700 hover:text-blue-900 underline inline-flex items-center gap-1">
-                                  {children}
-                                  <ExternalLink size={12} />
-                                </a>
-                              );
-                            },
-                            img: ({ src, alt }) => {
-                              console.log("✅ IMG RENDERER CALLED - src:", src, "alt:", alt);
-                              return <ChatImageRenderer src={src || ""} alt={alt || ""} />;
-                            },
-                            code: ({ children, className, ...props }) => {
-                              console.log("Rendering code block with className:", className, "content:", String(children).substring(0, 50));
-                              
-                              // Check if it's inline code (no className usually means inline)
-                              const isBlock = className !== undefined;
-                              
-                              if (!isBlock) {
-                                return <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{children}</code>;
-                              }
-
-                              const content = String(children).trim();
-                              
-                              // Progress bar syntax: ```progress\n75```
-                              if (className === 'language-progress') {
-                                const value = parseInt(content.replace('%', ''));
-                                return (
-                                  <div className="my-3 space-y-2">
-                                    <div className="flex justify-between text-xs text-muted-foreground">
-                                      <span>Progresso da Meta</span>
-                                      <span>{value}%</span>
-                                    </div>
-                                    <Progress value={value} className="h-3" />
-                                  </div>
-                                );
-                              }
-                              
-                              // Audio player syntax: ```audio\nurl```
-                              if (className === 'language-audio') {
-                                return (
-                                  <div className="my-3 bg-muted rounded-lg p-4 border-2 border-pastel-purple/30">
-                                    <audio controls className="w-full">
-                                      <source src={content} type="audio/mpeg" />
-                                      Seu navegador não suporta o elemento de áudio.
-                                    </audio>
-                                  </div>
-                                );
-                              }
-                              
-                              // Video player syntax: ```video\nurl```
-                              if (className === 'language-video') {
-                                return (
-                                  <div className="my-3 bg-muted rounded-lg overflow-hidden border-2 border-pastel-purple/30">
-                                    <video controls className="w-full">
-                                      <source src={content} type="video/mp4" />
-                                      Seu navegador não suporta o elemento de vídeo.
-                                    </video>
-                                  </div>
-                                );
-                              }
-                              
-                              // Chart syntax: ```chart-bar\n{"data":[...],"dataKey":"value","xKey":"name"}```
-                              if (className?.startsWith('language-chart-')) {
-                                try {
-                                  const chartType = className.replace('language-chart-', '') as "bar" | "line" | "pie";
-                                  const chartData = JSON.parse(content);
-                                  return (
-                                    <ChatChartRenderer 
-                                      type={chartType}
-                                      data={chartData.data}
-                                      dataKey={chartData.dataKey || "value"}
-                                      xKey={chartData.xKey || "name"}
-                                      colors={chartData.colors}
-                                    />
-                                  );
-                                } catch (e) {
-                                  console.error("Error parsing chart data:", e);
-                                  return <code className="bg-muted px-1.5 py-0.5 rounded text-xs">Erro ao renderizar gráfico</code>;
-                                }
-                              }
-                              
-                              return <code className="bg-muted px-1.5 py-0.5 rounded text-xs block">{children}</code>;
-                            },
-                          }}
-                        >
-                          {msg.content}
-                        </ReactMarkdown>
+                        <MessageRenderer content={msg.content} />
                       </div>
                     </div>
                   </div>
