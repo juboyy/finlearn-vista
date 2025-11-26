@@ -60,7 +60,7 @@ TEMPLATES DE RESPOSTA:
 # 📰 Principais Notícias - [Data]
 
 ## [Título da Notícia 1]
-![Ilustração da notícia](https://placehold.co/600x300/e9d5ff/1e293b?text=Noticia+1)
+![Ilustração da notícia](IMAGE_GENERATE:Financial news about [topic])
 
 *Categoria* | **[Destaque importante]**
 
@@ -71,7 +71,7 @@ TEMPLATES DE RESPOSTA:
 ---
 
 ## [Título da Notícia 2]
-![Ilustração da notícia](https://placehold.co/600x300/ddd6fe/1e293b?text=Noticia+2)
+![Ilustração da notícia](IMAGE_GENERATE:Financial market news illustration about [topic])
 
 *Categoria* | **[Destaque importante]**
 
@@ -117,7 +117,7 @@ TEMPLATES DE RESPOSTA:
 
 ## Mercados em Foco - EP142: Volatilidade nos Mercados
 
-![Capa do Podcast](https://placehold.co/300x300/fae8ff/1e293b?text=Podcast+EP142)
+![Capa do Podcast](IMAGE_GENERATE:Podcast cover for financial market volatility episode)
 
 *Duração: 45 min* | **Lançado hoje**
 
@@ -135,7 +135,7 @@ Análise profunda sobre a volatilidade recente nos mercados globais e seu impact
 
 ## Open Finance em Destaque - EP25
 
-![Capa do Podcast](https://placehold.co/300x300/e0e7ff/1e293b?text=Open+Finance)
+![Capa do Podcast](IMAGE_GENERATE:Open finance podcast cover illustration)
 
 *Duração: 38 min*
 
@@ -206,7 +206,12 @@ Análise profunda sobre a volatilidade recente nos mercados globais e seu impact
 ---
 
 Mantenha suas respostas focadas, práticas e orientadas a ação. Use dados do mercado brasileiro quando relevante.
-IMPORTANTE: Para imagens de notícias, use placeholders temporários ou URLs de exemplo, pois a geração de imagens virá em uma atualização futura.`,
+
+IMPORTANTE SOBRE IMAGENS: 
+- Use a sintaxe IMAGE_GENERATE: para imagens que devem ser geradas automaticamente
+- Exemplo: ![descrição](IMAGE_GENERATE:prompt para gerar a imagem)
+- O sistema detectará essa sintaxe e gerará imagens reais no estilo da plataforma
+- Descreva bem o contexto da imagem no prompt após IMAGE_GENERATE:`,
     };
 
     const systemPrompt = systemPrompts[agentName] || "Você é um assistente financeiro útil e conhecedor. Forneça respostas claras e concisas.";

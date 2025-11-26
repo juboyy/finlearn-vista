@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Progress } from "@/components/ui/progress";
+import { ChatImageRenderer } from "@/components/Dashboard/ChatImageRenderer";
 import auxiliarAvatar from "@/assets/auxiliar-do-dia-avatar.png";
 import {
   Sheet,
@@ -239,7 +240,7 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
                               );
                             },
                             img: ({ src, alt }) => (
-                              <img src={src} alt={alt} className="rounded-lg my-3 max-w-full h-auto border-2 border-pastel-purple/30 shadow-sm" />
+                              <ChatImageRenderer src={src || ""} alt={alt || ""} />
                             ),
                             code: ({ children, className }) => {
                               // Progress bar syntax: ```progress:75```

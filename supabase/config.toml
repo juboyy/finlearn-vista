@@ -24,3 +24,6 @@ verify_jwt = false
 [functions.generate-assistant-suggestions]
 verify_jwt = false
 
+[functions.generate-chat-image]
+verify_jwt = false
+
