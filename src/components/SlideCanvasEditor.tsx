@@ -926,91 +926,80 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
           </Tooltip>
         </TooltipProvider>
 
-        {onAddChart && (
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      type="button"
-                      size="icon"
-                      className="bg-[#F5C6E3] hover:bg-[#E0B0CF] text-slate-700 border-none w-10 h-10"
-                    >
-                      <BarChart3 className="h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-56 bg-white dark:bg-slate-800 z-50">
-                    <DropdownMenuLabel>Escolha o tipo de gráfico</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem 
-                      onClick={() => handleAddChart("bar")}
-                      className="cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700"
-                    >
-                      <BarChart3 className="mr-2 h-4 w-4" />
-                      <span>Gráfico de Barras</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem 
-                      onClick={() => handleAddChart("line")}
-                      className="cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700"
-                    >
-                      <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
-                      </svg>
-                      <span>Gráfico de Linhas</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem 
-                      onClick={() => handleAddChart("area")}
-                      className="cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700"
-                    >
-                      <svg className="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M3 13h2l2-4 3 6 3-6 3 4 2-2v6H3v-4z" opacity="0.5"/>
-                        <path d="M3 13l2-4 2 4 3-6 3 6 3-4 2 2" fill="none" stroke="currentColor" strokeWidth="2"/>
-                      </svg>
-                      <span>Gráfico de Área</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem 
-                      onClick={() => handleAddChart("scatter")}
-                      className="cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700"
-                    >
-                      <svg className="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                        <circle cx="6" cy="8" r="2"/>
-                        <circle cx="10" cy="14" r="2"/>
-                        <circle cx="14" cy="10" r="2"/>
-                        <circle cx="18" cy="16" r="2"/>
-                      </svg>
-                      <span>Gráfico de Dispersão</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem 
-                      onClick={() => handleAddChart("pie")}
-                      className="cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700"
-                    >
-                      <svg className="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2v10l8.66 5A10 10 0 1 1 12 2z" opacity="0.5"/>
-                        <path d="M12 2a10 10 0 0 1 8.66 15L12 12V2z"/>
-                      </svg>
-                      <span>Gráfico de Pizza</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem 
-                      onClick={() => handleAddChart("donut")}
-                      className="cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700"
-                    >
-                      <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="9" strokeWidth="2"/>
-                        <circle cx="12" cy="12" r="5" strokeWidth="2"/>
-                        <path d="M12 3v4M12 17v4" strokeWidth="2"/>
-                      </svg>
-                      <span>Gráfico Donut</span>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Adicionar Gráfico</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        )}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              type="button"
+              size="icon"
+              className="bg-[#F5C6E3] hover:bg-[#E0B0CF] text-slate-700 border-none w-10 h-10"
+            >
+              <BarChart3 className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56 bg-white border border-slate-200 shadow-lg z-[100]">
+            <DropdownMenuLabel className="text-slate-700">Escolha o tipo de gráfico</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem 
+              onClick={() => handleAddChart("bar")}
+              className="cursor-pointer hover:bg-slate-100 text-slate-700"
+            >
+              <BarChart3 className="mr-2 h-4 w-4" />
+              <span>Gráfico de Barras</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem 
+              onClick={() => handleAddChart("line")}
+              className="cursor-pointer hover:bg-slate-100 text-slate-700"
+            >
+              <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+              </svg>
+              <span>Gráfico de Linhas</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem 
+              onClick={() => handleAddChart("area")}
+              className="cursor-pointer hover:bg-slate-100 text-slate-700"
+            >
+              <svg className="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M3 13h2l2-4 3 6 3-6 3 4 2-2v6H3v-4z" opacity="0.5"/>
+                <path d="M3 13l2-4 2 4 3-6 3 6 3-4 2 2" fill="none" stroke="currentColor" strokeWidth="2"/>
+              </svg>
+              <span>Gráfico de Área</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem 
+              onClick={() => handleAddChart("scatter")}
+              className="cursor-pointer hover:bg-slate-100 text-slate-700"
+            >
+              <svg className="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                <circle cx="6" cy="8" r="2"/>
+                <circle cx="10" cy="14" r="2"/>
+                <circle cx="14" cy="10" r="2"/>
+                <circle cx="18" cy="16" r="2"/>
+              </svg>
+              <span>Gráfico de Dispersão</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem 
+              onClick={() => handleAddChart("pie")}
+              className="cursor-pointer hover:bg-slate-100 text-slate-700"
+            >
+              <svg className="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2v10l8.66 5A10 10 0 1 1 12 2z" opacity="0.5"/>
+                <path d="M12 2a10 10 0 0 1 8.66 15L12 12V2z"/>
+              </svg>
+              <span>Gráfico de Pizza</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem 
+              onClick={() => handleAddChart("donut")}
+              className="cursor-pointer hover:bg-slate-100 text-slate-700"
+            >
+              <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="9" strokeWidth="2"/>
+                <circle cx="12" cy="12" r="5" strokeWidth="2"/>
+                <path d="M12 3v4M12 17v4" strokeWidth="2"/>
+              </svg>
+              <span>Gráfico Donut</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
         <TooltipProvider>
           <Tooltip>
