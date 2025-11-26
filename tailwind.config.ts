@@ -124,6 +124,7 @@ export default {
           purple: "hsl(var(--pastel-purple))",
           purpleBtn: "hsl(var(--pastel-purple-btn))",
           purpleText: "hsl(var(--pastel-purple-text))",
+          purpleDark: "hsl(var(--pastel-purple-dark))",
           pink: "hsl(var(--pastel-pink))",
           pinkBtn: "hsl(var(--pastel-pink-btn))",
           pinkText: "hsl(var(--pastel-pink-text))",
