@@ -158,14 +158,14 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
     };
   }, []);
 
-  // Adicionar conteúdo gerado pela IA apenas para slides novos que têm conteúdo gerado
+  // Adicionar conteúdo gerado pela IA ao carregar o slide
   useEffect(() => {
-    if (!fabricCanvas || !isInitializedRef.current) return;
+    if (!fabricCanvas || !isInitializedRef.current || !slideId) return;
     
     // Se já tem dados salvos no canvas, não sobrescrever
     const hasCanvasData = initialData && Object.keys(initialData).length > 0;
     if (hasCanvasData) {
-      console.log("Slide já tem dados salvos, não adicionar conteúdo gerado");
+      console.log("Slide já tem dados salvos, carregando do cache");
       return;
     }
     
@@ -175,11 +175,12 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
       return;
     }
 
-    console.log("Adicionando conteúdo gerado pela IA ao slide");
+    console.log("Adicionando conteúdo gerado pela IA ao slide automaticamente");
     const addGeneratedContent = async () => {
       try {
-        // Verificar se o canvas está pronto
-        if (!fabricCanvas.getContext()) return;
+        // Limpar canvas antes de adicionar novo conteúdo
+        fabricCanvas.clear();
+        fabricCanvas.backgroundColor = "#ffffff";
         
         let yPosition = 50;
 
@@ -263,13 +264,19 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
       }
 
       fabricCanvas.renderAll();
+      
+      // Salvar o conteúdo inicial automaticamente
+      const json = fabricCanvas.toJSON();
+      lastSaveRef.current = JSON.stringify(json);
+      onUpdate(json);
+      console.log("✅ Conteúdo gerado pela IA adicionado e salvo automaticamente");
     } catch (error) {
       console.error("Erro ao adicionar conteúdo ao canvas:", error);
     }
     };
 
     addGeneratedContent();
-  }, [fabricCanvas, isInitializedRef.current, slideText, slideImage, slideChart, initialData]);
+  }, [fabricCanvas, slideId, slideText, slideImage, slideChart, initialData]);
 
   // Atalho Ctrl+S para salvamento manual
   useEffect(() => {
