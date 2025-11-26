@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Send, Loader2, Newspaper, BookOpen, Video, Target, Headphones, Award, Sparkles, Trash2 } from "lucide-react";
+import { Send, Loader2, Newspaper, BookOpen, Video, Target, Headphones, Award, Sparkles, Trash2, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -8,6 +8,8 @@ import { useAgentChat } from "@/hooks/useAgentChat";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { Progress } from "@/components/ui/progress";
 import auxiliarAvatar from "@/assets/auxiliar-do-dia-avatar.png";
 import {
   Sheet,
@@ -199,8 +201,59 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
                           : "bg-muted text-foreground"
                       }`}
                     >
-                      <div className="text-sm prose prose-sm max-w-none dark:prose-invert">
-                        <ReactMarkdown>{msg.content}</ReactMarkdown>
+                      <div className="prose prose-sm max-w-none dark:prose-invert chat-markdown">
+                        <ReactMarkdown
+                          remarkPlugins={[remarkGfm]}
+                          components={{
+                            h1: ({ children }) => <h1 className="text-2xl font-bold text-foreground mb-4 mt-2">{children}</h1>,
+                            h2: ({ children }) => <h2 className="text-xl font-semibold text-foreground mb-3 mt-2">{children}</h2>,
+                            h3: ({ children }) => <h3 className="text-lg font-medium text-foreground mb-2 mt-2">{children}</h3>,
+                            p: ({ children }) => <p className="text-sm text-foreground mb-2 leading-relaxed">{children}</p>,
+                            ul: ({ children }) => <ul className="list-disc list-inside mb-2 space-y-1">{children}</ul>,
+                            ol: ({ children }) => <ol className="list-decimal list-inside mb-2 space-y-1">{children}</ol>,
+                            strong: ({ children }) => <strong className="font-semibold text-pastel-blue">{children}</strong>,
+                            em: ({ children }) => <em className="italic text-pastel-purple">{children}</em>,
+                            a: ({ href, children }) => {
+                              // Detect podcast links
+                              if (href?.includes('podcast') || href?.includes('audio')) {
+                                return (
+                                  <a href={href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-3 py-2 my-1 bg-pastel-pink rounded-lg hover:bg-pastel-purple transition-colors text-foreground no-underline">
+                                    <Headphones size={16} />
+                                    <span className="text-sm font-medium">{children}</span>
+                                    <ExternalLink size={14} />
+                                  </a>
+                                );
+                              }
+                              return (
+                                <a href={href} target="_blank" rel="noopener noreferrer" className="text-pastel-blue hover:text-pastel-purple underline inline-flex items-center gap-1">
+                                  {children}
+                                  <ExternalLink size={12} />
+                                </a>
+                              );
+                            },
+                            img: ({ src, alt }) => (
+                              <img src={src} alt={alt} className="rounded-lg my-3 max-w-full h-auto border-2 border-pastel-purple/30" />
+                            ),
+                            code: ({ children, className }) => {
+                              // Progress bar syntax: ```progress:75```
+                              if (className === 'language-progress') {
+                                const value = parseInt(String(children).replace('%', ''));
+                                return (
+                                  <div className="my-3 space-y-2">
+                                    <div className="flex justify-between text-xs text-muted-foreground">
+                                      <span>Progresso da Meta</span>
+                                      <span>{value}%</span>
+                                    </div>
+                                    <Progress value={value} className="h-3" />
+                                  </div>
+                                );
+                              }
+                              return <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{children}</code>;
+                            },
+                          }}
+                        >
+                          {msg.content}
+                        </ReactMarkdown>
                       </div>
                     </div>
                   </div>
