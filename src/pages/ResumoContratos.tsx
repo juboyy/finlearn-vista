@@ -524,28 +524,28 @@ export default function ResumoContratos() {
                             ? "hsl(322, 48%, 75%)" 
                             : agent.bgColor 
                         }}
-                        className={`w-full p-4 rounded-xl border-2 transition-all text-left ${
+                        className={`w-full p-3 rounded-xl border-2 transition-all text-left ${
                           selectedAgent === agent.id 
                             ? 'border-slate-400 shadow-lg scale-[1.02]' 
                             : 'border-slate-300 hover:border-slate-400 hover:shadow-md'
                         }`}
                       >
-                        <div className="flex items-start gap-3">
+                        <div className="flex items-start gap-2.5">
                           <img 
                             src={agent.image} 
                             alt={agent.name}
-                            className="w-12 h-12 rounded-full object-cover flex-shrink-0"
+                            className="w-11 h-11 rounded-full object-cover flex-shrink-0"
                           />
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-1">
                               <span className="font-semibold text-slate-800 text-sm">{agent.name}</span>
                               <div className="flex items-center gap-1">
                                 <i className="fas fa-star text-yellow-500 text-xs"></i>
-                                <span className="text-xs text-slate-600">{agent.rating}</span>
+                                <span className="text-xs text-slate-900">{agent.rating}</span>
                               </div>
                             </div>
-                            <p className="text-xs text-slate-600 leading-tight mb-1">{agent.description}</p>
-                            <span className="inline-block px-2 py-0.5 bg-slate-200 text-slate-700 text-xs rounded-full">
+                            <p className="text-xs text-slate-900 leading-tight mb-1">{agent.description}</p>
+                            <span className="inline-block px-2 py-0.5 bg-slate-200 text-slate-900 text-xs rounded-full">
                               {agent.category}
                             </span>
                           </div>
