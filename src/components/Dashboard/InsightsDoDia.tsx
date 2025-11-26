@@ -3,6 +3,7 @@ import { Send, Loader2, Newspaper, BookOpen, Video, Target, Headphones, Award, S
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { useAgentChat } from "@/hooks/useAgentChat";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -121,13 +122,12 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
             {/* Header */}
             <SheetHeader className="border-b border-border p-6 pb-4">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 bg-pastel-purple">
-                  <img 
+                <Avatar className="w-12 h-12 flex-shrink-0">
+                  <AvatarImage 
                     src="https://storage.googleapis.com/uxpilot-auth.appspot.com/7f4f5eae9b-7e9b1f43f4fe2b6ce84f.png" 
                     alt="Auxiliar do dia" 
-                    className="w-full h-full object-cover" 
                   />
-                </div>
+                </Avatar>
                 <div className="flex-1">
                   <SheetTitle className="text-xl font-semibold text-foreground">
                     Agente de IA - Auxiliar do dia
@@ -181,13 +181,12 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
                     className={`flex gap-3 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                   >
                     {msg.role === "assistant" && (
-                      <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 bg-pastel-purple">
-                        <img 
+                      <Avatar className="w-8 h-8 flex-shrink-0">
+                        <AvatarImage 
                           src="https://storage.googleapis.com/uxpilot-auth.appspot.com/7f4f5eae9b-7e9b1f43f4fe2b6ce84f.png" 
                           alt="Auxiliar do dia" 
-                          className="w-full h-full object-cover" 
                         />
-                      </div>
+                      </Avatar>
                     )}
                     <div
                       className={`max-w-[70%] rounded-lg px-4 py-3 ${
@@ -204,13 +203,12 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
                 ))}
                 {isLoading && (
                   <div className="flex gap-3 justify-start">
-                    <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 bg-pastel-purple">
-                      <img 
+                    <Avatar className="w-8 h-8 flex-shrink-0">
+                      <AvatarImage 
                         src="https://storage.googleapis.com/uxpilot-auth.appspot.com/7f4f5eae9b-7e9b1f43f4fe2b6ce84f.png" 
                         alt="Auxiliar do dia" 
-                        className="w-full h-full object-cover" 
                       />
-                    </div>
+                    </Avatar>
                     <div className="bg-muted rounded-lg px-4 py-3 flex items-center gap-2">
                       <Loader2 className="animate-spin" size={16} />
                       <span className="text-sm text-muted-foreground">Pensando...</span>
