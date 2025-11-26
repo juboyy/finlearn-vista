@@ -38,8 +38,8 @@ const mockInsights = [
     priority: "high" as const,
     is_read: false,
     metadata: { showAuthor: true, authorName: "Marina Costa", articleTitle: "Protocolos DeFi no Brasil" },
-    created_at: new Date(Date.now() - 1 * 60 * 60 * 1000).toISOString(),
-    updated_at: new Date(Date.now() - 1 * 60 * 60 * 1000).toISOString(),
+    created_at: new Date(Date.now() - 15 * 60 * 1000).toISOString(), // 15 minutos atrás
+    updated_at: new Date(Date.now() - 15 * 60 * 1000).toISOString(),
   },
   {
     id: "3",
@@ -50,8 +50,8 @@ const mockInsights = [
     priority: "high" as const,
     is_read: false,
     metadata: { showProgress: true, progressValue: 78, progressLabel: "Taxa de engajamento" },
-    created_at: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(),
-    updated_at: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(),
+    created_at: new Date(Date.now() - 30 * 60 * 1000).toISOString(), // 30 minutos atrás
+    updated_at: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
   },
   {
     id: "4",
@@ -119,6 +119,9 @@ export const InsightsSuggestions = ({ open, onOpenChange }: InsightsSuggestionsP
   const [activeTab, setActiveTab] = useState("todas");
   const [insights, setInsights] = useState(mockInsights);
 
+  console.log("📊 Total insights:", insights.length);
+  console.log("🔍 Insights data:", insights.slice(0, 3).map(i => ({ id: i.id, title: i.title })));
+
   const unreadCount = insights.filter(i => !i.is_read).length;
 
   const filteredInsights = activeTab === "nao-lidas" 
@@ -128,6 +131,15 @@ export const InsightsSuggestions = ({ open, onOpenChange }: InsightsSuggestionsP
     : activeTab === "lembretes"
     ? insights.filter(s => s.suggestion_type === "reminders")
     : insights;
+
+  // Sort by created_at descending (most recent first)
+  const sortedInsights = [...filteredInsights].sort((a, b) => 
+    new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+  );
+
+  console.log("🎯 Active tab:", activeTab);
+  console.log("📋 Filtered insights count:", sortedInsights.length);
+  console.log("🔝 First 3 insights:", sortedInsights.slice(0, 3).map(i => i.title));
 
   const handleMarkAsRead = (id: string) => {
     setInsights(prev => prev.map(i => i.id === id ? { ...i, is_read: true } : i));
@@ -195,9 +207,9 @@ export const InsightsSuggestions = ({ open, onOpenChange }: InsightsSuggestionsP
         </SheetHeader>
 
         <ScrollArea className="h-[calc(100vh-180px)] px-6 py-4">
-          {filteredInsights.length > 0 ? (
+          {sortedInsights.length > 0 ? (
             <div className="space-y-4">
-              {filteredInsights.map((suggestion) => (
+              {sortedInsights.map((suggestion) => (
                 <AssistantSuggestionCard
                   key={suggestion.id}
                   suggestion={suggestion}
