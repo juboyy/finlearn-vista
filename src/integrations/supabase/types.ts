@@ -188,6 +188,54 @@ export type Database = {
         }
         Relationships: []
       }
+      product_promotions: {
+        Row: {
+          created_at: string
+          discount_percentage: number
+          ends_at: string
+          id: string
+          is_active: boolean | null
+          original_price: number
+          product_category: string | null
+          product_id: string
+          product_tags: string[] | null
+          product_title: string
+          product_type: string
+          promotional_price: number
+          starts_at: string
+        }
+        Insert: {
+          created_at?: string
+          discount_percentage: number
+          ends_at: string
+          id?: string
+          is_active?: boolean | null
+          original_price: number
+          product_category?: string | null
+          product_id: string
+          product_tags?: string[] | null
+          product_title: string
+          product_type: string
+          promotional_price: number
+          starts_at?: string
+        }
+        Update: {
+          created_at?: string
+          discount_percentage?: number
+          ends_at?: string
+          id?: string
+          is_active?: boolean | null
+          original_price?: number
+          product_category?: string | null
+          product_id?: string
+          product_tags?: string[] | null
+          product_title?: string
+          product_type?: string
+          promotional_price?: number
+          starts_at?: string
+        }
+        Relationships: []
+      }
       saved_charts: {
         Row: {
           chart_data: Json
@@ -259,6 +307,45 @@ export type Database = {
           time_spent_seconds?: number | null
           user_id?: string
           viewed_at?: string
+        }
+        Relationships: []
+      }
+      user_notifications: {
+        Row: {
+          action_url: string | null
+          created_at: string
+          id: string
+          is_read: boolean | null
+          message: string
+          metadata: Json | null
+          notification_type: string
+          read_at: string | null
+          title: string
+          user_id: string
+        }
+        Insert: {
+          action_url?: string | null
+          created_at?: string
+          id?: string
+          is_read?: boolean | null
+          message: string
+          metadata?: Json | null
+          notification_type: string
+          read_at?: string | null
+          title: string
+          user_id?: string
+        }
+        Update: {
+          action_url?: string | null
+          created_at?: string
+          id?: string
+          is_read?: boolean | null
+          message?: string
+          metadata?: Json | null
+          notification_type?: string
+          read_at?: string | null
+          title?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -348,7 +435,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      deactivate_expired_promotions: { Args: never; Returns: undefined }
     }
     Enums: {
       [_ in never]: never

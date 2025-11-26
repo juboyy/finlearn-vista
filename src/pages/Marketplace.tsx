@@ -11,12 +11,16 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useRecommendations } from "@/hooks/useRecommendations";
+import { useNotifications } from "@/hooks/useNotifications";
+import { NotificationsPanel } from "@/components/NotificationsPanel";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const Marketplace = () => {
   const navigate = useNavigate();
   const mockUserId = "user-123"; // In production, get from auth context
   const { recommendations, isLoading } = useRecommendations(mockUserId);
+  const { unreadCount } = useNotifications(mockUserId);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
   
   return (
     <div className="flex h-screen overflow-hidden">
@@ -35,9 +39,16 @@ const Marketplace = () => {
                 </p>
               </div>
               <div className="flex items-center gap-4">
-                <button className="relative p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
+                <button 
+                  onClick={() => setNotificationsOpen(true)}
+                  className="relative p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition"
+                >
                   <Bell className="w-5 h-5" />
-                  <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                  {unreadCount > 0 && (
+                    <span className="absolute top-1 right-1 px-1.5 min-w-[18px] h-[18px] bg-red-500 text-white text-xs font-medium rounded-full flex items-center justify-center">
+                      {unreadCount > 9 ? '9+' : unreadCount}
+                    </span>
+                  )}
                 </button>
                 <button className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
                   <Upload className="w-4 h-4 inline mr-2" />
@@ -730,6 +741,12 @@ const Marketplace = () => {
           </div>
         </div>
       </main>
+
+      <NotificationsPanel 
+        open={notificationsOpen}
+        onOpenChange={setNotificationsOpen}
+        userId={mockUserId}
+      />
     </div>
   );
 };
