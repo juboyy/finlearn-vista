@@ -124,27 +124,29 @@ export default function MeusConteudos() {
       
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
-        <header className="bg-card border-b border-border flex-none">
-          <div className="px-8 py-4 flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Link to="/aprendizado" className="text-muted-foreground hover:text-foreground transition-colors">
-                <ArrowLeft className="w-5 h-5" />
-              </Link>
-              <h1 className="text-lg font-semibold text-foreground">Meus Conteúdos</h1>
-            </div>
-            
-            <div className="flex items-center gap-4">
-              <button className="w-10 h-10 rounded-full hover:bg-accent/10 flex items-center justify-center text-muted-foreground transition-colors relative">
-                <Bell className="w-5 h-5" />
-                <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-card"></span>
-              </button>
+        <header className="bg-card border-b border-border">
+          <div className="px-8 py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <Link to="/aprendizado" className="text-muted-foreground hover:text-foreground transition-colors">
+                  <ArrowLeft className="w-5 h-5" />
+                </Link>
+                <h1 className="text-2xl font-semibold text-foreground">Meus Conteúdos</h1>
+              </div>
               
-              <Link to="/criar-conteudo">
-                <button className="bg-primary hover:bg-primary/90 text-primary-foreground px-5 py-2.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 shadow-sm">
-                  <Plus className="w-4 h-4" />
-                  Criar Novo
+              <div className="flex items-center gap-4">
+                <button className="w-10 h-10 rounded-full hover:bg-accent/10 flex items-center justify-center text-muted-foreground transition-colors relative">
+                  <Bell className="w-5 h-5" />
+                  <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-card"></span>
                 </button>
-              </Link>
+                
+                <Link to="/criar-conteudo">
+                  <button className="bg-primary hover:bg-primary/90 text-primary-foreground px-5 py-2.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 shadow-sm">
+                    <Plus className="w-4 h-4" />
+                    Criar Novo
+                  </button>
+                </Link>
+              </div>
             </div>
           </div>
         </header>
