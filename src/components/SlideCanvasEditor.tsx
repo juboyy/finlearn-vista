@@ -24,7 +24,7 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
 
     const canvas = new FabricCanvas(canvasRef.current, {
       width: 1000,
-      height: 600,
+      height: 800,
       backgroundColor: "#ffffff",
     });
 
@@ -68,22 +68,27 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
         const textBox = new Textbox(slideText, {
           left: 50,
           top: yPosition,
-          width: 500,
-          fontSize: 16,
+          width: 850,
+          fontSize: 18,
           fill: "#1e293b",
           fontFamily: "Arial",
           selectable: true,
           editable: true,
+          lineHeight: 1.5,
         });
         fabricCanvas.add(textBox);
-        yPosition += 200;
+        yPosition = textBox.top + textBox.height! + 30;
       }
 
-      // Adicionar imagem gerada
-      if (slideImage) {
+      // Adicionar imagem e gráfico lado a lado
+      const contentWidth = 400;
+      const contentSpacing = 50;
+      
+      if (slideImage && slideChart) {
+        // Imagem à esquerda
         try {
           const img = await FabricImage.fromURL(slideImage);
-          img.scaleToWidth(300);
+          img.scaleToWidth(contentWidth);
           img.set({
             left: 50,
             top: yPosition,
@@ -93,20 +98,46 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
         } catch (error) {
           console.error("Erro ao adicionar imagem ao canvas:", error);
         }
-      }
 
-      // Adicionar gráfico (como imagem ou placeholder)
-      if (slideChart) {
-        const chartText = new Textbox(`Gráfico: ${slideChart.title || 'Sem título'}`, {
-          left: 550,
+        // Gráfico à direita
+        const chartText = new Textbox(`📊 ${slideChart.title || 'Gráfico'}\n\n${JSON.stringify(slideChart.data || [], null, 2)}`, {
+          left: 50 + contentWidth + contentSpacing,
           top: yPosition,
-          width: 400,
+          width: contentWidth,
           fontSize: 14,
           fill: "#475569",
           fontFamily: "Arial",
-          fontStyle: "italic",
           selectable: true,
           editable: true,
+          backgroundColor: "#f8fafc",
+        });
+        fabricCanvas.add(chartText);
+      } else if (slideImage) {
+        // Apenas imagem (maior)
+        try {
+          const img = await FabricImage.fromURL(slideImage);
+          img.scaleToWidth(contentWidth * 1.5);
+          img.set({
+            left: 50,
+            top: yPosition,
+            selectable: true,
+          });
+          fabricCanvas.add(img);
+        } catch (error) {
+          console.error("Erro ao adicionar imagem ao canvas:", error);
+        }
+      } else if (slideChart) {
+        // Apenas gráfico (maior)
+        const chartText = new Textbox(`📊 ${slideChart.title || 'Gráfico'}\n\n${JSON.stringify(slideChart.data || [], null, 2)}`, {
+          left: 50,
+          top: yPosition,
+          width: contentWidth * 1.5,
+          fontSize: 14,
+          fill: "#475569",
+          fontFamily: "Arial",
+          selectable: true,
+          editable: true,
+          backgroundColor: "#f8fafc",
         });
         fabricCanvas.add(chartText);
       }
