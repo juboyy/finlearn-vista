@@ -161,16 +161,11 @@ export default function HistoricoResumos() {
               <Link to="/resumo-contratos" className="p-2 hover:bg-slate-100 rounded-lg transition">
                 <ArrowLeft className="h-5 w-5 text-slate-600" />
               </Link>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-[hsl(206,35%,75%)]">
-                  <FileText className="h-5 w-5 text-slate-700" />
-                </div>
-                <div>
-                  <h1 className="text-2xl font-semibold text-slate-800">Histórico de Resumos</h1>
-                  <p className="text-sm text-slate-600">
-                    {filteredHistory.length} {filteredHistory.length === 1 ? "resumo encontrado" : "resumos encontrados"}
-                  </p>
-                </div>
+              <div>
+                <h1 className="text-2xl font-semibold text-slate-800">Histórico de Resumos</h1>
+                <p className="text-sm text-slate-500 mt-1">
+                  {filteredHistory.length} {filteredHistory.length === 1 ? "resumo encontrado" : "resumos encontrados"}
+                </p>
               </div>
             </div>
           </div>
