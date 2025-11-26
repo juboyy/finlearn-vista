@@ -579,7 +579,7 @@ IMPORTANTE:
             </Button>
             <Button
               onClick={clearAllSlides}
-              className="bg-red-500 hover:bg-red-600 text-white"
+              className="bg-slate-700 hover:bg-white text-white hover:text-slate-700 border hover:border-slate-700"
             >
               Limpar Tudo
             </Button>
