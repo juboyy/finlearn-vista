@@ -172,17 +172,22 @@ export default function NovoEbookEtapa2() {
               {/* Form Sections */}
               <div className="col-span-2 space-y-6">
                 {/* Cover Upload */}
-                <div className={`bg-card rounded-xl border p-8 ${showValidation && !formData.coverImage ? 'border-destructive' : formData.coverImage ? 'border-[hsl(142,35%,50%)]' : 'border-border'}`}>
+                <div className={`bg-gradient-to-br from-card via-card to-[hsl(340,50%,95%)] rounded-2xl border-2 shadow-lg p-8 ${showValidation && !formData.coverImage ? 'border-destructive' : formData.coverImage ? 'border-[hsl(142,35%,50%)]' : 'border-border'}`}>
                   <div className="flex items-center justify-between mb-6">
-                    <div>
-                      <h3 className="text-xl font-semibold text-foreground flex items-center gap-2">
-                        Capa do eBook
-                        <span className="text-destructive">*</span>
-                      </h3>
-                      <p className="text-sm text-muted-foreground mt-1">A capa é a primeira impressão do seu produto</p>
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-[hsl(340,50%,75%)] to-[hsl(340,50%,85%)] rounded-xl flex items-center justify-center shadow-md">
+                        <ImageIcon className="w-6 h-6 text-[hsl(215,20%,40%)]" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-foreground flex items-center gap-2">
+                          Capa do eBook
+                          <span className="text-destructive">*</span>
+                        </h3>
+                        <p className="text-sm text-muted-foreground mt-1">A capa é a primeira impressão do seu produto</p>
+                      </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="px-3 py-1 bg-[hsl(340,50%,85%)] text-[hsl(215,20%,40%)] text-xs font-medium rounded-full">Obrigatório</span>
+                      <span className="px-4 py-1.5 bg-gradient-to-r from-[hsl(340,50%,85%)] to-[hsl(340,50%,90%)] text-[hsl(215,20%,40%)] text-xs font-bold rounded-full shadow-sm">Obrigatório</span>
                       {showValidation && !formData.coverImage && (
                         <span className="text-xs text-destructive flex items-center gap-1">
                           <span className="w-2 h-2 bg-destructive rounded-full"></span>
@@ -262,17 +267,22 @@ export default function NovoEbookEtapa2() {
                 </div>
 
                 {/* Main File Upload */}
-                <div className={`bg-card rounded-xl border p-8 ${showValidation && !formData.mainFile ? 'border-destructive' : formData.mainFile ? 'border-[hsl(142,35%,50%)]' : 'border-border'}`}>
+                <div className={`bg-gradient-to-br from-card via-card to-[hsl(206,35%,95%)] rounded-2xl border-2 shadow-lg p-8 ${showValidation && !formData.mainFile ? 'border-destructive' : formData.mainFile ? 'border-[hsl(142,35%,50%)]' : 'border-border'}`}>
                   <div className="flex items-center justify-between mb-6">
-                    <div>
-                      <h3 className="text-xl font-semibold text-foreground flex items-center gap-2">
-                        Arquivo Principal do eBook
-                        <span className="text-destructive">*</span>
-                      </h3>
-                      <p className="text-sm text-muted-foreground mt-1">Upload do conteúdo completo que será entregue aos compradores</p>
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-[hsl(206,50%,75%)] to-[hsl(206,50%,85%)] rounded-xl flex items-center justify-center shadow-md">
+                        <FileText className="w-6 h-6 text-[hsl(215,20%,40%)]" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-foreground flex items-center gap-2">
+                          Arquivo Principal do eBook
+                          <span className="text-destructive">*</span>
+                        </h3>
+                        <p className="text-sm text-muted-foreground mt-1">Upload do conteúdo completo que será entregue aos compradores</p>
+                      </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="px-3 py-1 bg-[hsl(340,50%,85%)] text-[hsl(215,20%,40%)] text-xs font-medium rounded-full">Obrigatório</span>
+                      <span className="px-4 py-1.5 bg-gradient-to-r from-[hsl(206,50%,85%)] to-[hsl(206,50%,90%)] text-[hsl(215,20%,40%)] text-xs font-bold rounded-full shadow-sm">Obrigatório</span>
                       {showValidation && !formData.mainFile && (
                         <span className="text-xs text-destructive flex items-center gap-1">
                           <span className="w-2 h-2 bg-destructive rounded-full"></span>
@@ -706,13 +716,18 @@ export default function NovoEbookEtapa2() {
                   </div>
 
                   {/* Help Card */}
-                  <div className="bg-[hsl(270,35%,85%)] rounded-xl border border-border p-6">
-                    <div className="flex items-start gap-3 mb-4">
-                      <HelpCircle className="w-5 h-5 text-[hsl(215,20%,40%)]" />
-                      <h3 className="text-lg font-semibold text-foreground">Precisa de Ajuda?</h3>
+                  <div className="bg-gradient-to-br from-[hsl(270,50%,85%)] via-card to-card rounded-2xl border-2 border-[hsl(270,50%,75%)] p-6 shadow-lg">
+                    <div className="flex items-start gap-3 mb-5">
+                      <div className="w-12 h-12 bg-gradient-to-br from-[hsl(270,60%,75%)] to-[hsl(270,60%,85%)] rounded-xl flex items-center justify-center shadow-md">
+                        <HelpCircle className="w-6 h-6 text-[hsl(215,20%,40%)]" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-bold text-foreground">Precisa de Ajuda?</h3>
+                        <p className="text-sm text-muted-foreground mt-1">Estamos aqui para você</p>
+                      </div>
                     </div>
-                    <p className="text-sm text-[hsl(215,20%,40%)] mb-4">Nossa equipe está pronta para auxiliar com qualquer dúvida sobre upload de arquivos.</p>
-                    <button className="w-full px-4 py-2 bg-foreground text-background rounded-lg font-medium hover:bg-foreground/90 transition-colors text-sm">
+                    <p className="text-sm text-foreground mb-5 p-3 bg-card/50 rounded-lg">Nossa equipe está pronta para auxiliar com qualquer dúvida sobre upload de arquivos.</p>
+                    <button className="w-full px-4 py-3 bg-gradient-to-r from-foreground to-muted-foreground text-background rounded-xl font-bold hover:shadow-lg transition-all text-sm transform hover:scale-105">
                       <HelpCircle className="w-4 h-4 inline mr-2" />
                       Falar com Suporte
                     </button>

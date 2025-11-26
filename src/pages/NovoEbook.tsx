@@ -1,6 +1,6 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { StepWizard } from "@/components/Dashboard/StepWizard";
-import { ArrowLeft, Plus, Save, ArrowRight, Lightbulb, ClipboardCheck, Headset, Book, GraduationCap, FileText } from "lucide-react";
+import { ArrowLeft, Plus, Save, ArrowRight, Lightbulb, ClipboardCheck, Headset, Book, GraduationCap, FileText, CheckCircle2 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -244,14 +244,22 @@ export default function NovoEbook() {
               <div className="grid grid-cols-3 gap-8">
                 {/* Form Content */}
                 <div className="col-span-2">
-                  <div className="bg-card rounded-xl border border-border p-8">
-                    <div className="flex items-center gap-3 mb-8 pb-6 border-b border-border">
-                      <div className="w-12 h-12 bg-[hsl(206,35%,85%)] rounded-lg flex items-center justify-center">
-                        <Book className="w-6 h-6 text-[hsl(215,20%,40%)]" />
+                  <div className="bg-gradient-to-br from-card via-card to-[hsl(206,35%,95%)] rounded-2xl border-2 border-border p-8 shadow-lg">
+                    <div className="flex items-center gap-4 mb-8 pb-6 border-b-2 border-dashed border-border">
+                      <div className="relative">
+                        <div className="w-16 h-16 bg-gradient-to-br from-[hsl(206,50%,75%)] to-[hsl(206,50%,85%)] rounded-2xl flex items-center justify-center shadow-md transform hover:scale-105 transition-transform">
+                          <Book className="w-8 h-8 text-[hsl(215,20%,40%)]" />
+                        </div>
+                        <div className="absolute -top-1 -right-1 w-5 h-5 bg-[hsl(142,50%,70%)] rounded-full border-2 border-card flex items-center justify-center">
+                          <span className="text-xs font-bold text-white">1</span>
+                        </div>
                       </div>
-                      <div>
-                        <h2 className="text-2xl font-semibold text-foreground">Etapa 1: Informações Básicas</h2>
-                        <p className="text-sm text-muted-foreground mt-1">Preencha os dados essenciais do seu produto</p>
+                      <div className="flex-1">
+                        <h2 className="text-2xl font-bold text-foreground bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text">Informações Básicas</h2>
+                        <p className="text-sm text-muted-foreground mt-1 flex items-center gap-2">
+                          <span className="w-2 h-2 bg-[hsl(142,50%,70%)] rounded-full animate-pulse"></span>
+                          Preencha os dados essenciais do seu produto
+                        </p>
                       </div>
                     </div>
                     
@@ -689,12 +697,12 @@ export default function NovoEbook() {
                 <div className="col-span-1">
                   <div className="sticky top-24 space-y-6">
                     {/* Help Card */}
-                    <div className="bg-card rounded-xl border border-border p-6">
-                      <div className="flex items-center gap-3 mb-4">
-                        <div className="w-10 h-10 bg-[hsl(48,35%,85%)] rounded-lg flex items-center justify-center">
-                          <Lightbulb className="w-5 h-5 text-[hsl(215,20%,40%)]" />
+                    <div className="bg-gradient-to-br from-[hsl(48,50%,85%)] via-card to-card rounded-2xl border-2 border-[hsl(48,50%,75%)] p-6 shadow-lg">
+                      <div className="flex items-center gap-3 mb-5">
+                        <div className="w-12 h-12 bg-gradient-to-br from-[hsl(48,60%,75%)] to-[hsl(48,60%,85%)] rounded-xl flex items-center justify-center shadow-md">
+                          <Lightbulb className="w-6 h-6 text-[hsl(215,20%,40%)]" />
                         </div>
-                        <h3 className="font-semibold text-foreground">Dicas para Etapa 1</h3>
+                        <h3 className="font-bold text-foreground text-lg">Dicas para Etapa 1</h3>
                       </div>
                       <ul className="space-y-3 text-sm text-foreground">
                         {[
@@ -704,8 +712,8 @@ export default function NovoEbook() {
                           'A descrição curta deve despertar interesse imediato',
                           'Destaque suas credenciais para gerar confiança'
                         ].map((tip, index) => (
-                          <li key={index} className="flex items-start gap-2">
-                            <span className="text-[hsl(142,35%,65%)] mt-0.5">✓</span>
+                          <li key={index} className="flex items-start gap-2 p-2 rounded-lg hover:bg-card/50 transition-colors">
+                            <span className="text-[hsl(142,50%,60%)] mt-0.5 font-bold text-base">✓</span>
                             <span>{tip}</span>
                           </li>
                         ))}
@@ -713,29 +721,34 @@ export default function NovoEbook() {
                     </div>
 
                     {/* Progress Card */}
-                    <div className="bg-card rounded-xl border border-border p-6">
-                      <h3 className="font-semibold text-foreground mb-4">Progresso da Etapa 1</h3>
-                      <div className="space-y-4">
+                    <div className="bg-gradient-to-br from-card via-card to-[hsl(206,35%,95%)] rounded-2xl border-2 border-border p-6 shadow-lg">
+                      <div className="flex items-center gap-3 mb-5">
+                        <div className="w-10 h-10 bg-gradient-to-br from-[hsl(206,50%,75%)] to-[hsl(206,50%,85%)] rounded-xl flex items-center justify-center shadow-md">
+                          <CheckCircle2 className="w-5 h-5 text-[hsl(215,20%,40%)]" />
+                        </div>
+                        <h3 className="font-bold text-foreground text-lg">Progresso</h3>
+                      </div>
+                      <div className="space-y-5">
                         <div>
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="text-sm text-muted-foreground">Campos obrigatórios</span>
-                            <span className="text-sm font-semibold text-foreground">{filledCount}/{totalRequired}</span>
+                          <div className="flex items-center justify-between mb-3">
+                            <span className="text-sm font-medium text-muted-foreground">Campos obrigatórios</span>
+                            <span className="text-base font-bold text-foreground bg-[hsl(206,50%,85%)] px-3 py-1 rounded-full">{filledCount}/{totalRequired}</span>
                           </div>
-                          <div className="h-2 bg-muted rounded-full overflow-hidden">
+                          <div className="h-3 bg-muted rounded-full overflow-hidden shadow-inner">
                             <div 
-                              className="h-full bg-foreground transition-all duration-300" 
+                              className="h-full bg-gradient-to-r from-[hsl(206,50%,70%)] to-[hsl(206,50%,80%)] transition-all duration-500 shadow-sm" 
                               style={{ width: `${progressPercentage}%` }}
                             ></div>
                           </div>
                         </div>
                         <div>
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="text-sm text-muted-foreground">Completude</span>
-                            <span className="text-sm font-semibold text-foreground">{Math.round(progressPercentage)}%</span>
+                          <div className="flex items-center justify-between mb-3">
+                            <span className="text-sm font-medium text-muted-foreground">Completude</span>
+                            <span className="text-base font-bold text-foreground bg-[hsl(142,50%,80%)] px-3 py-1 rounded-full">{Math.round(progressPercentage)}%</span>
                           </div>
-                          <div className="h-2 bg-muted rounded-full overflow-hidden">
+                          <div className="h-3 bg-muted rounded-full overflow-hidden shadow-inner">
                             <div 
-                              className="h-full bg-[hsl(142,35%,65%)] transition-all duration-300" 
+                              className="h-full bg-gradient-to-r from-[hsl(142,50%,65%)] to-[hsl(142,50%,75%)] transition-all duration-500 shadow-sm" 
                               style={{ width: `${progressPercentage}%` }}
                             ></div>
                           </div>
