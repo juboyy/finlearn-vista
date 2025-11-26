@@ -807,37 +807,61 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
 
       {/* Toolbar */}
       <div className="flex items-center gap-2 p-3 bg-white border-2 border-slate-200 rounded-lg">
-        <Button
-          type="button"
-          size="sm"
-          onClick={handleViewSlide}
-          className="bg-[hsl(206,35%,75%)] hover:bg-[hsl(206,35%,65%)] text-slate-800 font-semibold"
-        >
-          <Eye className="h-4 w-4 mr-2" />
-          Ver Slide
-        </Button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                type="button"
+                size="icon"
+                onClick={handleViewSlide}
+                className="bg-[#F5C6E3] hover:bg-[#E0B0CF] text-slate-700 border-none w-10 h-10"
+              >
+                <Eye className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Ver Slide</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
         
         <div className="w-px h-6 bg-slate-300" />
         
-        <Button
-          type="button"
-          size="sm"
-          onClick={handleAddText}
-          className="bg-[hsl(206,35%,75%)] hover:bg-[hsl(206,35%,65%)] text-slate-800"
-        >
-          <Type className="h-4 w-4 mr-2" />
-          Adicionar Texto
-        </Button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                type="button"
+                size="icon"
+                onClick={handleAddText}
+                className="bg-[#F5C6E3] hover:bg-[#E0B0CF] text-slate-700 border-none w-10 h-10"
+              >
+                <Type className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Adicionar Texto</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
 
-        <Button
-          type="button"
-          size="sm"
-          onClick={() => fileInputRef.current?.click()}
-          className="bg-[hsl(322,35%,75%)] hover:bg-[hsl(322,35%,65%)] text-slate-800"
-        >
-          <ImageIcon className="h-4 w-4 mr-2" />
-          Adicionar Imagem
-        </Button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                type="button"
+                size="icon"
+                onClick={() => fileInputRef.current?.click()}
+                className="bg-[#F5C6E3] hover:bg-[#E0B0CF] text-slate-700 border-none w-10 h-10"
+              >
+                <ImageIcon className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Adicionar Imagem</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
 
         {onAddChart && (
           <DropdownMenu>
