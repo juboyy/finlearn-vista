@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Upload, FileText, Loader2, Download } from "lucide-react";
+import { ArrowLeft, Upload, FileText, Loader2, Download, ChartLine, Landmark, Bitcoin, GraduationCap, TrendingUp, CreditCard, Database, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -8,86 +8,114 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
-const agentTypes = [
-  { 
-    id: "analise", 
-    name: "Análise", 
-    icon: "fas fa-chart-line", 
-    color: "hsl(206, 50%, 75%)",
-    bgColor: "#B8D4E8",
-    description: "Relatórios e análises de contratos" 
+const specializedAgents = [
+  {
+    id: "analista-tecnica",
+    name: "Ana - Analista Técnica",
+    description: "Especialista em análise técnica, padrões gráficos e estratégias de trading",
+    icon: ChartLine,
+    bgColor: "hsl(206,35%,75%)",
+    image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/f28f1efee6-bb8cd63f0a8ea0129291.png",
+    category: "Análise",
+    rating: "4.9"
   },
-  { 
-    id: "compliance", 
-    name: "Compliance", 
-    icon: "fas fa-balance-scale", 
-    color: "hsl(152, 48%, 75%)",
-    bgColor: "#C5E8D4",
-    description: "Documentos regulatórios e conformidade" 
+  {
+    id: "renda-fixa",
+    name: "Ricardo - Especialista em Renda Fixa",
+    description: "Expert em títulos públicos, CDBs, LCIs e estratégias conservadoras",
+    icon: Landmark,
+    bgColor: "hsl(280,35%,75%)",
+    image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4f08e86bcd-772ce53ecbb47d504bde.png",
+    category: "Renda Fixa",
+    rating: "4.8"
   },
-  { 
-    id: "juridico", 
-    name: "Jurídico", 
-    icon: "fas fa-file-contract", 
-    color: "hsl(322, 48%, 75%)",
-    bgColor: "#E8C5D8",
-    description: "Documentos legais e contratuais" 
+  {
+    id: "crypto-defi",
+    name: "Marina - Crypto & DeFi",
+    description: "Especialista em criptomoedas, DeFi e tecnologia blockchain",
+    icon: Bitcoin,
+    bgColor: "hsl(340,35%,75%)",
+    image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/521bb99722-72b06772970c6fd465e6.png",
+    category: "Crypto",
+    rating: "4.7"
   },
-  { 
-    id: "estrategia", 
-    name: "Estratégia", 
-    icon: "fas fa-lightbulb", 
-    color: "hsl(44, 70%, 75%)",
-    bgColor: "#E8E0C5",
-    description: "Planejamento e insights estratégicos" 
-  }
-];
-
-const specificAgents = [
-  { 
-    value: "advogado-mercado-capitais", 
-    label: "⚖️ Advogado Mercado de Capitais",
-    description: "Operações estruturadas",
-    category: "Jurídico"
+  {
+    id: "educador-financeiro",
+    name: "Professor João - Educador",
+    description: "Educador financeiro com foco em fundamentos e teoria econômica",
+    icon: GraduationCap,
+    bgColor: "hsl(160,35%,75%)",
+    image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4450be57c6-3f9f4c9c029e3c4d7519.png",
+    category: "Educação",
+    rating: "4.9"
   },
-  { 
-    value: "especialista-contratos", 
-    label: "📄 Especialista em Contratos",
-    description: "Documentação legal",
-    category: "Jurídico"
+  {
+    id: "mercado-financeiro",
+    name: "Especialista em Mercado Financeiro",
+    description: "Expert em análise de mercados, ações e tendências econômicas",
+    icon: TrendingUp,
+    bgColor: "hsl(206,35%,75%)",
+    image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-74fa07dc19664888168d.png",
+    category: "Mercados",
+    rating: "4.8"
   },
-  { 
-    value: "compliance-cvm", 
-    label: "⚖️ Especialista CVM",
-    description: "Normas e regulamentações",
-    category: "Compliance"
+  {
+    id: "pagamentos",
+    name: "Especialista em Pagamentos",
+    description: "Conhecimento em sistemas de pagamento, fintechs e transações digitais",
+    icon: CreditCard,
+    bgColor: "hsl(280,35%,75%)",
+    image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-13cb55de72175bb27fe6.png",
+    category: "Fintechs",
+    rating: "4.6"
   },
-  { 
-    value: "compliance-bacen", 
-    label: "🏦 Especialista BACEN",
-    description: "Regulação bancária",
-    category: "Compliance"
+  {
+    id: "capitais",
+    name: "Especialista em Mercado de Capitais",
+    description: "Especialista em IPOs, ofertas públicas e estruturação de operações",
+    icon: Database,
+    bgColor: "hsl(340,35%,75%)",
+    image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-d3b919a60e4b8021bd1b.png",
+    category: "Capitais",
+    rating: "4.7"
   },
-  { 
-    value: "analista-risco-contratual", 
-    label: "⚠️ Analista de Risco Contratual",
-    description: "Gestão e mitigação de riscos",
-    category: "Análise"
+  {
+    id: "esg-investing",
+    name: "Julia - ESG & Investimentos Sustentáveis",
+    description: "Especialista em investimentos ESG e sustentabilidade corporativa",
+    icon: TrendingUp,
+    bgColor: "hsl(160,35%,75%)",
+    image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-22a909d28eba94674e80.png",
+    category: "ESG",
+    rating: "4.5"
   },
-  { 
-    value: "estrategista-negociacoes", 
-    label: "💡 Estrategista de Negociações",
-    description: "Análise estratégica de termos",
-    category: "Estratégia"
-  }
+  {
+    id: "compliance",
+    name: "Fernanda - Compliance & Regulação",
+    description: "Expert em compliance, regulamentação CVM e aspectos legais do mercado",
+    icon: Settings,
+    bgColor: "hsl(340,35%,75%)",
+    image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-d3b919a60e4b8021bd1b.png",
+    category: "Compliance",
+    rating: "4.8"
+  },
+  {
+    id: "valuation",
+    name: "Pedro - Valuation & M&A",
+    description: "Especialista em avaliação de empresas, fusões e aquisições",
+    icon: Landmark,
+    bgColor: "hsl(206,35%,75%)",
+    image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-74fa07dc19664888168d.png",
+    category: "Valuation",
+    rating: "4.6"
+  },
 ];
 
 export default function ResumoContratos() {
   const [file, setFile] = useState<File | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [summaryType, setSummaryType] = useState<"short" | "medium" | "extensive">("medium");
-  const [selectedAgent, setSelectedAgent] = useState(agentTypes[0].id);
-  const [specificAgent, setSpecificAgent] = useState("");
+  const [selectedAgent, setSelectedAgent] = useState(specializedAgents[0].id);
   const [isProcessing, setIsProcessing] = useState(false);
   const [summary, setSummary] = useState("");
   const { toast } = useToast();
@@ -176,7 +204,6 @@ export default function ResumoContratos() {
             fileContent: base64Content.split(",")[1],
             summaryType,
             agent: selectedAgent,
-            specificAgent,
           },
         });
 
@@ -356,9 +383,56 @@ export default function ResumoContratos() {
               </div>
 
               <div className="space-y-6">
+                {/* Seletor de Agente - Primeira Opção */}
                 <div className="bg-white rounded-xl border-2 border-slate-200 p-6">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="w-10 h-10 rounded-lg bg-[hsl(206,50%,75%)] flex items-center justify-center border-2 border-slate-300">
+                      <i className="fas fa-robot text-slate-700"></i>
+                    </div>
+                    <h3 className="text-lg font-bold text-slate-800">Selecionar Agente de IA</h3>
+                  </div>
+                  
+                  <div className="space-y-3 max-h-[500px] overflow-y-auto pr-2">
+                    {specializedAgents.map((agent) => (
+                      <button
+                        key={agent.id}
+                        onClick={() => setSelectedAgent(agent.id)}
+                        style={{ backgroundColor: agent.bgColor }}
+                        className={`w-full p-4 rounded-xl border-2 transition-all text-left ${
+                          selectedAgent === agent.id 
+                            ? 'border-slate-400 shadow-lg scale-[1.02]' 
+                            : 'border-slate-300 hover:border-slate-400 hover:shadow-md'
+                        }`}
+                      >
+                        <div className="flex items-start gap-3">
+                          <img 
+                            src={agent.image} 
+                            alt={agent.name}
+                            className="w-12 h-12 rounded-full object-cover flex-shrink-0"
+                          />
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className="font-semibold text-slate-800 text-sm">{agent.name}</span>
+                              <div className="flex items-center gap-1">
+                                <i className="fas fa-star text-yellow-500 text-xs"></i>
+                                <span className="text-xs text-slate-600">{agent.rating}</span>
+                              </div>
+                            </div>
+                            <p className="text-xs text-slate-600 leading-tight mb-1">{agent.description}</p>
+                            <span className="inline-block px-2 py-0.5 bg-slate-200 text-slate-700 text-xs rounded-full">
+                              {agent.category}
+                            </span>
+                          </div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Tipo de Resumo - Segunda Opção */}
+                <div className="bg-white rounded-xl border-2 border-slate-200 p-6">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 rounded-lg bg-[hsl(322,48%,75%)] flex items-center justify-center border-2 border-slate-300">
                       <i className="fas fa-sliders-h text-slate-700"></i>
                     </div>
                     <h3 className="text-lg font-bold text-slate-800">Tipo de Resumo</h3>
@@ -397,61 +471,6 @@ export default function ResumoContratos() {
                       </div>
                     </div>
                   </RadioGroup>
-                </div>
-
-                <div className="bg-white rounded-xl border-2 border-slate-200 p-6">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 rounded-lg bg-[#B8D4E8] flex items-center justify-center border-2 border-slate-300">
-                      <i className="fas fa-robot text-slate-700"></i>
-                    </div>
-                    <h3 className="text-lg font-bold text-slate-800">Selecionar Agente</h3>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-semibold text-slate-700 mb-3">Tipo de Agente:</label>
-                      <div className="grid grid-cols-2 gap-3">
-                        {agentTypes.map((agent) => (
-                          <button
-                            key={agent.id}
-                            onClick={() => setSelectedAgent(agent.id)}
-                            style={{ backgroundColor: agent.bgColor }}
-                            className={`p-3 rounded-xl border-2 transition-all text-left ${
-                              selectedAgent === agent.id 
-                                ? 'border-slate-400 shadow-md scale-105' 
-                                : 'border-slate-300 hover:border-slate-400'
-                            }`}
-                          >
-                            <div className="flex items-center gap-2 mb-1">
-                              <i className={`${agent.icon} text-slate-700`}></i>
-                              <span className="font-semibold text-slate-800 text-sm">{agent.name}</span>
-                            </div>
-                            <p className="text-xs text-slate-600 leading-tight">{agent.description}</p>
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-semibold text-slate-700 mb-3">Agente Específico (opcional):</label>
-                      <select 
-                        value={specificAgent}
-                        onChange={(e) => setSpecificAgent(e.target.value)}
-                        className="w-full px-4 py-3 bg-white border-2 border-slate-200 rounded-xl text-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(206,50%,72%)] focus:border-transparent"
-                      >
-                        <option value="">Selecione um especialista...</option>
-                        {specificAgents.map((agent) => (
-                          <option key={agent.value} value={agent.value}>
-                            {agent.label} - {agent.description}
-                          </option>
-                        ))}
-                      </select>
-                      <p className="text-xs text-slate-500 mt-2">
-                        <i className="fas fa-info-circle mr-1"></i>
-                        Ao selecionar um especialista, o resumo será personalizado com sua expertise
-                      </p>
-                    </div>
-                  </div>
                 </div>
 
                 <Button
