@@ -9,8 +9,15 @@ import { LearningProgressChart } from "@/components/Dashboard/LearningProgressCh
 import { ContentDistributionChart } from "@/components/Dashboard/ContentDistributionChart";
 import { InsightsSuggestions } from "@/components/Dashboard/InsightsSuggestions";
 import { InsightsDoDia } from "@/components/Dashboard/InsightsDoDia";
+import { ExplainChartChat } from "@/components/Dashboard/ExplainChartChat";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Award, Clock, Flame, TrendingUp, Coins, Scale, Bot, Mic, Video, BookMarked, Bell, Plus, Clock as ClockIcon, Headphones, Play, Lightbulb } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { BookOpen, Award, Clock, Flame, TrendingUp, Coins, Scale, Bot, Mic, Video, BookMarked, Bell, Plus, Clock as ClockIcon, Headphones, Play, Lightbulb, HelpCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useUserAgents } from "@/hooks/useUserAgents";
@@ -18,6 +25,7 @@ import { useUserAgents } from "@/hooks/useUserAgents";
 const Index = () => {
   const [insightsOpen, setInsightsOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
+  const [explainChartOpen, setExplainChartOpen] = useState(false);
   const { agents } = useUserAgents();
   
   // Keyboard shortcuts
@@ -143,11 +151,30 @@ const Index = () => {
             <section className="col-span-2 bg-card rounded-xl p-6 border border-border animate-fade-in">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-lg font-semibold text-foreground">Progresso de Aprendizado</h2>
-                <select className="text-sm text-foreground border border-border rounded-lg px-3 py-2 bg-background focus:outline-none focus:ring-2 focus:ring-ring transition-all">
-                  <option>Últimos 7 dias</option>
-                  <option>Últimos 30 dias</option>
-                  <option>Últimos 90 dias</option>
-                </select>
+                <div className="flex items-center gap-3">
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          onClick={() => setExplainChartOpen(true)}
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 rounded-full hover:bg-pastel-purple/20"
+                        >
+                          <HelpCircle size={18} className="text-muted-foreground" />
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Me explique esse gráfico</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                  <select className="text-sm text-foreground border border-border rounded-lg px-3 py-2 bg-background focus:outline-none focus:ring-2 focus:ring-ring transition-all">
+                    <option>Últimos 7 dias</option>
+                    <option>Últimos 30 dias</option>
+                    <option>Últimos 90 dias</option>
+                  </select>
+                </div>
               </div>
               <LearningProgressChart />
             </section>
@@ -319,6 +346,20 @@ const Index = () => {
       
       <InsightsSuggestions open={insightsOpen} onOpenChange={setInsightsOpen} />
       <InsightsDoDia open={chatOpen} onOpenChange={setChatOpen} />
+      <ExplainChartChat 
+        open={explainChartOpen} 
+        onOpenChange={setExplainChartOpen}
+        chartData={[
+          { day: "Seg", hours: 1.5 },
+          { day: "Ter", hours: 2 },
+          { day: "Qua", hours: 1.8 },
+          { day: "Qui", hours: 2.2 },
+          { day: "Sex", hours: 2.5 },
+          { day: "Sáb", hours: 1.5 },
+          { day: "Dom", hours: 1 }
+        ]}
+        chartType="line"
+      />
     </div>
   );
 };

@@ -75,7 +75,6 @@ Formate sua resposta como JSON válido seguindo esta estrutura:
             content: prompt
           }
         ],
-        temperature: 0.7,
       }),
     });
 
