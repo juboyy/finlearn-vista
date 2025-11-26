@@ -115,7 +115,7 @@ export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
 
         <div className="mt-6 space-y-6">
           {/* Rolando agora */}
-          <div>
+          <div className="px-12">
             <h3 className="text-sm font-semibold text-foreground mb-3">
               Rolando agora
             </h3>
@@ -127,13 +127,13 @@ export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="left-0" />
-              <CarouselNext className="right-0" />
+              <CarouselPrevious />
+              <CarouselNext />
             </Carousel>
           </div>
 
           {/* Continuar de onde parou */}
-          <div>
+          <div className="px-12">
             <h3 className="text-sm font-semibold text-foreground mb-3">
               Continuar de onde parou
             </h3>
@@ -145,13 +145,13 @@ export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="left-0" />
-              <CarouselNext className="right-0" />
+              <CarouselPrevious />
+              <CarouselNext />
             </Carousel>
           </div>
 
           {/* Recomendadas para você */}
-          <div>
+          <div className="px-12">
             <h3 className="text-sm font-semibold text-foreground mb-3">
               Recomendadas para você
             </h3>
@@ -163,8 +163,8 @@ export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="left-0" />
-              <CarouselNext className="right-0" />
+              <CarouselPrevious />
+              <CarouselNext />
             </Carousel>
           </div>
         </div>
