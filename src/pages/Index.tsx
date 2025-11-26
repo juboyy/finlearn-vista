@@ -10,6 +10,7 @@ import { ContentDistributionChart } from "@/components/Dashboard/ContentDistribu
 import { InsightsSuggestions } from "@/components/Dashboard/InsightsSuggestions";
 import { InsightsDoDia } from "@/components/Dashboard/InsightsDoDia";
 import { ExplainChartChat } from "@/components/Dashboard/ExplainChartChat";
+import { EventDetailsSheet } from "@/components/Dashboard/EventDetailsSheet";
 import { Button } from "@/components/ui/button";
 import {
   Tooltip,
@@ -26,7 +27,97 @@ const Index = () => {
   const [insightsOpen, setInsightsOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [explainChartOpen, setExplainChartOpen] = useState(false);
+  const [eventDetailsOpen, setEventDetailsOpen] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState<any>(null);
   const { agents } = useUserAgents();
+
+  // Mock event data - in production, this would come from an API
+  const events = [
+    {
+      id: "1",
+      type: "webinar" as const,
+      title: "Webinar: Mercado de Capitais 2025",
+      date: "18 de Novembro de 2024",
+      time: "14:00 - 16:00",
+      duration: "2 horas",
+      description: "Discussão aprofundada sobre as tendências e perspectivas do mercado de capitais para 2025. Abordaremos tópicos como regulamentação, novos produtos financeiros, tecnologia no mercado de capitais e estratégias de investimento.",
+      isPaid: true,
+      price: 149.90,
+      presenters: [
+        {
+          id: "1",
+          name: "Ana Clara Silva",
+          role: "Especialista em Mercado de Capitais",
+          image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg",
+          profileUrl: "/perfil-autor/ana-clara"
+        },
+        {
+          id: "2",
+          name: "Ricardo Santos",
+          role: "Analista de Investimentos",
+          image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg",
+          profileUrl: "/perfil-autor/ricardo-santos"
+        }
+      ],
+      confirmedAttendees: 127,
+      capacity: 200
+    },
+    {
+      id: "2",
+      type: "live" as const,
+      title: "Live: Análise de Ações Tech",
+      date: "20 de Novembro de 2024",
+      time: "19:00 - 20:30",
+      duration: "1h 30min",
+      description: "Live exclusiva analisando as principais ações do setor de tecnologia. Vamos avaliar resultados recentes, tendências do setor e oportunidades de investimento em empresas de tecnologia nacionais e internacionais.",
+      isPaid: false,
+      presenters: [
+        {
+          id: "3",
+          name: "Marina Costa",
+          role: "Analista de Tecnologia",
+          image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg",
+          profileUrl: "/perfil-autor/marina-costa"
+        }
+      ],
+      confirmedAttendees: 342
+    },
+    {
+      id: "3",
+      type: "workshop" as const,
+      title: "Workshop: Trading Algorítmico",
+      date: "22 de Novembro de 2024",
+      time: "10:00 - 12:00",
+      duration: "2 horas",
+      description: "Workshop prático sobre trading algorítmico. Aprenda a desenvolver, testar e implementar algoritmos de trading. Inclui exemplos práticos, análise de estratégias e sessão de perguntas e respostas.",
+      isPaid: true,
+      price: 299.90,
+      presenters: [
+        {
+          id: "4",
+          name: "João Pedro Lima",
+          role: "Especialista em Trading Algorítmico",
+          image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg",
+          profileUrl: "/perfil-autor/joao-pedro"
+        },
+        {
+          id: "5",
+          name: "Sofia Rodrigues",
+          role: "Desenvolvedora Quantitativa",
+          image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg",
+          profileUrl: "/perfil-autor/sofia-rodrigues"
+        }
+      ],
+      confirmedAttendees: 89,
+      capacity: 100
+    }
+  ];
+
+  const handleEventClick = (eventId: string) => {
+    const event = events.find(e => e.id === eventId);
+    setSelectedEvent(event);
+    setEventDetailsOpen(true);
+  };
   
   // Keyboard shortcuts
   useEffect(() => {
@@ -256,6 +347,7 @@ const Index = () => {
                   title="Webinar: Mercado de Capitais 2025"
                   time="14:00 - 16:00"
                   bgColor="bg-pastel-yellow"
+                  onClick={() => handleEventClick("1")}
                 />
                 <EventCard
                   day="20"
@@ -263,6 +355,7 @@ const Index = () => {
                   title="Live: Análise de Ações Tech"
                   time="19:00 - 20:30"
                   bgColor="bg-pastel-pink"
+                  onClick={() => handleEventClick("2")}
                 />
                 <EventCard
                   day="22"
@@ -270,6 +363,7 @@ const Index = () => {
                   title="Workshop: Trading Algorítmico"
                   time="10:00 - 12:00"
                   bgColor="bg-pastel-peach"
+                  onClick={() => handleEventClick("3")}
                 />
               </div>
             </section>
@@ -359,6 +453,11 @@ const Index = () => {
           { day: "Dom", hours: 1 }
         ]}
         chartType="line"
+      />
+      <EventDetailsSheet 
+        open={eventDetailsOpen} 
+        onOpenChange={setEventDetailsOpen}
+        event={selectedEvent}
       />
     </div>
   );
