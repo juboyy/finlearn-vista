@@ -150,34 +150,50 @@ INSTRUÇÕES CRÍTICAS:
 - Adicione insights e análises específicas do mercado financeiro
 - TODOS os slides devem ter uma imagem E um gráfico únicos e específicos
 
-Estrutura sugerida:
+IMPORTANTE: Você DEVE criar EXATAMENTE 10 ou MAIS slides. Não crie menos de 10 slides.
+
+Estrutura OBRIGATÓRIA (mínimo 10 slides):
 1. Slide de introdução/contexto
-2-3. Slides sobre aspectos fundamentais
-4-6. Slides com análises e dados detalhados
-7-8. Slides com exemplos práticos e casos de uso
+2. Slide sobre fundamentos - parte 1
+3. Slide sobre fundamentos - parte 2
+4. Slide com análise detalhada - parte 1
+5. Slide com análise detalhada - parte 2
+6. Slide com análise detalhada - parte 3
+7. Slide com exemplos práticos - parte 1
+8. Slide com exemplos práticos - parte 2
 9. Slide de tendências/futuro
 10. Slide de conclusão/próximos passos
+(Você pode adicionar mais slides além desses 10)
 
-Retorne um JSON com MÚLTIPLOS slides neste formato exato:
+Retorne um JSON com NO MÍNIMO 10 slides neste formato exato:
 {
   "slides": [
     {
       "title": "Título do Slide 1",
-      "content": "Conteúdo detalhado...",
-      "imagePrompt": "Descrição específica e detalhada da imagem para este slide, relacionada ao mercado financeiro",
+      "content": "Conteúdo detalhado em texto...",
+      "imagePrompt": "Descrição específica e detalhada da imagem para este slide no estilo sketch/desenho com cores pastel claras",
+      "chartType": "bar" ou "line" ou "pie",
+      "chartPrompt": "Descrição específica dos dados para o gráfico deste slide"
+    },
+    {
+      "title": "Título do Slide 2",
+      "content": "Conteúdo detalhado em texto...",
+      "imagePrompt": "Descrição específica e detalhada da imagem para este slide no estilo sketch/desenho com cores pastel claras",
       "chartType": "bar" ou "line" ou "pie",
       "chartPrompt": "Descrição específica dos dados para o gráfico deste slide"
     }
+    ... até completar NO MÍNIMO 10 slides
   ]
 }
 
-OBRIGATÓRIO:
-- TODOS os slides DEVEM ter "imagePrompt" com descrição específica
-- TODOS os slides DEVEM ter "chartType" e "chartPrompt" com dados específicos
-- Cada imagem deve ser única e relacionada ao conteúdo específico do slide
-- Cada gráfico deve mostrar dados diferentes e relevantes ao conteúdo do slide
+REGRAS OBRIGATÓRIAS:
+- Gere NO MÍNIMO 10 slides (pode ser mais, mas NUNCA menos de 10)
+- TODOS os slides DEVEM ter "title", "content", "imagePrompt", "chartType" e "chartPrompt"
+- Cada "imagePrompt" deve ser único e no estilo sketch/desenho com cores pastel claras
+- Cada "chartPrompt" deve conter dados diferentes e relevantes
+- O "content" de cada slide deve ter texto substantivo e detalhado
 
-LEMBRE-SE: Retorne NO MÍNIMO 10 slides diferentes, cada um com sua própria imagem e gráfico únicos.`,
+CRITICAL: Se você gerar menos de 10 slides, sua resposta será rejeitada. GERE NO MÍNIMO 10 SLIDES.`,
         },
       });
 
