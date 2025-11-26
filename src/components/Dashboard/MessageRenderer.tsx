@@ -3,6 +3,7 @@ import remarkGfm from "remark-gfm";
 import { Progress } from "@/components/ui/progress";
 import { ChatImageRenderer } from "@/components/Dashboard/ChatImageRenderer";
 import { ChatChartRenderer } from "@/components/Dashboard/ChatChartRenderer";
+import { EbookCard } from "@/components/Dashboard/EbookCard";
 import { Headphones, ExternalLink, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -173,6 +174,22 @@ export const MessageRenderer = ({ content }: MessageRendererProps) => {
                   } catch (e) {
                     console.error("Error parsing chart data:", e);
                     return <code className="bg-muted px-1.5 py-0.5 rounded text-xs">Erro ao renderizar gráfico</code>;
+                  }
+                }
+                
+                if (className === 'language-ebook') {
+                  try {
+                    const ebookData = JSON.parse(content);
+                    return (
+                      <div className="my-4 flex gap-4 flex-wrap">
+                        {ebookData.map((ebook: any, idx: number) => (
+                          <EbookCard key={idx} {...ebook} />
+                        ))}
+                      </div>
+                    );
+                  } catch (e) {
+                    console.error("Error parsing ebook data:", e);
+                    return <code className="bg-muted px-1.5 py-0.5 rounded text-xs">Erro ao renderizar ebooks</code>;
                   }
                 }
                 
