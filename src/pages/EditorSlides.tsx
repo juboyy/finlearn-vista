@@ -99,7 +99,7 @@ export default function EditorSlides() {
     isPaid: false,
     price: "",
     paymentMethods: [] as string[],
-    coAuthors: "",
+    coAuthors: [] as string[],
     summary: "",
     coverImage: "",
   });
@@ -415,7 +415,7 @@ Exemplo para PIX:
         target_audience: projectInfo.targetAudience || null,
         slides: slides as any,
         status: 'published',
-        author_name: presentationSettings.coAuthors || 'Usuário',
+        author_name: presentationSettings.coAuthors.filter(a => a.trim()).join(', ') || 'Usuário',
         topic: 'Geral'
       };
 
@@ -777,27 +777,65 @@ Exemplo para PIX:
 
             {/* Co-autores */}
             <div className="bg-white rounded-xl p-4 border-2 border-slate-200 space-y-3">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-[hsl(280,35%,75%)] flex items-center justify-center">
-                  <Users className="h-4 w-4 text-slate-700" />
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-[hsl(280,35%,75%)] flex items-center justify-center">
+                    <Users className="h-4 w-4 text-slate-700" />
+                  </div>
+                  <Label className="text-sm font-semibold text-slate-800">
+                    Co-autores
+                  </Label>
                 </div>
-                <Label htmlFor="coAuthors" className="text-sm font-semibold text-slate-800">
-                  Co-autores
-                </Label>
+                <Button
+                  type="button"
+                  size="sm"
+                  onClick={() => {
+                    setPresentationSettings({
+                      ...presentationSettings,
+                      coAuthors: [...presentationSettings.coAuthors, ""]
+                    });
+                  }}
+                  className="bg-[hsl(280,35%,65%)] hover:bg-[hsl(280,35%,55%)] text-slate-800 h-8 w-8 p-0"
+                >
+                  <Plus className="h-4 w-4" />
+                </Button>
               </div>
-              <Input
-                id="coAuthors"
-                placeholder="Separe os nomes por vírgula..."
-                value={presentationSettings.coAuthors}
-                onChange={(e) =>
-                  setPresentationSettings({ ...presentationSettings, coAuthors: e.target.value })
-                }
-                className="border-2 border-slate-200 focus:border-[hsl(280,35%,65%)] transition-colors"
-              />
-              <p className="text-xs text-slate-500 flex items-center gap-1">
-                <Info className="h-3 w-3" />
-                Adicione colaboradores que participaram da criação
-              </p>
+              
+              {presentationSettings.coAuthors.length === 0 ? (
+                <p className="text-xs text-slate-500 flex items-center gap-1 py-2">
+                  <Info className="h-3 w-3" />
+                  Clique no botão + para adicionar colaboradores
+                </p>
+              ) : (
+                <div className="space-y-2">
+                  {presentationSettings.coAuthors.map((coAuthor, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <Input
+                        placeholder={`Nome do co-autor ${index + 1}`}
+                        value={coAuthor}
+                        onChange={(e) => {
+                          const newCoAuthors = [...presentationSettings.coAuthors];
+                          newCoAuthors[index] = e.target.value;
+                          setPresentationSettings({ ...presentationSettings, coAuthors: newCoAuthors });
+                        }}
+                        className="border-2 border-slate-200 focus:border-[hsl(280,35%,65%)] transition-colors flex-1"
+                      />
+                      <Button
+                        type="button"
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => {
+                          const newCoAuthors = presentationSettings.coAuthors.filter((_, i) => i !== index);
+                          setPresentationSettings({ ...presentationSettings, coAuthors: newCoAuthors });
+                        }}
+                        className="text-slate-600 hover:text-red-600 hover:bg-red-50 h-9 w-9 p-0"
+                      >
+                        <XCircle className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Resumo */}
