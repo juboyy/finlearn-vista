@@ -313,6 +313,21 @@ export default function ResumoEbook() {
                   </div>
                 )}
 
+                {/* FAQs */}
+                {productData?.faqs && productData.faqs.length > 0 && (
+                  <div className="bg-card rounded-xl border border-border p-8">
+                    <h3 className="text-xl font-semibold text-foreground mb-6">Perguntas Frequentes</h3>
+                    <div className="space-y-4">
+                      {productData.faqs.map((faq: any, index: number) => (
+                        <div key={index} className="border-b border-border last:border-0 pb-4 last:pb-0">
+                          <h4 className="text-base font-semibold text-foreground mb-2">{faq.question}</h4>
+                          <p className="text-sm text-muted-foreground leading-relaxed">{faq.answer}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
               </div>
 
               {/* Sidebar */}
