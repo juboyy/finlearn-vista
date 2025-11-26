@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { X } from "lucide-react";
+import { X, Pin } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { AssistantSuggestionCard } from "@/components/Dashboard/AssistantSuggestionCard";
@@ -118,6 +118,7 @@ const mockInsights = [
 export const InsightsSuggestions = ({ open, onOpenChange }: InsightsSuggestionsProps) => {
   const [activeTab, setActiveTab] = useState("todas");
   const [insights, setInsights] = useState(mockInsights);
+  const [pinnedIds, setPinnedIds] = useState<string[]>([]);
 
   console.log("📊 Total insights:", insights.length);
   console.log("🔍 Insights data:", insights.slice(0, 3).map(i => ({ id: i.id, title: i.title })));
@@ -148,6 +149,18 @@ export const InsightsSuggestions = ({ open, onOpenChange }: InsightsSuggestionsP
   const handleMarkAllAsRead = () => {
     setInsights(prev => prev.map(i => ({ ...i, is_read: true })));
   };
+
+  const handleTogglePin = (id: string) => {
+    setPinnedIds(prev => 
+      prev.includes(id) 
+        ? prev.filter(pinnedId => pinnedId !== id)
+        : [...prev, id]
+    );
+  };
+
+  // Separate pinned and unpinned insights
+  const pinnedInsights = sortedInsights.filter(i => pinnedIds.includes(i.id));
+  const unpinnedInsights = sortedInsights.filter(i => !pinnedIds.includes(i.id));
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -208,14 +221,46 @@ export const InsightsSuggestions = ({ open, onOpenChange }: InsightsSuggestionsP
 
         <ScrollArea className="h-[calc(100vh-180px)] px-6 py-4">
           {sortedInsights.length > 0 ? (
-            <div className="space-y-4">
-              {sortedInsights.map((suggestion) => (
-                <AssistantSuggestionCard
-                  key={suggestion.id}
-                  suggestion={suggestion}
-                  onMarkAsRead={handleMarkAsRead}
-                />
-              ))}
+            <div className="space-y-6">
+              {pinnedInsights.length > 0 && (
+                <div>
+                  <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+                    <Pin size={16} className="text-pastel-yellow" />
+                    Fixados
+                  </h3>
+                  <div className="space-y-4">
+                    {pinnedInsights.map((suggestion) => (
+                      <AssistantSuggestionCard
+                        key={suggestion.id}
+                        suggestion={suggestion}
+                        onMarkAsRead={handleMarkAsRead}
+                        onTogglePin={handleTogglePin}
+                        isPinned={true}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+              {unpinnedInsights.length > 0 && (
+                <div>
+                  {pinnedInsights.length > 0 && (
+                    <h3 className="text-sm font-semibold text-foreground mb-3">
+                      Todos os Insights
+                    </h3>
+                  )}
+                  <div className="space-y-4">
+                    {unpinnedInsights.map((suggestion) => (
+                      <AssistantSuggestionCard
+                        key={suggestion.id}
+                        suggestion={suggestion}
+                        onMarkAsRead={handleMarkAsRead}
+                        onTogglePin={handleTogglePin}
+                        isPinned={false}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           ) : (
             <div className="text-center py-12 text-muted-foreground">

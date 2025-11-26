@@ -1,15 +1,18 @@
-import { Clock, Newspaper, Lightbulb, BookOpen, MoreVertical, Brain, User } from "lucide-react";
+import { Clock, Newspaper, Lightbulb, BookOpen, MoreVertical, Brain, User, Pin } from "lucide-react";
 import { AssistantSuggestion } from "@/hooks/useAssistantSuggestions";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import auxiliarAvatar from "@/assets/auxiliar-do-dia-avatar.png";
 
 interface AssistantSuggestionCardProps {
   suggestion: AssistantSuggestion;
   onMarkAsRead: (id: string) => void;
+  onTogglePin?: (id: string) => void;
+  isPinned?: boolean;
 }
 
 const suggestionTypeConfig = {
@@ -39,7 +42,7 @@ const suggestionTypeConfig = {
   },
 };
 
-export const AssistantSuggestionCard = ({ suggestion, onMarkAsRead }: AssistantSuggestionCardProps) => {
+export const AssistantSuggestionCard = ({ suggestion, onMarkAsRead, onTogglePin, isPinned = false }: AssistantSuggestionCardProps) => {
   const navigate = useNavigate();
   const config = suggestionTypeConfig[suggestion.suggestion_type];
   const Icon = config.icon;
@@ -59,13 +62,25 @@ export const AssistantSuggestionCard = ({ suggestion, onMarkAsRead }: AssistantS
     }
   };
 
+  const handlePinClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onTogglePin) {
+      onTogglePin(suggestion.id);
+    }
+  };
+
   return (
     <div
       onClick={handleClick}
       className={`bg-white rounded-xl border-2 ${
-        suggestion.is_read ? "border-slate-200" : config.borderColor
-      } hover:shadow-md transition cursor-pointer`}
+        isPinned ? "border-pastel-yellow" : suggestion.is_read ? "border-slate-200" : config.borderColor
+      } hover:shadow-md transition cursor-pointer relative`}
     >
+      {isPinned && (
+        <div className="absolute top-2 right-2">
+          <Pin size={16} className="text-pastel-yellow fill-pastel-yellow" />
+        </div>
+      )}
       <div className="p-4">
         <div className="flex items-start gap-4">
           <Avatar className="w-10 h-10 flex-shrink-0">
@@ -113,9 +128,16 @@ export const AssistantSuggestionCard = ({ suggestion, onMarkAsRead }: AssistantS
             )}
           </div>
           <div className="flex flex-col items-end gap-2">
-            <button className="text-slate-400 hover:text-slate-600">
-              <MoreVertical size={18} />
-            </button>
+            {onTogglePin && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handlePinClick}
+                className="h-8 w-8 p-0 text-slate-400 hover:text-pastel-yellow"
+              >
+                <Pin size={18} className={isPinned ? "fill-pastel-yellow text-pastel-yellow" : ""} />
+              </Button>
+            )}
           </div>
         </div>
       </div>
