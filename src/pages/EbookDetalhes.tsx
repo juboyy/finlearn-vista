@@ -18,7 +18,7 @@ const EbookDetalhes = () => {
   }, mockUserId);
 
   return (
-    <div className="flex h-screen overflow-hidden bg-pastel-blue">
+    <div className="flex h-screen overflow-hidden bg-slate-50">
       <SidebarFix />
       
       <main className="flex-1 overflow-y-auto">
