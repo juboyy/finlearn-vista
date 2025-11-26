@@ -7,7 +7,7 @@ import { ContentCard } from "@/components/Dashboard/ContentCard";
 import { ProgressBar } from "@/components/Dashboard/ProgressBar";
 import { LearningProgressChart } from "@/components/Dashboard/LearningProgressChart";
 import { ContentDistributionChart } from "@/components/Dashboard/ContentDistributionChart";
-import { InsightsDoDia } from "@/components/Dashboard/InsightsDoDia";
+import { InsightsSuggestions } from "@/components/Dashboard/InsightsSuggestions";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Award, Clock, Flame, TrendingUp, Coins, Scale, Bot, Mic, Video, BookMarked, Bell, Plus, Clock as ClockIcon, Headphones, Play, Lightbulb } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -296,7 +296,7 @@ const Index = () => {
         </div>
       </main>
       
-      <InsightsDoDia open={insightsOpen} onOpenChange={setInsightsOpen} />
+      <InsightsSuggestions open={insightsOpen} onOpenChange={setInsightsOpen} />
     </div>
   );
 };
