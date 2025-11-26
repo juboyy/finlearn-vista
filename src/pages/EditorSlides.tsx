@@ -121,41 +121,50 @@ export default function EditorSlides() {
 
       const { data, error } = await supabase.functions.invoke("generate-slides-content", {
         body: {
-          prompt: `VOCÊ DEVE GERAR EXATAMENTE 10 SLIDES.
+          prompt: `VOCÊ DEVE GERAR EXATAMENTE 10 SLIDES COMPLETOS COM TÍTULO E TEXTO.
 
 Tema: ${projectInfo.title}
 Descrição: ${projectInfo.description}
 Público-alvo: ${projectInfo.targetAudience}
 Contexto: Mercado financeiro brasileiro${agentContext}
 
-ESTRUTURA OBRIGATÓRIA - CRIE TODOS ESTES 10 SLIDES:
+ESTRUTURA OBRIGATÓRIA - CRIE TODOS ESTES 10 SLIDES COM CONTEÚDO COMPLETO:
 
-1. SLIDE 1 - Introdução: Apresente o tema e relevância
-2. SLIDE 2 - Fundamentos Parte 1: Conceitos básicos
-3. SLIDE 3 - Fundamentos Parte 2: Aspectos técnicos
-4. SLIDE 4 - Dados de Mercado: Estatísticas atuais
-5. SLIDE 5 - Análise de Tendências: Comportamentos recentes
-6. SLIDE 6 - Projeções: Perspectivas futuras
-7. SLIDE 7 - Casos Práticos: Exemplos reais
-8. SLIDE 8 - Mercado Brasileiro: Particularidades nacionais
-9. SLIDE 9 - Inovações: Tecnologias emergentes
-10. SLIDE 10 - Conclusão: Síntese e próximos passos
+1. SLIDE 1 - Introdução: Título impactante + texto apresentando o tema e sua relevância (3-4 parágrafos)
+2. SLIDE 2 - Fundamentos Parte 1: Título claro + texto explicando conceitos básicos essenciais (3-4 parágrafos)
+3. SLIDE 3 - Fundamentos Parte 2: Título técnico + texto sobre aspectos técnicos importantes (3-4 parágrafos)
+4. SLIDE 4 - Dados de Mercado: Título com dados + texto apresentando estatísticas atuais (3-4 parágrafos)
+5. SLIDE 5 - Análise de Tendências: Título analítico + texto sobre comportamentos recentes (3-4 parágrafos)
+6. SLIDE 6 - Projeções: Título prospectivo + texto com perspectivas futuras (3-4 parágrafos)
+7. SLIDE 7 - Casos Práticos: Título prático + texto com exemplos reais detalhados (3-4 parágrafos)
+8. SLIDE 8 - Mercado Brasileiro: Título local + texto sobre particularidades nacionais (3-4 parágrafos)
+9. SLIDE 9 - Inovações: Título inovador + texto sobre tecnologias emergentes (3-4 parágrafos)
+10. SLIDE 10 - Conclusão: Título conclusivo + texto sintetizando e indicando próximos passos (3-4 parágrafos)
+
+IMPORTANTE: 
+- Cada slide DEVE ter um TÍTULO único e específico
+- Cada slide DEVE ter um TEXTO completo de 3-4 parágrafos
+- O texto deve ser detalhado, informativo e profissional
+- Use linguagem do mercado financeiro brasileiro
 
 Retorne EXATAMENTE este JSON com 10 slides:
 {
   "slides": [
     {
-      "title": "Título do Slide 1",
-      "content": "Conteúdo completo e detalhado do slide 1...",
-      "imagePrompt": "Prompt para imagem (estilo sketch/desenho, cores pastel claras)",
+      "title": "Título específico e impactante do slide 1",
+      "content": "Texto completo do slide 1 com 3-4 parágrafos detalhados explicando o tema, contexto e relevância. Cada parágrafo deve ter pelo menos 3-4 frases completas com informações relevantes e específicas sobre o tópico.",
+      "imagePrompt": "Prompt detalhado para imagem no estilo ilustração sketch/desenho com cores pastel claras, traços limpos, representando o conceito principal do slide",
       "chartType": "bar",
-      "chartPrompt": "Dados específicos para o gráfico"
+      "chartPrompt": "Dados específicos e relevantes para o gráfico do tipo bar com valores reais do mercado"
     },
-    ... CONTINUE ATÉ O SLIDE 10 ...
+    ... REPITA PARA TODOS OS 10 SLIDES COM CONTEÚDO ÚNICO ...
   ]
 }
 
-ATENÇÃO: Se você retornar menos de 10 slides, sua resposta será REJEITADA.`,
+ATENÇÃO: 
+- Se você retornar menos de 10 slides, sua resposta será REJEITADA
+- Cada slide DEVE ter título E texto completo
+- O texto de cada slide DEVE ter no mínimo 250 palavras`,
         },
       });
 

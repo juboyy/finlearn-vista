@@ -70,15 +70,30 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
     const objects = fabricCanvas.getObjects();
     
     if (objects.length === 0) {
-      toast.info("Este slide está vazio");
+      toast.info("Este slide está vazio. Clique em 'Adicionar Texto' para começar.");
       return;
     }
     
-    // Zoom out para mostrar todo o conteúdo
+    // Resetar viewport e zoom
     fabricCanvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
+    
+    // Desmarcar qualquer seleção
+    fabricCanvas.discardActiveObject();
+    
+    // Forçar re-renderização completa
     fabricCanvas.renderAll();
     
-    toast.success(`Visualizando ${objects.length} elemento(s) no slide`);
+    // Contagem de elementos
+    const textCount = objects.filter(obj => obj.type === 'textbox').length;
+    const imageCount = objects.filter(obj => obj.type === 'image').length;
+    const otherCount = objects.length - textCount - imageCount;
+    
+    let message = `Visualizando slide completo:`;
+    if (textCount > 0) message += ` ${textCount} texto(s)`;
+    if (imageCount > 0) message += `, ${imageCount} imagem(s)`;
+    if (otherCount > 0) message += `, ${otherCount} outro(s)`;
+    
+    toast.success(message);
   };
 
   useEffect(() => {
@@ -165,22 +180,25 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
       return;
     }
 
-    console.log("Adicionando conteúdo gerado pela IA ao slide automaticamente");
+    console.log("🎨 Adicionando conteúdo gerado pela IA ao slide automaticamente");
+    console.log(`📝 Texto: ${slideText ? 'SIM (' + slideText.substring(0, 50) + '...)' : 'NÃO'}`);
+    console.log(`🖼️ Imagem: ${slideImage ? 'SIM' : 'NÃO'}`);
+    console.log(`📊 Gráfico: ${slideChart ? 'SIM' : 'NÃO'}`);
     const addGeneratedContent = async () => {
       try {
         // Limpar canvas antes de adicionar novo conteúdo
         fabricCanvas.clear();
         fabricCanvas.backgroundColor = "#ffffff";
         
-        let yPosition = 50;
+        let yPosition = 40;
 
-      // Adicionar texto gerado
+      // Adicionar texto gerado com formatação otimizada
       if (slideText) {
         const textBox = new Textbox(slideText, {
           left: 40,
           top: yPosition,
           width: 880,
-          fontSize: 16,
+          fontSize: 13,
           fill: "#1e293b",
           fontFamily: "Arial",
           selectable: true,
@@ -188,21 +206,26 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
           lineHeight: 1.5,
         });
         fabricCanvas.add(textBox);
-        yPosition = textBox.top + textBox.height! + 25;
+        // Limitar altura do texto para caber imagem/gráfico
+        yPosition = Math.min(textBox.top + textBox.height! + 15, 320);
       }
 
-      // Adicionar imagem e gráfico lado a lado
+      // Adicionar imagem e gráfico lado a lado na parte inferior
       const contentWidth = 350;
       const contentSpacing = 40;
+      const imageChartYPosition = Math.max(yPosition, 280);
       
       if (slideImage && slideChart) {
         // Imagem à esquerda
         try {
           const img = await FabricImage.fromURL(slideImage);
-          img.scaleToWidth(contentWidth);
+          // Limitar altura da imagem
+          const maxHeight = 240;
+          const scale = Math.min(contentWidth / img.width!, maxHeight / img.height!);
+          img.scale(scale);
           img.set({
             left: 40,
-            top: yPosition,
+            top: imageChartYPosition,
             selectable: true,
           });
           fabricCanvas.add(img);
@@ -213,9 +236,9 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
         // Gráfico à direita
         const chartText = new Textbox(`📊 ${slideChart.title || 'Gráfico'}\n\n${JSON.stringify(slideChart.data || [], null, 2)}`, {
           left: 40 + contentWidth + contentSpacing,
-          top: yPosition,
+          top: imageChartYPosition,
           width: contentWidth,
-          fontSize: 12,
+          fontSize: 10,
           fill: "#475569",
           fontFamily: "Arial",
           selectable: true,
@@ -224,13 +247,16 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
         });
         fabricCanvas.add(chartText);
       } else if (slideImage) {
-        // Apenas imagem (maior)
+        // Apenas imagem (centralizada e otimizada)
         try {
           const img = await FabricImage.fromURL(slideImage);
-          img.scaleToWidth(contentWidth * 1.4);
+          const maxWidth = 740;
+          const maxHeight = 240;
+          const scale = Math.min(maxWidth / img.width!, maxHeight / img.height!);
+          img.scale(scale);
           img.set({
-            left: 40,
-            top: yPosition,
+            left: (960 - img.getScaledWidth()) / 2,
+            top: imageChartYPosition,
             selectable: true,
           });
           fabricCanvas.add(img);
@@ -238,12 +264,12 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
           console.error("Erro ao adicionar imagem ao canvas:", error);
         }
       } else if (slideChart) {
-        // Apenas gráfico (maior)
+        // Apenas gráfico (centralizado)
         const chartText = new Textbox(`📊 ${slideChart.title || 'Gráfico'}\n\n${JSON.stringify(slideChart.data || [], null, 2)}`, {
-          left: 40,
-          top: yPosition,
+          left: (960 - contentWidth * 1.4) / 2,
+          top: imageChartYPosition,
           width: contentWidth * 1.4,
-          fontSize: 12,
+          fontSize: 10,
           fill: "#475569",
           fontFamily: "Arial",
           selectable: true,
@@ -259,7 +285,8 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
       const json = fabricCanvas.toJSON();
       lastSaveRef.current = JSON.stringify(json);
       onUpdate(json);
-      console.log("✅ Conteúdo gerado pela IA adicionado e salvo automaticamente");
+      console.log("✅ Conteúdo do slide salvo automaticamente");
+      console.log(`📦 Total de objetos no canvas: ${fabricCanvas.getObjects().length}`);
     } catch (error) {
       console.error("Erro ao adicionar conteúdo ao canvas:", error);
     }
