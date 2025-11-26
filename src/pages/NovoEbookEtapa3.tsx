@@ -206,7 +206,7 @@ export default function NovoEbookEtapa3() {
                   Salvar Rascunho
                 </Button>
                 <Button onClick={handlePublish} disabled={isPublishing} className="gap-2">
-                  {isPublishing ? "Publicando..." : "Publicar eBook"}
+                  {isPublishing ? "Publicando..." : "Ver Resumo"}
                 </Button>
               </div>
             </div>
@@ -938,7 +938,7 @@ export default function NovoEbookEtapa3() {
                 disabled={isPublishing}
                 className="px-8 py-3 bg-foreground text-background rounded-lg font-medium hover:bg-foreground/90 transition-colors disabled:opacity-50"
               >
-                {isPublishing ? "Publicando..." : "Publicar eBook"}
+                {isPublishing ? "Publicando..." : "Ver Resumo"}
                 <Check className="w-4 h-4 inline ml-2" />
               </button>
             </div>
