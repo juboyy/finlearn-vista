@@ -143,6 +143,11 @@ serve(async (req) => {
       }
     ];
 
+    // Filter products by price range
+    const minPrice = preferences?.price_range_min || 0;
+    const maxPrice = preferences?.price_range_max || 1000;
+    const filteredProducts = availableProducts.filter(p => p.price >= minPrice && p.price <= maxPrice);
+
     // Use Lovable AI to generate personalized recommendations
     const systemPrompt = `Você é um especialista em sistemas de recomendação para conteúdos educacionais do mercado financeiro.
 
@@ -178,14 +183,21 @@ Retorne em formato JSON com esta estrutura:
 - Nível de habilidade: ${preferences?.skill_level || 'intermediario'}
 - Interesses: ${preferences?.interests?.join(', ') || 'Não especificado'}
 
+Preferências configuradas pelo usuário:
+- Categorias preferidas: ${preferences?.preferred_categories?.join(', ') || 'Não especificado'}
+- Tipos de conteúdo preferidos: ${preferences?.preferred_content_types?.join(', ') || 'Não especificado'}
+- Faixa de preço: R$ ${preferences?.price_range_min || 0} - R$ ${preferences?.price_range_max || 1000}
+
 Produtos disponíveis no catálogo:
-${JSON.stringify(availableProducts, null, 2)}
+${JSON.stringify(filteredProducts.length > 0 ? filteredProducts : availableProducts, null, 2)}
 
 Gere 4 recomendações priorizando produtos que:
-1. Complementam o que o usuário já consome
-2. Estão alinhados com suas preferências
-3. São apropriados para seu nível de habilidade
-4. Têm alta qualidade (rating alto)`;
+1. Estejam dentro da faixa de preço configurada (${preferences?.price_range_min || 0} - ${preferences?.price_range_max || 1000})
+2. Correspondam às categorias e tipos de conteúdo preferidos quando especificados
+3. Complementem o que o usuário já consome
+4. Estão alinhados com suas preferências e histórico
+5. São apropriados para seu nível de habilidade
+6. Têm alta qualidade (rating alto)`;
 
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',

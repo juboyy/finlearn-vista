@@ -1,8 +1,9 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { Bell, Shield, Monitor, Clock, Palette, Languages, Plus, Smartphone, Key, Fingerprint, Mail, Laptop, Tablet, LogOut, Calendar, CalendarDays, Sun, Moon, SunMoon, MoreVertical, Newspaper, Chrome, Download } from "lucide-react";
+import { Bell, Shield, Monitor, Clock, Palette, Languages, Plus, Smartphone, Key, Fingerprint, Mail, Laptop, Tablet, LogOut, Calendar, CalendarDays, Sun, Moon, SunMoon, MoreVertical, Newspaper, Chrome, Download, Settings } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
 import { useNavigate } from "react-router-dom";
+import { UserPreferencesForm } from "@/components/UserPreferencesForm";
 export default function Configuracoes() {
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState("seguranca");
@@ -13,6 +14,7 @@ export default function Configuracoes() {
   const appearanceRef = useFadeInOnScroll<HTMLElement>();
   const pluginRef = useFadeInOnScroll<HTMLElement>();
   const languageRef = useFadeInOnScroll<HTMLElement>();
+  const preferencesRef = useFadeInOnScroll<HTMLElement>();
   const scrollToSection = (section: string) => {
     setActiveSection(section);
     const refs = {
@@ -22,7 +24,8 @@ export default function Configuracoes() {
       lembretes: remindersRef,
       aparencia: appearanceRef,
       plugin: pluginRef,
-      idioma: languageRef
+      idioma: languageRef,
+      preferencias: preferencesRef
     };
     const targetRef = refs[section as keyof typeof refs];
     if (targetRef?.current) {
@@ -73,6 +76,9 @@ export default function Configuracoes() {
     }, {
       ref: languageRef,
       id: 'idioma'
+    }, {
+      ref: preferencesRef,
+      id: 'preferencias'
     }];
     refs.forEach(({
       ref
@@ -141,6 +147,10 @@ export default function Configuracoes() {
                 <button onClick={() => scrollToSection("idioma")} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left ${activeSection === "idioma" ? "bg-pastel-blue text-slate-800 font-medium" : "text-slate-600 hover:bg-slate-100 transition"}`}>
                   <Languages size={20} />
                   <span>Idioma</span>
+                </button>
+                <button onClick={() => scrollToSection("preferencias")} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left ${activeSection === "preferencias" ? "bg-pastel-blue text-slate-800 font-medium" : "text-slate-600 hover:bg-slate-100 transition"}`}>
+                  <Settings size={20} />
+                  <span>Preferências de Recomendação</span>
                 </button>
               </nav>
             </div>
@@ -578,6 +588,20 @@ export default function Configuracoes() {
                     </select>
                   </div>
                 </div>
+              </section>
+
+              <section ref={preferencesRef} data-section="preferencias" className="bg-white rounded-xl border border-slate-200 p-6 opacity-0">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-12 h-12 bg-pastel-pink rounded-lg flex items-center justify-center">
+                    <Settings className="text-slate-700" size={24} />
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-semibold text-slate-800">Preferências de Recomendação</h2>
+                    <p className="text-sm text-slate-500">Personalize suas recomendações de conteúdo</p>
+                  </div>
+                </div>
+
+                <UserPreferencesForm />
               </section>
             </div>
           </div>
