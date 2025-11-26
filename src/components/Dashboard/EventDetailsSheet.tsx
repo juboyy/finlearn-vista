@@ -65,19 +65,55 @@ export const EventDetailsSheet = ({ open, onOpenChange, event }: EventDetailsShe
 
         <div className="mt-6 space-y-6">
           {/* Event Info */}
-          <div className="space-y-3">
-            <div className="flex items-center gap-3 text-sm text-muted-foreground">
-              <Calendar size={16} />
-              <span>{event.date}</span>
+          <div className="grid grid-cols-1 gap-4">
+            <div className="bg-gradient-to-br from-[hsl(206,50%,90%)] via-card to-card rounded-2xl border-2 border-[hsl(206,50%,75%)] p-5 shadow-lg hover:shadow-xl transition-all">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 bg-gradient-to-br from-[hsl(206,60%,70%)] to-[hsl(206,60%,85%)] rounded-xl flex items-center justify-center shadow-md flex-shrink-0">
+                  <Calendar className="text-white" size={24} />
+                </div>
+                <div className="flex-1">
+                  <p className="text-xs font-medium text-muted-foreground mb-1">Data do Evento</p>
+                  <p className="text-base font-bold text-foreground">{event.date}</p>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-3 text-sm text-muted-foreground">
-              <Clock size={16} />
-              <span>{event.time} ({event.duration})</span>
+
+            <div className="bg-gradient-to-br from-[hsl(340,50%,90%)] via-card to-card rounded-2xl border-2 border-[hsl(340,50%,75%)] p-5 shadow-lg hover:shadow-xl transition-all">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 bg-gradient-to-br from-[hsl(340,60%,70%)] to-[hsl(340,60%,85%)] rounded-xl flex items-center justify-center shadow-md flex-shrink-0">
+                  <Clock className="text-white" size={24} />
+                </div>
+                <div className="flex-1">
+                  <p className="text-xs font-medium text-muted-foreground mb-1">Horário e Duração</p>
+                  <p className="text-base font-bold text-foreground">{event.time}</p>
+                  <p className="text-sm font-medium text-muted-foreground">{event.duration}</p>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-3 text-sm text-muted-foreground">
-              <Users size={16} />
-              <span>{event.confirmedAttendees} participantes confirmados</span>
-              {event.capacity && <span className="text-xs">/ {event.capacity} vagas</span>}
+
+            <div className="bg-gradient-to-br from-[hsl(142,50%,90%)] via-card to-card rounded-2xl border-2 border-[hsl(142,50%,75%)] p-5 shadow-lg hover:shadow-xl transition-all">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 bg-gradient-to-br from-[hsl(142,60%,65%)] to-[hsl(142,60%,80%)] rounded-xl flex items-center justify-center shadow-md flex-shrink-0">
+                  <Users className="text-white" size={24} />
+                </div>
+                <div className="flex-1">
+                  <p className="text-xs font-medium text-muted-foreground mb-1">Participantes</p>
+                  <p className="text-base font-bold text-foreground">
+                    {event.confirmedAttendees} confirmados
+                    {event.capacity && <span className="text-sm font-normal text-muted-foreground ml-1">de {event.capacity} vagas</span>}
+                  </p>
+                  {event.capacity && (
+                    <div className="mt-2">
+                      <div className="h-2 bg-muted rounded-full overflow-hidden">
+                        <div 
+                          className="h-full bg-gradient-to-r from-[hsl(142,60%,65%)] to-[hsl(142,60%,75%)] transition-all duration-500"
+                          style={{ width: `${(event.confirmedAttendees / event.capacity) * 100}%` }}
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
 
