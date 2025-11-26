@@ -26,13 +26,14 @@ interface InsightsDoDiaProps {
 }
 
 const quickActions = [
-  { label: "Notícias do dia", icon: Newspaper, color: "bg-pastel-blue", prompt: "Mostre as principais notícias do mercado financeiro brasileiro hoje com imagens ilustrativas no estilo 2D com cores pastel claras. Formate com títulos, destaques importantes em negrito e links relevantes. Para cada notícia, gere uma imagem contextual." },
+  { label: "Teste Completo", icon: Sparkles, color: "bg-pastel-purple", prompt: "Mostre um exemplo completo de TODOS os formatos suportados:\n\n# 🎨 Teste de Formatos\n\n## 1. Imagem Gerada\n![Teste](IMAGE_GENERATE:ilustração 2D de mercado financeiro com gráficos, estilo desenho com cores pastel claras)\n\n## 2. Progress Bar\n```progress\n75\n```\n\n## 3. Player de Áudio\n```audio\nhttps://example.com/test-audio.mp3\n```\n\n## 4. Player de Vídeo\n```video\nhttps://example.com/test-video.mp4\n```\n\n## 5. Gráfico de Barras\n```chart-bar\n{\"data\":[{\"name\":\"Jan\",\"value\":100},{\"name\":\"Fev\",\"value\":150},{\"name\":\"Mar\",\"value\":200}],\"dataKey\":\"value\",\"xKey\":\"name\"}\n```\n\n## 6. Gráfico de Linha\n```chart-line\n{\"data\":[{\"name\":\"Q1\",\"value\":50},{\"name\":\"Q2\",\"value\":80},{\"name\":\"Q3\",\"value\":120}],\"dataKey\":\"value\",\"xKey\":\"name\"}\n```\n\n## 7. Gráfico de Pizza\n```chart-pie\n{\"data\":[{\"name\":\"Ações\",\"value\":40},{\"name\":\"Renda Fixa\",\"value\":35},{\"name\":\"Crypto\",\"value\":25}],\"dataKey\":\"value\",\"xKey\":\"name\"}\n```\n\n**Todos os formatos devem aparecer corretamente!**" },
+  { label: "Notícias do dia", icon: Newspaper, color: "bg-pastel-blue", prompt: "Mostre as principais notícias do mercado financeiro brasileiro hoje. Para CADA notícia, inclua:\n\n1. Título em ## (h2)\n2. Imagem gerada: ![Notícia](IMAGE_GENERATE:ilustração 2D estilo desenho com cores pastel claras sobre [tema da notícia])\n3. Breve resumo\n4. Link relevante\n\nFormate com markdown rico: use **negrito** para destaques e organize em seções claras." },
   { label: "Novos Materiais", icon: BookOpen, color: "bg-pastel-green", prompt: "Liste os novos materiais educacionais disponíveis sobre mercado financeiro, organizados por categoria com descrições breves e links." },
   { label: "Webinars de hoje", icon: Video, color: "bg-pastel-purple", prompt: "Mostre os webinars agendados para hoje sobre mercado financeiro, com horários, tópicos e links para inscrição." },
-  { label: "Focar nas Metas", icon: Target, color: "bg-pastel-yellow", prompt: "Mostre meu progresso detalhado nas metas: 1) Meta de hoje com progressbar, 2) Meta do mês com progressbar, 3) Liste as metas em atraso com destaque, 4) Sugira próximas ações prioritárias." },
-  { label: "Podcasts rolando", icon: Headphones, color: "bg-pastel-pink", prompt: "Recomende os podcasts mais relevantes sobre mercado financeiro esta semana. Para cada podcast inclua: imagem de capa, título, descrição, e link de áudio formatado como player. Use links com 'audio' no URL." },
-  { label: "Completar Cursos", icon: Award, color: "bg-pastel-peach", prompt: "Mostre meus cursos em andamento: 1) Progressbar de conclusão de cada curso, 2) Destaque de onde parei (módulo e vídeo atual), 3) Link do vídeo para continuar assistindo, 4) Tempo estimado para finalizar." },
-  { label: "Promoções", icon: Tag, color: "bg-pastel-blue", prompt: "Mostre as promoções ativas de cursos, e-books, relatórios e outros materiais educacionais do mercado financeiro. Destaque descontos, prazos limitados e benefícios de cada promoção com links para acesso." },
+  { label: "Focar nas Metas", icon: Target, color: "bg-pastel-yellow", prompt: "Mostre minhas metas com:\n\n## Meta de Hoje\n```progress\n85\n```\n**Status**: 85% concluída\n\n## Meta do Mês\n```progress\n65\n```\n**Status**: 65% concluída\n\n### Metas em Atraso\n1. **Completar Módulo 3** - há 2 dias\n2. **Revisar Relatório** - ontem" },
+  { label: "Podcasts rolando", icon: Headphones, color: "bg-pastel-pink", prompt: "Recomende podcasts desta semana:\n\n## Mercados em Foco - EP142\n![Podcast](IMAGE_GENERATE:capa de podcast sobre mercado financeiro, estilo 2D com cores pastel)\n\n*Duração: 45 min*\n\nAnálise da volatilidade nos mercados.\n\n```audio\nhttps://example.com/podcast-ep142.mp3\n```" },
+  { label: "Completar Cursos", icon: Award, color: "bg-pastel-peach", prompt: "Mostre cursos em andamento:\n\n## Análise Técnica Avançada\n```progress\n72\n```\n\n**De onde parou**: Módulo 5\n\n### Próximo Vídeo\n**Aula 5.3**: Ombro-Cabeça-Ombro\n\n```video\nhttps://example.com/curso-video.mp4\n```\n\n**Tempo restante**: ~4 horas" },
+  { label: "Promoções", icon: Tag, color: "bg-pastel-blue", prompt: "Mostre promoções ativas:\n\n## Cursos com Desconto\n\n### Curso Day Trade\n**60% OFF** - De R$ 497 por R$ 197\n\n### Evolução de Vendas 2024\n```chart-bar\n{\"data\":[{\"name\":\"Jan\",\"value\":150},{\"name\":\"Fev\",\"value\":230},{\"name\":\"Mar\",\"value\":180},{\"name\":\"Abr\",\"value\":290}],\"dataKey\":\"value\",\"xKey\":\"name\"}\n```\n\n---\n\n## E-books Gratuitos\n- Guia Completo de Renda Fixa 2025\n- 10 Estratégias de Proteção" },
 ];
 
 export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
@@ -240,13 +241,25 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
                                 </a>
                               );
                             },
-                            img: ({ src, alt }) => (
-                              <ChatImageRenderer src={src || ""} alt={alt || ""} />
-                            ),
-                            code: ({ children, className }) => {
-                              // Progress bar syntax: ```progress:75```
+                            img: ({ src, alt }) => {
+                              console.log("Rendering image with src:", src, "alt:", alt);
+                              return <ChatImageRenderer src={src || ""} alt={alt || ""} />;
+                            },
+                            code: ({ children, className, ...props }) => {
+                              console.log("Rendering code block with className:", className, "content:", String(children).substring(0, 50));
+                              
+                              // Check if it's inline code (no className usually means inline)
+                              const isBlock = className !== undefined;
+                              
+                              if (!isBlock) {
+                                return <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{children}</code>;
+                              }
+
+                              const content = String(children).trim();
+                              
+                              // Progress bar syntax: ```progress\n75```
                               if (className === 'language-progress') {
-                                const value = parseInt(String(children).replace('%', ''));
+                                const value = parseInt(content.replace('%', ''));
                                 return (
                                   <div className="my-3 space-y-2">
                                     <div className="flex justify-between text-xs text-muted-foreground">
@@ -257,42 +270,42 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
                                   </div>
                                 );
                               }
-                              // Audio player syntax: ```audio:url```
+                              
+                              // Audio player syntax: ```audio\nurl```
                               if (className === 'language-audio') {
-                                const audioUrl = String(children).trim();
                                 return (
                                   <div className="my-3 bg-muted rounded-lg p-4 border-2 border-pastel-purple/30">
                                     <audio controls className="w-full">
-                                      <source src={audioUrl} type="audio/mpeg" />
+                                      <source src={content} type="audio/mpeg" />
                                       Seu navegador não suporta o elemento de áudio.
                                     </audio>
                                   </div>
                                 );
                               }
-                              // Video player syntax: ```video:url```
+                              
+                              // Video player syntax: ```video\nurl```
                               if (className === 'language-video') {
-                                const videoUrl = String(children).trim();
                                 return (
                                   <div className="my-3 bg-muted rounded-lg overflow-hidden border-2 border-pastel-purple/30">
                                     <video controls className="w-full">
-                                      <source src={videoUrl} type="video/mp4" />
+                                      <source src={content} type="video/mp4" />
                                       Seu navegador não suporta o elemento de vídeo.
                                     </video>
                                   </div>
                                 );
                               }
-                              // Chart syntax: ```chart:type:{"data":[...],"dataKey":"value","xKey":"name"}```
-                              if (className?.startsWith('language-chart')) {
+                              
+                              // Chart syntax: ```chart-bar\n{"data":[...],"dataKey":"value","xKey":"name"}```
+                              if (className?.startsWith('language-chart-')) {
                                 try {
-                                  const parts = String(children).trim().split('\n');
-                                  const chartType = className.replace('language-chart:', '') as "bar" | "line" | "pie";
-                                  const chartData = JSON.parse(parts[0]);
+                                  const chartType = className.replace('language-chart-', '') as "bar" | "line" | "pie";
+                                  const chartData = JSON.parse(content);
                                   return (
                                     <ChatChartRenderer 
                                       type={chartType}
                                       data={chartData.data}
-                                      dataKey={chartData.dataKey}
-                                      xKey={chartData.xKey}
+                                      dataKey={chartData.dataKey || "value"}
+                                      xKey={chartData.xKey || "name"}
                                       colors={chartData.colors}
                                     />
                                   );
@@ -301,7 +314,8 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
                                   return <code className="bg-muted px-1.5 py-0.5 rounded text-xs">Erro ao renderizar gráfico</code>;
                                 }
                               }
-                              return <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{children}</code>;
+                              
+                              return <code className="bg-muted px-1.5 py-0.5 rounded text-xs block">{children}</code>;
                             },
                           }}
                         >

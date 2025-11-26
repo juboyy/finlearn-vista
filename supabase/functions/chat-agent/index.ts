@@ -48,13 +48,24 @@ Use Markdown para formatar suas respostas de forma rica e visualmente atrativa:
 - **Itálico**: Use *itálico* para nuances e observações (será mostrado em cinza escuro)
 - **Listas**: Use - ou 1. para criar listas organizadas
 - **Links**: Formate links como [texto](url) - links com 'audio' serão exibidos como players
-- **Progresso de Metas**: Para mostrar progresso, use: \`\`\`progress:75\`\`\` (substitua 75 pelo valor percentual)
-- **Players de Áudio**: Para adicionar player de podcast, use: \`\`\`audio:url-do-audio\`\`\`
-- **Players de Vídeo**: Para adicionar player de vídeo de curso, use: \`\`\`video:url-do-video\`\`\`
-- **Gráficos**: Para adicionar gráficos, use: \`\`\`chart:tipo\\n{"data":[{"name":"A","value":10}],"dataKey":"value","xKey":"name"}\`\`\`
-  - Tipos disponíveis: bar (barras), line (linha), pie (pizza)
-  - O data deve ser um array de objetos com as chaves especificadas em dataKey e xKey
-- **Imagens**: Use ![descrição](url-da-imagem) para incluir imagens ilustrativas
+- **Progresso de Metas**: Para mostrar progresso, use:
+  \`\`\`progress
+  75
+  \`\`\`
+- **Players de Áudio**: Para adicionar player de podcast, use:
+  \`\`\`audio
+  https://example.com/audio.mp3
+  \`\`\`
+- **Players de Vídeo**: Para adicionar player de vídeo de curso, use:
+  \`\`\`video
+  https://example.com/video.mp4
+  \`\`\`
+- **Gráficos**: Para adicionar gráficos, use:
+  \`\`\`chart-bar
+  {"data":[{"name":"Jan","value":10},{"name":"Fev","value":20}],"dataKey":"value","xKey":"name"}
+  \`\`\`
+  Tipos disponíveis: chart-bar, chart-line, chart-pie
+- **Imagens**: Use ![descrição](IMAGE_GENERATE:prompt detalhado) para gerar imagens no estilo da plataforma
 - **Espaçamento**: Use parágrafos separados para melhor legibilidade
 
 TEMPLATES DE RESPOSTA:
@@ -87,14 +98,16 @@ TEMPLATES DE RESPOSTA:
 
 ## Meta de Hoje
 
-\`\`\`progress:85
+\`\`\`progress
+85
 \`\`\`
 
 **Status**: 85% concluída - Faltam 2 tarefas
 
 ## Meta do Mês
 
-\`\`\`progress:65
+\`\`\`progress
+65
 \`\`\`
 
 **Status**: 65% concluída - No caminho certo!
@@ -131,7 +144,8 @@ Análise profunda sobre a volatilidade recente nos mercados globais e seu impact
 - Estratégias de proteção
 - Oportunidades no cenário atual
 
-\`\`\`audio:https://example.com/podcast-ep142.mp3
+\`\`\`audio
+https://example.com/podcast-ep142.mp3
 \`\`\`
 
 ---
@@ -151,7 +165,8 @@ Análise profunda sobre a volatilidade recente nos mercados globais e seu impact
 
 ## Análise Técnica Avançada
 
-\`\`\`progress:72
+\`\`\`progress
+72
 \`\`\`
 
 **De onde parou**: Módulo 5 - Padrões de Reversão
@@ -160,7 +175,8 @@ Análise profunda sobre a volatilidade recente nos mercados globais e seu impact
 **Aula 5.3**: Ombro-Cabeça-Ombro na Prática
 *Duração: 18 minutos*
 
-\`\`\`video:https://example.com/curso-video-5-3.mp4
+\`\`\`video
+https://example.com/curso-video-5-3.mp4
 \`\`\`
 
 **Tempo para concluir o curso**: ~4 horas restantes
@@ -169,7 +185,8 @@ Análise profunda sobre a volatilidade recente nos mercados globais e seu impact
 
 ## Certificação CPA-20
 
-\`\`\`progress:45
+\`\`\`progress
+45
 \`\`\`
 
 **De onde parou**: Módulo 3 - Fundos de Investimento
