@@ -147,6 +147,8 @@ export default function TransformarTabelas() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [chartData, setChartData] = useState<ChartData[]>([]);
   const [dataKeys, setDataKeys] = useState<string[]>([]);
+  const [selectedColumns, setSelectedColumns] = useState<string[]>([]);
+  const [labelColumn, setLabelColumn] = useState<string>("");
   const { toast } = useToast();
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -206,6 +208,8 @@ export default function TransformarTabelas() {
     setFile(null);
     setChartData([]);
     setDataKeys([]);
+    setSelectedColumns([]);
+    setLabelColumn("");
   };
 
   const processExcelFile = (arrayBuffer: ArrayBuffer) => {
@@ -224,10 +228,19 @@ export default function TransformarTabelas() {
       
       setChartData(jsonData);
       setDataKeys(keys);
+      
+      // Definir automaticamente a primeira coluna como label e as demais como selecionadas
+      if (keys.length > 0) {
+        setLabelColumn(keys[0]);
+        const numericKeys = keys.slice(1).filter(key => {
+          return jsonData.some(row => typeof row[key] === "number" || !isNaN(Number(row[key])));
+        });
+        setSelectedColumns(numericKeys);
+      }
 
       toast({
-        title: "Gráfico gerado com sucesso",
-        description: `Processadas ${jsonData.length} linhas de dados com ${keys.length} colunas.`,
+        title: "Arquivo carregado com sucesso",
+        description: `Processadas ${jsonData.length} linhas de dados com ${keys.length} colunas. Selecione as colunas desejadas.`,
       });
     } catch (error: any) {
       console.error("Error processing file:", error);
@@ -246,6 +259,15 @@ export default function TransformarTabelas() {
       toast({
         title: "Nenhum arquivo selecionado",
         description: "Por favor, selecione um arquivo para processar.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (selectedColumns.length === 0) {
+      toast({
+        title: "Nenhuma coluna selecionada",
+        description: "Por favor, selecione pelo menos uma coluna para visualizar.",
         variant: "destructive",
       });
       return;
@@ -283,138 +305,156 @@ export default function TransformarTabelas() {
     }
   };
 
+  const toggleColumnSelection = (column: string) => {
+    setSelectedColumns(prev => 
+      prev.includes(column) 
+        ? prev.filter(c => c !== column)
+        : [...prev, column]
+    );
+  };
+
+  const renderSingleChart = (columns: string[], chartTitle?: string) => {
+    if (!labelColumn) return null;
+
+    return (
+      <div className="space-y-4">
+        {chartTitle && (
+          <h3 className="text-lg font-semibold text-slate-800">{chartTitle}</h3>
+        )}
+        
+        {chartType === "pie" ? (
+          <ResponsiveContainer width="100%" height={400}>
+            <RechartsPieChart>
+              <Pie
+                data={chartData.map((row, index) => ({
+                  name: String(row[labelColumn]),
+                  value: Number(row[columns[0]]) || 0,
+                  fill: CHART_COLORS[index % CHART_COLORS.length],
+                }))}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                outerRadius={120}
+                fill="#8884d8"
+                dataKey="value"
+              >
+                {chartData.map((_, index) => (
+                  <Cell key={`cell-${index}`} fill={CHART_COLORS[index % CHART_COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+              <Legend />
+            </RechartsPieChart>
+          </ResponsiveContainer>
+        ) : chartType === "line" ? (
+          <ResponsiveContainer width="100%" height={400}>
+            <RechartsLineChart data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(215, 20%, 85%)" />
+              <XAxis 
+                dataKey={labelColumn} 
+                tick={{ fill: "hsl(215, 20%, 40%)" }}
+                angle={-45}
+                textAnchor="end"
+                height={80}
+              />
+              <YAxis tick={{ fill: "hsl(215, 20%, 40%)" }} />
+              <Tooltip 
+                contentStyle={{
+                  backgroundColor: "white",
+                  border: "2px solid hsl(215, 20%, 85%)",
+                  borderRadius: "8px",
+                }}
+              />
+              <Legend />
+              {columns.map((key, index) => (
+                <Line
+                  key={key}
+                  type="monotone"
+                  dataKey={key}
+                  stroke={CHART_COLORS[index % CHART_COLORS.length]}
+                  strokeWidth={2}
+                  dot={{ r: 4 }}
+                  activeDot={{ r: 6 }}
+                />
+              ))}
+            </RechartsLineChart>
+          </ResponsiveContainer>
+        ) : (
+          <ResponsiveContainer width="100%" height={400}>
+            <RechartsBarChart data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(215, 20%, 85%)" />
+              <XAxis 
+                dataKey={labelColumn} 
+                tick={{ fill: "hsl(215, 20%, 40%)" }}
+                angle={-45}
+                textAnchor="end"
+                height={80}
+              />
+              <YAxis tick={{ fill: "hsl(215, 20%, 40%)" }} />
+              <Tooltip 
+                contentStyle={{
+                  backgroundColor: "white",
+                  border: "2px solid hsl(215, 20%, 85%)",
+                  borderRadius: "8px",
+                }}
+              />
+              <Legend />
+              {columns.map((key, index) => (
+                <Bar
+                  key={key}
+                  dataKey={key}
+                  fill={CHART_COLORS[index % CHART_COLORS.length]}
+                  radius={[4, 4, 0, 0]}
+                />
+              ))}
+            </RechartsBarChart>
+          </ResponsiveContainer>
+        )}
+      </div>
+    );
+  };
+
   const renderChart = () => {
     if (chartData.length === 0 || dataKeys.length === 0) {
       return (
         <div className="border-2 border-dashed border-slate-300 rounded-lg p-12 text-center">
           <BarChart3 className="w-16 h-16 mx-auto mb-4 text-slate-300" />
           <p className="text-slate-500 text-sm">
-            Faça upload de um arquivo e clique em "Gerar Gráfico"
+            Faça upload de um arquivo e selecione as colunas
           </p>
         </div>
       );
     }
 
-    // Primeira coluna é usada como label/categoria
-    const labelKey = dataKeys[0];
-    // Demais colunas são valores numéricos
-    const valueKeys = dataKeys.slice(1).filter(key => {
-      // Verificar se a coluna contém valores numéricos
-      return chartData.some(row => typeof row[key] === "number" || !isNaN(Number(row[key])));
-    });
-
-    if (valueKeys.length === 0) {
+    if (selectedColumns.length === 0) {
       return (
         <div className="border-2 border-dashed border-slate-300 rounded-lg p-12 text-center">
           <BarChart3 className="w-16 h-16 mx-auto mb-4 text-slate-300" />
           <p className="text-slate-500 text-sm">
-            Não foram encontradas colunas numéricas nos dados.
+            Selecione pelo menos uma coluna para visualizar
           </p>
         </div>
       );
     }
 
-    // Para gráfico de pizza, usar apenas a primeira coluna numérica
-    if (chartType === "pie") {
-      const pieData = chartData.map((row, index) => ({
-        name: String(row[labelKey]),
-        value: Number(row[valueKeys[0]]) || 0,
-        fill: CHART_COLORS[index % CHART_COLORS.length],
-      }));
+    // Se houver até 3 colunas, mostrar em um único gráfico
+    if (selectedColumns.length <= 3) {
+      return renderSingleChart(selectedColumns);
+    }
 
-      return (
-        <ResponsiveContainer width="100%" height={400}>
-          <RechartsPieChart>
-            <Pie
-              data={pieData}
-              cx="50%"
-              cy="50%"
-              labelLine={false}
-              label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-              outerRadius={120}
-              fill="#8884d8"
-              dataKey="value"
-            >
-              {pieData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={entry.fill} />
-              ))}
-            </Pie>
-            <Tooltip />
-            <Legend />
-          </RechartsPieChart>
-        </ResponsiveContainer>
+    // Se houver mais de 3 colunas, dividir em múltiplos gráficos
+    const chartsToRender = [];
+    for (let i = 0; i < selectedColumns.length; i += 2) {
+      const columnsForChart = selectedColumns.slice(i, i + 2);
+      chartsToRender.push(
+        <div key={i} className="mb-8">
+          {renderSingleChart(columnsForChart, `Gráfico ${Math.floor(i / 2) + 1}`)}
+        </div>
       );
     }
 
-    if (chartType === "line") {
-      return (
-        <ResponsiveContainer width="100%" height={400}>
-          <RechartsLineChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" stroke="hsl(215, 20%, 85%)" />
-            <XAxis 
-              dataKey={labelKey} 
-              tick={{ fill: "hsl(215, 20%, 40%)" }}
-              angle={-45}
-              textAnchor="end"
-              height={80}
-            />
-            <YAxis tick={{ fill: "hsl(215, 20%, 40%)" }} />
-            <Tooltip 
-              contentStyle={{
-                backgroundColor: "white",
-                border: "2px solid hsl(215, 20%, 85%)",
-                borderRadius: "8px",
-              }}
-            />
-            <Legend />
-            {valueKeys.map((key, index) => (
-              <Line
-                key={key}
-                type="monotone"
-                dataKey={key}
-                stroke={CHART_COLORS[index % CHART_COLORS.length]}
-                strokeWidth={2}
-                dot={{ r: 4 }}
-                activeDot={{ r: 6 }}
-              />
-            ))}
-          </RechartsLineChart>
-        </ResponsiveContainer>
-      );
-    }
-
-    // Bar chart (default)
-    return (
-      <ResponsiveContainer width="100%" height={400}>
-        <RechartsBarChart data={chartData}>
-          <CartesianGrid strokeDasharray="3 3" stroke="hsl(215, 20%, 85%)" />
-          <XAxis 
-            dataKey={labelKey} 
-            tick={{ fill: "hsl(215, 20%, 40%)" }}
-            angle={-45}
-            textAnchor="end"
-            height={80}
-          />
-          <YAxis tick={{ fill: "hsl(215, 20%, 40%)" }} />
-          <Tooltip 
-            contentStyle={{
-              backgroundColor: "white",
-              border: "2px solid hsl(215, 20%, 85%)",
-              borderRadius: "8px",
-            }}
-          />
-          <Legend />
-          {valueKeys.map((key, index) => (
-            <Bar
-              key={key}
-              dataKey={key}
-              fill={CHART_COLORS[index % CHART_COLORS.length]}
-              radius={[4, 4, 0, 0]}
-            />
-          ))}
-        </RechartsBarChart>
-      </ResponsiveContainer>
-    );
+    return <div className="space-y-6">{chartsToRender}</div>;
   };
 
   return (
@@ -595,6 +635,73 @@ export default function TransformarTabelas() {
                   </RadioGroup>
                 </div>
 
+{dataKeys.length > 0 && (
+                  <div className="bg-white rounded-xl border-2 border-slate-200 p-6">
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="w-10 h-10 rounded-lg bg-[hsl(207,50%,75%)] flex items-center justify-center">
+                        <i className="fas fa-columns text-slate-700"></i>
+                      </div>
+                      <h3 className="font-bold text-slate-800">Seleção de Colunas</h3>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div>
+                        <Label className="text-sm font-semibold text-slate-700 mb-2 block">
+                          Coluna de Rótulos (Eixo X)
+                        </Label>
+                        <select
+                          value={labelColumn}
+                          onChange={(e) => setLabelColumn(e.target.value)}
+                          className="w-full p-2 border-2 border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(142,35%,75%)]"
+                        >
+                          {dataKeys.map((key) => (
+                            <option key={key} value={key}>
+                              {key}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div>
+                        <Label className="text-sm font-semibold text-slate-700 mb-2 block">
+                          Colunas de Dados (Valores)
+                        </Label>
+                        <div className="space-y-2 max-h-64 overflow-y-auto pr-2">
+                          {dataKeys
+                            .filter(key => key !== labelColumn)
+                            .map((key) => {
+                              const isNumeric = chartData.some(row => 
+                                typeof row[key] === "number" || !isNaN(Number(row[key]))
+                              );
+                              
+                              if (!isNumeric) return null;
+
+                              return (
+                                <label
+                                  key={key}
+                                  className="flex items-center gap-3 p-3 rounded-lg border-2 border-slate-200 hover:border-[hsl(142,35%,75%)] transition-colors cursor-pointer"
+                                >
+                                  <input
+                                    type="checkbox"
+                                    checked={selectedColumns.includes(key)}
+                                    onChange={() => toggleColumnSelection(key)}
+                                    className="w-4 h-4 text-[hsl(142,35%,65%)] focus:ring-[hsl(142,35%,75%)] border-slate-300 rounded"
+                                  />
+                                  <span className="text-sm font-medium text-slate-700 flex-1">
+                                    {key}
+                                  </span>
+                                </label>
+                              );
+                            })}
+                        </div>
+                        <p className="text-xs text-slate-500 mt-2">
+                          {selectedColumns.length} coluna(s) selecionada(s)
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 <div className="bg-white rounded-xl border-2 border-slate-200 p-6">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="w-10 h-10 rounded-lg bg-[hsl(322,48%,75%)] flex items-center justify-center">
@@ -603,7 +710,7 @@ export default function TransformarTabelas() {
                     <h3 className="font-bold text-slate-800">Agente IA</h3>
                   </div>
 
-                  <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
+                  <div className="space-y-3 max-h-64 overflow-y-auto pr-2">
                     {specializedAgents.map((agent) => (
                       <button
                         key={agent.id}
@@ -643,18 +750,18 @@ export default function TransformarTabelas() {
 
                 <Button
                   onClick={handleGenerateChart}
-                  disabled={!file || isProcessing}
-                  className="w-full bg-[hsl(142,35%,65%)] hover:bg-[hsl(142,35%,55%)] text-white font-semibold py-6 text-base"
+                  disabled={!file || isProcessing || selectedColumns.length === 0}
+                  className="w-full bg-[hsl(142,35%,65%)] hover:bg-[hsl(142,35%,55%)] text-white font-semibold py-6 text-base disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isProcessing ? (
                     <>
                       <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                      Gerando...
+                      Processando...
                     </>
                   ) : (
                     <>
-                      <BarChart3 className="mr-2 h-5 w-5" />
-                      Gerar Gráfico
+                      <Upload className="mr-2 h-5 w-5" />
+                      Carregar Arquivo
                     </>
                   )}
                 </Button>
