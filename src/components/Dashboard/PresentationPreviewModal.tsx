@@ -3,11 +3,13 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, X, Maximize } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { toast } from "sonner";
+import { Canvas as FabricCanvas } from "fabric";
 
 interface Slide {
   id: number;
   content: string;
   image?: string;
+  canvasData?: any;
 }
 
 interface PresentationPreviewModalProps {
@@ -26,6 +28,59 @@ export const PresentationPreviewModal = ({
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [slideImages, setSlideImages] = useState<{ [key: number]: string }>({});
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  // Renderizar canvas data como imagem
+  useEffect(() => {
+    if (!slides || slides.length === 0) return;
+
+    const renderSlides = async () => {
+      const images: { [key: number]: string } = {};
+      
+      for (let i = 0; i < slides.length; i++) {
+        const slide = slides[i];
+        if (slide.canvasData) {
+          try {
+            // Criar canvas temporário
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = 960;
+            tempCanvas.height = 540;
+            
+            const fabricCanvas = new FabricCanvas(tempCanvas, {
+              width: 960,
+              height: 540,
+              backgroundColor: '#ffffff',
+            });
+
+            // Carregar dados do canvas
+            await new Promise((resolve, reject) => {
+              fabricCanvas.loadFromJSON(slide.canvasData, () => {
+                fabricCanvas.renderAll();
+                resolve(true);
+              });
+            });
+
+            // Converter para imagem
+            const dataUrl = fabricCanvas.toDataURL({
+              format: 'png',
+              quality: 1,
+              multiplier: 1,
+            });
+
+            images[i] = dataUrl;
+            fabricCanvas.dispose();
+          } catch (error) {
+            console.error(`Erro ao renderizar slide ${i}:`, error);
+          }
+        }
+      }
+      
+      setSlideImages(images);
+    };
+
+    renderSlides();
+  }, [slides]);
 
   const handlePrevious = () => {
     setCurrentSlide((prev) => (prev > 0 ? prev - 1 : slides.length - 1));
@@ -90,7 +145,13 @@ export const PresentationPreviewModal = ({
             <div className={`rounded-lg shadow-lg p-8 w-full h-full flex items-center justify-center ${
               isFullscreen ? 'bg-black' : 'bg-white'
             }`}>
-              {slides[currentSlide]?.image ? (
+              {slideImages[currentSlide] ? (
+                <img 
+                  src={slideImages[currentSlide]} 
+                  alt={`Slide ${currentSlide + 1}`}
+                  className="max-w-full max-h-full object-contain"
+                />
+              ) : slides[currentSlide]?.image ? (
                 <img 
                   src={slides[currentSlide].image} 
                   alt={`Slide ${currentSlide + 1}`}
