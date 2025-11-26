@@ -213,6 +213,13 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
                     >
                       {(() => {
                         console.log("📝 Rendering message:", msg.content.substring(0, 200));
+                        
+                        // Check if message contains image syntax
+                        const hasImage = msg.content.includes('![') && msg.content.includes('](IMAGE_GENERATE:');
+                        if (hasImage) {
+                          console.log("🖼️ MESSAGE CONTAINS IMAGE SYNTAX!");
+                        }
+                        
                         return null;
                       })()}
                       <div className="prose prose-sm max-w-none dark:prose-invert chat-markdown">
