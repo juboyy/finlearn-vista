@@ -8,7 +8,6 @@ import { ProgressBar } from "@/components/Dashboard/ProgressBar";
 import { LearningProgressChart } from "@/components/Dashboard/LearningProgressChart";
 import { ContentDistributionChart } from "@/components/Dashboard/ContentDistributionChart";
 import { InsightsDoDia } from "@/components/Dashboard/InsightsDoDia";
-import { AgentChat } from "@/components/AgentChat";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Award, Clock, Flame, TrendingUp, Coins, Scale, Bot, Mic, Video, BookMarked, Bell, Plus, Clock as ClockIcon, Headphones, Play, Lightbulb } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -17,7 +16,6 @@ import { useUserAgents } from "@/hooks/useUserAgents";
 
 const Index = () => {
   const [insightsOpen, setInsightsOpen] = useState(false);
-  const [chatOpen, setChatOpen] = useState(false);
   const { agents } = useUserAgents();
   
   const anaAgent = agents.find(a => a.agent_key === "ana-analista-tecnica");
@@ -141,7 +139,7 @@ const Index = () => {
                   title="Chat com IA"
                   description="Tire suas dúvidas"
                   bgColor="bg-pastel-blue"
-                  onClick={() => setChatOpen(true)}
+                  onClick={() => setInsightsOpen(true)}
                 />
                 <QuickActionCard
                   icon={Mic}
@@ -299,14 +297,6 @@ const Index = () => {
       </main>
       
       <InsightsDoDia open={insightsOpen} onOpenChange={setInsightsOpen} />
-      
-      {chatOpen && (
-        <AgentChat
-          agentName="Assistente Geral"
-          agentImage="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-7.jpg"
-          onClose={() => setChatOpen(false)}
-        />
-      )}
     </div>
   );
 };
