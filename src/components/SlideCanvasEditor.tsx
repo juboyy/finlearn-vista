@@ -51,9 +51,12 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
     };
   }, []);
 
-  // Adicionar conteúdo gerado pela IA automaticamente ao canvas
+  // Adicionar conteúdo gerado pela IA automaticamente ao canvas (apenas na primeira vez)
   useEffect(() => {
     if (!fabricCanvas) return;
+    
+    // Se já existe initialData salvo, não sobrescrever com conteúdo gerado
+    if (initialData) return;
 
     const addGeneratedContent = async () => {
       try {
@@ -152,7 +155,7 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
     };
 
     addGeneratedContent();
-  }, [fabricCanvas, slideText, slideImage, slideChart]);
+  }, [fabricCanvas, slideText, slideImage, slideChart, initialData]);
 
   // Adicionar atalhos de teclado para deletar
   useEffect(() => {
