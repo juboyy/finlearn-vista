@@ -17,7 +17,6 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [fabricCanvas, setFabricCanvas] = useState<FabricCanvas | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [isContentLoaded, setIsContentLoaded] = useState(false);
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -54,7 +53,7 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
 
   // Adicionar conteúdo gerado pela IA automaticamente ao canvas
   useEffect(() => {
-    if (!fabricCanvas || isContentLoaded) return;
+    if (!fabricCanvas) return;
 
     const addGeneratedContent = async () => {
       // Limpar canvas antes de adicionar novo conteúdo
@@ -143,18 +142,10 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
       }
 
       fabricCanvas.renderAll();
-      setIsContentLoaded(true);
     };
 
-    if (slideText || slideImage || slideChart) {
-      addGeneratedContent();
-    }
-  }, [fabricCanvas, slideText, slideImage, slideChart, isContentLoaded]);
-
-  // Reset content loaded when slide changes
-  useEffect(() => {
-    setIsContentLoaded(false);
-  }, [slideText, slideImage, slideChart]);
+    addGeneratedContent();
+  }, [fabricCanvas, slideText, slideImage, slideChart]);
 
   // Adicionar atalhos de teclado para deletar
   useEffect(() => {
