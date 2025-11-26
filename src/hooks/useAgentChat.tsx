@@ -27,7 +27,7 @@ export const useAgentChat = (agentName: string) => {
 
   const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat-agent`;
 
-  const sendMessage = useCallback(async (input: string) => {
+  const sendMessage = useCallback(async (input: string, contextPrompt?: string) => {
     const userMsg: Message = { role: "user", content: input };
     setMessages(prev => [...prev, userMsg]);
     setIsLoading(true);
@@ -35,6 +35,10 @@ export const useAgentChat = (agentName: string) => {
     let assistantSoFar = "";
     
     try {
+      // Use contextPrompt if provided, otherwise use input
+      const messageToSend = contextPrompt || input;
+      const messageForBackend: Message = { role: "user", content: messageToSend };
+      
       const resp = await fetch(CHAT_URL, {
         method: "POST",
         headers: {
@@ -42,7 +46,7 @@ export const useAgentChat = (agentName: string) => {
           Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
         },
         body: JSON.stringify({ 
-          messages: [...messages, userMsg],
+          messages: [...messages, messageForBackend],
           agentName 
         }),
       });

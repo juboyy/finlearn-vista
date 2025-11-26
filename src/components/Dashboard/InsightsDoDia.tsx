@@ -55,7 +55,8 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
 
   const handleQuickAction = async (action: typeof quickActions[0]) => {
     if (isLoading) return;
-    await sendMessage(action.prompt);
+    // Send label as visible message, but prompt as context for the agent
+    await sendMessage(action.label, action.prompt);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
