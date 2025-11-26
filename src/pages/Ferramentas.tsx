@@ -144,44 +144,60 @@ export default function Ferramentas() {
               </div>
             </div>
 
-            {/* Tools Grid */}
+            {/* Tools List */}
             <div className="mb-6">
               <h2 className="text-lg font-semibold text-slate-800 mb-4">Todas as Ferramentas</h2>
             </div>
 
-            <div className="grid grid-cols-3 gap-6">
-              {ferramentas.map((ferramenta) => (
-                <div
-                  key={ferramenta.id}
-                  className="bg-white rounded-lg border border-slate-200 p-6 hover:shadow-lg transition-shadow cursor-pointer group"
-                >
-                  <div className="flex items-start gap-4 mb-4">
-                    <div
-                      className="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0"
-                      style={{ backgroundColor: ferramenta.color }}
+            <div className="bg-white rounded-lg border border-slate-200 overflow-hidden">
+              <table className="w-full">
+                <thead className="bg-slate-50 border-b border-slate-200">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider w-16">Ícone</th>
+                    <th className="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Ferramenta</th>
+                    <th className="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Descrição</th>
+                    <th className="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider w-32">Área</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-200">
+                  {ferramentas.map((ferramenta) => (
+                    <tr 
+                      key={ferramenta.id}
+                      className="hover:bg-slate-50 transition-colors cursor-pointer"
                     >
-                      <ferramenta.icon className="h-6 w-6 text-slate-700" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-base font-semibold text-slate-800 mb-1 group-hover:text-blue-600 transition-colors">
-                        {ferramenta.nome}
-                      </h3>
-                      <Badge 
-                        style={{ 
-                          backgroundColor: areaColors[ferramenta.area],
-                          color: 'hsl(215, 20%, 30%)'
-                        }}
-                        className="text-xs font-medium"
-                      >
-                        {ferramenta.area}
-                      </Badge>
-                    </div>
-                  </div>
-                  <p className="text-sm text-slate-600 leading-relaxed">
-                    {ferramenta.descricao}
-                  </p>
-                </div>
-              ))}
+                      <td className="px-6 py-4">
+                        <div
+                          className="w-10 h-10 rounded-lg flex items-center justify-center"
+                          style={{ backgroundColor: ferramenta.color }}
+                        >
+                          <ferramenta.icon className="h-5 w-5 text-slate-700" />
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="text-sm font-semibold text-slate-800">
+                          {ferramenta.nome}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="text-sm text-slate-600">
+                          {ferramenta.descricao}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <Badge 
+                          style={{ 
+                            backgroundColor: areaColors[ferramenta.area],
+                            color: 'hsl(215, 20%, 30%)'
+                          }}
+                          className="text-xs font-medium whitespace-nowrap"
+                        >
+                          {ferramenta.area}
+                        </Badge>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </main>
