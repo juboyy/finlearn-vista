@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Upload, FileText, Loader2, Download, ChartLine, Landmark, Bitcoin, GraduationCap, TrendingUp, CreditCard, Database, Settings } from "lucide-react";
+import { ArrowLeft, Upload, FileText, Loader2, Download, ChartLine, Landmark, Bitcoin, GraduationCap, TrendingUp, CreditCard, Database, Settings, History, Trash2, Eye } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -8,6 +8,13 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import ReactMarkdown from "react-markdown";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 const specializedAgents = [
   {
@@ -112,6 +119,17 @@ const specializedAgents = [
   },
 ];
 
+interface HistorySummary {
+  id: string;
+  file_name: string;
+  file_size: number;
+  summary_type: string;
+  agent_id: string;
+  agent_name: string;
+  summary_content: string;
+  created_at: string;
+}
+
 export default function ResumoContratos() {
   const [file, setFile] = useState<File | null>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -119,7 +137,28 @@ export default function ResumoContratos() {
   const [selectedAgent, setSelectedAgent] = useState(specializedAgents[0].id);
   const [isProcessing, setIsProcessing] = useState(false);
   const [summary, setSummary] = useState("");
+  const [history, setHistory] = useState<HistorySummary[]>([]);
+  const [selectedHistoryItem, setSelectedHistoryItem] = useState<HistorySummary | null>(null);
+  const [showHistoryDialog, setShowHistoryDialog] = useState(false);
   const { toast } = useToast();
+
+  useEffect(() => {
+    loadHistory();
+  }, []);
+
+  const loadHistory = async () => {
+    const { data, error } = await supabase
+      .from("contract_summaries")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(20);
+
+    if (error) {
+      console.error("Error loading history:", error);
+    } else {
+      setHistory(data || []);
+    }
+  };
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -211,6 +250,21 @@ export default function ResumoContratos() {
         if (error) throw error;
 
         setSummary(data.summary);
+        
+        // Save to database
+        const selectedAgentData = specializedAgents.find(a => a.id === selectedAgent);
+        await supabase.from("contract_summaries").insert({
+          file_name: file.name,
+          file_size: file.size,
+          summary_type: summaryType,
+          agent_id: selectedAgent,
+          agent_name: selectedAgentData?.name || "Unknown",
+          summary_content: data.summary,
+        });
+
+        // Reload history
+        loadHistory();
+
         toast({
           title: "Resumo gerado com sucesso",
           description: "O resumo do contrato foi gerado pela IA.",
@@ -227,6 +281,49 @@ export default function ResumoContratos() {
     } finally {
       setIsProcessing(false);
     }
+  };
+
+  const handleDeleteHistory = async (id: string) => {
+    const { error } = await supabase
+      .from("contract_summaries")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      toast({
+        title: "Erro ao deletar",
+        description: "Não foi possível deletar o resumo.",
+        variant: "destructive",
+      });
+    } else {
+      loadHistory();
+      toast({
+        title: "Resumo deletado",
+        description: "O resumo foi removido do histórico.",
+      });
+    }
+  };
+
+  const handleViewHistory = (item: HistorySummary) => {
+    setSelectedHistoryItem(item);
+    setShowHistoryDialog(true);
+  };
+
+  const handleDownloadHistory = (item: HistorySummary) => {
+    const blob = new Blob([item.summary_content], { type: "text/markdown" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `resumo-${item.file_name}.md`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    toast({
+      title: "Download iniciado",
+      description: "O resumo está sendo baixado.",
+    });
   };
 
   return (
@@ -527,9 +624,119 @@ export default function ResumoContratos() {
                 </div>
               </div>
             </div>
+
+            {/* Histórico de Resumos */}
+            {history.length > 0 && (
+              <div className="mt-8">
+                <div className="bg-white rounded-xl border-2 border-slate-200 p-8">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-12 h-12 rounded-xl bg-[hsl(206,50%,75%)] flex items-center justify-center border-2 border-slate-300">
+                      <History className="h-6 w-6 text-slate-700" />
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-bold text-slate-800">Histórico de Resumos</h2>
+                      <p className="text-sm text-slate-600">Últimos {history.length} resumos gerados</p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    {history.map((item) => (
+                      <div
+                        key={item.id}
+                        className="border-2 border-slate-200 rounded-lg p-4 hover:border-slate-300 transition-all"
+                      >
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="flex items-start gap-3 flex-1 min-w-0">
+                            <div className="w-10 h-10 rounded-lg bg-[hsl(142,35%,75%)] flex items-center justify-center flex-shrink-0">
+                              <FileText className="h-5 w-5 text-slate-700" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="font-semibold text-slate-800 truncate">{item.file_name}</p>
+                              <div className="flex items-center gap-3 mt-1">
+                                <span className="text-xs text-slate-600">
+                                  {(item.file_size / 1024 / 1024).toFixed(2)} MB
+                                </span>
+                                <span className="text-xs text-slate-600">•</span>
+                                <span className="text-xs text-slate-600">{item.agent_name}</span>
+                                <span className="text-xs text-slate-600">•</span>
+                                <span className="text-xs text-slate-600">
+                                  {new Date(item.created_at).toLocaleDateString("pt-BR")}
+                                </span>
+                              </div>
+                              <span className="inline-block mt-2 px-2 py-0.5 bg-slate-200 text-slate-700 text-xs rounded-full">
+                                {item.summary_type === "short" ? "Curto" : item.summary_type === "medium" ? "Médio" : "Extenso"}
+                              </span>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2 flex-shrink-0">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleViewHistory(item)}
+                              className="text-slate-600 hover:text-[hsl(206,50%,55%)] hover:bg-[hsl(206,50%,95%)]"
+                            >
+                              <Eye className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleDownloadHistory(item)}
+                              className="text-slate-600 hover:text-[hsl(142,35%,55%)] hover:bg-[hsl(142,35%,95%)]"
+                            >
+                              <Download className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleDeleteHistory(item.id)}
+                              className="text-slate-600 hover:text-red-600 hover:bg-red-50"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </main>
       </div>
+
+      {/* Dialog para visualizar resumo do histórico */}
+      <Dialog open={showHistoryDialog} onOpenChange={setShowHistoryDialog}>
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-slate-800">
+              {selectedHistoryItem?.file_name}
+            </DialogTitle>
+            <DialogDescription className="text-slate-600">
+              Gerado em {selectedHistoryItem && new Date(selectedHistoryItem.created_at).toLocaleDateString("pt-BR")} por {selectedHistoryItem?.agent_name}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="mt-4 p-6 bg-slate-50 rounded-lg border-2 border-slate-200">
+            <div className="prose prose-slate max-w-none text-slate-700 leading-relaxed">
+              <ReactMarkdown>
+                {selectedHistoryItem?.summary_content || ""}
+              </ReactMarkdown>
+            </div>
+          </div>
+          <div className="flex gap-2 justify-end mt-4">
+            <Button
+              variant="outline"
+              onClick={() => selectedHistoryItem && handleDownloadHistory(selectedHistoryItem)}
+            >
+              <Download className="h-4 w-4 mr-2" />
+              Baixar
+            </Button>
+            <Button onClick={() => setShowHistoryDialog(false)}>
+              Fechar
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
