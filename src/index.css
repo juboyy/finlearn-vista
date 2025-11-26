@@ -39,7 +39,7 @@ All colors MUST be HSL.
     
     --primary-light: 206 49% 85%;
     --secondary-light: 152 35% 85%;
-    --accent-light: 270 25% 96%;
+    --accent-light: 270 15% 98%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
@@ -54,10 +54,10 @@ All colors MUST be HSL.
     --pastel-blue: 206 50% 72%;
     --pastel-blue-btn: 206 55% 75%;
     --pastel-blue-text: 206 49% 35%;
-    --pastel-indigo: 239 25% 95%;
-    --pastel-purple: 270 25% 96%;
-    --pastel-purple-btn: 270 25% 95%;
-    --pastel-purple-text: 270 20% 40%;
+    --pastel-indigo: 239 15% 98%;
+    --pastel-purple: 270 15% 98%;
+    --pastel-purple-btn: 270 15% 97%;
+    --pastel-purple-text: 270 15% 45%;
     --pastel-pink: 322 48% 62%;
     --pastel-pink-btn: 322 48% 58%;
     --pastel-pink-text: 322 32% 30%;
@@ -120,7 +120,7 @@ All colors MUST be HSL.
     
     --primary-light: 206 30% 75%;
     --secondary-light: 152 45% 75%;
-    --accent-light: 270 25% 94%;
+    --accent-light: 270 15% 96%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
@@ -132,10 +132,10 @@ All colors MUST be HSL.
     --pastel-blue: 206 48% 62%;
     --pastel-blue-btn: 206 50% 65%;
     --pastel-blue-text: 206 45% 35%;
-    --pastel-indigo: 239 25% 93%;
-    --pastel-purple: 270 25% 94%;
-    --pastel-purple-btn: 270 25% 93%;
-    --pastel-purple-text: 270 20% 42%;
+    --pastel-indigo: 239 15% 96%;
+    --pastel-purple: 270 15% 96%;
+    --pastel-purple-btn: 270 15% 95%;
+    --pastel-purple-text: 270 15% 47%;
     --pastel-pink: 322 48% 60%;
     --pastel-pink-btn: 322 48% 56%;
     --pastel-pink-text: 322 35% 32%;
