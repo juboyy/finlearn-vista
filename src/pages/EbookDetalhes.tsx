@@ -103,9 +103,9 @@ const EbookDetalhes = () => {
               <div className="bg-white dark:bg-slate-800 rounded-xl border border-border dark:border-slate-700 p-8">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
-                    <span className="inline-block px-3 py-1 bg-pastel-green text-foreground text-sm font-medium rounded-full mb-3">eBook</span>
-                    <h2 className="text-3xl font-bold text-foreground mb-3">Guia Completo dos Cartões de Crédito</h2>
-                    <p className="text-lg text-muted-foreground">
+                    <span className="inline-block px-3 py-1 bg-pastel-green dark:bg-pastel-green text-foreground dark:text-slate-900 text-sm font-medium rounded-full mb-3">eBook</span>
+                    <h2 className="text-3xl font-bold text-foreground dark:text-slate-100 mb-3">Guia Completo dos Cartões de Crédito</h2>
+                    <p className="text-lg text-muted-foreground dark:text-slate-300">
                       Entenda o ecossistema de pagamentos, bandeiras, adquirência e todos os aspectos operacionais e regulatórios dos cartões de crédito no Brasil
                     </p>
                   </div>
@@ -119,54 +119,54 @@ const EbookDetalhes = () => {
                       alt="Author" 
                     />
                     <div>
-                      <p className="font-semibold text-foreground">Ricardo Almeida</p>
-                      <p className="text-sm text-muted-foreground">Especialista em Meios de Pagamento, 18 anos</p>
+                      <p className="font-semibold text-foreground dark:text-slate-100">Ricardo Almeida</p>
+                      <p className="text-sm text-muted-foreground dark:text-slate-400">Especialista em Meios de Pagamento, 18 anos</p>
                     </div>
                   </div>
-                  <div className="h-10 w-px bg-border"></div>
+                  <div className="h-10 w-px bg-border dark:bg-slate-700"></div>
                   <div className="flex items-center gap-2">
                     <div className="flex items-center gap-1">
                       {[...Array(5)].map((_, i) => (
                         <i key={i} className="fas fa-star text-yellow-500"></i>
                       ))}
                     </div>
-                    <span className="font-semibold text-foreground">4.9</span>
-                    <span className="text-muted-foreground">(243 avaliações)</span>
+                    <span className="font-semibold text-foreground dark:text-slate-100">4.9</span>
+                    <span className="text-muted-foreground dark:text-slate-400">(243 avaliações)</span>
                   </div>
-                  <div className="h-10 w-px bg-border"></div>
+                  <div className="h-10 w-px bg-border dark:bg-slate-700"></div>
                   <div className="text-center">
-                    <p className="text-2xl font-bold text-foreground">1.247</p>
-                    <p className="text-sm text-muted-foreground">vendas</p>
+                    <p className="text-2xl font-bold text-foreground dark:text-slate-100">1.247</p>
+                    <p className="text-sm text-muted-foreground dark:text-slate-400">vendas</p>
                   </div>
                 </div>
 
                 <div className="flex flex-wrap gap-2">
-                  <span className="px-3 py-1 bg-pastel-blue text-foreground text-sm rounded-full">Meios de Pagamento</span>
-                  <span className="px-3 py-1 bg-pastel-blue text-foreground text-sm rounded-full">Adquirência</span>
-                  <span className="px-3 py-1 bg-pastel-blue text-foreground text-sm rounded-full">Bandeiras</span>
-                  <span className="px-3 py-1 bg-pastel-blue text-foreground text-sm rounded-full">Regulação Bacen</span>
+                  <span className="px-3 py-1 bg-pastel-blue dark:bg-pastel-blue text-foreground dark:text-slate-900 text-sm rounded-full">Meios de Pagamento</span>
+                  <span className="px-3 py-1 bg-pastel-blue dark:bg-pastel-blue text-foreground dark:text-slate-900 text-sm rounded-full">Adquirência</span>
+                  <span className="px-3 py-1 bg-pastel-blue dark:bg-pastel-blue text-foreground dark:text-slate-900 text-sm rounded-full">Bandeiras</span>
+                  <span className="px-3 py-1 bg-pastel-blue dark:bg-pastel-blue text-foreground dark:text-slate-900 text-sm rounded-full">Regulação Bacen</span>
                 </div>
               </div>
 
               {/* Description */}
-              <div className="bg-white rounded-xl border border-border p-8">
-                <h3 className="text-xl font-semibold text-foreground mb-4">Sobre este eBook</h3>
-                <div className="prose prose-slate max-w-none space-y-4">
-                  <p className="text-muted-foreground leading-relaxed">
+              <div className="bg-white dark:bg-slate-800 rounded-xl border border-border dark:border-slate-700 p-8">
+                <h3 className="text-xl font-semibold text-foreground dark:text-slate-100 mb-4">Sobre este eBook</h3>
+                <div className="prose prose-slate dark:prose-invert max-w-none space-y-4">
+                  <p className="text-muted-foreground dark:text-slate-300 leading-relaxed">
                     Este guia abrangente foi desenvolvido para profissionais do mercado financeiro e de meios de pagamento que desejam dominar todos os aspectos do ecossistema de cartões de crédito no Brasil. Com 312 páginas de conteúdo técnico e prático, você terá acesso a informações detalhadas sobre bandeiras, adquirentes, emissores, modelos de negócio e regulação.
                   </p>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-muted-foreground dark:text-slate-300 leading-relaxed">
                     O material cobre desde a história e evolução dos cartões de crédito até as tecnologias mais recentes como tokenização, pagamentos contactless e Open Banking. Aborda também aspectos operacionais como processamento de transações, liquidação, chargeback, antifraude e compliance com as normas do Banco Central e demais reguladores.
                   </p>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-muted-foreground dark:text-slate-300 leading-relaxed">
                     Ideal para profissionais de bancos, fintechs, adquirentes, bandeiras, subadquirentes, varejistas e todos que trabalham ou desejam trabalhar com meios de pagamento. Inclui casos reais do mercado brasileiro, análise de modelos de precificação (MDR, interchange) e tendências do setor.
                   </p>
                 </div>
               </div>
 
               {/* Features */}
-              <div className="bg-white rounded-xl border border-border p-8">
-                <h3 className="text-xl font-semibold text-foreground mb-6">O que você vai aprender</h3>
+              <div className="bg-white dark:bg-slate-800 rounded-xl border border-border dark:border-slate-700 p-8">
+                <h3 className="text-xl font-semibold text-foreground dark:text-slate-100 mb-6">O que você vai aprender</h3>
                 <div className="grid grid-cols-2 gap-4">
                   {[
                     {
@@ -195,12 +195,12 @@ const EbookDetalhes = () => {
                     }
                   ].map((item, index) => (
                     <div key={index} className="flex items-start gap-3">
-                      <div className="w-8 h-8 bg-pastel-green rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-                        <Check className="text-foreground" size={18} />
+                      <div className="w-8 h-8 bg-pastel-green dark:bg-pastel-green rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                        <Check className="text-foreground dark:text-slate-900" size={18} />
                       </div>
                       <div>
-                        <h4 className="font-semibold text-foreground mb-1">{item.title}</h4>
-                        <p className="text-sm text-muted-foreground">{item.description}</p>
+                        <h4 className="font-semibold text-foreground dark:text-slate-100 mb-1">{item.title}</h4>
+                        <p className="text-sm text-muted-foreground dark:text-slate-300">{item.description}</p>
                       </div>
                     </div>
                   ))}
@@ -208,8 +208,8 @@ const EbookDetalhes = () => {
               </div>
 
               {/* Contents */}
-              <div className="bg-white rounded-xl border border-border p-8">
-                <h3 className="text-xl font-semibold text-foreground mb-6">Índice do Conteúdo</h3>
+              <div className="bg-white dark:bg-slate-800 rounded-xl border border-border dark:border-slate-700 p-8">
+                <h3 className="text-xl font-semibold text-foreground dark:text-slate-100 mb-6">Índice do Conteúdo</h3>
                 <div className="space-y-3">
                   {[
                     { title: "História e Evolução dos Cartões", subtitle: "Do surgimento às tecnologias atuais", pages: "38 páginas" },
@@ -219,25 +219,25 @@ const EbookDetalhes = () => {
                     { title: "Regulação e Compliance", subtitle: "Normas Bacen, PCI-DSS e LGPD", pages: "52 páginas" },
                     { title: "Gestão de Risco e Antifraude", subtitle: "Estratégias e tecnologias de proteção", pages: "54 páginas" }
                   ].map((item, index) => (
-                    <div key={index} className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
+                    <div key={index} className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-700 rounded-lg">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-pastel-purple rounded-lg flex items-center justify-center">
-                          <span className="text-sm font-semibold text-foreground">{index + 1}</span>
+                        <div className="w-8 h-8 bg-pastel-purple dark:bg-pastel-purple rounded-lg flex items-center justify-center">
+                          <span className="text-sm font-semibold text-foreground dark:text-slate-900">{index + 1}</span>
                         </div>
                         <div>
-                          <h4 className="font-semibold text-foreground">{item.title}</h4>
-                          <p className="text-sm text-muted-foreground">{item.subtitle}</p>
+                          <h4 className="font-semibold text-foreground dark:text-slate-100">{item.title}</h4>
+                          <p className="text-sm text-muted-foreground dark:text-slate-300">{item.subtitle}</p>
                         </div>
                       </div>
-                      <span className="text-sm text-muted-foreground">{item.pages}</span>
+                      <span className="text-sm text-muted-foreground dark:text-slate-400">{item.pages}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* Author Info */}
-              <div className="bg-white rounded-xl border border-border p-8">
-                <h3 className="text-xl font-semibold text-foreground mb-6">Sobre o Autor</h3>
+              <div className="bg-white dark:bg-slate-800 rounded-xl border border-border dark:border-slate-700 p-8">
+                <h3 className="text-xl font-semibold text-foreground dark:text-slate-100 mb-6">Sobre o Autor</h3>
                 <div className="flex items-start gap-6">
                   <img 
                     src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg" 
@@ -245,11 +245,11 @@ const EbookDetalhes = () => {
                     alt="Author" 
                   />
                   <div className="flex-1">
-                    <h4 className="text-lg font-semibold text-foreground mb-2">Ricardo Almeida</h4>
-                    <p className="text-muted-foreground mb-4 leading-relaxed">
+                    <h4 className="text-lg font-semibold text-foreground dark:text-slate-100 mb-2">Ricardo Almeida</h4>
+                    <p className="text-muted-foreground dark:text-slate-300 mb-4 leading-relaxed">
                       Especialista em meios de pagamento com 18 anos de experiência no setor. Atuou em grandes adquirentes, bandeiras e fintechs, liderando projetos de inovação e regulação. Palestrante frequente em eventos do setor e consultor para empresas que desejam entrar no mercado de pagamentos.
                     </p>
-                    <div className="flex items-center gap-6 text-sm text-muted-foreground">
+                    <div className="flex items-center gap-6 text-sm text-muted-foreground dark:text-slate-400">
                       <div className="flex items-center gap-2">
                         <i className="fas fa-book text-pastel-purple"></i>
                         <span>8 publicações</span>
@@ -264,30 +264,30 @@ const EbookDetalhes = () => {
                       </div>
                     </div>
                   </div>
-                  <button className="px-6 py-2 border-2 border-slate-800 text-slate-800 rounded-lg font-medium hover:bg-slate-50 transition">
+                  <button className="px-6 py-2 border-2 border-slate-800 dark:border-slate-600 text-slate-800 dark:text-slate-300 rounded-lg font-medium hover:bg-slate-50 dark:hover:bg-slate-700 transition">
                     Seguir
                   </button>
                 </div>
               </div>
 
               {/* Ratings */}
-              <div className="bg-white rounded-xl border border-border p-8">
+              <div className="bg-white dark:bg-slate-800 rounded-xl border border-border dark:border-slate-700 p-8">
                 <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-xl font-semibold text-foreground">Avaliações</h3>
-                  <button className="px-4 py-2 bg-pastel-blue text-foreground rounded-lg font-medium hover:bg-opacity-80 transition">
+                  <h3 className="text-xl font-semibold text-foreground dark:text-slate-100">Avaliações</h3>
+                  <button className="px-4 py-2 bg-pastel-blue dark:bg-pastel-blue text-foreground dark:text-slate-900 rounded-lg font-medium hover:bg-opacity-80 transition">
                     Escrever Avaliação
                   </button>
                 </div>
 
-                <div className="grid grid-cols-3 gap-8 mb-8 pb-8 border-b border-border">
+                <div className="grid grid-cols-3 gap-8 mb-8 pb-8 border-b border-border dark:border-slate-700">
                   <div className="text-center">
-                    <div className="text-5xl font-bold text-foreground mb-2">4.9</div>
+                    <div className="text-5xl font-bold text-foreground dark:text-slate-100 mb-2">4.9</div>
                     <div className="flex items-center justify-center gap-1 mb-2">
                       {[...Array(5)].map((_, i) => (
                         <i key={i} className="fas fa-star text-yellow-500"></i>
                       ))}
                     </div>
-                    <p className="text-sm text-muted-foreground">243 avaliações</p>
+                    <p className="text-sm text-muted-foreground dark:text-slate-400">243 avaliações</p>
                   </div>
                   <div className="col-span-2 space-y-2">
                     {[
@@ -298,13 +298,13 @@ const EbookDetalhes = () => {
                       { stars: 1, percentage: 0, count: 1 }
                     ].map((item) => (
                       <div key={item.stars} className="flex items-center gap-3">
-                        <span className="text-sm text-muted-foreground w-12">
+                        <span className="text-sm text-muted-foreground dark:text-slate-400 w-12">
                           {item.stars} <i className="fas fa-star text-yellow-500 text-xs"></i>
                         </span>
-                        <div className="flex-1 h-2.5 bg-slate-100 rounded-full overflow-hidden">
-                          <div className="h-full bg-pastel-yellow rounded-full transition-all duration-300" style={{ width: `${item.percentage}%` }}></div>
+                        <div className="flex-1 h-2.5 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+                          <div className="h-full bg-pastel-yellow dark:bg-pastel-yellow rounded-full transition-all duration-300" style={{ width: `${item.percentage}%` }}></div>
                         </div>
-                        <span className="text-sm text-muted-foreground w-12 text-right">{item.count}</span>
+                        <span className="text-sm text-muted-foreground dark:text-slate-400 w-12 text-right">{item.count}</span>
                       </div>
                     ))}
                   </div>

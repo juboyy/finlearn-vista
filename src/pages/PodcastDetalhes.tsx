@@ -417,9 +417,9 @@ export default function PodcastDetalhes() {
           <section className="px-8 py-8">
             <div className="max-w-7xl mx-auto">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-slate-800">Todos os Episódios</h2>
+                <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100">Todos os Episódios</h2>
                 <div className="flex items-center gap-3">
-                  <select className="px-4 py-2.5 border border-[hsl(215,20%,85%)] rounded-xl text-sm text-slate-700 font-medium focus:outline-none focus:ring-2 focus:ring-[hsl(206,35%,75%)] bg-white">
+                  <select className="px-4 py-2.5 border border-[hsl(215,20%,85%)] dark:border-slate-700 rounded-xl text-sm text-slate-700 dark:text-slate-300 font-medium focus:outline-none focus:ring-2 focus:ring-[hsl(206,35%,75%)] bg-white dark:bg-slate-800">
                     <option>Mais recentes</option>
                     <option>Mais antigos</option>
                     <option>Mais ouvidos</option>
@@ -434,16 +434,16 @@ export default function PodcastDetalhes() {
                   <div 
                     key={episode.id}
                     onClick={() => setSelectedEpisode(episode.number)}
-                    className={`bg-white rounded-xl border transition-all cursor-pointer ${
+                    className={`bg-white dark:bg-slate-800 rounded-xl border transition-all cursor-pointer ${
                       selectedEpisode === episode.number
                         ? 'border-[hsl(206,35%,75%)] shadow-lg ring-2 ring-[hsl(206,35%,75%)]/20'
-                        : 'border-[hsl(215,20%,85%)] hover:shadow-md hover:border-slate-300'
+                        : 'border-[hsl(215,20%,85%)] dark:border-slate-700 hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600'
                     }`}
                   >
                     <div className="p-6">
                       <div className="flex gap-6">
                         {/* Episode Image */}
-                        <div className="relative w-32 h-32 rounded-lg overflow-hidden flex-shrink-0 bg-slate-100">
+                        <div className="relative w-32 h-32 rounded-lg overflow-hidden flex-shrink-0 bg-slate-100 dark:bg-slate-700">
                           <img src={episode.image} alt={episode.title} className="w-full h-full object-cover" />
                           {selectedEpisode === episode.number && (
                             <div className="absolute inset-0 bg-slate-900/60 flex items-center justify-center backdrop-blur-sm">
@@ -461,10 +461,10 @@ export default function PodcastDetalhes() {
                           <div className="flex items-start justify-between mb-2">
                             <div className="flex-1">
                               <div className="flex items-center gap-2 mb-2">
-                                <Badge className="bg-slate-100 text-slate-700 border-slate-200">
+                                <Badge className="bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-600">
                                   Episódio #{episode.number}
                                 </Badge>
-                                <span className="text-xs text-slate-500">{episode.date}</span>
+                                <span className="text-xs text-slate-500 dark:text-slate-400">{episode.date}</span>
                                 {episode.status === "played" ? (
                                   <CheckCircle2 className="w-4 h-4 text-[hsl(142,45%,28%)]" />
                                 ) : episode.status === "playing" ? (
@@ -475,29 +475,29 @@ export default function PodcastDetalhes() {
                                   <Circle className="w-4 h-4 text-slate-300" />
                                 )}
                               </div>
-                              <h3 className="font-bold text-slate-800 mb-2 text-lg">{episode.title}</h3>
-                              <p className="text-sm text-slate-600 leading-relaxed line-clamp-2">{episode.description}</p>
+                              <h3 className="font-bold text-slate-800 dark:text-slate-100 mb-2 text-lg">{episode.title}</h3>
+                              <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed line-clamp-2">{episode.description}</p>
                             </div>
                           </div>
 
                           {/* Episode Meta */}
                           <div className="flex items-center gap-4 mt-4">
-                            <div className="flex items-center gap-1.5 text-sm text-slate-600">
+                            <div className="flex items-center gap-1.5 text-sm text-slate-600 dark:text-slate-400">
                               <Clock className="w-4 h-4" />
                               <span className="font-medium">{episode.duration}</span>
                             </div>
-                            <div className="flex items-center gap-1.5 text-sm text-slate-600">
+                            <div className="flex items-center gap-1.5 text-sm text-slate-600 dark:text-slate-400">
                               <Headphones className="w-4 h-4" />
                               <span className="font-medium">{episode.plays} reproduções</span>
                             </div>
                             <div className="flex-1"></div>
-                            <button className="p-2 text-slate-700 hover:bg-slate-100 rounded-lg transition-all">
+                            <button className="p-2 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-all">
                               <Download className="w-4 h-4" />
                             </button>
-                            <button className="p-2 text-slate-700 hover:bg-slate-100 rounded-lg transition-all">
+                            <button className="p-2 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-all">
                               <Share2 className="w-4 h-4" />
                             </button>
-                            <button className="p-2 text-slate-700 hover:bg-slate-100 rounded-lg transition-all">
+                            <button className="p-2 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-all">
                               <MoreVertical className="w-4 h-4" />
                             </button>
                           </div>
@@ -511,9 +511,9 @@ export default function PodcastDetalhes() {
           </section>
 
           {/* Footer */}
-          <footer className="mt-12 pt-8 border-t border-[hsl(215,20%,85%)] px-8 pb-8">
+          <footer className="mt-12 pt-8 border-t border-[hsl(215,20%,85%)] dark:border-slate-700 px-8 pb-8">
             <div className="max-w-7xl mx-auto text-center">
-              <p className="text-sm text-slate-600 font-medium">© 2025 Mercados em Foco - Todos os direitos reservados. Central de Conteúdo Educacional.</p>
+              <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">© 2025 Mercados em Foco - Todos os direitos reservados. Central de Conteúdo Educacional.</p>
             </div>
           </footer>
         </div>
