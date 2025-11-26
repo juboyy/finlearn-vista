@@ -541,26 +541,153 @@ export default function NovoEbookEtapa2() {
                 <div className="sticky top-24 space-y-6">
                   {/* Progress Card */}
                   <div className="bg-card rounded-xl border border-border p-6">
-                    <h3 className="text-lg font-semibold text-foreground mb-4">Requisitos</h3>
+                    <h3 className="text-lg font-semibold text-foreground mb-4">Progresso da Etapa 2</h3>
+                    <div className="space-y-4">
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-sm text-muted-foreground">Arquivos obrigatórios</span>
+                          <span className="text-sm font-semibold text-foreground">
+                            {(formData.coverImage ? 1 : 0) + (formData.mainFile ? 1 : 0)}/2
+                          </span>
+                        </div>
+                        <div className="h-2 bg-muted rounded-full overflow-hidden">
+                          <div 
+                            className="h-full bg-foreground transition-all duration-500" 
+                            style={{ width: `${((formData.coverImage ? 1 : 0) + (formData.mainFile ? 1 : 0)) * 50}%` }}
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-sm text-muted-foreground">Completude da etapa</span>
+                          <span className="text-sm font-semibold text-foreground">
+                            {Math.round(((formData.coverImage ? 25 : 0) + (formData.mainFile ? 25 : 0) + (formData.previewFile ? 25 : 0) + (formData.videoUrl ? 25 : 0)))}%
+                          </span>
+                        </div>
+                        <div className="h-2 bg-muted rounded-full overflow-hidden">
+                          <div 
+                            className="h-full bg-[hsl(142,35%,65%)] transition-all duration-500" 
+                            style={{ width: `${((formData.coverImage ? 25 : 0) + (formData.mainFile ? 25 : 0) + (formData.previewFile ? 25 : 0) + (formData.videoUrl ? 25 : 0))}%` }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mt-6 pt-6 border-t border-border">
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-3">
+                          <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${formData.coverImage ? 'border-foreground bg-foreground' : 'border-border'}`}>
+                            {formData.coverImage && <Check className="w-3 h-3 text-background" />}
+                          </div>
+                          <span className={`text-sm ${formData.coverImage ? 'text-foreground' : 'text-muted-foreground'}`}>Capa do eBook</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${formData.mainFile ? 'border-foreground bg-foreground' : 'border-border'}`}>
+                            {formData.mainFile && <Check className="w-3 h-3 text-background" />}
+                          </div>
+                          <span className={`text-sm ${formData.mainFile ? 'text-foreground' : 'text-muted-foreground'}`}>Arquivo principal</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${formData.previewFile ? 'border-foreground bg-foreground' : 'border-border'}`}>
+                            {formData.previewFile && <Check className="w-3 h-3 text-background" />}
+                          </div>
+                          <span className={`text-sm ${formData.previewFile ? 'text-foreground' : 'text-muted-foreground/70'}`}>Arquivo de prévia</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${formData.additionalMaterials.length > 0 ? 'border-foreground bg-foreground' : 'border-border'}`}>
+                            {formData.additionalMaterials.length > 0 && <Check className="w-3 h-3 text-background" />}
+                          </div>
+                          <span className={`text-sm ${formData.additionalMaterials.length > 0 ? 'text-foreground' : 'text-muted-foreground/70'}`}>Materiais extras</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Preview Display Card */}
+                  <div className="bg-card rounded-xl border border-border p-6">
+                    <h3 className="text-lg font-semibold text-foreground mb-4">Prévia da Capa</h3>
+                    <div className="aspect-square bg-[hsl(142,35%,85%)] rounded-lg border-2 border-dashed border-border flex items-center justify-center mb-4">
+                      {formData.coverImage ? (
+                        <img 
+                          src={URL.createObjectURL(formData.coverImage)} 
+                          alt="Preview" 
+                          className="w-full h-full object-cover rounded-lg"
+                        />
+                      ) : (
+                        <div className="text-center p-6">
+                          <ImageIcon className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
+                          <p className="text-sm text-muted-foreground">Sua capa aparecerá aqui</p>
+                        </div>
+                      )}
+                    </div>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex items-center justify-between py-2 border-b border-border">
+                        <span className="text-muted-foreground">Formato:</span>
+                        <span className={formData.coverImage ? 'text-foreground' : 'text-muted-foreground/50'}>
+                          {formData.coverImage ? formData.coverImage.type.split('/')[1].toUpperCase() : '-'}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between py-2 border-b border-border">
+                        <span className="text-muted-foreground">Dimensões:</span>
+                        <span className="text-muted-foreground/50">-</span>
+                      </div>
+                      <div className="flex items-center justify-between py-2">
+                        <span className="text-muted-foreground">Tamanho:</span>
+                        <span className={formData.coverImage ? 'text-foreground' : 'text-muted-foreground/50'}>
+                          {formData.coverImage ? `${(formData.coverImage.size / 1024 / 1024).toFixed(2)} MB` : '-'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Files Summary Card */}
+                  <div className="bg-card rounded-xl border border-border p-6">
+                    <h3 className="text-lg font-semibold text-foreground mb-4">Arquivos Carregados</h3>
                     <div className="space-y-3">
-                      <div className="flex items-center gap-3">
-                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${formData.coverImage ? 'border-[hsl(142,35%,65%)] bg-[hsl(142,35%,65%)]' : 'border-border'}`}>
-                          {formData.coverImage && <Check className="w-3 h-3 text-background" />}
+                      {!formData.coverImage && !formData.mainFile && !formData.previewFile && formData.additionalMaterials.length === 0 ? (
+                        <div className="text-center py-8">
+                          <FolderPlus className="w-10 h-10 text-muted-foreground/30 mx-auto mb-3" />
+                          <p className="text-sm text-muted-foreground">Nenhum arquivo carregado ainda</p>
                         </div>
-                        <span className={`text-sm ${formData.coverImage ? 'text-foreground' : 'text-muted-foreground'}`}>Capa do eBook</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${formData.mainFile ? 'border-[hsl(142,35%,65%)] bg-[hsl(142,35%,65%)]' : 'border-border'}`}>
-                          {formData.mainFile && <Check className="w-3 h-3 text-background" />}
-                        </div>
-                        <span className={`text-sm ${formData.mainFile ? 'text-foreground' : 'text-muted-foreground'}`}>Arquivo principal</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${formData.previewFile ? 'border-[hsl(142,35%,65%)] bg-[hsl(142,35%,65%)]' : 'border-border'}`}>
-                          {formData.previewFile && <Check className="w-3 h-3 text-background" />}
-                        </div>
-                        <span className={`text-sm ${formData.previewFile ? 'text-muted-foreground' : 'text-muted-foreground'}`}>Arquivo de prévia (opcional)</span>
-                      </div>
+                      ) : (
+                        <>
+                          {formData.coverImage && (
+                            <div className="flex items-center gap-3 p-3 bg-[hsl(206,35%,85%)] rounded-lg">
+                              <ImageIcon className="w-5 h-5 text-[hsl(215,20%,40%)]" />
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm font-medium text-foreground truncate">{formData.coverImage.name}</p>
+                                <p className="text-xs text-muted-foreground">Capa</p>
+                              </div>
+                            </div>
+                          )}
+                          {formData.mainFile && (
+                            <div className="flex items-center gap-3 p-3 bg-[hsl(142,35%,85%)] rounded-lg">
+                              <FileText className="w-5 h-5 text-[hsl(215,20%,40%)]" />
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm font-medium text-foreground truncate">{formData.mainFile.name}</p>
+                                <p className="text-xs text-muted-foreground">Principal</p>
+                              </div>
+                            </div>
+                          )}
+                          {formData.previewFile && (
+                            <div className="flex items-center gap-3 p-3 bg-[hsl(48,35%,85%)] rounded-lg">
+                              <Eye className="w-5 h-5 text-[hsl(215,20%,40%)]" />
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm font-medium text-foreground truncate">{formData.previewFile.name}</p>
+                                <p className="text-xs text-muted-foreground">Prévia</p>
+                              </div>
+                            </div>
+                          )}
+                          {formData.additionalMaterials.length > 0 && (
+                            <div className="flex items-center gap-3 p-3 bg-[hsl(340,35%,85%)] rounded-lg">
+                              <FolderPlus className="w-5 h-5 text-[hsl(215,20%,40%)]" />
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm font-medium text-foreground">{formData.additionalMaterials.length} arquivos</p>
+                                <p className="text-xs text-muted-foreground">Materiais extras</p>
+                              </div>
+                            </div>
+                          )}
+                        </>
+                      )}
                     </div>
                   </div>
 
@@ -570,9 +697,10 @@ export default function NovoEbookEtapa2() {
                       <HelpCircle className="w-5 h-5 text-[hsl(215,20%,40%)]" />
                       <h3 className="text-lg font-semibold text-foreground">Precisa de Ajuda?</h3>
                     </div>
-                    <p className="text-sm text-foreground mb-4">Nossa equipe está pronta para auxiliar com qualquer dúvida sobre upload de arquivos.</p>
+                    <p className="text-sm text-[hsl(215,20%,40%)] mb-4">Nossa equipe está pronta para auxiliar com qualquer dúvida sobre upload de arquivos.</p>
                     <button className="w-full px-4 py-2 bg-foreground text-background rounded-lg font-medium hover:bg-foreground/90 transition-colors text-sm">
-                      💬 Falar com Suporte
+                      <HelpCircle className="w-4 h-4 inline mr-2" />
+                      Falar com Suporte
                     </button>
                   </div>
                 </div>
