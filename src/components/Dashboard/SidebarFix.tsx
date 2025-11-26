@@ -2,6 +2,7 @@ import { Home, Newspaper, Bot, Mail, GraduationCap, Book, MessageCircle, Store, 
 import { NavLink } from "@/components/NavLink";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: Home },
@@ -21,8 +22,8 @@ export const SidebarFix = () => {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <aside className={`bg-sidebar border-r border-sidebar-border flex flex-col h-screen sticky top-0 transition-all duration-300 ${collapsed ? 'w-16' : 'w-64'}`}>
-      <div className={`p-6 border-b border-sidebar-border flex items-center ${collapsed ? 'justify-center' : 'justify-between'}`}>
+    <aside className={`bg-sidebar dark:bg-sidebar border-r border-sidebar-border dark:border-sidebar-border flex flex-col h-screen sticky top-0 transition-all duration-300 ${collapsed ? 'w-16' : 'w-64'}`}>
+      <div className={`p-6 border-b border-sidebar-border dark:border-sidebar-border flex items-center ${collapsed ? 'justify-center' : 'justify-between'}`}>
         {!collapsed && (
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-sidebar-primary rounded-lg flex items-center justify-center">
@@ -36,14 +37,23 @@ export const SidebarFix = () => {
             <TrendingUp className="text-sidebar-primary-foreground" size={20} />
           </div>
         )}
-        <button
-          onClick={() => setCollapsed(!collapsed)}
-          className={`text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent p-2 rounded-lg transition-colors ${collapsed ? 'absolute top-6 right-2' : ''}`}
-          title={collapsed ? 'Expandir sidebar' : 'Recolher sidebar'}
-        >
-          <ChevronLeft className={`transition-transform duration-300 ${collapsed ? 'rotate-180' : ''}`} size={20} />
-        </button>
+        <div className="flex items-center gap-2">
+          {!collapsed && <ThemeToggle />}
+          <button
+            onClick={() => setCollapsed(!collapsed)}
+            className={`text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent p-2 rounded-lg transition-colors ${collapsed ? 'absolute top-6 right-2' : ''}`}
+            title={collapsed ? 'Expandir sidebar' : 'Recolher sidebar'}
+          >
+            <ChevronLeft className={`transition-transform duration-300 ${collapsed ? 'rotate-180' : ''}`} size={20} />
+          </button>
+        </div>
       </div>
+      
+      {collapsed && (
+        <div className="p-4 flex justify-center border-b border-sidebar-border dark:border-sidebar-border">
+          <ThemeToggle />
+        </div>
+      )}
       
       <nav className="flex-1 p-4 space-y-1 overflow-y-auto sidebar-scroll">
         {navigation.map((item) => (
@@ -61,7 +71,7 @@ export const SidebarFix = () => {
         ))}
       </nav>
       
-      <div className="border-t border-sidebar-border">
+      <div className="border-t border-sidebar-border dark:border-sidebar-border">
         {!collapsed && (
           <div className="p-4">
             <div className="flex items-center gap-3 px-4 py-3">
