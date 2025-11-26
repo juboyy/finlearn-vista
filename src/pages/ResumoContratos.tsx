@@ -819,45 +819,27 @@ export default function ResumoContratos() {
 
       {/* Loading Overlay */}
       {isProcessing && (
-        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center">
-          <div className="bg-white rounded-2xl p-8 shadow-2xl max-w-md w-full mx-4 animate-scale-in">
-            <div className="flex flex-col items-center">
-              {/* Animated icon */}
-              <div className="relative w-24 h-24 mb-6">
-                <div className="absolute inset-0 bg-gradient-to-r from-[hsl(142,35%,75%)] to-[hsl(206,35%,75%)] rounded-full animate-pulse"></div>
-                <div className="absolute inset-2 bg-white rounded-full flex items-center justify-center">
-                  <FileText className="h-10 w-10 text-slate-700 animate-bounce" />
-                </div>
-              </div>
-
-              {/* Loading text */}
-              <h3 className="text-xl font-bold text-slate-800 mb-2">Analisando Documento</h3>
-              <p className="text-sm text-slate-600 text-center mb-6">
-                Nosso agente de IA está processando seu contrato e gerando um resumo detalhado...
-              </p>
-
-              {/* Progress indicators */}
-              <div className="w-full space-y-3">
-                <div className="flex items-center gap-3 text-sm">
-                  <div className="w-2 h-2 rounded-full bg-[hsl(142,35%,65%)] animate-pulse"></div>
-                  <span className="text-slate-600">Extraindo conteúdo</span>
-                </div>
-                <div className="flex items-center gap-3 text-sm">
-                  <div className="w-2 h-2 rounded-full bg-[hsl(206,35%,65%)] animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-                  <span className="text-slate-600">Analisando cláusulas</span>
-                </div>
-                <div className="flex items-center gap-3 text-sm">
-                  <div className="w-2 h-2 rounded-full bg-[hsl(322,35%,65%)] animate-pulse" style={{ animationDelay: '0.4s' }}></div>
-                  <span className="text-slate-600">Gerando resumo</span>
-                </div>
-              </div>
-
-              {/* Loading bar */}
-              <div className="w-full mt-6 h-2 bg-slate-200 rounded-full overflow-hidden">
-                <div className="h-full bg-gradient-to-r from-[hsl(142,35%,65%)] via-[hsl(206,35%,65%)] to-[hsl(322,35%,65%)] animate-loading-bar"></div>
-              </div>
-
-              <p className="text-xs text-slate-500 mt-4">Isso pode levar alguns segundos...</p>
+        <div className="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 flex items-center justify-center">
+          <div className="flex flex-col items-center gap-6 animate-fade-in">
+            {/* Pensando text */}
+            <h2 className="text-5xl font-bold text-white tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
+              Pensando
+            </h2>
+            
+            {/* Animated dots */}
+            <div className="flex items-center gap-3">
+              <div 
+                className="w-4 h-4 rounded-full bg-white animate-bounce"
+                style={{ animationDelay: '0ms', animationDuration: '1s' }}
+              ></div>
+              <div 
+                className="w-4 h-4 rounded-full bg-white animate-bounce"
+                style={{ animationDelay: '150ms', animationDuration: '1s' }}
+              ></div>
+              <div 
+                className="w-4 h-4 rounded-full bg-white animate-bounce"
+                style={{ animationDelay: '300ms', animationDuration: '1s' }}
+              ></div>
             </div>
           </div>
         </div>
