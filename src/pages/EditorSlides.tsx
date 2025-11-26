@@ -1074,6 +1074,36 @@ Exemplo para PIX:
           </div>
         </div>
       </div>
+
+      {/* Loading Overlay */}
+      {isGenerating && (
+        <div className="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 flex items-center justify-center">
+          <div className="flex flex-col items-center gap-6 animate-fade-in">
+            {/* Pensando text */}
+            <h2 className="text-5xl font-bold text-white tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
+              Pensando
+            </h2>
+            
+            {/* Animated dots */}
+            <div className="flex items-center gap-3">
+              <div 
+                className="w-4 h-4 rounded-full bg-white animate-bounce"
+                style={{ animationDelay: '0ms', animationDuration: '1s' }}
+              ></div>
+              <div 
+                className="w-4 h-4 rounded-full bg-white animate-bounce"
+                style={{ animationDelay: '150ms', animationDuration: '1s' }}
+              ></div>
+              <div 
+                className="w-4 h-4 rounded-full bg-white animate-bounce"
+                style={{ animationDelay: '300ms', animationDuration: '1s' }}
+              ></div>
+            </div>
+            
+            <p className="text-white text-lg mt-4 opacity-80">Gerando slides, imagens e gráficos...</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
