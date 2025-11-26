@@ -115,6 +115,16 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
                   <span className="text-sm text-left">{action.label}</span>
                 </Button>
               ))}
+              
+              <Button
+                onClick={handleClearChat}
+                disabled={messages.length === 0}
+                variant="outline"
+                className="justify-start h-auto py-3 px-4 mt-2"
+              >
+                <Trash2 size={18} className="mr-3 flex-shrink-0" />
+                <span className="text-sm text-left">Limpar Conversa</span>
+              </Button>
             </div>
           </div>
 
@@ -137,35 +147,24 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
                   </SheetTitle>
                   <p className="text-sm text-muted-foreground">Chat em tempo real</p>
                 </div>
-                <div className="flex gap-2">
-                  <Button
-                    onClick={handleClearChat}
-                    disabled={messages.length === 0}
-                    variant="outline"
-                    size="sm"
-                  >
-                    <Trash2 className="mr-2" size={16} />
-                    Limpar
-                  </Button>
-                  <Button
-                    onClick={handleGenerateSuggestions}
-                    disabled={isGenerating}
-                    className="bg-pastel-purple hover:bg-pastel-pink text-foreground"
-                    size="sm"
-                  >
-                    {isGenerating ? (
-                      <>
-                        <Loader2 className="animate-spin mr-2" size={16} />
-                        Gerando...
-                      </>
-                    ) : (
-                      <>
-                        <Sparkles className="mr-2" size={16} />
-                        Gerar Sugestões
-                      </>
-                    )}
-                  </Button>
-                </div>
+                <Button
+                  onClick={handleGenerateSuggestions}
+                  disabled={isGenerating}
+                  className="bg-pastel-purple hover:bg-pastel-pink text-foreground"
+                  size="sm"
+                >
+                  {isGenerating ? (
+                    <>
+                      <Loader2 className="animate-spin mr-2" size={16} />
+                      Gerando...
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles className="mr-2" size={16} />
+                      Gerar Sugestões
+                    </>
+                  )}
+                </Button>
               </div>
             </SheetHeader>
 
