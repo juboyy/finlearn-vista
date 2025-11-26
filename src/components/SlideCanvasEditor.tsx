@@ -20,6 +20,7 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
   const [saveStatus, setSaveStatus] = useState<"saved" | "saving" | "idle">("idle");
   const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const lastSaveRef = useRef<string>("");
+  const contentLoadedRef = useRef(false);
 
   // Função de salvamento manual
   const handleManualSave = () => {
@@ -56,10 +57,11 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
 
     setFabricCanvas(canvas);
 
-    // Load initial data if provided
+    // Load initial data if provided (dados salvos previamente)
     if (initialData) {
       canvas.loadFromJSON(initialData, () => {
         canvas.renderAll();
+        contentLoadedRef.current = true;
       });
     }
 
@@ -93,21 +95,31 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
       if (saveTimeoutRef.current) {
         clearTimeout(saveTimeoutRef.current);
       }
+      contentLoadedRef.current = false;
       canvas.dispose();
     };
   }, []);
 
-  // Adicionar conteúdo gerado pela IA automaticamente ao canvas (apenas na primeira vez)
+  // Adicionar conteúdo gerado pela IA automaticamente ao canvas (apenas se não houver dados salvos)
   useEffect(() => {
     if (!fabricCanvas) return;
     
+    // Se já carregou conteúdo (ou dados salvos), não adicionar novamente
+    if (contentLoadedRef.current) return;
+    
     // Se já existe initialData salvo, não sobrescrever com conteúdo gerado
     if (initialData) return;
+    
+    // Se não há conteúdo gerado pela IA, não fazer nada
+    if (!slideText && !slideImage && !slideChart) return;
 
     const addGeneratedContent = async () => {
       try {
         // Verificar se o canvas está pronto antes de limpar
         if (!fabricCanvas.getContext()) return;
+        
+        // Marcar que estamos carregando conteúdo
+        contentLoadedRef.current = true;
         
         // Limpar canvas antes de adicionar novo conteúdo
         fabricCanvas.clear();
