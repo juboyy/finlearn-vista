@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      chart_explanations: {
+        Row: {
+          attention_points: string[] | null
+          chart_data: Json
+          created_at: string
+          explanation: string
+          id: string
+          recommendations: string[] | null
+          summary: string | null
+          updated_at: string
+        }
+        Insert: {
+          attention_points?: string[] | null
+          chart_data: Json
+          created_at?: string
+          explanation: string
+          id?: string
+          recommendations?: string[] | null
+          summary?: string | null
+          updated_at?: string
+        }
+        Update: {
+          attention_points?: string[] | null
+          chart_data?: Json
+          created_at?: string
+          explanation?: string
+          id?: string
+          recommendations?: string[] | null
+          summary?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       contract_summaries: {
         Row: {
           agent_id: string
