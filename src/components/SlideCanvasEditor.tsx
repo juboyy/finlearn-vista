@@ -4,6 +4,12 @@ import { Button } from "@/components/ui/button";
 import { ImageIcon, BarChart3, Type, Trash2, Download, Eye } from "lucide-react";
 import { toast } from "sonner";
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -913,27 +919,41 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
 
         <div className="flex-1" />
 
-        <Button
-          type="button"
-          size="sm"
-          variant="ghost"
-          onClick={handleDeleteSelected}
-          className="text-slate-600 hover:text-red-600 hover:bg-red-50"
-        >
-          <Trash2 className="h-4 w-4 mr-2" />
-          Excluir Selecionado
-        </Button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                type="button"
+                size="icon"
+                onClick={handleDeleteSelected}
+                className="bg-[#F5C6E3] hover:bg-[#E0B0CF] text-slate-700 border-none w-10 h-10"
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Excluir Selecionado</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
 
-        <Button
-          type="button"
-          size="sm"
-          variant="ghost"
-          onClick={handleExportImage}
-          className="text-slate-600 hover:text-slate-800"
-        >
-          <Download className="h-4 w-4 mr-2" />
-          Exportar PNG
-        </Button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                type="button"
+                size="icon"
+                onClick={handleExportImage}
+                className="bg-[#F5C6E3] hover:bg-[#E0B0CF] text-slate-700 border-none w-10 h-10"
+              >
+                <Download className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Exportar PNG</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
 
         <Button
           type="button"
