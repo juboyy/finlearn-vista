@@ -44,6 +44,50 @@ interface HistorySummary {
   summary_length_type?: string;
 }
 
+// Dados dos agentes para mapear imagens e informações
+const agentsData: Record<string, { image: string; category: string; rating: string }> = {
+  "analista-tecnica": {
+    image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/f28f1efee6-bb8cd63f0a8ea0129291.png",
+    category: "Análise Técnica",
+    rating: "4.9"
+  },
+  "renda-fixa": {
+    image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4f08e86bcd-772ce53ecbb47d504bde.png",
+    category: "Renda Fixa",
+    rating: "4.8"
+  },
+  "crypto-defi": {
+    image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/521bb99722-72b06772970c6fd465e6.png",
+    category: "Crypto & DeFi",
+    rating: "4.7"
+  },
+  "educador-financeiro": {
+    image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4450be57c6-3f9f4c9c029e3c4d7519.png",
+    category: "Educação Financeira",
+    rating: "4.9"
+  },
+  "mercado-financeiro": {
+    image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-74fa07dc19664888168d.png",
+    category: "Mercado Financeiro",
+    rating: "4.8"
+  },
+  "pagamentos": {
+    image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-13cb55de72175bb27fe6.png",
+    category: "Pagamentos",
+    rating: "4.6"
+  },
+  "capitais": {
+    image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-d3b919a60e4b8021bd1b.png",
+    category: "Mercado de Capitais",
+    rating: "4.7"
+  },
+  "esg-investing": {
+    image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-22a909d28eba94674e80.png",
+    category: "ESG & Sustentabilidade",
+    rating: "4.5"
+  }
+};
+
 export default function HistoricoResumos() {
   const [history, setHistory] = useState<HistorySummary[]>([]);
   const [filteredHistory, setFilteredHistory] = useState<HistorySummary[]>([]);
@@ -168,6 +212,18 @@ export default function HistoricoResumos() {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = Math.round(seconds % 60);
     return `${minutes}m ${remainingSeconds}s`;
+  };
+
+  const getAgentImage = (agentId: string) => {
+    return agentsData[agentId]?.image || "https://storage.googleapis.com/uxpilot-auth.appspot.com/f28f1efee6-bb8cd63f0a8ea0129291.png";
+  };
+
+  const getAgentCategory = (agentId: string) => {
+    return agentsData[agentId]?.category || "Especialista";
+  };
+
+  const getAgentRating = (agentId: string) => {
+    return agentsData[agentId]?.rating || "4.5";
   };
 
   const uniqueAgents = Array.from(new Set(history.map((item) => item.agent_name)));
@@ -532,48 +588,84 @@ export default function HistoricoResumos() {
                 </div>
               </div>
 
-              {/* Informações do Agente e Processamento */}
-              <div className="bg-white rounded-lg border-2 border-slate-200 p-4">
-                <h3 className="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-4">
-                  Processamento
+              {/* Card do Agente de IA */}
+              <div className="bg-white rounded-lg border-2 border-[hsl(215,20%,85%)] p-5 hover:shadow-md transition-shadow">
+                <h3 className="text-xs font-semibold text-slate-600 uppercase tracking-wider mb-4">
+                  Agente de IA Utilizado
                 </h3>
                 
-                <div className="space-y-3">
-                  <div>
-                    <label className="text-xs font-medium text-slate-500 uppercase">Agente de IA Utilizado</label>
-                    <div className="flex items-center gap-2 mt-2">
-                      <div className="w-8 h-8 rounded-lg bg-[hsl(206,35%,75%)] flex items-center justify-center">
-                        <FileText className="h-4 w-4 text-slate-700" />
-                      </div>
-                      <div>
-                        <p className="text-sm text-slate-800 font-medium">{selectedDetailsItem.agent_name}</p>
-                        <p className="text-xs text-slate-500">{selectedDetailsItem.agent_id}</p>
-                      </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-16 h-16 rounded-xl overflow-hidden bg-[hsl(206,35%,75%)] flex-shrink-0 ring-2 ring-[hsl(206,35%,85%)]">
+                    <img 
+                      src={getAgentImage(selectedDetailsItem.agent_id)} 
+                      alt={selectedDetailsItem.agent_name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-base text-slate-800 font-semibold mb-1">{selectedDetailsItem.agent_name}</p>
+                    <p className="text-xs text-slate-500 mb-2">{getAgentCategory(selectedDetailsItem.agent_id)}</p>
+                    <div className="flex items-center gap-1">
+                      <span className="text-xs text-slate-600">Avaliação:</span>
+                      <span className="text-xs font-medium text-[hsl(48,75%,45%)]">★ {getAgentRating(selectedDetailsItem.agent_id)}</span>
                     </div>
                   </div>
-                  
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="text-xs font-medium text-slate-500 uppercase flex items-center gap-1">
-                        <Clock className="h-3 w-3" />
-                        Tempo de Processamento
-                      </label>
-                      <p className="text-sm text-slate-800 mt-1 font-medium">
-                        {formatProcessingTime(selectedDetailsItem.processing_time_seconds)}
-                      </p>
-                    </div>
-                    <div>
-                      <label className="text-xs font-medium text-slate-500 uppercase">Tipo de Resumo</label>
-                      <Badge
-                        className="mt-1 text-xs"
-                        style={{ 
-                          backgroundColor: 'hsl(206, 35%, 75%)',
-                          color: 'hsl(215, 20%, 30%)'
-                        }}
-                      >
-                        {getSummaryLengthLabel(selectedDetailsItem.summary_length_type)}
-                      </Badge>
-                    </div>
+                </div>
+              </div>
+
+              {/* Card de Tempo de Processamento */}
+              <div className="bg-white rounded-lg border-2 border-[hsl(215,20%,85%)] p-5 hover:shadow-md transition-shadow">
+                <h3 className="text-xs font-semibold text-slate-600 uppercase tracking-wider mb-4 flex items-center gap-2">
+                  <Clock className="h-4 w-4 text-[hsl(206,35%,65%)]" />
+                  Tempo de Processamento
+                </h3>
+                
+                <div className="flex items-baseline gap-2">
+                  <p className="text-3xl text-slate-800 font-bold">
+                    {formatProcessingTime(selectedDetailsItem.processing_time_seconds)}
+                  </p>
+                  <span className="text-xs text-slate-500">segundos</span>
+                </div>
+                
+                <div className="mt-3 pt-3 border-t border-slate-200">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-slate-600">Eficiência</span>
+                    <span className="font-medium text-slate-800">
+                      {selectedDetailsItem.processing_time_seconds && selectedDetailsItem.processing_time_seconds < 30
+                        ? "Excelente"
+                        : selectedDetailsItem.processing_time_seconds && selectedDetailsItem.processing_time_seconds < 60
+                        ? "Boa"
+                        : "Normal"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card de Tipo de Resumo */}
+              <div className="bg-white rounded-lg border-2 border-[hsl(215,20%,85%)] p-5 hover:shadow-md transition-shadow">
+                <h3 className="text-xs font-semibold text-slate-600 uppercase tracking-wider mb-4">
+                  Tipo de Resumo
+                </h3>
+                
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-lg bg-[hsl(206,35%,75%)] flex items-center justify-center flex-shrink-0">
+                    <FileText className="h-6 w-6 text-slate-700" />
+                  </div>
+                  <div>
+                    <Badge
+                      className="text-sm px-3 py-1 font-medium"
+                      style={{ 
+                        backgroundColor: 'hsl(206, 35%, 75%)',
+                        color: 'hsl(215, 20%, 30%)'
+                      }}
+                    >
+                      {getSummaryLengthLabel(selectedDetailsItem.summary_length_type)}
+                    </Badge>
+                    <p className="text-xs text-slate-500 mt-1">
+                      {selectedDetailsItem.summary_length_type === 'extensive' && 'Análise completa e detalhada'}
+                      {selectedDetailsItem.summary_length_type === 'medium' && 'Resumo balanceado'}
+                      {selectedDetailsItem.summary_length_type === 'short' && 'Resumo executivo rápido'}
+                    </p>
                   </div>
                 </div>
               </div>
