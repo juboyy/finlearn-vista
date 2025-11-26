@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { ChevronLeft, ShoppingCart, Star, CreditCard, Barcode, Clock, Check, Share2, Bookmark, Download } from "lucide-react";
+import { ChevronLeft, ShoppingCart, Star, CreditCard, Barcode, Clock, Check, Share2, Bookmark, Download, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
+import type { RealtimeChannel } from "@supabase/supabase-js";
 
 export default function ResumoEbook() {
   const navigate = useNavigate();
@@ -13,12 +14,78 @@ export default function ResumoEbook() {
   const [productData, setProductData] = useState<any>(null);
   const [relatedProducts, setRelatedProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [activeViewers, setActiveViewers] = useState(0);
+  const [totalViews, setTotalViews] = useState(0);
 
   useEffect(() => {
     if (productId) {
       loadProductData();
+      incrementViewCount();
+      setupRealtimePresence();
     }
   }, [productId]);
+
+  const incrementViewCount = async () => {
+    if (!productId) return;
+    
+    try {
+      // Track view in browsing history and count total views
+      const { data: historyData } = await supabase
+        .from("user_browsing_history")
+        .select("id", { count: "exact" })
+        .eq("product_id", productId);
+      
+      setTotalViews(historyData?.length || 0);
+      
+      // Add new view to history
+      await supabase.from("user_browsing_history").insert({
+        product_id: productId,
+        product_title: productData?.title || "Produto",
+        product_type: productData?.product_type || "ebook",
+        product_category: productData?.category,
+        product_tags: productData?.tags,
+      });
+    } catch (error) {
+      console.error("Error incrementing view count:", error);
+    }
+  };
+
+  const setupRealtimePresence = () => {
+    if (!productId) return;
+
+    const channel: RealtimeChannel = supabase.channel(`product:${productId}`, {
+      config: {
+        presence: {
+          key: `user_${Math.random().toString(36).substring(7)}`,
+        },
+      },
+    });
+
+    channel
+      .on("presence", { event: "sync" }, () => {
+        const state = channel.presenceState();
+        const viewers = Object.keys(state).length;
+        setActiveViewers(viewers);
+      })
+      .on("presence", { event: "join" }, ({ newPresences }) => {
+        console.log("New viewers joined:", newPresences);
+      })
+      .on("presence", { event: "leave" }, ({ leftPresences }) => {
+        console.log("Viewers left:", leftPresences);
+      })
+      .subscribe(async (status) => {
+        if (status === "SUBSCRIBED") {
+          await channel.track({
+            viewing_at: new Date().toISOString(),
+          });
+        }
+      });
+
+    // Cleanup on unmount
+    return () => {
+      channel.unsubscribe();
+    };
+  };
 
   const loadProductData = async () => {
     if (!productId) return;
@@ -142,12 +209,28 @@ export default function ResumoEbook() {
                 <div className="w-12 h-12 bg-card rounded-lg flex items-center justify-center flex-shrink-0">
                   <Check className="w-6 h-6 text-[hsl(207,35%,45%)]" />
                 </div>
-                <div>
+                <div className="flex-1">
                   <h3 className="text-lg font-semibold text-foreground mb-2">Preview do Produto</h3>
                   <p className="text-sm text-muted-foreground">
                     Esta é uma visualização de como seu eBook será exibido para os usuários na plataforma. 
                     Todas as informações podem ser editadas antes da publicação final.
                   </p>
+                </div>
+                <div className="flex items-center gap-6 flex-shrink-0">
+                  <div className="flex items-center gap-2 px-4 py-2 bg-card rounded-lg border border-border">
+                    <Eye className="w-5 h-5 text-[hsl(207,35%,45%)]" />
+                    <div className="text-center">
+                      <p className="text-xs text-muted-foreground">Visualizando agora</p>
+                      <p className="text-lg font-bold text-foreground">{activeViewers}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 px-4 py-2 bg-card rounded-lg border border-border">
+                    <Eye className="w-5 h-5 text-[hsl(142,35%,45%)]" />
+                    <div className="text-center">
+                      <p className="text-xs text-muted-foreground">Total de visualizações</p>
+                      <p className="text-lg font-bold text-foreground">{totalViews.toLocaleString()}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
