@@ -7,9 +7,20 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAssistantSuggestions } from "@/hooks/useAssistantSuggestions";
+import { AssistantSuggestionCard } from "@/components/Dashboard/AssistantSuggestionCard";
 
 export default function Notificacoes() {
   const [activeTab, setActiveTab] = useState("todas");
+  const { suggestions, loading, unreadCount, markAsRead, markAllAsRead } = useAssistantSuggestions();
+
+  const filteredSuggestions = activeTab === "nao-lidas" 
+    ? suggestions.filter(s => !s.is_read)
+    : activeTab === "insights"
+    ? suggestions.filter(s => s.suggestion_type === "insights")
+    : activeTab === "lembretes"
+    ? suggestions.filter(s => s.suggestion_type === "reminders")
+    : suggestions;
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -58,7 +69,7 @@ export default function Notificacoes() {
                 }`}
               >
                 Não lidas
-                <span className="ml-2 px-2 py-0.5 bg-slate-200 rounded-full text-xs">12</span>
+                <span className="ml-2 px-2 py-0.5 bg-slate-200 rounded-full text-xs">{unreadCount}</span>
               </button>
               <button 
                 onClick={() => setActiveTab("insights")}
@@ -145,7 +156,7 @@ export default function Notificacoes() {
                     Limpar filtros
                   </button>
 
-                  <button className="px-3 py-1.5 text-sm bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 flex items-center gap-2">
+                  <button className="px-3 py-1.5 text-sm bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 flex items-center gap-2" onClick={markAllAsRead}>
                     <CheckCheck size={16} />
                     Marcar todas como lidas
                   </button>
@@ -185,6 +196,20 @@ export default function Notificacoes() {
                     <div className="flex-1 h-px bg-slate-200"></div>
                   </div>
 
+                  {/* Sugestões do Auxiliar do dia */}
+                  {loading ? (
+                    <div className="text-center py-8 text-slate-500">Carregando sugestões...</div>
+                  ) : filteredSuggestions.length > 0 ? (
+                    filteredSuggestions.map((suggestion) => (
+                      <AssistantSuggestionCard
+                        key={suggestion.id}
+                        suggestion={suggestion}
+                        onMarkAsRead={markAsRead}
+                      />
+                    ))
+                  ) : null}
+
+                  {/* Notificações mockadas existentes continuam abaixo */}
                   <div className="bg-white rounded-xl border-2 border-pastel-peach hover:shadow-md transition cursor-pointer">
                     <div className="p-4">
                       <div className="flex items-start gap-4">
