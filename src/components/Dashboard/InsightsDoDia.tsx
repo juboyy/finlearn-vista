@@ -211,6 +211,10 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
                           : "bg-muted text-foreground"
                       }`}
                     >
+                      {(() => {
+                        console.log("📝 Rendering message:", msg.content.substring(0, 200));
+                        return null;
+                      })()}
                       <div className="prose prose-sm max-w-none dark:prose-invert chat-markdown">
                         <ReactMarkdown
                           remarkPlugins={[remarkGfm]}
@@ -242,7 +246,7 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
                               );
                             },
                             img: ({ src, alt }) => {
-                              console.log("Rendering image with src:", src, "alt:", alt);
+                              console.log("✅ IMG RENDERER CALLED - src:", src, "alt:", alt);
                               return <ChatImageRenderer src={src || ""} alt={alt || ""} />;
                             },
                             code: ({ children, className, ...props }) => {
