@@ -64,7 +64,7 @@ export const StatCard = ({
                 <AvatarFallback>{agentName.charAt(0)}</AvatarFallback>
               </Avatar>
               <div>
-                <p className="text-sm font-semibold text-foreground">{agentName}</p>
+                <p className="text-sm font-semibold text-foreground">{agentName.split(' - ')[0]}</p>
               </div>
             </div>
           )}
