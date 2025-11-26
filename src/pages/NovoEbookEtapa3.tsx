@@ -12,7 +12,6 @@ export default function NovoEbookEtapa3() {
   const productId = searchParams.get("productId");
   
   const [productData, setProductData] = useState<any>(null);
-  const [isPublishing, setIsPublishing] = useState(false);
   
   // Pricing
   const [price, setPrice] = useState("97.00");
@@ -140,45 +139,8 @@ export default function NovoEbookEtapa3() {
       return;
     }
     
-    setIsPublishing(true);
-    try {
-      const paymentMethods = [];
-      if (creditCard) paymentMethods.push("credit_card");
-      if (pix) paymentMethods.push("pix");
-      if (boleto) paymentMethods.push("boleto");
-      if (digitalWallet) paymentMethods.push("digital_wallet");
-
-      const { error } = await supabase
-        .from("products")
-        .update({
-          price: parseFloat(price),
-          is_free: false,
-          payment_methods: paymentMethods as any,
-          status: "published",
-          updated_at: new Date().toISOString()
-        })
-        .eq("id", productId);
-      
-      if (error) throw error;
-      
-      toast({
-        title: "Produto publicado!",
-        description: "Seu eBook foi publicado com sucesso no Marketplace!",
-      });
-      
-      setTimeout(() => {
-        navigate("/marketplace");
-      }, 2000);
-    } catch (error) {
-      console.error("Error publishing:", error);
-      toast({
-        title: "Erro ao publicar",
-        description: "Não foi possível publicar o produto.",
-        variant: "destructive"
-      });
-    } finally {
-      setIsPublishing(false);
-    }
+    // Navigate to resume page
+    navigate(`/resumo-ebook?productId=${productId}`);
   };
 
   const completionPercentage = 67;
@@ -205,8 +167,8 @@ export default function NovoEbookEtapa3() {
                 <Button variant="outline" onClick={handleSaveDraft} className="gap-2">
                   Salvar Rascunho
                 </Button>
-                <Button onClick={handlePublish} disabled={isPublishing} className="gap-2">
-                  {isPublishing ? "Publicando..." : "Ver Resumo"}
+                <Button onClick={handlePublish} className="gap-2">
+                  Ver Resumo
                 </Button>
               </div>
             </div>
@@ -935,10 +897,9 @@ export default function NovoEbookEtapa3() {
               </button>
               <button 
                 onClick={handlePublish}
-                disabled={isPublishing}
-                className="px-8 py-3 bg-foreground text-background rounded-lg font-medium hover:bg-foreground/90 transition-colors disabled:opacity-50"
+                className="px-8 py-3 bg-foreground text-background rounded-lg font-medium hover:bg-foreground/90 transition-colors"
               >
-                {isPublishing ? "Publicando..." : "Ver Resumo"}
+                Ver Resumo
                 <Check className="w-4 h-4 inline ml-2" />
               </button>
             </div>
