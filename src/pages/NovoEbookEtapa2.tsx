@@ -219,10 +219,18 @@ export default function NovoEbookEtapa2() {
                         />
                       </label>
                       <div className="mt-4 space-y-2">
-                        <button className="w-full px-4 py-3 bg-foreground text-background rounded-lg font-medium hover:bg-foreground/90 transition-colors">
-                          <Upload className="w-4 h-4 inline mr-2" />
-                          Fazer Upload da Capa
-                        </button>
+                        <label className="block">
+                          <div className="w-full px-4 py-3 bg-foreground text-background rounded-lg font-medium hover:bg-foreground/90 transition-colors cursor-pointer text-center">
+                            <Upload className="w-4 h-4 inline mr-2" />
+                            Fazer Upload da Capa
+                          </div>
+                          <input 
+                            type="file" 
+                            accept="image/*"
+                            onChange={(e) => handleFileChange('coverImage', e.target.files?.[0] || null)}
+                            className="hidden" 
+                          />
+                        </label>
                       </div>
                     </div>
                     <div>
@@ -269,8 +277,8 @@ export default function NovoEbookEtapa2() {
                   </div>
                   
                   <div className="space-y-4">
-                    <label className="block">
-                      <div className="border-2 border-dashed border-border rounded-xl p-8 text-center hover:border-muted-foreground transition-colors cursor-pointer bg-muted/30">
+                    <label className="block cursor-pointer">
+                      <div className="border-2 border-dashed border-border rounded-xl p-8 text-center hover:border-muted-foreground transition-colors bg-muted/30">
                         <div className="w-20 h-20 mx-auto mb-4 bg-card rounded-xl flex items-center justify-center">
                           <FileText className="w-10 h-10 text-muted-foreground" />
                         </div>
@@ -278,10 +286,10 @@ export default function NovoEbookEtapa2() {
                           {formData.mainFile ? formData.mainFile.name : 'Clique para fazer upload ou arraste o arquivo'}
                         </p>
                         <p className="text-sm text-muted-foreground mb-4">PDF, EPUB ou MOBI - Máximo 50MB</p>
-                        <button type="button" className="px-6 py-3 bg-foreground text-background rounded-lg font-medium hover:bg-foreground/90 transition-colors">
+                        <div className="inline-block px-6 py-3 bg-foreground text-background rounded-lg font-medium hover:bg-foreground/90 transition-colors">
                           <Upload className="w-4 h-4 inline mr-2" />
                           Selecionar Arquivo
-                        </button>
+                        </div>
                       </div>
                       <input 
                         type="file" 
@@ -314,17 +322,17 @@ export default function NovoEbookEtapa2() {
                   </div>
                   
                   <div className="space-y-4">
-                    <label className="block">
-                      <div className="border-2 border-dashed border-border rounded-xl p-8 text-center hover:border-muted-foreground transition-colors cursor-pointer">
+                    <label className="block cursor-pointer">
+                      <div className="border-2 border-dashed border-border rounded-xl p-8 text-center hover:border-muted-foreground transition-colors">
                         <div className="w-16 h-16 mx-auto mb-4 bg-[hsl(142,35%,85%)] rounded-xl flex items-center justify-center">
                           <Eye className="w-8 h-8 text-[hsl(215,20%,40%)]" />
                         </div>
                         <p className="text-foreground font-medium mb-1">Adicionar prévia do eBook</p>
                         <p className="text-sm text-muted-foreground mb-4">Primeiras páginas ou capítulo de amostra - Máximo 10MB</p>
-                        <button type="button" className="px-6 py-3 border-2 border-border text-foreground rounded-lg font-medium hover:bg-accent/10 transition-colors">
+                        <div className="inline-block px-6 py-3 border-2 border-border text-foreground rounded-lg font-medium hover:bg-accent/10 transition-colors">
                           <Upload className="w-4 h-4 inline mr-2" />
                           Fazer Upload da Prévia
-                        </button>
+                        </div>
                       </div>
                       <input 
                         type="file" 
