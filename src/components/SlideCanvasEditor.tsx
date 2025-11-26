@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Canvas as FabricCanvas, FabricImage, Rect, Textbox, util } from "fabric";
 import { Button } from "@/components/ui/button";
-import { ImageIcon, BarChart3, Type, Trash2, Download, Save } from "lucide-react";
+import { ImageIcon, BarChart3, Type, Trash2, Download, Eye } from "lucide-react";
 import { toast } from "sonner";
 
 interface SlideCanvasEditorProps {
@@ -23,7 +23,6 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
   const lastSaveRef = useRef<string>("");
   const previousSlideIdRef = useRef<string>("");
   const isInitializedRef = useRef(false);
-  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 
   // Detectar mudança de slide e recarregar canvas corretamente
   useEffect(() => {
@@ -36,7 +35,6 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
       console.log(`Trocando de slide: ${previousSlideIdRef.current} -> ${slideId}`);
       previousSlideIdRef.current = slideId;
       isInitializedRef.current = false;
-      setHasUnsavedChanges(false); // Reset ao trocar de slide
       
       // Limpar canvas
       try {
@@ -65,28 +63,22 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
     }
   }, [fabricCanvas, slideId, initialData]);
 
-  // Função de salvamento manual
-  const handleManualSave = () => {
+  // Função para visualizar todo o conteúdo do slide
+  const handleViewSlide = () => {
     if (!fabricCanvas) return;
     
-    if (!hasUnsavedChanges) {
-      toast.info("Não há alterações para salvar");
+    const objects = fabricCanvas.getObjects();
+    
+    if (objects.length === 0) {
+      toast.info("Este slide está vazio");
       return;
     }
     
-    const json = fabricCanvas.toJSON();
-    const jsonString = JSON.stringify(json);
+    // Zoom out para mostrar todo o conteúdo
+    fabricCanvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
+    fabricCanvas.renderAll();
     
-    setSaveStatus("saving");
-    onUpdate(json);
-    lastSaveRef.current = jsonString;
-    setHasUnsavedChanges(false);
-    
-    setTimeout(() => {
-      setSaveStatus("saved");
-      toast.success("Slide salvo com sucesso!");
-      setTimeout(() => setSaveStatus("idle"), 2000);
-    }, 200);
+    toast.success(`Visualizando ${objects.length} elemento(s) no slide`);
   };
 
   useEffect(() => {
@@ -123,7 +115,6 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
       }
       
       console.log(`🔄 Alteração detectada no canvas`);
-      setHasUnsavedChanges(true);
       setSaveStatus("saving");
       
       // Limpar timeout anterior
@@ -136,7 +127,6 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
         console.log(`💾 Salvando automaticamente...`);
         onUpdate(json);
         lastSaveRef.current = jsonString;
-        setHasUnsavedChanges(false);
         setSaveStatus("saved");
         toast.success("Alterações salvas automaticamente");
         setTimeout(() => setSaveStatus("idle"), 2000);
@@ -277,19 +267,6 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
 
     addGeneratedContent();
   }, [fabricCanvas, slideId, slideText, slideImage, slideChart, initialData]);
-
-  // Atalho Ctrl+S para salvamento manual
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
-        e.preventDefault();
-        handleManualSave();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [fabricCanvas]);
 
   // Adicionar atalhos de teclado para deletar
   useEffect(() => {
@@ -512,16 +489,11 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
         <Button
           type="button"
           size="sm"
-          onClick={handleManualSave}
-          disabled={!hasUnsavedChanges}
-          className={`font-semibold transition-all ${
-            hasUnsavedChanges 
-              ? 'bg-[hsl(142,35%,65%)] hover:bg-[hsl(142,35%,55%)] text-slate-800' 
-              : 'bg-slate-200 text-slate-400 cursor-not-allowed'
-          }`}
+          onClick={handleViewSlide}
+          className="bg-[hsl(206,35%,75%)] hover:bg-[hsl(206,35%,65%)] text-slate-800 font-semibold"
         >
-          <Save className="h-4 w-4 mr-2" />
-          Salvar Slide
+          <Eye className="h-4 w-4 mr-2" />
+          Ver Slide
         </Button>
         
         <div className="w-px h-6 bg-slate-300" />
