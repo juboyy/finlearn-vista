@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { Canvas as FabricCanvas, FabricImage, Rect, Textbox, util, Line, Circle, Group } from "fabric";
+import { Canvas as FabricCanvas, FabricImage, Rect, Textbox, util, Line, Circle, Group, Path, Polygon } from "fabric";
 import { Button } from "@/components/ui/button";
 import { ImageIcon, BarChart3, Type, Trash2, Download, Eye } from "lucide-react";
 import { toast } from "sonner";
 
 interface ChartData {
-  type: "bar" | "line" | "pie";
+  type: "bar" | "line" | "pie" | "donut" | "area" | "scatter";
   title: string;
   data: Array<{ name: string; value: number; color?: string }>;
 }
@@ -209,6 +209,203 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
         );
         elements.push(line);
       }
+    } else if (chartData.type === "area") {
+      // Gráfico de Área
+      const maxValue = Math.max(...chartData.data.map(d => d.value));
+      const pointSpacing = (chartWidth - 60) / (chartData.data.length - 1);
+      const graphHeight = chartHeight - 60;
+      const startX = 30;
+      const startY = 35;
+      const baseY = startY + graphHeight;
+
+      const points: { x: number; y: number }[] = [];
+      
+      chartData.data.forEach((item, index) => {
+        const x = startX + (index * pointSpacing);
+        const normalizedValue = (item.value / maxValue) * graphHeight;
+        const y = startY + graphHeight - normalizedValue;
+        points.push({ x, y });
+      });
+
+      // Criar polígono da área
+      const areaPoints = [
+        ...points,
+        { x: points[points.length - 1].x, y: baseY },
+        { x: points[0].x, y: baseY }
+      ];
+
+      const pathString = areaPoints.map((p, i) => 
+        `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`
+      ).join(' ') + ' Z';
+
+      const areaPath = new Path(pathString, {
+        fill: 'hsla(206, 70%, 60%, 0.3)',
+        stroke: 'hsl(206, 70%, 60%)',
+        strokeWidth: 2,
+        selectable: false,
+      });
+      elements.push(areaPath);
+
+      // Pontos e labels
+      chartData.data.forEach((item, index) => {
+        const x = points[index].x;
+        const y = points[index].y;
+
+        // Ponto
+        const circle = new Circle({
+          left: x - 3,
+          top: y - 3,
+          radius: 3,
+          fill: item.color || 'hsl(206, 70%, 60%)',
+          selectable: false,
+        });
+        elements.push(circle);
+
+        // Label do valor
+        const valueLabel = new Textbox(item.value.toString(), {
+          left: x - 15,
+          top: y - 20,
+          width: 30,
+          fontSize: 9,
+          fill: "#475569",
+          fontFamily: "Arial",
+          textAlign: "center",
+          selectable: false,
+        });
+        elements.push(valueLabel);
+
+        // Label do nome
+        const nameLabel = new Textbox(item.name, {
+          left: x - 20,
+          top: baseY + 5,
+          width: 40,
+          fontSize: 9,
+          fill: "#475569",
+          fontFamily: "Arial",
+          textAlign: "center",
+          selectable: false,
+        });
+        elements.push(nameLabel);
+      });
+
+    } else if (chartData.type === "scatter") {
+      // Gráfico de Dispersão
+      const maxValue = Math.max(...chartData.data.map(d => d.value));
+      const pointSpacing = (chartWidth - 60) / (chartData.data.length - 1);
+      const graphHeight = chartHeight - 60;
+      const startX = 30;
+      const startY = 35;
+
+      chartData.data.forEach((item, index) => {
+        const x = startX + (index * pointSpacing);
+        const normalizedValue = (item.value / maxValue) * graphHeight;
+        const y = startY + graphHeight - normalizedValue;
+
+        // Ponto maior para scatter
+        const circle = new Circle({
+          left: x - 6,
+          top: y - 6,
+          radius: 6,
+          fill: item.color || `hsl(${206 + index * 40}, 70%, 60%)`,
+          opacity: 0.7,
+          selectable: false,
+        });
+        elements.push(circle);
+
+        // Label do valor dentro do ponto
+        const valueLabel = new Textbox(item.value.toString(), {
+          left: x - 12,
+          top: y - 20,
+          width: 24,
+          fontSize: 8,
+          fill: "#1e293b",
+          fontFamily: "Arial",
+          fontWeight: "bold",
+          textAlign: "center",
+          selectable: false,
+        });
+        elements.push(valueLabel);
+
+        // Label do nome
+        const nameLabel = new Textbox(item.name, {
+          left: x - 20,
+          top: startY + graphHeight + 5,
+          width: 40,
+          fontSize: 9,
+          fill: "#475569",
+          fontFamily: "Arial",
+          textAlign: "center",
+          selectable: false,
+        });
+        elements.push(nameLabel);
+      });
+
+    } else if (chartData.type === "pie" || chartData.type === "donut") {
+      // Gráfico de Pizza ou Donut
+      const total = chartData.data.reduce((sum, item) => sum + item.value, 0);
+      const centerX = chartWidth / 2;
+      const centerY = (chartHeight + 20) / 2;
+      const radius = Math.min(chartWidth, chartHeight - 40) / 2.5;
+      const innerRadius = chartData.type === "donut" ? radius * 0.5 : 0;
+
+      let currentAngle = -90; // Começar do topo
+
+      chartData.data.forEach((item, index) => {
+        const percentage = (item.value / total) * 100;
+        const angle = (item.value / total) * 360;
+        const color = item.color || `hsl(${index * (360 / chartData.data.length)}, 70%, 60%)`;
+
+        // Criar fatia como Path
+        const startAngle = currentAngle * Math.PI / 180;
+        const endAngle = (currentAngle + angle) * Math.PI / 180;
+
+        const x1 = centerX + radius * Math.cos(startAngle);
+        const y1 = centerY + radius * Math.sin(startAngle);
+        const x2 = centerX + radius * Math.cos(endAngle);
+        const y2 = centerY + radius * Math.sin(endAngle);
+
+        let pathStr: string;
+        
+        if (chartData.type === "donut") {
+          const x1Inner = centerX + innerRadius * Math.cos(startAngle);
+          const y1Inner = centerY + innerRadius * Math.sin(startAngle);
+          const x2Inner = centerX + innerRadius * Math.cos(endAngle);
+          const y2Inner = centerY + innerRadius * Math.sin(endAngle);
+
+          pathStr = `M ${x1Inner} ${y1Inner} L ${x1} ${y1} A ${radius} ${radius} 0 ${angle > 180 ? 1 : 0} 1 ${x2} ${y2} L ${x2Inner} ${y2Inner} A ${innerRadius} ${innerRadius} 0 ${angle > 180 ? 1 : 0} 0 ${x1Inner} ${y1Inner} Z`;
+        } else {
+          pathStr = `M ${centerX} ${centerY} L ${x1} ${y1} A ${radius} ${radius} 0 ${angle > 180 ? 1 : 0} 1 ${x2} ${y2} Z`;
+        }
+
+        const slice = new Path(pathStr, {
+          fill: color,
+          stroke: '#ffffff',
+          strokeWidth: 2,
+          selectable: false,
+        });
+        elements.push(slice);
+
+        // Label com nome e percentual
+        const labelAngle = (currentAngle + angle / 2) * Math.PI / 180;
+        const labelRadius = chartData.type === "donut" ? (radius + innerRadius) / 2 : radius * 0.7;
+        const labelX = centerX + labelRadius * Math.cos(labelAngle);
+        const labelY = centerY + labelRadius * Math.sin(labelAngle);
+
+        const label = new Textbox(`${item.name}\n${percentage.toFixed(1)}%`, {
+          left: labelX - 30,
+          top: labelY - 15,
+          width: 60,
+          fontSize: 9,
+          fill: "#ffffff",
+          fontFamily: "Arial",
+          fontWeight: "bold",
+          textAlign: "center",
+          selectable: false,
+        });
+        elements.push(label);
+
+        currentAngle += angle;
+      });
     }
 
     // Criar grupo com todos os elementos do gráfico
@@ -507,20 +704,24 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
   const handleAddChart = async () => {
     if (!fabricCanvas) return;
 
+    // Escolher tipo aleatório para demonstração
+    const types: ChartData["type"][] = ["bar", "line", "area", "scatter", "pie", "donut"];
+    const randomType = types[Math.floor(Math.random() * types.length)];
+
     // Dados de exemplo para o gráfico
     const chartData: ChartData = {
-      type: "bar",
-      title: "Exemplo de Gráfico",
+      type: randomType,
+      title: `Gráfico ${randomType === "bar" ? "de Barras" : randomType === "line" ? "de Linhas" : randomType === "area" ? "de Área" : randomType === "scatter" ? "de Dispersão" : randomType === "pie" ? "de Pizza" : "Donut"}`,
       data: [
-        { name: "Jan", value: 450, color: "hsl(206, 70%, 60%)" },
-        { name: "Fev", value: 680, color: "hsl(226, 70%, 60%)" },
-        { name: "Mar", value: 520, color: "hsl(246, 70%, 60%)" },
-        { name: "Abr", value: 790, color: "hsl(266, 70%, 60%)" },
+        { name: "A", value: 450, color: "hsl(206, 70%, 60%)" },
+        { name: "B", value: 680, color: "hsl(226, 70%, 60%)" },
+        { name: "C", value: 520, color: "hsl(246, 70%, 60%)" },
+        { name: "D", value: 790, color: "hsl(266, 70%, 60%)" },
       ]
     };
 
     renderNativeChart(chartData, 350, 40);
-    toast.success("Gráfico nativo adicionado ao canvas");
+    toast.success(`Gráfico ${randomType} adicionado ao canvas`);
   };
 
   const handleDeleteSelected = () => {
@@ -625,6 +826,7 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
             size="sm"
             onClick={handleAddChart}
             className="bg-[hsl(142,35%,75%)] hover:bg-[hsl(142,35%,65%)] text-slate-800"
+            title="Tipos: Barras, Linhas, Área, Dispersão, Pizza, Donut"
           >
             <BarChart3 className="h-4 w-4 mr-2" />
             Adicionar Gráfico

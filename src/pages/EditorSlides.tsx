@@ -155,7 +155,7 @@ Retorne EXATAMENTE este JSON com 10 slides:
       "content": "Texto completo do slide 1 com 3-4 parágrafos detalhados explicando o tema, contexto e relevância. Cada parágrafo deve ter pelo menos 3-4 frases completas com informações relevantes e específicas sobre o tópico.",
       "imagePrompt": "Prompt detalhado para imagem no estilo ilustração sketch/desenho com cores pastel claras, traços limpos, representando o conceito principal do slide",
       "chartType": "bar",
-      "chartPrompt": "Dados específicos e relevantes para o gráfico do tipo bar com valores reais do mercado"
+      "chartPrompt": "Dados específicos e relevantes para o gráfico com valores reais do mercado (bar, line, area, scatter, pie ou donut)"
     },
     ... REPITA PARA TODOS OS 10 SLIDES COM CONTEÚDO ÚNICO ...
   ]
@@ -213,17 +213,31 @@ ATENÇÃO:
             try {
               const { data: chartDataResponse } = await supabase.functions.invoke("generate-slides-content", {
                 body: {
-                  prompt: `Baseado em: "${slide.chartPrompt}", gere dados para gráfico ${slide.chartType}.
+                   prompt: `Baseado em: "${slide.chartPrompt}", gere dados para gráfico ${slide.chartType}.
 
 Retorne JSON:
 {
   "type": "${slide.chartType}",
   "title": "Título do gráfico",
   "data": [
-    { "name": "Label 1", "value": 123 },
-    { "name": "Label 2", "value": 456 }
+    { "name": "Label 1", "value": 123, "color": "hsl(206, 70%, 60%)" },
+    { "name": "Label 2", "value": 456, "color": "hsl(226, 70%, 60%)" },
+    { "name": "Label 3", "value": 789, "color": "hsl(246, 70%, 60%)" }
   ]
-}`,
+}
+
+TIPOS DE GRÁFICOS DISPONÍVEIS:
+- bar: Gráfico de barras verticais
+- line: Gráfico de linhas com pontos conectados
+- area: Gráfico de área preenchida sob a linha
+- scatter: Gráfico de dispersão com pontos individuais
+- pie: Gráfico de pizza circular
+- donut: Gráfico de rosca (pizza com buraco central)
+
+IMPORTANTE: 
+- Escolha o tipo de gráfico mais adequado aos dados
+- Inclua cores HSL diferentes para cada item
+- Gere pelo menos 4 pontos de dados`,
                 },
               });
 
