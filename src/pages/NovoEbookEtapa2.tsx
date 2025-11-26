@@ -172,10 +172,10 @@ export default function NovoEbookEtapa2() {
               {/* Form Sections */}
               <div className="col-span-2 space-y-6">
                 {/* Cover Upload */}
-                <div className={`bg-gradient-to-br from-card via-card to-[hsl(340,50%,95%)] rounded-2xl border-2 shadow-lg p-8 ${showValidation && !formData.coverImage ? 'border-destructive' : formData.coverImage ? 'border-[hsl(142,35%,50%)]' : 'border-border'}`}>
+                <div className={`bg-card rounded-2xl border-2 p-8 ${showValidation && !formData.coverImage ? 'border-destructive' : formData.coverImage ? 'border-[hsl(142,35%,50%)]' : 'border-border'}`}>
                   <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-gradient-to-br from-[hsl(340,50%,75%)] to-[hsl(340,50%,85%)] rounded-xl flex items-center justify-center shadow-md">
+                      <div className="w-12 h-12 bg-[hsl(340,50%,80%)] rounded-xl flex items-center justify-center">
                         <ImageIcon className="w-6 h-6 text-[hsl(215,20%,40%)]" />
                       </div>
                       <div>
@@ -187,7 +187,7 @@ export default function NovoEbookEtapa2() {
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="px-4 py-1.5 bg-gradient-to-r from-[hsl(340,50%,85%)] to-[hsl(340,50%,90%)] text-[hsl(215,20%,40%)] text-xs font-bold rounded-full shadow-sm">Obrigatório</span>
+                      <span className="px-4 py-1.5 bg-[hsl(340,50%,85%)] text-[hsl(215,20%,40%)] text-xs font-bold rounded-full">Obrigatório</span>
                       {showValidation && !formData.coverImage && (
                         <span className="text-xs text-destructive flex items-center gap-1">
                           <span className="w-2 h-2 bg-destructive rounded-full"></span>
@@ -267,10 +267,10 @@ export default function NovoEbookEtapa2() {
                 </div>
 
                 {/* Main File Upload */}
-                <div className={`bg-gradient-to-br from-card via-card to-[hsl(206,35%,95%)] rounded-2xl border-2 shadow-lg p-8 ${showValidation && !formData.mainFile ? 'border-destructive' : formData.mainFile ? 'border-[hsl(142,35%,50%)]' : 'border-border'}`}>
+                <div className={`bg-card rounded-2xl border-2 p-8 ${showValidation && !formData.mainFile ? 'border-destructive' : formData.mainFile ? 'border-[hsl(142,35%,50%)]' : 'border-border'}`}>
                   <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-gradient-to-br from-[hsl(206,50%,75%)] to-[hsl(206,50%,85%)] rounded-xl flex items-center justify-center shadow-md">
+                      <div className="w-12 h-12 bg-[hsl(206,50%,80%)] rounded-xl flex items-center justify-center">
                         <FileText className="w-6 h-6 text-[hsl(215,20%,40%)]" />
                       </div>
                       <div>
@@ -282,7 +282,7 @@ export default function NovoEbookEtapa2() {
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="px-4 py-1.5 bg-gradient-to-r from-[hsl(206,50%,85%)] to-[hsl(206,50%,90%)] text-[hsl(215,20%,40%)] text-xs font-bold rounded-full shadow-sm">Obrigatório</span>
+                      <span className="px-4 py-1.5 bg-[hsl(206,50%,85%)] text-[hsl(215,20%,40%)] text-xs font-bold rounded-full">Obrigatório</span>
                       {showValidation && !formData.mainFile && (
                         <span className="text-xs text-destructive flex items-center gap-1">
                           <span className="w-2 h-2 bg-destructive rounded-full"></span>
@@ -716,9 +716,9 @@ export default function NovoEbookEtapa2() {
                   </div>
 
                   {/* Help Card */}
-                  <div className="bg-gradient-to-br from-[hsl(270,50%,85%)] via-card to-card rounded-2xl border-2 border-[hsl(270,50%,75%)] p-6 shadow-lg">
+                  <div className="bg-[hsl(270,50%,85%)] rounded-2xl border-2 border-[hsl(270,50%,75%)] p-6">
                     <div className="flex items-start gap-3 mb-5">
-                      <div className="w-12 h-12 bg-gradient-to-br from-[hsl(270,60%,75%)] to-[hsl(270,60%,85%)] rounded-xl flex items-center justify-center shadow-md">
+                      <div className="w-12 h-12 bg-[hsl(270,60%,75%)] rounded-xl flex items-center justify-center">
                         <HelpCircle className="w-6 h-6 text-[hsl(215,20%,40%)]" />
                       </div>
                       <div>
@@ -727,7 +727,7 @@ export default function NovoEbookEtapa2() {
                       </div>
                     </div>
                     <p className="text-sm text-foreground mb-5 p-3 bg-card/50 rounded-lg">Nossa equipe está pronta para auxiliar com qualquer dúvida sobre upload de arquivos.</p>
-                    <button className="w-full px-4 py-3 bg-gradient-to-r from-foreground to-muted-foreground text-background rounded-xl font-bold hover:shadow-lg transition-all text-sm transform hover:scale-105">
+                    <button className="w-full px-4 py-3 bg-foreground text-background rounded-xl font-bold hover:opacity-90 transition-all text-sm">
                       <HelpCircle className="w-4 h-4 inline mr-2" />
                       Falar com Suporte
                     </button>

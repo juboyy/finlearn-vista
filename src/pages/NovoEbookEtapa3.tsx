@@ -203,10 +203,10 @@ export default function NovoEbookEtapa3() {
             <div className="col-span-2 space-y-6">
               
               {/* Pricing Section */}
-              <div className="bg-gradient-to-br from-card via-card to-[hsl(142,35%,95%)] rounded-2xl border-2 border-border shadow-lg p-8">
+              <div className="bg-card rounded-2xl border-2 border-border p-8">
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-[hsl(142,50%,75%)] to-[hsl(142,50%,85%)] rounded-xl flex items-center justify-center shadow-md">
+                    <div className="w-12 h-12 bg-[hsl(142,50%,80%)] rounded-xl flex items-center justify-center">
                       <DollarSign className="w-6 h-6 text-[hsl(215,20%,40%)]" />
                     </div>
                     <div>
@@ -214,7 +214,7 @@ export default function NovoEbookEtapa3() {
                       <p className="text-sm text-muted-foreground mt-1">Configure o valor de venda do seu eBook</p>
                     </div>
                   </div>
-                  <span className="px-4 py-1.5 bg-gradient-to-r from-[hsl(340,50%,85%)] to-[hsl(340,50%,90%)] text-[hsl(215,20%,40%)] text-xs font-bold rounded-full shadow-sm">Obrigatório</span>
+                  <span className="px-4 py-1.5 bg-[hsl(340,50%,85%)] text-[hsl(215,20%,40%)] text-xs font-bold rounded-full">Obrigatório</span>
                 </div>
                 
                 <div className="space-y-6">
@@ -241,10 +241,10 @@ export default function NovoEbookEtapa3() {
                     </div>
                   </div>
 
-                  <div className="bg-gradient-to-br from-[hsl(206,50%,90%)] via-card to-card rounded-2xl border-2 border-[hsl(206,50%,75%)] p-6 shadow-lg">
+                  <div className="bg-[hsl(206,50%,90%)] rounded-2xl border-2 border-[hsl(206,50%,75%)] p-6">
                     <div className="flex items-center justify-between mb-5">
                       <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-gradient-to-br from-[hsl(206,60%,75%)] to-[hsl(206,60%,85%)] rounded-lg flex items-center justify-center">
+                        <div className="w-8 h-8 bg-[hsl(206,60%,75%)] rounded-lg flex items-center justify-center">
                           <DollarSign className="w-4 h-4 text-[hsl(215,20%,40%)]" />
                         </div>
                         <span className="text-sm font-bold text-foreground">Detalhamento</span>
@@ -259,7 +259,7 @@ export default function NovoEbookEtapa3() {
                         <span className="text-destructive font-medium">Taxa da plataforma (15%)</span>
                         <span className="font-bold text-destructive text-base">- R$ {calculatePlatformFee().toFixed(2)}</span>
                       </div>
-                      <div className="flex items-center justify-between pt-4 border-t-2 border-dashed border-border p-4 bg-gradient-to-r from-[hsl(142,50%,85%)] to-[hsl(142,50%,90%)] rounded-xl shadow-md">
+                      <div className="flex items-center justify-between pt-4 border-t-2 border-dashed border-border p-4 bg-[hsl(142,50%,85%)] rounded-xl">
                         <span className="font-bold text-foreground flex items-center gap-2">
                           <Check className="w-5 h-5 text-[hsl(142,50%,50%)]" />
                           Você recebe por venda
@@ -315,10 +315,10 @@ export default function NovoEbookEtapa3() {
               </div>
 
               {/* Payment Methods Section */}
-              <div className={`bg-gradient-to-br from-card via-card to-[hsl(206,35%,95%)] rounded-2xl border-2 shadow-lg p-8 ${showValidation && !creditCard && !pix && !boleto && !digitalWallet ? 'border-destructive' : 'border-border'}`}>
+              <div className={`bg-card rounded-2xl border-2 p-8 ${showValidation && !creditCard && !pix && !boleto && !digitalWallet ? 'border-destructive' : 'border-border'}`}>
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-[hsl(206,50%,75%)] to-[hsl(206,50%,85%)] rounded-xl flex items-center justify-center shadow-md">
+                    <div className="w-12 h-12 bg-[hsl(206,50%,80%)] rounded-xl flex items-center justify-center">
                       <CreditCard className="w-6 h-6 text-[hsl(215,20%,40%)]" />
                     </div>
                     <div>
@@ -330,7 +330,7 @@ export default function NovoEbookEtapa3() {
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="px-4 py-1.5 bg-gradient-to-r from-[hsl(340,50%,85%)] to-[hsl(340,50%,90%)] text-[hsl(215,20%,40%)] text-xs font-bold rounded-full shadow-sm">Obrigatório</span>
+                    <span className="px-4 py-1.5 bg-[hsl(340,50%,85%)] text-[hsl(215,20%,40%)] text-xs font-bold rounded-full">Obrigatório</span>
                     {showValidation && !creditCard && !pix && !boleto && !digitalWallet && (
                       <span className="text-xs text-destructive flex items-center gap-1">
                         <span className="w-2 h-2 bg-destructive rounded-full"></span>
@@ -799,9 +799,9 @@ export default function NovoEbookEtapa3() {
               <div className="sticky top-8 space-y-6">
                 
                 {/* Summary Card */}
-                <div className="bg-gradient-to-br from-card via-card to-[hsl(340,35%,95%)] rounded-2xl border-2 border-border p-6 shadow-lg">
+                <div className="bg-card rounded-2xl border-2 border-border p-6">
                   <div className="flex items-center gap-3 mb-5">
-                    <div className="w-10 h-10 bg-gradient-to-br from-[hsl(340,50%,75%)] to-[hsl(340,50%,85%)] rounded-xl flex items-center justify-center shadow-md">
+                    <div className="w-10 h-10 bg-[hsl(340,50%,80%)] rounded-xl flex items-center justify-center">
                       <FileText className="w-5 h-5 text-[hsl(215,20%,40%)]" />
                     </div>
                     <h3 className="text-lg font-bold text-foreground">Resumo do Produto</h3>
