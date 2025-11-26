@@ -315,7 +315,7 @@ const Index = () => {
                   progress={67}
                   completedLessons={12}
                   totalLessons={18}
-                  bgColor="bg-pastel-blue"
+                  bgColor="bg-[hsl(270,35%,55%)]"
                 />
                 <CourseCard
                   icon={Coins}
@@ -323,7 +323,7 @@ const Index = () => {
                   progress={33}
                   completedLessons={5}
                   totalLessons={15}
-                  bgColor="bg-pastel-green"
+                  bgColor="bg-[hsl(270,35%,55%)]"
                 />
                 <CourseCard
                   icon={Scale}
@@ -331,7 +331,7 @@ const Index = () => {
                   progress={80}
                   completedLessons={8}
                   totalLessons={10}
-                  bgColor="bg-pastel-purple"
+                  bgColor="bg-[hsl(270,35%,55%)]"
                 />
               </div>
             </section>
