@@ -236,6 +236,81 @@ export type Database = {
         }
         Relationships: []
       }
+      products: {
+        Row: {
+          author_name: string
+          category: string
+          co_authors: Json | null
+          cover_image: string | null
+          created_at: string
+          credentials: string
+          file_url: string | null
+          id: string
+          is_free: boolean | null
+          language: string
+          long_description: string | null
+          price: number | null
+          product_type: string
+          short_description: string
+          status: string
+          subcategory: string | null
+          subtitle: string | null
+          tags: string[]
+          target_audience: string[]
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          author_name: string
+          category: string
+          co_authors?: Json | null
+          cover_image?: string | null
+          created_at?: string
+          credentials: string
+          file_url?: string | null
+          id?: string
+          is_free?: boolean | null
+          language?: string
+          long_description?: string | null
+          price?: number | null
+          product_type?: string
+          short_description: string
+          status?: string
+          subcategory?: string | null
+          subtitle?: string | null
+          tags?: string[]
+          target_audience?: string[]
+          title: string
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          author_name?: string
+          category?: string
+          co_authors?: Json | null
+          cover_image?: string | null
+          created_at?: string
+          credentials?: string
+          file_url?: string | null
+          id?: string
+          is_free?: boolean | null
+          language?: string
+          long_description?: string | null
+          price?: number | null
+          product_type?: string
+          short_description?: string
+          status?: string
+          subcategory?: string | null
+          subtitle?: string | null
+          tags?: string[]
+          target_audience?: string[]
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       saved_charts: {
         Row: {
           chart_data: Json
