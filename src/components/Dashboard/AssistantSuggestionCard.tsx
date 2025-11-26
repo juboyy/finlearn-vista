@@ -1,5 +1,6 @@
 import { Clock, Newspaper, Lightbulb, BookOpen, MoreVertical, Brain } from "lucide-react";
 import { AssistantSuggestion } from "@/hooks/useAssistantSuggestions";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
@@ -58,6 +59,12 @@ export const AssistantSuggestionCard = ({ suggestion, onMarkAsRead }: AssistantS
     >
       <div className="p-4">
         <div className="flex items-start gap-4">
+          <Avatar className="w-10 h-10 flex-shrink-0">
+            <AvatarImage 
+              src="https://storage.googleapis.com/uxpilot-auth.appspot.com/7f4f5eae9b-7e9b1f43f4fe2b6ce84f.png" 
+              alt="Auxiliar do dia" 
+            />
+          </Avatar>
           <div className={`w-10 h-10 ${config.bgColor} rounded-lg flex items-center justify-center flex-shrink-0`}>
             <Icon className="text-slate-700" size={20} />
           </div>
