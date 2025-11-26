@@ -85,8 +85,8 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
     if (!canvasRef.current) return;
 
     const canvas = new FabricCanvas(canvasRef.current, {
-      width: 1000,
-      height: 800,
+      width: 960,
+      height: 540,
       backgroundColor: "#ffffff",
     });
 
@@ -177,10 +177,10 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
       // Adicionar texto gerado
       if (slideText) {
         const textBox = new Textbox(slideText, {
-          left: 50,
+          left: 40,
           top: yPosition,
-          width: 850,
-          fontSize: 18,
+          width: 880,
+          fontSize: 16,
           fill: "#1e293b",
           fontFamily: "Arial",
           selectable: true,
@@ -188,12 +188,12 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
           lineHeight: 1.5,
         });
         fabricCanvas.add(textBox);
-        yPosition = textBox.top + textBox.height! + 30;
+        yPosition = textBox.top + textBox.height! + 25;
       }
 
       // Adicionar imagem e gráfico lado a lado
-      const contentWidth = 400;
-      const contentSpacing = 50;
+      const contentWidth = 350;
+      const contentSpacing = 40;
       
       if (slideImage && slideChart) {
         // Imagem à esquerda
@@ -201,7 +201,7 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
           const img = await FabricImage.fromURL(slideImage);
           img.scaleToWidth(contentWidth);
           img.set({
-            left: 50,
+            left: 40,
             top: yPosition,
             selectable: true,
           });
@@ -212,10 +212,10 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
 
         // Gráfico à direita
         const chartText = new Textbox(`📊 ${slideChart.title || 'Gráfico'}\n\n${JSON.stringify(slideChart.data || [], null, 2)}`, {
-          left: 50 + contentWidth + contentSpacing,
+          left: 40 + contentWidth + contentSpacing,
           top: yPosition,
           width: contentWidth,
-          fontSize: 14,
+          fontSize: 12,
           fill: "#475569",
           fontFamily: "Arial",
           selectable: true,
@@ -227,9 +227,9 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
         // Apenas imagem (maior)
         try {
           const img = await FabricImage.fromURL(slideImage);
-          img.scaleToWidth(contentWidth * 1.5);
+          img.scaleToWidth(contentWidth * 1.4);
           img.set({
-            left: 50,
+            left: 40,
             top: yPosition,
             selectable: true,
           });
@@ -240,10 +240,10 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
       } else if (slideChart) {
         // Apenas gráfico (maior)
         const chartText = new Textbox(`📊 ${slideChart.title || 'Gráfico'}\n\n${JSON.stringify(slideChart.data || [], null, 2)}`, {
-          left: 50,
+          left: 40,
           top: yPosition,
-          width: contentWidth * 1.5,
-          fontSize: 14,
+          width: contentWidth * 1.4,
+          fontSize: 12,
           fill: "#475569",
           fontFamily: "Arial",
           selectable: true,
@@ -299,10 +299,10 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
     if (!fabricCanvas) return;
 
     const text = new Textbox("Digite o texto aqui", {
-      left: 100,
-      top: 100,
-      width: 300,
-      fontSize: 24,
+      left: 80,
+      top: 80,
+      width: 250,
+      fontSize: 20,
       fill: "#1e293b",
       fontFamily: "Arial",
     });
@@ -322,10 +322,10 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
       const imgUrl = event.target?.result as string;
       
       FabricImage.fromURL(imgUrl).then((img) => {
-        img.scaleToWidth(400);
+        img.scaleToWidth(350);
         img.set({
-          left: 100,
-          top: 100,
+          left: 80,
+          top: 80,
         });
         
         fabricCanvas.add(img);
@@ -359,8 +359,8 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
     const title = new Textbox(chartData.title, {
       left: 0,
       top: 0,
-      width: 200,
-      fontSize: 12,
+      width: 180,
+      fontSize: 11,
       fill: "#1e293b",
       fontFamily: "Arial",
       fontWeight: "bold",
@@ -370,11 +370,11 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
 
     // Adicionar barras do gráfico
     const maxValue = Math.max(...chartData.data.map(d => d.value));
-    const barWidth = 40;
-    const barSpacing = 10;
-    const chartHeight = 150;
+    const barWidth = 35;
+    const barSpacing = 8;
+    const chartHeight = 130;
     const startX = 10;
-    const startY = 30;
+    const startY = 25;
 
     chartData.data.forEach((item, index) => {
       const barHeight = (item.value / maxValue) * chartHeight;
@@ -397,7 +397,7 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
         left: x,
         top: startY + chartHeight + 5,
         width: barWidth,
-        fontSize: 10,
+        fontSize: 9,
         fill: "#475569",
         fontFamily: "Arial",
         textAlign: "center",
@@ -407,8 +407,8 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
     });
 
     // Adicionar todos os elementos ao canvas em uma posição inicial
-    const groupLeft = 400;
-    const groupTop = 50;
+    const groupLeft = 350;
+    const groupTop = 40;
     
     chartGroup.forEach((obj) => {
       obj.set({
