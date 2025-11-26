@@ -915,13 +915,11 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
 
         <Button
           type="button"
-          size="sm"
-          variant="ghost"
+          size="icon"
           onClick={handleDeleteSelected}
-          className="text-slate-600 hover:text-red-600 hover:bg-red-50"
+          className="bg-red-500 hover:bg-red-600 text-white"
         >
-          <Trash2 className="h-4 w-4 mr-2" />
-          Excluir Selecionado
+          <Trash2 className="h-4 w-4" />
         </Button>
 
         <Button
