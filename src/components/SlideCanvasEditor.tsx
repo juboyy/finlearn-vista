@@ -125,6 +125,33 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
     setIsContentLoaded(false);
   }, [slideText, slideImage, slideChart]);
 
+  // Adicionar atalhos de teclado para deletar
+  useEffect(() => {
+    if (!fabricCanvas) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Delete ou Backspace
+      if (e.key === 'Delete' || e.key === 'Backspace') {
+        const activeObjects = fabricCanvas.getActiveObjects();
+        if (activeObjects.length > 0) {
+          e.preventDefault(); // Prevenir navegação do browser no Backspace
+          activeObjects.forEach((obj) => {
+            fabricCanvas.remove(obj);
+          });
+          fabricCanvas.discardActiveObject();
+          fabricCanvas.renderAll();
+          toast.success("Elemento(s) excluído(s)");
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [fabricCanvas]);
+
   const handleAddText = () => {
     if (!fabricCanvas) return;
 
