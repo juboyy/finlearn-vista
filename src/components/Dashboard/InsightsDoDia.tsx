@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Send, Loader2, Newspaper, BookOpen, Video, Target, Headphones, Award, Sparkles, Trash2, ExternalLink } from "lucide-react";
+import { Send, Loader2, Newspaper, BookOpen, Video, Target, Headphones, Award, Sparkles, Trash2, ExternalLink, Tag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -24,12 +24,13 @@ interface InsightsDoDiaProps {
 }
 
 const quickActions = [
-  { label: "Notícias do dia", icon: Newspaper, color: "bg-pastel-blue", prompt: "Mostre as principais notícias do mercado financeiro brasileiro hoje, formatadas com títulos, destaques importantes em negrito e links relevantes." },
+  { label: "Notícias do dia", icon: Newspaper, color: "bg-pastel-blue", prompt: "Mostre as principais notícias do mercado financeiro brasileiro hoje com imagens ilustrativas no estilo 2D com cores pastel claras. Formate com títulos, destaques importantes em negrito e links relevantes. Para cada notícia, gere uma imagem contextual." },
   { label: "Novos Materiais", icon: BookOpen, color: "bg-pastel-green", prompt: "Liste os novos materiais educacionais disponíveis sobre mercado financeiro, organizados por categoria com descrições breves e links." },
   { label: "Webinars de hoje", icon: Video, color: "bg-pastel-purple", prompt: "Mostre os webinars agendados para hoje sobre mercado financeiro, com horários, tópicos e links para inscrição." },
-  { label: "Focar nas Metas", icon: Target, color: "bg-pastel-yellow", prompt: "Mostre meu progresso nas metas da semana com progress bars, destaque o que falta completar e sugira próximas ações prioritárias." },
-  { label: "Podcasts rolando", icon: Headphones, color: "bg-pastel-pink", prompt: "Recomende os podcasts mais relevantes sobre mercado financeiro e pagamentos esta semana, com descrição e links formatados com ícone de podcast." },
-  { label: "Completar Cursos", icon: Award, color: "bg-pastel-peach", prompt: "Mostre meus cursos em andamento com progress bars de conclusão, destaque o próximo módulo e tempo estimado para finalizar." },
+  { label: "Focar nas Metas", icon: Target, color: "bg-pastel-yellow", prompt: "Mostre meu progresso detalhado nas metas: 1) Meta de hoje com progressbar, 2) Meta do mês com progressbar, 3) Liste as metas em atraso com destaque, 4) Sugira próximas ações prioritárias." },
+  { label: "Podcasts rolando", icon: Headphones, color: "bg-pastel-pink", prompt: "Recomende os podcasts mais relevantes sobre mercado financeiro esta semana. Para cada podcast inclua: imagem de capa, título, descrição, e link de áudio formatado como player. Use links com 'audio' no URL." },
+  { label: "Completar Cursos", icon: Award, color: "bg-pastel-peach", prompt: "Mostre meus cursos em andamento: 1) Progressbar de conclusão de cada curso, 2) Destaque de onde parei (módulo e vídeo atual), 3) Link do vídeo para continuar assistindo, 4) Tempo estimado para finalizar." },
+  { label: "Promoções", icon: Tag, color: "bg-pastel-blue", prompt: "Mostre as promoções ativas de cursos, e-books, relatórios e outros materiais educacionais do mercado financeiro. Destaque descontos, prazos limitados e benefícios de cada promoção com links para acesso." },
 ];
 
 export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
@@ -230,14 +231,14 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
                                 );
                               }
                               return (
-                                <a href={href} target="_blank" rel="noopener noreferrer" className="text-pastel-blue hover:text-pastel-purple underline inline-flex items-center gap-1">
+                                <a href={href} target="_blank" rel="noopener noreferrer" className="text-blue-700 hover:text-blue-900 underline inline-flex items-center gap-1">
                                   {children}
                                   <ExternalLink size={12} />
                                 </a>
                               );
                             },
                             img: ({ src, alt }) => (
-                              <img src={src} alt={alt} className="rounded-lg my-3 max-w-full h-auto border-2 border-pastel-purple/30" />
+                              <img src={src} alt={alt} className="rounded-lg my-3 max-w-full h-auto border-2 border-pastel-purple/30 shadow-sm" />
                             ),
                             code: ({ children, className }) => {
                               // Progress bar syntax: ```progress:75```
@@ -250,6 +251,30 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
                                       <span>{value}%</span>
                                     </div>
                                     <Progress value={value} className="h-3" />
+                                  </div>
+                                );
+                              }
+                              // Audio player syntax: ```audio:url```
+                              if (className === 'language-audio') {
+                                const audioUrl = String(children).trim();
+                                return (
+                                  <div className="my-3 bg-muted rounded-lg p-4">
+                                    <audio controls className="w-full">
+                                      <source src={audioUrl} type="audio/mpeg" />
+                                      Seu navegador não suporta o elemento de áudio.
+                                    </audio>
+                                  </div>
+                                );
+                              }
+                              // Video player syntax: ```video:url```
+                              if (className === 'language-video') {
+                                const videoUrl = String(children).trim();
+                                return (
+                                  <div className="my-3 bg-muted rounded-lg overflow-hidden">
+                                    <video controls className="w-full">
+                                      <source src={videoUrl} type="video/mp4" />
+                                      Seu navegador não suporta o elemento de vídeo.
+                                    </video>
                                   </div>
                                 );
                               }
