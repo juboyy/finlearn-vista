@@ -24,12 +24,12 @@ interface InsightsDoDiaProps {
 }
 
 const quickActions = [
-  { label: "Notícias do dia", icon: Newspaper, color: "bg-pastel-blue" },
-  { label: "Novos Materiais", icon: BookOpen, color: "bg-pastel-green" },
-  { label: "Webinars de hoje", icon: Video, color: "bg-pastel-purple" },
-  { label: "Focar nas Metas", icon: Target, color: "bg-pastel-yellow" },
-  { label: "Podcasts rolando", icon: Headphones, color: "bg-pastel-pink" },
-  { label: "Completar Cursos", icon: Award, color: "bg-pastel-peach" },
+  { label: "Notícias do dia", icon: Newspaper, color: "bg-pastel-blue", prompt: "Mostre as principais notícias do mercado financeiro brasileiro hoje, formatadas com títulos, destaques importantes em negrito e links relevantes." },
+  { label: "Novos Materiais", icon: BookOpen, color: "bg-pastel-green", prompt: "Liste os novos materiais educacionais disponíveis sobre mercado financeiro, organizados por categoria com descrições breves e links." },
+  { label: "Webinars de hoje", icon: Video, color: "bg-pastel-purple", prompt: "Mostre os webinars agendados para hoje sobre mercado financeiro, com horários, tópicos e links para inscrição." },
+  { label: "Focar nas Metas", icon: Target, color: "bg-pastel-yellow", prompt: "Mostre meu progresso nas metas da semana com progress bars, destaque o que falta completar e sugira próximas ações prioritárias." },
+  { label: "Podcasts rolando", icon: Headphones, color: "bg-pastel-pink", prompt: "Recomende os podcasts mais relevantes sobre mercado financeiro e pagamentos esta semana, com descrição e links formatados com ícone de podcast." },
+  { label: "Completar Cursos", icon: Award, color: "bg-pastel-peach", prompt: "Mostre meus cursos em andamento com progress bars de conclusão, destaque o próximo módulo e tempo estimado para finalizar." },
 ];
 
 export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
@@ -50,6 +50,11 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
     if (!messageToSend.trim() || isLoading) return;
     if (!message) setInput("");
     await sendMessage(messageToSend);
+  };
+
+  const handleQuickAction = async (action: typeof quickActions[0]) => {
+    if (isLoading) return;
+    await sendMessage(action.prompt);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -109,7 +114,7 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
               {quickActions.map((action) => (
                 <Button
                   key={action.label}
-                  onClick={() => handleSend(action.label)}
+                  onClick={() => handleQuickAction(action)}
                   className={`${action.color} hover:bg-pastel-pink text-foreground justify-start h-auto py-3 px-4 transition-colors`}
                   disabled={isLoading}
                 >
