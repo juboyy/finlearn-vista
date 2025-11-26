@@ -188,6 +188,7 @@ export default function Ferramentas() {
                 <tbody className="divide-y divide-slate-200">
                   {ferramentas.map((ferramenta) => {
                     const isResumoContratos = ferramenta.id === 2;
+                    const isTransformarTabelas = ferramenta.id === 5;
                     const RowContent = (
                       <>
                       <td className="px-6 py-4">
@@ -222,20 +223,32 @@ export default function Ferramentas() {
                       </>
                     );
 
-                    return isResumoContratos ? (
-                      <tr key={ferramenta.id} className="hover:bg-slate-50 transition-colors">
-                        <Link to="/resumo-contratos" className="contents">
+                    if (isResumoContratos) {
+                      return (
+                        <tr key={ferramenta.id} className="hover:bg-slate-50 transition-colors">
+                          <Link to="/resumo-contratos" className="contents">
+                            {RowContent}
+                          </Link>
+                        </tr>
+                      );
+                    } else if (isTransformarTabelas) {
+                      return (
+                        <tr key={ferramenta.id} className="hover:bg-slate-50 transition-colors">
+                          <Link to="/transformar-tabelas" className="contents">
+                            {RowContent}
+                          </Link>
+                        </tr>
+                      );
+                    } else {
+                      return (
+                        <tr 
+                          key={ferramenta.id}
+                          className="hover:bg-slate-50 transition-colors cursor-pointer"
+                        >
                           {RowContent}
-                        </Link>
-                      </tr>
-                    ) : (
-                      <tr 
-                        key={ferramenta.id}
-                        className="hover:bg-slate-50 transition-colors cursor-pointer"
-                      >
-                        {RowContent}
-                      </tr>
-                    );
+                        </tr>
+                      );
+                    }
                   })}
                 </tbody>
               </table>
