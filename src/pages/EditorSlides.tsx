@@ -18,6 +18,11 @@ import {
   MessageSquare,
   Settings,
   Upload,
+  DollarSign,
+  CreditCard,
+  Smartphone,
+  Users,
+  Info,
 } from "lucide-react";
 import {
   Select,
@@ -27,6 +32,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -674,13 +680,23 @@ Exemplo para PIX:
             </SheetDescription>
           </SheetHeader>
 
-          <div className="space-y-6 mt-6">
-            {/* Tipo de Acesso */}
-            <div className="space-y-3">
+          <div className="space-y-4 mt-6">
+            {/* Tipo de Acesso - Card destacado */}
+            <div className="bg-gradient-to-r from-[#F5C6E3] to-[#E0B0CF] rounded-xl p-4 border-2 border-slate-200">
               <div className="flex items-center justify-between">
-                <Label htmlFor="isPaid" className="text-sm font-medium text-slate-700">
-                  Apresentação Paga
-                </Label>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-white/50 flex items-center justify-center">
+                    <DollarSign className="h-5 w-5 text-slate-700" />
+                  </div>
+                  <div>
+                    <Label htmlFor="isPaid" className="text-sm font-semibold text-slate-800 cursor-pointer">
+                      Apresentação Paga
+                    </Label>
+                    <p className="text-xs text-slate-600 mt-0.5">
+                      Monetize seu conteúdo
+                    </p>
+                  </div>
+                </div>
                 <Switch
                   id="isPaid"
                   checked={presentationSettings.isPaid}
@@ -693,104 +709,151 @@ Exemplo para PIX:
 
             {/* Campos exibidos apenas se for pago */}
             {presentationSettings.isPaid && (
-              <>
-                <div className="space-y-2">
-                  <Label htmlFor="price" className="text-sm font-medium text-slate-700">
-                    Valor (R$)
-                  </Label>
-                  <Input
-                    id="price"
-                    type="number"
-                    placeholder="0.00"
-                    value={presentationSettings.price}
-                    onChange={(e) =>
-                      setPresentationSettings({ ...presentationSettings, price: e.target.value })
-                    }
-                    className="border-slate-300"
-                  />
+              <div className="space-y-4 animate-fade-in">
+                {/* Valor */}
+                <div className="bg-white rounded-xl p-4 border-2 border-slate-200 space-y-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-[hsl(142,35%,75%)] flex items-center justify-center">
+                      <DollarSign className="h-4 w-4 text-slate-700" />
+                    </div>
+                    <Label htmlFor="price" className="text-sm font-semibold text-slate-800">
+                      Valor da Apresentação
+                    </Label>
+                  </div>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 font-medium">
+                      R$
+                    </span>
+                    <Input
+                      id="price"
+                      type="number"
+                      placeholder="0.00"
+                      value={presentationSettings.price}
+                      onChange={(e) =>
+                        setPresentationSettings({ ...presentationSettings, price: e.target.value })
+                      }
+                      className="pl-12 border-2 border-slate-200 focus:border-[hsl(142,35%,65%)] transition-colors"
+                    />
+                  </div>
                 </div>
 
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-slate-700">
-                    Formas de Pagamento
-                  </Label>
-                  <div className="space-y-2">
-                    {["Cartão de Crédito", "PIX", "Boleto"].map((method) => (
-                      <div key={method} className="flex items-center gap-2">
-                        <input
-                          type="checkbox"
-                          id={method}
-                          checked={presentationSettings.paymentMethods.includes(method)}
-                          onChange={(e) => {
-                            const methods = e.target.checked
-                              ? [...presentationSettings.paymentMethods, method]
-                              : presentationSettings.paymentMethods.filter((m) => m !== method);
+                {/* Formas de Pagamento */}
+                <div className="bg-white rounded-xl p-4 border-2 border-slate-200 space-y-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-[hsl(206,35%,75%)] flex items-center justify-center">
+                      <CreditCard className="h-4 w-4 text-slate-700" />
+                    </div>
+                    <Label className="text-sm font-semibold text-slate-800">
+                      Formas de Pagamento
+                    </Label>
+                  </div>
+                  <div className="space-y-3 pl-2">
+                    {[
+                      { name: "Cartão de Crédito", icon: CreditCard },
+                      { name: "PIX", icon: Smartphone },
+                      { name: "Boleto", icon: FileText }
+                    ].map(({ name, icon: Icon }) => (
+                      <div key={name} className="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 transition-colors">
+                        <Checkbox
+                          id={name}
+                          checked={presentationSettings.paymentMethods.includes(name)}
+                          onCheckedChange={(checked) => {
+                            const methods = checked
+                              ? [...presentationSettings.paymentMethods, name]
+                              : presentationSettings.paymentMethods.filter((m) => m !== name);
                             setPresentationSettings({ ...presentationSettings, paymentMethods: methods });
                           }}
-                          className="rounded border-slate-300"
                         />
-                        <Label htmlFor={method} className="text-sm text-slate-700 cursor-pointer">
-                          {method}
+                        <Icon className="h-4 w-4 text-slate-600" />
+                        <Label htmlFor={name} className="text-sm text-slate-700 cursor-pointer flex-1">
+                          {name}
                         </Label>
                       </div>
                     ))}
                   </div>
                 </div>
-              </>
+              </div>
             )}
 
             {/* Co-autores */}
-            <div className="space-y-2">
-              <Label htmlFor="coAuthors" className="text-sm font-medium text-slate-700">
-                Co-autores
-              </Label>
+            <div className="bg-white rounded-xl p-4 border-2 border-slate-200 space-y-3">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-[hsl(280,35%,75%)] flex items-center justify-center">
+                  <Users className="h-4 w-4 text-slate-700" />
+                </div>
+                <Label htmlFor="coAuthors" className="text-sm font-semibold text-slate-800">
+                  Co-autores
+                </Label>
+              </div>
               <Input
                 id="coAuthors"
-                placeholder="Separe os nomes por vírgula"
+                placeholder="Separe os nomes por vírgula..."
                 value={presentationSettings.coAuthors}
                 onChange={(e) =>
                   setPresentationSettings({ ...presentationSettings, coAuthors: e.target.value })
                 }
-                className="border-slate-300"
+                className="border-2 border-slate-200 focus:border-[hsl(280,35%,65%)] transition-colors"
               />
+              <p className="text-xs text-slate-500 flex items-center gap-1">
+                <Info className="h-3 w-3" />
+                Adicione colaboradores que participaram da criação
+              </p>
             </div>
 
             {/* Resumo */}
-            <div className="space-y-2">
-              <Label htmlFor="summary" className="text-sm font-medium text-slate-700">
-                Resumo da Apresentação
-              </Label>
+            <div className="bg-white rounded-xl p-4 border-2 border-slate-200 space-y-3">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-[hsl(44,35%,75%)] flex items-center justify-center">
+                  <FileText className="h-4 w-4 text-slate-700" />
+                </div>
+                <Label htmlFor="summary" className="text-sm font-semibold text-slate-800">
+                  Resumo da Apresentação
+                </Label>
+              </div>
               <Textarea
                 id="summary"
-                placeholder="Breve descrição sobre o conteúdo..."
+                placeholder="Descreva o conteúdo e objetivos da apresentação..."
                 value={presentationSettings.summary}
                 onChange={(e) =>
                   setPresentationSettings({ ...presentationSettings, summary: e.target.value })
                 }
-                className="border-slate-300 min-h-[100px]"
+                className="border-2 border-slate-200 focus:border-[hsl(44,35%,65%)] transition-colors min-h-[100px] resize-none"
               />
+              <p className="text-xs text-slate-500">
+                {presentationSettings.summary.length} caracteres
+              </p>
             </div>
 
             {/* Imagem de Capa */}
-            <div className="space-y-2">
-              <Label htmlFor="coverImage" className="text-sm font-medium text-slate-700">
-                Imagem de Capa (URL)
-              </Label>
+            <div className="bg-white rounded-xl p-4 border-2 border-slate-200 space-y-3">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-[hsl(322,35%,75%)] flex items-center justify-center">
+                  <ImageIcon className="h-4 w-4 text-slate-700" />
+                </div>
+                <Label htmlFor="coverImage" className="text-sm font-semibold text-slate-800">
+                  Imagem de Capa
+                </Label>
+              </div>
               <Input
                 id="coverImage"
-                placeholder="https://..."
+                placeholder="Cole a URL da imagem..."
                 value={presentationSettings.coverImage}
                 onChange={(e) =>
                   setPresentationSettings({ ...presentationSettings, coverImage: e.target.value })
                 }
-                className="border-slate-300"
+                className="border-2 border-slate-200 focus:border-[hsl(322,35%,65%)] transition-colors"
               />
               {presentationSettings.coverImage && (
-                <img
-                  src={presentationSettings.coverImage}
-                  alt="Preview"
-                  className="w-full h-32 object-cover rounded-lg border-2 border-slate-200 mt-2"
-                />
+                <div className="relative group">
+                  <img
+                    src={presentationSettings.coverImage}
+                    alt="Preview"
+                    className="w-full h-40 object-cover rounded-lg border-2 border-slate-200 transition-transform group-hover:scale-[1.02]"
+                  />
+                  <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/10 rounded-lg transition-colors flex items-center justify-center">
+                    <Eye className="h-6 w-6 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                </div>
               )}
             </div>
 
@@ -800,8 +863,9 @@ Exemplo para PIX:
                 setShowSettingsSheet(false);
                 toast.success("Configurações salvas");
               }}
-              className="w-full bg-[#F5C6E3] hover:bg-[#E0B0CF] text-slate-700"
+              className="w-full bg-[#F5C6E3] hover:bg-[#E0B0CF] text-slate-800 font-semibold h-12 text-base shadow-md hover:shadow-lg transition-all"
             >
+              <Save className="h-5 w-5 mr-2" />
               Salvar Configurações
             </Button>
           </div>
