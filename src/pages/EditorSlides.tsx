@@ -89,6 +89,7 @@ export default function EditorSlides() {
   ]);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [generationProgress, setGenerationProgress] = useState({ current: 0, total: 0 });
   const [imagePrompt, setImagePrompt] = useState("");
   const [chartPrompt, setChartPrompt] = useState("");
   const [showImageDialog, setShowImageDialog] = useState(false);
@@ -216,11 +217,16 @@ ATENÇÃO: Se você retornar menos de 10 slides, sua resposta será REJEITADA e 
           throw new Error(`A IA gerou apenas ${slidesData.slides.length} slides. São necessários no mínimo 10 slides. Por favor, tente novamente.`);
         }
 
-        toast.info(`Gerando ${slidesData.slides.length} slides com imagens e gráficos únicos...`);
+        const totalSlides = slidesData.slides.length;
+        setGenerationProgress({ current: 0, total: totalSlides });
+        toast.info(`Gerando ${totalSlides} slides com imagens e gráficos únicos...`);
         
-        // Gerar imagens e gráficos para cada slide
-        const generatedSlides = await Promise.all(
-          slidesData.slides.map(async (slide: any, index: number) => {
+        // Gerar imagens e gráficos para cada slide (sequencialmente para mostrar progresso)
+        const generatedSlides: Slide[] = [];
+        
+        for (let index = 0; index < slidesData.slides.length; index++) {
+          const slide = slidesData.slides[index];
+          setGenerationProgress({ current: index + 1, total: totalSlides });
             let imageUrl: string | undefined;
             let chartData: any | undefined;
 
@@ -277,18 +283,20 @@ Retorne APENAS um JSON válido neste formato exato:
               }
             }
 
-            return {
+            const generatedSlide: Slide = {
               id: `${index + 1}`,
               title: slide.title,
               content: slide.content,
               imageUrl,
               chartData,
             };
-          })
-        );
+            
+            generatedSlides.push(generatedSlide);
+          }
         
         console.log("Total de slides processados:", generatedSlides.length);
         setSlides(generatedSlides);
+        setGenerationProgress({ current: 0, total: 0 });
         toast.success(`✅ ${generatedSlides.length} slides gerados com sucesso!`);
       }
     } catch (error) {
@@ -296,6 +304,7 @@ Retorne APENAS um JSON válido neste formato exato:
       toast.error("Erro ao gerar slides iniciais");
     } finally {
       setIsGenerating(false);
+      setGenerationProgress({ current: 0, total: 0 });
     }
   };
 
@@ -1143,7 +1152,20 @@ Exemplo para PIX:
               ></div>
             </div>
             
-            <p className="text-white text-lg mt-4 opacity-80">Gerando slides, imagens e gráficos...</p>
+            {/* Progress indicator */}
+            {generationProgress.total > 0 ? (
+              <div className="text-white text-xl mt-6 font-semibold">
+                <p>Gerando slide {generationProgress.current} de {generationProgress.total}</p>
+                <div className="w-64 h-2 bg-white/20 rounded-full mt-3 overflow-hidden">
+                  <div 
+                    className="h-full bg-white rounded-full transition-all duration-300"
+                    style={{ width: `${(generationProgress.current / generationProgress.total) * 100}%` }}
+                  />
+                </div>
+              </div>
+            ) : (
+              <p className="text-white text-lg mt-4 opacity-80">Gerando slides, imagens e gráficos...</p>
+            )}
           </div>
         </div>
       )}
