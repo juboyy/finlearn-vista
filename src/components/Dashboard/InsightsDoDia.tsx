@@ -87,7 +87,7 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 bg-pastel-purple">
                   <img 
-                    src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-9.jpg" 
+                    src="https://storage.googleapis.com/uxpilot-auth.appspot.com/7f4f5eae9b-7e9b1f43f4fe2b6ce84f.png" 
                     alt="Auxiliar do dia" 
                     className="w-full h-full object-cover" 
                   />
@@ -118,7 +118,7 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
                     {msg.role === "assistant" && (
                       <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 bg-pastel-purple">
                         <img 
-                          src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-9.jpg" 
+                          src="https://storage.googleapis.com/uxpilot-auth.appspot.com/7f4f5eae9b-7e9b1f43f4fe2b6ce84f.png" 
                           alt="Auxiliar do dia" 
                           className="w-full h-full object-cover" 
                         />
@@ -139,7 +139,7 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
                   <div className="flex gap-3 justify-start">
                     <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 bg-pastel-purple">
                       <img 
-                        src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-9.jpg" 
+                        src="https://storage.googleapis.com/uxpilot-auth.appspot.com/7f4f5eae9b-7e9b1f43f4fe2b6ce84f.png" 
                         alt="Auxiliar do dia" 
                         className="w-full h-full object-cover" 
                       />
