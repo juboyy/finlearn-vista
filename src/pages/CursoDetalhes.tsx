@@ -205,8 +205,8 @@ const CursoDetalhes = () => {
                   Presentear Alguém
                 </button>
 
-                <div className="space-y-4 mb-6 pb-6 border-b border-slate-200">
-                  <div className="flex items-center gap-3 text-sm text-slate-600">
+                <div className="space-y-4 mb-6 pb-6 border-b border-slate-200 dark:border-slate-700">
+                  <div className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-400">
                     <Video size={20} />
                     <span>42 aulas em vídeo</span>
                   </div>
@@ -253,24 +253,24 @@ const CursoDetalhes = () => {
             <div className="grid grid-cols-3 gap-8">
               <div className="col-span-2 space-y-8">
                 {/* About Course */}
-                <div className="bg-white rounded-xl border border-slate-200 p-6">
-                  <h2 className="text-xl font-semibold text-slate-800 mb-4">Sobre o Curso</h2>
-                  <div className="prose prose-slate max-w-none">
-                    <p className="text-base text-slate-600 mb-3">
+                <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-6">
+                  <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-100 mb-4">Sobre o Curso</h2>
+                  <div className="prose prose-slate dark:prose-invert max-w-none">
+                    <p className="text-base text-slate-600 dark:text-slate-300 mb-3">
                       Este curso completo foi desenvolvido para profissionais que desejam dominar o mercado de capitais brasileiro e internacional. Com uma abordagem prática e atualizada, você aprenderá desde os fundamentos até as estratégias mais avançadas utilizadas por gestores de fundos de investimento.
                     </p>
-                    <p className="text-base text-slate-600 mb-3">
+                    <p className="text-base text-slate-600 dark:text-slate-300 mb-3">
                       Ao longo de 28 horas de conteúdo exclusivo, você será guiado por especialistas renomados do mercado financeiro, que compartilharão suas experiências, técnicas e insights valiosos para que você possa tomar decisões de investimento mais assertivas e construir uma carreira sólida no mercado de capitais.
                     </p>
-                    <p className="text-base text-slate-600">
+                    <p className="text-base text-slate-600 dark:text-slate-300">
                       O curso aborda tópicos essenciais como análise fundamentalista, valuation de empresas, estratégias de alocação de ativos, gestão de portfólios, análise de risco, mercado de ações, renda fixa, derivativos e muito mais. Além disso, você terá acesso a casos práticos reais, planilhas de análise e ferramentas profissionais utilizadas no dia a dia do mercado.
                     </p>
                   </div>
                 </div>
 
                 {/* What You Learn */}
-                <div className="bg-white rounded-xl border border-slate-200 p-8">
-                  <h2 className="text-2xl font-semibold text-slate-800 mb-6">O Que Você Vai Aprender</h2>
+                <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-8">
+                  <h2 className="text-2xl font-semibold text-slate-800 dark:text-slate-100 mb-6">O Que Você Vai Aprender</h2>
                   <div className="grid grid-cols-2 gap-4">
                     {[
                       { title: "Análise Fundamentalista", desc: "Avalie empresas através de indicadores financeiros e projete resultados futuros" },
@@ -283,12 +283,12 @@ const CursoDetalhes = () => {
                       { title: "Macroeconomia Aplicada", desc: "Analise cenários macroeconômicos e seus impactos no mercado" }
                     ].map((item, idx) => (
                       <div key={idx} className="flex items-start gap-3">
-                        <div className="w-6 h-6 bg-pastel-green rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                          <CheckCircle className="text-slate-700" size={14} />
+                        <div className="w-6 h-6 bg-pastel-green dark:bg-pastel-green rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                          <CheckCircle className="text-slate-700 dark:text-slate-900" size={14} />
                         </div>
                         <div>
-                          <h4 className="font-medium text-slate-800 mb-1">{item.title}</h4>
-                          <p className="text-sm text-slate-600">{item.desc}</p>
+                          <h4 className="font-medium text-slate-800 dark:text-slate-100 mb-1">{item.title}</h4>
+                          <p className="text-sm text-slate-600 dark:text-slate-300">{item.desc}</p>
                         </div>
                       </div>
                     ))}
@@ -296,8 +296,8 @@ const CursoDetalhes = () => {
                 </div>
 
                 {/* Course Curriculum */}
-                <div className="bg-white rounded-xl border border-slate-200 p-8">
-                  <h2 className="text-2xl font-semibold text-slate-800 mb-6">Conteúdo do Curso</h2>
+                <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-8">
+                  <h2 className="text-2xl font-semibold text-slate-800 dark:text-slate-100 mb-6">Conteúdo do Curso</h2>
                   <div className="space-y-4">
                     {[
                       { 
