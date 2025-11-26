@@ -202,7 +202,7 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
                     <div
                       className={`max-w-[70%] rounded-lg px-4 py-3 ${
                         msg.role === "user"
-                          ? "bg-primary text-primary-foreground"
+                          ? "bg-pastel-purple text-foreground"
                           : "bg-muted text-foreground"
                       }`}
                     >
