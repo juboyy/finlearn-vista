@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      contract_summaries: {
+        Row: {
+          agent_id: string
+          agent_name: string
+          created_at: string
+          file_name: string
+          file_size: number
+          id: string
+          summary_content: string
+          summary_type: string
+        }
+        Insert: {
+          agent_id: string
+          agent_name: string
+          created_at?: string
+          file_name: string
+          file_size: number
+          id?: string
+          summary_content: string
+          summary_type: string
+        }
+        Update: {
+          agent_id?: string
+          agent_name?: string
+          created_at?: string
+          file_name?: string
+          file_size?: number
+          id?: string
+          summary_content?: string
+          summary_type?: string
+        }
+        Relationships: []
+      }
       presentations: {
         Row: {
           author_name: string
