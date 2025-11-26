@@ -217,7 +217,7 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
                             ul: ({ children }) => <ul className="list-disc list-inside mb-2 space-y-1">{children}</ul>,
                             ol: ({ children }) => <ol className="list-decimal list-inside mb-2 space-y-1">{children}</ol>,
                             strong: ({ children }) => <strong className="font-semibold text-pastel-blue">{children}</strong>,
-                            em: ({ children }) => <em className="italic text-pastel-purple">{children}</em>,
+                            em: ({ children }) => <em className="italic text-slate-700">{children}</em>,
                             a: ({ href, children }) => {
                               // Detect podcast links
                               if (href?.includes('podcast') || href?.includes('audio')) {
