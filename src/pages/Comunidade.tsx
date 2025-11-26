@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { MessageCircle, Users, Trophy, Star, TrendingUp, DollarSign, Scale, Briefcase, ChartLine, Bell, Plus, Pen, Flame, Clock, Eye, Heart, MessageSquare, Bookmark, Crown } from "lucide-react";
 import creditoRuralImage from "@/assets/credito-rural-2025.png";
+import { CommunityResumosChat } from "@/components/Dashboard/CommunityResumosChat";
 
 export default function Comunidade() {
   const [activeTab, setActiveTab] = useState<"discussoes" | "artigos">("discussoes");
+  const [resumosChatOpen, setResumosChatOpen] = useState(false);
   const navigate = useNavigate();
 
   return (
@@ -183,6 +185,12 @@ export default function Comunidade() {
               <div className="bg-white rounded-xl border border-slate-200">
                 <div className="border-b border-slate-200">
                   <div className="flex items-center gap-2 px-6 pt-6 pb-4">
+                    <button 
+                      onClick={() => setResumosChatOpen(true)}
+                      className="px-4 py-2 text-sm font-medium rounded-lg transition text-slate-800 bg-pastel-blue border border-pastel-blue hover:bg-pastel-pink"
+                    >
+                      Resumos
+                    </button>
                     <button 
                       onClick={() => setActiveTab("discussoes")}
                       className={`px-4 py-2 text-sm font-medium rounded-lg transition ${
@@ -749,15 +757,20 @@ export default function Comunidade() {
                   <Crown className="w-6 h-6" />
                   <h3 className="font-semibold">Premium</h3>
                 </div>
-                <p className="text-sm mb-4 opacity-90">Desbloqueie recursos exclusivos e acelere seu aprendizado</p>
-                <button className="w-full px-4 py-2 bg-white text-slate-800 rounded-lg font-medium hover:bg-opacity-90 transition">
-                  Saiba Mais
-                </button>
-              </div>
-            </aside>
-          </div>
-        </div>
-      </main>
-    </div>
-  );
-}
+                 <p className="text-sm mb-4 opacity-90">Desbloqueie recursos exclusivos e acelere seu aprendizado</p>
+                 <button className="w-full px-4 py-2 bg-white text-slate-800 rounded-lg font-medium hover:bg-opacity-90 transition">
+                   Saiba Mais
+                 </button>
+               </div>
+             </aside>
+           </div>
+         </div>
+       </main>
+
+       <CommunityResumosChat 
+         open={resumosChatOpen} 
+         onOpenChange={setResumosChatOpen}
+       />
+     </div>
+   );
+ }
