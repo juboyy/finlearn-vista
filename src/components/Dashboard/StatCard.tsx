@@ -56,9 +56,9 @@ export const StatCard = ({
         </div>
       </HoverCardTrigger>
       <HoverCardContent className="w-[500px] p-0 bg-card shadow-xl border-2 border-border z-[9999]" side="top" align="center">
-        <div className="p-4">
+        <div className="p-5">
           {agentImage && agentName && (
-            <div className="flex items-center gap-3 pb-2 border-b border-border mb-3">
+            <div className="flex items-center gap-3 pb-3 border-b border-border mb-4">
               <Avatar className="h-10 w-10">
                 <AvatarImage src={agentImage} alt={agentName} />
                 <AvatarFallback>{agentName.charAt(0)}</AvatarFallback>
@@ -70,25 +70,25 @@ export const StatCard = ({
             </div>
           )}
           
-          <div className="grid grid-cols-3 gap-3">
+          <div className="space-y-4">
             {explanation && (
               <div>
-                <h4 className="text-xs font-semibold text-foreground mb-1">O que significa</h4>
-                <p className="text-xs text-muted-foreground leading-snug">{explanation}</p>
+                <h4 className="text-sm font-semibold text-foreground mb-2">O que significa</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed">{explanation}</p>
               </div>
             )}
             
             {insight && (
-              <div className="bg-pastel-blue/20 rounded-lg p-2">
-                <h4 className="text-xs font-semibold text-foreground mb-1">Insight</h4>
-                <p className="text-xs text-muted-foreground leading-snug">{insight}</p>
+              <div className="bg-pastel-blue/20 rounded-lg p-3">
+                <h4 className="text-sm font-semibold text-foreground mb-2">Insight</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed">{insight}</p>
               </div>
             )}
             
             {note && (
               <div>
-                <h4 className="text-xs font-semibold text-foreground mb-1">Nota</h4>
-                <p className="text-xs text-muted-foreground leading-snug">{note}</p>
+                <h4 className="text-sm font-semibold text-foreground mb-2">Nota</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed">{note}</p>
               </div>
             )}
           </div>
