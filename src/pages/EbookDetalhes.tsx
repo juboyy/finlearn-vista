@@ -337,14 +337,14 @@ const EbookDetalhes = () => {
                       helpful: 28
                     }
                   ].map((review, index) => (
-                    <div key={index} className={`pb-6 ${index < 2 ? 'border-b border-border' : ''}`}>
+                    <div key={index} className={`pb-6 ${index < 2 ? 'border-b border-border dark:border-slate-700' : ''}`}>
                       <div className="flex items-start gap-4">
                         <img src={review.avatar} className="w-12 h-12 rounded-full object-cover" alt="Reviewer" />
                         <div className="flex-1">
                           <div className="flex items-center justify-between mb-2">
                             <div>
-                              <h4 className="font-semibold text-foreground">{review.name}</h4>
-                              <p className="text-sm text-muted-foreground">Compra verificada • {review.time}</p>
+                              <h4 className="font-semibold text-foreground dark:text-slate-100">{review.name}</h4>
+                              <p className="text-sm text-muted-foreground dark:text-slate-400">Compra verificada • {review.time}</p>
                             </div>
                             <div className="flex items-center gap-1">
                               {[...Array(5)].map((_, i) => (
@@ -352,14 +352,14 @@ const EbookDetalhes = () => {
                               ))}
                             </div>
                           </div>
-                          <h5 className="font-semibold text-foreground mb-2">{review.title}</h5>
-                          <p className="text-muted-foreground leading-relaxed mb-3">{review.review}</p>
-                          <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                            <button className="hover:text-foreground transition">
+                          <h5 className="font-semibold text-foreground dark:text-slate-100 mb-2">{review.title}</h5>
+                          <p className="text-muted-foreground dark:text-slate-300 leading-relaxed mb-3">{review.review}</p>
+                          <div className="flex items-center gap-4 text-sm text-muted-foreground dark:text-slate-400">
+                            <button className="hover:text-foreground dark:hover:text-slate-200 transition">
                               <ThumbsUp className="inline-block mr-1" size={14} />
                               Útil ({review.helpful})
                             </button>
-                            <button className="hover:text-foreground transition">
+                            <button className="hover:text-foreground dark:hover:text-slate-200 transition">
                               <MessageCircle className="inline-block mr-1" size={14} />
                               Responder
                             </button>
@@ -370,14 +370,14 @@ const EbookDetalhes = () => {
                   ))}
                 </div>
 
-                <button className="w-full mt-6 px-6 py-3 border border-border text-foreground rounded-lg font-medium hover:bg-slate-50 transition">
+                <button className="w-full mt-6 px-6 py-3 border border-border dark:border-slate-700 text-foreground dark:text-slate-300 rounded-lg font-medium hover:bg-slate-50 dark:hover:bg-slate-700 transition">
                   Ver Todas as Avaliações
                 </button>
               </div>
 
               {/* Related Products */}
-              <div className="bg-white rounded-xl border border-border p-8">
-                <h3 className="text-xl font-semibold text-foreground mb-6">Produtos Relacionados</h3>
+              <div className="bg-white dark:bg-slate-800 rounded-xl border border-border dark:border-slate-700 p-8">
+                <h3 className="text-xl font-semibold text-foreground dark:text-slate-100 mb-6">Produtos Relacionados</h3>
                 <div className="grid grid-cols-3 gap-6">
                   {[
                     {
@@ -402,7 +402,7 @@ const EbookDetalhes = () => {
                       bg: "bg-pastel-pink"
                     }
                   ].map((product, index) => (
-                    <div key={index} className="bg-white border border-border rounded-lg overflow-hidden hover:shadow-lg transition group">
+                    <div key={index} className="bg-white dark:bg-slate-800 border border-border dark:border-slate-700 rounded-lg overflow-hidden hover:shadow-lg transition group">
                       <div className={`h-40 overflow-hidden ${product.bg}`}>
                         <img 
                           className="w-full h-full object-cover group-hover:scale-105 transition duration-300" 
@@ -411,12 +411,12 @@ const EbookDetalhes = () => {
                         />
                       </div>
                       <div className="p-4">
-                        <h4 className="font-semibold text-foreground mb-2 line-clamp-2">{product.title}</h4>
+                        <h4 className="font-semibold text-foreground dark:text-slate-100 mb-2 line-clamp-2">{product.title}</h4>
                         <div className="flex items-center justify-between">
-                          <span className="text-lg font-bold text-foreground">{product.price}</span>
+                          <span className="text-lg font-bold text-foreground dark:text-slate-100">{product.price}</span>
                           <div className="flex items-center gap-1 text-xs">
                             <i className="fas fa-star text-yellow-500"></i>
-                            <span className="font-medium text-foreground">{product.rating}</span>
+                            <span className="font-medium text-foreground dark:text-slate-100">{product.rating}</span>
                           </div>
                         </div>
                       </div>
@@ -426,8 +426,8 @@ const EbookDetalhes = () => {
               </div>
 
               {/* FAQ */}
-              <div className="bg-white rounded-xl border border-border p-8">
-                <h3 className="text-xl font-semibold text-foreground mb-6">Perguntas Frequentes</h3>
+              <div className="bg-white dark:bg-slate-800 rounded-xl border border-border dark:border-slate-700 p-8">
+                <h3 className="text-xl font-semibold text-foreground dark:text-slate-100 mb-6">Perguntas Frequentes</h3>
                 <div className="space-y-4">
                   {[
                     {
@@ -451,9 +451,9 @@ const EbookDetalhes = () => {
                       answer: "Sim, oferecemos garantia de 7 dias. Se não ficar satisfeito, devolvemos 100% do valor investido."
                     }
                   ].map((faq, index) => (
-                    <div key={index} className="border border-border rounded-lg p-5">
-                      <h4 className="font-semibold text-foreground mb-2">{faq.question}</h4>
-                      <p className="text-muted-foreground">{faq.answer}</p>
+                    <div key={index} className="border border-border dark:border-slate-700 rounded-lg p-5 bg-slate-50 dark:bg-slate-700/50">
+                      <h4 className="font-semibold text-foreground dark:text-slate-100 mb-2">{faq.question}</h4>
+                      <p className="text-muted-foreground dark:text-slate-300">{faq.answer}</p>
                     </div>
                   ))}
                 </div>
@@ -463,14 +463,14 @@ const EbookDetalhes = () => {
         </div>
 
         {/* Footer */}
-        <footer className="bg-white border-t border-border mt-12">
+        <footer className="bg-white dark:bg-slate-800 border-t border-border dark:border-slate-700 mt-12">
           <div className="px-8 py-6">
             <div className="flex items-center justify-between">
-              <p className="text-sm text-muted-foreground">© 2025 FinLearn. Todos os direitos reservados.</p>
-              <div className="flex items-center gap-6 text-sm text-muted-foreground">
-                <a href="#" className="hover:text-foreground transition">Termos de Uso</a>
-                <a href="#" className="hover:text-foreground transition">Política de Privacidade</a>
-                <a href="#" className="hover:text-foreground transition">Suporte</a>
+              <p className="text-sm text-muted-foreground dark:text-slate-400">© 2025 FinLearn. Todos os direitos reservados.</p>
+              <div className="flex items-center gap-6 text-sm text-muted-foreground dark:text-slate-400">
+                <a href="#" className="hover:text-foreground dark:hover:text-slate-200 transition">Termos de Uso</a>
+                <a href="#" className="hover:text-foreground dark:hover:text-slate-200 transition">Política de Privacidade</a>
+                <a href="#" className="hover:text-foreground dark:hover:text-slate-200 transition">Suporte</a>
               </div>
             </div>
           </div>
