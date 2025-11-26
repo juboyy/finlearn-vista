@@ -775,6 +775,7 @@ IMPORTANTE:
           id: index,
           content: slide.title || `Slide ${index + 1}`,
           image: slide.imageUrl,
+          canvasData: slide.canvasData,
         }))}
       />
     </div>
