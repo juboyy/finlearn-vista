@@ -189,8 +189,8 @@ LEMBRE-SE: Retorne NO MÍNIMO 10 slides diferentes, cada um com sua própria ima
         
         const slidesData = JSON.parse(cleanedText);
         
-        if (!slidesData.slides || slidesData.slides.length < 5) {
-          throw new Error("A IA não gerou slides suficientes. Tente novamente.");
+        if (!slidesData.slides || slidesData.slides.length < 10) {
+          throw new Error("A IA deve gerar no mínimo 10 slides. Tente novamente.");
         }
 
         toast.info(`Gerando ${slidesData.slides.length} slides com imagens e gráficos únicos...`);
