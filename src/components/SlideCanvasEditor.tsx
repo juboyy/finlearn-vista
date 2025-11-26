@@ -1,8 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import { Canvas as FabricCanvas, FabricImage, Rect, Textbox, util } from "fabric";
+import { Canvas as FabricCanvas, FabricImage, Rect, Textbox, util, Line, Circle, Group } from "fabric";
 import { Button } from "@/components/ui/button";
 import { ImageIcon, BarChart3, Type, Trash2, Download, Eye } from "lucide-react";
 import { toast } from "sonner";
+
+interface ChartData {
+  type: "bar" | "line" | "pie";
+  title: string;
+  data: Array<{ name: string; value: number; color?: string }>;
+}
 
 interface SlideCanvasEditorProps {
   initialData?: any;
@@ -63,7 +69,160 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
     }
   }, [fabricCanvas, slideId, initialData]);
 
-  // Função para visualizar todo o conteúdo do slide
+  // Função para renderizar gráfico nativo no canvas
+  const renderNativeChart = (chartData: ChartData, left: number, top: number) => {
+    if (!fabricCanvas) return;
+
+    const chartWidth = 350;
+    const chartHeight = 200;
+    const elements: any[] = [];
+
+    // Título do gráfico
+    const titleText = new Textbox(chartData.title, {
+      left: 0,
+      top: 0,
+      width: chartWidth,
+      fontSize: 14,
+      fill: "#1e293b",
+      fontFamily: "Arial",
+      fontWeight: "bold",
+      textAlign: "center",
+      selectable: false,
+    });
+    elements.push(titleText);
+
+    if (chartData.type === "bar") {
+      // Gráfico de Barras
+      const maxValue = Math.max(...chartData.data.map(d => d.value));
+      const barWidth = (chartWidth - 40) / chartData.data.length - 10;
+      const graphHeight = chartHeight - 60;
+      const startX = 20;
+      const startY = 35;
+
+      chartData.data.forEach((item, index) => {
+        const barHeight = (item.value / maxValue) * graphHeight;
+        const x = startX + (index * (barWidth + 10));
+        const y = startY + graphHeight - barHeight;
+
+        // Barra
+        const bar = new Rect({
+          left: x,
+          top: y,
+          width: barWidth,
+          height: barHeight,
+          fill: item.color || `hsl(${206 + index * 40}, 70%, 60%)`,
+          selectable: false,
+          rx: 4,
+          ry: 4,
+        });
+        elements.push(bar);
+
+        // Label do valor
+        const valueLabel = new Textbox(item.value.toString(), {
+          left: x,
+          top: y - 18,
+          width: barWidth,
+          fontSize: 10,
+          fill: "#475569",
+          fontFamily: "Arial",
+          textAlign: "center",
+          selectable: false,
+        });
+        elements.push(valueLabel);
+
+        // Label do nome
+        const nameLabel = new Textbox(item.name, {
+          left: x,
+          top: startY + graphHeight + 5,
+          width: barWidth,
+          fontSize: 9,
+          fill: "#475569",
+          fontFamily: "Arial",
+          textAlign: "center",
+          selectable: false,
+        });
+        elements.push(nameLabel);
+      });
+
+    } else if (chartData.type === "line") {
+      // Gráfico de Linhas
+      const maxValue = Math.max(...chartData.data.map(d => d.value));
+      const pointSpacing = (chartWidth - 60) / (chartData.data.length - 1);
+      const graphHeight = chartHeight - 60;
+      const startX = 30;
+      const startY = 35;
+
+      const points: { x: number; y: number }[] = [];
+      
+      chartData.data.forEach((item, index) => {
+        const x = startX + (index * pointSpacing);
+        const normalizedValue = (item.value / maxValue) * graphHeight;
+        const y = startY + graphHeight - normalizedValue;
+        points.push({ x, y });
+
+        // Ponto
+        const circle = new Circle({
+          left: x - 4,
+          top: y - 4,
+          radius: 4,
+          fill: item.color || `hsl(206, 70%, 60%)`,
+          selectable: false,
+        });
+        elements.push(circle);
+
+        // Label do valor
+        const valueLabel = new Textbox(item.value.toString(), {
+          left: x - 15,
+          top: y - 25,
+          width: 30,
+          fontSize: 9,
+          fill: "#475569",
+          fontFamily: "Arial",
+          textAlign: "center",
+          selectable: false,
+        });
+        elements.push(valueLabel);
+
+        // Label do nome
+        const nameLabel = new Textbox(item.name, {
+          left: x - 20,
+          top: startY + graphHeight + 5,
+          width: 40,
+          fontSize: 9,
+          fill: "#475569",
+          fontFamily: "Arial",
+          textAlign: "center",
+          selectable: false,
+        });
+        elements.push(nameLabel);
+      });
+
+      // Linhas conectando os pontos
+      for (let i = 0; i < points.length - 1; i++) {
+        const line = new Line(
+          [points[i].x, points[i].y, points[i + 1].x, points[i + 1].y],
+          {
+            stroke: `hsl(206, 70%, 60%)`,
+            strokeWidth: 2,
+            selectable: false,
+          }
+        );
+        elements.push(line);
+      }
+    }
+
+    // Criar grupo com todos os elementos do gráfico
+    const group = new Group(elements, {
+      left: left,
+      top: top,
+      selectable: true,
+    });
+
+    fabricCanvas.add(group);
+    fabricCanvas.renderAll();
+    
+    return group;
+  };
   const handleViewSlide = () => {
     if (!fabricCanvas) return;
     
@@ -219,7 +378,6 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
         // Imagem à esquerda
         try {
           const img = await FabricImage.fromURL(slideImage);
-          // Limitar altura da imagem
           const maxHeight = 240;
           const scale = Math.min(contentWidth / img.width!, maxHeight / img.height!);
           img.scale(scale);
@@ -233,19 +391,10 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
           console.error("Erro ao adicionar imagem ao canvas:", error);
         }
 
-        // Gráfico à direita
-        const chartText = new Textbox(`📊 ${slideChart.title || 'Gráfico'}\n\n${JSON.stringify(slideChart.data || [], null, 2)}`, {
-          left: 40 + contentWidth + contentSpacing,
-          top: imageChartYPosition,
-          width: contentWidth,
-          fontSize: 10,
-          fill: "#475569",
-          fontFamily: "Arial",
-          selectable: true,
-          editable: true,
-          backgroundColor: "#f8fafc",
-        });
-        fabricCanvas.add(chartText);
+        // Gráfico nativo à direita
+        if (slideChart.type && slideChart.data) {
+          renderNativeChart(slideChart, 40 + contentWidth + contentSpacing, imageChartYPosition);
+        }
       } else if (slideImage) {
         // Apenas imagem (centralizada e otimizada)
         try {
@@ -264,19 +413,10 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
           console.error("Erro ao adicionar imagem ao canvas:", error);
         }
       } else if (slideChart) {
-        // Apenas gráfico (centralizado)
-        const chartText = new Textbox(`📊 ${slideChart.title || 'Gráfico'}\n\n${JSON.stringify(slideChart.data || [], null, 2)}`, {
-          left: (960 - contentWidth * 1.4) / 2,
-          top: imageChartYPosition,
-          width: contentWidth * 1.4,
-          fontSize: 10,
-          fill: "#475569",
-          fontFamily: "Arial",
-          selectable: true,
-          editable: true,
-          backgroundColor: "#f8fafc",
-        });
-        fabricCanvas.add(chartText);
+        // Apenas gráfico nativo (centralizado)
+        if (slideChart.type && slideChart.data) {
+          renderNativeChart(slideChart, (960 - 350) / 2, imageChartYPosition);
+        }
       }
 
       fabricCanvas.renderAll();
@@ -367,86 +507,20 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
   const handleAddChart = async () => {
     if (!fabricCanvas) return;
 
-    // Criar um gráfico de exemplo pequeno
-    const chartData = {
+    // Dados de exemplo para o gráfico
+    const chartData: ChartData = {
       type: "bar",
-      title: "Gráfico de Exemplo",
+      title: "Exemplo de Gráfico",
       data: [
-        { name: "A", value: 30 },
-        { name: "B", value: 60 },
-        { name: "C", value: 45 },
-        { name: "D", value: 80 },
+        { name: "Jan", value: 450, color: "hsl(206, 70%, 60%)" },
+        { name: "Fev", value: 680, color: "hsl(226, 70%, 60%)" },
+        { name: "Mar", value: 520, color: "hsl(246, 70%, 60%)" },
+        { name: "Abr", value: 790, color: "hsl(266, 70%, 60%)" },
       ]
     };
 
-    // Criar um container para o gráfico
-    const chartGroup: any[] = [];
-    
-    // Adicionar título
-    const title = new Textbox(chartData.title, {
-      left: 0,
-      top: 0,
-      width: 180,
-      fontSize: 11,
-      fill: "#1e293b",
-      fontFamily: "Arial",
-      fontWeight: "bold",
-      textAlign: "center",
-    });
-    chartGroup.push(title);
-
-    // Adicionar barras do gráfico
-    const maxValue = Math.max(...chartData.data.map(d => d.value));
-    const barWidth = 35;
-    const barSpacing = 8;
-    const chartHeight = 130;
-    const startX = 10;
-    const startY = 25;
-
-    chartData.data.forEach((item, index) => {
-      const barHeight = (item.value / maxValue) * chartHeight;
-      const x = startX + (index * (barWidth + barSpacing));
-      const y = startY + chartHeight - barHeight;
-
-      // Barra
-      const bar = new Rect({
-        left: x,
-        top: y,
-        width: barWidth,
-        height: barHeight,
-        fill: `hsl(${206 + index * 30}, 70%, 60%)`,
-        selectable: false,
-      });
-      chartGroup.push(bar);
-
-      // Label
-      const label = new Textbox(item.name, {
-        left: x,
-        top: startY + chartHeight + 5,
-        width: barWidth,
-        fontSize: 9,
-        fill: "#475569",
-        fontFamily: "Arial",
-        textAlign: "center",
-        selectable: false,
-      });
-      chartGroup.push(label);
-    });
-
-    // Adicionar todos os elementos ao canvas em uma posição inicial
-    const groupLeft = 350;
-    const groupTop = 40;
-    
-    chartGroup.forEach((obj) => {
-      obj.set({
-        left: obj.left + groupLeft,
-        top: obj.top + groupTop,
-      });
-      fabricCanvas.add(obj);
-    });
-
-    fabricCanvas.renderAll();
-    toast.success("Gráfico adicionado ao canvas");
+    renderNativeChart(chartData, 350, 40);
+    toast.success("Gráfico nativo adicionado ao canvas");
   };
 
   const handleDeleteSelected = () => {
