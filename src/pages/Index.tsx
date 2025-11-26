@@ -331,7 +331,7 @@ const Index = () => {
                   progress={80}
                   completedLessons={8}
                   totalLessons={10}
-                  bgColor="bg-pastel-purple"
+                  bgColor="bg-pastel-purpleDark"
                 />
               </div>
             </section>
