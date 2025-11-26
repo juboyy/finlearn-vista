@@ -51,6 +51,9 @@ Use Markdown para formatar suas respostas de forma rica e visualmente atrativa:
 - **Progresso de Metas**: Para mostrar progresso, use: \`\`\`progress:75\`\`\` (substitua 75 pelo valor percentual)
 - **Players de Áudio**: Para adicionar player de podcast, use: \`\`\`audio:url-do-audio\`\`\`
 - **Players de Vídeo**: Para adicionar player de vídeo de curso, use: \`\`\`video:url-do-video\`\`\`
+- **Gráficos**: Para adicionar gráficos, use: \`\`\`chart:tipo\\n{"data":[{"name":"A","value":10}],"dataKey":"value","xKey":"name"}\`\`\`
+  - Tipos disponíveis: bar (barras), line (linha), pie (pizza)
+  - O data deve ser um array de objetos com as chaves especificadas em dataKey e xKey
 - **Imagens**: Use ![descrição](url-da-imagem) para incluir imagens ilustrativas
 - **Espaçamento**: Use parágrafos separados para melhor legibilidade
 
