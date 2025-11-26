@@ -588,23 +588,8 @@ export default function TransformarTabelas() {
       );
     }
 
-    // Se houver até 3 colunas, mostrar em um único gráfico
-    if (selectedColumns.length <= 3) {
-      return renderSingleChart(selectedColumns);
-    }
-
-    // Se houver mais de 3 colunas, dividir em múltiplos gráficos
-    const chartsToRender = [];
-    for (let i = 0; i < selectedColumns.length; i += columnsPerChart) {
-      const columnsForChart = selectedColumns.slice(i, i + columnsPerChart);
-      chartsToRender.push(
-        <div key={i} className="mb-8">
-          {renderSingleChart(columnsForChart, `Gráfico ${Math.floor(i / columnsPerChart) + 1}`)}
-        </div>
-      );
-    }
-
-    return <div className="space-y-6">{chartsToRender}</div>;
+    // Renderizar todas as colunas selecionadas no mesmo gráfico compartilhando o eixo X
+    return renderSingleChart(selectedColumns);
   };
 
   return (
