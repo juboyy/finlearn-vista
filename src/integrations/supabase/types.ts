@@ -238,17 +238,28 @@ export type Database = {
       }
       products: {
         Row: {
+          additional_materials: Json | null
+          allow_printing: boolean | null
+          allow_text_copy: boolean | null
           author_name: string
           category: string
           co_authors: Json | null
+          content_samples: Json | null
           cover_image: string | null
+          cover_image_url: string | null
           created_at: string
           credentials: string
+          digital_watermark: boolean | null
+          drm_protection: boolean | null
+          faqs: Json | null
           file_url: string | null
           id: string
           is_free: boolean | null
           language: string
           long_description: string | null
+          main_file_url: string | null
+          presentation_video_url: string | null
+          preview_file_url: string | null
           price: number | null
           product_type: string
           short_description: string
@@ -262,17 +273,28 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          additional_materials?: Json | null
+          allow_printing?: boolean | null
+          allow_text_copy?: boolean | null
           author_name: string
           category: string
           co_authors?: Json | null
+          content_samples?: Json | null
           cover_image?: string | null
+          cover_image_url?: string | null
           created_at?: string
           credentials: string
+          digital_watermark?: boolean | null
+          drm_protection?: boolean | null
+          faqs?: Json | null
           file_url?: string | null
           id?: string
           is_free?: boolean | null
           language?: string
           long_description?: string | null
+          main_file_url?: string | null
+          presentation_video_url?: string | null
+          preview_file_url?: string | null
           price?: number | null
           product_type?: string
           short_description: string
@@ -286,17 +308,28 @@ export type Database = {
           user_id?: string
         }
         Update: {
+          additional_materials?: Json | null
+          allow_printing?: boolean | null
+          allow_text_copy?: boolean | null
           author_name?: string
           category?: string
           co_authors?: Json | null
+          content_samples?: Json | null
           cover_image?: string | null
+          cover_image_url?: string | null
           created_at?: string
           credentials?: string
+          digital_watermark?: boolean | null
+          drm_protection?: boolean | null
+          faqs?: Json | null
           file_url?: string | null
           id?: string
           is_free?: boolean | null
           language?: string
           long_description?: string | null
+          main_file_url?: string | null
+          presentation_video_url?: string | null
+          preview_file_url?: string | null
           price?: number | null
           product_type?: string
           short_description?: string
