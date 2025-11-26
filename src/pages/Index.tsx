@@ -119,7 +119,7 @@ const Index = () => {
           </section>
           
           <div className="grid grid-cols-3 gap-6 mb-8">
-            <section className="col-span-2 bg-card rounded-xl p-6 border border-border animate-fade-in">
+            <section className="col-span-2 bg-card rounded-xl p-6 border border-border animate-fade-in relative" style={{ zIndex: 1 }}>
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-lg font-semibold text-foreground">Progresso de Aprendizado</h2>
                 <select className="text-sm text-foreground border border-border rounded-lg px-3 py-2 bg-background focus:outline-none focus:ring-2 focus:ring-ring transition-all">
