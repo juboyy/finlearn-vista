@@ -11,6 +11,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Progress } from "@/components/ui/progress";
 import { ChatImageRenderer } from "@/components/Dashboard/ChatImageRenderer";
+import { ChatChartRenderer } from "@/components/Dashboard/ChatChartRenderer";
 import auxiliarAvatar from "@/assets/auxiliar-do-dia-avatar.png";
 import {
   Sheet,
@@ -260,7 +261,7 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
                               if (className === 'language-audio') {
                                 const audioUrl = String(children).trim();
                                 return (
-                                  <div className="my-3 bg-muted rounded-lg p-4">
+                                  <div className="my-3 bg-muted rounded-lg p-4 border-2 border-pastel-purple/30">
                                     <audio controls className="w-full">
                                       <source src={audioUrl} type="audio/mpeg" />
                                       Seu navegador não suporta o elemento de áudio.
@@ -272,13 +273,33 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
                               if (className === 'language-video') {
                                 const videoUrl = String(children).trim();
                                 return (
-                                  <div className="my-3 bg-muted rounded-lg overflow-hidden">
+                                  <div className="my-3 bg-muted rounded-lg overflow-hidden border-2 border-pastel-purple/30">
                                     <video controls className="w-full">
                                       <source src={videoUrl} type="video/mp4" />
                                       Seu navegador não suporta o elemento de vídeo.
                                     </video>
                                   </div>
                                 );
+                              }
+                              // Chart syntax: ```chart:type:{"data":[...],"dataKey":"value","xKey":"name"}```
+                              if (className?.startsWith('language-chart')) {
+                                try {
+                                  const parts = String(children).trim().split('\n');
+                                  const chartType = className.replace('language-chart:', '') as "bar" | "line" | "pie";
+                                  const chartData = JSON.parse(parts[0]);
+                                  return (
+                                    <ChatChartRenderer 
+                                      type={chartType}
+                                      data={chartData.data}
+                                      dataKey={chartData.dataKey}
+                                      xKey={chartData.xKey}
+                                      colors={chartData.colors}
+                                    />
+                                  );
+                                } catch (e) {
+                                  console.error("Error parsing chart data:", e);
+                                  return <code className="bg-muted px-1.5 py-0.5 rounded text-xs">Erro ao renderizar gráfico</code>;
+                                }
                               }
                               return <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{children}</code>;
                             },
