@@ -1,14 +1,26 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { ArrowLeft, Share2, Heart, ShoppingCart, Gift, Video, Clock, FileText, Infinity, Smartphone, Award, Star, CheckCircle, PlayCircle, FileDown, Lock, Trophy, BadgeCheck, Briefcase, Users, Wrench, Headphones, RefreshCw, User, GraduationCap, ChartLine, Repeat, ShieldCheck } from "lucide-react";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { useProductViewTracker } from "@/hooks/useProductViewTracker";
 
 const CursoDetalhes = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const mockUserId = "user-123"; // In production, get from auth context
   const [expandedModule, setExpandedModule] = useState(1);
+  
+  // Track product view time
+  useProductViewTracker({
+    productId: id || 'curso-001',
+    productType: 'curso',
+    productTitle: 'Análise Técnica Avançada',
+    productCategory: 'Análise de Mercado',
+    productTags: ['análise técnica', 'trading', 'mercado', 'investimentos']
+  }, mockUserId);
   
   // Countdown state - define end date (7 days from now for demo)
   const [timeLeft, setTimeLeft] = useState({

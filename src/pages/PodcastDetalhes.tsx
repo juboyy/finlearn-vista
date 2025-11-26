@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import {
   ArrowLeft,
@@ -30,6 +30,7 @@ import {
   Circle
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { useProductViewTracker } from "@/hooks/useProductViewTracker";
 import ep142Image from "@/assets/podcast-ep142-volatilidade.png";
 import ep141Image from "@/assets/podcast-ep141-selic.png";
 import ep140Image from "@/assets/podcast-ep140-tendencias-2025.png";
@@ -53,6 +54,8 @@ interface Episode {
 
 export default function PodcastDetalhes() {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const mockUserId = "user-123"; // In production, get from auth context
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(2700); // 45 minutes in seconds
@@ -60,6 +63,15 @@ export default function PodcastDetalhes() {
   const [isMuted, setIsMuted] = useState(false);
   const [selectedEpisode, setSelectedEpisode] = useState(142);
   const audioRef = useRef<HTMLAudioElement>(null);
+
+  // Track product view time
+  useProductViewTracker({
+    productId: id || 'podcast-mercados-em-foco',
+    productType: 'podcast',
+    productTitle: 'Mercados em Foco',
+    productCategory: 'Análise de Mercado',
+    productTags: ['podcast', 'mercado financeiro', 'análise', 'investimentos']
+  }, mockUserId);
 
   const episodes: Episode[] = [
     {
