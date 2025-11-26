@@ -32,9 +32,10 @@ interface SlideCanvasEditorProps {
   slideImage?: string;
   slideChart?: any;
   slideId?: string;
+  onViewSlide?: () => void;
 }
 
-export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText, slideImage, slideChart, slideId }: SlideCanvasEditorProps) => {
+export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText, slideImage, slideChart, slideId, onViewSlide }: SlideCanvasEditorProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [fabricCanvas, setFabricCanvas] = useState<FabricCanvas | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -436,6 +437,12 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
   };
   const handleViewSlide = () => {
     if (!fabricCanvas) return;
+    
+    // Se onViewSlide foi fornecido, chama ele para abrir o modal de preview
+    if (onViewSlide) {
+      onViewSlide();
+      return;
+    }
     
     const objects = fabricCanvas.getObjects();
     
