@@ -108,31 +108,40 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
       isInitializedRef.current = true;
     }
 
-    // Setup autosave
+    // Setup autosave - salvar imediatamente após cada modificação
     const handleModified = () => {
-      setSaveStatus("saving");
+      const json = canvas.toJSON();
+      const jsonString = JSON.stringify(json);
       
-      // Limpar timeout anterior se existir
+      // Verificar se realmente houve mudança
+      if (jsonString === lastSaveRef.current) {
+        return;
+      }
+      
+      console.log(`🔄 Salvando alterações do canvas automaticamente...`);
+      setSaveStatus("saving");
+      lastSaveRef.current = jsonString;
+      
+      // Salvar imediatamente
+      onUpdate(json);
+      
+      // Limpar timeout anterior
       if (saveTimeoutRef.current) {
         clearTimeout(saveTimeoutRef.current);
       }
       
-      const json = canvas.toJSON();
-      const jsonString = JSON.stringify(json);
-      lastSaveRef.current = jsonString;
-      onUpdate(json);
-      
-      // Mostrar "salvo" após um breve delay
+      // Mostrar feedback de "salvo"
       saveTimeoutRef.current = setTimeout(() => {
         setSaveStatus("saved");
-        // Voltar para idle após 2 segundos
+        console.log(`✅ Canvas salvo com sucesso`);
         setTimeout(() => setSaveStatus("idle"), 2000);
-      }, 300);
+      }, 100);
     };
 
     canvas.on("object:modified", handleModified);
     canvas.on("object:added", handleModified);
     canvas.on("object:removed", handleModified);
+    canvas.on("text:changed", handleModified);
 
     return () => {
       if (saveTimeoutRef.current) {
