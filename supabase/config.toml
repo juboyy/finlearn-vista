@@ -21,3 +21,6 @@ verify_jwt = false
 [functions.explain-chart]
 verify_jwt = false
 
+[functions.generate-assistant-suggestions]
+verify_jwt = false
+

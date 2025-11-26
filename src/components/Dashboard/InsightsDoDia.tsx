@@ -1,9 +1,11 @@
 import { useState, useRef, useEffect } from "react";
-import { Send, Loader2, Newspaper, BookOpen, Video, Target, Headphones, Award } from "lucide-react";
+import { Send, Loader2, Newspaper, BookOpen, Video, Target, Headphones, Award, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAgentChat } from "@/hooks/useAgentChat";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 import {
   Sheet,
   SheetContent,
@@ -27,7 +29,9 @@ const quickActions = [
 
 export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
   const [input, setInput] = useState("");
+  const [isGenerating, setIsGenerating] = useState(false);
   const { messages, sendMessage, isLoading } = useAgentChat("Auxiliar do dia");
+  const { toast } = useToast();
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -47,6 +51,29 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSend();
+    }
+  };
+
+  const handleGenerateSuggestions = async () => {
+    setIsGenerating(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-assistant-suggestions');
+      
+      if (error) throw error;
+      
+      toast({
+        title: "Sugestões geradas!",
+        description: `${data.count} novas sugestões foram criadas. Confira em Notificações.`,
+      });
+    } catch (error) {
+      console.error("Error generating suggestions:", error);
+      toast({
+        title: "Erro ao gerar sugestões",
+        description: "Tente novamente mais tarde.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsGenerating(false);
     }
   };
 
@@ -98,6 +125,24 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
                   </SheetTitle>
                   <p className="text-sm text-muted-foreground">Chat em tempo real</p>
                 </div>
+                <Button
+                  onClick={handleGenerateSuggestions}
+                  disabled={isGenerating}
+                  className="bg-pastel-purple hover:bg-pastel-pink text-foreground"
+                  size="sm"
+                >
+                  {isGenerating ? (
+                    <>
+                      <Loader2 className="animate-spin mr-2" size={16} />
+                      Gerando...
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles className="mr-2" size={16} />
+                      Gerar Sugestões
+                    </>
+                  )}
+                </Button>
               </div>
             </SheetHeader>
 

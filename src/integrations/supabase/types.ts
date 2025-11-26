@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      assistant_suggestions: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          is_read: boolean
+          metadata: Json | null
+          priority: string
+          suggestion_type: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          metadata?: Json | null
+          priority?: string
+          suggestion_type: string
+          title: string
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          metadata?: Json | null
+          priority?: string
+          suggestion_type?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       chart_explanations: {
         Row: {
           attention_points: string[] | null
