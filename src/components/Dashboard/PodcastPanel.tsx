@@ -106,7 +106,7 @@ const PodcastCard = ({ podcast }: { podcast: Podcast }) => (
         <span className="font-medium">24:30</span>
       </div>
       <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
-        <div className="h-full bg-gradient-to-r from-pastel-purple to-pastel-pink w-[60%] rounded-full transition-all duration-500"></div>
+        <div className="h-full bg-slate-700 w-[60%] rounded-full transition-all duration-500"></div>
       </div>
     </div>
   </div>
