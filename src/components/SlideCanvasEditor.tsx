@@ -17,6 +17,8 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [fabricCanvas, setFabricCanvas] = useState<FabricCanvas | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [saveStatus, setSaveStatus] = useState<"saved" | "saving" | "idle">("idle");
+  const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -38,8 +40,22 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
 
     // Setup autosave
     const handleModified = () => {
+      setSaveStatus("saving");
+      
+      // Limpar timeout anterior se existir
+      if (saveTimeoutRef.current) {
+        clearTimeout(saveTimeoutRef.current);
+      }
+      
       const json = canvas.toJSON();
       onUpdate(json);
+      
+      // Mostrar "salvo" após um breve delay
+      saveTimeoutRef.current = setTimeout(() => {
+        setSaveStatus("saved");
+        // Voltar para idle após 2 segundos
+        setTimeout(() => setSaveStatus("idle"), 2000);
+      }, 300);
     };
 
     canvas.on("object:modified", handleModified);
@@ -47,6 +63,9 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
     canvas.on("object:removed", handleModified);
 
     return () => {
+      if (saveTimeoutRef.current) {
+        clearTimeout(saveTimeoutRef.current);
+      }
       canvas.dispose();
     };
   }, []);
@@ -357,6 +376,22 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
 
   return (
     <div className="space-y-4">
+      {/* Save Status Indicator */}
+      <div className="flex items-center justify-end">
+        {saveStatus === "saving" && (
+          <div className="flex items-center gap-2 text-sm text-slate-500 animate-pulse">
+            <div className="w-2 h-2 bg-slate-400 rounded-full"></div>
+            <span>Salvando...</span>
+          </div>
+        )}
+        {saveStatus === "saved" && (
+          <div className="flex items-center gap-2 text-sm text-green-600 animate-fade-in">
+            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+            <span>Alterações salvas</span>
+          </div>
+        )}
+      </div>
+
       {/* Toolbar */}
       <div className="flex items-center gap-2 p-3 bg-white border-2 border-slate-200 rounded-lg">
         <Button
