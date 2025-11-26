@@ -14,6 +14,7 @@ export default function NovoEbookEtapa3() {
   const [scrollProgress, setScrollProgress] = useState(0);
   
   const [productData, setProductData] = useState<any>(null);
+  const [showValidation, setShowValidation] = useState(false);
   
   // Pricing
   const [price, setPrice] = useState("97.00");
@@ -136,6 +137,8 @@ export default function NovoEbookEtapa3() {
   };
 
   const handlePublish = async () => {
+    setShowValidation(true);
+    
     if (!productId) return;
     
     if (!creditCard && !pix && !boleto && !digitalWallet) {
@@ -299,13 +302,24 @@ export default function NovoEbookEtapa3() {
               </div>
 
               {/* Payment Methods Section */}
-              <div className="bg-card rounded-xl border border-border p-8">
+              <div className={`bg-card rounded-xl border p-8 ${showValidation && !creditCard && !pix && !boleto && !digitalWallet ? 'border-destructive' : 'border-border'}`}>
                 <div className="flex items-center justify-between mb-6">
                   <div>
-                    <h3 className="text-xl font-semibold text-foreground">Formas de Pagamento</h3>
+                    <h3 className="text-xl font-semibold text-foreground flex items-center gap-2">
+                      Formas de Pagamento
+                      <span className="text-destructive">*</span>
+                    </h3>
                     <p className="text-sm text-muted-foreground mt-1">Selecione as opções que seus compradores poderão usar</p>
                   </div>
-                  <span className="px-3 py-1 bg-[hsl(340,40%,92%)] text-[hsl(215,20%,40%)] text-xs font-medium rounded-full">Obrigatório</span>
+                  <div className="flex items-center gap-2">
+                    <span className="px-3 py-1 bg-[hsl(340,40%,92%)] text-[hsl(215,20%,40%)] text-xs font-medium rounded-full">Obrigatório</span>
+                    {showValidation && !creditCard && !pix && !boleto && !digitalWallet && (
+                      <span className="text-xs text-destructive flex items-center gap-1">
+                        <span className="w-2 h-2 bg-destructive rounded-full"></span>
+                        Selecione pelo menos uma
+                      </span>
+                    )}
+                  </div>
                 </div>
 
                 <div className="space-y-4">
@@ -532,13 +546,31 @@ export default function NovoEbookEtapa3() {
                   </div>
 
                   {payoutMethod === 'bank' && (
-                    <div className="border border-border rounded-lg p-6 space-y-4">
+                    <div className={`border rounded-lg p-6 space-y-4 ${showValidation && (!bank || !agency || !account || !cpfCnpj) ? 'border-destructive' : 'border-border'}`}>
+                      {showValidation && (!bank || !agency || !account || !cpfCnpj) && (
+                        <div className="mb-4 p-3 bg-destructive/10 border border-destructive rounded-lg">
+                          <p className="text-sm text-destructive flex items-center gap-2">
+                            <span className="w-2 h-2 bg-destructive rounded-full"></span>
+                            Preencha todos os dados bancários obrigatórios
+                          </p>
+                        </div>
+                      )}
                       <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">Banco</label>
+                        <label className="flex items-center justify-between text-sm font-medium text-foreground mb-2">
+                          <div className="flex items-center gap-2">
+                            <span>Banco</span>
+                            <span className="text-destructive">*</span>
+                          </div>
+                          {showValidation && !bank && (
+                            <span className="text-xs text-destructive">Obrigatório</span>
+                          )}
+                        </label>
                         <select 
                           value={bank}
                           onChange={(e) => setBank(e.target.value)}
-                          className="w-full px-4 py-3 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+                          className={`w-full px-4 py-3 border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary ${
+                            showValidation && !bank ? 'border-destructive' : bank ? 'border-[hsl(142,35%,50%)]' : 'border-border'
+                          }`}
                         >
                           <option value="">Selecione seu banco</option>
                           <option value="bb">Banco do Brasil</option>
@@ -565,34 +597,64 @@ export default function NovoEbookEtapa3() {
                           </select>
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-foreground mb-2">Agência</label>
+                          <label className="flex items-center justify-between text-sm font-medium text-foreground mb-2">
+                            <div className="flex items-center gap-2">
+                              <span>Agência</span>
+                              <span className="text-destructive">*</span>
+                            </div>
+                            {showValidation && !agency && (
+                              <span className="text-xs text-destructive">Obrigatório</span>
+                            )}
+                          </label>
                           <input 
                             type="text" 
                             placeholder="0000" 
                             value={agency}
                             onChange={(e) => setAgency(e.target.value)}
-                            className="w-full px-4 py-3 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+                            className={`w-full px-4 py-3 border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary ${
+                              showValidation && !agency ? 'border-destructive' : agency ? 'border-[hsl(142,35%,50%)]' : 'border-border'
+                            }`}
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-foreground mb-2">Conta</label>
+                          <label className="flex items-center justify-between text-sm font-medium text-foreground mb-2">
+                            <div className="flex items-center gap-2">
+                              <span>Conta</span>
+                              <span className="text-destructive">*</span>
+                            </div>
+                            {showValidation && !account && (
+                              <span className="text-xs text-destructive">Obrigatório</span>
+                            )}
+                          </label>
                           <input 
                             type="text" 
                             placeholder="00000-0" 
                             value={account}
                             onChange={(e) => setAccount(e.target.value)}
-                            className="w-full px-4 py-3 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+                            className={`w-full px-4 py-3 border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary ${
+                              showValidation && !account ? 'border-destructive' : account ? 'border-[hsl(142,35%,50%)]' : 'border-border'
+                            }`}
                           />
                         </div>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">CPF/CNPJ do Titular</label>
+                        <label className="flex items-center justify-between text-sm font-medium text-foreground mb-2">
+                          <div className="flex items-center gap-2">
+                            <span>CPF/CNPJ do Titular</span>
+                            <span className="text-destructive">*</span>
+                          </div>
+                          {showValidation && !cpfCnpj && (
+                            <span className="text-xs text-destructive">Obrigatório</span>
+                          )}
+                        </label>
                         <input 
                           type="text" 
                           placeholder="000.000.000-00" 
                           value={cpfCnpj}
                           onChange={(e) => setCpfCnpj(e.target.value)}
-                          className="w-full px-4 py-3 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+                          className={`w-full px-4 py-3 border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary ${
+                            showValidation && !cpfCnpj ? 'border-destructive' : cpfCnpj ? 'border-[hsl(142,35%,50%)]' : 'border-border'
+                          }`}
                         />
                       </div>
                     </div>

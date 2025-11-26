@@ -28,6 +28,7 @@ export default function NovoEbook() {
   const [descLength, setDescLength] = useState(0);
   const [tagsCount, setTagsCount] = useState(0);
   const [coAuthorInput, setCoAuthorInput] = useState('');
+  const [showValidation, setShowValidation] = useState(false);
 
   // Monitor scroll progress
   useEffect(() => {
@@ -92,9 +93,38 @@ export default function NovoEbook() {
     return count;
   };
 
+  const getRequiredFields = () => {
+    return {
+      productType: !!formData.productType,
+      title: formData.title.trim().length > 0,
+      category: !!formData.category,
+      targetAudience: formData.targetAudience.length > 0,
+      tags: formData.tags.trim().length > 0,
+      language: !!formData.language,
+      shortDescription: formData.shortDescription.trim().length > 0,
+      authorName: formData.authorName.trim().length > 0,
+      credentials: formData.credentials.trim().length > 0
+    };
+  };
+
+  const getMissingFields = () => {
+    const fields = getRequiredFields();
+    const missing = [];
+    if (!fields.productType) missing.push('Tipo de Produto');
+    if (!fields.title) missing.push('Título');
+    if (!fields.category) missing.push('Categoria');
+    if (!fields.targetAudience) missing.push('Público-Alvo');
+    if (!fields.tags) missing.push('Tags');
+    if (!fields.shortDescription) missing.push('Descrição');
+    if (!fields.authorName) missing.push('Nome do Autor');
+    if (!fields.credentials) missing.push('Credenciais');
+    return missing;
+  };
+
   const filledCount = getFilledFieldsCount();
   const totalRequired = 9;
   const progressPercentage = (filledCount / totalRequired) * 100;
+  const requiredFields = getRequiredFields();
 
   const handleSaveDraft = async () => {
     try {
@@ -130,8 +160,11 @@ export default function NovoEbook() {
   };
 
   const handleNextStep = async () => {
+    setShowValidation(true);
+    
     if (filledCount < totalRequired) {
-      toast.error("Preencha todos os campos obrigatórios");
+      const missing = getMissingFields();
+      toast.error(`Campos obrigatórios não preenchidos: ${missing.join(', ')}`);
       return;
     }
 
@@ -272,9 +305,18 @@ export default function NovoEbook() {
 
                       {/* Title */}
                       <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">
-                          Título do Produto *
-                          <span className="text-xs font-normal text-muted-foreground ml-2">(Seja claro e descritivo)</span>
+                        <label className="flex items-center justify-between text-sm font-medium text-foreground mb-2">
+                          <div className="flex items-center gap-2">
+                            <span>Título do Produto</span>
+                            <span className="text-destructive">*</span>
+                            <span className="text-xs font-normal text-muted-foreground">(Seja claro e descritivo)</span>
+                          </div>
+                          {showValidation && !requiredFields.title && (
+                            <span className="text-xs text-destructive flex items-center gap-1">
+                              <span className="w-2 h-2 bg-destructive rounded-full"></span>
+                              Obrigatório
+                            </span>
+                          )}
                         </label>
                         <input 
                           type="text" 
@@ -282,7 +324,13 @@ export default function NovoEbook() {
                           value={formData.title}
                           onChange={(e) => handleInputChange('title', e.target.value)}
                           maxLength={80}
-                          className="w-full px-4 py-3 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                          className={`w-full px-4 py-3 border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${
+                            showValidation && !requiredFields.title 
+                              ? 'border-destructive' 
+                              : requiredFields.title 
+                              ? 'border-[hsl(142,35%,50%)]' 
+                              : 'border-border'
+                          }`}
                         />
                         <div className="flex justify-between items-center mt-2">
                           <p className="text-xs text-muted-foreground">Use entre 40-80 caracteres para melhor visibilidade</p>
@@ -308,11 +356,28 @@ export default function NovoEbook() {
 
                       {/* Category */}
                       <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">Categoria Principal *</label>
+                        <label className="flex items-center justify-between text-sm font-medium text-foreground mb-2">
+                          <div className="flex items-center gap-2">
+                            <span>Categoria Principal</span>
+                            <span className="text-destructive">*</span>
+                          </div>
+                          {showValidation && !requiredFields.category && (
+                            <span className="text-xs text-destructive flex items-center gap-1">
+                              <span className="w-2 h-2 bg-destructive rounded-full"></span>
+                              Obrigatório
+                            </span>
+                          )}
+                        </label>
                         <select 
                           value={formData.category}
                           onChange={(e) => handleInputChange('category', e.target.value)}
-                          className="w-full px-4 py-3 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                          className={`w-full px-4 py-3 border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${
+                            showValidation && !requiredFields.category 
+                              ? 'border-destructive' 
+                              : requiredFields.category 
+                              ? 'border-[hsl(142,35%,50%)]' 
+                              : 'border-border'
+                          }`}
                         >
                           <option value="">Selecione uma categoria</option>
                           <option value="payment-methods">Meios de Pagamento</option>
@@ -350,7 +415,18 @@ export default function NovoEbook() {
 
                       {/* Target Audience */}
                       <div>
-                        <label className="block text-sm font-medium text-foreground mb-3">Público-Alvo *</label>
+                        <label className="flex items-center justify-between text-sm font-medium text-foreground mb-3">
+                          <div className="flex items-center gap-2">
+                            <span>Público-Alvo</span>
+                            <span className="text-destructive">*</span>
+                          </div>
+                          {showValidation && !requiredFields.targetAudience && (
+                            <span className="text-xs text-destructive flex items-center gap-1">
+                              <span className="w-2 h-2 bg-destructive rounded-full"></span>
+                              Selecione pelo menos um
+                            </span>
+                          )}
+                        </label>
                         <div className="space-y-3">
                           {[
                             { value: 'beginners', label: 'Iniciantes', desc: 'Profissionais entrando no mercado financeiro' },
@@ -379,16 +455,31 @@ export default function NovoEbook() {
 
                       {/* Tags */}
                       <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">
-                          Tags (Palavras-chave) *
-                          <span className="text-xs font-normal text-muted-foreground ml-2">(Separadas por vírgula)</span>
+                        <label className="flex items-center justify-between text-sm font-medium text-foreground mb-2">
+                          <div className="flex items-center gap-2">
+                            <span>Tags (Palavras-chave)</span>
+                            <span className="text-destructive">*</span>
+                            <span className="text-xs font-normal text-muted-foreground">(Separadas por vírgula)</span>
+                          </div>
+                          {showValidation && !requiredFields.tags && (
+                            <span className="text-xs text-destructive flex items-center gap-1">
+                              <span className="w-2 h-2 bg-destructive rounded-full"></span>
+                              Obrigatório
+                            </span>
+                          )}
                         </label>
                         <input 
                           type="text" 
                           placeholder="Ex: pagamentos, adquirência, bandeiras, regulação, PIX" 
                           value={formData.tags}
                           onChange={(e) => handleInputChange('tags', e.target.value)}
-                          className="w-full px-4 py-3 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                          className={`w-full px-4 py-3 border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${
+                            showValidation && !requiredFields.tags 
+                              ? 'border-destructive' 
+                              : requiredFields.tags 
+                              ? 'border-[hsl(142,35%,50%)]' 
+                              : 'border-border'
+                          }`}
                         />
                         <div className="flex justify-between items-center mt-2">
                           <p className="text-xs text-muted-foreground">Adicione até 10 tags para facilitar a busca do seu produto</p>
@@ -434,9 +525,18 @@ export default function NovoEbook() {
 
                       {/* Short Description */}
                       <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">
-                          Descrição Curta *
-                          <span className="text-xs font-normal text-muted-foreground ml-2">(Aparecerá no card do produto)</span>
+                        <label className="flex items-center justify-between text-sm font-medium text-foreground mb-2">
+                          <div className="flex items-center gap-2">
+                            <span>Descrição Curta</span>
+                            <span className="text-destructive">*</span>
+                            <span className="text-xs font-normal text-muted-foreground">(Aparecerá no card do produto)</span>
+                          </div>
+                          {showValidation && !requiredFields.shortDescription && (
+                            <span className="text-xs text-destructive flex items-center gap-1">
+                              <span className="w-2 h-2 bg-destructive rounded-full"></span>
+                              Obrigatório
+                            </span>
+                          )}
                         </label>
                         <textarea 
                           rows={3}
@@ -444,7 +544,13 @@ export default function NovoEbook() {
                           value={formData.shortDescription}
                           onChange={(e) => handleInputChange('shortDescription', e.target.value)}
                           maxLength={160}
-                          className="w-full px-4 py-3 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
+                          className={`w-full px-4 py-3 border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none ${
+                            showValidation && !requiredFields.shortDescription 
+                              ? 'border-destructive' 
+                              : requiredFields.shortDescription 
+                              ? 'border-[hsl(142,35%,50%)]' 
+                              : 'border-border'
+                          }`}
                         ></textarea>
                         <div className="flex justify-between items-center mt-2">
                           <p className="text-xs text-muted-foreground">Recomendamos entre 120-160 caracteres</p>
@@ -454,7 +560,18 @@ export default function NovoEbook() {
 
                       {/* Author */}
                       <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">Autor Principal *</label>
+                        <label className="flex items-center justify-between text-sm font-medium text-foreground mb-2">
+                          <div className="flex items-center gap-2">
+                            <span>Autor Principal</span>
+                            <span className="text-destructive">*</span>
+                          </div>
+                          {showValidation && !requiredFields.authorName && (
+                            <span className="text-xs text-destructive flex items-center gap-1">
+                              <span className="w-2 h-2 bg-destructive rounded-full"></span>
+                              Obrigatório
+                            </span>
+                          )}
+                        </label>
                         <div className="flex items-center gap-4 p-4 bg-muted/50 rounded-lg border border-border">
                           <img 
                             src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" 
@@ -467,7 +584,13 @@ export default function NovoEbook() {
                               placeholder="Ex: Ricardo Almeida" 
                               value={formData.authorName}
                               onChange={(e) => handleInputChange('authorName', e.target.value)}
-                              className="w-full px-4 py-2 border border-border rounded-lg bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                              className={`w-full px-4 py-2 border rounded-lg bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${
+                                showValidation && !requiredFields.authorName 
+                                  ? 'border-destructive' 
+                                  : requiredFields.authorName 
+                                  ? 'border-[hsl(142,35%,50%)]' 
+                                  : 'border-border'
+                              }`}
                             />
                           </div>
                         </div>
@@ -514,16 +637,31 @@ export default function NovoEbook() {
 
                       {/* Credentials */}
                       <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">
-                          Credenciais/Especialização *
-                          <span className="text-xs font-normal text-muted-foreground ml-2">(Sua expertise no tema)</span>
+                        <label className="flex items-center justify-between text-sm font-medium text-foreground mb-2">
+                          <div className="flex items-center gap-2">
+                            <span>Credenciais/Especialização</span>
+                            <span className="text-destructive">*</span>
+                            <span className="text-xs font-normal text-muted-foreground">(Sua expertise no tema)</span>
+                          </div>
+                          {showValidation && !requiredFields.credentials && (
+                            <span className="text-xs text-destructive flex items-center gap-1">
+                              <span className="w-2 h-2 bg-destructive rounded-full"></span>
+                              Obrigatório
+                            </span>
+                          )}
                         </label>
                         <input 
                           type="text" 
                           placeholder="Ex: Especialista em Meios de Pagamento com 18 anos de experiência" 
                           value={formData.credentials}
                           onChange={(e) => handleInputChange('credentials', e.target.value)}
-                          className="w-full px-4 py-3 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                          className={`w-full px-4 py-3 border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${
+                            showValidation && !requiredFields.credentials 
+                              ? 'border-destructive' 
+                              : requiredFields.credentials 
+                              ? 'border-[hsl(142,35%,50%)]' 
+                              : 'border-border'
+                          }`}
                         />
                       </div>
                     </div>

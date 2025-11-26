@@ -33,6 +33,7 @@ export default function NovoEbookEtapa2() {
 
   const [faqs, setFaqs] = useState<FAQ[]>([]);
   const [newFaq, setNewFaq] = useState({ question: '', answer: '' });
+  const [showValidation, setShowValidation] = useState(false);
 
   // Monitor scroll progress
   useEffect(() => {
@@ -110,6 +111,8 @@ export default function NovoEbookEtapa2() {
   };
 
   const handleContinue = async () => {
+    setShowValidation(true);
+    
     if (!formData.coverImage) {
       toast.error("A capa do eBook é obrigatória");
       return;
@@ -169,13 +172,24 @@ export default function NovoEbookEtapa2() {
               {/* Form Sections */}
               <div className="col-span-2 space-y-6">
                 {/* Cover Upload */}
-                <div className="bg-card rounded-xl border border-border p-8">
+                <div className={`bg-card rounded-xl border p-8 ${showValidation && !formData.coverImage ? 'border-destructive' : formData.coverImage ? 'border-[hsl(142,35%,50%)]' : 'border-border'}`}>
                   <div className="flex items-center justify-between mb-6">
                     <div>
-                      <h3 className="text-xl font-semibold text-foreground">Capa do eBook</h3>
+                      <h3 className="text-xl font-semibold text-foreground flex items-center gap-2">
+                        Capa do eBook
+                        <span className="text-destructive">*</span>
+                      </h3>
                       <p className="text-sm text-muted-foreground mt-1">A capa é a primeira impressão do seu produto</p>
                     </div>
-                    <span className="px-3 py-1 bg-[hsl(340,50%,85%)] text-[hsl(215,20%,40%)] text-xs font-medium rounded-full">Obrigatório</span>
+                    <div className="flex items-center gap-2">
+                      <span className="px-3 py-1 bg-[hsl(340,50%,85%)] text-[hsl(215,20%,40%)] text-xs font-medium rounded-full">Obrigatório</span>
+                      {showValidation && !formData.coverImage && (
+                        <span className="text-xs text-destructive flex items-center gap-1">
+                          <span className="w-2 h-2 bg-destructive rounded-full"></span>
+                          Não enviado
+                        </span>
+                      )}
+                    </div>
                   </div>
                   
                   <div className="grid grid-cols-2 gap-6">
@@ -248,13 +262,24 @@ export default function NovoEbookEtapa2() {
                 </div>
 
                 {/* Main File Upload */}
-                <div className="bg-card rounded-xl border border-border p-8">
+                <div className={`bg-card rounded-xl border p-8 ${showValidation && !formData.mainFile ? 'border-destructive' : formData.mainFile ? 'border-[hsl(142,35%,50%)]' : 'border-border'}`}>
                   <div className="flex items-center justify-between mb-6">
                     <div>
-                      <h3 className="text-xl font-semibold text-foreground">Arquivo Principal do eBook</h3>
+                      <h3 className="text-xl font-semibold text-foreground flex items-center gap-2">
+                        Arquivo Principal do eBook
+                        <span className="text-destructive">*</span>
+                      </h3>
                       <p className="text-sm text-muted-foreground mt-1">Upload do conteúdo completo que será entregue aos compradores</p>
                     </div>
-                    <span className="px-3 py-1 bg-[hsl(340,50%,85%)] text-[hsl(215,20%,40%)] text-xs font-medium rounded-full">Obrigatório</span>
+                    <div className="flex items-center gap-2">
+                      <span className="px-3 py-1 bg-[hsl(340,50%,85%)] text-[hsl(215,20%,40%)] text-xs font-medium rounded-full">Obrigatório</span>
+                      {showValidation && !formData.mainFile && (
+                        <span className="text-xs text-destructive flex items-center gap-1">
+                          <span className="w-2 h-2 bg-destructive rounded-full"></span>
+                          Não enviado
+                        </span>
+                      )}
+                    </div>
                   </div>
                   
                   <div className="space-y-4">
