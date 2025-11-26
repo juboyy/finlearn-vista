@@ -72,6 +72,8 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
           fontSize: 16,
           fill: "#1e293b",
           fontFamily: "Arial",
+          selectable: true,
+          editable: true,
         });
         fabricCanvas.add(textBox);
         yPosition += 200;
@@ -85,6 +87,7 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
           img.set({
             left: 50,
             top: yPosition,
+            selectable: true,
           });
           fabricCanvas.add(img);
         } catch (error) {
@@ -102,6 +105,8 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
           fill: "#475569",
           fontFamily: "Arial",
           fontStyle: "italic",
+          selectable: true,
+          editable: true,
         });
         fabricCanvas.add(chartText);
       }
