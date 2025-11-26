@@ -334,25 +334,25 @@ export default function ResumoEbook() {
                             <Share2 className="w-4 h-4" />
                             Compartilhar
                           </Button>
-                          {productData?.preview_file_url && (
-                            <Button 
-                              variant="outline" 
-                              size="sm" 
-                              className="flex-1 gap-2"
-                              onClick={() => {
-                                if (productData?.preview_file_url) {
-                                  window.open(productData.preview_file_url, '_blank');
-                                  toast({
-                                    title: "Download iniciado",
-                                    description: "A prévia está sendo baixada.",
-                                  });
-                                }
-                              }}
-                            >
-                              <Download className="w-4 h-4" />
-                              Prévia
-                            </Button>
-                          )}
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            className="flex-1 gap-2"
+                            disabled={!productData?.preview_file_url}
+                            onClick={() => {
+                              if (productData?.preview_file_url) {
+                                window.open(productData.preview_file_url, '_blank');
+                                toast({
+                                  title: "Download iniciado",
+                                  description: "A prévia está sendo baixada.",
+                                });
+                              }
+                            }}
+                            title={!productData?.preview_file_url ? "Prévia não disponível para este produto" : "Baixar prévia"}
+                          >
+                            <Download className="w-4 h-4" />
+                            Prévia
+                          </Button>
                         </div>
                       </div>
                     </div>
