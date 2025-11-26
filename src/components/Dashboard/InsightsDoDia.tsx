@@ -8,6 +8,7 @@ import { useAgentChat } from "@/hooks/useAgentChat";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import ReactMarkdown from "react-markdown";
+import auxiliarAvatar from "@/assets/auxiliar-do-dia-avatar.png";
 import {
   Sheet,
   SheetContent,
@@ -124,7 +125,7 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
               <div className="flex items-center gap-4">
                 <Avatar className="w-12 h-12 flex-shrink-0">
                   <AvatarImage 
-                    src="https://storage.googleapis.com/uxpilot-auth.appspot.com/7f4f5eae9b-7e9b1f43f4fe2b6ce84f.png" 
+                    src={auxiliarAvatar} 
                     alt="Auxiliar do dia"
                     className="object-cover"
                   />
@@ -185,7 +186,7 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
                     {msg.role === "assistant" && (
                       <Avatar className="w-8 h-8 flex-shrink-0">
                         <AvatarImage 
-                          src="https://storage.googleapis.com/uxpilot-auth.appspot.com/7f4f5eae9b-7e9b1f43f4fe2b6ce84f.png" 
+                          src={auxiliarAvatar} 
                           alt="Auxiliar do dia"
                           className="object-cover"
                         />
@@ -209,7 +210,7 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
                   <div className="flex gap-3 justify-start">
                     <Avatar className="w-8 h-8 flex-shrink-0">
                       <AvatarImage 
-                        src="https://storage.googleapis.com/uxpilot-auth.appspot.com/7f4f5eae9b-7e9b1f43f4fe2b6ce84f.png" 
+                        src={auxiliarAvatar} 
                         alt="Auxiliar do dia"
                         className="object-cover"
                       />
