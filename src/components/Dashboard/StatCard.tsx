@@ -55,7 +55,7 @@ export const StatCard = ({
           <p className="text-sm text-muted-foreground">{label}</p>
         </div>
       </HoverCardTrigger>
-      <HoverCardContent className="w-[500px] p-0 bg-card shadow-xl border-2 border-border" side="top" align="center" style={{ zIndex: 9999 }}>
+      <HoverCardContent className="w-[500px] p-0 bg-card shadow-xl border-2 border-border z-[9999]" side="top" align="center">
         <div className="p-4">
           {agentImage && agentName && (
             <div className="flex items-center gap-3 pb-2 border-b border-border mb-3">
