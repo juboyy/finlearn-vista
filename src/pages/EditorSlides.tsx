@@ -275,21 +275,23 @@ Retorne JSON:
     toast.success("Slide removido");
   };
 
-  const updateSlide = useCallback((field: keyof Slide, value: any) => {
+  const updateSlide = useCallback((slideId: string, field: keyof Slide, value: any) => {
     setSlides(prevSlides => {
       const newSlides = [...prevSlides];
-      const currentIndex = currentSlideIndex;
+      const slideIndex = newSlides.findIndex(s => s.id === slideId);
       
-      if (newSlides[currentIndex]) {
-        newSlides[currentIndex] = {
-          ...newSlides[currentIndex],
+      if (slideIndex !== -1) {
+        newSlides[slideIndex] = {
+          ...newSlides[slideIndex],
           [field]: value,
         };
-        console.log(`Slide ${newSlides[currentIndex].id} - Campo ${field} atualizado`);
+        console.log(`✅ Slide ${slideId} - Campo ${field} salvo automaticamente`);
+      } else {
+        console.error(`❌ Slide ${slideId} não encontrado para atualizar ${field}`);
       }
       return newSlides;
     });
-  }, [currentSlideIndex]);
+  }, []);
 
   const clearAllSlides = () => {
     const newSlide: Slide = {
@@ -661,7 +663,7 @@ Retorne JSON:
                     </label>
                     <Input
                       value={currentSlide.title || ""}
-                      onChange={(e) => updateSlide("title", e.target.value)}
+                      onChange={(e) => updateSlide(currentSlide.id, "title", e.target.value)}
                       className="text-2xl font-bold border-slate-300"
                       placeholder="Título do slide"
                     />
@@ -674,7 +676,7 @@ Retorne JSON:
                     <SlideCanvasEditor
                       key={currentSlide.id}
                       initialData={currentSlide.canvasData}
-                      onUpdate={(canvasData) => updateSlide("canvasData", canvasData)}
+                      onUpdate={(canvasData) => updateSlide(currentSlide.id, "canvasData", canvasData)}
                       slideText={currentSlide.content}
                       slideImage={currentSlide.imageUrl}
                       slideChart={currentSlide.chartData}
