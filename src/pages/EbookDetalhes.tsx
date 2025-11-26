@@ -28,7 +28,7 @@ const EbookDetalhes = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <button 
-                  onClick={() => navigate(-1)}
+                  onClick={() => navigate('/aprendizado')}
                   className="p-2 text-muted-foreground hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition"
                 >
                   <ArrowLeft size={20} />
