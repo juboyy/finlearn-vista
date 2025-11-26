@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import ReactMarkdown from "react-markdown";
 
 const specializedAgents = [
   {
@@ -380,10 +381,10 @@ export default function ResumoContratos() {
                   
                   <div className="min-h-[300px] rounded-lg border-2 border-slate-200 bg-slate-50 p-6">
                     {summary ? (
-                      <div className="prose prose-slate max-w-none">
-                        <div className="text-slate-700 whitespace-pre-wrap leading-relaxed">
+                      <div className="prose prose-slate max-w-none text-slate-700 leading-relaxed">
+                        <ReactMarkdown>
                           {summary}
-                        </div>
+                        </ReactMarkdown>
                       </div>
                     ) : (
                       <div className="flex flex-col items-center justify-center h-full text-center py-12">
