@@ -18,35 +18,35 @@ const EbookDetalhes = () => {
   }, mockUserId);
 
   return (
-    <div className="flex h-screen overflow-hidden bg-slate-50">
+    <div className="flex h-screen overflow-hidden bg-slate-50 dark:bg-slate-900">
       <SidebarFix />
       
       <main className="flex-1 overflow-y-auto">
         {/* Header */}
-        <header className="bg-white border-b border-border sticky top-0 z-10">
+        <header className="bg-white dark:bg-slate-800 border-b border-border dark:border-slate-700 sticky top-0 z-10">
           <div className="px-8 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <button 
                   onClick={() => navigate(-1)}
-                  className="p-2 text-muted-foreground hover:bg-slate-100 rounded-lg transition"
+                  className="p-2 text-muted-foreground hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition"
                 >
                   <ArrowLeft size={20} />
                 </button>
                 <div>
-                  <h1 className="text-2xl font-semibold text-foreground">Detalhes do Produto</h1>
-                  <p className="text-sm text-muted-foreground mt-1">Guia Completo dos Cartões de Crédito</p>
+                  <h1 className="text-2xl font-semibold text-foreground dark:text-slate-100">Detalhes do Produto</h1>
+                  <p className="text-sm text-muted-foreground dark:text-slate-400 mt-1">Guia Completo dos Cartões de Crédito</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <button className="relative p-2 text-muted-foreground hover:bg-slate-100 rounded-lg transition">
+                <button className="relative p-2 text-muted-foreground hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition">
                   <Bell size={20} />
                   <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                 </button>
-                <button className="p-2 text-muted-foreground hover:bg-slate-100 rounded-lg transition">
+                <button className="p-2 text-muted-foreground hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition">
                   <Share2 size={20} />
                 </button>
-                <button className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition">
+                <button className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-950 rounded-lg transition">
                   <Heart size={20} fill="currentColor" />
                 </button>
               </div>
@@ -58,7 +58,7 @@ const EbookDetalhes = () => {
           <div className="grid grid-cols-3 gap-8 mb-8">
             {/* Product Images - Sidebar */}
             <div className="col-span-1">
-              <div className="bg-white rounded-xl border border-border overflow-hidden sticky top-24">
+              <div className="bg-white dark:bg-slate-800 rounded-xl border border-border dark:border-slate-700 overflow-hidden sticky top-24">
                 <div className="h-60 overflow-hidden bg-pastel-green flex items-center justify-center p-4">
                   <img 
                     className="w-full h-full object-contain" 
@@ -67,30 +67,30 @@ const EbookDetalhes = () => {
                   />
                 </div>
                 <div className="p-4 space-y-2">
-                  <button className="w-full px-4 py-2.5 bg-slate-800 text-white rounded-lg font-semibold hover:bg-slate-700 transition text-sm">
+                  <button className="w-full px-4 py-2.5 bg-slate-800 dark:bg-slate-700 text-white rounded-lg font-semibold hover:bg-slate-700 dark:hover:bg-slate-600 transition text-sm">
                     <ShoppingCart className="inline-block mr-2" size={16} />
                     Comprar Agora - R$ 89
                   </button>
-                  <button className="w-full px-4 py-2 border-2 border-slate-800 text-slate-800 rounded-lg font-semibold hover:bg-slate-50 transition text-sm">
+                  <button className="w-full px-4 py-2 border-2 border-slate-800 dark:border-slate-600 text-slate-800 dark:text-slate-300 rounded-lg font-semibold hover:bg-slate-50 dark:hover:bg-slate-700 transition text-sm">
                     <Download className="inline-block mr-2" size={16} />
                     Prévia Grátis
                   </button>
-                  <div className="pt-4 border-t border-border space-y-3">
+                  <div className="pt-4 border-t border-border dark:border-slate-700 space-y-3">
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-muted-foreground">Formato:</span>
-                      <span className="font-medium text-foreground">PDF, EPUB</span>
+                      <span className="text-muted-foreground dark:text-slate-400">Formato:</span>
+                      <span className="font-medium text-foreground dark:text-slate-300">PDF, EPUB</span>
                     </div>
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-muted-foreground">Páginas:</span>
-                      <span className="font-medium text-foreground">312 páginas</span>
+                      <span className="text-muted-foreground dark:text-slate-400">Páginas:</span>
+                      <span className="font-medium text-foreground dark:text-slate-300">312 páginas</span>
                     </div>
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-muted-foreground">Idioma:</span>
-                      <span className="font-medium text-foreground">Português</span>
+                      <span className="text-muted-foreground dark:text-slate-400">Idioma:</span>
+                      <span className="font-medium text-foreground dark:text-slate-300">Português</span>
                     </div>
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-muted-foreground">Atualização:</span>
-                      <span className="font-medium text-foreground">Janeiro 2025</span>
+                      <span className="text-muted-foreground dark:text-slate-400">Atualização:</span>
+                      <span className="font-medium text-foreground dark:text-slate-300">Janeiro 2025</span>
                     </div>
                   </div>
                 </div>
@@ -100,7 +100,7 @@ const EbookDetalhes = () => {
             {/* Product Info */}
             <div className="col-span-2 space-y-6">
               {/* Header Section */}
-              <div className="bg-white rounded-xl border border-border p-8">
+              <div className="bg-white dark:bg-slate-800 rounded-xl border border-border dark:border-slate-700 p-8">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
                     <span className="inline-block px-3 py-1 bg-pastel-green text-foreground text-sm font-medium rounded-full mb-3">eBook</span>

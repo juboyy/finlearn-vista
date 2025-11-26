@@ -58,33 +58,33 @@ const CursoDetalhes = () => {
   }, []);
 
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="flex h-screen overflow-hidden bg-slate-50 dark:bg-slate-900">
       <SidebarFix />
       
       <main className="flex-1 overflow-y-auto">
         {/* Header */}
-        <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
+        <header className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-10">
           <div className="px-8 py-4 flex items-center justify-between">
             <div className="flex items-center gap-4">
               <button 
                 onClick={() => navigate('/aprendizado')}
-                className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition"
+                className="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition"
               >
                 <ArrowLeft size={20} />
               </button>
               <div>
-                <h1 className="text-2xl font-semibold text-slate-800">Domine o Mercado de Capitais em 2025</h1>
-                <p className="text-sm text-slate-500 mt-1">Curso completo com certificação internacional</p>
+                <h1 className="text-2xl font-semibold text-slate-800 dark:text-slate-100">Domine o Mercado de Capitais em 2025</h1>
+                <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Curso completo com certificação internacional</p>
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <button className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
+              <button className="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition">
                 <Share2 size={20} />
               </button>
-              <button className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
+              <button className="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition">
                 <Heart size={20} />
               </button>
-              <button className="px-6 py-3 bg-pastel-purple text-slate-800 rounded-lg font-semibold hover:bg-opacity-80 transition">
+              <button className="px-6 py-3 bg-pastel-purple dark:bg-pastel-purple text-slate-800 dark:text-slate-900 rounded-lg font-semibold hover:bg-opacity-80 transition">
                 Inscrever-se Agora
               </button>
             </div>
@@ -153,7 +153,7 @@ const CursoDetalhes = () => {
               </div>
 
               {/* Pricing Sidebar */}
-              <div className="bg-white rounded-xl border border-slate-200 p-6">
+              <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-6">
                 {/* Countdown Timer */}
                 <div className="mb-6 p-4 bg-[hsl(var(--pastel-blue))] rounded-lg">
                   <p className="text-center text-xs font-semibold text-pastel-gray-dark mb-3 uppercase tracking-wide">
@@ -189,18 +189,18 @@ const CursoDetalhes = () => {
 
                 <div className="mb-6">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs text-slate-500 line-through">R$ 1.497,00</span>
-                    <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">33% OFF</span>
+                    <span className="text-xs text-slate-500 dark:text-slate-400 line-through">R$ 1.497,00</span>
+                    <span className="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-xs font-medium rounded-full">33% OFF</span>
                   </div>
-                  <div className="text-4xl font-bold text-slate-800 mb-4">R$ 997,00</div>
-                  <p className="text-xs text-slate-500">ou 12x de R$ 97,00 sem juros</p>
+                  <div className="text-4xl font-bold text-slate-800 dark:text-slate-100 mb-4">R$ 997,00</div>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">ou 12x de R$ 97,00 sem juros</p>
                 </div>
 
-                <button className="w-full px-6 py-4 bg-slate-800 text-white rounded-lg font-semibold hover:bg-slate-700 transition mb-3">
+                <button className="w-full px-6 py-4 bg-slate-800 dark:bg-slate-700 text-white rounded-lg font-semibold hover:bg-slate-700 dark:hover:bg-slate-600 transition mb-3">
                   <ShoppingCart className="inline mr-2" size={16} />
                   Comprar Agora
                 </button>
-                <button className="w-full px-6 py-3 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition mb-6">
+                <button className="w-full px-6 py-3 bg-pastel-blue dark:bg-pastel-blue text-slate-700 dark:text-slate-900 rounded-lg font-medium hover:bg-opacity-80 transition mb-6">
                   <Gift className="inline mr-2" size={16} />
                   Presentear Alguém
                 </button>

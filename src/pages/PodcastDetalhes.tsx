@@ -216,29 +216,29 @@ export default function PodcastDetalhes() {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-slate-50">
+    <div className="flex h-screen overflow-hidden bg-slate-50 dark:bg-slate-900">
       <SidebarFix />
       
       <main className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
-        <header className="bg-white border-b border-[hsl(215,20%,85%)] flex-shrink-0 z-10">
+        <header className="bg-white dark:bg-slate-800 border-b border-[hsl(215,20%,85%)] dark:border-slate-700 flex-shrink-0 z-10">
           <div className="px-8 py-5 flex items-center justify-between">
             <div className="flex items-center gap-4">
               <button 
                 onClick={() => navigate('/aprendizado')}
-                className="p-2.5 text-slate-700 hover:bg-slate-100 rounded-xl transition-all"
+                className="p-2.5 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl transition-all"
               >
                 <ArrowLeft className="w-5 h-5" />
               </button>
               <div>
-                <h1 className="text-xl font-bold text-slate-800">Mercados em Foco</h1>
-                <p className="text-sm text-slate-600 font-medium">Podcast semanal de análise de mercado</p>
+                <h1 className="text-xl font-bold text-slate-800 dark:text-slate-100">Mercados em Foco</h1>
+                <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">Podcast semanal de análise de mercado</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <button className="relative p-2.5 text-slate-700 hover:bg-slate-100 rounded-xl transition-all">
+              <button className="relative p-2.5 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl transition-all">
                 <Bell className="w-5 h-5" />
-                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[hsl(322,35%,78%)] rounded-full ring-2 ring-white"></span>
+                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[hsl(322,35%,78%)] rounded-full ring-2 ring-white dark:ring-slate-800"></span>
               </button>
             </div>
           </div>
@@ -325,7 +325,7 @@ export default function PodcastDetalhes() {
           </section>
 
           {/* Audio Player Section */}
-          <section className="sticky top-0 bg-white border-b border-[hsl(215,20%,85%)] shadow-lg z-20">
+          <section className="sticky top-0 bg-white dark:bg-slate-800 border-b border-[hsl(215,20%,85%)] dark:border-slate-700 shadow-lg z-20">
             <div className="px-8 py-3">
               <div className="max-w-7xl mx-auto">
                 <div className="flex items-center gap-6">
@@ -335,31 +335,31 @@ export default function PodcastDetalhes() {
                       <img src={currentEpisode.image} alt="episode" className="w-full h-full object-cover" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs text-slate-500">Episódio #{currentEpisode.number}</p>
-                      <h3 className="text-sm font-bold text-slate-800 truncate">{currentEpisode.title}</h3>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">Episódio #{currentEpisode.number}</p>
+                      <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 truncate">{currentEpisode.title}</h3>
                     </div>
                   </div>
 
                   {/* Player Controls */}
                   <div className="flex items-center gap-3">
-                    <button className="p-1.5 text-slate-700 hover:bg-slate-100 rounded-lg transition-all">
+                    <button className="p-1.5 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-all">
                       <Bookmark className="w-4 h-4" />
                     </button>
                     <button 
                       onClick={skipBackward}
-                      className="p-2 text-slate-700 hover:bg-slate-100 rounded-lg transition-all"
+                      className="p-2 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-all"
                     >
                       <SkipBack className="w-4 h-4" />
                     </button>
                     <button 
                       onClick={togglePlayPause}
-                      className="p-3 bg-slate-800 text-white rounded-full hover:bg-slate-700 transition-all shadow-lg"
+                      className="p-3 bg-slate-800 dark:bg-slate-700 text-white rounded-full hover:bg-slate-700 dark:hover:bg-slate-600 transition-all shadow-lg"
                     >
                       {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-0.5" />}
                     </button>
                     <button 
                       onClick={skipForward}
-                      className="p-2 text-slate-700 hover:bg-slate-100 rounded-lg transition-all"
+                      className="p-2 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-all"
                     >
                       <SkipForward className="w-4 h-4" />
                     </button>
@@ -367,7 +367,7 @@ export default function PodcastDetalhes() {
 
                   {/* Progress Bar with Time */}
                   <div className="flex items-center gap-3 flex-[2] min-w-0">
-                    <span className="text-xs text-slate-600 font-medium whitespace-nowrap">{formatTime(currentTime)}</span>
+                    <span className="text-xs text-slate-600 dark:text-slate-400 font-medium whitespace-nowrap">{formatTime(currentTime)}</span>
                     <input
                       type="range"
                       min="0"
