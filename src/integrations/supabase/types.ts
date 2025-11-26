@@ -226,6 +226,123 @@ export type Database = {
           },
         ]
       }
+      user_browsing_history: {
+        Row: {
+          id: string
+          product_category: string | null
+          product_id: string
+          product_tags: string[] | null
+          product_title: string
+          product_type: string
+          time_spent_seconds: number | null
+          user_id: string
+          viewed_at: string
+        }
+        Insert: {
+          id?: string
+          product_category?: string | null
+          product_id: string
+          product_tags?: string[] | null
+          product_title: string
+          product_type: string
+          time_spent_seconds?: number | null
+          user_id?: string
+          viewed_at?: string
+        }
+        Update: {
+          id?: string
+          product_category?: string | null
+          product_id?: string
+          product_tags?: string[] | null
+          product_title?: string
+          product_type?: string
+          time_spent_seconds?: number | null
+          user_id?: string
+          viewed_at?: string
+        }
+        Relationships: []
+      }
+      user_preferences: {
+        Row: {
+          created_at: string
+          id: string
+          interests: string[] | null
+          preferred_categories: string[] | null
+          preferred_content_types: string[] | null
+          price_range_max: number | null
+          price_range_min: number | null
+          skill_level: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          interests?: string[] | null
+          preferred_categories?: string[] | null
+          preferred_content_types?: string[] | null
+          price_range_max?: number | null
+          price_range_min?: number | null
+          skill_level?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          interests?: string[] | null
+          preferred_categories?: string[] | null
+          preferred_content_types?: string[] | null
+          price_range_max?: number | null
+          price_range_min?: number | null
+          skill_level?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_purchases: {
+        Row: {
+          completed: boolean | null
+          id: string
+          price: number
+          product_category: string | null
+          product_id: string
+          product_tags: string[] | null
+          product_title: string
+          product_type: string
+          purchased_at: string
+          rating: number | null
+          user_id: string
+        }
+        Insert: {
+          completed?: boolean | null
+          id?: string
+          price: number
+          product_category?: string | null
+          product_id: string
+          product_tags?: string[] | null
+          product_title: string
+          product_type: string
+          purchased_at?: string
+          rating?: number | null
+          user_id?: string
+        }
+        Update: {
+          completed?: boolean | null
+          id?: string
+          price?: number
+          product_category?: string | null
+          product_id?: string
+          product_tags?: string[] | null
+          product_title?: string
+          product_type?: string
+          purchased_at?: string
+          rating?: number | null
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
