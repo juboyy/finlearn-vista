@@ -11,6 +11,7 @@ import { InsightsSuggestions } from "@/components/Dashboard/InsightsSuggestions"
 import { InsightsDoDia } from "@/components/Dashboard/InsightsDoDia";
 import { ExplainChartChat } from "@/components/Dashboard/ExplainChartChat";
 import { EventDetailsSheet } from "@/components/Dashboard/EventDetailsSheet";
+import { PodcastPanel } from "@/components/Dashboard/PodcastPanel";
 import { Button } from "@/components/ui/button";
 import {
   Tooltip,
@@ -24,6 +25,7 @@ import { useState, useEffect } from "react";
 import { useUserAgents } from "@/hooks/useUserAgents";
 
 const Index = () => {
+  const [podcastPanelOpen, setPodcastPanelOpen] = useState(false);
   const [insightsOpen, setInsightsOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [explainChartOpen, setExplainChartOpen] = useState(false);
@@ -285,6 +287,7 @@ const Index = () => {
                   title="Podcast"
                   description="Ouça enquanto trabalha"
                   bgColor="bg-pastel-green"
+                  onClick={() => setPodcastPanelOpen(true)}
                 />
                 <QuickActionCard
                   icon={Video}
@@ -458,6 +461,10 @@ const Index = () => {
         open={eventDetailsOpen} 
         onOpenChange={setEventDetailsOpen}
         event={selectedEvent}
+      />
+      <PodcastPanel 
+        open={podcastPanelOpen} 
+        onOpenChange={setPodcastPanelOpen}
       />
     </div>
   );
