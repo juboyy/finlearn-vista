@@ -244,10 +244,10 @@ export default function NovoEbook() {
               <div className="grid grid-cols-3 gap-8">
                 {/* Form Content */}
                 <div className="col-span-2">
-                  <div className="bg-gradient-to-br from-card via-card to-[hsl(206,35%,95%)] rounded-2xl border-2 border-border p-8 shadow-lg">
+                  <div className="bg-card rounded-2xl border-2 border-border p-8">
                     <div className="flex items-center gap-4 mb-8 pb-6 border-b-2 border-dashed border-border">
                       <div className="relative">
-                        <div className="w-16 h-16 bg-gradient-to-br from-[hsl(206,50%,75%)] to-[hsl(206,50%,85%)] rounded-2xl flex items-center justify-center shadow-md transform hover:scale-105 transition-transform">
+                        <div className="w-16 h-16 bg-[hsl(206,50%,80%)] rounded-2xl flex items-center justify-center">
                           <Book className="w-8 h-8 text-[hsl(215,20%,40%)]" />
                         </div>
                         <div className="absolute -top-1 -right-1 w-5 h-5 bg-[hsl(142,50%,70%)] rounded-full border-2 border-card flex items-center justify-center">
@@ -255,7 +255,7 @@ export default function NovoEbook() {
                         </div>
                       </div>
                       <div className="flex-1">
-                        <h2 className="text-2xl font-bold text-foreground bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text">Informações Básicas</h2>
+                        <h2 className="text-2xl font-bold text-foreground">Informações Básicas</h2>
                         <p className="text-sm text-muted-foreground mt-1 flex items-center gap-2">
                           <span className="w-2 h-2 bg-[hsl(142,50%,70%)] rounded-full animate-pulse"></span>
                           Preencha os dados essenciais do seu produto
@@ -697,9 +697,9 @@ export default function NovoEbook() {
                 <div className="col-span-1">
                   <div className="sticky top-24 space-y-6">
                     {/* Help Card */}
-                    <div className="bg-gradient-to-br from-[hsl(48,50%,85%)] via-card to-card rounded-2xl border-2 border-[hsl(48,50%,75%)] p-6 shadow-lg">
+                    <div className="bg-[hsl(48,50%,85%)] rounded-2xl border-2 border-[hsl(48,50%,75%)] p-6">
                       <div className="flex items-center gap-3 mb-5">
-                        <div className="w-12 h-12 bg-gradient-to-br from-[hsl(48,60%,75%)] to-[hsl(48,60%,85%)] rounded-xl flex items-center justify-center shadow-md">
+                        <div className="w-12 h-12 bg-[hsl(48,60%,75%)] rounded-xl flex items-center justify-center">
                           <Lightbulb className="w-6 h-6 text-[hsl(215,20%,40%)]" />
                         </div>
                         <h3 className="font-bold text-foreground text-lg">Dicas para Etapa 1</h3>
@@ -721,9 +721,9 @@ export default function NovoEbook() {
                     </div>
 
                     {/* Progress Card */}
-                    <div className="bg-gradient-to-br from-card via-card to-[hsl(206,35%,95%)] rounded-2xl border-2 border-border p-6 shadow-lg">
+                    <div className="bg-card rounded-2xl border-2 border-border p-6">
                       <div className="flex items-center gap-3 mb-5">
-                        <div className="w-10 h-10 bg-gradient-to-br from-[hsl(206,50%,75%)] to-[hsl(206,50%,85%)] rounded-xl flex items-center justify-center shadow-md">
+                        <div className="w-10 h-10 bg-[hsl(206,50%,80%)] rounded-xl flex items-center justify-center">
                           <CheckCircle2 className="w-5 h-5 text-[hsl(215,20%,40%)]" />
                         </div>
                         <h3 className="font-bold text-foreground text-lg">Progresso</h3>
@@ -734,9 +734,9 @@ export default function NovoEbook() {
                             <span className="text-sm font-medium text-muted-foreground">Campos obrigatórios</span>
                             <span className="text-base font-bold text-foreground bg-[hsl(206,50%,85%)] px-3 py-1 rounded-full">{filledCount}/{totalRequired}</span>
                           </div>
-                          <div className="h-3 bg-muted rounded-full overflow-hidden shadow-inner">
+                          <div className="h-3 bg-muted rounded-full overflow-hidden">
                             <div 
-                              className="h-full bg-gradient-to-r from-[hsl(206,50%,70%)] to-[hsl(206,50%,80%)] transition-all duration-500 shadow-sm" 
+                              className="h-full bg-[hsl(206,50%,75%)] transition-all duration-500" 
                               style={{ width: `${progressPercentage}%` }}
                             ></div>
                           </div>
@@ -746,9 +746,9 @@ export default function NovoEbook() {
                             <span className="text-sm font-medium text-muted-foreground">Completude</span>
                             <span className="text-base font-bold text-foreground bg-[hsl(142,50%,80%)] px-3 py-1 rounded-full">{Math.round(progressPercentage)}%</span>
                           </div>
-                          <div className="h-3 bg-muted rounded-full overflow-hidden shadow-inner">
+                          <div className="h-3 bg-muted rounded-full overflow-hidden">
                             <div 
-                              className="h-full bg-gradient-to-r from-[hsl(142,50%,65%)] to-[hsl(142,50%,75%)] transition-all duration-500 shadow-sm" 
+                              className="h-full bg-[hsl(142,50%,70%)] transition-all duration-500" 
                               style={{ width: `${progressPercentage}%` }}
                             ></div>
                           </div>
