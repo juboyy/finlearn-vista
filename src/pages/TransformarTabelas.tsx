@@ -130,6 +130,13 @@ interface ChartData {
   [key: string]: string | number;
 }
 
+interface CustomChart {
+  id: string;
+  title: string;
+  columns: string[];
+  type: "bar" | "line" | "pie";
+}
+
 const CHART_COLORS = [
   "hsl(207, 50%, 65%)",
   "hsl(142, 50%, 65%)",
@@ -150,6 +157,9 @@ export default function TransformarTabelas() {
   const [selectedColumns, setSelectedColumns] = useState<string[]>([]);
   const [labelColumn, setLabelColumn] = useState<string>("");
   const [columnsPerChart, setColumnsPerChart] = useState<number>(2);
+  const [customCharts, setCustomCharts] = useState<CustomChart[]>([]);
+  const [showChartBuilder, setShowChartBuilder] = useState(false);
+  const [currentChart, setCurrentChart] = useState<CustomChart | null>(null);
   const { toast } = useToast();
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -211,6 +221,8 @@ export default function TransformarTabelas() {
     setDataKeys([]);
     setSelectedColumns([]);
     setLabelColumn("");
+    setCustomCharts([]);
+    setShowChartBuilder(false);
   };
 
   const processExcelFile = (arrayBuffer: ArrayBuffer) => {
@@ -307,23 +319,92 @@ export default function TransformarTabelas() {
   };
 
   const toggleColumnSelection = (column: string) => {
-    setSelectedColumns(prev => 
-      prev.includes(column) 
-        ? prev.filter(c => c !== column)
-        : [...prev, column]
-    );
+    if (currentChart) {
+      setCurrentChart(prev => prev ? {
+        ...prev,
+        columns: prev.columns.includes(column)
+          ? prev.columns.filter(c => c !== column)
+          : [...prev.columns, column]
+      } : null);
+    } else {
+      setSelectedColumns(prev => 
+        prev.includes(column) 
+          ? prev.filter(c => c !== column)
+          : [...prev, column]
+      );
+    }
   };
 
-  const renderSingleChart = (columns: string[], chartTitle?: string) => {
+  const createNewChart = () => {
+    setCurrentChart({
+      id: Date.now().toString(),
+      title: `Gráfico ${customCharts.length + 1}`,
+      columns: [],
+      type: "bar"
+    });
+    setShowChartBuilder(true);
+  };
+
+  const saveCurrentChart = () => {
+    if (!currentChart) return;
+    
+    if (currentChart.columns.length === 0) {
+      toast({
+        title: "Nenhuma coluna selecionada",
+        description: "Selecione pelo menos uma coluna para o gráfico.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const existingIndex = customCharts.findIndex(c => c.id === currentChart.id);
+    if (existingIndex >= 0) {
+      const updated = [...customCharts];
+      updated[existingIndex] = currentChart;
+      setCustomCharts(updated);
+    } else {
+      setCustomCharts([...customCharts, currentChart]);
+    }
+
+    setCurrentChart(null);
+    setShowChartBuilder(false);
+    
+    toast({
+      title: "Gráfico salvo",
+      description: "Gráfico personalizado criado com sucesso.",
+    });
+  };
+
+  const editChart = (chart: CustomChart) => {
+    setCurrentChart(chart);
+    setShowChartBuilder(true);
+  };
+
+  const deleteChart = (chartId: string) => {
+    setCustomCharts(customCharts.filter(c => c.id !== chartId));
+    toast({
+      title: "Gráfico removido",
+      description: "Gráfico personalizado excluído.",
+    });
+  };
+
+  const cancelChartBuilder = () => {
+    setCurrentChart(null);
+    setShowChartBuilder(false);
+  };
+
+  const renderSingleChart = (columns: string[], chartTitle?: string, chartTypeOverride?: "bar" | "line" | "pie") => {
     if (!labelColumn) return null;
+
+    const type = chartTypeOverride || chartType;
 
     return (
       <div className="space-y-4">
         {chartTitle && (
-          <h3 className="text-lg font-semibold text-slate-800">{chartTitle}</h3>
+          <h3 className="text-lg font-semibold text-slate-800 mb-2">{chartTitle}</h3>
         )}
         
-        {chartType === "pie" ? (
+        {type === "pie" ? (
           <ResponsiveContainer width="100%" height={400}>
             <RechartsPieChart>
               <Pie
@@ -348,7 +429,7 @@ export default function TransformarTabelas() {
               <Legend />
             </RechartsPieChart>
           </ResponsiveContainer>
-        ) : chartType === "line" ? (
+        ) : type === "line" ? (
           <ResponsiveContainer width="100%" height={400}>
             <RechartsLineChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(215, 20%, 85%)" />
@@ -424,6 +505,37 @@ export default function TransformarTabelas() {
           <p className="text-slate-500 text-sm">
             Faça upload de um arquivo e selecione as colunas
           </p>
+        </div>
+      );
+    }
+
+    // Se existem gráficos personalizados, renderizar eles
+    if (customCharts.length > 0) {
+      return (
+        <div className="space-y-8">
+          {customCharts.map((chart) => (
+            <div key={chart.id} className="relative border-2 border-slate-200 rounded-lg p-4">
+              <div className="absolute top-4 right-4 flex gap-2">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => editChart(chart)}
+                  className="h-8 px-2"
+                >
+                  <i className="fas fa-edit text-slate-600"></i>
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => deleteChart(chart.id)}
+                  className="h-8 px-2 hover:bg-red-50 hover:text-red-600"
+                >
+                  <i className="fas fa-trash text-slate-600"></i>
+                </Button>
+              </div>
+              {renderSingleChart(chart.columns, chart.title, chart.type)}
+            </div>
+          ))}
         </div>
       );
     }
@@ -576,6 +688,102 @@ export default function TransformarTabelas() {
                   )}
                 </div>
 
+                {showChartBuilder && currentChart && (
+                  <div className="bg-white rounded-xl border-2 border-[hsl(142,35%,75%)] p-6">
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-[hsl(142,35%,75%)] flex items-center justify-center">
+                          <i className="fas fa-chart-bar text-slate-700"></i>
+                        </div>
+                        <h3 className="font-bold text-slate-800">Configurar Gráfico</h3>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div>
+                        <Label className="text-sm font-semibold text-slate-700 mb-2 block">
+                          Título do Gráfico
+                        </Label>
+                        <input
+                          type="text"
+                          value={currentChart.title}
+                          onChange={(e) => setCurrentChart({ ...currentChart, title: e.target.value })}
+                          className="w-full p-2 border-2 border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(142,35%,75%)]"
+                          placeholder="Nome do gráfico"
+                        />
+                      </div>
+
+                      <div>
+                        <Label className="text-sm font-semibold text-slate-700 mb-2 block">
+                          Tipo de Gráfico
+                        </Label>
+                        <select
+                          value={currentChart.type}
+                          onChange={(e) => setCurrentChart({ ...currentChart, type: e.target.value as "bar" | "line" | "pie" })}
+                          className="w-full p-2 border-2 border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(142,35%,75%)]"
+                        >
+                          <option value="bar">Gráfico de Barras</option>
+                          <option value="line">Gráfico de Linha</option>
+                          <option value="pie">Gráfico de Pizza</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <Label className="text-sm font-semibold text-slate-700 mb-2 block">
+                          Selecionar Colunas para Cruzar
+                        </Label>
+                        <div className="space-y-2 max-h-64 overflow-y-auto pr-2">
+                          {dataKeys
+                            .filter(key => key !== labelColumn)
+                            .map((key) => {
+                              const isNumeric = chartData.some(row => 
+                                typeof row[key] === "number" || !isNaN(Number(row[key]))
+                              );
+                              
+                              if (!isNumeric) return null;
+
+                              return (
+                                <label
+                                  key={key}
+                                  className="flex items-center gap-3 p-3 rounded-lg border-2 border-slate-200 hover:border-[hsl(142,35%,75%)] transition-colors cursor-pointer"
+                                >
+                                  <input
+                                    type="checkbox"
+                                    checked={currentChart.columns.includes(key)}
+                                    onChange={() => toggleColumnSelection(key)}
+                                    className="w-4 h-4 text-[hsl(142,35%,65%)] focus:ring-[hsl(142,35%,75%)] border-slate-300 rounded"
+                                  />
+                                  <span className="text-sm font-medium text-slate-700 flex-1">
+                                    {key}
+                                  </span>
+                                </label>
+                              );
+                            })}
+                        </div>
+                        <p className="text-xs text-slate-500 mt-2">
+                          {currentChart.columns.length} coluna(s) selecionada(s)
+                        </p>
+                      </div>
+
+                      <div className="flex gap-2 pt-4">
+                        <Button
+                          onClick={saveCurrentChart}
+                          className="flex-1 bg-[hsl(142,35%,65%)] hover:bg-[hsl(142,35%,55%)] text-white"
+                        >
+                          Salvar Gráfico
+                        </Button>
+                        <Button
+                          onClick={cancelChartBuilder}
+                          variant="outline"
+                          className="flex-1"
+                        >
+                          Cancelar
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 {/* Área de Visualização */}
                 <div className="bg-white rounded-xl border-2 border-slate-200 p-8">
                   <div className="flex items-center gap-3 mb-6">
@@ -658,8 +866,70 @@ export default function TransformarTabelas() {
                   )}
                 </div>
 
-{dataKeys.length > 0 && (
-                  <div className="bg-white rounded-xl border-2 border-slate-200 p-6">
+{dataKeys.length > 0 && !showChartBuilder && (
+                  <>
+                    <div className="bg-white rounded-xl border-2 border-slate-200 p-6">
+                      <div className="flex items-center justify-between mb-6">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-lg bg-[hsl(207,50%,75%)] flex items-center justify-center">
+                            <i className="fas fa-layer-group text-slate-700"></i>
+                          </div>
+                          <h3 className="font-bold text-slate-800">Gráficos Personalizados</h3>
+                        </div>
+                        <Button
+                          onClick={createNewChart}
+                          size="sm"
+                          className="bg-[hsl(142,35%,65%)] hover:bg-[hsl(142,35%,55%)] text-white"
+                        >
+                          <i className="fas fa-plus mr-2"></i>
+                          Novo Gráfico
+                        </Button>
+                      </div>
+
+                      {customCharts.length > 0 ? (
+                        <div className="space-y-2">
+                          {customCharts.map((chart) => (
+                            <div
+                              key={chart.id}
+                              className="p-3 border-2 border-slate-200 rounded-lg hover:border-[hsl(142,35%,75%)] transition-colors"
+                            >
+                              <div className="flex items-center justify-between">
+                                <div className="flex-1">
+                                  <p className="font-semibold text-sm text-slate-800">{chart.title}</p>
+                                  <p className="text-xs text-slate-500 mt-1">
+                                    {chart.columns.length} coluna(s) • {chart.type === "bar" ? "Barras" : chart.type === "line" ? "Linha" : "Pizza"}
+                                  </p>
+                                </div>
+                                <div className="flex gap-2">
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    onClick={() => editChart(chart)}
+                                    className="h-8 px-2"
+                                  >
+                                    <i className="fas fa-edit text-slate-600"></i>
+                                  </Button>
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    onClick={() => deleteChart(chart.id)}
+                                    className="h-8 px-2 hover:text-red-600"
+                                  >
+                                    <i className="fas fa-trash text-slate-600"></i>
+                                  </Button>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="text-sm text-slate-500 text-center py-4">
+                          Nenhum gráfico personalizado criado ainda
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="bg-white rounded-xl border-2 border-slate-200 p-6">
                     <div className="flex items-center gap-3 mb-6">
                       <div className="w-10 h-10 rounded-lg bg-[hsl(207,50%,75%)] flex items-center justify-center">
                         <i className="fas fa-columns text-slate-700"></i>
@@ -723,6 +993,7 @@ export default function TransformarTabelas() {
                       </div>
                     </div>
                   </div>
+                  </>
                 )}
 
                 <div className="bg-white rounded-xl border-2 border-slate-200 p-6">
