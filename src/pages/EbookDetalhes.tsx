@@ -1,9 +1,21 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { ArrowLeft, Bell, Share2, Heart, ShoppingCart, Download, Check, ThumbsUp, MessageCircle } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useProductViewTracker } from "@/hooks/useProductViewTracker";
 
 const EbookDetalhes = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const mockUserId = "user-123"; // In production, get from auth context
+
+  // Track product view time
+  useProductViewTracker({
+    productId: id || 'ebook-001',
+    productType: 'ebook',
+    productTitle: 'Guia Completo dos Cartões de Crédito',
+    productCategory: 'Meios de Pagamento',
+    productTags: ['cartão de crédito', 'pagamentos', 'fintech', 'análise']
+  }, mockUserId);
 
   return (
     <div className="flex h-screen overflow-hidden bg-pastel-blue">

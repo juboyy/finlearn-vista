@@ -51,31 +51,6 @@ export const useRecommendations = (userId: string | null) => {
     }
   };
 
-  const trackProductView = async (productData: {
-    productId: string;
-    productType: string;
-    productTitle: string;
-    productCategory?: string;
-    productTags?: string[];
-    timeSpentSeconds?: number;
-  }) => {
-    if (!userId) return;
-
-    try {
-      await supabase.from('user_browsing_history').insert({
-        user_id: userId,
-        product_id: productData.productId,
-        product_type: productData.productType,
-        product_title: productData.productTitle,
-        product_category: productData.productCategory,
-        product_tags: productData.productTags,
-        time_spent_seconds: productData.timeSpentSeconds || 0,
-      });
-    } catch (error) {
-      console.error('Error tracking product view:', error);
-    }
-  };
-
   useEffect(() => {
     if (userId) {
       fetchRecommendations();
@@ -86,6 +61,5 @@ export const useRecommendations = (userId: string | null) => {
     recommendations,
     isLoading,
     refreshRecommendations: fetchRecommendations,
-    trackProductView,
   };
 };

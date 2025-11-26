@@ -16,7 +16,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 const Marketplace = () => {
   const navigate = useNavigate();
   const mockUserId = "user-123"; // In production, get from auth context
-  const { recommendations, isLoading, trackProductView } = useRecommendations(mockUserId);
+  const { recommendations, isLoading } = useRecommendations(mockUserId);
   
   return (
     <div className="flex h-screen overflow-hidden">
@@ -173,16 +173,7 @@ const Marketplace = () => {
                   <div 
                     key={product.id}
                     className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-xl transition group cursor-pointer" 
-                    onClick={() => {
-                      trackProductView({
-                        productId: product.id,
-                        productType: product.type,
-                        productTitle: product.title,
-                        productCategory: product.category,
-                        productTags: product.tags
-                      });
-                      navigate(`/${product.type}/${product.id}`);
-                    }}
+                    onClick={() => navigate(`/${product.type}/${product.id}`)}
                   >
                     <div className="relative">
                       <div className={`h-40 overflow-hidden ${
