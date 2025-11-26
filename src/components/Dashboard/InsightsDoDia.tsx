@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Send, Loader2, Newspaper, BookOpen, Video, Target, Headphones, Award, Sparkles, Trash2, ExternalLink, Tag } from "lucide-react";
+import { Send, Loader2, Newspaper, BookOpen, Video, Target, Headphones, Award, Sparkles, Trash2, ExternalLink, Tag, History, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -32,9 +32,46 @@ const quickActions = [
   { label: "Promoções", icon: Tag, color: "bg-pastel-blue", prompt: "Mostre promoções ativas:\n\n## Cursos com Desconto\n\n### Curso Day Trade\n**60% OFF** - De R$ 497 por R$ 197\n\n### Evolução de Vendas 2024\n```chart-bar\n{\"data\":[{\"name\":\"Jan\",\"value\":150},{\"name\":\"Fev\",\"value\":230},{\"name\":\"Mar\",\"value\":180},{\"name\":\"Abr\",\"value\":290}],\"dataKey\":\"value\",\"xKey\":\"name\"}\n```\n\n---\n\n## E-books Gratuitos\n- Guia Completo de Renda Fixa 2025\n- 10 Estratégias de Proteção" },
 ];
 
+interface ChatHistory {
+  id: string;
+  title: string;
+  timestamp: Date;
+  messages: Array<{ role: string; content: string }>;
+}
+
 export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
   const [input, setInput] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
+  const [chatHistory, setChatHistory] = useState<ChatHistory[]>([
+    {
+      id: "1",
+      title: "Análise de Mercado - Terça 16/11",
+      timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+      messages: [
+        { role: "user", content: "Quais foram as principais notícias do mercado hoje?" },
+        { role: "assistant", content: "As principais notícias incluem a alta do dólar..." }
+      ]
+    },
+    {
+      id: "2",
+      title: "Dúvidas sobre DeFi",
+      timestamp: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
+      messages: [
+        { role: "user", content: "Como funcionam os protocolos DeFi?" },
+        { role: "assistant", content: "Os protocolos DeFi são contratos inteligentes..." }
+      ]
+    },
+    {
+      id: "3",
+      title: "Recomendações de Cursos",
+      timestamp: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+      messages: [
+        { role: "user", content: "Quais cursos você recomenda para iniciantes?" },
+        { role: "assistant", content: "Para iniciantes, recomendo começar com..." }
+      ]
+    }
+  ]);
   const { messages, sendMessage, isLoading, clearMessages } = useAgentChat("Auxiliar do dia");
   const { toast } = useToast();
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -89,11 +126,32 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
   };
 
   const handleClearChat = () => {
+    // Save current conversation to history before clearing
+    if (messages.length > 0) {
+      const firstUserMessage = messages.find(m => m.role === "user");
+      const newHistory: ChatHistory = {
+        id: Date.now().toString(),
+        title: firstUserMessage?.content.slice(0, 40) + "..." || "Nova conversa",
+        timestamp: new Date(),
+        messages: [...messages]
+      };
+      setChatHistory(prev => [newHistory, ...prev]);
+    }
+    
     clearMessages();
     toast({
-      title: "Conversa limpa",
-      description: "O histórico de mensagens foi removido.",
+      title: "Conversa salva no histórico",
+      description: "A conversa foi arquivada e uma nova foi iniciada.",
     });
+  };
+
+  const handleLoadHistory = (history: ChatHistory) => {
+    // In a real implementation, this would load the messages into the chat
+    toast({
+      title: "Histórico carregado",
+      description: `Conversa "${history.title}" carregada.`,
+    });
+    setShowHistory(false);
   };
 
   return (
@@ -101,8 +159,8 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
       <SheetContent className="w-[900px] sm:max-w-[900px] p-0 overflow-hidden">
         <div className="flex h-full">
           {/* Sidebar Lateral */}
-          <div className="w-64 border-r border-border bg-muted/30 p-6 flex flex-col">
-            <div className="mb-6">
+          <div className="w-64 border-r border-border bg-muted/30 p-6 flex flex-col overflow-hidden">
+            <div className="mb-4">
               <h3 className="text-sm font-semibold text-foreground mb-1">
                 O que deseja saber
               </h3>
@@ -110,30 +168,91 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
                 e fazer hoje?
               </h3>
             </div>
-            
-            <div className="flex flex-col gap-3 flex-1">
-              {quickActions.map((action) => (
-                <Button
-                  key={action.label}
-                  onClick={() => handleQuickAction(action)}
-                  className={`${action.color} hover:bg-pastel-pink text-foreground justify-start h-auto py-3 px-4 transition-colors`}
-                  disabled={isLoading}
-                >
-                  <action.icon size={18} className="mr-3 flex-shrink-0" />
-                  <span className="text-sm text-left">{action.label}</span>
-                </Button>
-              ))}
-              
+
+            {/* Toggle between actions and history */}
+            <div className="flex gap-2 mb-4">
               <Button
-                onClick={handleClearChat}
-                disabled={messages.length === 0}
-                variant="outline"
-                className="justify-start h-auto py-3 px-4 mt-2"
+                onClick={() => setShowHistory(false)}
+                variant={!showHistory ? "default" : "outline"}
+                size="sm"
+                className={!showHistory ? "bg-pastel-blue hover:bg-pastel-purple flex-1" : "flex-1"}
               >
-                <Trash2 size={18} className="mr-3 flex-shrink-0" />
-                <span className="text-sm text-left">Limpar Conversa</span>
+                <Sparkles size={14} className="mr-1" />
+                Ações
+              </Button>
+              <Button
+                onClick={() => setShowHistory(true)}
+                variant={showHistory ? "default" : "outline"}
+                size="sm"
+                className={showHistory ? "bg-pastel-blue hover:bg-pastel-purple flex-1" : "flex-1"}
+              >
+                <History size={14} className="mr-1" />
+                Histórico
               </Button>
             </div>
+            
+            <ScrollArea className="flex-1 -mx-6 px-6">
+              {!showHistory ? (
+                <div className="flex flex-col gap-3 pb-4">
+                  {quickActions.map((action) => (
+                    <Button
+                      key={action.label}
+                      onClick={() => handleQuickAction(action)}
+                      className={`${action.color} hover:bg-pastel-pink text-foreground justify-start h-auto py-3 px-4 transition-colors`}
+                      disabled={isLoading}
+                    >
+                      <action.icon size={18} className="mr-3 flex-shrink-0" />
+                      <span className="text-sm text-left">{action.label}</span>
+                    </Button>
+                  ))}
+                  
+                  <Button
+                    onClick={handleClearChat}
+                    disabled={messages.length === 0}
+                    variant="outline"
+                    className="justify-start h-auto py-3 px-4 mt-2"
+                  >
+                    <Trash2 size={18} className="mr-3 flex-shrink-0" />
+                    <span className="text-sm text-left">Salvar e Nova Conversa</span>
+                  </Button>
+                </div>
+              ) : (
+                <div className="space-y-3 pb-4">
+                  {chatHistory.length > 0 ? (
+                    chatHistory.map((history) => (
+                      <button
+                        key={history.id}
+                        onClick={() => handleLoadHistory(history)}
+                        className="w-full text-left p-3 rounded-lg border border-border hover:bg-muted/50 transition-colors"
+                      >
+                        <div className="flex items-start gap-2 mb-1">
+                          <Clock size={14} className="text-muted-foreground mt-0.5 flex-shrink-0" />
+                          <span className="text-xs text-muted-foreground">
+                            {new Intl.DateTimeFormat('pt-BR', {
+                              day: '2-digit',
+                              month: '2-digit',
+                              hour: '2-digit',
+                              minute: '2-digit'
+                            }).format(history.timestamp)}
+                          </span>
+                        </div>
+                        <p className="text-sm font-medium text-foreground line-clamp-2">
+                          {history.title}
+                        </p>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {history.messages.length} mensagens
+                        </p>
+                      </button>
+                    ))
+                  ) : (
+                    <div className="text-center py-8 text-muted-foreground">
+                      <History size={32} className="mx-auto mb-2 opacity-50" />
+                      <p className="text-sm">Nenhum histórico ainda</p>
+                    </div>
+                  )}
+                </div>
+              )}
+            </ScrollArea>
           </div>
 
           {/* Área do Chat */}

@@ -12,13 +12,32 @@ import { InsightsDoDia } from "@/components/Dashboard/InsightsDoDia";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Award, Clock, Flame, TrendingUp, Coins, Scale, Bot, Mic, Video, BookMarked, Bell, Plus, Clock as ClockIcon, Headphones, Play, Lightbulb } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useUserAgents } from "@/hooks/useUserAgents";
 
 const Index = () => {
   const [insightsOpen, setInsightsOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const { agents } = useUserAgents();
+  
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Ctrl+I or Cmd+I for Insights
+      if ((e.ctrlKey || e.metaKey) && e.key === 'i') {
+        e.preventDefault();
+        setInsightsOpen(true);
+      }
+      // Ctrl+K or Cmd+K for Chat
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        setChatOpen(true);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
   
   const anaAgent = agents.find(a => a.agent_key === "ana-analista-tecnica");
   const ricardoAgent = agents.find(a => a.agent_key === "ricardo-renda-fixa");
