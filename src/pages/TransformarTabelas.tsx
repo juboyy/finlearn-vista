@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Upload, FileText, Loader2, Download, ChartLine, Landmark, Bitcoin, GraduationCap, TrendingUp, CreditCard, Database, Settings, BarChart3, PieChart, LineChart, GripVertical, Lightbulb, X } from "lucide-react";
+import { ArrowLeft, Upload, FileText, Loader2, Download, ChartLine, Landmark, Bitcoin, GraduationCap, TrendingUp, CreditCard, Database, Settings, BarChart3, PieChart, LineChart, GripVertical, Lightbulb, X, Save } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import * as XLSX from "xlsx";
@@ -181,12 +183,16 @@ export default function TransformarTabelas() {
   const [currentChart, setCurrentChart] = useState<CustomChart | null>(null);
   const [showExplanationPanel, setShowExplanationPanel] = useState(false);
   const [explanation, setExplanation] = useState<{
+    id?: string;
     summary: string;
     representation: string;
     attention_points: string[];
     recommendations: string[];
   } | null>(null);
   const [isExplaining, setIsExplaining] = useState(false);
+  const [showSaveDialog, setShowSaveDialog] = useState(false);
+  const [chartName, setChartName] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
   const { toast } = useToast();
 
   const sensors = useSensors(
@@ -593,6 +599,7 @@ export default function TransformarTabelas() {
       }
 
       setExplanation({
+        id: data.id,
         summary: data.summary,
         representation: data.representation,
         attention_points: data.attention_points,
@@ -613,6 +620,56 @@ export default function TransformarTabelas() {
       setShowExplanationPanel(false);
     } finally {
       setIsExplaining(false);
+    }
+  };
+
+  const handleSaveChart = async () => {
+    if (!chartName.trim()) {
+      toast({
+        title: "Nome obrigatório",
+        description: "Por favor, insira um nome para o gráfico.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (chartData.length === 0) {
+      toast({
+        title: "Nenhum dado disponível",
+        description: "Não há dados para salvar.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSaving(true);
+
+    try {
+      const { error } = await supabase.from("saved_charts").insert({
+        name: chartName.trim(),
+        chart_type: chartType,
+        chart_data: chartData,
+        explanation_id: explanation?.id || null,
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Gráfico salvo",
+        description: "Gráfico salvo com sucesso com o histórico da explicação.",
+      });
+      
+      setShowSaveDialog(false);
+      setChartName("");
+    } catch (error: any) {
+      console.error("Erro ao salvar gráfico:", error);
+      toast({
+        title: "Erro ao salvar",
+        description: error.message || "Não foi possível salvar o gráfico.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -751,24 +808,35 @@ export default function TransformarTabelas() {
                         <p className="text-sm text-slate-600">Envie seu arquivo com dados</p>
                       </div>
                     </div>
-                    <Button
-                      variant="outline"
-                      onClick={handleExplainChart}
-                      disabled={isExplaining || chartData.length === 0}
-                      className="bg-[hsl(142,35%,65%)] hover:bg-[hsl(142,35%,55%)] text-slate-700 font-medium border-2 border-[hsl(142,35%,65%)] disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {isExplaining ? (
-                        <>
-                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                          Analisando...
-                        </>
-                      ) : (
-                        <>
-                          <Lightbulb className="h-4 w-4 mr-2" />
-                          Explicar Gráfico
-                        </>
-                      )}
-                    </Button>
+                    <div className="flex gap-2">
+                      <Button
+                        variant="outline"
+                        onClick={handleExplainChart}
+                        disabled={isExplaining || chartData.length === 0}
+                        className="bg-[hsl(142,35%,65%)] hover:bg-[hsl(142,35%,55%)] text-slate-700 font-medium border-2 border-[hsl(142,35%,65%)] disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {isExplaining ? (
+                          <>
+                            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                            Analisando...
+                          </>
+                        ) : (
+                          <>
+                            <Lightbulb className="h-4 w-4 mr-2" />
+                            Explicar Gráfico
+                          </>
+                        )}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        onClick={() => setShowSaveDialog(true)}
+                        disabled={chartData.length === 0}
+                        className="bg-[hsl(322,48%,65%)] hover:bg-[hsl(322,48%,55%)] text-slate-700 font-medium border-2 border-[hsl(322,48%,65%)] disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <Save className="h-4 w-4 mr-2" />
+                        Salvar Gráfico
+                      </Button>
+                    </div>
                   </div>
                   
                   {!file ? (
@@ -1252,6 +1320,59 @@ export default function TransformarTabelas() {
           )}
         </SheetContent>
       </Sheet>
+
+      {/* Save Chart Dialog */}
+      <Dialog open={showSaveDialog} onOpenChange={setShowSaveDialog}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Salvar Gráfico</DialogTitle>
+            <DialogDescription>
+              Dê um nome ao seu gráfico para salvá-lo com o histórico da explicação da IA.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <Label htmlFor="chart-name">Nome do Gráfico</Label>
+              <Input
+                id="chart-name"
+                value={chartName}
+                onChange={(e) => setChartName(e.target.value)}
+                placeholder="Ex: Análise de Vendas Q4 2024"
+                disabled={isSaving}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setShowSaveDialog(false);
+                setChartName("");
+              }}
+              disabled={isSaving}
+            >
+              Cancelar
+            </Button>
+            <Button
+              onClick={handleSaveChart}
+              disabled={isSaving || !chartName.trim()}
+              className="bg-[#F5C6E3] hover:bg-[#E0B0CF] text-slate-700"
+            >
+              {isSaving ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Salvando...
+                </>
+              ) : (
+                <>
+                  <Save className="mr-2 h-4 w-4" />
+                  Salvar
+                </>
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

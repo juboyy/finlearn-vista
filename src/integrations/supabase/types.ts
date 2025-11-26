@@ -149,6 +149,44 @@ export type Database = {
         }
         Relationships: []
       }
+      saved_charts: {
+        Row: {
+          chart_data: Json
+          chart_type: string
+          created_at: string
+          explanation_id: string | null
+          id: string
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          chart_data: Json
+          chart_type: string
+          created_at?: string
+          explanation_id?: string | null
+          id?: string
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          chart_data?: Json
+          chart_type?: string
+          created_at?: string
+          explanation_id?: string | null
+          id?: string
+          name?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "saved_charts_explanation_id_fkey"
+            columns: ["explanation_id"]
+            isOneToOne: false
+            referencedRelation: "chart_explanations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
