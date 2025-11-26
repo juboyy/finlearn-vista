@@ -22,7 +22,10 @@ export type Database = {
           file_name: string
           file_size: number
           id: string
+          last_accessed_at: string | null
+          processing_time_seconds: number | null
           summary_content: string
+          summary_length_type: string | null
           summary_type: string
         }
         Insert: {
@@ -32,7 +35,10 @@ export type Database = {
           file_name: string
           file_size: number
           id?: string
+          last_accessed_at?: string | null
+          processing_time_seconds?: number | null
           summary_content: string
+          summary_length_type?: string | null
           summary_type: string
         }
         Update: {
@@ -42,7 +48,10 @@ export type Database = {
           file_name?: string
           file_size?: number
           id?: string
+          last_accessed_at?: string | null
+          processing_time_seconds?: number | null
           summary_content?: string
+          summary_length_type?: string | null
           summary_type?: string
         }
         Relationships: []

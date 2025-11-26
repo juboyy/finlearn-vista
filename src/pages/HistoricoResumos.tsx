@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, FileText, Download, Eye, Trash2, Search, Filter, Calendar } from "lucide-react";
+import { ArrowLeft, FileText, Download, Eye, Trash2, Search, Filter, Calendar, Clock, MoreHorizontal } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,6 +21,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import { Badge } from "@/components/ui/badge";
 
 interface HistorySummary {
   id: string;
@@ -31,6 +39,9 @@ interface HistorySummary {
   agent_name: string;
   summary_content: string;
   created_at: string;
+  last_accessed_at?: string;
+  processing_time_seconds?: number;
+  summary_length_type?: string;
 }
 
 export default function HistoricoResumos() {
@@ -38,6 +49,8 @@ export default function HistoricoResumos() {
   const [filteredHistory, setFilteredHistory] = useState<HistorySummary[]>([]);
   const [selectedHistoryItem, setSelectedHistoryItem] = useState<HistorySummary | null>(null);
   const [showDialog, setShowDialog] = useState(false);
+  const [showDetailsSheet, setShowDetailsSheet] = useState(false);
+  const [selectedDetailsItem, setSelectedDetailsItem] = useState<HistorySummary | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterAgent, setFilterAgent] = useState("all");
   const [filterType, setFilterType] = useState("all");
@@ -118,6 +131,11 @@ export default function HistoricoResumos() {
     setShowDialog(true);
   };
 
+  const handleViewDetails = (item: HistorySummary) => {
+    setSelectedDetailsItem(item);
+    setShowDetailsSheet(true);
+  };
+
   const handleDownloadHistory = (item: HistorySummary) => {
     const blob = new Blob([item.summary_content], { type: "text/markdown" });
     const url = URL.createObjectURL(blob);
@@ -135,20 +153,24 @@ export default function HistoricoResumos() {
     });
   };
 
-  const uniqueAgents = Array.from(new Set(history.map((item) => item.agent_name)));
-
-  const getSummaryTypeLabel = (type: string) => {
-    switch (type) {
-      case "short":
-        return "Curto";
-      case "medium":
-        return "Médio";
-      case "extensive":
-        return "Extenso";
-      default:
-        return type;
-    }
+  const getSummaryLengthLabel = (type: string | undefined) => {
+    const labels: Record<string, string> = {
+      short: "Curto",
+      medium: "Médio",
+      extensive: "Extenso",
+    };
+    return labels[type || "medium"] || "Médio";
   };
+
+  const formatProcessingTime = (seconds: number | undefined) => {
+    if (!seconds) return "N/A";
+    if (seconds < 60) return `${Math.round(seconds)}s`;
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = Math.round(seconds % 60);
+    return `${minutes}m ${remainingSeconds}s`;
+  };
+
+  const uniqueAgents = Array.from(new Set(history.map((item) => item.agent_name)));
 
   return (
     <div className="flex min-h-screen bg-slate-50">
@@ -221,7 +243,7 @@ export default function HistoricoResumos() {
               </div>
             </div>
 
-            {/* Lista de Resumos */}
+            {/* Tabela de Resumos */}
             {isLoading ? (
               <div className="bg-white rounded-xl border-2 border-slate-200 p-12 text-center">
                 <div className="w-16 h-16 rounded-full bg-slate-200 flex items-center justify-center mx-auto mb-4 animate-pulse">
@@ -242,84 +264,101 @@ export default function HistoricoResumos() {
                 </p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 gap-4">
-                {filteredHistory.map((item) => (
-                  <div
-                    key={item.id}
-                    className="bg-white border-2 border-slate-200 rounded-xl p-6 hover:border-slate-300 hover:shadow-md transition-all"
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex items-start gap-4 flex-1 min-w-0">
-                        <div className="w-14 h-14 rounded-xl bg-[hsl(142,35%,75%)] flex items-center justify-center flex-shrink-0 border-2 border-slate-300">
-                          <FileText className="h-7 w-7 text-slate-700" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h3 className="font-bold text-slate-800 text-lg mb-2 truncate">
+              <div className="bg-white rounded-xl border-2 border-slate-200 overflow-hidden">
+                <table className="w-full">
+                  <thead className="bg-slate-50 border-b-2 border-slate-200">
+                    <tr>
+                      <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider w-16">
+                        
+                      </th>
+                      <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
+                        Nome do Documento
+                      </th>
+                      <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider w-40">
+                        Data de Criação
+                      </th>
+                      <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider w-40">
+                        Último Acesso
+                      </th>
+                      <th className="px-6 py-4 text-center text-xs font-semibold text-slate-600 uppercase tracking-wider w-32">
+                        Ações
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-200">
+                    {filteredHistory.map((item) => (
+                      <tr key={item.id} className="hover:bg-slate-50 transition-colors">
+                        <td className="px-6 py-4">
+                          <div className="w-10 h-10 rounded-lg bg-[hsl(142,35%,75%)] flex items-center justify-center border-2 border-slate-300">
+                            <FileText className="h-5 w-5 text-slate-700" />
+                          </div>
+                        </td>
+                        <td className="px-6 py-4">
+                          <div className="font-medium text-slate-800">
                             {item.file_name}
-                          </h3>
-                          <div className="flex flex-wrap items-center gap-3 mb-3">
-                            <div className="flex items-center gap-2 text-sm text-slate-600">
-                              <FileText className="h-4 w-4" />
-                              <span>{(item.file_size / 1024 / 1024).toFixed(2)} MB</span>
-                            </div>
-                            <span className="text-slate-400">•</span>
-                            <div className="flex items-center gap-2 text-sm text-slate-600">
-                              <i className="fas fa-robot"></i>
-                              <span>{item.agent_name}</span>
-                            </div>
-                            <span className="text-slate-400">•</span>
-                            <div className="flex items-center gap-2 text-sm text-slate-600">
-                              <Calendar className="h-4 w-4" />
-                              <span>
-                                {new Date(item.created_at).toLocaleDateString("pt-BR", {
-                                  day: "2-digit",
-                                  month: "long",
-                                  year: "numeric",
+                          </div>
+                          <div className="text-sm text-slate-500 mt-1">
+                            {(item.file_size / 1024 / 1024).toFixed(2)} MB
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 text-sm text-slate-600">
+                          {new Date(item.created_at).toLocaleDateString("pt-BR", {
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "numeric",
+                          })}
+                          <div className="text-xs text-slate-500 mt-1">
+                            {new Date(item.created_at).toLocaleTimeString("pt-BR", {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            })}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 text-sm text-slate-600">
+                          {item.last_accessed_at ? (
+                            <>
+                              {new Date(item.last_accessed_at).toLocaleDateString("pt-BR", {
+                                day: "2-digit",
+                                month: "2-digit",
+                                year: "numeric",
+                              })}
+                              <div className="text-xs text-slate-500 mt-1">
+                                {new Date(item.last_accessed_at).toLocaleTimeString("pt-BR", {
                                   hour: "2-digit",
                                   minute: "2-digit",
                                 })}
-                              </span>
-                            </div>
+                              </div>
+                            </>
+                          ) : (
+                            <span className="text-slate-400">Nunca acessado</span>
+                          )}
+                        </td>
+                        <td className="px-6 py-4">
+                          <div className="flex items-center justify-center gap-2">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleDownloadHistory(item)}
+                              className="text-slate-600 hover:text-[hsl(142,35%,55%)] hover:bg-[hsl(142,35%,95%)]"
+                              title="Download"
+                            >
+                              <Download className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleViewDetails(item)}
+                              className="text-slate-600 hover:text-[hsl(206,50%,55%)] hover:bg-[hsl(206,50%,95%)]"
+                              title="Ver Mais"
+                            >
+                              <MoreHorizontal className="h-4 w-4" />
+                            </Button>
                           </div>
-                          <div className="flex gap-2">
-                            <span className="inline-block px-3 py-1 bg-[hsl(206,35%,85%)] text-slate-700 text-xs font-medium rounded-full">
-                              {getSummaryTypeLabel(item.summary_type)}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2 flex-shrink-0">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleViewHistory(item)}
-                          className="text-slate-600 hover:text-[hsl(206,50%,55%)] hover:bg-[hsl(206,50%,95%)]"
-                          title="Visualizar"
-                        >
-                          <Eye className="h-5 w-5" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleDownloadHistory(item)}
-                          className="text-slate-600 hover:text-[hsl(142,35%,55%)] hover:bg-[hsl(142,35%,95%)]"
-                          title="Baixar"
-                        >
-                          <Download className="h-5 w-5" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleDeleteHistory(item.id)}
-                          className="text-slate-600 hover:text-red-600 hover:bg-red-50"
-                          title="Deletar"
-                        >
-                          <Trash2 className="h-5 w-5" />
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             )}
           </div>
@@ -432,6 +471,166 @@ export default function HistoricoResumos() {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Sheet de Detalhes */}
+      <Sheet open={showDetailsSheet} onOpenChange={setShowDetailsSheet}>
+        <SheetContent className="w-[600px] overflow-y-auto">
+          <SheetHeader>
+            <SheetTitle className="text-slate-800">Detalhes do Resumo</SheetTitle>
+            <SheetDescription className="text-slate-600">
+              Informações completas sobre o documento e processamento
+            </SheetDescription>
+          </SheetHeader>
+          
+          {selectedDetailsItem && (
+            <div className="mt-6 space-y-6">
+              {/* Informações Básicas */}
+              <div className="bg-white rounded-lg border-2 border-slate-200 p-4">
+                <h3 className="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-4">
+                  Informações do Documento
+                </h3>
+                
+                <div className="space-y-3">
+                  <div>
+                    <label className="text-xs font-medium text-slate-500 uppercase">Nome do Arquivo</label>
+                    <p className="text-sm text-slate-800 font-medium mt-1">{selectedDetailsItem.file_name}</p>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xs font-medium text-slate-500 uppercase">Tamanho</label>
+                      <p className="text-sm text-slate-800 mt-1">
+                        {(selectedDetailsItem.file_size / 1024 / 1024).toFixed(2)} MB
+                      </p>
+                    </div>
+                    <div>
+                      <label className="text-xs font-medium text-slate-500 uppercase">Data de Criação</label>
+                      <p className="text-sm text-slate-800 mt-1">
+                        {new Date(selectedDetailsItem.created_at).toLocaleDateString("pt-BR", {
+                          day: "2-digit",
+                          month: "2-digit",
+                          year: "numeric",
+                        })}
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="text-xs font-medium text-slate-500 uppercase">Último Acesso</label>
+                    <p className="text-sm text-slate-800 mt-1">
+                      {selectedDetailsItem.last_accessed_at
+                        ? new Date(selectedDetailsItem.last_accessed_at).toLocaleDateString("pt-BR", {
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "numeric",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })
+                        : "Nunca acessado"}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Informações do Agente e Processamento */}
+              <div className="bg-white rounded-lg border-2 border-slate-200 p-4">
+                <h3 className="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-4">
+                  Processamento
+                </h3>
+                
+                <div className="space-y-3">
+                  <div>
+                    <label className="text-xs font-medium text-slate-500 uppercase">Agente de IA Utilizado</label>
+                    <div className="flex items-center gap-2 mt-2">
+                      <div className="w-8 h-8 rounded-lg bg-[hsl(206,35%,75%)] flex items-center justify-center">
+                        <FileText className="h-4 w-4 text-slate-700" />
+                      </div>
+                      <div>
+                        <p className="text-sm text-slate-800 font-medium">{selectedDetailsItem.agent_name}</p>
+                        <p className="text-xs text-slate-500">{selectedDetailsItem.agent_id}</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xs font-medium text-slate-500 uppercase flex items-center gap-1">
+                        <Clock className="h-3 w-3" />
+                        Tempo de Processamento
+                      </label>
+                      <p className="text-sm text-slate-800 mt-1 font-medium">
+                        {formatProcessingTime(selectedDetailsItem.processing_time_seconds)}
+                      </p>
+                    </div>
+                    <div>
+                      <label className="text-xs font-medium text-slate-500 uppercase">Tipo de Resumo</label>
+                      <Badge
+                        className="mt-1 text-xs"
+                        style={{ 
+                          backgroundColor: 'hsl(206, 35%, 75%)',
+                          color: 'hsl(215, 20%, 30%)'
+                        }}
+                      >
+                        {getSummaryLengthLabel(selectedDetailsItem.summary_length_type)}
+                      </Badge>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Performance */}
+              <div className="bg-white rounded-lg border-2 border-slate-200 p-4">
+                <h3 className="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-4">
+                  Performance
+                </h3>
+                
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs text-slate-600">Velocidade de Processamento</span>
+                    <span className="text-xs font-medium text-slate-800">
+                      {selectedDetailsItem.processing_time_seconds && selectedDetailsItem.processing_time_seconds > 0
+                        ? `${((selectedDetailsItem.file_size / 1024 / 1024) / selectedDetailsItem.processing_time_seconds).toFixed(2)} MB/s`
+                        : "N/A"}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs text-slate-600">Eficiência</span>
+                    <span className="text-xs font-medium text-slate-800">
+                      {selectedDetailsItem.processing_time_seconds && selectedDetailsItem.processing_time_seconds < 30
+                        ? "Excelente"
+                        : selectedDetailsItem.processing_time_seconds && selectedDetailsItem.processing_time_seconds < 60
+                        ? "Boa"
+                        : "Normal"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Ações */}
+              <div className="flex gap-2">
+                <Button
+                  className="flex-1 bg-[hsl(142,35%,65%)] hover:bg-[hsl(142,35%,55%)] text-slate-800"
+                  onClick={() => handleDownloadHistory(selectedDetailsItem)}
+                >
+                  <Download className="h-4 w-4 mr-2" />
+                  Download
+                </Button>
+                <Button
+                  variant="outline"
+                  className="flex-1 border-2 border-slate-300"
+                  onClick={() => {
+                    handleViewHistory(selectedDetailsItem);
+                    setShowDetailsSheet(false);
+                  }}
+                >
+                  <Eye className="h-4 w-4 mr-2" />
+                  Visualizar
+                </Button>
+              </div>
+            </div>
+          )}
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }

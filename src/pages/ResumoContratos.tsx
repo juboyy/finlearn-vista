@@ -236,6 +236,7 @@ export default function ResumoContratos() {
     try {
       const reader = new FileReader();
       reader.onload = async (e) => {
+        const startTime = Date.now(); // Track processing start time
         const base64Content = e.target?.result as string;
         
         const { data, error } = await supabase.functions.invoke("resumir-contrato", {
@@ -249,9 +250,10 @@ export default function ResumoContratos() {
 
         if (error) throw error;
 
+        const processingTimeSeconds = (Date.now() - startTime) / 1000; // Calculate processing time
         setSummary(data.summary);
         
-        // Save to database
+        // Save to database with new fields
         const selectedAgentData = specializedAgents.find(a => a.id === selectedAgent);
         await supabase.from("contract_summaries").insert({
           file_name: file.name,
@@ -260,6 +262,8 @@ export default function ResumoContratos() {
           agent_id: selectedAgent,
           agent_name: selectedAgentData?.name || "Unknown",
           summary_content: data.summary,
+          processing_time_seconds: processingTimeSeconds,
+          summary_length_type: summaryType, // short, medium, or extensive
         });
 
         // Reload history
