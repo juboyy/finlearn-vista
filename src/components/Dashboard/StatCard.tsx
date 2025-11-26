@@ -55,11 +55,11 @@ export const StatCard = ({
           <p className="text-sm text-muted-foreground">{label}</p>
         </div>
       </HoverCardTrigger>
-      <HoverCardContent className="w-80 p-0" side="bottom" align="start">
-        <div className="space-y-4 p-4">
+      <HoverCardContent className="w-[500px] p-0 z-50 bg-card" side="top" align="center">
+        <div className="p-4">
           {agentImage && agentName && (
-            <div className="flex items-center gap-3 pb-3 border-b border-border">
-              <Avatar className="h-12 w-12">
+            <div className="flex items-center gap-3 pb-2 border-b border-border mb-3">
+              <Avatar className="h-10 w-10">
                 <AvatarImage src={agentImage} alt={agentName} />
                 <AvatarFallback>{agentName.charAt(0)}</AvatarFallback>
               </Avatar>
@@ -70,26 +70,28 @@ export const StatCard = ({
             </div>
           )}
           
-          {explanation && (
-            <div>
-              <h4 className="text-xs font-semibold text-foreground mb-1.5">O que significa</h4>
-              <p className="text-xs text-muted-foreground leading-relaxed">{explanation}</p>
-            </div>
-          )}
-          
-          {insight && (
-            <div className="bg-pastel-blue/20 rounded-lg p-3">
-              <h4 className="text-xs font-semibold text-foreground mb-1.5">Insight</h4>
-              <p className="text-xs text-muted-foreground leading-relaxed">{insight}</p>
-            </div>
-          )}
-          
-          {note && (
-            <div>
-              <h4 className="text-xs font-semibold text-foreground mb-1.5">Nota</h4>
-              <p className="text-xs text-muted-foreground leading-relaxed">{note}</p>
-            </div>
-          )}
+          <div className="grid grid-cols-3 gap-3">
+            {explanation && (
+              <div>
+                <h4 className="text-xs font-semibold text-foreground mb-1">O que significa</h4>
+                <p className="text-xs text-muted-foreground leading-snug">{explanation}</p>
+              </div>
+            )}
+            
+            {insight && (
+              <div className="bg-pastel-blue/20 rounded-lg p-2">
+                <h4 className="text-xs font-semibold text-foreground mb-1">Insight</h4>
+                <p className="text-xs text-muted-foreground leading-snug">{insight}</p>
+              </div>
+            )}
+            
+            {note && (
+              <div>
+                <h4 className="text-xs font-semibold text-foreground mb-1">Nota</h4>
+                <p className="text-xs text-muted-foreground leading-snug">{note}</p>
+              </div>
+            )}
+          </div>
         </div>
       </HoverCardContent>
     </HoverCard>
