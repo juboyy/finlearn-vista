@@ -91,9 +91,17 @@ const PodcastCard = ({ podcast }: { podcast: Podcast }) => (
       </h4>
       <p className="text-xs text-muted-foreground truncate">{podcast.topic}</p>
     </div>
-    <Button size="icon" variant="ghost" className="shrink-0 hover:bg-primary/10">
-      <Play className="h-4 w-4" />
-    </Button>
+    <div className="flex flex-col gap-2 shrink-0">
+      <Button size="icon" variant="ghost" className="h-12 w-12 hover:bg-primary/10">
+        <Play className="h-5 w-5" />
+      </Button>
+      <div className="w-12 flex flex-col items-center gap-1">
+        <div className="w-full h-1 bg-slate-800 rounded-full overflow-hidden">
+          <div className="h-full bg-primary w-[60%]"></div>
+        </div>
+        <span className="text-[10px] text-muted-foreground">24:30</span>
+      </div>
+    </div>
   </div>
 );
 
