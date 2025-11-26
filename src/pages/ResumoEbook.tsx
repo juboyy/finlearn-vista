@@ -11,6 +11,7 @@ export default function ResumoEbook() {
   const [searchParams] = useSearchParams();
   const productId = searchParams.get("productId");
   const [productData, setProductData] = useState<any>(null);
+  const [relatedProducts, setRelatedProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -32,6 +33,21 @@ export default function ResumoEbook() {
       if (error) throw error;
       
       setProductData(data);
+      
+      // Load related products based on category and tags
+      if (data) {
+        const { data: related, error: relatedError } = await supabase
+          .from("products")
+          .select("*")
+          .neq("id", productId)
+          .eq("status", "published")
+          .or(`category.eq.${data.category},tags.cs.{${data.tags?.join(',') || ''}}`)
+          .limit(4);
+        
+        if (!relatedError && related) {
+          setRelatedProducts(related);
+        }
+      }
     } catch (error) {
       console.error("Error loading product:", error);
       toast({
@@ -322,6 +338,52 @@ export default function ResumoEbook() {
                         <div key={index} className="border-b border-border last:border-0 pb-4 last:pb-0">
                           <h4 className="text-base font-semibold text-foreground mb-2">{faq.question}</h4>
                           <p className="text-sm text-muted-foreground leading-relaxed">{faq.answer}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Related Products */}
+                {relatedProducts.length > 0 && (
+                  <div className="bg-card rounded-xl border border-border p-8">
+                    <h3 className="text-xl font-semibold text-foreground mb-6">Produtos Relacionados</h3>
+                    <div className="grid grid-cols-2 gap-4">
+                      {relatedProducts.map((product: any) => (
+                        <div key={product.id} className="border border-border rounded-lg p-4 hover:border-primary/50 transition-colors cursor-pointer">
+                          <div className="flex gap-4">
+                            <div className="w-20 h-28 bg-[hsl(142,35%,85%)] rounded flex-shrink-0 flex items-center justify-center overflow-hidden">
+                              {product.cover_image_url ? (
+                                <img 
+                                  src={product.cover_image_url} 
+                                  alt={product.title}
+                                  className="w-full h-full object-cover"
+                                />
+                              ) : (
+                                <span className="text-3xl">📚</span>
+                              )}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-xs px-2 py-0.5 bg-[hsl(207,35%,92%)] text-[hsl(215,20%,40%)] rounded-full inline-block mb-2">
+                                {product.category}
+                              </p>
+                              <h4 className="text-sm font-semibold text-foreground mb-1 line-clamp-2">
+                                {product.title}
+                              </h4>
+                              <p className="text-xs text-muted-foreground mb-2 line-clamp-2">
+                                {product.short_description}
+                              </p>
+                              <div className="flex items-center justify-between">
+                                <p className="text-lg font-bold text-foreground">
+                                  R$ {product.price ? parseFloat(product.price).toFixed(2) : "0,00"}
+                                </p>
+                                <div className="flex items-center gap-1">
+                                  <Star className="w-3 h-3 fill-[hsl(48,85%,60%)] text-[hsl(48,85%,60%)]" />
+                                  <span className="text-xs text-muted-foreground">4.5</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       ))}
                     </div>
