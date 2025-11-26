@@ -194,6 +194,91 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
     reader.readAsDataURL(file);
   };
 
+  const handleAddChart = async () => {
+    if (!fabricCanvas) return;
+
+    // Criar um gráfico de exemplo pequeno
+    const chartData = {
+      type: "bar",
+      title: "Gráfico de Exemplo",
+      data: [
+        { name: "A", value: 30 },
+        { name: "B", value: 60 },
+        { name: "C", value: 45 },
+        { name: "D", value: 80 },
+      ]
+    };
+
+    // Criar um container para o gráfico
+    const chartGroup: any[] = [];
+    
+    // Adicionar título
+    const title = new Textbox(chartData.title, {
+      left: 0,
+      top: 0,
+      width: 200,
+      fontSize: 12,
+      fill: "#1e293b",
+      fontFamily: "Arial",
+      fontWeight: "bold",
+      textAlign: "center",
+    });
+    chartGroup.push(title);
+
+    // Adicionar barras do gráfico
+    const maxValue = Math.max(...chartData.data.map(d => d.value));
+    const barWidth = 40;
+    const barSpacing = 10;
+    const chartHeight = 150;
+    const startX = 10;
+    const startY = 30;
+
+    chartData.data.forEach((item, index) => {
+      const barHeight = (item.value / maxValue) * chartHeight;
+      const x = startX + (index * (barWidth + barSpacing));
+      const y = startY + chartHeight - barHeight;
+
+      // Barra
+      const bar = new Rect({
+        left: x,
+        top: y,
+        width: barWidth,
+        height: barHeight,
+        fill: `hsl(${206 + index * 30}, 70%, 60%)`,
+        selectable: false,
+      });
+      chartGroup.push(bar);
+
+      // Label
+      const label = new Textbox(item.name, {
+        left: x,
+        top: startY + chartHeight + 5,
+        width: barWidth,
+        fontSize: 10,
+        fill: "#475569",
+        fontFamily: "Arial",
+        textAlign: "center",
+        selectable: false,
+      });
+      chartGroup.push(label);
+    });
+
+    // Adicionar todos os elementos ao canvas em uma posição inicial
+    const groupLeft = 400;
+    const groupTop = 50;
+    
+    chartGroup.forEach((obj) => {
+      obj.set({
+        left: obj.left + groupLeft,
+        top: obj.top + groupTop,
+      });
+      fabricCanvas.add(obj);
+    });
+
+    fabricCanvas.renderAll();
+    toast.success("Gráfico adicionado ao canvas");
+  };
+
   const handleDeleteSelected = () => {
     if (!fabricCanvas) return;
     
@@ -266,7 +351,7 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
           <Button
             type="button"
             size="sm"
-            onClick={onAddChart}
+            onClick={handleAddChart}
             className="bg-[hsl(142,35%,75%)] hover:bg-[hsl(142,35%,65%)] text-slate-800"
           >
             <BarChart3 className="h-4 w-4 mr-2" />
