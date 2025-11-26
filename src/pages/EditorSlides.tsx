@@ -53,6 +53,7 @@ import { AgentChat } from "@/components/AgentChat";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Switch } from "@/components/ui/switch";
 import { Checkbox } from "@/components/ui/checkbox";
+import { PresentationPreviewModal } from "@/components/Dashboard/PresentationPreviewModal";
 
 interface Slide {
   id: string;
@@ -79,6 +80,7 @@ export default function EditorSlides() {
   const [showAgentChat, setShowAgentChat] = useState(false);
   const [showSettingsSheet, setShowSettingsSheet] = useState(false);
   const [showClearDialog, setShowClearDialog] = useState(false);
+  const [showSlidePreview, setShowSlidePreview] = useState(false);
   const [presentationSettings, setPresentationSettings] = useState({
     isPaid: false,
     price: "",
@@ -704,6 +706,7 @@ IMPORTANTE:
                       slideImage={currentSlide.imageUrl}
                       slideChart={currentSlide.chartData}
                       slideId={currentSlide.id}
+                      onViewSlide={() => setShowSlidePreview(true)}
                     />
                   </div>
                 </div>
@@ -762,6 +765,18 @@ IMPORTANTE:
           </div>
         </div>
       )}
+      
+      {/* Presentation Preview Modal */}
+      <PresentationPreviewModal
+        isOpen={showSlidePreview}
+        onClose={() => setShowSlidePreview(false)}
+        title={projectInfo.title || "Apresentação"}
+        slides={slides.map((slide, index) => ({
+          id: index,
+          content: slide.title || `Slide ${index + 1}`,
+          image: slide.imageUrl,
+        }))}
+      />
     </div>
   );
 }
