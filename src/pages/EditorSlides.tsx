@@ -44,6 +44,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { SlideChart } from "@/components/SlideChart";
+import { SlideCanvasEditor } from "@/components/SlideCanvasEditor";
 import {
   DndContext,
   closestCenter,
@@ -70,6 +71,7 @@ interface Slide {
   id: string;
   title: string;
   content: string;
+  canvasData?: any; // Fabric.js canvas JSON data
   imageUrl?: string;
   chartData?: any;
 }
@@ -1059,57 +1061,13 @@ Exemplo para PIX:
 
                 <div>
                   <label className="text-sm font-medium text-slate-700 mb-2 block">
-                    Conteúdo
+                    Conteúdo Visual
                   </label>
-                  <Textarea
-                    value={currentSlide?.content || ""}
-                    onChange={(e) => updateSlide("content", e.target.value)}
-                    className="min-h-[400px] border-slate-300 font-normal text-base leading-relaxed"
-                    placeholder="Digite o conteúdo do slide..."
+                  <SlideCanvasEditor
+                    initialData={currentSlide?.canvasData}
+                    onUpdate={(canvasData) => updateSlide("canvasData", canvasData)}
+                    onAddChart={() => setShowChartDialog(true)}
                   />
-                  
-                  {/* Images and Charts side by side */}
-                  {(currentSlide?.imageUrl || currentSlide?.chartData) && (
-                    <div className="mt-6 flex gap-4 items-start">
-                      {currentSlide?.imageUrl && (
-                        <div className="relative flex-shrink-0">
-                          <img
-                            src={currentSlide.imageUrl}
-                            alt="Slide"
-                            className="w-80 h-auto rounded-lg border-2 border-slate-200"
-                          />
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => updateSlide("imageUrl", undefined)}
-                            className="absolute top-2 right-2 bg-white/90 hover:bg-white h-8 w-8 p-0"
-                          >
-                            <Trash2 className="w-4 h-4 text-red-500" />
-                          </Button>
-                        </div>
-                      )}
-                      
-                      {currentSlide?.chartData && (
-                        <div className="relative flex-1">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => updateSlide("chartData", undefined)}
-                            className="absolute top-2 right-2 bg-white/90 hover:bg-white h-8 w-8 p-0 z-10"
-                          >
-                            <Trash2 className="w-4 h-4 text-red-500" />
-                          </Button>
-                          <div className="w-full">
-                            <SlideChart
-                              type={currentSlide.chartData.type}
-                              data={currentSlide.chartData.data}
-                              title={currentSlide.chartData.title}
-                            />
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  )}
                 </div>
               </div>
             </div>
