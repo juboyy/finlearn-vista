@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { Search, Bell, ArrowLeft, Wrench, FileText, TrendingUp, Scale, Calculator, Megaphone, Target, Store } from "lucide-react";
+import { Search, Bell, ArrowLeft, Wrench, FileText, TrendingUp, Scale, Calculator, Megaphone, Target, Store, BarChart3 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -39,6 +39,14 @@ const ferramentas = [
   },
   {
     id: 5,
+    nome: "Transformar tabelas em gráficos",
+    descricao: "Conversão automática de dados tabulares em visualizações gráficas",
+    area: "Contábil",
+    icon: BarChart3,
+    color: "hsl(207, 35%, 75%)"
+  },
+  {
+    id: 6,
     nome: "Modelos de envio de Informes Legais",
     descricao: "Templates e estruturas para envio de informações regulatórias obrigatórias",
     area: "Jurídico",
@@ -46,7 +54,7 @@ const ferramentas = [
     color: "hsl(142, 35%, 75%)"
   },
   {
-    id: 6,
+    id: 7,
     nome: "Notas Explicativas de artigos Bacen",
     descricao: "Interpretação e contextualização de normativos do Banco Central",
     area: "Jurídico",
@@ -54,7 +62,7 @@ const ferramentas = [
     color: "hsl(142, 35%, 75%)"
   },
   {
-    id: 7,
+    id: 8,
     nome: "Notas Explicativas de artigo CVM",
     descricao: "Interpretação e contextualização de normativos da Comissão de Valores Mobiliários",
     area: "Jurídico",
@@ -62,7 +70,7 @@ const ferramentas = [
     color: "hsl(142, 35%, 75%)"
   },
   {
-    id: 8,
+    id: 9,
     nome: "PRD de Features",
     descricao: "Criação de Product Requirement Documents para novas funcionalidades",
     area: "Marketing",
@@ -70,7 +78,7 @@ const ferramentas = [
     color: "hsl(280, 35%, 75%)"
   },
   {
-    id: 9,
+    id: 10,
     nome: "Análise de Concorrentes",
     descricao: "Estudo comparativo de posicionamento e estratégias competitivas",
     area: "Marketing",
@@ -134,7 +142,7 @@ export default function Ferramentas() {
                   <span className="text-slate-600 text-sm">Total de Ferramentas</span>
                   <Wrench className="h-5 w-5 text-slate-400" />
                 </div>
-                <p className="text-3xl font-semibold text-slate-800">9</p>
+                <p className="text-3xl font-semibold text-slate-800">10</p>
               </div>
               
               <div className="bg-white rounded-lg p-6 border border-slate-200">
@@ -150,7 +158,7 @@ export default function Ferramentas() {
                   <span className="text-slate-600 text-sm">Área Contábil</span>
                   <Calculator className="h-5 w-5 text-slate-400" />
                 </div>
-                <p className="text-3xl font-semibold text-slate-800">1</p>
+                <p className="text-3xl font-semibold text-slate-800">2</p>
               </div>
               
               <div className="bg-white rounded-lg p-6 border border-slate-200">
