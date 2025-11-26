@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Canvas as FabricCanvas, FabricImage, Rect, Textbox, util } from "fabric";
 import { Button } from "@/components/ui/button";
-import { ImageIcon, BarChart3, Type, Trash2, Download } from "lucide-react";
+import { ImageIcon, BarChart3, Type, Trash2, Download, Save } from "lucide-react";
 import { toast } from "sonner";
 
 interface SlideCanvasEditorProps {
@@ -497,6 +497,18 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
 
       {/* Toolbar */}
       <div className="flex items-center gap-2 p-3 bg-white border-2 border-slate-200 rounded-lg">
+        <Button
+          type="button"
+          size="sm"
+          onClick={handleManualSave}
+          className="bg-[hsl(142,35%,65%)] hover:bg-[hsl(142,35%,55%)] text-slate-800 font-semibold"
+        >
+          <Save className="h-4 w-4 mr-2" />
+          Salvar Slide
+        </Button>
+        
+        <div className="w-px h-6 bg-slate-300" />
+        
         <Button
           type="button"
           size="sm"
