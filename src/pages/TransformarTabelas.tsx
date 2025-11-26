@@ -677,14 +677,22 @@ export default function TransformarTabelas() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <div className="lg:col-span-2 space-y-6">
                 <div className="bg-white rounded-xl border-2 border-slate-200 p-8">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-12 h-12 rounded-xl bg-[hsl(142,35%,75%)] flex items-center justify-center border-2 border-slate-300">
-                      <Upload className="h-6 w-6 text-slate-700" />
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-xl bg-[hsl(142,35%,75%)] flex items-center justify-center border-2 border-slate-300">
+                        <Upload className="h-6 w-6 text-slate-700" />
+                      </div>
+                      <div>
+                        <h2 className="text-xl font-bold text-slate-800">Upload da Tabela</h2>
+                        <p className="text-sm text-slate-600">Envie seu arquivo com dados</p>
+                      </div>
                     </div>
-                    <div>
-                      <h2 className="text-xl font-bold text-slate-800">Upload da Tabela</h2>
-                      <p className="text-sm text-slate-600">Envie seu arquivo com dados</p>
-                    </div>
+                    <Button
+                      variant="outline"
+                      className="border-2 border-slate-300 hover:border-[hsl(142,35%,65%)] hover:bg-[hsl(142,35%,95%)] text-slate-700 font-medium"
+                    >
+                      Explicar Gráfico
+                    </Button>
                   </div>
                   
                   {!file ? (
