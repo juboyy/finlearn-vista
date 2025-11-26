@@ -12,9 +12,17 @@ import { Button } from "@/components/ui/button";
 import { BookOpen, Award, Clock, Flame, TrendingUp, Coins, Scale, Bot, Mic, Video, BookMarked, Bell, Plus, Clock as ClockIcon, Headphones, Play, Lightbulb } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useUserAgents } from "@/hooks/useUserAgents";
 
 const Index = () => {
   const [insightsOpen, setInsightsOpen] = useState(false);
+  const { agents } = useUserAgents();
+  
+  const anaAgent = agents.find(a => a.agent_key === "ana-analista-tecnica");
+  const ricardoAgent = agents.find(a => a.agent_key === "ricardo-renda-fixa");
+  const marinaAgent = agents.find(a => a.agent_key === "marina-mercado-capitais");
+  const joaoAgent = agents.find(a => a.agent_key === "joao-educador");
+  
   return (
     <div className="flex h-screen overflow-hidden">
       <SidebarFix />
@@ -57,6 +65,11 @@ const Index = () => {
                 label="Cursos em Progresso"
                 trend="+12%"
                 bgColor="bg-pastel-blue"
+                agentImage={anaAgent?.agent_image}
+                agentName={anaAgent?.agent_name}
+                explanation="Este número representa a quantidade total de cursos que você iniciou e está atualmente estudando na plataforma. Incluem cursos de análise técnica, mercado de capitais, e outros tópicos financeiros."
+                insight="Com 24 cursos em progresso e um crescimento de 12% no último período, você está demonstrando grande comprometimento com o aprendizado contínuo. Isso coloca você acima da média de 18 cursos por usuário ativo."
+                note="Recomendamos focar em concluir 2-3 cursos por vez para maximizar a retenção de conhecimento e obter certificações mais rapidamente."
               />
             </div>
             <div className="animate-fade-in" style={{ animationDelay: "0.2s" }}>
@@ -66,6 +79,11 @@ const Index = () => {
                 label="Certificados Obtidos"
                 trend="+3"
                 bgColor="bg-pastel-green"
+                agentImage={ricardoAgent?.agent_image}
+                agentName={ricardoAgent?.agent_name}
+                explanation="Total de certificações que você conquistou ao completar cursos na plataforma. Cada certificado valida seu conhecimento em áreas específicas do mercado financeiro e pode ser compartilhado em seu perfil profissional."
+                insight="Você conquistou 3 novos certificados recentemente! Essa evolução demonstra seu progresso consistente. Profissionais com 10+ certificados têm 40% mais visibilidade no mercado."
+                note="Certificados em Compliance e Regulação são os mais valorizados atualmente. Considere priorizar cursos nessas áreas para fortalecer seu perfil."
               />
             </div>
             <div className="animate-fade-in" style={{ animationDelay: "0.3s" }}>
@@ -76,6 +94,11 @@ const Index = () => {
                 trend="Esta semana"
                 trendType="neutral"
                 bgColor="bg-pastel-yellow"
+                agentImage={marinaAgent?.agent_image}
+                agentName={marinaAgent?.agent_name}
+                explanation="Soma das horas dedicadas ao estudo e consumo de conteúdo educacional na última semana. Inclui aulas, leituras, podcasts e webinars assistidos na plataforma."
+                insight="Suas 12.5 horas semanais estão perfeitamente alinhadas com o ritmo ideal de aprendizado. Estudos mostram que 10-15 horas semanais proporcionam melhor absorção de conteúdo sem sobrecarga."
+                note="Manter consistência é mais importante que volume. Continue com esse ritmo para obter resultados sustentáveis a longo prazo."
               />
             </div>
             <div className="animate-fade-in" style={{ animationDelay: "0.4s" }}>
@@ -86,6 +109,11 @@ const Index = () => {
                 trend="Sequência"
                 trendType="neutral"
                 bgColor="bg-pastel-pink"
+                agentImage={joaoAgent?.agent_image}
+                agentName={joaoAgent?.agent_name}
+                explanation="Número de dias seguidos em que você acessou a plataforma e realizou alguma atividade de aprendizado. Manter uma sequência demonstra disciplina e cria o hábito de estudo contínuo."
+                insight="Parabéns por manter 15 dias consecutivos de estudo! Sequências acima de 14 dias aumentam a probabilidade de conclusão de cursos em 3x. Você está construindo um hábito sólido."
+                note="Para manter a sequência, tente estudar no mesmo horário todos os dias. Mesmo 15 minutos diários são suficientes para manter o streak ativo."
               />
             </div>
           </section>
