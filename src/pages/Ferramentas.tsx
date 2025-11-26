@@ -183,11 +183,10 @@ export default function Ferramentas() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-200">
-                  {ferramentas.map((ferramenta) => (
-                    <tr 
-                      key={ferramenta.id}
-                      className="hover:bg-slate-50 transition-colors cursor-pointer"
-                    >
+                  {ferramentas.map((ferramenta) => {
+                    const isResumoContratos = ferramenta.id === 2;
+                    const RowContent = (
+                      <>
                       <td className="px-6 py-4">
                         <div
                           className="w-10 h-10 rounded-lg flex items-center justify-center"
@@ -217,8 +216,24 @@ export default function Ferramentas() {
                           {ferramenta.area}
                         </Badge>
                       </td>
-                    </tr>
-                  ))}
+                      </>
+                    );
+
+                    return isResumoContratos ? (
+                      <tr key={ferramenta.id} className="hover:bg-slate-50 transition-colors">
+                        <Link to="/resumo-contratos" className="contents">
+                          {RowContent}
+                        </Link>
+                      </tr>
+                    ) : (
+                      <tr 
+                        key={ferramenta.id}
+                        className="hover:bg-slate-50 transition-colors cursor-pointer"
+                      >
+                        {RowContent}
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
