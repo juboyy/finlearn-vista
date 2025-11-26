@@ -124,8 +124,8 @@ export default function MeusConteudos() {
       
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
-        <header className="bg-card border-b border-border h-16 flex-none">
-          <div className="h-full px-6 flex items-center justify-between">
+        <header className="bg-card border-b border-border flex-none">
+          <div className="px-8 py-4 flex items-center justify-between">
             <div className="flex items-center gap-4">
               <Link to="/aprendizado" className="text-muted-foreground hover:text-foreground transition-colors">
                 <ArrowLeft className="w-5 h-5" />
