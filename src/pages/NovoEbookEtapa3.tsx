@@ -5,11 +5,13 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
+import { StepWizard } from "@/components/Dashboard/StepWizard";
 
 export default function NovoEbookEtapa3() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const productId = searchParams.get("productId");
+  const [scrollProgress, setScrollProgress] = useState(0);
   
   const [productData, setProductData] = useState<any>(null);
   
@@ -49,6 +51,21 @@ export default function NovoEbookEtapa3() {
       loadProductData();
     }
   }, [productId]);
+
+  // Monitor scroll progress
+  useEffect(() => {
+    const handleScroll = () => {
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const scrollTop = window.scrollY;
+      const scrollable = documentHeight - windowHeight;
+      const progress = (scrollTop / scrollable) * 100;
+      setScrollProgress(Math.min(progress, 100));
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const loadProductData = async () => {
     if (!productId) return;
@@ -143,8 +160,6 @@ export default function NovoEbookEtapa3() {
     navigate(`/resumo-ebook?productId=${productId}`);
   };
 
-  const completionPercentage = 67;
-
   return (
     <div className="flex min-h-screen w-full bg-muted/30">
       <SidebarFix />
@@ -175,69 +190,7 @@ export default function NovoEbookEtapa3() {
           </div>
         </header>
 
-        {/* Progress Bar */}
-        <div className="bg-card border-b border-border px-8 py-4">
-          <div className="max-w-5xl mx-auto">
-            <div className="mb-2 flex items-center justify-between text-sm">
-              <span className="font-medium text-foreground">Progresso do Cadastro</span>
-              <span className="font-semibold text-foreground">{completionPercentage}%</span>
-            </div>
-            <div className="h-3 bg-accent rounded-full overflow-hidden">
-              <div className="h-full bg-foreground transition-all duration-500" style={{ width: `${completionPercentage}%` }}></div>
-            </div>
-            <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
-              <span className="flex items-center gap-1">
-                <Check className="w-4 h-4 text-foreground" />
-                Informações Básicas
-              </span>
-              <span className="flex items-center gap-1">
-                <Check className="w-4 h-4 text-foreground" />
-                Conteúdo e Arquivos
-              </span>
-              <span className="flex items-center gap-1">
-                <div className="w-4 h-4 rounded-full border-2 border-muted" />
-                Pagamento e Publicação
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* Progress Indicator */}
-        <div className="px-8 pt-8 pb-6">
-          <div className="flex items-center justify-center">
-            <div className="flex items-center gap-4 max-w-3xl w-full">
-              <div className="flex items-center gap-3 flex-1">
-                <div className="w-10 h-10 rounded-full bg-foreground flex items-center justify-center text-background font-semibold">
-                  <Check className="w-5 h-5" />
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-foreground">Informações Básicas</p>
-                  <p className="text-xs text-muted-foreground">Completo</p>
-                </div>
-              </div>
-              <div className="w-16 h-0.5 bg-foreground"></div>
-              <div className="flex items-center gap-3 flex-1">
-                <div className="w-10 h-10 rounded-full bg-foreground flex items-center justify-center text-background font-semibold">
-                  <Check className="w-5 h-5" />
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-foreground">Conteúdo e Arquivos</p>
-                  <p className="text-xs text-muted-foreground">Completo</p>
-                </div>
-              </div>
-              <div className="w-16 h-0.5 bg-foreground"></div>
-              <div className="flex items-center gap-3 flex-1">
-                <div className="w-10 h-10 rounded-full bg-foreground flex items-center justify-center text-background font-semibold">
-                  3
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-foreground">Pagamento e Publicação</p>
-                  <p className="text-xs text-muted-foreground">Em andamento</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <StepWizard currentStep={3} scrollProgress={scrollProgress} />
 
         {/* Content */}
         <div className="p-8">

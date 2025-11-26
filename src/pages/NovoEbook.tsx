@@ -1,4 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
+import { StepWizard } from "@/components/Dashboard/StepWizard";
 import { ArrowLeft, Plus, Save, ArrowRight, Lightbulb, ClipboardCheck, Headset, Book, GraduationCap, FileText } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -202,56 +203,7 @@ export default function NovoEbook() {
 
         {/* Main Content */}
         <main className="flex-1 overflow-y-auto">
-          {/* Sticky Progress Bar */}
-          <div className="sticky top-0 z-20 bg-card border-b border-border shadow-sm">
-            <div className="px-8 py-6">
-              <div className="max-w-5xl mx-auto">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-foreground text-background rounded-full flex items-center justify-center font-semibold text-lg">
-                      1
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground">Informações Básicas</h3>
-                      <p className="text-sm text-muted-foreground">Dados essenciais do produto</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-muted text-muted-foreground rounded-full flex items-center justify-center font-semibold text-lg">
-                      2
-                    </div>
-                    <div>
-                      <h3 className="font-medium text-muted-foreground">Conteúdo e Detalhes</h3>
-                      <p className="text-sm text-muted-foreground">Descrição completa</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-muted text-muted-foreground rounded-full flex items-center justify-center font-semibold text-lg">
-                      3
-                    </div>
-                    <div>
-                      <h3 className="font-medium text-muted-foreground">Precificação e Arquivos</h3>
-                      <p className="text-sm text-muted-foreground">Finalização</p>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="relative">
-                  <div className="h-2 bg-muted rounded-full overflow-hidden">
-                    <div 
-                      className="h-full bg-foreground transition-all duration-300 ease-out" 
-                      style={{ width: `${scrollProgress}%` }}
-                    ></div>
-                  </div>
-                  <div className="absolute top-0 left-0 w-full flex justify-between -mt-1">
-                    <div className="w-4 h-4 bg-foreground rounded-full border-4 border-card"></div>
-                    <div className={`w-4 h-4 rounded-full border-4 border-card transition-all duration-300 ${scrollProgress >= 50 ? 'bg-foreground' : 'bg-muted'}`}></div>
-                    <div className={`w-4 h-4 rounded-full border-4 border-card transition-all duration-300 ${scrollProgress >= 90 ? 'bg-foreground' : 'bg-muted'}`}></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <StepWizard currentStep={1} scrollProgress={scrollProgress} />
 
           <div className="p-8">
 

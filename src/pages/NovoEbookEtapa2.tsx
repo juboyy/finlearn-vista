@@ -1,7 +1,8 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
+import { StepWizard } from "@/components/Dashboard/StepWizard";
 import { ArrowLeft, ArrowRight, Upload, Eye, FolderPlus, Video, Link as LinkIcon, Lock, Fingerprint, Printer, Copy, Plus, Trash2, Save, Check, Image as ImageIcon, Lightbulb, HelpCircle, FileText } from "lucide-react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
@@ -15,6 +16,7 @@ export default function NovoEbookEtapa2() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const productId = searchParams.get('productId');
+  const [scrollProgress, setScrollProgress] = useState(0);
   
   const [formData, setFormData] = useState({
     coverImage: null as File | null,
@@ -31,6 +33,21 @@ export default function NovoEbookEtapa2() {
 
   const [faqs, setFaqs] = useState<FAQ[]>([]);
   const [newFaq, setNewFaq] = useState({ question: '', answer: '' });
+
+  // Monitor scroll progress
+  useEffect(() => {
+    const handleScroll = () => {
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const scrollTop = window.scrollY;
+      const scrollable = documentHeight - windowHeight;
+      const progress = (scrollTop / scrollable) * 100;
+      setScrollProgress(Math.min(progress, 100));
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleFileChange = (field: string, file: File | null) => {
     setFormData(prev => ({ ...prev, [field]: file }));
@@ -144,45 +161,9 @@ export default function NovoEbookEtapa2() {
           </div>
         </header>
 
-        {/* Step Indicator */}
-        <div className="px-8 pt-8 pb-6">
-          <div className="flex items-center justify-center">
-            <div className="flex items-center gap-4 max-w-3xl w-full">
-              <div className="flex items-center gap-3 flex-1">
-                <div className="w-10 h-10 rounded-full bg-foreground flex items-center justify-center text-background font-semibold">
-                  <Check className="w-5 h-5" />
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-foreground">Informações Básicas</p>
-                  <p className="text-xs text-muted-foreground">Completo</p>
-                </div>
-              </div>
-              <div className="w-16 h-0.5 bg-foreground"></div>
-              <div className="flex items-center gap-3 flex-1">
-                <div className="w-10 h-10 rounded-full bg-foreground flex items-center justify-center text-background font-semibold">
-                  2
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-foreground">Conteúdo e Arquivos</p>
-                  <p className="text-xs text-muted-foreground">Em andamento</p>
-                </div>
-              </div>
-              <div className="w-16 h-0.5 bg-border"></div>
-              <div className="flex items-center gap-3 flex-1">
-                <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground font-semibold">
-                  3
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-muted-foreground">Revisão e Publicação</p>
-                  <p className="text-xs text-muted-foreground">Pendente</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* Main Content */}
         <main className="flex-1 overflow-y-auto">
+          <StepWizard currentStep={2} scrollProgress={scrollProgress} />
           <div className="p-8">
             <div className="grid grid-cols-3 gap-8">
               {/* Form Sections */}
