@@ -95,18 +95,18 @@ const PodcastCard = ({ podcast }: { podcast: Podcast }) => (
         <h4 className="font-semibold text-base text-foreground mb-1 line-clamp-2 group-hover:text-pastel-purple transition-colors">
           {podcast.title}
         </h4>
-        <p className="text-sm text-muted-foreground mb-3">{podcast.topic}</p>
-        
-        {/* Progress bar */}
-        <div className="space-y-1.5">
-          <div className="flex items-center justify-between text-xs text-muted-foreground">
-            <span>Em reprodução</span>
-            <span className="font-medium">24:30</span>
-          </div>
-          <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
-            <div className="h-full bg-gradient-to-r from-pastel-purple to-pastel-pink w-[60%] rounded-full transition-all duration-500"></div>
-          </div>
-        </div>
+        <p className="text-sm text-muted-foreground">{podcast.topic}</p>
+      </div>
+    </div>
+    
+    {/* Progress bar - full width */}
+    <div className="space-y-1.5">
+      <div className="flex items-center justify-between text-xs text-muted-foreground">
+        <span>Em reprodução</span>
+        <span className="font-medium">24:30</span>
+      </div>
+      <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
+        <div className="h-full bg-gradient-to-r from-pastel-purple to-pastel-pink w-[60%] rounded-full transition-all duration-500"></div>
       </div>
     </div>
   </div>
