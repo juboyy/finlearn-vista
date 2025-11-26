@@ -11,9 +11,10 @@ interface SlideCanvasEditorProps {
   slideText?: string;
   slideImage?: string;
   slideChart?: any;
+  slideId?: string;
 }
 
-export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText, slideImage, slideChart }: SlideCanvasEditorProps) => {
+export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText, slideImage, slideChart, slideId }: SlideCanvasEditorProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [fabricCanvas, setFabricCanvas] = useState<FabricCanvas | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -21,6 +22,30 @@ export const SlideCanvasEditor = ({ initialData, onUpdate, onAddChart, slideText
   const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const lastSaveRef = useRef<string>("");
   const contentLoadedRef = useRef(false);
+  const currentSlideIdRef = useRef<string>("");
+
+  // Detectar mudança de slide e recarregar canvas
+  useEffect(() => {
+    if (!fabricCanvas || !slideId) return;
+    
+    // Se mudou de slide
+    if (currentSlideIdRef.current !== slideId) {
+      currentSlideIdRef.current = slideId;
+      contentLoadedRef.current = false;
+      
+      // Limpar canvas
+      fabricCanvas.clear();
+      fabricCanvas.backgroundColor = "#ffffff";
+      
+      // Carregar dados salvos se existirem
+      if (initialData) {
+        fabricCanvas.loadFromJSON(initialData, () => {
+          fabricCanvas.renderAll();
+          contentLoadedRef.current = true;
+        });
+      }
+    }
+  }, [fabricCanvas, slideId, initialData]);
 
   // Função de salvamento manual
   const handleManualSave = () => {
