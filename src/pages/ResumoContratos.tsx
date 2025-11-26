@@ -348,16 +348,19 @@ export default function ResumoContratos() {
                   )}
                 </div>
 
-                {summary && (
-                  <div className="bg-white rounded-xl border-2 border-slate-200 p-8">
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="w-12 h-12 rounded-xl bg-[hsl(152,48%,75%)] flex items-center justify-center border-2 border-slate-300">
-                        <i className="fas fa-file-alt text-slate-700 text-xl"></i>
-                      </div>
-                      <div className="flex-1">
-                        <h2 className="text-xl font-bold text-slate-800">Resumo Gerado</h2>
-                        <p className="text-sm text-slate-600">Análise completa do contrato</p>
-                      </div>
+                {/* Área do Resumo - Sempre Visível */}
+                <div className="bg-white rounded-xl border-2 border-slate-200 p-8">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-12 h-12 rounded-xl bg-[hsl(152,48%,75%)] flex items-center justify-center border-2 border-slate-300">
+                      <i className="fas fa-file-alt text-slate-700 text-xl"></i>
+                    </div>
+                    <div className="flex-1">
+                      <h2 className="text-xl font-bold text-slate-800">Resumo do Contrato</h2>
+                      <p className="text-sm text-slate-600">
+                        {summary ? "Análise completa do documento" : "O resumo aparecerá aqui após o processamento"}
+                      </p>
+                    </div>
+                    {summary && (
                       <Button
                         variant="outline"
                         size="sm"
@@ -372,14 +375,29 @@ export default function ResumoContratos() {
                         <Download className="h-4 w-4 mr-2" />
                         Copiar
                       </Button>
-                    </div>
-                    <div className="prose prose-slate max-w-none">
-                      <div className="text-slate-700 whitespace-pre-wrap leading-relaxed">
-                        {summary}
-                      </div>
-                    </div>
+                    )}
                   </div>
-                )}
+                  
+                  <div className="min-h-[300px] rounded-lg border-2 border-slate-200 bg-slate-50 p-6">
+                    {summary ? (
+                      <div className="prose prose-slate max-w-none">
+                        <div className="text-slate-700 whitespace-pre-wrap leading-relaxed">
+                          {summary}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="flex flex-col items-center justify-center h-full text-center py-12">
+                        <div className="w-20 h-20 rounded-full bg-slate-200 flex items-center justify-center mb-4">
+                          <FileText className="h-10 w-10 text-slate-400" />
+                        </div>
+                        <p className="text-slate-500 font-medium mb-2">Nenhum resumo gerado ainda</p>
+                        <p className="text-sm text-slate-400 max-w-md">
+                          Selecione um agente, escolha o tipo de resumo e clique em "Gerar Resumo" para começar
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
 
               <div className="space-y-6">
