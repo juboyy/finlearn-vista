@@ -4,6 +4,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { useNavigate } from "react-router-dom";
 import auxiliarAvatar from "@/assets/auxiliar-do-dia-avatar.png";
 
 interface AssistantSuggestionCardProps {
@@ -39,6 +40,7 @@ const suggestionTypeConfig = {
 };
 
 export const AssistantSuggestionCard = ({ suggestion, onMarkAsRead }: AssistantSuggestionCardProps) => {
+  const navigate = useNavigate();
   const config = suggestionTypeConfig[suggestion.suggestion_type];
   const Icon = config.icon;
   const timeAgo = formatDistanceToNow(new Date(suggestion.created_at), {
@@ -49,6 +51,11 @@ export const AssistantSuggestionCard = ({ suggestion, onMarkAsRead }: AssistantS
   const handleClick = () => {
     if (!suggestion.is_read) {
       onMarkAsRead(suggestion.id);
+    }
+    
+    // Navigate to related content if link is provided
+    if (suggestion.metadata?.link) {
+      navigate(suggestion.metadata.link);
     }
   };
 
