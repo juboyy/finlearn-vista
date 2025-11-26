@@ -484,10 +484,81 @@ export default function ResumoContratos() {
                   
                   <div className="min-h-[300px] rounded-lg border-2 border-slate-200 bg-slate-50 p-6">
                     {summary ? (
-                      <div className="prose prose-slate max-w-none text-slate-700 leading-relaxed">
-                        <ReactMarkdown>
-                          {summary}
-                        </ReactMarkdown>
+                      <div className="prose prose-slate max-w-none">
+                        <style>{`
+                          .markdown-content h1 {
+                            color: hsl(206, 50%, 45%);
+                            font-size: 1.75rem;
+                            font-weight: 700;
+                            margin-top: 1.5rem;
+                            margin-bottom: 1rem;
+                            border-bottom: 2px solid hsl(206, 35%, 85%);
+                            padding-bottom: 0.5rem;
+                          }
+                          .markdown-content h2 {
+                            color: hsl(322, 48%, 45%);
+                            font-size: 1.5rem;
+                            font-weight: 600;
+                            margin-top: 1.5rem;
+                            margin-bottom: 1rem;
+                          }
+                          .markdown-content h3 {
+                            color: hsl(142, 35%, 40%);
+                            font-size: 1.25rem;
+                            font-weight: 600;
+                            margin-top: 1.25rem;
+                            margin-bottom: 0.75rem;
+                          }
+                          .markdown-content p {
+                            color: hsl(215, 16%, 25%);
+                            line-height: 1.8;
+                            margin-bottom: 1rem;
+                          }
+                          .markdown-content ul, .markdown-content ol {
+                            margin-bottom: 1.5rem;
+                            padding-left: 1.5rem;
+                          }
+                          .markdown-content li {
+                            color: hsl(215, 16%, 30%);
+                            line-height: 1.7;
+                            margin-bottom: 0.5rem;
+                          }
+                          .markdown-content li::marker {
+                            color: hsl(206, 50%, 55%);
+                            font-weight: 600;
+                          }
+                          .markdown-content strong {
+                            color: hsl(215, 16%, 20%);
+                            font-weight: 700;
+                          }
+                          .markdown-content em {
+                            color: hsl(322, 48%, 45%);
+                          }
+                          .markdown-content code {
+                            background-color: hsl(206, 35%, 95%);
+                            color: hsl(206, 50%, 40%);
+                            padding: 0.2rem 0.4rem;
+                            border-radius: 0.25rem;
+                            font-size: 0.9em;
+                          }
+                          .markdown-content blockquote {
+                            border-left: 4px solid hsl(142, 35%, 65%);
+                            padding-left: 1rem;
+                            margin: 1.5rem 0;
+                            color: hsl(215, 16%, 35%);
+                            font-style: italic;
+                          }
+                          .markdown-content hr {
+                            border: none;
+                            border-top: 2px solid hsl(206, 35%, 85%);
+                            margin: 2rem 0;
+                          }
+                        `}</style>
+                        <div className="markdown-content">
+                          <ReactMarkdown>
+                            {summary}
+                          </ReactMarkdown>
+                        </div>
                       </div>
                     ) : (
                       <div className="flex flex-col items-center justify-center h-full text-center py-12">
