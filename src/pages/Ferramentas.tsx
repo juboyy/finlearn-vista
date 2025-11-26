@@ -98,14 +98,11 @@ export default function Ferramentas() {
               <Link to="/biblioteca" className="p-2 hover:bg-slate-100 rounded-lg transition">
                 <ArrowLeft className="h-5 w-5 text-slate-600" />
               </Link>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#F5C6E3' }}>
-                  <Wrench className="h-5 w-5 text-slate-700" />
-                </div>
+              <div>
                 <h1 className="text-2xl font-semibold text-slate-800">Ferramentas IA</h1>
+                <p className="text-sm text-slate-500 mt-1">Automatize tarefas com inteligência artificial</p>
               </div>
             </div>
-
             <div className="flex items-center gap-4">
               <div className="relative">
                 <input
