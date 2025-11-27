@@ -418,6 +418,36 @@ export type Database = {
         }
         Relationships: []
       }
+      user_favorite_podcasts: {
+        Row: {
+          created_at: string
+          id: string
+          podcast_id: string
+          podcast_image: string
+          podcast_title: string
+          podcast_topic: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          podcast_id: string
+          podcast_image: string
+          podcast_title: string
+          podcast_topic: string
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          podcast_id?: string
+          podcast_image?: string
+          podcast_title?: string
+          podcast_topic?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_notifications: {
         Row: {
           action_url: string | null
