@@ -1,5 +1,5 @@
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Play } from "lucide-react";
+import { Play, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
@@ -8,6 +8,13 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { toast } from "sonner";
 
 interface Podcast {
   id: string;
@@ -78,26 +85,75 @@ const recommendedPodcasts: Podcast[] = [
   },
 ];
 
-const PodcastCard = ({ podcast }: { podcast: Podcast }) => (
-  <div className="group relative flex flex-col gap-3 p-4 rounded-xl border-2 border-border bg-gradient-to-br from-card to-card/50 hover:shadow-lg hover:border-pastel-purple/50 transition-all duration-300 hover:scale-[1.02]">
-    <div className="flex items-start gap-4">
-      <div className="relative shrink-0">
-        <img
-          src={podcast.image}
-          alt={podcast.title}
-          className="w-20 h-20 rounded-lg object-cover shadow-md ring-2 ring-pastel-purple/20 group-hover:ring-pastel-pink/40 transition-all"
-        />
-        <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-pastel-purple/90 rounded-full flex items-center justify-center shadow-md backdrop-blur-sm">
-          <Play className="h-3 w-3 text-white fill-white" />
+const PodcastCard = ({ podcast }: { podcast: Podcast }) => {
+  const handleShare = (platform: string) => {
+    const url = encodeURIComponent(window.location.href);
+    const text = encodeURIComponent(`${podcast.title} - ${podcast.topic}`);
+    
+    const shareUrls: Record<string, string> = {
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+      twitter: `https://twitter.com/intent/tweet?text=${text}&url=${url}`,
+      linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
+      whatsapp: `https://wa.me/?text=${text}%20${url}`,
+    };
+
+    if (platform === "copy") {
+      navigator.clipboard.writeText(window.location.href);
+      toast.success("Link copiado para área de transferência");
+      return;
+    }
+
+    window.open(shareUrls[platform], "_blank", "width=600,height=400");
+  };
+
+  return (
+    <div className="group relative flex flex-col gap-3 p-4 rounded-xl border-2 border-border bg-gradient-to-br from-card to-card/50 hover:shadow-lg hover:border-pastel-purple/50 transition-all duration-300 hover:scale-[1.02]">
+      <div className="flex items-start gap-4">
+        <div className="relative shrink-0">
+          <img
+            src={podcast.image}
+            alt={podcast.title}
+            className="w-20 h-20 rounded-lg object-cover shadow-md ring-2 ring-pastel-purple/20 group-hover:ring-pastel-pink/40 transition-all"
+          />
+          <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-pastel-purple/90 rounded-full flex items-center justify-center shadow-md backdrop-blur-sm">
+            <Play className="h-3 w-3 text-white fill-white" />
+          </div>
         </div>
+        <div className="flex-1 min-w-0">
+          <h4 className="font-semibold text-base text-foreground mb-1 line-clamp-2 group-hover:text-pastel-purple transition-colors">
+            {podcast.title}
+          </h4>
+          <p className="text-sm text-muted-foreground">{podcast.topic}</p>
+        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 shrink-0 text-muted-foreground hover:text-foreground"
+            >
+              <Share2 className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-48">
+            <DropdownMenuItem onClick={() => handleShare("facebook")}>
+              Facebook
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleShare("twitter")}>
+              Twitter/X
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleShare("linkedin")}>
+              LinkedIn
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleShare("whatsapp")}>
+              WhatsApp
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleShare("copy")}>
+              Copiar Link
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
-      <div className="flex-1 min-w-0">
-        <h4 className="font-semibold text-base text-foreground mb-1 line-clamp-2 group-hover:text-pastel-purple transition-colors">
-          {podcast.title}
-        </h4>
-        <p className="text-sm text-muted-foreground">{podcast.topic}</p>
-      </div>
-    </div>
     
     {/* Progress bar - full width */}
     <div className="space-y-1.5">
@@ -109,8 +165,9 @@ const PodcastCard = ({ podcast }: { podcast: Podcast }) => (
         <div className="h-full bg-slate-700 w-[60%] rounded-full transition-all duration-500"></div>
       </div>
     </div>
-  </div>
-);
+    </div>
+  );
+};
 
 export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
   return (
