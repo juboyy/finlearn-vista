@@ -1,5 +1,5 @@
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Play, Share2 } from "lucide-react";
+import { Play, Share2, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
@@ -15,6 +15,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
+import { useState, useEffect } from "react";
 
 interface Podcast {
   id: string;
@@ -26,6 +28,12 @@ interface Podcast {
 interface PodcastPanelProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+}
+
+interface PodcastCardProps {
+  podcast: Podcast;
+  isFavorite: boolean;
+  onToggleFavorite: (podcast: Podcast) => void;
 }
 
 const nowPlayingPodcasts: Podcast[] = [
@@ -85,7 +93,7 @@ const recommendedPodcasts: Podcast[] = [
   },
 ];
 
-const PodcastCard = ({ podcast }: { podcast: Podcast }) => {
+const PodcastCard = ({ podcast, isFavorite, onToggleFavorite }: PodcastCardProps) => {
   const handleShare = (platform: string) => {
     const url = encodeURIComponent(window.location.href);
     const text = encodeURIComponent(`${podcast.title} - ${podcast.topic}`);
@@ -125,34 +133,44 @@ const PodcastCard = ({ podcast }: { podcast: Podcast }) => {
           </h4>
           <p className="text-sm text-muted-foreground">{podcast.topic}</p>
         </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-8 w-8 shrink-0 text-muted-foreground hover:text-foreground"
-            >
-              <Share2 className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48">
-            <DropdownMenuItem onClick={() => handleShare("facebook")}>
-              Facebook
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleShare("twitter")}>
-              Twitter/X
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleShare("linkedin")}>
-              LinkedIn
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleShare("whatsapp")}>
-              WhatsApp
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleShare("copy")}>
-              Copiar Link
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="flex items-center gap-1">
+          <Button
+            variant="ghost"
+            size="icon"
+            className={`h-8 w-8 shrink-0 ${isFavorite ? 'text-red-500 hover:text-red-600' : 'text-muted-foreground hover:text-foreground'}`}
+            onClick={() => onToggleFavorite(podcast)}
+          >
+            <Heart className={`h-4 w-4 ${isFavorite ? 'fill-current' : ''}`} />
+          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 shrink-0 text-muted-foreground hover:text-foreground"
+              >
+                <Share2 className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48">
+              <DropdownMenuItem onClick={() => handleShare("facebook")}>
+                Facebook
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleShare("twitter")}>
+                Twitter/X
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleShare("linkedin")}>
+                LinkedIn
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleShare("whatsapp")}>
+                WhatsApp
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleShare("copy")}>
+                Copiar Link
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
     
     {/* Progress bar - full width */}
@@ -170,6 +188,78 @@ const PodcastCard = ({ podcast }: { podcast: Podcast }) => {
 };
 
 export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
+  const [favorites, setFavorites] = useState<Podcast[]>([]);
+  const [favoriteIds, setFavoriteIds] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    if (open) {
+      loadFavorites();
+    }
+  }, [open]);
+
+  const loadFavorites = async () => {
+    const { data, error } = await supabase
+      .from("user_favorite_podcasts")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error("Error loading favorites:", error);
+      return;
+    }
+
+    if (data) {
+      const favPodcasts: Podcast[] = data.map(fav => ({
+        id: fav.podcast_id,
+        title: fav.podcast_title,
+        topic: fav.podcast_topic,
+        image: fav.podcast_image,
+      }));
+      setFavorites(favPodcasts);
+      setFavoriteIds(new Set(data.map(fav => fav.podcast_id)));
+    }
+  };
+
+  const toggleFavorite = async (podcast: Podcast) => {
+    const isFavorite = favoriteIds.has(podcast.id);
+
+    if (isFavorite) {
+      // Remove from favorites
+      const { error } = await supabase
+        .from("user_favorite_podcasts")
+        .delete()
+        .eq("podcast_id", podcast.id);
+
+      if (error) {
+        console.error("Error removing favorite:", error);
+        toast.error("Erro ao remover dos favoritos");
+        return;
+      }
+
+      toast.success("Removido dos favoritos");
+      await loadFavorites();
+    } else {
+      // Add to favorites
+      const { error } = await supabase
+        .from("user_favorite_podcasts")
+        .insert({
+          podcast_id: podcast.id,
+          podcast_title: podcast.title,
+          podcast_topic: podcast.topic,
+          podcast_image: podcast.image,
+        });
+
+      if (error) {
+        console.error("Error adding favorite:", error);
+        toast.error("Erro ao adicionar aos favoritos");
+        return;
+      }
+
+      toast.success("Adicionado aos favoritos");
+      await loadFavorites();
+    }
+  };
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="right" className="w-[400px] sm:w-[540px] overflow-y-auto bg-gradient-to-b from-background to-muted/20">
@@ -181,6 +271,33 @@ export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
         </SheetHeader>
 
         <div className="mt-8 space-y-8">
+          {/* Meus Favoritos */}
+          {favorites.length > 0 && (
+            <div className="px-12 animate-fade-in">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                <h3 className="text-base font-bold text-foreground">
+                  Meus Favoritos
+                </h3>
+              </div>
+              <Carousel className="w-full">
+                <CarouselContent>
+                  {favorites.map((podcast) => (
+                    <CarouselItem key={podcast.id}>
+                      <PodcastCard 
+                        podcast={podcast} 
+                        isFavorite={true}
+                        onToggleFavorite={toggleFavorite}
+                      />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+              </Carousel>
+            </div>
+          )}
+
           {/* Rolando agora */}
           <div className="px-12 animate-fade-in">
             <div className="flex items-center gap-2 mb-4">
@@ -193,7 +310,11 @@ export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
               <CarouselContent>
                 {nowPlayingPodcasts.map((podcast) => (
                   <CarouselItem key={podcast.id}>
-                    <PodcastCard podcast={podcast} />
+                    <PodcastCard 
+                      podcast={podcast}
+                      isFavorite={favoriteIds.has(podcast.id)}
+                      onToggleFavorite={toggleFavorite}
+                    />
                   </CarouselItem>
                 ))}
               </CarouselContent>
@@ -214,7 +335,11 @@ export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
               <CarouselContent>
                 {continuePodcasts.map((podcast) => (
                   <CarouselItem key={podcast.id}>
-                    <PodcastCard podcast={podcast} />
+                    <PodcastCard 
+                      podcast={podcast}
+                      isFavorite={favoriteIds.has(podcast.id)}
+                      onToggleFavorite={toggleFavorite}
+                    />
                   </CarouselItem>
                 ))}
               </CarouselContent>
@@ -235,7 +360,11 @@ export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
               <CarouselContent>
                 {recommendedPodcasts.map((podcast) => (
                   <CarouselItem key={podcast.id}>
-                    <PodcastCard podcast={podcast} />
+                    <PodcastCard 
+                      podcast={podcast}
+                      isFavorite={favoriteIds.has(podcast.id)}
+                      onToggleFavorite={toggleFavorite}
+                    />
                   </CarouselItem>
                 ))}
               </CarouselContent>
