@@ -109,6 +109,12 @@ import ArtigoAnalytics from "./pages/ArtigoAnalytics";
 import ConteudoAnalytics from "./pages/ConteudoAnalytics";
 import ApresentacoesAnalytics from "./pages/ApresentacoesAnalytics";
 import LiveAnalytics from "./pages/LiveAnalytics";
+import EstudosAcademicosAnalytics from "./pages/EstudosAcademicosAnalytics";
+import NewsletterAnalytics from "./pages/NewsletterAnalytics";
+import InfograficoAnalytics from "./pages/InfograficoAnalytics";
+import EntrevistasAnalytics from "./pages/EntrevistasAnalytics";
+import PlanilhasAnalytics from "./pages/PlanilhasAnalytics";
+import WhitepaperAnalytics from "./pages/WhitepaperAnalytics";
 import PodcastAnalytics from "./pages/PodcastAnalytics";
 import CursosAnalytics from "./pages/CursosAnalytics";
 import AvatarIAAnalytics from "./pages/AvatarIAAnalytics";
@@ -242,6 +248,12 @@ const App = () => {
            <Route path="/conteudo-analytics" element={<ConteudoAnalytics />} />
           <Route path="/apresentacoes-analytics" element={<ApresentacoesAnalytics />} />
           <Route path="/live-analytics" element={<LiveAnalytics />} />
+          <Route path="/estudos-academicos-analytics" element={<EstudosAcademicosAnalytics />} />
+          <Route path="/newsletter-analytics" element={<NewsletterAnalytics />} />
+          <Route path="/infografico-analytics" element={<InfograficoAnalytics />} />
+          <Route path="/entrevistas-analytics" element={<EntrevistasAnalytics />} />
+          <Route path="/planilhas-analytics" element={<PlanilhasAnalytics />} />
+          <Route path="/whitepaper-analytics" element={<WhitepaperAnalytics />} />
           <Route path="/podcast-analytics" element={<PodcastAnalytics />} />
           <Route path="/cursos-analytics" element={<CursosAnalytics />} />
           <Route path="/avatar-ia-analytics" element={<AvatarIAAnalytics />} />
