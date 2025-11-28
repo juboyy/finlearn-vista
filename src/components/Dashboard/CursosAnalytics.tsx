@@ -7,9 +7,32 @@ export const CursosAnalytics = () => {
     if (typeof window !== 'undefined' && (window as any).Plotly) {
       initializeCharts();
     }
-  }, []);
+  }, [selectedPeriod]);
+
+  const getDataByPeriod = () => {
+    const data = {
+      '7d': {
+        progress: { x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], y: [2, 3, 2, 4, 3, 1, 1] },
+        enrolled: 12, hours: 48, certificates: 3, completion: 67
+      },
+      '30d': {
+        progress: { x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], y: [2, 3, 2, 4, 3, 1, 1] },
+        enrolled: 12, hours: 48, certificates: 3, completion: 67
+      },
+      '90d': {
+        progress: { x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], y: [3, 4, 3, 5, 4, 2, 2] },
+        enrolled: 28, hours: 124, certificates: 8, completion: 71
+      },
+      '1y': {
+        progress: { x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], y: [4, 5, 4, 6, 5, 3, 3] },
+        enrolled: 84, hours: 456, certificates: 24, completion: 75
+      }
+    };
+    return data[selectedPeriod];
+  };
 
   const initializeCharts = () => {
+    const periodData = getDataByPeriod();
     const Plotly = (window as any).Plotly;
 
     // Progresso Semanal
@@ -134,7 +157,7 @@ export const CursosAnalytics = () => {
             <span className="text-sm text-slate-500 font-medium">Cursos Matriculados</span>
             <i className="fas fa-graduation-cap text-slate-400"></i>
           </div>
-          <p className="text-3xl font-bold text-slate-800">12</p>
+          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod().enrolled}</p>
           <p className="text-xs text-emerald-600 font-medium mt-2">
             <i className="fas fa-arrow-up mr-1"></i>
             +3 este mês
@@ -146,10 +169,10 @@ export const CursosAnalytics = () => {
             <span className="text-sm text-slate-500 font-medium">Horas de Estudo</span>
             <i className="fas fa-clock text-slate-400"></i>
           </div>
-          <p className="text-3xl font-bold text-slate-800">127h</p>
+          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod().hours}h</p>
           <p className="text-xs text-emerald-600 font-medium mt-2">
             <i className="fas fa-arrow-up mr-1"></i>
-            +22% este mês
+            +22% no período
           </p>
         </div>
 
@@ -158,7 +181,7 @@ export const CursosAnalytics = () => {
             <span className="text-sm text-slate-500 font-medium">Certificados</span>
             <i className="fas fa-certificate text-slate-400"></i>
           </div>
-          <p className="text-3xl font-bold text-slate-800">8</p>
+          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod().certificates}</p>
           <p className="text-xs text-slate-500 font-medium mt-2">
             Total conquistados
           </p>
@@ -169,7 +192,7 @@ export const CursosAnalytics = () => {
             <span className="text-sm text-slate-500 font-medium">Taxa de Conclusão</span>
             <i className="fas fa-trophy text-slate-400"></i>
           </div>
-          <p className="text-3xl font-bold text-slate-800">67%</p>
+          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod().completion}%</p>
           <p className="text-xs text-emerald-600 font-medium mt-2">
             Acima da média
           </p>

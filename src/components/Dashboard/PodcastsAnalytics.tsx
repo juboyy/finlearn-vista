@@ -7,15 +7,38 @@ export const PodcastsAnalytics = () => {
     if (typeof window !== 'undefined' && (window as any).Plotly) {
       initializeCharts();
     }
-  }, []);
+  }, [selectedPeriod]);
+
+  const getDataByPeriod = () => {
+    const data = {
+      '7d': {
+        episodes: { x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], y: [4, 5, 6, 4, 3, 2, 1] },
+        total: 142, growth: 18, hours: 86.5, completion: 68, streak: 14
+      },
+      '30d': {
+        episodes: { x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], y: [4, 5, 6, 4, 3, 2, 1] },
+        total: 142, growth: 18, hours: 86.5, completion: 68, streak: 14
+      },
+      '90d': {
+        episodes: { x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], y: [5, 6, 7, 5, 4, 3, 2] },
+        total: 428, growth: 52, hours: 245.8, completion: 71, streak: 42
+      },
+      '1y': {
+        episodes: { x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], y: [6, 7, 8, 6, 5, 4, 3] },
+        total: 1824, growth: 215, hours: 1024.5, completion: 73, streak: 89
+      }
+    };
+    return data[selectedPeriod];
+  };
 
   const initializeCharts = () => {
+    const periodData = getDataByPeriod();
     const Plotly = (window as any).Plotly;
 
     // Episódios Ouvidos por Semana
     const episodesData = [{
-      x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
-      y: [4, 5, 6, 4, 3, 2, 1],
+      x: periodData.episodes.x,
+      y: periodData.episodes.y,
       type: 'scatter',
       mode: 'lines+markers',
       name: 'Episódios',
@@ -139,10 +162,10 @@ export const PodcastsAnalytics = () => {
             <span className="text-sm text-slate-500 font-medium">Total de Episódios</span>
             <i className="fas fa-headphones text-slate-400"></i>
           </div>
-          <p className="text-3xl font-bold text-slate-800">142</p>
+          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod().total}</p>
           <p className="text-xs text-emerald-600 font-medium mt-2">
             <i className="fas fa-arrow-up mr-1"></i>
-            +18% este mês
+            +{getDataByPeriod().growth}% no período
           </p>
         </div>
 
@@ -151,7 +174,7 @@ export const PodcastsAnalytics = () => {
             <span className="text-sm text-slate-500 font-medium">Horas Totais</span>
             <i className="fas fa-clock text-slate-400"></i>
           </div>
-          <p className="text-3xl font-bold text-slate-800">86.5h</p>
+          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod().hours}h</p>
           <p className="text-xs text-emerald-600 font-medium mt-2">
             <i className="fas fa-arrow-up mr-1"></i>
             +12% este mês
@@ -163,7 +186,7 @@ export const PodcastsAnalytics = () => {
             <span className="text-sm text-slate-500 font-medium">Taxa de Conclusão</span>
             <i className="fas fa-check-circle text-slate-400"></i>
           </div>
-          <p className="text-3xl font-bold text-slate-800">68%</p>
+          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod().completion}%</p>
           <p className="text-xs text-slate-500 font-medium mt-2">
             Média da plataforma: 55%
           </p>
@@ -174,7 +197,7 @@ export const PodcastsAnalytics = () => {
             <span className="text-sm text-slate-500 font-medium">Streak Atual</span>
             <i className="fas fa-fire text-slate-400"></i>
           </div>
-          <p className="text-3xl font-bold text-slate-800">14 dias</p>
+          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod().streak} dias</p>
           <p className="text-xs text-slate-500 font-medium mt-2">
             Ouvindo diariamente
           </p>
