@@ -47,7 +47,7 @@ export default function MinhaAgendaDia() {
             {/* Sidebar esquerda */}
             <aside className="w-80 space-y-6">
               {/* Mini Calendar */}
-              <section className="bg-white rounded-xl p-6 border border-slate-200 sticky top-8">
+              <section className="bg-white rounded-xl p-6 border border-slate-200">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-lg font-semibold text-slate-800">Novembro 2024</h2>
                   <div className="flex gap-2">
