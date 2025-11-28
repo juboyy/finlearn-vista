@@ -49,7 +49,7 @@ export const EbookReader = ({
   const [menuPosition, setMenuPosition] = useState<{ top: number; left: number } | null>(null);
   const [showNoteDialog, setShowNoteDialog] = useState(false);
   const [noteContent, setNoteContent] = useState("");
-  const [selectedColor, setSelectedColor] = useState("#fef3c7");
+  const [selectedColor, setSelectedColor] = useState("#fef08a");
   const [showSidebar, setShowSidebar] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -90,11 +90,11 @@ export const EbookReader = ({
   `;
 
   const highlightColors = [
-    { name: "Amarelo", color: "#fef3c7" },
-    { name: "Verde", color: "#d1fae5" },
-    { name: "Rosa", color: "#fce7f3" },
-    { name: "Azul", color: "#dbeafe" },
-    { name: "Roxo", color: "#e9d5ff" },
+    { name: "Amarelo", color: "#fef08a" },
+    { name: "Verde", color: "#86efac" },
+    { name: "Rosa", color: "#f9a8d4" },
+    { name: "Azul", color: "#93c5fd" },
+    { name: "Roxo", color: "#d8b4fe" },
   ];
 
   const handleTextSelection = () => {
@@ -178,23 +178,32 @@ export const EbookReader = ({
   const renderContentWithAnnotations = () => {
     if (annotations.length === 0) return mockContent;
 
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(mockContent, 'text/html');
-    const contentText = doc.body.textContent || '';
-    
-    const sortedAnnotations = [...annotations].sort((a, b) => b.position_start - a.position_start);
-
     let result = mockContent;
+    const sortedAnnotations = [...annotations].sort((a, b) => a.position_start - b.position_start);
+
+    // Create a map to track already highlighted positions
+    const highlightedRanges: Array<{ start: number; end: number; html: string }> = [];
     
     sortedAnnotations.forEach((annotation) => {
       if (annotation.annotation_type === "highlight" && !annotation.is_deleted) {
-        const textToHighlight = annotation.selected_text;
-        const highlightMarkup = `<mark style="background-color: ${annotation.highlight_color}; padding: 2px 4px; border-radius: 3px;" data-annotation-id="${annotation.id}">${textToHighlight}</mark>`;
-        
-        // Replace first occurrence of the exact text
-        const regex = new RegExp(textToHighlight.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
-        result = result.replace(regex, highlightMarkup);
+        highlightedRanges.push({
+          start: annotation.position_start,
+          end: annotation.position_end,
+          html: `<mark style="background-color: ${annotation.highlight_color}; padding: 3px 2px; border-radius: 2px; font-weight: 500;" data-annotation-id="${annotation.id}">${annotation.selected_text}</mark>`
+        });
       }
+    });
+
+    // Apply highlights in reverse order to maintain positions
+    highlightedRanges.reverse().forEach(({ start, end, html }) => {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(result, 'text/html');
+      const textContent = doc.body.textContent || '';
+      
+      const before = result.substring(0, result.indexOf(textContent.substring(start, end)));
+      const after = result.substring(result.indexOf(textContent.substring(start, end)) + (end - start));
+      
+      result = before + html + after;
     });
 
     return result;
@@ -264,13 +273,13 @@ export const EbookReader = ({
                     Destacar
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-2">
+              <PopoverContent className="w-auto p-2 bg-card border-2 border-border">
                   <div className="flex gap-2">
                     {highlightColors.map((color) => (
                       <button
                         key={color.color}
                         onClick={() => handleHighlight(color.color)}
-                        className="w-8 h-8 rounded-full border-2 border-border hover:scale-110 transition-transform"
+                        className="w-10 h-10 rounded-lg border-2 border-border hover:scale-110 hover:border-foreground transition-all shadow-sm"
                         style={{ backgroundColor: color.color }}
                         title={color.name}
                       />
