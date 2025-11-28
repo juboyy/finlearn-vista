@@ -294,8 +294,7 @@ export const EbookPanel = ({
           {/* Action buttons */}
           <div className="flex gap-2 mt-3">
             <Button size="sm" className="flex-1 bg-pastel-blue hover:bg-pastel-purple text-foreground font-semibold" onClick={() => {
-              onOpenChange(false);
-              navigate(`/ler-ebook/${ebook.id}`);
+              setReadingEbook(ebook);
             }}>
               Ler Agora
             </Button>
