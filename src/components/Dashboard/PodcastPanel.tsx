@@ -19,6 +19,16 @@ import { supabase } from "@/integrations/supabase/client";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+// Import podcast images
+import ep142Image from "@/assets/podcast-ep142-volatilidade.png";
+import ep141Image from "@/assets/podcast-ep141-selic.png";
+import ep140Image from "@/assets/podcast-ep140-tendencias-2025.png";
+import ep139Image from "@/assets/podcast-ep139-bancos-fintechs.png";
+import ep138Image from "@/assets/podcast-ep138-cripto.png";
+import ep137Image from "@/assets/podcast-ep137-open-finance.png";
+import ep136Image from "@/assets/podcast-ep136-esg.png";
+import ep135Image from "@/assets/podcast-ep135-cartoes.png";
+
 interface Podcast {
   id: string;
   title: string;
@@ -46,7 +56,7 @@ const nowPlayingPodcasts: Podcast[] = [
     id: "1",
     title: "Mercados em Foco #142",
     topic: "Volatilidade e Estratégias",
-    image: "/src/assets/podcast-ep142-volatilidade.png",
+    image: ep142Image,
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
     duration: "45:32",
   },
@@ -54,7 +64,7 @@ const nowPlayingPodcasts: Podcast[] = [
     id: "2",
     title: "Mercados em Foco #141",
     topic: "Taxa Selic e Impactos",
-    image: "/src/assets/podcast-ep141-selic.png",
+    image: ep141Image,
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
     duration: "52:18",
   },
@@ -62,7 +72,7 @@ const nowPlayingPodcasts: Podcast[] = [
     id: "3",
     title: "Mercados em Foco #140",
     topic: "Tendências 2025",
-    image: "/src/assets/podcast-ep140-tendencias-2025.png",
+    image: ep140Image,
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
     duration: "48:45",
   },
@@ -73,7 +83,7 @@ const continuePodcasts: Podcast[] = [
     id: "4",
     title: "Mercados em Foco #139",
     topic: "Bancos e Fintechs",
-    image: "/src/assets/podcast-ep139-bancos-fintechs.png",
+    image: ep139Image,
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
     duration: "51:23",
   },
@@ -81,7 +91,7 @@ const continuePodcasts: Podcast[] = [
     id: "5",
     title: "Mercados em Foco #138",
     topic: "Criptomoedas em 2025",
-    image: "/src/assets/podcast-ep138-cripto.png",
+    image: ep138Image,
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
     duration: "47:55",
   },
@@ -89,7 +99,7 @@ const continuePodcasts: Podcast[] = [
     id: "6",
     title: "Mercados em Foco #137",
     topic: "Open Finance",
-    image: "/src/assets/podcast-ep137-open-finance.png",
+    image: ep137Image,
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",
     duration: "49:38",
   },
@@ -100,7 +110,7 @@ const recommendedPodcasts: Podcast[] = [
     id: "7",
     title: "Mercados em Foco #136",
     topic: "ESG no Mercado Financeiro",
-    image: "/src/assets/podcast-ep136-esg.png",
+    image: ep136Image,
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3",
     duration: "51:25",
   },
@@ -108,7 +118,7 @@ const recommendedPodcasts: Podcast[] = [
     id: "8",
     title: "Mercados em Foco #135",
     topic: "Cartões de Crédito",
-    image: "/src/assets/podcast-ep135-cartoes.png",
+    image: ep135Image,
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3",
     duration: "43:52",
   },
