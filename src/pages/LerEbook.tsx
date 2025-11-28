@@ -12,6 +12,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { useEbookAnnotations } from "@/hooks/useEbookAnnotations";
 import { supabase } from "@/integrations/supabase/client";
 import ebookGestaoRiscos from "@/assets/ebook-gestao-riscos.png";
+import { EbookReadingAgentChat } from "@/components/Dashboard/EbookReadingAgentChat";
 
 const LerEbook = () => {
   const { id } = useParams();
@@ -37,6 +38,7 @@ const LerEbook = () => {
   const [renderKey, setRenderKey] = useState(0);
   const [previewRange, setPreviewRange] = useState<Range | null>(null);
   const [highlightName, setHighlightName] = useState("");
+  const [showReadingAgent, setShowReadingAgent] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -752,7 +754,12 @@ const LerEbook = () => {
                     Marcar Página
                   </Button>
                 </div>
-                <Button variant="outline" size="sm" className="w-full">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="w-full"
+                  onClick={() => setShowReadingAgent(true)}
+                >
                   <Bot size={16} className="mr-2" />
                   Agente de Leitura
                 </Button>
@@ -1371,6 +1378,15 @@ const LerEbook = () => {
           )}
         </div>
       )}
+
+      {/* Agente de Leitura Chat */}
+      <EbookReadingAgentChat
+        open={showReadingAgent}
+        onOpenChange={setShowReadingAgent}
+        ebookTitle={ebookData.title}
+        ebookContent={ebookData.content}
+        currentPage={currentPage}
+      />
     </div>
   );
 };
