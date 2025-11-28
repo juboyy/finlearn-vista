@@ -1,0 +1,185 @@
+import { useEffect } from "react";
+
+export const AnalisesAnalyticsConsumption = () => {
+  useEffect(() => {
+    if (typeof window !== 'undefined' && (window as any).Plotly) {
+      initializeCharts();
+    }
+  }, []);
+
+  const initializeCharts = () => {
+    const Plotly = (window as any).Plotly;
+
+    // Análises Semanais
+    const weeklyData = [{
+      x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+      y: [3, 5, 4, 6, 4, 2, 1],
+      type: 'bar',
+      marker: { color: '#C5E8D4' }
+    }];
+
+    Plotly.newPlot('analises-weekly-chart', weeklyData, {
+      margin: { l: 40, r: 20, t: 20, b: 40 },
+      xaxis: { gridcolor: '#f1f5f9' },
+      yaxis: { gridcolor: '#f1f5f9', title: 'Análises Lidas' },
+      plot_bgcolor: '#ffffff',
+      paper_bgcolor: '#ffffff'
+    }, { displayModeBar: false });
+
+    // Análises por Tipo
+    const typesData = [{
+      values: [38, 28, 20, 14],
+      labels: ['Técnica', 'Fundamentalista', 'Macroeconômica', 'Setorial'],
+      type: 'pie',
+      marker: { colors: ['#C5E8D4', '#B8D4E8', '#F4C8D8', '#D8BFD8'] },
+      textinfo: 'label+percent'
+    }];
+
+    Plotly.newPlot('analises-types-chart', typesData, {
+      margin: { l: 20, r: 20, t: 20, b: 20 },
+      showlegend: false,
+      paper_bgcolor: '#ffffff'
+    }, { displayModeBar: false });
+
+    // Tempo de Análise
+    const timeData = [{
+      x: ['0-15 min', '15-30 min', '30-60 min', '60+ min'],
+      y: [12, 28, 35, 18],
+      type: 'bar',
+      marker: { color: ['#E8C5D8', '#E8E0C5', '#C5E8D4', '#B8D4E8'] }
+    }];
+
+    Plotly.newPlot('analises-time-chart', timeData, {
+      margin: { l: 40, r: 20, t: 20, b: 40 },
+      xaxis: { gridcolor: '#f1f5f9', title: 'Tempo de Leitura' },
+      yaxis: { gridcolor: '#f1f5f9', title: 'Análises' },
+      plot_bgcolor: '#ffffff',
+      paper_bgcolor: '#ffffff'
+    }, { displayModeBar: false });
+
+    // Engajamento Mensal
+    const monthlyData = [{
+      x: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+      y: [18, 22, 19, 25, 28, 32],
+      type: 'scatter',
+      mode: 'lines+markers',
+      line: { color: '#C5E8D4', width: 3 },
+      marker: { size: 8, color: '#C5E8D4' }
+    }];
+
+    Plotly.newPlot('analises-monthly-chart', monthlyData, {
+      margin: { l: 40, r: 20, t: 20, b: 40 },
+      xaxis: { gridcolor: '#f1f5f9' },
+      yaxis: { gridcolor: '#f1f5f9', title: 'Análises Lidas' },
+      plot_bgcolor: '#ffffff',
+      paper_bgcolor: '#ffffff'
+    }, { displayModeBar: false });
+  };
+
+  return (
+    <div className="p-8 bg-slate-50">
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-slate-800 mb-2">Analytics de Consumo: Análises</h2>
+        <p className="text-slate-600">Seu histórico de análises técnicas e fundamentalistas</p>
+      </div>
+
+      {/* KPIs */}
+      <div className="grid grid-cols-4 gap-6 mb-8">
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Total Lidas</span>
+            <i className="fas fa-chart-line text-slate-400"></i>
+          </div>
+          <p className="text-3xl font-bold text-slate-800">93</p>
+          <p className="text-xs text-emerald-600 font-medium mt-2">
+            <i className="fas fa-arrow-up mr-1"></i>
+            +18 este mês
+          </p>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Tempo Total</span>
+            <i className="fas fa-clock text-slate-400"></i>
+          </div>
+          <p className="text-3xl font-bold text-slate-800">52h</p>
+          <p className="text-xs text-emerald-600 font-medium mt-2">
+            <i className="fas fa-arrow-up mr-1"></i>
+            +25% este mês
+          </p>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Média Semanal</span>
+            <i className="fas fa-calendar-week text-slate-400"></i>
+          </div>
+          <p className="text-3xl font-bold text-slate-800">6.5</p>
+          <p className="text-xs text-slate-500 font-medium mt-2">
+            Análises por semana
+          </p>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Ativos Analisados</span>
+            <i className="fas fa-coins text-slate-400"></i>
+          </div>
+          <p className="text-3xl font-bold text-slate-800">47</p>
+          <p className="text-xs text-slate-500 font-medium mt-2">
+            Diferentes ativos
+          </p>
+        </div>
+      </div>
+
+      {/* Charts Grid */}
+      <div className="grid grid-cols-2 gap-6 mb-8">
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <h3 className="text-lg font-semibold text-slate-800 mb-4">Análises Semanais</h3>
+          <div id="analises-weekly-chart" className="h-64"></div>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <h3 className="text-lg font-semibold text-slate-800 mb-4">Distribuição por Tipo</h3>
+          <div id="analises-types-chart" className="h-64"></div>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <h3 className="text-lg font-semibold text-slate-800 mb-4">Tempo de Análise</h3>
+          <div id="analises-time-chart" className="h-64"></div>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <h3 className="text-lg font-semibold text-slate-800 mb-4">Engajamento Mensal</h3>
+          <div id="analises-monthly-chart" className="h-64"></div>
+        </div>
+      </div>
+
+      {/* Análises Recentes */}
+      <div className="bg-white rounded-xl p-6 border border-slate-200">
+        <h3 className="text-lg font-semibold text-slate-800 mb-4">Análises Lidas Recentemente</h3>
+        <div className="space-y-3">
+          {[
+            { title: 'Análise Técnica: PETR4 - Suporte em R$ 38,50', author: 'Trading Pro', type: 'Técnica', date: 'Hoje' },
+            { title: 'Vale3: Perspectivas para 2025', author: 'Fundamentus', type: 'Fundamentalista', date: 'Ontem' },
+            { title: 'Cenário Macro: SELIC e Impactos no Mercado', author: 'Macro Insights', type: 'Macroeconômica', date: '2 dias atrás' },
+            { title: 'Setor Bancário: Análise Comparativa', author: 'Financial Research', type: 'Setorial', date: '3 dias atrás' },
+            { title: 'Bitcoin: Análise de Ondas de Elliott', author: 'Crypto Analysis', type: 'Técnica', date: '4 dias atrás' }
+          ].map((analise, idx) => (
+            <div key={idx} className="flex items-center justify-between p-3 border border-slate-100 rounded-lg hover:bg-slate-50 transition">
+              <div className="flex items-center gap-3 flex-1">
+                <div className="w-10 h-10 bg-pastel-green rounded-lg flex items-center justify-center">
+                  <i className="fas fa-chart-line text-slate-700"></i>
+                </div>
+                <div className="flex-1">
+                  <p className="font-medium text-slate-800">{analise.title}</p>
+                  <p className="text-xs text-slate-500">{analise.author} • {analise.type} • {analise.date}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};

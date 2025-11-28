@@ -1,0 +1,185 @@
+import { useEffect } from "react";
+
+export const InfograficosAnalyticsConsumption = () => {
+  useEffect(() => {
+    if (typeof window !== 'undefined' && (window as any).Plotly) {
+      initializeCharts();
+    }
+  }, []);
+
+  const initializeCharts = () => {
+    const Plotly = (window as any).Plotly;
+
+    // Visualizações Semanais
+    const weeklyData = [{
+      x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+      y: [5, 8, 6, 10, 7, 3, 2],
+      type: 'bar',
+      marker: { color: '#F4E4A6' }
+    }];
+
+    Plotly.newPlot('infograficos-weekly-chart', weeklyData, {
+      margin: { l: 40, r: 20, t: 20, b: 40 },
+      xaxis: { gridcolor: '#f1f5f9' },
+      yaxis: { gridcolor: '#f1f5f9', title: 'Infográficos Vistos' },
+      plot_bgcolor: '#ffffff',
+      paper_bgcolor: '#ffffff'
+    }, { displayModeBar: false });
+
+    // Infográficos por Tema
+    const topicsData = [{
+      values: [32, 28, 20, 12, 8],
+      labels: ['Dados Mercado', 'Processos', 'Comparativos', 'Tendências', 'Outros'],
+      type: 'pie',
+      marker: { colors: ['#F4E4A6', '#C5E8D4', '#F4C8D8', '#D8BFD8', '#B8D4E8'] },
+      textinfo: 'label+percent'
+    }];
+
+    Plotly.newPlot('infograficos-topics-chart', topicsData, {
+      margin: { l: 20, r: 20, t: 20, b: 20 },
+      showlegend: false,
+      paper_bgcolor: '#ffffff'
+    }, { displayModeBar: false });
+
+    // Tempo de Visualização
+    const timeData = [{
+      x: ['0-2 min', '2-5 min', '5-10 min', '10+ min'],
+      y: [18, 32, 25, 12],
+      type: 'bar',
+      marker: { color: ['#E8C5D8', '#E8E0C5', '#C5E8D4', '#F4E4A6'] }
+    }];
+
+    Plotly.newPlot('infograficos-time-chart', timeData, {
+      margin: { l: 40, r: 20, t: 20, b: 40 },
+      xaxis: { gridcolor: '#f1f5f9', title: 'Tempo de Visualização' },
+      yaxis: { gridcolor: '#f1f5f9', title: 'Infográficos' },
+      plot_bgcolor: '#ffffff',
+      paper_bgcolor: '#ffffff'
+    }, { displayModeBar: false });
+
+    // Engajamento Mensal
+    const monthlyData = [{
+      x: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+      y: [32, 38, 35, 42, 45, 51],
+      type: 'scatter',
+      mode: 'lines+markers',
+      line: { color: '#F4E4A6', width: 3 },
+      marker: { size: 8, color: '#F4E4A6' }
+    }];
+
+    Plotly.newPlot('infograficos-monthly-chart', monthlyData, {
+      margin: { l: 40, r: 20, t: 20, b: 40 },
+      xaxis: { gridcolor: '#f1f5f9' },
+      yaxis: { gridcolor: '#f1f5f9', title: 'Infográficos Vistos' },
+      plot_bgcolor: '#ffffff',
+      paper_bgcolor: '#ffffff'
+    }, { displayModeBar: false });
+  };
+
+  return (
+    <div className="p-8 bg-slate-50">
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-slate-800 mb-2">Analytics de Consumo: Infográficos</h2>
+        <p className="text-slate-600">Seu histórico de visualização de infográficos</p>
+      </div>
+
+      {/* KPIs */}
+      <div className="grid grid-cols-4 gap-6 mb-8">
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Total Vistos</span>
+            <i className="fas fa-chart-bar text-slate-400"></i>
+          </div>
+          <p className="text-3xl font-bold text-slate-800">87</p>
+          <p className="text-xs text-emerald-600 font-medium mt-2">
+            <i className="fas fa-arrow-up mr-1"></i>
+            +15 este mês
+          </p>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Tempo Total</span>
+            <i className="fas fa-clock text-slate-400"></i>
+          </div>
+          <p className="text-3xl font-bold text-slate-800">28h</p>
+          <p className="text-xs text-emerald-600 font-medium mt-2">
+            <i className="fas fa-arrow-up mr-1"></i>
+            +20% este mês
+          </p>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Média Semanal</span>
+            <i className="fas fa-calendar-week text-slate-400"></i>
+          </div>
+          <p className="text-3xl font-bold text-slate-800">6.8</p>
+          <p className="text-xs text-slate-500 font-medium mt-2">
+            Infográficos por semana
+          </p>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Downloads</span>
+            <i className="fas fa-download text-slate-400"></i>
+          </div>
+          <p className="text-3xl font-bold text-slate-800">34</p>
+          <p className="text-xs text-slate-500 font-medium mt-2">
+            Salvos localmente
+          </p>
+        </div>
+      </div>
+
+      {/* Charts Grid */}
+      <div className="grid grid-cols-2 gap-6 mb-8">
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <h3 className="text-lg font-semibold text-slate-800 mb-4">Visualizações Semanais</h3>
+          <div id="infograficos-weekly-chart" className="h-64"></div>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <h3 className="text-lg font-semibold text-slate-800 mb-4">Distribuição por Tema</h3>
+          <div id="infograficos-topics-chart" className="h-64"></div>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <h3 className="text-lg font-semibold text-slate-800 mb-4">Tempo de Visualização</h3>
+          <div id="infograficos-time-chart" className="h-64"></div>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <h3 className="text-lg font-semibold text-slate-800 mb-4">Engajamento Mensal</h3>
+          <div id="infograficos-monthly-chart" className="h-64"></div>
+        </div>
+      </div>
+
+      {/* Infográficos Recentes */}
+      <div className="bg-white rounded-xl p-6 border border-slate-200">
+        <h3 className="text-lg font-semibold text-slate-800 mb-4">Infográficos Vistos Recentemente</h3>
+        <div className="space-y-3">
+          {[
+            { title: 'Evolução dos Pagamentos Digitais no Brasil', author: 'Data Insights', tema: 'Dados Mercado', date: 'Hoje' },
+            { title: 'Fluxo de Aprovação de Crédito', author: 'Banking Process', tema: 'Processos', date: 'Ontem' },
+            { title: 'Comparativo: Taxas Bancárias 2024', author: 'Market Compare', tema: 'Comparativos', date: '2 dias atrás' },
+            { title: 'Tendências em Open Finance', author: 'Tech Trends', tema: 'Tendências', date: '3 dias atrás' },
+            { title: 'PIX: 5 Anos de Evolução', author: 'Bacen Visual', tema: 'Dados Mercado', date: '5 dias atrás' }
+          ].map((info, idx) => (
+            <div key={idx} className="flex items-center justify-between p-3 border border-slate-100 rounded-lg hover:bg-slate-50 transition">
+              <div className="flex items-center gap-3 flex-1">
+                <div className="w-10 h-10 bg-pastel-yellow rounded-lg flex items-center justify-center">
+                  <i className="fas fa-chart-bar text-slate-700"></i>
+                </div>
+                <div className="flex-1">
+                  <p className="font-medium text-slate-800">{info.title}</p>
+                  <p className="text-xs text-slate-500">{info.author} • {info.tema} • {info.date}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};

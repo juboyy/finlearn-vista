@@ -10,6 +10,17 @@ import { NewspaperAnalytics } from "@/components/Dashboard/NewspaperAnalytics";
 import { PodcastsAnalytics } from "@/components/Dashboard/PodcastsAnalytics";
 import { CursosAnalytics } from "@/components/Dashboard/CursosAnalytics";
 import { WebinarsAnalyticsConsumption } from "@/components/Dashboard/WebinarsAnalyticsConsumption";
+import { EbooksAnalyticsConsumption } from "@/components/Dashboard/EbooksAnalyticsConsumption";
+import { ArtigosAnalyticsConsumption } from "@/components/Dashboard/ArtigosAnalyticsConsumption";
+import { AnalisesAnalyticsConsumption } from "@/components/Dashboard/AnalisesAnalyticsConsumption";
+import { RelatoriosAnalyticsConsumption } from "@/components/Dashboard/RelatoriosAnalyticsConsumption";
+import { EstudosAnalyticsConsumption } from "@/components/Dashboard/EstudosAnalyticsConsumption";
+import { InfograficosAnalyticsConsumption } from "@/components/Dashboard/InfograficosAnalyticsConsumption";
+import { WhitepaperAnalyticsConsumption } from "@/components/Dashboard/WhitepaperAnalyticsConsumption";
+import { ApresentacoesAnalyticsConsumption } from "@/components/Dashboard/ApresentacoesAnalyticsConsumption";
+import { LiveAnalyticsConsumption } from "@/components/Dashboard/LiveAnalyticsConsumption";
+import { EntrevistasAnalyticsConsumption } from "@/components/Dashboard/EntrevistasAnalyticsConsumption";
+import { AvatarIAAnalyticsConsumption } from "@/components/Dashboard/AvatarIAAnalyticsConsumption";
 import { Bell, Play, Clock, BookOpen, TrendingUp, Headphones, Calendar, Users, MessageCircle, Star, BookMarked, Video, Award, Heart, CheckCircle, PlayCircle, Trophy, ChartLine, Shield, Bitcoin, Gavel, PieChart, Repeat, Globe, Leaf, Plus, BookOpenCheck, CreditCard, FileText, Bookmark, Quote, Download, Share2, Bot, Eye, Percent, DollarSign, Lightbulb, AlertTriangle, Coins, Mic, Search, ChevronLeft, ChevronRight, Circle } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -367,6 +378,17 @@ const Aprendizado = () => {
           activeTab === 'podcasts' ? <PodcastsAnalytics /> :
           activeTab === 'cursos' ? <CursosAnalytics /> :
           activeTab === 'webinars' ? <WebinarsAnalyticsConsumption /> :
+          activeTab === 'ebooks' ? <EbooksAnalyticsConsumption /> :
+          activeTab === 'artigos' ? <ArtigosAnalyticsConsumption /> :
+          activeTab === 'analises' ? <AnalisesAnalyticsConsumption /> :
+          activeTab === 'relatorios' ? <RelatoriosAnalyticsConsumption /> :
+          activeTab === 'estudos' ? <EstudosAnalyticsConsumption /> :
+          activeTab === 'infograficos' ? <InfograficosAnalyticsConsumption /> :
+          activeTab === 'whitepaper' ? <WhitepaperAnalyticsConsumption /> :
+          activeTab === 'apresentacoes' ? <ApresentacoesAnalyticsConsumption /> :
+          activeTab === 'live' ? <LiveAnalyticsConsumption /> :
+          activeTab === 'entrevistas' ? <EntrevistasAnalyticsConsumption /> :
+          activeTab === 'avatar-ia' ? <AvatarIAAnalyticsConsumption /> :
           <NewspaperAnalytics /> // Default fallback
         ) : activeTab !== 'documentos' ? <div className="flex-1 p-8 pb-32">
           {activeTab === 'todos' && <>
