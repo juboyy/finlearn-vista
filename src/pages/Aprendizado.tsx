@@ -385,6 +385,8 @@ const Aprendizado = () => {
               setShowHistorico(false);
             }
           }}
+          showHistoricoButton={activeTab === 'documentos'}
+          showAnalyticsButton={activeTab === 'documentos'}
         />
 
         {showAnalytics && activeTab === 'documentos' ? (

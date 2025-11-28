@@ -6,12 +6,16 @@ interface MenutabbarFixProps {
   setActiveTab: (tab: TabType) => void;
   onHistoricoClick?: () => void;
   onAnalyticsClick?: () => void;
+  showHistoricoButton?: boolean;
+  showAnalyticsButton?: boolean;
 }
 export const MenutabbarFix = ({
   activeTab,
   setActiveTab,
   onHistoricoClick,
-  onAnalyticsClick
+  onAnalyticsClick,
+  showHistoricoButton = false,
+  showAnalyticsButton = false
 }: MenutabbarFixProps) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [activeActionButton, setActiveActionButton] = useState<'analytics' | 'historico' | null>(null);
@@ -159,7 +163,7 @@ export const MenutabbarFix = ({
           <span>Filtro Avançado</span>
         </button>
         
-        {onAnalyticsClick && (
+        {showAnalyticsButton && onAnalyticsClick && (
           <button 
             onClick={() => {
               onAnalyticsClick();
@@ -176,7 +180,7 @@ export const MenutabbarFix = ({
           </button>
         )}
         
-        {onHistoricoClick && (
+        {showHistoricoButton && onHistoricoClick && (
           <button 
             onClick={() => {
               onHistoricoClick();
