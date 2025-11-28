@@ -217,7 +217,7 @@ export const EbookPanel = ({
             <div className="absolute inset-0 bg-black/60 opacity-0 group-hover/image:opacity-100 transition-opacity duration-300 flex items-end justify-center p-4">
               <Button size="sm" className="bg-pastel-purple hover:bg-pastel-pink text-foreground font-semibold shadow-lg" onClick={() => {
                 onOpenChange(false);
-                navigate(`/ebook/${ebook.id}`);
+                navigate(`/ler-ebook/${ebook.id}`);
               }}>
                 <Play size={14} className="mr-2" />
                 Ler Agora
@@ -282,7 +282,7 @@ export const EbookPanel = ({
           <div className="flex gap-2 mt-3">
             <Button size="sm" className="flex-1 bg-pastel-blue hover:bg-pastel-purple text-foreground font-semibold" onClick={() => {
               onOpenChange(false);
-              navigate(`/ebook/${ebook.id}`);
+              navigate(`/ler-ebook/${ebook.id}`);
             }}>
               Ler Agora
             </Button>
