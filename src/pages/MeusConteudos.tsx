@@ -209,16 +209,6 @@ export default function MeusConteudos() {
                     Publicado
                   </button>
                 </div>
-                <div className="flex gap-2">
-                  <button className="px-4 py-2 text-sm font-medium text-foreground bg-card border border-border rounded-lg hover:bg-accent/10 transition-colors flex items-center gap-2">
-                    <Filter className="w-4 h-4" />
-                    Filtrar
-                  </button>
-                  <button className="px-4 py-2 text-sm font-medium text-foreground bg-card border border-border rounded-lg hover:bg-accent/10 transition-colors flex items-center gap-2">
-                    <ArrowDownWideNarrow className="w-4 h-4" />
-                    Ordenar
-                  </button>
-                </div>
               </div>
 
               <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
