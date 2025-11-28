@@ -15,10 +15,22 @@ export function CriarAgenteResumo() {
         {/* Header */}
         <header className="sticky top-0 z-10 bg-card border-b border-border">
           <div className="px-8 py-4">
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-2xl font-bold text-foreground">Criar Novo Agente IA</h2>
-                <p className="text-sm text-muted-foreground mt-1">Configure seu assistente financeiro inteligente</p>
+                <div className="flex items-center space-x-3">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="rounded-lg"
+                    onClick={() => navigate("/criar-agente/personalidade")}
+                  >
+                    <ArrowLeft className="h-5 w-5" />
+                  </Button>
+                  <div>
+                    <h2 className="text-2xl font-bold text-foreground">Criar Novo Agente IA</h2>
+                    <p className="text-sm text-muted-foreground mt-1">Configure seu assistente financeiro inteligente</p>
+                  </div>
+                </div>
               </div>
               <div className="flex items-center gap-3">
                 <Button variant="outline" className="rounded-lg font-bold">
@@ -30,9 +42,9 @@ export function CriarAgenteResumo() {
                 </Button>
               </div>
             </div>
-
-        <AgentStepWizard currentStep={4} />
           </div>
+
+          <AgentStepWizard currentStep={4} />
         </header>
 
         {/* Content */}
