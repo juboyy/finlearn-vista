@@ -33,3 +33,5 @@ verify_jwt = false
 [functions.notify-similar-promotions]
 verify_jwt = false
 
+[functions.ebook-reading-agent]
+verify_jwt = false
