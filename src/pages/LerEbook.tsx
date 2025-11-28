@@ -138,9 +138,9 @@ const LerEbook = () => {
     }
   };
 
-  const handleHighlight = () => {
+  const handleHighlight = async () => {
     if (selectedText) {
-      createAnnotation(
+      await createAnnotation(
         "highlight",
         selectedText,
         0,
@@ -149,6 +149,7 @@ const LerEbook = () => {
         undefined,
         currentPage
       );
+      
       setShowHighlightMenu(false);
       setShowNoteInput(false);
       window.getSelection()?.removeAllRanges();
@@ -168,9 +169,9 @@ const LerEbook = () => {
     window.getSelection()?.removeAllRanges();
   };
 
-  const handleAddNote = () => {
+  const handleAddNote = async () => {
     if (selectedText && noteContent.trim()) {
-      createAnnotation(
+      await createAnnotation(
         "note",
         selectedText,
         0,
@@ -179,6 +180,7 @@ const LerEbook = () => {
         noteContent,
         currentPage
       );
+      
       setShowHighlightMenu(false);
       setShowNoteInput(false);
       setNoteContent("");
@@ -728,6 +730,7 @@ const LerEbook = () => {
           <div className="max-w-4xl mx-auto p-12 relative">
             <div
               ref={contentRef}
+              key={`content-${annotations.length}-${currentPage}`}
               className="prose prose-slate dark:prose-invert max-w-none"
               onMouseUp={handleTextSelection}
               dangerouslySetInnerHTML={{ __html: getContentWithAnnotations() }}
