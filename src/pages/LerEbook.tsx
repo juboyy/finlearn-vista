@@ -10,6 +10,16 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { useEbookAnnotations } from "@/hooks/useEbookAnnotations";
 import { supabase } from "@/integrations/supabase/client";
 import ebookGestaoRiscos from "@/assets/ebook-gestao-riscos.png";
@@ -41,6 +51,7 @@ const LerEbook = () => {
   const [highlightName, setHighlightName] = useState("");
   const [showReadingAgent, setShowReadingAgent] = useState(false);
   const [markdownPages, setMarkdownPages] = useState<any[]>([]);
+  const [showExitDialog, setShowExitDialog] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -711,7 +722,7 @@ const LerEbook = () => {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => navigate("/biblioteca")}
+            onClick={() => setShowExitDialog(true)}
             className="mb-4"
           >
             <ArrowLeft className="mr-2" size={16} />
@@ -1485,6 +1496,24 @@ const LerEbook = () => {
         ebookContent={ebookData.content}
         currentPage={currentPage}
       />
+
+      {/* Diálogo de Confirmação de Saída */}
+      <AlertDialog open={showExitDialog} onOpenChange={setShowExitDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Sair da leitura?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Você está na página {currentPage} de {totalPages}. Sua posição de leitura será salva, mas você perderá qualquer texto selecionado ou ações não finalizadas.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Continuar lendo</AlertDialogCancel>
+            <AlertDialogAction onClick={() => navigate("/biblioteca")}>
+              Sair
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
