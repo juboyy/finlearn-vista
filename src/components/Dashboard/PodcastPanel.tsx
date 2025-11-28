@@ -431,7 +431,7 @@ export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
           )}
 
           {/* Rolando agora */}
-          <div className="px-4 animate-fade-in">
+          <div className="px-12 animate-fade-in">
             <div className="flex items-center gap-3 mb-5 group">
               <div className="relative">
                 <div className="w-3 h-3 bg-gradient-to-br from-pastel-pink to-pink-400 rounded-full shadow-lg shadow-pastel-pink/50 animate-pulse"></div>
