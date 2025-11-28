@@ -952,7 +952,7 @@ const LerEbook = () => {
         </ScrollArea>
 
         {/* Page Navigation */}
-        <div className="bg-card border-t border-border px-4 py-3">
+        <div className="bg-card border-t border-border px-4 py-2.5">
           <div className="flex items-center justify-between max-w-4xl mx-auto">
             <Button
               variant="outline"
