@@ -95,7 +95,7 @@ const EditorMarkdown = () => {
         </div>
       </div>
 
-      {/* Center Content - Split View: Editor & Preview */}
+      {/* Center Content - Live Preview */}
       <div className="flex-1 flex flex-col">
         {/* Header */}
         <div className="bg-card border-b border-border p-6">
@@ -107,24 +107,16 @@ const EditorMarkdown = () => {
           />
         </div>
 
-        {/* Split Content Area */}
-        <div className="flex-1 flex">
-          {/* Editor Column */}
-          <div className="flex-1 border-r border-border">
-            <div className="bg-muted/30 px-4 py-2 border-b border-border">
-              <span className="text-sm font-medium text-muted-foreground">
-                Editor Markdown
-              </span>
-            </div>
-            <ScrollArea className="h-[calc(100vh-200px)]">
-              <div className="p-6">
-                <Textarea
-                  value={content}
-                  onChange={(e) => setContent(e.target.value)}
-                  placeholder="Comece a escrever em markdown...
+        {/* Content Area with Live Markdown Rendering */}
+        <ScrollArea className="flex-1">
+          <div className="max-w-4xl mx-auto p-12">
+            <Textarea
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              placeholder="Comece a escrever em markdown...
 
 # Título 1
-## Título 2
+## Título 2  
 ### Título 3
 
 **Texto em negrito**
@@ -134,46 +126,33 @@ const EditorMarkdown = () => {
 - Outro item
 
 1. Lista numerada
-2. Segundo item
-
-[Link](https://exemplo.com)
-![Imagem](url-da-imagem)"
-                  className="min-h-[800px] resize-none border-none focus-visible:ring-0 text-base leading-relaxed bg-transparent"
-                />
-              </div>
-            </ScrollArea>
-          </div>
-
-          {/* Preview Column */}
-          <div className="flex-1">
-            <div className="bg-muted/30 px-4 py-2 border-b border-border">
-              <span className="text-sm font-medium text-muted-foreground">
-                Visualização
-              </span>
-            </div>
-            <ScrollArea className="h-[calc(100vh-200px)]">
-              <div className="p-12">
-                <div 
-                  className="prose prose-slate dark:prose-invert max-w-none"
-                  style={{
-                    fontSize: '1rem',
-                    lineHeight: '1.8'
-                  }}
-                >
-                  {content ? (
+2. Segundo item"
+              className="min-h-[800px] resize-none border-none focus-visible:ring-0 text-base leading-relaxed bg-transparent mb-8"
+            />
+            
+            {content && (
+              <>
+                <div className="h-px bg-border my-8" />
+                <div className="bg-muted/20 rounded-lg p-8">
+                  <div className="text-xs font-medium text-muted-foreground mb-4 uppercase tracking-wide">
+                    Visualização Renderizada
+                  </div>
+                  <div 
+                    className="prose prose-slate dark:prose-invert max-w-none"
+                    style={{
+                      fontSize: '1rem',
+                      lineHeight: '1.8'
+                    }}
+                  >
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>
                       {content}
                     </ReactMarkdown>
-                  ) : (
-                    <p className="text-muted-foreground italic">
-                      A visualização do seu conteúdo aparecerá aqui...
-                    </p>
-                  )}
+                  </div>
                 </div>
-              </div>
-            </ScrollArea>
+              </>
+            )}
           </div>
-        </div>
+        </ScrollArea>
       </div>
     </div>
   );
