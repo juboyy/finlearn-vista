@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, RotateCw, Camera, Video, Eye, Hand, Smile, Palette, Handshake, CheckCircle, Circle, Lightbulb, Info } from "lucide-react";
+import { ArrowLeft, RotateCw, Camera, Video, Eye, Hand, Smile, Palette, Handshake, CheckCircle, Circle, Lightbulb, Info, Database, Cloud, FileSpreadsheet, Webhook, FolderOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -31,6 +31,13 @@ export function CriarAgentePersonalidade() {
   const [headMovements, setHeadMovements] = useState(true);
   const [facialExpressions, setFacialExpressions] = useState(true);
   const [customBackground, setCustomBackground] = useState(false);
+
+  // State for memory integrations
+  const [googleDriveEnabled, setGoogleDriveEnabled] = useState(false);
+  const [notionEnabled, setNotionEnabled] = useState(false);
+  const [googleSheetsEnabled, setGoogleSheetsEnabled] = useState(false);
+  const [webhookEnabled, setWebhookEnabled] = useState(false);
+  const [dropboxEnabled, setDropboxEnabled] = useState(false);
 
   const reasoningTraits = [
     {
@@ -720,6 +727,89 @@ export function CriarAgentePersonalidade() {
                 </div>
                 <p className="text-2xl font-bold text-slate-800">{enthusiasm[0]}%</p>
                 <p className="text-xs text-slate-800 mt-1">Moderado</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Memory Style Section */}
+          <div className="bg-card rounded-xl p-6 border border-border mb-6">
+            <div className="flex items-center space-x-3 mb-6">
+              <div className="w-10 h-10 rounded-lg bg-pastel-purple flex items-center justify-center">
+                <Database className="text-purple-600" size={20} />
+              </div>
+              <h3 className="text-xl font-bold text-foreground">
+                Estilo de Memória
+              </h3>
+            </div>
+            
+            <p className="text-sm text-muted-foreground mb-6">
+              Configure se o agente poderá acessar e trazer informações de fontes externas para enriquecer suas respostas
+            </p>
+
+            <div className="space-y-4">
+              <div className="flex items-center justify-between p-4 rounded-xl bg-secondary border border-border">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-lg bg-pastel-blue flex items-center justify-center">
+                    <Cloud className="text-sky-600" size={20} />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">Google Drive</p>
+                    <p className="text-xs text-muted-foreground">Acesso a documentos e arquivos</p>
+                  </div>
+                </div>
+                <Switch checked={googleDriveEnabled} onCheckedChange={setGoogleDriveEnabled} />
+              </div>
+
+              <div className="flex items-center justify-between p-4 rounded-xl bg-secondary border border-border">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-lg bg-pastel-indigo flex items-center justify-center">
+                    <FolderOpen className="text-indigo-600" size={20} />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">Notion</p>
+                    <p className="text-xs text-muted-foreground">Acesso a páginas e databases</p>
+                  </div>
+                </div>
+                <Switch checked={notionEnabled} onCheckedChange={setNotionEnabled} />
+              </div>
+
+              <div className="flex items-center justify-between p-4 rounded-xl bg-secondary border border-border">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-lg bg-pastel-green flex items-center justify-center">
+                    <FileSpreadsheet className="text-emerald-600" size={20} />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">Google Sheets</p>
+                    <p className="text-xs text-muted-foreground">Acesso a planilhas e dados</p>
+                  </div>
+                </div>
+                <Switch checked={googleSheetsEnabled} onCheckedChange={setGoogleSheetsEnabled} />
+              </div>
+
+              <div className="flex items-center justify-between p-4 rounded-xl bg-secondary border border-border">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-lg bg-pastel-orange flex items-center justify-center">
+                    <Webhook className="text-orange-600" size={20} />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">Webhook</p>
+                    <p className="text-xs text-muted-foreground">Integração via webhooks personalizados</p>
+                  </div>
+                </div>
+                <Switch checked={webhookEnabled} onCheckedChange={setWebhookEnabled} />
+              </div>
+
+              <div className="flex items-center justify-between p-4 rounded-xl bg-secondary border border-border">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-lg bg-pastel-pink flex items-center justify-center">
+                    <Cloud className="text-pink-600" size={20} />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">Dropbox</p>
+                    <p className="text-xs text-muted-foreground">Acesso a arquivos e pastas</p>
+                  </div>
+                </div>
+                <Switch checked={dropboxEnabled} onCheckedChange={setDropboxEnabled} />
               </div>
             </div>
           </div>
