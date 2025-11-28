@@ -377,6 +377,159 @@ const LerEbook = () => {
     return doc.body.innerHTML;
   };
 
+  // Apply annotations to content
+  const getContentWithAnnotations = () => {
+    let content = ebookData.content;
+    
+    // Apply search highlights first if there's a search query
+    if (searchQuery.trim()) {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(content, 'text/html');
+      const walker = document.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT);
+      
+      const textNodes: Text[] = [];
+      let node;
+      while ((node = walker.nextNode())) {
+        textNodes.push(node as Text);
+      }
+
+      const query = searchQuery.toLowerCase();
+      textNodes.forEach((textNode) => {
+        const text = textNode.textContent || '';
+        const lowerText = text.toLowerCase();
+        
+        if (lowerText.includes(query)) {
+          const fragment = document.createDocumentFragment();
+          let lastIndex = 0;
+          let index = lowerText.indexOf(query);
+          
+          while (index !== -1) {
+            if (index > lastIndex) {
+              fragment.appendChild(document.createTextNode(text.substring(lastIndex, index)));
+            }
+            
+            const mark = document.createElement('mark');
+            mark.setAttribute('data-search-result', 'true');
+            mark.style.backgroundColor = 'hsl(48, 75%, 70%)';
+            mark.style.padding = '2px 0';
+            mark.style.borderRadius = '2px';
+            mark.textContent = text.substring(index, index + query.length);
+            fragment.appendChild(mark);
+            
+            lastIndex = index + query.length;
+            index = lowerText.indexOf(query, lastIndex);
+          }
+          
+          if (lastIndex < text.length) {
+            fragment.appendChild(document.createTextNode(text.substring(lastIndex)));
+          }
+          
+          textNode.parentNode?.replaceChild(fragment, textNode);
+        }
+      });
+      
+      content = doc.body.innerHTML;
+    }
+    
+    // Get annotations for current page
+    const pageAnnotations = annotations.filter(a => a.page_number === currentPage);
+    const pageBookmarks = bookmarks.filter(b => b.page_number === currentPage);
+    
+    // Create a temporary DOM to work with
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(content, 'text/html');
+    const bodyText = doc.body.innerText;
+    
+    // Sort annotations by position to avoid overlapping issues
+    const sortedAnnotations = [...pageAnnotations].sort((a, b) => 
+      bodyText.indexOf(a.selected_text) - bodyText.indexOf(b.selected_text)
+    );
+    
+    // Apply each annotation
+    sortedAnnotations.forEach((annotation) => {
+      const walker = document.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT);
+      const textNodes: Text[] = [];
+      let node;
+      
+      while ((node = walker.nextNode())) {
+        textNodes.push(node as Text);
+      }
+      
+      textNodes.forEach((textNode) => {
+        const text = textNode.textContent || '';
+        const index = text.indexOf(annotation.selected_text);
+        
+        if (index !== -1) {
+          const fragment = document.createDocumentFragment();
+          
+          // Text before annotation
+          if (index > 0) {
+            fragment.appendChild(document.createTextNode(text.substring(0, index)));
+          }
+          
+          // Create annotation element
+          const span = document.createElement('span');
+          span.setAttribute('data-annotation-id', annotation.id);
+          span.style.padding = '3px 2px';
+          span.style.borderRadius = '3px';
+          span.style.cursor = 'pointer';
+          span.style.transition = 'all 0.2s';
+          span.style.position = 'relative';
+          
+          if (annotation.annotation_type === 'highlight') {
+            span.style.backgroundColor = annotation.highlight_color || 'rgba(255, 235, 59, 0.4)';
+            span.title = 'Destaque';
+          } else if (annotation.annotation_type === 'note') {
+            span.style.backgroundColor = 'rgba(59, 130, 246, 0.2)';
+            span.style.borderBottom = '2px solid rgba(59, 130, 246, 0.6)';
+            span.title = `Anotação: ${annotation.annotation_content}`;
+            
+            // Add note icon
+            const icon = document.createElement('sup');
+            icon.innerHTML = '📝';
+            icon.style.fontSize = '0.7em';
+            icon.style.marginLeft = '2px';
+            span.appendChild(document.createTextNode(annotation.selected_text));
+            span.appendChild(icon);
+          }
+          
+          if (annotation.annotation_type !== 'note') {
+            span.textContent = annotation.selected_text;
+          }
+          
+          fragment.appendChild(span);
+          
+          // Text after annotation
+          const afterText = text.substring(index + annotation.selected_text.length);
+          if (afterText) {
+            fragment.appendChild(document.createTextNode(afterText));
+          }
+          
+          textNode.parentNode?.replaceChild(fragment, textNode);
+        }
+      });
+    });
+    
+    // Apply bookmark indicators
+    if (pageBookmarks.length > 0) {
+      const bookmarkIndicator = document.createElement('div');
+      bookmarkIndicator.style.position = 'absolute';
+      bookmarkIndicator.style.top = '0';
+      bookmarkIndicator.style.right = '0';
+      bookmarkIndicator.style.backgroundColor = 'hsl(var(--primary))';
+      bookmarkIndicator.style.color = 'white';
+      bookmarkIndicator.style.padding = '4px 8px';
+      bookmarkIndicator.style.borderRadius = '0 0 0 8px';
+      bookmarkIndicator.style.fontSize = '12px';
+      bookmarkIndicator.style.fontWeight = '600';
+      bookmarkIndicator.innerHTML = `🔖 ${pageBookmarks.length} marcador${pageBookmarks.length > 1 ? 'es' : ''}`;
+      doc.body.style.position = 'relative';
+      doc.body.insertBefore(bookmarkIndicator, doc.body.firstChild);
+    }
+    
+    return doc.body.innerHTML;
+  };
+
   const handleNextSearchResult = () => {
     if (searchResults.length > 0) {
       setCurrentSearchIndex((prev) => (prev + 1) % searchResults.length);
@@ -535,7 +688,7 @@ const LerEbook = () => {
               ref={contentRef}
               className="prose prose-slate dark:prose-invert max-w-none"
               onMouseUp={handleTextSelection}
-              dangerouslySetInnerHTML={{ __html: getContentWithSearchHighlights() }}
+              dangerouslySetInnerHTML={{ __html: getContentWithAnnotations() }}
             />
           </div>
         </ScrollArea>
