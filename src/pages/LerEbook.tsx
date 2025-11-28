@@ -35,11 +35,12 @@ const LerEbook = () => {
   const [editingBookmarkName, setEditingBookmarkName] = useState("");
   const [sortBy, setSortBy] = useState<"date" | "page" | "type">("date");
   const [hoveredAnnotationId, setHoveredAnnotationId] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<"bookmarks" | "highlights" | "notes">("bookmarks");
+  const [activeTab, setActiveTab] = useState<"bookmarks" | "highlights" | "notes" | "pages">("bookmarks");
   const [renderKey, setRenderKey] = useState(0);
   const [previewRange, setPreviewRange] = useState<Range | null>(null);
   const [highlightName, setHighlightName] = useState("");
   const [showReadingAgent, setShowReadingAgent] = useState(false);
+  const [markdownPages, setMarkdownPages] = useState<any[]>([]);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -379,6 +380,24 @@ const LerEbook = () => {
   const sortedHighlights = sortedAnnotations.filter(a => a.annotation_type === "highlight");
   const sortedNotes = sortedAnnotations.filter(a => a.annotation_type === "note");
   const sortedBookmarks = getSortedBookmarks();
+
+  // Load markdown pages when pages tab is active
+  useEffect(() => {
+    const loadMarkdownPages = async () => {
+      if (activeTab === "pages") {
+        const { data } = await supabase
+          .from("markdown_documents")
+          .select("*")
+          .order("created_at", { ascending: false });
+        
+        if (data) {
+          setMarkdownPages(data);
+        }
+      }
+    };
+
+    loadMarkdownPages();
+  }, [activeTab]);
 
   const handleAddBookmark = () => {
     const chapter = ebookData.chapters.find(ch => ch.page <= currentPage);
@@ -1028,6 +1047,27 @@ const LerEbook = () => {
                   <p>Anotações</p>
                 </TooltipContent>
               </Tooltip>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant={activeTab === "pages" ? "default" : "ghost"}
+                    size="icon"
+                    onClick={() => setActiveTab("pages")}
+                    className="relative"
+                  >
+                    <FileEdit size={18} />
+                    {markdownPages.length > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                        {markdownPages.length}
+                      </span>
+                    )}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Páginas Criadas</p>
+                </TooltipContent>
+              </Tooltip>
             </div>
           </TooltipProvider>
           
@@ -1270,6 +1310,53 @@ const LerEbook = () => {
                 ))}
                 {sortedNotes.length === 0 && (
                   <p className="text-sm text-muted-foreground text-center py-8">Nenhuma anotação ainda</p>
+                )}
+              </div>
+            )}
+
+            {/* Pages Tab Content */}
+            {activeTab === "pages" && (
+              <div className="space-y-2">
+                {markdownPages.map((page) => (
+                  <div
+                    key={page.id}
+                    className="p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors cursor-pointer"
+                    onClick={() => navigate(`/editor-markdown?id=${page.id}`)}
+                  >
+                    <div className="flex items-start justify-between gap-2 mb-2">
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-medium text-foreground truncate mb-1">
+                          {page.title}
+                        </h4>
+                        <div className="text-xs text-muted-foreground">
+                          Criado em {new Date(page.created_at).toLocaleDateString("pt-BR")}
+                        </div>
+                      </div>
+                      <FileEdit className="w-4 h-4 text-muted-foreground shrink-0" />
+                    </div>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full mt-2"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/editor-markdown?id=${page.id}`);
+                      }}
+                    >
+                      Abrir documento
+                    </Button>
+                  </div>
+                ))}
+                {markdownPages.length === 0 && (
+                  <div className="text-center py-12">
+                    <FileEdit className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
+                    <p className="text-sm text-muted-foreground mb-2">
+                      Nenhuma página criada ainda
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      Selecione um texto e clique em "Página" para criar
+                    </p>
+                  </div>
                 )}
               </div>
             )}
