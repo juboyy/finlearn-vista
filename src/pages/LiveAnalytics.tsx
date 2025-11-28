@@ -367,55 +367,90 @@ export default function LiveAnalytics() {
           </Card>
         </div>
 
-        <Card className="p-6 border-border">
-          <h3 className="text-lg font-semibold text-foreground mb-4">
-            Top 5 Lives com Melhor Performance
-          </h3>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-border">
-                  <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
-                    Título da Live
-                  </th>
-                  <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
-                    Espectadores
-                  </th>
-                  <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
-                    Retenção
-                  </th>
-                  <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
-                    Tempo Médio
-                  </th>
-                  <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
-                    Data
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {topLives.map((live, index) => (
-                  <tr key={index} className="border-b border-border hover:bg-muted/50">
-                    <td className="py-3 px-4 text-sm text-foreground font-medium">
-                      {live.title}
-                    </td>
-                    <td className="py-3 px-4 text-sm text-foreground">
-                      {live.views}
-                    </td>
-                    <td className="py-3 px-4 text-sm text-foreground">
-                      {live.retention}
-                    </td>
-                    <td className="py-3 px-4 text-sm text-foreground">
-                      {live.avgTime}
-                    </td>
-                    <td className="py-3 px-4 text-sm text-muted-foreground">
-                      {live.date}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        <div className="space-y-4">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h3 className="text-2xl font-bold text-foreground">
+                Top 5 Lives com Melhor Performance
+              </h3>
+              <p className="text-sm text-muted-foreground mt-1">
+                Lives com maior engajamento e retenção de audiência
+              </p>
+            </div>
           </div>
-        </Card>
+
+          <div className="grid gap-4">
+            {topLives.map((live, index) => (
+              <Card
+                key={index}
+                className="group relative overflow-hidden border-border hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-pastel-blue via-pastel-purple to-pastel-pink" />
+                
+                <div className="p-6 pl-8">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1 space-y-3">
+                      <div className="flex items-start gap-3">
+                        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-pastel-blue/20 text-pastel-blue font-bold text-lg flex-shrink-0">
+                          {index + 1}
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="text-lg font-bold text-foreground group-hover:text-pastel-blue transition-colors">
+                            {live.title}
+                          </h4>
+                          <p className="text-sm text-muted-foreground mt-1">
+                            Transmitido em {live.date}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-3 gap-4 mt-4">
+                        <div className="flex items-center gap-2 bg-muted/30 rounded-lg p-3 hover:bg-muted/50 transition-colors">
+                          <div className="w-10 h-10 rounded-lg bg-pastel-purple/20 flex items-center justify-center flex-shrink-0">
+                            <Eye className="w-5 h-5 text-pastel-purple" />
+                          </div>
+                          <div>
+                            <p className="text-xs text-muted-foreground font-medium">Espectadores</p>
+                            <p className="text-lg font-bold text-foreground">{live.views}</p>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2 bg-muted/30 rounded-lg p-3 hover:bg-muted/50 transition-colors">
+                          <div className="w-10 h-10 rounded-lg bg-pastel-green/20 flex items-center justify-center flex-shrink-0">
+                            <TrendingUp className="w-5 h-5 text-pastel-green" />
+                          </div>
+                          <div>
+                            <p className="text-xs text-muted-foreground font-medium">Retenção</p>
+                            <p className="text-lg font-bold text-foreground">{live.retention}</p>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2 bg-muted/30 rounded-lg p-3 hover:bg-muted/50 transition-colors">
+                          <div className="w-10 h-10 rounded-lg bg-pastel-pink/20 flex items-center justify-center flex-shrink-0">
+                            <Clock className="w-5 h-5 text-pastel-pink" />
+                          </div>
+                          <div>
+                            <p className="text-xs text-muted-foreground font-medium">Tempo Médio</p>
+                            <p className="text-lg font-bold text-foreground">{live.avgTime}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {index === 0 && (
+                  <div className="absolute top-4 right-4">
+                    <div className="bg-gradient-to-r from-pastel-yellow to-pastel-orange text-foreground px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 shadow-md animate-pulse">
+                      <Users className="w-3.5 h-3.5" />
+                      Melhor Performance
+                    </div>
+                  </div>
+                )}
+              </Card>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
