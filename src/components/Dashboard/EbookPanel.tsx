@@ -369,12 +369,20 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
         
         <div className="relative">
           <SheetHeader className="p-6 pb-4 border-b border-border/50 bg-background backdrop-blur-sm sticky top-0 z-10">
-            <SheetTitle className="font-black text-3xl text-pastel-purple">
-              Biblioteca de eBooks
-            </SheetTitle>
-            <p className="text-sm text-muted-foreground mt-2">
-              Explore nossa coleção de conteúdos educacionais premium
-            </p>
+            <div className="flex items-center gap-4">
+              <div className="p-3 rounded-xl bg-pastel-purple/20 border-2 border-pastel-purple">
+                <BookOpen size={28} className="text-pastel-purple" />
+              </div>
+              <div>
+                <SheetTitle className="font-black text-3xl text-foreground mb-1">
+                  <span className="text-pastel-purple text-4xl">Biblioteca</span>{" "}
+                  <span className="text-muted-foreground text-2xl">de eBooks</span>
+                </SheetTitle>
+                <p className="text-sm text-muted-foreground">
+                  Explore nossa coleção de conteúdos educacionais premium
+                </p>
+              </div>
+            </div>
           </SheetHeader>
 
           <div className="p-6 space-y-8">
