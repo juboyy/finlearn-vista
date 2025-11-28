@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useEbookAnnotations } from "@/hooks/useEbookAnnotations";
 import { supabase } from "@/integrations/supabase/client";
 import ebookGestaoRiscos from "@/assets/ebook-gestao-riscos.png";
@@ -32,6 +33,7 @@ const LerEbook = () => {
   const [editingBookmarkName, setEditingBookmarkName] = useState("");
   const [sortBy, setSortBy] = useState<"date" | "page" | "type">("date");
   const [hoveredAnnotationId, setHoveredAnnotationId] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<"bookmarks" | "highlights" | "notes">("bookmarks");
   const contentRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -850,32 +852,97 @@ const LerEbook = () => {
 
       {/* Right Sidebar - Bookmarks & Annotations */}
       <div className="w-80 bg-card border-l border-border flex flex-col">
-        <div className="p-6 border-b border-border">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-semibold text-foreground">Marcadores & Anotações</h2>
-          </div>
-          <div className="flex items-center gap-2">
-            <ArrowUpDown size={14} className="text-muted-foreground" />
-            <Select value={sortBy} onValueChange={(value: "date" | "page" | "type") => setSortBy(value)}>
-              <SelectTrigger className="h-8 text-xs">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="date">Ordenar por Data</SelectItem>
-                <SelectItem value="page">Ordenar por Página</SelectItem>
-                <SelectItem value="type">Ordenar por Tipo</SelectItem>
-              </SelectContent>
-            </Select>
+        <div className="border-b border-border">
+          {/* Tab Buttons */}
+          <TooltipProvider>
+            <div className="flex items-center justify-around p-4 gap-2">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant={activeTab === "bookmarks" ? "default" : "ghost"}
+                    size="icon"
+                    onClick={() => setActiveTab("bookmarks")}
+                    className="relative"
+                  >
+                    <Bookmark size={18} />
+                    {sortedBookmarks.length > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                        {sortedBookmarks.length}
+                      </span>
+                    )}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Marcadores</p>
+                </TooltipContent>
+              </Tooltip>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant={activeTab === "highlights" ? "default" : "ghost"}
+                    size="icon"
+                    onClick={() => setActiveTab("highlights")}
+                    className="relative"
+                  >
+                    <Highlighter size={18} />
+                    {sortedHighlights.length > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                        {sortedHighlights.length}
+                      </span>
+                    )}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Destaques</p>
+                </TooltipContent>
+              </Tooltip>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant={activeTab === "notes" ? "default" : "ghost"}
+                    size="icon"
+                    onClick={() => setActiveTab("notes")}
+                    className="relative"
+                  >
+                    <MessageSquare size={18} />
+                    {sortedNotes.length > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                        {sortedNotes.length}
+                      </span>
+                    )}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Anotações</p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
+          </TooltipProvider>
+          
+          {/* Sort Options */}
+          <div className="px-4 pb-4">
+            <div className="flex items-center gap-2">
+              <ArrowUpDown size={14} className="text-muted-foreground" />
+              <Select value={sortBy} onValueChange={(value: "date" | "page" | "type") => setSortBy(value)}>
+                <SelectTrigger className="h-8 text-xs">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="date">Ordenar por Data</SelectItem>
+                  <SelectItem value="page">Ordenar por Página</SelectItem>
+                  <SelectItem value="type">Ordenar por Tipo</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         </div>
+        
         <ScrollArea className="flex-1">
-          <div className="p-4 space-y-6">
-            {/* Bookmarks Section */}
-            <div>
-              <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-                <Bookmark size={16} />
-                Marcadores ({sortedBookmarks.length})
-              </h3>
+          <div className="p-4">
+            {/* Bookmarks Tab Content */}
+            {activeTab === "bookmarks" && (
               <div className="space-y-2">
                 {sortedBookmarks.map((bookmark) => (
                   <div
@@ -960,145 +1027,137 @@ const LerEbook = () => {
                   </div>
                 ))}
                 {sortedBookmarks.length === 0 && (
-                  <p className="text-sm text-muted-foreground">Nenhum marcador ainda</p>
+                  <p className="text-sm text-muted-foreground text-center py-8">Nenhum marcador ainda</p>
                 )}
               </div>
-            </div>
+            )}
 
-            {/* Highlights Section */}
-            <div>
-              <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-                <Highlighter size={16} />
-                Destaques ({sortedHighlights.length})
-              </h3>
+            {/* Highlights Tab Content */}
+            {activeTab === "highlights" && (
               <div className="space-y-2">
                 {sortedHighlights.map((annotation) => (
+                  <div
+                    key={annotation.id}
+                    className="p-3 bg-muted rounded-lg group"
+                  >
                     <div
-                      key={annotation.id}
-                      className="p-3 bg-muted rounded-lg group"
+                      className="text-sm text-foreground mb-2 p-2 rounded cursor-pointer"
+                      style={{ backgroundColor: annotation.highlight_color || undefined }}
+                      onClick={() => annotation.page_number && setCurrentPage(annotation.page_number)}
                     >
-                      <div
-                        className="text-sm text-foreground mb-2 p-2 rounded cursor-pointer"
-                        style={{ backgroundColor: annotation.highlight_color || undefined }}
-                        onClick={() => annotation.page_number && setCurrentPage(annotation.page_number)}
-                      >
-                        "{annotation.selected_text}"
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <div className="text-xs text-muted-foreground">
-                          Página {annotation.page_number}
-                        </div>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          onClick={() => handleDeleteAnnotation(annotation.id)}
-                          className="h-6 px-2 text-xs text-destructive hover:text-destructive opacity-0 group-hover:opacity-100 transition-opacity"
-                        >
-                          <Trash2 size={12} className="mr-1" />
-                          Excluir
-                        </Button>
-                      </div>
+                      "{annotation.selected_text}"
                     </div>
-                  ))}
+                    <div className="flex items-center justify-between">
+                      <div className="text-xs text-muted-foreground">
+                        Página {annotation.page_number}
+                      </div>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => handleDeleteAnnotation(annotation.id)}
+                        className="h-6 px-2 text-xs text-destructive hover:text-destructive opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <Trash2 size={12} className="mr-1" />
+                        Excluir
+                      </Button>
+                    </div>
+                  </div>
+                ))}
                 {sortedHighlights.length === 0 && (
-                  <p className="text-sm text-muted-foreground">Nenhum destaque ainda</p>
+                  <p className="text-sm text-muted-foreground text-center py-8">Nenhum destaque ainda</p>
                 )}
               </div>
-            </div>
+            )}
 
-            {/* Notes Section */}
-            <div>
-              <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-                <MessageSquare size={16} />
-                Anotações ({sortedNotes.length})
-              </h3>
+            {/* Notes Tab Content */}
+            {activeTab === "notes" && (
               <div className="space-y-2">
                 {sortedNotes.map((annotation) => (
-                    <div
-                      key={annotation.id}
-                      className="p-3 bg-muted rounded-lg group"
-                    >
-                      {editingAnnotationId === annotation.id ? (
-                        <div className="space-y-2">
-                          <Input
-                            value={editingAnnotationContent}
-                            onChange={(e) => setEditingAnnotationContent(e.target.value)}
-                            placeholder="Conteúdo da anotação..."
-                            className="text-sm"
-                            autoFocus
-                            onKeyDown={(e) => {
-                              if (e.key === 'Enter' && !e.shiftKey) {
-                                e.preventDefault();
-                                handleSaveAnnotationEdit();
-                              } else if (e.key === 'Escape') {
-                                handleCancelAnnotationEdit();
-                              }
-                            }}
-                          />
-                          <div className="flex gap-1">
+                  <div
+                    key={annotation.id}
+                    className="p-3 bg-muted rounded-lg group"
+                  >
+                    {editingAnnotationId === annotation.id ? (
+                      <div className="space-y-2">
+                        <Input
+                          value={editingAnnotationContent}
+                          onChange={(e) => setEditingAnnotationContent(e.target.value)}
+                          placeholder="Conteúdo da anotação..."
+                          className="text-sm"
+                          autoFocus
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' && !e.shiftKey) {
+                              e.preventDefault();
+                              handleSaveAnnotationEdit();
+                            } else if (e.key === 'Escape') {
+                              handleCancelAnnotationEdit();
+                            }
+                          }}
+                        />
+                        <div className="flex gap-1">
+                          <Button
+                            size="sm"
+                            onClick={handleSaveAnnotationEdit}
+                            className="flex-1 h-7 text-xs"
+                          >
+                            <Save size={12} className="mr-1" />
+                            Salvar
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={handleCancelAnnotationEdit}
+                            className="flex-1 h-7 text-xs"
+                          >
+                            Cancelar
+                          </Button>
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        <div
+                          className="text-sm text-foreground mb-2 cursor-pointer"
+                          onClick={() => annotation.page_number && setCurrentPage(annotation.page_number)}
+                        >
+                          {annotation.annotation_content}
+                        </div>
+                        <div className="text-xs text-muted-foreground mb-2 italic">
+                          "{annotation.selected_text}"
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <div className="text-xs text-muted-foreground">
+                            Página {annotation.page_number}
+                          </div>
+                          <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                             <Button
                               size="sm"
-                              onClick={handleSaveAnnotationEdit}
-                              className="flex-1 h-7 text-xs"
+                              variant="ghost"
+                              onClick={() => handleStartEditAnnotation(annotation.id, annotation.annotation_content || "")}
+                              className="h-6 px-2 text-xs"
                             >
-                              <Save size={12} className="mr-1" />
-                              Salvar
+                              <Edit2 size={12} className="mr-1" />
+                              Editar
                             </Button>
                             <Button
                               size="sm"
-                              variant="outline"
-                              onClick={handleCancelAnnotationEdit}
-                              className="flex-1 h-7 text-xs"
+                              variant="ghost"
+                              onClick={() => handleDeleteAnnotation(annotation.id)}
+                              className="h-6 px-2 text-xs text-destructive hover:text-destructive"
                             >
-                              Cancelar
+                              <Trash2 size={12} className="mr-1" />
+                              Excluir
                             </Button>
                           </div>
                         </div>
-                      ) : (
-                        <>
-                          <div
-                            className="text-sm text-foreground mb-2 cursor-pointer"
-                            onClick={() => annotation.page_number && setCurrentPage(annotation.page_number)}
-                          >
-                            {annotation.annotation_content}
-                          </div>
-                          <div className="text-xs text-muted-foreground mb-2 italic">
-                            "{annotation.selected_text}"
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <div className="text-xs text-muted-foreground">
-                              Página {annotation.page_number}
-                            </div>
-                            <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                              <Button
-                                size="sm"
-                                variant="ghost"
-                                onClick={() => handleStartEditAnnotation(annotation.id, annotation.annotation_content || "")}
-                                className="h-6 px-2 text-xs"
-                              >
-                                <Edit2 size={12} className="mr-1" />
-                                Editar
-                              </Button>
-                              <Button
-                                size="sm"
-                                variant="ghost"
-                                onClick={() => handleDeleteAnnotation(annotation.id)}
-                                className="h-6 px-2 text-xs text-destructive hover:text-destructive"
-                              >
-                                <Trash2 size={12} className="mr-1" />
-                                Excluir
-                              </Button>
-                            </div>
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  ))}
+                      </>
+                    )}
+                  </div>
+                ))}
                 {sortedNotes.length === 0 && (
-                  <p className="text-sm text-muted-foreground">Nenhuma anotação ainda</p>
+                  <p className="text-sm text-muted-foreground text-center py-8">Nenhuma anotação ainda</p>
                 )}
               </div>
-            </div>
+            )}
           </div>
         </ScrollArea>
       </div>
