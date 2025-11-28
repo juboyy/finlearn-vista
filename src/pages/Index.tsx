@@ -20,7 +20,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { BookOpen, Award, Clock, Flame, TrendingUp, Coins, Scale, Bot, Mic, Video, BookMarked, Bell, Plus, Clock as ClockIcon, Headphones, Play, Lightbulb, HelpCircle } from "lucide-react";
+import { BookOpen, Award, Clock, Flame, TrendingUp, Coins, Scale, Bot, Mic, Video, BookMarked, Bell, Plus, Clock as ClockIcon, Headphones, Play, Lightbulb, HelpCircle, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useUserAgents } from "@/hooks/useUserAgents";
@@ -292,10 +292,11 @@ const Index = () => {
                   onClick={() => setPodcastPanelOpen(true)}
                 />
                 <QuickActionCard
-                  icon={Video}
-                  title="Webinars"
-                  description="Ao vivo e gravados"
+                  icon={Calendar}
+                  title="Minha Agenda"
+                  description="Seus compromissos"
                   bgColor="bg-pastel-pink"
+                  onClick={() => window.location.href = "/minha-agenda"}
                 />
                 <QuickActionCard
                   icon={BookMarked}
