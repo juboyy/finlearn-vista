@@ -17,6 +17,7 @@ export type Database = {
       agenda_activities: {
         Row: {
           activity_type: string
+          attachments: Json | null
           color: string
           completed_at: string | null
           created_at: string
@@ -33,6 +34,7 @@ export type Database = {
         }
         Insert: {
           activity_type: string
+          attachments?: Json | null
           color?: string
           completed_at?: string | null
           created_at?: string
@@ -49,6 +51,7 @@ export type Database = {
         }
         Update: {
           activity_type?: string
+          attachments?: Json | null
           color?: string
           completed_at?: string | null
           created_at?: string

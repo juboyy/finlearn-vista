@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-import { X, Plus, Trash2, Users, BookOpen, GraduationCap, Mic, Video, LineChart, FileCheck, Calendar as CalendarIcon, Clock, Briefcase, Coffee, Phone, Mail, Presentation, Target } from "lucide-react";
+import { X, Plus, Trash2, Users, BookOpen, GraduationCap, Mic, Video, LineChart, FileCheck, Calendar as CalendarIcon, Clock, Briefcase, Coffee, Phone, Mail, Presentation, Target, Paperclip, Upload, File } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
@@ -53,6 +53,8 @@ export function EventFormSheet({ open, onOpenChange, eventId, onSave }: EventFor
   const [endTime, setEndTime] = useState("10:00");
   const [invitations, setInvitations] = useState<Invitation[]>([]);
   const [newInvitee, setNewInvitee] = useState({ email: "", name: "" });
+  const [attachments, setAttachments] = useState<Array<{ name: string; url: string; size: number }>>([]);
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     if (open && eventId) {
@@ -103,6 +105,11 @@ export function EventFormSheet({ open, onOpenChange, eventId, onSave }: EventFor
       if (invData) {
         setInvitations(invData.map(inv => ({ email: inv.invitee_email, name: inv.invitee_name || "" })));
       }
+
+      // Load attachments
+      if (data.attachments) {
+        setAttachments(data.attachments as Array<{ name: string; url: string; size: number }>);
+      }
     }
   };
 
@@ -114,12 +121,85 @@ export function EventFormSheet({ open, onOpenChange, eventId, onSave }: EventFor
       location: "",
       color: "pastel-blue",
     });
+    setEventSubtype("");
     setStartDate(undefined);
     setStartTime("09:00");
     setEndDate(undefined);
     setEndTime("10:00");
     setInvitations([]);
     setNewInvitee({ email: "", name: "" });
+    setAttachments([]);
+  };
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    setUploading(true);
+
+    try {
+      const uploadedFiles: Array<{ name: string; url: string; size: number }> = [];
+
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
+        const filePath = `${fileName}`;
+
+        const { error: uploadError, data } = await supabase.storage
+          .from('event-attachments')
+          .upload(filePath, file);
+
+        if (uploadError) {
+          console.error('Upload error:', uploadError);
+          toast({ title: `Erro ao fazer upload de ${file.name}`, variant: "destructive" });
+          continue;
+        }
+
+        const { data: urlData } = supabase.storage
+          .from('event-attachments')
+          .getPublicUrl(filePath);
+
+        uploadedFiles.push({
+          name: file.name,
+          url: urlData.publicUrl,
+          size: file.size,
+        });
+      }
+
+      setAttachments([...attachments, ...uploadedFiles]);
+      toast({ title: `${uploadedFiles.length} arquivo(s) anexado(s) com sucesso!` });
+    } catch (error) {
+      console.error('Error uploading files:', error);
+      toast({ title: "Erro ao fazer upload dos arquivos", variant: "destructive" });
+    } finally {
+      setUploading(false);
+      e.target.value = '';
+    }
+  };
+
+  const removeAttachment = async (index: number) => {
+    const attachment = attachments[index];
+    
+    // Extract file path from URL
+    const urlParts = attachment.url.split('/');
+    const filePath = urlParts[urlParts.length - 1];
+
+    // Delete from storage
+    await supabase.storage
+      .from('event-attachments')
+      .remove([filePath]);
+
+    setAttachments(attachments.filter((_, i) => i !== index));
+    toast({ title: "Arquivo removido" });
+  };
+
+  const formatFileSize = (bytes: number) => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
   };
 
   const handleSave = async () => {
@@ -163,6 +243,7 @@ export function EventFormSheet({ open, onOpenChange, eventId, onSave }: EventFor
             color: formData.color,
             start_time: startDateTime.toISOString(),
             end_time: endDateTime.toISOString(),
+            attachments: attachments,
           })
           .eq("id", eventId);
 
@@ -194,6 +275,7 @@ export function EventFormSheet({ open, onOpenChange, eventId, onSave }: EventFor
             start_time: startDateTime.toISOString(),
             end_time: endDateTime.toISOString(),
             status: "pending",
+            attachments: attachments,
           })
           .select()
           .single();
@@ -677,6 +759,79 @@ export function EventFormSheet({ open, onOpenChange, eventId, onSave }: EventFor
                 ))}
               </div>
             )}
+          </div>
+
+          {/* Attachments */}
+          <div className="p-6 rounded-xl bg-muted/30 border border-border space-y-5">
+            <div className="flex items-center gap-3 mb-4">
+              <Paperclip className="w-6 h-6 text-primary" />
+              <h3 className="text-lg font-semibold text-foreground">Anexos do Evento</h3>
+            </div>
+
+            <div className="space-y-3">
+              <Label htmlFor="file-upload" className="cursor-pointer">
+                <div className="flex items-center justify-center gap-3 h-24 border-2 border-dashed border-border rounded-lg hover:border-primary hover:bg-muted/50 transition-colors">
+                  <Upload className="w-6 h-6 text-muted-foreground" />
+                  <div className="text-center">
+                    <p className="text-base font-medium text-foreground">
+                      {uploading ? "Enviando..." : "Clique para adicionar arquivos"}
+                    </p>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      PDF, DOC, XLS, Imagens (máx. 20MB por arquivo)
+                    </p>
+                  </div>
+                </div>
+                <Input
+                  id="file-upload"
+                  type="file"
+                  multiple
+                  onChange={handleFileUpload}
+                  disabled={uploading}
+                  className="hidden"
+                  accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png,.gif"
+                />
+              </Label>
+
+              {attachments.length > 0 && (
+                <div className="space-y-3 mt-4">
+                  <p className="text-sm font-medium text-muted-foreground">{attachments.length} arquivo(s) anexado(s)</p>
+                  {attachments.map((file, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center justify-between p-4 bg-background rounded-lg border-2 border-border hover:border-primary transition-colors"
+                    >
+                      <div className="flex items-center gap-3 flex-1 min-w-0">
+                        <File className="w-5 h-5 text-primary flex-shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-base font-semibold text-foreground truncate">{file.name}</p>
+                          <p className="text-sm text-muted-foreground">{formatFileSize(file.size)}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2 flex-shrink-0">
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => window.open(file.url, '_blank')}
+                          className="text-muted-foreground hover:text-primary"
+                        >
+                          <Upload size={16} className="rotate-180" />
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => removeAttachment(index)}
+                          className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                        >
+                          <Trash2 size={16} />
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Actions */}
