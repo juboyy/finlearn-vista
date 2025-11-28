@@ -1,11 +1,109 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Bell, ChevronLeft, ChevronRight, CalendarCheck, Clock, BookOpen, Users, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { format, startOfDay, endOfDay, startOfWeek, endOfWeek, startOfMonth, endOfMonth } from "date-fns";
+
+interface Activity {
+  id: string;
+  title: string;
+  description: string | null;
+  activity_type: string;
+  start_time: string;
+  end_time: string;
+  status: string;
+  color: string;
+  icon: string | null;
+  location: string | null;
+}
 
 export default function AtividadesRealizadas() {
   const navigate = useNavigate();
   const [selectedPeriod, setSelectedPeriod] = useState<"hoje" | "semana" | "mes">("hoje");
+  const [activities, setActivities] = useState<Activity[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchActivities();
+  }, [selectedPeriod]);
+
+  const getDateRange = () => {
+    const now = new Date();
+    
+    switch (selectedPeriod) {
+      case "hoje":
+        return {
+          start: startOfDay(now),
+          end: endOfDay(now)
+        };
+      case "semana":
+        return {
+          start: startOfWeek(now, { weekStartsOn: 0 }),
+          end: endOfWeek(now, { weekStartsOn: 0 })
+        };
+      case "mes":
+        return {
+          start: startOfMonth(now),
+          end: endOfMonth(now)
+        };
+    }
+  };
+
+  const fetchActivities = async () => {
+    setLoading(true);
+    const { start, end } = getDateRange();
+
+    const { data, error } = await supabase
+      .from("agenda_activities")
+      .select("*")
+      .eq("status", "completed")
+      .gte("completed_at", start.toISOString())
+      .lte("completed_at", end.toISOString())
+      .order("completed_at", { ascending: false });
+
+    if (error) {
+      console.error("Error fetching activities:", error);
+    } else {
+      setActivities(data || []);
+    }
+    
+    setLoading(false);
+  };
+
+  const getActivityIcon = (type: string) => {
+    const icons: Record<string, string> = {
+      podcast: "fa-podcast",
+      meeting: "fa-users",
+      study: "fa-book-open",
+      training: "fa-graduation-cap",
+      video: "fa-video",
+      analysis: "fa-chart-line",
+      review: "fa-file-alt"
+    };
+    return icons[type] || "fa-calendar";
+  };
+
+  const formatTimeRange = (startTime: string, endTime: string) => {
+    return `${format(new Date(startTime), "HH:mm")} - ${format(new Date(endTime), "HH:mm")}`;
+  };
+
+  const calculateTotalHours = () => {
+    const totalMinutes = activities.reduce((acc, activity) => {
+      const start = new Date(activity.start_time);
+      const end = new Date(activity.end_time);
+      const diff = (end.getTime() - start.getTime()) / (1000 * 60);
+      return acc + diff;
+    }, 0);
+    
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = Math.floor(totalMinutes % 60);
+    return `${hours}h ${minutes}m`;
+  };
+
+  const countByType = (type: string) => {
+    return activities.filter(a => a.activity_type === type).length;
+  };
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -94,7 +192,7 @@ export default function AtividadesRealizadas() {
                       </div>
                       <span className="text-sm text-slate-700">Total Realizadas</span>
                     </div>
-                    <span className="font-semibold text-slate-800">24</span>
+                    <span className="font-semibold text-slate-800">{activities.length}</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
@@ -103,7 +201,7 @@ export default function AtividadesRealizadas() {
                       </div>
                       <span className="text-sm text-slate-700">Horas Totais</span>
                     </div>
-                    <span className="font-semibold text-slate-800">18h 45m</span>
+                    <span className="font-semibold text-slate-800">{calculateTotalHours()}</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
@@ -112,7 +210,7 @@ export default function AtividadesRealizadas() {
                       </div>
                       <span className="text-sm text-slate-700">Estudos</span>
                     </div>
-                    <span className="font-semibold text-slate-800">12</span>
+                    <span className="font-semibold text-slate-800">{countByType('study') + countByType('training')}</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
@@ -121,7 +219,7 @@ export default function AtividadesRealizadas() {
                       </div>
                       <span className="text-sm text-slate-700">Reuniões</span>
                     </div>
-                    <span className="font-semibold text-slate-800">8</span>
+                    <span className="font-semibold text-slate-800">{countByType('meeting')}</span>
                   </div>
                 </div>
               </section>
@@ -176,131 +274,44 @@ export default function AtividadesRealizadas() {
                   </span>
                 </div>
                 <div className="space-y-3">
-                  {/* Event 1 */}
-                  <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-pastel-rose hover:bg-slate-50 transition cursor-pointer">
-                    <div className="w-1 h-16 bg-pastel-rose rounded-full"></div>
-                    <div className="w-12 h-12 bg-pastel-rose rounded-lg flex items-center justify-center flex-shrink-0">
-                      <i className="fas fa-podcast text-slate-700"></i>
+                  {loading ? (
+                    <div className="text-center py-12">
+                      <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]" />
+                      <p className="mt-4 text-sm text-slate-500">Carregando atividades...</p>
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-semibold text-slate-900">Podcast: Análise Macroeconômica</h4>
-                      <p className="text-xs text-slate-900 mt-1">08:00 - 08:45 • Episódio: Juros e Inflação 2024</p>
+                  ) : activities.length === 0 ? (
+                    <div className="text-center py-12">
+                      <CalendarCheck size={48} className="mx-auto text-slate-300 mb-3" />
+                      <p className="text-sm text-slate-500">Nenhuma atividade realizada neste período</p>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span className="px-3 py-1 bg-pastel-green bg-opacity-20 text-slate-900 text-xs font-medium rounded-full">Concluído</span>
-                      <button className="p-2 text-slate-400 hover:text-slate-600">
-                        <i className="fas fa-ellipsis-v"></i>
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Event 2 */}
-                  <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-pastel-blue hover:bg-slate-50 transition cursor-pointer">
-                    <div className="w-1 h-16 bg-pastel-blue rounded-full"></div>
-                    <div className="w-12 h-12 bg-pastel-blue rounded-lg flex items-center justify-center flex-shrink-0">
-                      <i className="fas fa-users text-slate-700"></i>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-semibold text-slate-900">Reunião: Revisão de Portfólio</h4>
-                      <p className="text-xs text-slate-900 mt-1">09:30 - 10:30 • Sala de Reuniões 2</p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="px-3 py-1 bg-pastel-green bg-opacity-20 text-slate-900 text-xs font-medium rounded-full">Concluído</span>
-                      <button className="p-2 text-slate-400 hover:text-slate-600">
-                        <i className="fas fa-ellipsis-v"></i>
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Event 3 */}
-                  <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-pastel-rose hover:bg-slate-50 transition cursor-pointer">
-                    <div className="w-1 h-16 bg-pastel-rose rounded-full"></div>
-                    <div className="w-12 h-12 bg-pastel-rose rounded-lg flex items-center justify-center flex-shrink-0">
-                      <i className="fas fa-book-open text-slate-700"></i>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-semibold text-slate-900">Estudo: Fundos de Investimento</h4>
-                      <p className="text-xs text-slate-900 mt-1">11:00 - 12:00 • Capítulo 5: Renda Variável</p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="px-3 py-1 bg-pastel-green bg-opacity-20 text-slate-900 text-xs font-medium rounded-full">Concluído</span>
-                      <button className="p-2 text-slate-400 hover:text-slate-600">
-                        <i className="fas fa-ellipsis-v"></i>
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Event 4 */}
-                  <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-pastel-purple hover:bg-slate-50 transition cursor-pointer">
-                    <div className="w-1 h-16 bg-pastel-purple rounded-full"></div>
-                    <div className="w-12 h-12 bg-pastel-purple rounded-lg flex items-center justify-center flex-shrink-0">
-                      <i className="fas fa-graduation-cap text-slate-700"></i>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-semibold text-slate-900">Treinamento: Compliance Bancário</h4>
-                      <p className="text-xs text-slate-900 mt-1">14:00 - 15:00 • Módulo 3: Prevenção à Lavagem</p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="px-3 py-1 bg-pastel-green bg-opacity-20 text-slate-900 text-xs font-medium rounded-full">Concluído</span>
-                      <button className="p-2 text-slate-400 hover:text-slate-600">
-                        <i className="fas fa-ellipsis-v"></i>
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Event 5 */}
-                  <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-pastel-rose hover:bg-slate-50 transition cursor-pointer">
-                    <div className="w-1 h-16 bg-pastel-rose rounded-full"></div>
-                    <div className="w-12 h-12 bg-pastel-rose rounded-lg flex items-center justify-center flex-shrink-0">
-                      <i className="fas fa-video text-slate-700"></i>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-semibold text-slate-900">Vídeo: Análise de Crédito</h4>
-                      <p className="text-xs text-slate-900 mt-1">15:30 - 16:15 • Curso: Gestão de Risco</p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="px-3 py-1 bg-pastel-green bg-opacity-20 text-slate-900 text-xs font-medium rounded-full">Concluído</span>
-                      <button className="p-2 text-slate-400 hover:text-slate-600">
-                        <i className="fas fa-ellipsis-v"></i>
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Event 6 */}
-                  <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-pastel-green hover:bg-slate-50 transition cursor-pointer">
-                    <div className="w-1 h-16 bg-pastel-green rounded-full"></div>
-                    <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center flex-shrink-0">
-                      <i className="fas fa-chart-line text-slate-700"></i>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-semibold text-slate-900">Análise: Indicadores Econômicos</h4>
-                      <p className="text-xs text-slate-900 mt-1">16:30 - 17:15 • Relatório Semanal</p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="px-3 py-1 bg-pastel-green bg-opacity-20 text-slate-900 text-xs font-medium rounded-full">Concluído</span>
-                      <button className="p-2 text-slate-400 hover:text-slate-600">
-                        <i className="fas fa-ellipsis-v"></i>
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Event 7 */}
-                  <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-pastel-blue hover:bg-slate-50 transition cursor-pointer">
-                    <div className="w-1 h-16 bg-pastel-blue rounded-full"></div>
-                    <div className="w-12 h-12 bg-pastel-blue rounded-lg flex items-center justify-center flex-shrink-0">
-                      <i className="fas fa-file-alt text-slate-700"></i>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-semibold text-slate-900">Revisão: Políticas de Crédito</h4>
-                      <p className="text-xs text-slate-900 mt-1">17:30 - 18:30 • Compliance Trimestral</p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="px-3 py-1 bg-pastel-green bg-opacity-20 text-slate-900 text-xs font-medium rounded-full">Concluído</span>
-                      <button className="p-2 text-slate-400 hover:text-slate-600">
-                        <i className="fas fa-ellipsis-v"></i>
-                      </button>
-                    </div>
-                  </div>
+                  ) : (
+                    activities.map((activity) => (
+                      <div 
+                        key={activity.id}
+                        className={`flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-${activity.color} hover:bg-slate-50 transition cursor-pointer`}
+                      >
+                        <div className={`w-1 h-16 bg-${activity.color} rounded-full`}></div>
+                        <div className={`w-12 h-12 bg-${activity.color} rounded-lg flex items-center justify-center flex-shrink-0`}>
+                          <i className={`fas ${activity.icon || getActivityIcon(activity.activity_type)} text-slate-700`}></i>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="text-sm font-semibold text-slate-900">{activity.title}</h4>
+                          <p className="text-xs text-slate-900 mt-1">
+                            {formatTimeRange(activity.start_time, activity.end_time)}
+                            {activity.description && ` • ${activity.description}`}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="px-3 py-1 bg-pastel-green bg-opacity-20 text-slate-900 text-xs font-medium rounded-full">
+                            Concluído
+                          </span>
+                          <button className="p-2 text-slate-400 hover:text-slate-600">
+                            <i className="fas fa-ellipsis-v"></i>
+                          </button>
+                        </div>
+                      </div>
+                    ))
+                  )}
                 </div>
               </section>
             </div>
