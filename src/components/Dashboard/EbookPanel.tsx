@@ -1,11 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { BookOpen, Heart, Star, Play, Share2, Clock, Sparkles, Bookmark } from "lucide-react";
 import { toast } from "sonner";
-import { EbookReader } from "./EbookReader";
 
 // Import ebook cover images
 import ebookGestaoRiscos from "@/assets/ebook-gestao-riscos.png";
@@ -42,8 +42,7 @@ export const EbookPanel = ({
   onOpenChange
 }: EbookPanelProps) => {
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
-  const [readerOpen, setReaderOpen] = useState(false);
-  const [selectedEbook, setSelectedEbook] = useState<Ebook | null>(null);
+  const navigate = useNavigate();
   const toggleFavorite = (id: string) => {
     const newFavorites = new Set(favorites);
     if (newFavorites.has(id)) {
@@ -217,9 +216,9 @@ export const EbookPanel = ({
             {/* Hover overlay with quick action */}
             <div className="absolute inset-0 bg-black/60 opacity-0 group-hover/image:opacity-100 transition-opacity duration-300 flex items-end justify-center p-4">
               <Button size="sm" className="bg-pastel-purple hover:bg-pastel-pink text-foreground font-semibold shadow-lg" onClick={() => {
-              setSelectedEbook(ebook);
-              setReaderOpen(true);
-            }}>
+                onOpenChange(false);
+                navigate(`/ebook/${ebook.id}`);
+              }}>
                 <Play size={14} className="mr-2" />
                 Ler Agora
               </Button>
@@ -282,9 +281,9 @@ export const EbookPanel = ({
           {/* Action buttons */}
           <div className="flex gap-2 mt-3">
             <Button size="sm" className="flex-1 bg-pastel-blue hover:bg-pastel-purple text-foreground font-semibold" onClick={() => {
-            setSelectedEbook(ebook);
-            setReaderOpen(true);
-          }}>
+              onOpenChange(false);
+              navigate(`/ebook/${ebook.id}`);
+            }}>
               Ler Agora
             </Button>
             <Button size="sm" variant="outline" className="border-2 hover:bg-muted">
@@ -410,7 +409,5 @@ export const EbookPanel = ({
           </div>
         </div>
       </SheetContent>
-
-      {selectedEbook && <EbookReader open={readerOpen} onOpenChange={setReaderOpen} ebookId={selectedEbook.id} ebookTitle={selectedEbook.title} />}
     </Sheet>;
 };
