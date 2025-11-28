@@ -289,7 +289,7 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
                   GRÁTIS
                 </Badge>
               ) : (
-                <span className="text-lg font-bold text-pastel-purple">
+                <span className="text-lg font-bold text-muted-foreground">
                   R$ {ebook.price.toFixed(2).replace('.', ',')}
                 </span>
               )}
