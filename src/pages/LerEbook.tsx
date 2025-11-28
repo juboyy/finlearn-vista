@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Bookmark, Highlighter, MessageSquare, ChevronLeft, ChevronRight, Search, X } from "lucide-react";
+import { ArrowLeft, Bookmark, Highlighter, MessageSquare, ChevronLeft, ChevronRight, Search, X, Edit2, Trash2, Save } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { useEbookAnnotations } from "@/hooks/useEbookAnnotations";
+import { supabase } from "@/integrations/supabase/client";
 import ebookGestaoRiscos from "@/assets/ebook-gestao-riscos.png";
 
 const LerEbook = () => {
@@ -21,6 +22,10 @@ const LerEbook = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [showNoteInput, setShowNoteInput] = useState(false);
   const [noteContent, setNoteContent] = useState("");
+  const [editingAnnotationId, setEditingAnnotationId] = useState<string | null>(null);
+  const [editingAnnotationContent, setEditingAnnotationContent] = useState("");
+  const [editingBookmarkId, setEditingBookmarkId] = useState<string | null>(null);
+  const [editingBookmarkName, setEditingBookmarkName] = useState("");
   const contentRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -28,6 +33,9 @@ const LerEbook = () => {
     bookmarks,
     createAnnotation,
     createBookmark,
+    updateAnnotation,
+    deleteAnnotation,
+    deleteBookmark,
   } = useEbookAnnotations(id || "ebook-001", "Guia Completo de Gestão de Riscos");
 
   const totalPages = 312;
@@ -172,6 +180,62 @@ const LerEbook = () => {
 
   const handleShowNoteInput = () => {
     setShowNoteInput(true);
+  };
+
+  const handleStartEditAnnotation = (annotationId: string, currentContent: string) => {
+    setEditingAnnotationId(annotationId);
+    setEditingAnnotationContent(currentContent);
+  };
+
+  const handleSaveAnnotationEdit = async () => {
+    if (editingAnnotationId && editingAnnotationContent.trim()) {
+      await updateAnnotation(editingAnnotationId, {
+        annotation_content: editingAnnotationContent,
+      });
+      setEditingAnnotationId(null);
+      setEditingAnnotationContent("");
+    }
+  };
+
+  const handleCancelAnnotationEdit = () => {
+    setEditingAnnotationId(null);
+    setEditingAnnotationContent("");
+  };
+
+  const handleDeleteAnnotation = async (annotationId: string) => {
+    if (confirm("Tem certeza que deseja excluir esta anotação?")) {
+      await deleteAnnotation(annotationId);
+    }
+  };
+
+  const handleStartEditBookmark = (bookmarkId: string, currentName: string) => {
+    setEditingBookmarkId(bookmarkId);
+    setEditingBookmarkName(currentName);
+  };
+
+  const handleSaveBookmarkEdit = async () => {
+    if (editingBookmarkId) {
+      const { error } = await supabase
+        .from("ebook_bookmarks")
+        .update({ bookmark_name: editingBookmarkName })
+        .eq("id", editingBookmarkId);
+      
+      if (!error) {
+        setEditingBookmarkId(null);
+        setEditingBookmarkName("");
+      }
+    }
+  };
+
+  const handleCancelBookmarkEdit = () => {
+    setEditingBookmarkId(null);
+    setEditingBookmarkName("");
+  };
+
+  const handleDeleteBookmark = async (bookmarkId: string) => {
+    if (confirm("Tem certeza que deseja excluir este marcador?")) {
+      await deleteBookmark(bookmarkId);
+    }
   };
 
   const handleAddBookmark = () => {
@@ -477,15 +541,83 @@ const LerEbook = () => {
                 {bookmarks.map((bookmark) => (
                   <div
                     key={bookmark.id}
-                    className="p-3 bg-muted rounded-lg cursor-pointer hover:bg-muted/80 transition-colors"
-                    onClick={() => setCurrentPage(bookmark.page_number)}
+                    className="p-3 bg-muted rounded-lg group"
                   >
-                    <div className="text-sm font-medium text-foreground">
-                      {bookmark.chapter_name || "Sem capítulo"}
-                    </div>
-                    <div className="text-xs text-muted-foreground mt-1">
-                      Página {bookmark.page_number}
-                    </div>
+                    {editingBookmarkId === bookmark.id ? (
+                      <div className="space-y-2">
+                        <Input
+                          value={editingBookmarkName}
+                          onChange={(e) => setEditingBookmarkName(e.target.value)}
+                          placeholder="Nome do marcador..."
+                          className="text-sm"
+                          autoFocus
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                              handleSaveBookmarkEdit();
+                            } else if (e.key === 'Escape') {
+                              handleCancelBookmarkEdit();
+                            }
+                          }}
+                        />
+                        <div className="flex gap-1">
+                          <Button
+                            size="sm"
+                            onClick={handleSaveBookmarkEdit}
+                            className="flex-1 h-7 text-xs"
+                          >
+                            <Save size={12} className="mr-1" />
+                            Salvar
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={handleCancelBookmarkEdit}
+                            className="flex-1 h-7 text-xs"
+                          >
+                            Cancelar
+                          </Button>
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        <div
+                          className="cursor-pointer"
+                          onClick={() => setCurrentPage(bookmark.page_number)}
+                        >
+                          <div className="text-sm font-medium text-foreground">
+                            {bookmark.bookmark_name || bookmark.chapter_name || "Sem título"}
+                          </div>
+                          <div className="text-xs text-muted-foreground mt-1">
+                            Página {bookmark.page_number}
+                          </div>
+                          {bookmark.preview_text && (
+                            <div className="text-xs text-muted-foreground mt-1 line-clamp-2">
+                              "{bookmark.preview_text}"
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex gap-1 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => handleStartEditBookmark(bookmark.id, bookmark.bookmark_name || "")}
+                            className="h-6 px-2 text-xs"
+                          >
+                            <Edit2 size={12} className="mr-1" />
+                            Editar
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => handleDeleteBookmark(bookmark.id)}
+                            className="h-6 px-2 text-xs text-destructive hover:text-destructive"
+                          >
+                            <Trash2 size={12} className="mr-1" />
+                            Excluir
+                          </Button>
+                        </div>
+                      </>
+                    )}
                   </div>
                 ))}
                 {bookmarks.length === 0 && (
@@ -506,16 +638,28 @@ const LerEbook = () => {
                   .map((annotation) => (
                     <div
                       key={annotation.id}
-                      className="p-3 bg-muted rounded-lg"
+                      className="p-3 bg-muted rounded-lg group"
                     >
                       <div
-                        className="text-sm text-foreground mb-2 p-2 rounded"
+                        className="text-sm text-foreground mb-2 p-2 rounded cursor-pointer"
                         style={{ backgroundColor: annotation.highlight_color || undefined }}
+                        onClick={() => annotation.page_number && setCurrentPage(annotation.page_number)}
                       >
                         "{annotation.selected_text}"
                       </div>
-                      <div className="text-xs text-muted-foreground">
-                        Página {annotation.page_number}
+                      <div className="flex items-center justify-between">
+                        <div className="text-xs text-muted-foreground">
+                          Página {annotation.page_number}
+                        </div>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => handleDeleteAnnotation(annotation.id)}
+                          className="h-6 px-2 text-xs text-destructive hover:text-destructive opacity-0 group-hover:opacity-100 transition-opacity"
+                        >
+                          <Trash2 size={12} className="mr-1" />
+                          Excluir
+                        </Button>
                       </div>
                     </div>
                   ))}
@@ -537,14 +681,82 @@ const LerEbook = () => {
                   .map((annotation) => (
                     <div
                       key={annotation.id}
-                      className="p-3 bg-muted rounded-lg"
+                      className="p-3 bg-muted rounded-lg group"
                     >
-                      <div className="text-sm text-foreground mb-2">
-                        {annotation.annotation_content}
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        Página {annotation.page_number}
-                      </div>
+                      {editingAnnotationId === annotation.id ? (
+                        <div className="space-y-2">
+                          <Input
+                            value={editingAnnotationContent}
+                            onChange={(e) => setEditingAnnotationContent(e.target.value)}
+                            placeholder="Conteúdo da anotação..."
+                            className="text-sm"
+                            autoFocus
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter' && !e.shiftKey) {
+                                e.preventDefault();
+                                handleSaveAnnotationEdit();
+                              } else if (e.key === 'Escape') {
+                                handleCancelAnnotationEdit();
+                              }
+                            }}
+                          />
+                          <div className="flex gap-1">
+                            <Button
+                              size="sm"
+                              onClick={handleSaveAnnotationEdit}
+                              className="flex-1 h-7 text-xs"
+                            >
+                              <Save size={12} className="mr-1" />
+                              Salvar
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={handleCancelAnnotationEdit}
+                              className="flex-1 h-7 text-xs"
+                            >
+                              Cancelar
+                            </Button>
+                          </div>
+                        </div>
+                      ) : (
+                        <>
+                          <div
+                            className="text-sm text-foreground mb-2 cursor-pointer"
+                            onClick={() => annotation.page_number && setCurrentPage(annotation.page_number)}
+                          >
+                            {annotation.annotation_content}
+                          </div>
+                          <div className="text-xs text-muted-foreground mb-2 italic">
+                            "{annotation.selected_text}"
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <div className="text-xs text-muted-foreground">
+                              Página {annotation.page_number}
+                            </div>
+                            <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                onClick={() => handleStartEditAnnotation(annotation.id, annotation.annotation_content || "")}
+                                className="h-6 px-2 text-xs"
+                              >
+                                <Edit2 size={12} className="mr-1" />
+                                Editar
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                onClick={() => handleDeleteAnnotation(annotation.id)}
+                                className="h-6 px-2 text-xs text-destructive hover:text-destructive"
+                              >
+                                <Trash2 size={12} className="mr-1" />
+                                Excluir
+                              </Button>
+                            </div>
+                          </div>
+                        </>
+                      )}
                     </div>
                   ))}
                 {annotations.filter(a => a.annotation_type === "note").length === 0 && (
