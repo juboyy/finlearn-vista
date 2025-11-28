@@ -5,10 +5,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { X, Plus, Trash2, Users, BookOpen, GraduationCap, Mic, Video, LineChart, FileCheck } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { X, Plus, Trash2, Users, BookOpen, GraduationCap, Mic, Video, LineChart, FileCheck, Calendar as CalendarIcon, Clock } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 const eventSchema = z.object({
   title: z.string().min(1, "Título é obrigatório").max(200, "Título muito longo"),
@@ -39,11 +43,13 @@ export function EventFormSheet({ open, onOpenChange, eventId, onSave }: EventFor
     title: "",
     description: "",
     activity_type: "meeting",
-    start_time: "",
-    end_time: "",
     location: "",
     color: "pastel-blue",
   });
+  const [startDate, setStartDate] = useState<Date>();
+  const [startTime, setStartTime] = useState("09:00");
+  const [endDate, setEndDate] = useState<Date>();
+  const [endTime, setEndTime] = useState("10:00");
   const [invitations, setInvitations] = useState<Invitation[]>([]);
   const [newInvitee, setNewInvitee] = useState({ email: "", name: "" });
 
@@ -74,11 +80,18 @@ export function EventFormSheet({ open, onOpenChange, eventId, onSave }: EventFor
         title: data.title,
         description: data.description || "",
         activity_type: data.activity_type,
-        start_time: data.start_time.slice(0, 16),
-        end_time: data.end_time.slice(0, 16),
         location: data.location || "",
         color: data.color,
       });
+
+      // Parse dates and times
+      const startDateTime = new Date(data.start_time);
+      const endDateTime = new Date(data.end_time);
+      
+      setStartDate(startDateTime);
+      setStartTime(format(startDateTime, "HH:mm"));
+      setEndDate(endDateTime);
+      setEndTime(format(endDateTime, "HH:mm"));
 
       // Load invitations
       const { data: invData } = await supabase
@@ -97,21 +110,41 @@ export function EventFormSheet({ open, onOpenChange, eventId, onSave }: EventFor
       title: "",
       description: "",
       activity_type: "meeting",
-      start_time: "",
-      end_time: "",
       location: "",
       color: "pastel-blue",
     });
+    setStartDate(undefined);
+    setStartTime("09:00");
+    setEndDate(undefined);
+    setEndTime("10:00");
     setInvitations([]);
     setNewInvitee({ email: "", name: "" });
   };
 
   const handleSave = async () => {
     try {
-      eventSchema.parse(formData);
+      if (!startDate || !endDate) {
+        toast({ title: "Selecione as datas de início e término", variant: "destructive" });
+        return;
+      }
 
-      if (new Date(formData.end_time) <= new Date(formData.start_time)) {
+      // Combine date and time
+      const [startHour, startMinute] = startTime.split(':').map(Number);
+      const [endHour, endMinute] = endTime.split(':').map(Number);
+      
+      const startDateTime = new Date(startDate);
+      startDateTime.setHours(startHour, startMinute, 0, 0);
+      
+      const endDateTime = new Date(endDate);
+      endDateTime.setHours(endHour, endMinute, 0, 0);
+
+      if (endDateTime <= startDateTime) {
         toast({ title: "Data/hora final deve ser posterior à inicial", variant: "destructive" });
+        return;
+      }
+
+      if (!formData.title.trim()) {
+        toast({ title: "Título é obrigatório", variant: "destructive" });
         return;
       }
 
@@ -127,8 +160,8 @@ export function EventFormSheet({ open, onOpenChange, eventId, onSave }: EventFor
             activity_type: formData.activity_type,
             location: formData.location,
             color: formData.color,
-            start_time: new Date(formData.start_time).toISOString(),
-            end_time: new Date(formData.end_time).toISOString(),
+            start_time: startDateTime.toISOString(),
+            end_time: endDateTime.toISOString(),
           })
           .eq("id", eventId);
 
@@ -157,8 +190,8 @@ export function EventFormSheet({ open, onOpenChange, eventId, onSave }: EventFor
             activity_type: formData.activity_type,
             location: formData.location,
             color: formData.color,
-            start_time: new Date(formData.start_time).toISOString(),
-            end_time: new Date(formData.end_time).toISOString(),
+            start_time: startDateTime.toISOString(),
+            end_time: endDateTime.toISOString(),
             status: "pending",
           })
           .select()
@@ -341,31 +374,130 @@ export function EventFormSheet({ open, onOpenChange, eventId, onSave }: EventFor
           {/* Date and Time */}
           <div className="p-6 rounded-xl bg-muted/30 border border-border space-y-4">
             <h3 className="text-lg font-semibold text-foreground mb-4">Data e Horário</h3>
-            <div className="grid grid-cols-2 gap-6">
-              <div className="space-y-3">
-                <Label htmlFor="start_time" className="text-base font-medium text-foreground">
-                  Início *
-                </Label>
-                <Input
-                  id="start_time"
-                  type="datetime-local"
-                  value={formData.start_time}
-                  onChange={(e) => setFormData({ ...formData, start_time: e.target.value })}
-                  className="h-12 border-2 border-border focus:border-primary"
-                />
-              </div>
+            
+            {/* Start Date and Time */}
+            <div className="space-y-3">
+              <Label className="text-base font-medium text-foreground">Data e Hora de Início *</Label>
+              <div className="grid grid-cols-2 gap-3">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "h-12 justify-start text-left font-normal border-2 border-border",
+                        !startDate && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-5 w-5" />
+                      {startDate ? format(startDate, "dd/MM/yyyy") : "Selecione a data"}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={startDate}
+                      onSelect={setStartDate}
+                      initialFocus
+                      className={cn("p-3 pointer-events-auto")}
+                    />
+                  </PopoverContent>
+                </Popover>
 
-              <div className="space-y-3">
-                <Label htmlFor="end_time" className="text-base font-medium text-foreground">
-                  Término *
-                </Label>
-                <Input
-                  id="end_time"
-                  type="datetime-local"
-                  value={formData.end_time}
-                  onChange={(e) => setFormData({ ...formData, end_time: e.target.value })}
-                  className="h-12 border-2 border-border focus:border-primary"
-                />
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="h-12 justify-start text-left font-normal border-2 border-border"
+                    >
+                      <Clock className="mr-2 h-5 w-5" />
+                      {startTime}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-4" align="start">
+                    <div className="space-y-3">
+                      <Label>Hora</Label>
+                      <Select value={startTime} onValueChange={setStartTime}>
+                        <SelectTrigger className="h-10">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className="max-h-60">
+                          {Array.from({ length: 24 * 4 }, (_, i) => {
+                            const hour = Math.floor(i / 4).toString().padStart(2, '0');
+                            const minute = ((i % 4) * 15).toString().padStart(2, '0');
+                            return `${hour}:${minute}`;
+                          }).map((time) => (
+                            <SelectItem key={time} value={time}>
+                              {time}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              </div>
+            </div>
+
+            {/* End Date and Time */}
+            <div className="space-y-3">
+              <Label className="text-base font-medium text-foreground">Data e Hora de Término *</Label>
+              <div className="grid grid-cols-2 gap-3">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "h-12 justify-start text-left font-normal border-2 border-border",
+                        !endDate && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-5 w-5" />
+                      {endDate ? format(endDate, "dd/MM/yyyy") : "Selecione a data"}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={endDate}
+                      onSelect={setEndDate}
+                      initialFocus
+                      className={cn("p-3 pointer-events-auto")}
+                    />
+                  </PopoverContent>
+                </Popover>
+
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="h-12 justify-start text-left font-normal border-2 border-border"
+                    >
+                      <Clock className="mr-2 h-5 w-5" />
+                      {endTime}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-4" align="start">
+                    <div className="space-y-3">
+                      <Label>Hora</Label>
+                      <Select value={endTime} onValueChange={setEndTime}>
+                        <SelectTrigger className="h-10">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className="max-h-60">
+                          {Array.from({ length: 24 * 4 }, (_, i) => {
+                            const hour = Math.floor(i / 4).toString().padStart(2, '0');
+                            const minute = ((i % 4) * 15).toString().padStart(2, '0');
+                            return `${hour}:${minute}`;
+                          }).map((time) => (
+                            <SelectItem key={time} value={time}>
+                              {time}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </PopoverContent>
+                </Popover>
               </div>
             </div>
           </div>
