@@ -56,18 +56,38 @@ export const EbookReadingAgentChat = ({
         body: { ebookTitle, ebookContent, currentPage },
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error("Erro ao invocar função:", error);
+        // Usar perguntas padrão como fallback
+        setSuggestedQuestions([
+          "Quais são os conceitos principais desta página?",
+          "Como posso aplicar isso na prática?",
+          "Quais são os principais riscos mencionados?",
+          "Pode dar exemplos relacionados a este tópico?"
+        ]);
+        return;
+      }
       
       if (data?.questions) {
         setSuggestedQuestions(data.questions);
+      } else {
+        // Fallback para perguntas padrão
+        setSuggestedQuestions([
+          "Quais são os conceitos principais desta página?",
+          "Como posso aplicar isso na prática?",
+          "Quais são os principais riscos mencionados?",
+          "Pode dar exemplos relacionados a este tópico?"
+        ]);
       }
     } catch (error) {
       console.error("Erro ao carregar sugestões:", error);
-      toast({
-        title: "Erro",
-        description: "Não foi possível carregar sugestões de perguntas.",
-        variant: "destructive",
-      });
+      // Usar perguntas padrão como fallback em caso de erro
+      setSuggestedQuestions([
+        "Quais são os conceitos principais desta página?",
+        "Como posso aplicar isso na prática?",
+        "Quais são os principais riscos mencionados?",
+        "Pode dar exemplos relacionados a este tópico?"
+      ]);
     } finally {
       setLoadingSuggestions(false);
     }
