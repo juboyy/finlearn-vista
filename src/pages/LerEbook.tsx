@@ -31,6 +31,8 @@ const LerEbook = () => {
   const [editingAnnotationContent, setEditingAnnotationContent] = useState("");
   const [editingBookmarkId, setEditingBookmarkId] = useState<string | null>(null);
   const [editingBookmarkName, setEditingBookmarkName] = useState("");
+  const [editingHighlightId, setEditingHighlightId] = useState<string | null>(null);
+  const [editingHighlightName, setEditingHighlightName] = useState("");
   const [sortBy, setSortBy] = useState<"date" | "page" | "type">("date");
   const [hoveredAnnotationId, setHoveredAnnotationId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<"bookmarks" | "highlights" | "notes">("bookmarks");
@@ -321,6 +323,26 @@ const LerEbook = () => {
   const handleCancelBookmarkEdit = () => {
     setEditingBookmarkId(null);
     setEditingBookmarkName("");
+  };
+
+  const handleStartEditHighlight = (highlightId: string, currentName: string) => {
+    setEditingHighlightId(highlightId);
+    setEditingHighlightName(currentName);
+  };
+
+  const handleSaveHighlightEdit = async () => {
+    if (editingHighlightId) {
+      await updateAnnotation(editingHighlightId, {
+        highlight_name: editingHighlightName.trim() || null,
+      });
+      setEditingHighlightId(null);
+      setEditingHighlightName("");
+    }
+  };
+
+  const handleCancelHighlightEdit = () => {
+    setEditingHighlightId(null);
+    setEditingHighlightName("");
   };
 
   const handleDeleteBookmark = async (bookmarkId: string) => {
