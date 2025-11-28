@@ -294,7 +294,7 @@ export const EbookPanel = ({
       </div>;
   };
   return <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right" className="w-[90vw] sm:w-[540px] max-w-[540px] p-0 bg-background backdrop-blur-xl border-l-2 border-pastel-blue/20 overflow-y-auto">
+      <SheetContent side="right" className="w-[90vw] sm:w-[400px] max-w-[400px] p-0 bg-background backdrop-blur-xl border-l-2 border-pastel-blue/20 overflow-y-auto">
         {/* Animated background pattern */}
         <div className="absolute inset-0 bg-muted/10 pointer-events-none" />
         
