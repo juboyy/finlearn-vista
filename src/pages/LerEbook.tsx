@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Bookmark, Highlighter, MessageSquare, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowLeft, Bookmark, Highlighter, MessageSquare, ChevronLeft, ChevronRight, Search, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Input } from "@/components/ui/input";
 import { useEbookAnnotations } from "@/hooks/useEbookAnnotations";
 import ebookGestaoRiscos from "@/assets/ebook-gestao-riscos.png";
 
@@ -14,14 +15,17 @@ const LerEbook = () => {
   const [showHighlightMenu, setShowHighlightMenu] = useState(false);
   const [highlightMenuPosition, setHighlightMenuPosition] = useState({ x: 0, y: 0 });
   const [selectedColor, setSelectedColor] = useState("rgba(255, 235, 59, 0.4)");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<number[]>([]);
+  const [currentSearchIndex, setCurrentSearchIndex] = useState(0);
+  const [showSearch, setShowSearch] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   const {
     annotations,
     bookmarks,
     createAnnotation,
     createBookmark,
-    deleteAnnotation,
-    deleteBookmark,
   } = useEbookAnnotations(id || "ebook-001", "Guia Completo de Gestão de Riscos");
 
   const totalPages = 312;
@@ -141,6 +145,111 @@ const LerEbook = () => {
     );
   };
 
+  // Search functionality
+  useEffect(() => {
+    if (!searchQuery.trim() || !contentRef.current) {
+      setSearchResults([]);
+      setCurrentSearchIndex(0);
+      return;
+    }
+
+    const content = contentRef.current.innerText;
+    const query = searchQuery.toLowerCase();
+    const results: number[] = [];
+    let index = content.toLowerCase().indexOf(query);
+    
+    while (index !== -1) {
+      results.push(index);
+      index = content.toLowerCase().indexOf(query, index + 1);
+    }
+    
+    setSearchResults(results);
+    setCurrentSearchIndex(0);
+  }, [searchQuery]);
+
+  // Scroll to current search result
+  useEffect(() => {
+    if (searchResults.length > 0 && contentRef.current) {
+      const marks = contentRef.current.querySelectorAll('mark[data-search-result]');
+      if (marks[currentSearchIndex]) {
+        marks[currentSearchIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  }, [currentSearchIndex, searchResults]);
+
+  // Highlight search results in content
+  const getContentWithSearchHighlights = () => {
+    if (!searchQuery.trim()) {
+      return ebookData.content;
+    }
+
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(ebookData.content, 'text/html');
+    const walker = document.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT);
+    
+    const textNodes: Text[] = [];
+    let node;
+    while ((node = walker.nextNode())) {
+      textNodes.push(node as Text);
+    }
+
+    const query = searchQuery.toLowerCase();
+    textNodes.forEach((textNode) => {
+      const text = textNode.textContent || '';
+      const lowerText = text.toLowerCase();
+      
+      if (lowerText.includes(query)) {
+        const fragment = document.createDocumentFragment();
+        let lastIndex = 0;
+        let index = lowerText.indexOf(query);
+        
+        while (index !== -1) {
+          if (index > lastIndex) {
+            fragment.appendChild(document.createTextNode(text.substring(lastIndex, index)));
+          }
+          
+          const mark = document.createElement('mark');
+          mark.setAttribute('data-search-result', 'true');
+          mark.style.backgroundColor = 'hsl(48, 75%, 70%)';
+          mark.style.padding = '2px 0';
+          mark.style.borderRadius = '2px';
+          mark.textContent = text.substring(index, index + query.length);
+          fragment.appendChild(mark);
+          
+          lastIndex = index + query.length;
+          index = lowerText.indexOf(query, lastIndex);
+        }
+        
+        if (lastIndex < text.length) {
+          fragment.appendChild(document.createTextNode(text.substring(lastIndex)));
+        }
+        
+        textNode.parentNode?.replaceChild(fragment, textNode);
+      }
+    });
+
+    return doc.body.innerHTML;
+  };
+
+  const handleNextSearchResult = () => {
+    if (searchResults.length > 0) {
+      setCurrentSearchIndex((prev) => (prev + 1) % searchResults.length);
+    }
+  };
+
+  const handlePreviousSearchResult = () => {
+    if (searchResults.length > 0) {
+      setCurrentSearchIndex((prev) => (prev - 1 + searchResults.length) % searchResults.length);
+    }
+  };
+
+  const handleClearSearch = () => {
+    setSearchQuery("");
+    setSearchResults([]);
+    setCurrentSearchIndex(0);
+    setShowSearch(false);
+  };
+
   return (
     <div className="flex h-screen overflow-hidden bg-background">
       {/* Left Sidebar - Chapters */}
@@ -181,42 +290,106 @@ const LerEbook = () => {
       {/* Center Content - Reading Area */}
       <div className="flex-1 flex flex-col">
         {/* Header with Cover and Authors */}
-        <div className="bg-card border-b border-border p-6">
-          <div className="flex items-center gap-6">
-            <img
-              src={ebookData.coverImage}
-              alt={ebookData.title}
-              className="w-24 h-32 object-cover rounded-lg shadow-md"
-            />
-            <div className="flex-1">
-              <h1 className="text-2xl font-bold text-foreground mb-2">{ebookData.title}</h1>
-              <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                <div>
-                  <span className="font-medium">Autor:</span> {ebookData.author}
-                </div>
-                {ebookData.coAuthors.length > 0 && (
+        <div className="bg-card border-b border-border">
+          <div className="p-6">
+            <div className="flex items-center gap-6">
+              <img
+                src={ebookData.coverImage}
+                alt={ebookData.title}
+                className="w-24 h-32 object-cover rounded-lg shadow-md"
+              />
+              <div className="flex-1">
+                <h1 className="text-2xl font-bold text-foreground mb-2">{ebookData.title}</h1>
+                <div className="flex items-center gap-4 text-sm text-muted-foreground">
                   <div>
-                    <span className="font-medium">Co-autores:</span> {ebookData.coAuthors.join(", ")}
+                    <span className="font-medium">Autor:</span> {ebookData.author}
                   </div>
+                  {ebookData.coAuthors.length > 0 && (
+                    <div>
+                      <span className="font-medium">Co-autores:</span> {ebookData.coAuthors.join(", ")}
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => setShowSearch(!showSearch)}
+                  className={showSearch ? "bg-pastel-blue" : ""}
+                >
+                  <Search size={16} className="mr-2" />
+                  Buscar
+                </Button>
+                <Button variant="outline" size="sm" onClick={handleAddBookmark}>
+                  <Bookmark size={16} className="mr-2" />
+                  Marcar Página
+                </Button>
+              </div>
+            </div>
+          </div>
+          
+          {/* Search Bar */}
+          {showSearch && (
+            <div className="px-6 pb-4">
+              <div className="flex items-center gap-2">
+                <div className="relative flex-1">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={16} />
+                  <Input
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Buscar texto no ebook..."
+                    className="pl-10 pr-10"
+                    autoFocus
+                  />
+                  {searchQuery && (
+                    <button
+                      onClick={handleClearSearch}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                    >
+                      <X size={16} />
+                    </button>
+                  )}
+                </div>
+                
+                {searchResults.length > 0 && (
+                  <>
+                    <div className="text-sm text-muted-foreground whitespace-nowrap">
+                      {currentSearchIndex + 1} de {searchResults.length}
+                    </div>
+                    <div className="flex gap-1">
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={handlePreviousSearchResult}
+                        disabled={searchResults.length === 0}
+                      >
+                        <ChevronLeft size={16} />
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={handleNextSearchResult}
+                        disabled={searchResults.length === 0}
+                      >
+                        <ChevronRight size={16} />
+                      </Button>
+                    </div>
+                  </>
                 )}
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm" onClick={handleAddBookmark}>
-                <Bookmark size={16} className="mr-2" />
-                Marcar Página
-              </Button>
-            </div>
-          </div>
+          )}
         </div>
 
         {/* Reading Content */}
         <ScrollArea className="flex-1">
           <div className="max-w-4xl mx-auto p-12">
             <div
+              ref={contentRef}
               className="prose prose-slate dark:prose-invert max-w-none"
               onMouseUp={handleTextSelection}
-              dangerouslySetInnerHTML={{ __html: ebookData.content }}
+              dangerouslySetInnerHTML={{ __html: getContentWithSearchHighlights() }}
             />
           </div>
         </ScrollArea>
