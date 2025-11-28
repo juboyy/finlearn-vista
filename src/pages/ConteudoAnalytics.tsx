@@ -345,17 +345,20 @@ const ConteudoAnalytics = () => {
                         <td className="px-6 py-4 text-right">
                           <button 
                             onClick={() => {
-                              if (content.name === 'Apresentações') {
-                                navigate('/apresentacoes-analytics');
-                              } else if (content.name === 'Live') {
-                                navigate('/live-analytics');
-                              } else if (content.name === 'Podcast') {
-                                navigate('/podcast-analytics');
-                              } else if (content.name === 'Cursos') {
-                                navigate('/cursos-analytics');
-                              } else if (content.name === 'Avatar IA') {
-                                navigate('/avatar-ia-analytics');
-                              }
+                              const routes: Record<string, string> = {
+                                'Apresentações': '/apresentacoes-analytics',
+                                'Live': '/live-analytics',
+                                'Podcast': '/podcast-analytics',
+                                'Cursos': '/cursos-analytics',
+                                'Avatar IA': '/avatar-ia-analytics',
+                                'E-books': '/ebooks-analytics',
+                                'Webinars': '/webinars-analytics',
+                                'Artigos': '/artigos-analytics',
+                                'Análises Técnicas': '/analises-analytics',
+                                'Relatórios': '/relatorios-analytics',
+                                'Newspaper': '/newspaper-analytics'
+                              };
+                              if (routes[content.name]) navigate(routes[content.name]);
                             }}
                             className={`text-sm font-bold ${content.textColor} hover:text-slate-800 transition-colors`}
                           >
