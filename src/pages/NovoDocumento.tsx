@@ -1,10 +1,11 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 
 export default function NovoDocumento() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [documentTitle, setDocumentTitle] = useState("");
   const [selectedAgent, setSelectedAgent] = useState("");
   const [specificAgent, setSpecificAgent] = useState("");
@@ -17,6 +18,14 @@ export default function NovoDocumento() {
   const [newTag, setNewTag] = useState("");
   const [generatedContent, setGeneratedContent] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
+
+  // Load title from URL params if present
+  useEffect(() => {
+    const titleParam = searchParams.get("title");
+    if (titleParam) {
+      setDocumentTitle(titleParam);
+    }
+  }, [searchParams]);
 
   const agentTypes = [
     { id: "analise", name: "Análise", icon: "fas fa-chart-line", color: "bg-[#B8D4E8]", description: "Relatórios e análises de mercado" },
