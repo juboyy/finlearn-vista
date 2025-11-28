@@ -45,7 +45,7 @@ export default function MinhaAgendaDia() {
         <div className="p-8">
           <div className="flex gap-6">
             {/* Sidebar esquerda */}
-            <aside className="w-80 space-y-6">
+            <aside className="w-80 space-y-6 sticky top-8 self-start">
               {/* Mini Calendar */}
               <section className="bg-white rounded-xl p-6 border border-slate-200">
                 <div className="flex items-center justify-between mb-4">
