@@ -379,7 +379,7 @@ export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
         <SheetHeader className="relative pb-8 border-b-2 border-gradient-to-r from-pastel-purple/30 via-pastel-pink/30 to-pastel-blue/30">
           <div className="flex items-center justify-between">
             <div className="space-y-1">
-              <SheetTitle className="text-3xl font-black bg-gradient-to-r from-pastel-purple via-pastel-pink to-pastel-blue bg-clip-text text-transparent animate-gradient">
+              <SheetTitle className="text-3xl font-black text-foreground">
                 Podcasts
               </SheetTitle>
               <p className="text-sm text-muted-foreground/90 font-medium">Seu conteúdo de áudio favorito</p>
