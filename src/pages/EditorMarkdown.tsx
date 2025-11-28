@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { ArrowLeft, Save } from "lucide-react";
+import { ArrowLeft, Save, Bold, Italic, Heading1, Heading2, Heading3, List, ListOrdered, Link2, Image, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -16,6 +16,7 @@ const EditorMarkdown = () => {
   const { toast } = useToast();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     const titleParam = searchParams.get("title");
@@ -30,6 +31,51 @@ const EditorMarkdown = () => {
       title: "Documento salvo",
       description: "Seu documento foi salvo com sucesso.",
     });
+  };
+
+  const insertMarkdown = (before: string, after: string = "", placeholder: string = "") => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = content.substring(start, end);
+    const textToInsert = selectedText || placeholder;
+    
+    const newContent = 
+      content.substring(0, start) + 
+      before + textToInsert + after + 
+      content.substring(end);
+    
+    setContent(newContent);
+    
+    // Set cursor position after insertion
+    setTimeout(() => {
+      const newCursorPos = start + before.length + textToInsert.length;
+      textarea.focus();
+      textarea.setSelectionRange(newCursorPos, newCursorPos);
+    }, 0);
+  };
+
+  const insertAtLine = (prefix: string) => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const beforeCursor = content.substring(0, start);
+    const lineStart = beforeCursor.lastIndexOf('\n') + 1;
+    
+    const newContent = 
+      content.substring(0, lineStart) + 
+      prefix + 
+      content.substring(lineStart);
+    
+    setContent(newContent);
+    
+    setTimeout(() => {
+      textarea.focus();
+      textarea.setSelectionRange(start + prefix.length, start + prefix.length);
+    }, 0);
   };
 
   return (
@@ -107,10 +153,100 @@ const EditorMarkdown = () => {
           />
         </div>
 
+        {/* Formatting Toolbar */}
+        <div className="bg-muted/30 border-b border-border px-4 py-2">
+          <div className="flex items-center gap-1 flex-wrap">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => insertMarkdown("**", "**", "negrito")}
+              title="Negrito"
+            >
+              <Bold className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => insertMarkdown("*", "*", "itálico")}
+              title="Itálico"
+            >
+              <Italic className="h-4 w-4" />
+            </Button>
+            <Separator orientation="vertical" className="h-6 mx-1" />
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => insertAtLine("# ")}
+              title="Título 1"
+            >
+              <Heading1 className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => insertAtLine("## ")}
+              title="Título 2"
+            >
+              <Heading2 className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => insertAtLine("### ")}
+              title="Título 3"
+            >
+              <Heading3 className="h-4 w-4" />
+            </Button>
+            <Separator orientation="vertical" className="h-6 mx-1" />
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => insertAtLine("- ")}
+              title="Lista"
+            >
+              <List className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => insertAtLine("1. ")}
+              title="Lista Numerada"
+            >
+              <ListOrdered className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => insertAtLine("> ")}
+              title="Citação"
+            >
+              <Quote className="h-4 w-4" />
+            </Button>
+            <Separator orientation="vertical" className="h-6 mx-1" />
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => insertMarkdown("[", "](url)", "texto do link")}
+              title="Link"
+            >
+              <Link2 className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => insertMarkdown("![", "](url)", "alt text")}
+              title="Imagem"
+            >
+              <Image className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+
         {/* Content Area with Live Markdown Rendering */}
         <ScrollArea className="flex-1">
           <div className="max-w-4xl mx-auto p-12">
             <Textarea
+              ref={textareaRef}
               value={content}
               onChange={(e) => setContent(e.target.value)}
               placeholder="Comece a escrever em markdown...
