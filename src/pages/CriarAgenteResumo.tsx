@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft, ClipboardCheck, Info, GraduationCap, Heart, Star, ListChecks, Plug, Eye, Clock, Languages, ShieldHalf, MessageCircle, ChartLine, Lightbulb, Check, Rocket, Gauge } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SidebarMeusAgentes } from "@/components/Dashboard/SidebarMeusAgentes";
+import { AgentStepWizard } from "@/components/Dashboard/AgentStepWizard";
 
 export function CriarAgenteResumo() {
   const navigate = useNavigate();
@@ -30,43 +31,7 @@ export function CriarAgenteResumo() {
               </div>
             </div>
 
-            {/* Progress Bar */}
-            <div className="flex items-center gap-2">
-              <div className="flex-1 flex items-center gap-2">
-                <div className="flex items-center gap-3 flex-1">
-                  <div className="w-10 h-10 rounded-full bg-success flex items-center justify-center flex-shrink-0">
-                    <Check className="h-5 w-5 text-success-foreground" />
-                  </div>
-                  <div className="flex-1 h-2 bg-success rounded-full"></div>
-                </div>
-                
-                <div className="flex items-center gap-3 flex-1">
-                  <div className="w-10 h-10 rounded-full bg-success flex items-center justify-center flex-shrink-0">
-                    <Check className="h-5 w-5 text-success-foreground" />
-                  </div>
-                  <div className="flex-1 h-2 bg-success rounded-full"></div>
-                </div>
-                
-                <div className="flex items-center gap-3 flex-1">
-                  <div className="w-10 h-10 rounded-full bg-success flex items-center justify-center flex-shrink-0">
-                    <Check className="h-5 w-5 text-success-foreground" />
-                  </div>
-                  <div className="flex-1 h-2 bg-success rounded-full"></div>
-                </div>
-                
-                <div className="flex items-center gap-3 flex-1">
-                  <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold flex-shrink-0">
-                    4
-                  </div>
-                  <div className="flex-1 h-2 bg-secondary rounded-full"></div>
-                </div>
-              </div>
-              
-              <div className="flex flex-col items-end flex-shrink-0">
-                <span className="text-xs font-semibold text-foreground">Passo 4 de 4</span>
-                <span className="text-xs text-muted-foreground">Finalização</span>
-              </div>
-            </div>
+        <AgentStepWizard currentStep={4} />
           </div>
         </header>
 

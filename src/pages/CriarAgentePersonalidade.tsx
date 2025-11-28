@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
+import { AgentStepWizard } from "@/components/Dashboard/AgentStepWizard";
 
 export function CriarAgentePersonalidade() {
   const navigate = useNavigate();
@@ -132,46 +133,7 @@ export function CriarAgentePersonalidade() {
           </div>
         </header>
 
-        {/* Progress Bar */}
-        <div className="px-8 py-4 bg-muted/50">
-          <div className="flex items-center justify-between max-w-5xl">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-                <CheckCircle className="text-primary-foreground" size={16} />
-              </div>
-              <span className="text-sm font-medium text-foreground">
-                Informações Básicas
-              </span>
-            </div>
-            <div className="flex-1 h-0.5 bg-primary mx-4"></div>
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-                <CheckCircle className="text-primary-foreground" size={16} />
-              </div>
-              <span className="text-sm font-medium text-foreground">
-                Especialização
-              </span>
-            </div>
-            <div className="flex-1 h-0.5 bg-primary mx-4"></div>
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground text-xs font-bold">3</span>
-              </div>
-              <span className="text-sm font-medium text-foreground">
-                Personalidade
-              </span>
-            </div>
-            <div className="flex-1 h-0.5 bg-border mx-4"></div>
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-full bg-muted border-2 border-border flex items-center justify-center">
-                <span className="text-muted-foreground text-xs font-bold">4</span>
-              </div>
-              <span className="text-sm font-medium text-muted-foreground">
-                Finalização
-              </span>
-            </div>
-          </div>
-        </div>
+        <AgentStepWizard currentStep={3} />
 
         {/* Content */}
         <div className="p-8">
