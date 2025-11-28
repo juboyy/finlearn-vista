@@ -141,6 +141,12 @@ const LerEbook = () => {
 
   const handleHighlight = async () => {
     if (selectedText) {
+      console.log('Criando destaque:', {
+        texto: selectedText,
+        cor: selectedColor,
+        pagina: currentPage
+      });
+      
       await createAnnotation(
         "highlight",
         selectedText,
@@ -150,6 +156,8 @@ const LerEbook = () => {
         undefined,
         currentPage
       );
+      
+      console.log('Destaque criado. Total de anotações:', annotations.length + 1);
       
       // Force re-render to show the highlight immediately
       setRenderKey(prev => prev + 1);
@@ -392,6 +400,9 @@ const LerEbook = () => {
   const getContentWithAnnotations = () => {
     let content = ebookData.content;
     
+    console.log('Aplicando anotações. Total:', annotations.length);
+    console.log('Anotações da página atual:', annotations.filter(a => a.page_number === currentPage));
+    
     // Apply search highlights first if there's a search query
     if (searchQuery.trim()) {
       const parser = new DOMParser();
@@ -493,7 +504,9 @@ const LerEbook = () => {
           span.style.position = 'relative';
           
           if (annotation.annotation_type === 'highlight') {
-            span.style.backgroundColor = annotation.highlight_color || 'rgba(255, 235, 59, 0.4)';
+            const bgColor = annotation.highlight_color || 'rgba(255, 235, 59, 0.6)';
+            console.log('Aplicando destaque:', { texto: annotation.selected_text, cor: bgColor });
+            span.style.backgroundColor = bgColor;
             span.title = 'Destaque';
             span.textContent = annotation.selected_text;
           } else if (annotation.annotation_type === 'note') {
