@@ -46,6 +46,7 @@ export const EbookReader = ({
   const [selectedText, setSelectedText] = useState("");
   const [selectionRange, setSelectionRange] = useState<{ start: number; end: number } | null>(null);
   const [showAnnotationMenu, setShowAnnotationMenu] = useState(false);
+  const [menuPosition, setMenuPosition] = useState<{ top: number; left: number } | null>(null);
   const [showNoteDialog, setShowNoteDialog] = useState(false);
   const [noteContent, setNoteContent] = useState("");
   const [selectedColor, setSelectedColor] = useState("#fef3c7");
@@ -101,6 +102,7 @@ export const EbookReader = ({
     if (selection && selection.toString().trim().length > 0) {
       const text = selection.toString();
       const range = selection.getRangeAt(0);
+      const rect = range.getBoundingClientRect();
       
       // Calculate position in content
       const preSelectionRange = range.cloneRange();
@@ -112,6 +114,10 @@ export const EbookReader = ({
 
         setSelectedText(text);
         setSelectionRange({ start, end });
+        setMenuPosition({
+          top: rect.top - 60,
+          left: rect.left + (rect.width / 2)
+        });
         setShowAnnotationMenu(true);
       }
     }
@@ -164,6 +170,7 @@ export const EbookReader = ({
     setSelectedText("");
     setSelectionRange(null);
     setShowAnnotationMenu(false);
+    setMenuPosition(null);
     window.getSelection()?.removeAllRanges();
   };
 
@@ -233,13 +240,13 @@ export const EbookReader = ({
           </ScrollArea>
 
           {/* Annotation Menu Popover */}
-          {showAnnotationMenu && (
+          {showAnnotationMenu && menuPosition && (
             <div
               className="fixed z-50 bg-card border-2 border-border rounded-xl shadow-2xl p-2 flex gap-2"
               style={{
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
+                top: `${menuPosition.top}px`,
+                left: `${menuPosition.left}px`,
+                transform: "translateX(-50%)",
               }}
             >
               <Popover>
