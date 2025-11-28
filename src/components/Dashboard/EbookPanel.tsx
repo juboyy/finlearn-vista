@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import {
   Sheet,
   SheetContent,
@@ -14,8 +14,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { BookOpen, Heart, Star, Play, Share2, Clock, Sparkles, TrendingUp, Bookmark } from "lucide-react";
+import { BookOpen, Heart, Star, Play, Share2, Clock, Sparkles, Bookmark } from "lucide-react";
 import { toast } from "sonner";
+import { EbookReader } from "./EbookReader";
 
 interface Ebook {
   id: string;
@@ -39,6 +40,8 @@ interface EbookPanelProps {
 
 export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
+  const [readerOpen, setReaderOpen] = useState(false);
+  const [selectedEbook, setSelectedEbook] = useState<Ebook | null>(null);
 
   const toggleFavorite = (id: string) => {
     const newFavorites = new Set(favorites);
@@ -221,6 +224,10 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
               <Button
                 size="sm"
                 className="bg-gradient-to-r from-pastel-purple to-pastel-pink hover:from-pastel-pink hover:to-pastel-purple text-foreground font-semibold shadow-lg"
+                onClick={() => {
+                  setSelectedEbook(ebook);
+                  setReaderOpen(true);
+                }}
               >
                 <Play size={14} className="mr-2" />
                 Ler Agora
@@ -294,8 +301,12 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
             <Button
               size="sm"
               className="flex-1 bg-gradient-to-r from-pastel-blue to-pastel-purple hover:from-pastel-purple hover:to-pastel-pink text-foreground font-semibold"
+              onClick={() => {
+                setSelectedEbook(ebook);
+                setReaderOpen(true);
+              }}
             >
-              Ver Detalhes
+              Ler Agora
             </Button>
             <Button
               size="sm"
@@ -426,6 +437,15 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
           </div>
         </div>
       </SheetContent>
+
+      {selectedEbook && (
+        <EbookReader
+          open={readerOpen}
+          onOpenChange={setReaderOpen}
+          ebookId={selectedEbook.id}
+          ebookTitle={selectedEbook.title}
+        />
+      )}
     </Sheet>
   );
 };
