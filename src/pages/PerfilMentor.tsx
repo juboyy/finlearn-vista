@@ -703,7 +703,7 @@ const PerfilMentor = () => {
           setShowReceipt(false);
         }
       }}>
-        <SheetContent ref={sheetContentRef} className="w-[400px] sm:w-[500px] overflow-y-auto">
+        <SheetContent ref={sheetContentRef} className="w-full sm:w-[500px] sm:max-w-[500px] overflow-y-auto">
           <SheetHeader>
             <SheetTitle className="text-2xl font-semibold text-slate-800">
               {showReceipt ? "Recibo de Pagamento" : paymentSuccess ? "Pagamento Aprovado" : scheduleStep === 1 ? "Agendar Mentoria" : "Pagamento e Confirmação"}
