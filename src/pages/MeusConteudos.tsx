@@ -301,7 +301,14 @@ export default function MeusConteudos() {
                                     <FileSearch className="w-4 h-4 mr-2" />
                                     Detalhes
                                   </DropdownMenuItem>
-                                  <DropdownMenuItem className="cursor-pointer hover:bg-accent/10 text-foreground">
+                                  <DropdownMenuItem 
+                                    className="cursor-pointer hover:bg-accent/10 text-foreground"
+                                    onClick={() => {
+                                      if (item.type === 'Artigo') {
+                                        window.location.href = '/artigo-analytics';
+                                      }
+                                    }}
+                                  >
                                     <BarChart3 className="w-4 h-4 mr-2" />
                                     Analytics
                                   </DropdownMenuItem>
