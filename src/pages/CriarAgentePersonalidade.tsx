@@ -46,11 +46,11 @@ export function CriarAgentePersonalidade() {
       case "short":
         return { max: 2, label: "Curto Prazo", description: "Ideal para tarefas pontuais e conversas breves" };
       case "medium":
-        return { max: 10, label: "Médio Prazo", description: "Balanceado para uso geral e projetos" };
+        return { max: 50, label: "Médio Prazo", description: "Balanceado para uso geral e projetos" };
       case "long":
-        return { max: 50, label: "Longo Prazo", description: "Máxima capacidade para projetos complexos" };
+        return { max: 100, label: "Longo Prazo", description: "Máxima capacidade para projetos complexos" };
       default:
-        return { max: 10, label: "Médio Prazo", description: "Balanceado para uso geral" };
+        return { max: 50, label: "Médio Prazo", description: "Balanceado para uso geral" };
     }
   };
 
@@ -770,7 +770,6 @@ export function CriarAgentePersonalidade() {
                 <div 
                   onClick={() => {
                     setMemoryType("short");
-                    setMemoryGB([Math.min(memoryGB[0], 2)]);
                   }}
                   className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
                     memoryType === "short" 
@@ -786,7 +785,6 @@ export function CriarAgentePersonalidade() {
                 <div 
                   onClick={() => {
                     setMemoryType("medium");
-                    setMemoryGB([Math.min(memoryGB[0], 10)]);
                   }}
                   className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
                     memoryType === "medium" 
@@ -795,7 +793,7 @@ export function CriarAgentePersonalidade() {
                   }`}
                 >
                   <p className="text-sm font-bold text-foreground mb-1">Médio Prazo</p>
-                  <p className="text-xs text-muted-foreground mb-2">Até 10 GB</p>
+                  <p className="text-xs text-muted-foreground mb-2">Até 50 GB</p>
                   <p className="text-xs text-muted-foreground">Balanceado para uso geral e projetos</p>
                 </div>
 
@@ -810,7 +808,7 @@ export function CriarAgentePersonalidade() {
                   }`}
                 >
                   <p className="text-sm font-bold text-foreground mb-1">Longo Prazo</p>
-                  <p className="text-xs text-muted-foreground mb-2">Até 50 GB</p>
+                  <p className="text-xs text-muted-foreground mb-2">Até 100 GB</p>
                   <p className="text-xs text-muted-foreground">Máxima capacidade para projetos complexos</p>
                 </div>
               </div>
@@ -827,8 +825,8 @@ export function CriarAgentePersonalidade() {
                   value={memoryGB} 
                   onValueChange={setMemoryGB} 
                   min={0} 
-                  max={currentMemoryLimit.max} 
-                  step={0.5} 
+                  max={200} 
+                  step={1} 
                   className="flex-1" 
                 />
                 <span className="px-4 py-2 bg-pastel-blue rounded-lg text-foreground font-bold text-sm min-w-[80px] text-center">
@@ -836,7 +834,7 @@ export function CriarAgentePersonalidade() {
                 </span>
               </div>
               <p className="text-xs text-muted-foreground mt-2">
-                Máximo disponível: {currentMemoryLimit.max} GB ({currentMemoryLimit.label})
+                Tipo selecionado: {currentMemoryLimit.label} (recomendado até {currentMemoryLimit.max} GB)
               </p>
             </div>
 
