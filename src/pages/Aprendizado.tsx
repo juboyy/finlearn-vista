@@ -15,152 +15,129 @@ import cursoAnaliseTecnicaIllustration from "@/assets/curso-analise-tecnica-illu
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts';
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { VideoCallModal } from "@/components/VideoCallModal";
 type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'relatorios' | 'documentos' | 'estudos' | 'infograficos' | 'whitepaper' | 'apresentacoes' | 'live';
-
-const agents = [
-  {
-    id: 1,
-    name: "Prof. Ana Santos",
-    role: "Especialista Sênior",
-    avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-2bbdc31a97c8479658e1.png",
-    specialty: "Derivativos",
-    specialtyColor: "bg-pastel-blue",
-    rating: 4.9,
-    reviews: "1.2k",
-    interactions: "3.4k conversas",
-    status: "online",
-  },
-  {
-    id: 2,
-    name: "Dr. Roberto Lima",
-    role: "Expert Principal",
-    avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b24014b83d-0b455d5abe744d3f9416.png",
-    specialty: "Macroeconomia",
-    specialtyColor: "bg-pastel-green",
-    rating: 4.8,
-    reviews: "980",
-    interactions: "2.8k conversas",
-    status: "online",
-  },
-  {
-    id: 3,
-    name: "Profa. Marina Costa",
-    role: "Consultora Especialista",
-    avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-db60e1b43d477718b599.png",
-    specialty: "ESG & Sustentabilidade",
-    specialtyColor: "bg-pastel-purple",
-    rating: 5.0,
-    reviews: "756",
-    interactions: "1.9k conversas",
-    status: "online",
-  },
-  {
-    id: 4,
-    name: "Dr. Fernando Alves",
-    role: "Analista Sênior",
-    avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b24014b83d-0b455d5abe744d3f9416.png",
-    specialty: "Análise Técnica",
-    specialtyColor: "bg-pastel-pink",
-    rating: 4.7,
-    reviews: "1.5k",
-    interactions: "4.2k conversas",
-    status: "ausente",
-  },
-  {
-    id: 5,
-    name: "Dra. Juliana Matos",
-    role: "Consultora Principal",
-    avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-2bbdc31a97c8479658e1.png",
-    specialty: "Compliance",
-    specialtyColor: "bg-pastel-yellow",
-    rating: 4.8,
-    reviews: "890",
-    interactions: "2.3k conversas",
-    status: "online",
-  },
-  {
-    id: 6,
-    name: "Prof. Ricardo Souza",
-    role: "Especialista Sênior",
-    avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b24014b83d-0b455d5abe744d3f9416.png",
-    specialty: "Gestão de Riscos",
-    specialtyColor: "bg-pastel-peach",
-    rating: 4.9,
-    reviews: "1.1k",
-    interactions: "3.1k conversas",
-    status: "online",
-  },
-  {
-    id: 7,
-    name: "Dra. Camila Rodrigues",
-    role: "Analista Principal",
-    avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-db60e1b43d477718b599.png",
-    specialty: "Mercado de Capitais",
-    specialtyColor: "bg-pastel-blue",
-    rating: 4.8,
-    reviews: "1.3k",
-    interactions: "3.8k conversas",
-    status: "online",
-  },
-  {
-    id: 8,
-    name: "Prof. Eduardo Martins",
-    role: "Consultor Especialista",
-    avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b24014b83d-0b455d5abe744d3f9416.png",
-    specialty: "Meios de Pagamento",
-    specialtyColor: "bg-pastel-green",
-    rating: 4.7,
-    reviews: "645",
-    interactions: "1.6k conversas",
-    status: "ausente",
-  },
-];
-
-const recentConversations = [
-  {
-    id: 1,
-    agent: "Prof. Ana Santos",
-    avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-2bbdc31a97c8479658e1.png",
-    time: "Há 2 horas",
-    type: "video",
-    typeColor: "bg-pastel-purple/30",
-    description: "Discussão sobre estratégias de hedge utilizando opções de índice...",
-    duration: "23 min de conversa",
-    credits: "230 créditos",
-  },
-  {
-    id: 2,
-    agent: "Dr. Roberto Lima",
-    avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b24014b83d-0b455d5abe744d3f9416.png",
-    time: "Ontem",
-    type: "text",
-    typeColor: "bg-pastel-green/30",
-    description: "Análise do impacto das decisões do Fed na economia brasileira...",
-    duration: "15 mensagens",
-    credits: "30 créditos",
-  },
-  {
-    id: 3,
-    agent: "Profa. Marina Costa",
-    avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-db60e1b43d477718b599.png",
-    time: "2 dias atrás",
-    type: "audio",
-    typeColor: "bg-pastel-blue/30",
-    description: "Consultoria sobre implementação de práticas ESG em fundos...",
-    duration: "18 min de conversa",
-    credits: "90 créditos",
-  },
-];
-
+const agents = [{
+  id: 1,
+  name: "Prof. Ana Santos",
+  role: "Especialista Sênior",
+  avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-2bbdc31a97c8479658e1.png",
+  specialty: "Derivativos",
+  specialtyColor: "bg-pastel-blue",
+  rating: 4.9,
+  reviews: "1.2k",
+  interactions: "3.4k conversas",
+  status: "online"
+}, {
+  id: 2,
+  name: "Dr. Roberto Lima",
+  role: "Expert Principal",
+  avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b24014b83d-0b455d5abe744d3f9416.png",
+  specialty: "Macroeconomia",
+  specialtyColor: "bg-pastel-green",
+  rating: 4.8,
+  reviews: "980",
+  interactions: "2.8k conversas",
+  status: "online"
+}, {
+  id: 3,
+  name: "Profa. Marina Costa",
+  role: "Consultora Especialista",
+  avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-db60e1b43d477718b599.png",
+  specialty: "ESG & Sustentabilidade",
+  specialtyColor: "bg-pastel-purple",
+  rating: 5.0,
+  reviews: "756",
+  interactions: "1.9k conversas",
+  status: "online"
+}, {
+  id: 4,
+  name: "Dr. Fernando Alves",
+  role: "Analista Sênior",
+  avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b24014b83d-0b455d5abe744d3f9416.png",
+  specialty: "Análise Técnica",
+  specialtyColor: "bg-pastel-pink",
+  rating: 4.7,
+  reviews: "1.5k",
+  interactions: "4.2k conversas",
+  status: "ausente"
+}, {
+  id: 5,
+  name: "Dra. Juliana Matos",
+  role: "Consultora Principal",
+  avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-2bbdc31a97c8479658e1.png",
+  specialty: "Compliance",
+  specialtyColor: "bg-pastel-yellow",
+  rating: 4.8,
+  reviews: "890",
+  interactions: "2.3k conversas",
+  status: "online"
+}, {
+  id: 6,
+  name: "Prof. Ricardo Souza",
+  role: "Especialista Sênior",
+  avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b24014b83d-0b455d5abe744d3f9416.png",
+  specialty: "Gestão de Riscos",
+  specialtyColor: "bg-pastel-peach",
+  rating: 4.9,
+  reviews: "1.1k",
+  interactions: "3.1k conversas",
+  status: "online"
+}, {
+  id: 7,
+  name: "Dra. Camila Rodrigues",
+  role: "Analista Principal",
+  avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-db60e1b43d477718b599.png",
+  specialty: "Mercado de Capitais",
+  specialtyColor: "bg-pastel-blue",
+  rating: 4.8,
+  reviews: "1.3k",
+  interactions: "3.8k conversas",
+  status: "online"
+}, {
+  id: 8,
+  name: "Prof. Eduardo Martins",
+  role: "Consultor Especialista",
+  avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b24014b83d-0b455d5abe744d3f9416.png",
+  specialty: "Meios de Pagamento",
+  specialtyColor: "bg-pastel-green",
+  rating: 4.7,
+  reviews: "645",
+  interactions: "1.6k conversas",
+  status: "ausente"
+}];
+const recentConversations = [{
+  id: 1,
+  agent: "Prof. Ana Santos",
+  avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-2bbdc31a97c8479658e1.png",
+  time: "Há 2 horas",
+  type: "video",
+  typeColor: "bg-pastel-purple/30",
+  description: "Discussão sobre estratégias de hedge utilizando opções de índice...",
+  duration: "23 min de conversa",
+  credits: "230 créditos"
+}, {
+  id: 2,
+  agent: "Dr. Roberto Lima",
+  avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b24014b83d-0b455d5abe744d3f9416.png",
+  time: "Ontem",
+  type: "text",
+  typeColor: "bg-pastel-green/30",
+  description: "Análise do impacto das decisões do Fed na economia brasileira...",
+  duration: "15 mensagens",
+  credits: "30 créditos"
+}, {
+  id: 3,
+  agent: "Profa. Marina Costa",
+  avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-db60e1b43d477718b599.png",
+  time: "2 dias atrás",
+  type: "audio",
+  typeColor: "bg-pastel-blue/30",
+  description: "Consultoria sobre implementação de práticas ESG em fundos...",
+  duration: "18 min de conversa",
+  credits: "90 créditos"
+}];
 const Aprendizado = () => {
   const [activeTab, setActiveTab] = useState<TabType>('todos');
   const [citationValue, setCitationValue] = useState(0);
@@ -168,13 +145,18 @@ const Aprendizado = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterSpecialty, setFilterSpecialty] = useState("Todas especialidades");
   const [videoCallOpen, setVideoCallOpen] = useState(false);
-  const [selectedAgent, setSelectedAgent] = useState<{ name: string; avatar: string } | null>(null);
+  const [selectedAgent, setSelectedAgent] = useState<{
+    name: string;
+    avatar: string;
+  } | null>(null);
   const [showHistorico, setShowHistorico] = useState(false);
   const [showAnalytics, setShowAnalytics] = useState(false);
   const navigate = useNavigate();
-
   const handleVideoCall = (agentName: string, agentAvatar: string) => {
-    setSelectedAgent({ name: agentName, avatar: agentAvatar });
+    setSelectedAgent({
+      name: agentName,
+      avatar: agentAvatar
+    });
     setVideoCallOpen(true);
   };
   const sectorData = [{
@@ -354,10 +336,7 @@ const Aprendizado = () => {
                   <Bell size={20} />
                   <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                 </button>
-                <button 
-                  onClick={() => navigate('/meus-conteudos')}
-                  className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
-                >
+                <button onClick={() => navigate('/meus-conteudos')} className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
                   <Plus className="w-4 h-4 inline mr-2" />
                   Criar Conteúdo
                 </button>
@@ -366,35 +345,23 @@ const Aprendizado = () => {
           </div>
         </header>
 
-        <MenutabbarFix 
-          activeTab={activeTab} 
-          setActiveTab={(tab) => {
-            setActiveTab(tab);
-            setShowHistorico(false);
-            setShowAnalytics(false);
-          }}
-          onHistoricoClick={() => {
-            if (activeTab === 'documentos') {
-              setShowHistorico(!showHistorico);
-              setShowAnalytics(false);
-            }
-          }}
-          onAnalyticsClick={() => {
-            if (activeTab === 'documentos') {
-              setShowAnalytics(!showAnalytics);
-              setShowHistorico(false);
-            }
-          }}
-          showHistoricoButton={true}
-          showAnalyticsButton={true}
-          isHistoricoActive={showHistorico}
-          isAnalyticsActive={showAnalytics}
-        />
+        <MenutabbarFix activeTab={activeTab} setActiveTab={tab => {
+        setActiveTab(tab);
+        setShowHistorico(false);
+        setShowAnalytics(false);
+      }} onHistoricoClick={() => {
+        if (activeTab === 'documentos') {
+          setShowHistorico(!showHistorico);
+          setShowAnalytics(false);
+        }
+      }} onAnalyticsClick={() => {
+        if (activeTab === 'documentos') {
+          setShowAnalytics(!showAnalytics);
+          setShowHistorico(false);
+        }
+      }} showHistoricoButton={true} showAnalyticsButton={true} isHistoricoActive={showHistorico} isAnalyticsActive={showAnalytics} />
 
-        {showAnalytics && activeTab === 'documentos' ? (
-          <NewspaperAnalytics />
-        ) : activeTab !== 'documentos' ? (
-          <div className="flex-1 p-8 pb-32">
+        {showAnalytics && activeTab === 'documentos' ? <NewspaperAnalytics /> : activeTab !== 'documentos' ? <div className="flex-1 p-8 pb-32">
           {activeTab === 'todos' && <>
 
               <div className="grid grid-cols-3 gap-6 mb-8">
@@ -474,7 +441,7 @@ const Aprendizado = () => {
                   <div className="w-12 h-12 bg-pastel-yellow rounded-lg flex items-center justify-center">
                     <i className="fas fa-clock text-slate-600 text-xl"></i>
                   </div>
-                  <span className="text-xs text-slate-500 font-bold">Últimos 7 dias</span>
+                  <span className="text-xs text-slate-500 font-bold">Últimos 30 dias</span>
                 </div>
                 <h3 className="text-3xl font-bold text-slate-800 mb-1">127h</h3>
                 <p className="text-sm text-slate-500 mb-3">Tempo Total de Estudo</p>
@@ -843,10 +810,7 @@ const Aprendizado = () => {
             </div>
 
             <div className="grid grid-cols-4 gap-6">
-              <div 
-                onClick={() => navigate('/podcast/mercados-em-foco')}
-                className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition cursor-pointer"
-              >
+              <div onClick={() => navigate('/podcast/mercados-em-foco')} className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition cursor-pointer">
                 <div className="h-40 bg-pastel-blue overflow-hidden">
                   <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png" alt="illustration of a microphone with sound waves for a podcast cover, financial market theme, pastel colors, outlined style" className="w-full h-full object-cover" />
                 </div>
@@ -1141,10 +1105,7 @@ const Aprendizado = () => {
                   <a href="#" className="text-sm text-slate-600 hover:text-slate-800 font-medium">Ver todos</a>
                 </div>
                 <div className="grid grid-cols-3 gap-6">
-                  <div 
-                    onClick={() => navigate('/podcast/mercados-em-foco')}
-                    className="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-lg transition cursor-pointer"
-                  >
+                  <div onClick={() => navigate('/podcast/mercados-em-foco')} className="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-lg transition cursor-pointer">
                     <div className="flex gap-4">
                       <div className="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-pastel-blue">
                         <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png" alt="podcast cover" className="w-full h-full object-cover" />
@@ -1255,10 +1216,7 @@ const Aprendizado = () => {
                   <a href="#" className="text-sm text-slate-600 hover:text-slate-800 font-medium">Ver todos</a>
                 </div>
                 <div className="grid grid-cols-3 gap-6">
-                  <div 
-                    onClick={() => navigate('/podcast/mercados-em-foco')}
-                    className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition cursor-pointer"
-                  >
+                  <div onClick={() => navigate('/podcast/mercados-em-foco')} className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition cursor-pointer">
                     <div className="h-48 bg-pastel-blue overflow-hidden relative">
                       <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png" alt="podcast cover" className="w-full h-full object-cover" />
                     </div>
@@ -1338,10 +1296,7 @@ const Aprendizado = () => {
                   <a href="#" className="text-sm text-slate-600 hover:text-slate-800 font-medium">Ver todos</a>
                 </div>
                 <div className="space-y-4">
-                  <div 
-                    onClick={() => navigate('/podcast/mercados-em-foco')}
-                    className="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-lg transition cursor-pointer"
-                  >
+                  <div onClick={() => navigate('/podcast/mercados-em-foco')} className="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-lg transition cursor-pointer">
                     <div className="flex gap-4">
                       <div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-pastel-pink">
                         <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5db95ca3fc-e18dc1c9625044bac903.png" alt="podcast cover" className="w-full h-full object-cover" />
@@ -1495,10 +1450,7 @@ const Aprendizado = () => {
                         </div>
                       </div>
                       <div className="flex items-center gap-4">
-                        <button 
-                          onClick={() => navigate('/curso-detalhes')}
-                          className="px-8 py-3 bg-foreground text-background rounded-lg font-semibold hover:opacity-80 transition"
-                        >
+                        <button onClick={() => navigate('/curso-detalhes')} className="px-8 py-3 bg-foreground text-background rounded-lg font-semibold hover:opacity-80 transition">
                           Inscrever-se Agora
                         </button>
                         <div className="flex flex-col">
@@ -2283,7 +2235,9 @@ const Aprendizado = () => {
                       <span className="text-lg text-slate-500">/ 5.000</span>
                     </div>
                     <div className="w-64 bg-slate-200 rounded-full h-2 mt-3">
-                      <div className="bg-pastel-yellow h-2 rounded-full" style={{ width: "49%" }}></div>
+                      <div className="bg-pastel-yellow h-2 rounded-full" style={{
+                      width: "49%"
+                    }}></div>
                     </div>
                   </div>
                   <button className="px-6 py-3 bg-pastel-yellow text-slate-800 rounded-lg font-medium hover:bg-opacity-80 transition">
@@ -2333,20 +2287,10 @@ const Aprendizado = () => {
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="relative">
-                      <Input
-                        type="text"
-                        placeholder="Buscar agente..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="pl-10 pr-4 py-2 w-64"
-                      />
+                      <Input type="text" placeholder="Buscar agente..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-10 pr-4 py-2 w-64" />
                       <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                     </div>
-                    <select
-                      value={filterSpecialty}
-                      onChange={(e) => setFilterSpecialty(e.target.value)}
-                      className="px-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-pastel-blue bg-white"
-                    >
+                    <select value={filterSpecialty} onChange={e => setFilterSpecialty(e.target.value)} className="px-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-pastel-blue bg-white">
                       <option>Todas especialidades</option>
                       <option>Análise de Mercado</option>
                       <option>Compliance</option>
@@ -2381,16 +2325,11 @@ const Aprendizado = () => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {agents.map((agent) => (
-                        <TableRow key={agent.id} className="hover:bg-slate-50 transition">
+                      {agents.map(agent => <TableRow key={agent.id} className="hover:bg-slate-50 transition">
                           <TableCell>
                             <div className="flex items-center gap-3">
                               <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
-                                <img
-                                  src={agent.avatar}
-                                  alt={agent.name}
-                                  className="w-full h-full object-cover"
-                                />
+                                <img src={agent.avatar} alt={agent.name} className="w-full h-full object-cover" />
                               </div>
                               <div>
                                 <p className="text-sm font-medium text-slate-800">{agent.name}</p>
@@ -2414,43 +2353,28 @@ const Aprendizado = () => {
                             <span className="text-sm text-slate-600">{agent.interactions}</span>
                           </TableCell>
                           <TableCell>
-                            {agent.status === "online" ? (
-                              <Badge className="bg-green-100 text-green-700 border-0 font-medium">
+                            {agent.status === "online" ? <Badge className="bg-green-100 text-green-700 border-0 font-medium">
                                 <Circle className="text-green-500 fill-green-500 mr-1" size={6} />
                                 Online
-                              </Badge>
-                            ) : (
-                              <Badge className="bg-slate-100 text-slate-700 border-0 font-medium">
+                              </Badge> : <Badge className="bg-slate-100 text-slate-700 border-0 font-medium">
                                 <Circle className="text-slate-400 fill-slate-400 mr-1" size={6} />
                                 Ausente
-                              </Badge>
-                            )}
+                              </Badge>}
                           </TableCell>
                           <TableCell>
                             <div className="flex items-center gap-2">
-                              <button
-                                onClick={() => handleVideoCall(agent.name, agent.avatar)}
-                                className="p-2 bg-pastel-purple hover:bg-opacity-80 text-slate-700 rounded-lg transition"
-                                title="Conversar por Vídeo"
-                              >
+                              <button onClick={() => handleVideoCall(agent.name, agent.avatar)} className="p-2 bg-pastel-purple hover:bg-opacity-80 text-slate-700 rounded-lg transition" title="Conversar por Vídeo">
                                 <Video size={16} />
                               </button>
-                              <button
-                                className="p-2 bg-pastel-blue hover:bg-opacity-80 text-slate-700 rounded-lg transition"
-                                title="Conversar por Voz"
-                              >
+                              <button className="p-2 bg-pastel-blue hover:bg-opacity-80 text-slate-700 rounded-lg transition" title="Conversar por Voz">
                                 <Mic size={16} />
                               </button>
-                              <button
-                                className="p-2 bg-pastel-green hover:bg-opacity-80 text-slate-700 rounded-lg transition"
-                                title="Conversar por Texto"
-                              >
+                              <button className="p-2 bg-pastel-green hover:bg-opacity-80 text-slate-700 rounded-lg transition" title="Conversar por Texto">
                                 <MessageCircle size={16} />
                               </button>
                             </div>
                           </TableCell>
-                        </TableRow>
-                      ))}
+                        </TableRow>)}
                     </TableBody>
                   </Table>
                 </div>
@@ -2458,20 +2382,14 @@ const Aprendizado = () => {
                 <div className="px-6 py-4 border-t border-slate-200 flex items-center justify-between">
                   <p className="text-sm text-slate-600">Mostrando 8 de 8 agentes</p>
                   <div className="flex items-center gap-2">
-                    <button
-                      className="px-3 py-2 border border-slate-200 rounded-lg text-sm text-slate-600 hover:bg-slate-50 transition disabled:opacity-50 disabled:cursor-not-allowed"
-                      disabled
-                    >
+                    <button className="px-3 py-2 border border-slate-200 rounded-lg text-sm text-slate-600 hover:bg-slate-50 transition disabled:opacity-50 disabled:cursor-not-allowed" disabled>
                       <ChevronLeft size={16} className="inline mr-1" />
                       Anterior
                     </button>
                     <button className="px-3 py-2 bg-pastel-blue text-slate-800 rounded-lg text-sm font-medium">
                       1
                     </button>
-                    <button
-                      className="px-3 py-2 border border-slate-200 rounded-lg text-sm text-slate-600 hover:bg-slate-50 transition disabled:opacity-50 disabled:cursor-not-allowed"
-                      disabled
-                    >
+                    <button className="px-3 py-2 border border-slate-200 rounded-lg text-sm text-slate-600 hover:bg-slate-50 transition disabled:opacity-50 disabled:cursor-not-allowed" disabled>
                       Próximo
                       <ChevronRight size={16} className="inline ml-1" />
                     </button>
@@ -2489,19 +2407,11 @@ const Aprendizado = () => {
               </div>
 
               <div className="grid grid-cols-3 gap-6">
-                {recentConversations.map((conversation) => (
-                  <div
-                    key={conversation.id}
-                    className="bg-white rounded-xl border border-slate-200 p-5 hover:shadow-lg transition"
-                  >
+                {recentConversations.map(conversation => <div key={conversation.id} className="bg-white rounded-xl border border-slate-200 p-5 hover:shadow-lg transition">
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-full overflow-hidden">
-                          <img
-                            src={conversation.avatar}
-                            alt={conversation.agent}
-                            className="w-full h-full object-cover"
-                          />
+                          <img src={conversation.avatar} alt={conversation.agent} className="w-full h-full object-cover" />
                         </div>
                         <div>
                           <p className="text-sm font-medium text-slate-800">{conversation.agent}</p>
@@ -2509,15 +2419,9 @@ const Aprendizado = () => {
                         </div>
                       </div>
                       <span className={`px-2 py-1 ${conversation.typeColor} rounded-full`}>
-                        {conversation.type === "video" && (
-                          <Video className="text-slate-700" size={14} />
-                        )}
-                        {conversation.type === "text" && (
-                          <MessageCircle className="text-slate-700" size={14} />
-                        )}
-                        {conversation.type === "audio" && (
-                          <Mic className="text-slate-700" size={14} />
-                        )}
+                        {conversation.type === "video" && <Video className="text-slate-700" size={14} />}
+                        {conversation.type === "text" && <MessageCircle className="text-slate-700" size={14} />}
+                        {conversation.type === "audio" && <Mic className="text-slate-700" size={14} />}
                       </span>
                     </div>
                     <p className="text-sm text-slate-600 mb-4 line-clamp-2">
@@ -2527,8 +2431,7 @@ const Aprendizado = () => {
                       <span>{conversation.duration}</span>
                       <span>{conversation.credits}</span>
                     </div>
-                  </div>
-                ))}
+                  </div>)}
               </div>
             </section>
           </>}
@@ -4482,10 +4385,7 @@ const Aprendizado = () => {
                         <h3 className="font-semibold text-slate-800 mb-1">Evolução do Cartão de Crédito</h3>
                         <p className="text-sm text-slate-500">Volume transacionado (R$ bilhões/mês)</p>
                       </div>
-                      <button 
-                        onClick={() => navigate('/evolucao-cartao-credito')}
-                        className="px-3 py-1.5 text-xs bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition"
-                      >
+                      <button onClick={() => navigate('/evolucao-cartao-credito')} className="px-3 py-1.5 text-xs bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition">
                         Ver Detalhes
                       </button>
                     </div>
@@ -4652,22 +4552,14 @@ const Aprendizado = () => {
                 </div>
               </section>
             </>}
-          </div>
-        ) : null}
+          </div> : null}
 
         {activeTab === 'documentos' && !showHistorico && !showAnalytics && <NewspapersNaoLidas />}
 
         {activeTab === 'documentos' && showHistorico && !showAnalytics && <HistoricoDocumentos />}
       </main>
 
-      {selectedAgent && (
-        <VideoCallModal
-          open={videoCallOpen}
-          onOpenChange={setVideoCallOpen}
-          agentName={selectedAgent.name}
-          agentAvatar={selectedAgent.avatar}
-        />
-      )}
+      {selectedAgent && <VideoCallModal open={videoCallOpen} onOpenChange={setVideoCallOpen} agentName={selectedAgent.name} agentAvatar={selectedAgent.avatar} />}
     </div>;
 };
 export default Aprendizado;
