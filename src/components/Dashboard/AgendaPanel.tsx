@@ -84,19 +84,8 @@ export function AgendaPanel({ open, onOpenChange }: AgendaPanelProps) {
       <Sheet open={open} onOpenChange={onOpenChange}>
         <SheetContent className="w-[600px] sm:w-[700px] overflow-y-auto">
           <SheetHeader className="border-b-2 border-border pb-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <SheetTitle className="text-2xl text-foreground">Minha Agenda</SheetTitle>
-                <p className="text-sm text-muted-foreground mt-1">{formatDate(selectedDate)}</p>
-              </div>
-              <Button 
-                onClick={handleNewEvent}
-                className="bg-[hsl(142,35%,65%)] hover:bg-[hsl(142,35%,55%)] text-[hsl(142,35%,15%)]"
-              >
-                <Plus size={18} className="mr-2" />
-                Novo Evento
-              </Button>
-            </div>
+            <SheetTitle className="text-2xl text-foreground">Minha Agenda</SheetTitle>
+            <p className="text-sm text-muted-foreground mt-1">{formatDate(selectedDate)}</p>
           </SheetHeader>
 
           <div className="mt-6 space-y-6">
@@ -111,6 +100,15 @@ export function AgendaPanel({ open, onOpenChange }: AgendaPanelProps) {
                 />
               </div>
             </div>
+
+            {/* Botão Novo Evento */}
+            <Button 
+              onClick={handleNewEvent}
+              className="w-full bg-[hsl(142,35%,65%)] hover:bg-[hsl(142,35%,55%)] text-[hsl(142,35%,15%)]"
+            >
+              <Plus size={18} className="mr-2" />
+              Novo Evento
+            </Button>
 
             {/* Atividades do Dia */}
             <div className="bg-card rounded-xl border-2 border-border">
