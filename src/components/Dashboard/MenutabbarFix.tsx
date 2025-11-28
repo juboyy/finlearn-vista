@@ -159,7 +159,39 @@ export const MenutabbarFix = ({
           <span>Filtro Avançado</span>
         </button>
         
+        {onAnalyticsClick && (
+          <button 
+            onClick={() => {
+              onAnalyticsClick();
+              setActiveActionButton(activeActionButton === 'analytics' ? null : 'analytics');
+            }}
+            className={`px-5 py-3 rounded-lg font-medium transition-all duration-200 hover:scale-105 active:scale-95 flex items-center gap-2 whitespace-nowrap ${
+              activeActionButton === 'analytics' 
+                ? 'bg-pastel-blue text-slate-800 border border-slate-300' 
+                : 'bg-pastel-blue text-slate-700 border border-slate-200 hover:bg-opacity-80'
+            }`}
+          >
+            <BarChart3 size={20} />
+            <span>Analytics</span>
+          </button>
+        )}
         
+        {onHistoricoClick && (
+          <button 
+            onClick={() => {
+              onHistoricoClick();
+              setActiveActionButton(activeActionButton === 'historico' ? null : 'historico');
+            }}
+            className={`px-5 py-3 rounded-lg font-medium transition-all duration-200 hover:scale-105 active:scale-95 flex items-center gap-2 whitespace-nowrap ${
+              activeActionButton === 'historico' 
+                ? 'bg-pastel-blue text-slate-800 border border-slate-300' 
+                : 'bg-pastel-blue text-slate-700 border border-slate-200 hover:bg-opacity-80'
+            }`}
+          >
+            <i className="fas fa-clock-rotate-left"></i>
+            <span>Histórico</span>
+          </button>
+        )}
       </div>
     </div>;
 };
