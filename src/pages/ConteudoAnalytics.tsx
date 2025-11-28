@@ -347,6 +347,8 @@ const ConteudoAnalytics = () => {
                             onClick={() => {
                               if (content.name === 'Apresentações') {
                                 navigate('/apresentacoes-analytics');
+                              } else if (content.name === 'Live') {
+                                navigate('/live-analytics');
                               }
                             }}
                             className={`text-sm font-bold ${content.textColor} hover:text-slate-800 transition-colors`}
