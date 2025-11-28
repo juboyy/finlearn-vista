@@ -9,6 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Chapter {
   id: string;
@@ -25,23 +26,155 @@ const EditorMarkdown = () => {
     { id: "1", title: "Capítulo 1", content: "" }
   ]);
   const [activeChapterId, setActiveChapterId] = useState("1");
+  const [documentId, setDocumentId] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const autoSaveTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const activeChapter = chapters.find(ch => ch.id === activeChapterId) || chapters[0];
 
+  // Load document from database
   useEffect(() => {
-    const titleParam = searchParams.get("title");
-    if (titleParam) {
-      setTitle(titleParam);
-    }
+    const loadDocument = async () => {
+      const docId = searchParams.get("id");
+      if (docId) {
+        setDocumentId(docId);
+        const { data: doc } = await supabase
+          .from("markdown_documents")
+          .select("*")
+          .eq("id", docId)
+          .single();
+
+        if (doc) {
+          setTitle(doc.title);
+          
+          const { data: chaptersData } = await supabase
+            .from("markdown_chapters")
+            .select("*")
+            .eq("document_id", docId)
+            .order("position");
+
+          if (chaptersData && chaptersData.length > 0) {
+            setChapters(chaptersData.map(ch => ({
+              id: ch.id,
+              title: ch.title,
+              content: ch.content
+            })));
+            setActiveChapterId(chaptersData[0].id);
+          }
+        }
+      } else {
+        const titleParam = searchParams.get("title");
+        if (titleParam) {
+          setTitle(titleParam);
+        }
+      }
+    };
+
+    loadDocument();
   }, [searchParams]);
 
-  const handleSave = () => {
-    // TODO: Implement save to database
-    toast({
-      title: "Documento salvo",
-      description: "Seu documento foi salvo com sucesso.",
-    });
+  // Auto-save effect
+  useEffect(() => {
+    if (autoSaveTimerRef.current) {
+      clearTimeout(autoSaveTimerRef.current);
+    }
+
+    autoSaveTimerRef.current = setTimeout(() => {
+      if (documentId || title) {
+        handleSave(true);
+      }
+    }, 30000); // 30 seconds
+
+    return () => {
+      if (autoSaveTimerRef.current) {
+        clearTimeout(autoSaveTimerRef.current);
+      }
+    };
+  }, [title, chapters, documentId]);
+
+  const handleSave = async (isAutoSave = false) => {
+    if (!title.trim()) {
+      if (!isAutoSave) {
+        toast({
+          title: "Erro",
+          description: "O documento precisa ter um título.",
+          variant: "destructive"
+        });
+      }
+      return;
+    }
+
+    setIsSaving(true);
+
+    try {
+      let currentDocId = documentId;
+
+      // Create or update document
+      if (!currentDocId) {
+        const { data: newDoc, error: docError } = await supabase
+          .from("markdown_documents")
+          .insert({ title })
+          .select()
+          .single();
+
+        if (docError) throw docError;
+        currentDocId = newDoc.id;
+        setDocumentId(currentDocId);
+        
+        // Update URL with document ID
+        navigate(`/editor-markdown?id=${currentDocId}`, { replace: true });
+      } else {
+        const { error: updateError } = await supabase
+          .from("markdown_documents")
+          .update({ title })
+          .eq("id", currentDocId);
+
+        if (updateError) throw updateError;
+      }
+
+      // Delete existing chapters
+      await supabase
+        .from("markdown_chapters")
+        .delete()
+        .eq("document_id", currentDocId);
+
+      // Insert updated chapters
+      const chaptersToInsert = chapters.map((ch, index) => ({
+        document_id: currentDocId,
+        id: ch.id,
+        title: ch.title,
+        content: ch.content,
+        position: index
+      }));
+
+      const { error: chaptersError } = await supabase
+        .from("markdown_chapters")
+        .insert(chaptersToInsert);
+
+      if (chaptersError) throw chaptersError;
+
+      setLastSaved(new Date());
+
+      if (!isAutoSave) {
+        toast({
+          title: "Documento salvo",
+          description: "Seu documento foi salvo com sucesso.",
+        });
+      }
+    } catch (error) {
+      console.error("Erro ao salvar:", error);
+      if (!isAutoSave) {
+        toast({
+          title: "Erro ao salvar",
+          description: "Não foi possível salvar o documento.",
+          variant: "destructive"
+        });
+      }
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const addChapter = () => {
@@ -205,7 +338,7 @@ const EditorMarkdown = () => {
               <span>Total de capítulos:</span>
               <span className="font-medium">{chapters.length}</span>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between mb-1">
               <span>Palavras totais:</span>
               <span className="font-medium">
                 {chapters.reduce((acc, ch) => 
@@ -213,10 +346,23 @@ const EditorMarkdown = () => {
                 )}
               </span>
             </div>
+            {lastSaved && (
+              <div className="flex justify-between text-green-600 dark:text-green-400">
+                <span>Último salvamento:</span>
+                <span className="font-medium">
+                  {lastSaved.toLocaleTimeString()}
+                </span>
+              </div>
+            )}
           </div>
-          <Button size="sm" onClick={handleSave} className="w-full">
+          <Button 
+            size="sm" 
+            onClick={() => handleSave(false)} 
+            disabled={isSaving}
+            className="w-full"
+          >
             <Save className="mr-2 h-4 w-4" />
-            Salvar Documento
+            {isSaving ? "Salvando..." : "Salvar Documento"}
           </Button>
         </div>
       </div>
