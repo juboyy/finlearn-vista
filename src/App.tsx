@@ -44,7 +44,6 @@ import MinhasMetas from "./pages/MinhasMetas";
 import MinhasMetasConfiguracao from "./pages/MinhasMetasConfiguracao";
 import MinhasMetasAreas from "./pages/MinhasMetasAreas";
 import MinhasMetasNotificacoes from "./pages/MinhasMetasNotificacoes";
-import MinhaAgenda from "./pages/MinhaAgenda";
 import MinhaAgendaDia from "./pages/MinhaAgendaDia";
 import AtividadesRealizadas from "./pages/AtividadesRealizadas";
 import EstudosAcademicos from "./pages/EstudosAcademicos";
@@ -171,7 +170,6 @@ const App = () => {
           <Route path="/minhas-metas/configuracao" element={<MinhasMetasConfiguracao />} />
           <Route path="/minhas-metas/areas" element={<MinhasMetasAreas />} />
           <Route path="/minhas-metas/notificacoes" element={<MinhasMetasNotificacoes />} />
-          <Route path="/minha-agenda" element={<MinhaAgenda />} />
           <Route path="/minha-agenda/dia" element={<MinhaAgendaDia />} />
           <Route path="/minha-agenda/atividades-realizadas" element={<AtividadesRealizadas />} />
           <Route path="/estudos-academicos" element={<EstudosAcademicos />} />

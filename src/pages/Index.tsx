@@ -13,6 +13,7 @@ import { ExplainChartChat } from "@/components/Dashboard/ExplainChartChat";
 import { EventDetailsSheet } from "@/components/Dashboard/EventDetailsSheet";
 import { PodcastPanel } from "@/components/Dashboard/PodcastPanel";
 import { EbookPanel } from "@/components/Dashboard/EbookPanel";
+import { AgendaPanel } from "@/components/Dashboard/AgendaPanel";
 import { Button } from "@/components/ui/button";
 import {
   Tooltip,
@@ -28,6 +29,7 @@ import { useUserAgents } from "@/hooks/useUserAgents";
 const Index = () => {
   const [podcastPanelOpen, setPodcastPanelOpen] = useState(false);
   const [ebookPanelOpen, setEbookPanelOpen] = useState(false);
+  const [agendaPanelOpen, setAgendaPanelOpen] = useState(false);
   const [insightsOpen, setInsightsOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [explainChartOpen, setExplainChartOpen] = useState(false);
@@ -296,7 +298,7 @@ const Index = () => {
                   title="Minha Agenda"
                   description="Seus compromissos"
                   bgColor="bg-pastel-pink"
-                  onClick={() => window.location.href = "/minha-agenda"}
+                  onClick={() => setAgendaPanelOpen(true)}
                 />
                 <QuickActionCard
                   icon={BookMarked}
@@ -473,6 +475,10 @@ const Index = () => {
       <EbookPanel 
         open={ebookPanelOpen} 
         onOpenChange={setEbookPanelOpen}
+      />
+      <AgendaPanel 
+        open={agendaPanelOpen} 
+        onOpenChange={setAgendaPanelOpen}
       />
     </div>
   );
