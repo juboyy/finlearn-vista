@@ -152,7 +152,7 @@ const ConteudoAnalytics = () => {
       <SidebarFix />
       
       <main className="flex-1 overflow-y-auto h-full relative bg-slate-50/50">
-        <header className="sticky top-0 z-20 bg-white/90 backdrop-blur-md border-b border-slate-200 px-8 py-5 flex justify-between items-center">
+        <header className="sticky top-0 z-20 bg-white/90 backdrop-blur-md border-b border-slate-200 px-6 py-5 flex justify-between items-center">
           <div>
             <h1 className="text-2xl font-bold text-slate-800 tracking-tight">Performance de Conteúdos Criados</h1>
             <p className="text-sm text-slate-500 mt-1 font-medium">Análise sintética de produção e engajamento por formato.</p>
@@ -173,7 +173,7 @@ const ConteudoAnalytics = () => {
           </div>
         </header>
 
-        <div className="p-8 space-y-8">
+        <div className="px-6 py-8 space-y-8">
           {/* KPI Section */}
           <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="bg-white border border-slate-200 rounded-xl p-6 flex items-center justify-between shadow-sm">
