@@ -49,9 +49,9 @@ export default function MeusAgentes() {
   };
 
   const getProgressColor = (percentage: number) => {
-    if (percentage > 70) return "bg-[hsl(206,35%,75%)]";
-    if (percentage > 40) return "bg-[hsl(45,35%,75%)]";
-    return "bg-[hsl(0,35%,75%)]";
+    if (percentage > 70) return "bg-pastel-blue-btn";
+    if (percentage > 40) return "bg-pastel-blue-btn";
+    return "bg-pastel-blue-btn";
   };
 
   const calculateLastInteraction = (lastInteraction: string) => {
