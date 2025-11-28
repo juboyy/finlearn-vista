@@ -15,6 +15,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Slider } from "@/components/ui/slider";
 import {
   Highlighter,
   StickyNote,
@@ -50,6 +51,7 @@ export const EbookReader = ({
   const [showNoteDialog, setShowNoteDialog] = useState(false);
   const [noteContent, setNoteContent] = useState("");
   const [selectedColor, setSelectedColor] = useState("#fef08a");
+  const [highlightOpacity, setHighlightOpacity] = useState(0.7);
   const [showSidebar, setShowSidebar] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -125,12 +127,18 @@ export const EbookReader = ({
 
   const handleHighlight = async (color: string) => {
     if (selectedText && selectionRange) {
+      // Convert hex color to rgba with opacity
+      const r = parseInt(color.slice(1, 3), 16);
+      const g = parseInt(color.slice(3, 5), 16);
+      const b = parseInt(color.slice(5, 7), 16);
+      const colorWithOpacity = `rgba(${r}, ${g}, ${b}, ${highlightOpacity})`;
+      
       await createAnnotation(
         "highlight",
         selectedText,
         selectionRange.start,
         selectionRange.end,
-        color,
+        colorWithOpacity,
         undefined,
         currentPage
       );
@@ -273,17 +281,49 @@ export const EbookReader = ({
                     Destacar
                   </Button>
                 </PopoverTrigger>
-              <PopoverContent className="w-auto p-2 bg-card border-2 border-border">
-                  <div className="flex gap-2">
-                    {highlightColors.map((color) => (
-                      <button
-                        key={color.color}
-                        onClick={() => handleHighlight(color.color)}
-                        className="w-10 h-10 rounded-lg border-2 border-border hover:scale-110 hover:border-foreground transition-all shadow-sm"
-                        style={{ backgroundColor: color.color }}
-                        title={color.name}
+              <PopoverContent className="w-64 p-4 bg-card border-2 border-border">
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-foreground">Cor do Destaque</label>
+                      <div className="flex gap-2">
+                        {highlightColors.map((color) => (
+                          <button
+                            key={color.color}
+                            onClick={() => handleHighlight(color.color)}
+                            className="w-10 h-10 rounded-lg border-2 border-border hover:scale-110 hover:border-foreground transition-all shadow-sm"
+                            style={{ backgroundColor: color.color }}
+                            title={color.name}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <label className="text-sm font-medium text-foreground">Intensidade</label>
+                        <span className="text-xs text-muted-foreground font-semibold">
+                          {Math.round(highlightOpacity * 100)}%
+                        </span>
+                      </div>
+                      <Slider
+                        value={[highlightOpacity * 100]}
+                        onValueChange={(value) => setHighlightOpacity(value[0] / 100)}
+                        min={30}
+                        max={100}
+                        step={5}
+                        className="w-full"
                       />
-                    ))}
+                      <div className="flex justify-between text-xs text-muted-foreground">
+                        <span>Suave</span>
+                        <span>Intenso</span>
+                      </div>
+                    </div>
+
+                    <div className="pt-2 border-t border-border">
+                      <p className="text-xs text-muted-foreground italic">
+                        Selecione uma cor para aplicar o destaque
+                      </p>
+                    </div>
                   </div>
                 </PopoverContent>
               </Popover>
