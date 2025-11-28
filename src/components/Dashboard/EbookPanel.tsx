@@ -368,7 +368,7 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
         <div className="absolute inset-0 bg-muted/10 pointer-events-none" />
         
         <div className="relative">
-          <SheetHeader className="p-6 pb-4 border-b border-border/50 bg-background backdrop-blur-sm sticky top-0 z-10">
+          <SheetHeader className="p-6 pb-4 border-b border-border/50 bg-background">
             <div className="flex items-center gap-4">
               <div className="p-3 rounded-xl bg-pastel-purple/20 border-2 border-pastel-purple">
                 <BookOpen size={28} className="text-pastel-purple" />
