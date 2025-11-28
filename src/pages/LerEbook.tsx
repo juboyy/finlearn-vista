@@ -4,6 +4,7 @@ import { ArrowLeft, Bookmark, Highlighter, MessageSquare, ChevronLeft, ChevronRi
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Badge } from "@/components/ui/badge";
@@ -1277,7 +1278,7 @@ const LerEbook = () => {
           style={{ 
             left: highlightMenuPosition.x, 
             top: highlightMenuPosition.y,
-            minWidth: showNoteInput ? '400px' : 'auto'
+            minWidth: showNoteInput ? '450px' : 'auto'
           }}
         >
           {!showNoteInput ? (
@@ -1340,14 +1341,14 @@ const LerEbook = () => {
           ) : (
             <div className="space-y-2">
               <div className="text-sm font-medium text-foreground mb-2">Adicionar Anotação</div>
-              <Input
+              <Textarea
                 value={noteContent}
                 onChange={(e) => setNoteContent(e.target.value)}
                 placeholder="Digite sua anotação..."
-                className="w-full"
+                className="w-full min-h-[200px] resize-y"
                 autoFocus
                 onKeyDown={(e) => {
-                  if (e.key === 'Enter' && !e.shiftKey) {
+                  if (e.key === 'Enter' && e.ctrlKey) {
                     e.preventDefault();
                     handleAddNote();
                   }
