@@ -19,6 +19,8 @@ const LerEbook = () => {
   const [searchResults, setSearchResults] = useState<number[]>([]);
   const [currentSearchIndex, setCurrentSearchIndex] = useState(0);
   const [showSearch, setShowSearch] = useState(false);
+  const [showNoteInput, setShowNoteInput] = useState(false);
+  const [noteContent, setNoteContent] = useState("");
   const contentRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -132,8 +134,44 @@ const LerEbook = () => {
         currentPage
       );
       setShowHighlightMenu(false);
+      setShowNoteInput(false);
       window.getSelection()?.removeAllRanges();
     }
+  };
+
+  const handleAddBookmarkFromSelection = () => {
+    const chapter = ebookData.chapters.find(ch => ch.page <= currentPage);
+    createBookmark(
+      currentPage,
+      undefined,
+      chapter?.title,
+      selectedText.substring(0, 100)
+    );
+    setShowHighlightMenu(false);
+    setShowNoteInput(false);
+    window.getSelection()?.removeAllRanges();
+  };
+
+  const handleAddNote = () => {
+    if (selectedText && noteContent.trim()) {
+      createAnnotation(
+        "note",
+        selectedText,
+        0,
+        selectedText.length,
+        "#fef3c7",
+        noteContent,
+        currentPage
+      );
+      setShowHighlightMenu(false);
+      setShowNoteInput(false);
+      setNoteContent("");
+      window.getSelection()?.removeAllRanges();
+    }
+  };
+
+  const handleShowNoteInput = () => {
+    setShowNoteInput(true);
   };
 
   const handleAddBookmark = () => {
@@ -518,35 +556,92 @@ const LerEbook = () => {
         </ScrollArea>
       </div>
 
-      {/* Highlight Menu */}
+      {/* Selection Menu */}
       {showHighlightMenu && (
         <div
-          className="fixed z-50 bg-card border border-border rounded-lg shadow-lg p-2 flex items-center gap-2"
-          style={{ left: highlightMenuPosition.x, top: highlightMenuPosition.y }}
+          className="fixed z-50 bg-card border border-border rounded-lg shadow-lg p-3"
+          style={{ 
+            left: highlightMenuPosition.x, 
+            top: highlightMenuPosition.y,
+            minWidth: showNoteInput ? '400px' : 'auto'
+          }}
         >
-          <div className="flex gap-1">
-            {[
-              { color: "rgba(255, 235, 59, 0.4)", label: "Amarelo" },
-              { color: "rgba(76, 175, 80, 0.4)", label: "Verde" },
-              { color: "rgba(33, 150, 243, 0.4)", label: "Azul" },
-              { color: "rgba(255, 152, 0, 0.4)", label: "Laranja" },
-              { color: "rgba(156, 39, 176, 0.4)", label: "Roxo" },
-            ].map((colorOption) => (
-              <button
-                key={colorOption.color}
-                onClick={() => setSelectedColor(colorOption.color)}
-                className={`w-8 h-8 rounded border-2 ${
-                  selectedColor === colorOption.color ? "border-foreground" : "border-transparent"
-                }`}
-                style={{ backgroundColor: colorOption.color }}
-                title={colorOption.label}
+          {!showNoteInput ? (
+            <div className="space-y-2">
+              {/* Color Selection */}
+              <div className="flex items-center gap-2 pb-2 border-b border-border">
+                <span className="text-xs text-muted-foreground mr-1">Cor:</span>
+                <div className="flex gap-1">
+                  {[
+                    { color: "rgba(255, 235, 59, 0.4)", label: "Amarelo" },
+                    { color: "rgba(76, 175, 80, 0.4)", label: "Verde" },
+                    { color: "rgba(33, 150, 243, 0.4)", label: "Azul" },
+                    { color: "rgba(255, 152, 0, 0.4)", label: "Laranja" },
+                    { color: "rgba(156, 39, 176, 0.4)", label: "Roxo" },
+                  ].map((colorOption) => (
+                    <button
+                      key={colorOption.color}
+                      onClick={() => setSelectedColor(colorOption.color)}
+                      className={`w-7 h-7 rounded border-2 ${
+                        selectedColor === colorOption.color ? "border-foreground" : "border-transparent"
+                      }`}
+                      style={{ backgroundColor: colorOption.color }}
+                      title={colorOption.label}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex gap-2">
+                <Button size="sm" onClick={handleHighlight} className="flex-1">
+                  <Highlighter size={14} className="mr-2" />
+                  Destacar
+                </Button>
+                <Button size="sm" variant="outline" onClick={handleAddBookmarkFromSelection} className="flex-1">
+                  <Bookmark size={14} className="mr-2" />
+                  Marcador
+                </Button>
+                <Button size="sm" variant="outline" onClick={handleShowNoteInput} className="flex-1">
+                  <MessageSquare size={14} className="mr-2" />
+                  Anotar
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <div className="space-y-2">
+              <div className="text-sm font-medium text-foreground mb-2">Adicionar Anotação</div>
+              <Input
+                value={noteContent}
+                onChange={(e) => setNoteContent(e.target.value)}
+                placeholder="Digite sua anotação..."
+                className="w-full"
+                autoFocus
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleAddNote();
+                  }
+                }}
               />
-            ))}
-          </div>
-          <Button size="sm" onClick={handleHighlight}>
-            <Highlighter size={14} className="mr-2" />
-            Destacar
-          </Button>
+              <div className="flex gap-2">
+                <Button size="sm" onClick={handleAddNote} disabled={!noteContent.trim()} className="flex-1">
+                  Salvar
+                </Button>
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  onClick={() => {
+                    setShowNoteInput(false);
+                    setNoteContent("");
+                  }}
+                  className="flex-1"
+                >
+                  Cancelar
+                </Button>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
