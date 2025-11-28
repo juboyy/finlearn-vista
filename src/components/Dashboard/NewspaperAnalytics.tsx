@@ -4,6 +4,7 @@ export const NewspaperAnalytics = () => {
   const [loadingInsights, setLoadingInsights] = useState(true);
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
   const [showDrillDown, setShowDrillDown] = useState(false);
+  const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
 
   // Mock data for articles by topic with completion rates
   const articlesByTopic: Record<string, Array<{
@@ -454,6 +455,55 @@ export const NewspaperAnalytics = () => {
     });
   };
   return <div className="flex-1 overflow-y-auto p-8">
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-slate-800 mb-2">Analytics de Consumo: Newspapers</h2>
+          <p className="text-slate-600">Seu histórico de leitura de notícias e artigos</p>
+        </div>
+
+        {/* Filtros de Período */}
+        <div className="mb-6 flex gap-3">
+          <button
+            onClick={() => setSelectedPeriod('7d')}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
+              selectedPeriod === '7d'
+                ? 'bg-[hsl(142,35%,50%)] text-white'
+                : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
+            }`}
+          >
+            7 dias
+          </button>
+          <button
+            onClick={() => setSelectedPeriod('30d')}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
+              selectedPeriod === '30d'
+                ? 'bg-[hsl(142,35%,50%)] text-white'
+                : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
+            }`}
+          >
+            30 dias
+          </button>
+          <button
+            onClick={() => setSelectedPeriod('90d')}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
+              selectedPeriod === '90d'
+                ? 'bg-[hsl(142,35%,50%)] text-white'
+                : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
+            }`}
+          >
+            90 dias
+          </button>
+          <button
+            onClick={() => setSelectedPeriod('1y')}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
+              selectedPeriod === '1y'
+                ? 'bg-[hsl(142,35%,50%)] text-white'
+                : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
+            }`}
+          >
+            1 ano
+          </button>
+        </div>
+
         {/* KPIs Overview */}
         <section className="grid grid-cols-6 gap-6 mb-8">
           <div className="bg-white rounded-xl p-6 border border-slate-200">

@@ -1,6 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export const PodcastsAnalytics = () => {
+  const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
+  
   useEffect(() => {
     if (typeof window !== 'undefined' && (window as any).Plotly) {
       initializeCharts();
@@ -84,6 +86,50 @@ export const PodcastsAnalytics = () => {
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-slate-800 mb-2">Analytics de Consumo: Podcasts</h2>
         <p className="text-slate-600">Análise do seu histórico de escuta e engajamento</p>
+      </div>
+
+      {/* Filtros de Período */}
+      <div className="mb-6 flex gap-3">
+        <button
+          onClick={() => setSelectedPeriod('7d')}
+          className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
+            selectedPeriod === '7d'
+              ? 'bg-[hsl(142,35%,50%)] text-white'
+              : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
+          }`}
+        >
+          7 dias
+        </button>
+        <button
+          onClick={() => setSelectedPeriod('30d')}
+          className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
+            selectedPeriod === '30d'
+              ? 'bg-[hsl(142,35%,50%)] text-white'
+              : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
+          }`}
+        >
+          30 dias
+        </button>
+        <button
+          onClick={() => setSelectedPeriod('90d')}
+          className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
+            selectedPeriod === '90d'
+              ? 'bg-[hsl(142,35%,50%)] text-white'
+              : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
+          }`}
+        >
+          90 dias
+        </button>
+        <button
+          onClick={() => setSelectedPeriod('1y')}
+          className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
+            selectedPeriod === '1y'
+              ? 'bg-[hsl(142,35%,50%)] text-white'
+              : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
+          }`}
+        >
+          1 ano
+        </button>
       </div>
 
       {/* KPIs */}
