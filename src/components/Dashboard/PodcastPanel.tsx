@@ -35,6 +35,7 @@ interface Podcast {
   topic: string;
   image: string;
   creator?: string;
+  creatorAvatar?: string;
   audioUrl?: string;
   duration?: string;
 }
@@ -58,6 +59,7 @@ const nowPlayingPodcasts: Podcast[] = [
     title: "Mercados em Foco #142",
     topic: "Volatilidade e Estratégias",
     creator: "FinTech Brasil",
+    creatorAvatar: "https://api.dicebear.com/7.x/initials/svg?seed=FinTech%20Brasil&backgroundColor=8b5cf6",
     image: ep142Image,
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
     duration: "45:32",
@@ -67,6 +69,7 @@ const nowPlayingPodcasts: Podcast[] = [
     title: "Mercados em Foco #141",
     topic: "Taxa Selic e Impactos",
     creator: "FinTech Brasil",
+    creatorAvatar: "https://api.dicebear.com/7.x/initials/svg?seed=FinTech%20Brasil&backgroundColor=8b5cf6",
     image: ep141Image,
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
     duration: "52:18",
@@ -76,6 +79,7 @@ const nowPlayingPodcasts: Podcast[] = [
     title: "Mercados em Foco #140",
     topic: "Tendências 2025",
     creator: "FinTech Brasil",
+    creatorAvatar: "https://api.dicebear.com/7.x/initials/svg?seed=FinTech%20Brasil&backgroundColor=8b5cf6",
     image: ep140Image,
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
     duration: "48:45",
@@ -88,6 +92,7 @@ const continuePodcasts: Podcast[] = [
     title: "Mercados em Foco #139",
     topic: "Bancos e Fintechs",
     creator: "FinTech Brasil",
+    creatorAvatar: "https://api.dicebear.com/7.x/initials/svg?seed=FinTech%20Brasil&backgroundColor=8b5cf6",
     image: ep139Image,
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
     duration: "51:23",
@@ -97,6 +102,7 @@ const continuePodcasts: Podcast[] = [
     title: "Mercados em Foco #138",
     topic: "Criptomoedas em 2025",
     creator: "FinTech Brasil",
+    creatorAvatar: "https://api.dicebear.com/7.x/initials/svg?seed=FinTech%20Brasil&backgroundColor=8b5cf6",
     image: ep138Image,
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
     duration: "47:55",
@@ -106,6 +112,7 @@ const continuePodcasts: Podcast[] = [
     title: "Mercados em Foco #137",
     topic: "Open Finance",
     creator: "FinTech Brasil",
+    creatorAvatar: "https://api.dicebear.com/7.x/initials/svg?seed=FinTech%20Brasil&backgroundColor=8b5cf6",
     image: ep137Image,
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",
     duration: "49:38",
@@ -118,6 +125,7 @@ const recommendedPodcasts: Podcast[] = [
     title: "Mercados em Foco #136",
     topic: "ESG no Mercado Financeiro",
     creator: "FinTech Brasil",
+    creatorAvatar: "https://api.dicebear.com/7.x/initials/svg?seed=FinTech%20Brasil&backgroundColor=8b5cf6",
     image: ep136Image,
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3",
     duration: "51:25",
@@ -127,6 +135,7 @@ const recommendedPodcasts: Podcast[] = [
     title: "Mercados em Foco #135",
     topic: "Cartões de Crédito",
     creator: "FinTech Brasil",
+    creatorAvatar: "https://api.dicebear.com/7.x/initials/svg?seed=FinTech%20Brasil&backgroundColor=8b5cf6",
     image: ep135Image,
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3",
     duration: "43:52",
@@ -207,9 +216,22 @@ const PodcastCard = ({ podcast, isFavorite, onToggleFavorite, isPlaying, onPlayP
           <h4 className="font-bold text-base text-foreground mb-1.5 line-clamp-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-pastel-purple group-hover:to-pastel-pink group-hover:bg-clip-text transition-all duration-300">
             {podcast.title}
           </h4>
-          <p className="text-sm text-muted-foreground/80 font-medium">{podcast.topic}</p>
+          <p className="text-sm text-muted-foreground/80 font-medium mb-2">{podcast.topic}</p>
           {podcast.creator && (
-            <p className="text-xs text-muted-foreground/60 font-medium mt-1">{podcast.creator}</p>
+            <div className="flex items-center gap-2">
+              {podcast.creatorAvatar ? (
+                <img 
+                  src={podcast.creatorAvatar} 
+                  alt={podcast.creator}
+                  className="w-5 h-5 rounded-full ring-2 ring-pastel-purple/30"
+                />
+              ) : (
+                <div className="w-5 h-5 rounded-full bg-pastel-purple/20 flex items-center justify-center text-[8px] font-bold text-pastel-purple ring-2 ring-pastel-purple/30">
+                  {podcast.creator.charAt(0)}
+                </div>
+              )}
+              <span className="text-sm font-semibold text-foreground/90">{podcast.creator}</span>
+            </div>
           )}
         </div>
         
@@ -313,6 +335,7 @@ export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
         topic: fav.podcast_topic,
         image: fav.podcast_image,
         creator: "FinTech Brasil",
+        creatorAvatar: "https://api.dicebear.com/7.x/initials/svg?seed=FinTech%20Brasil&backgroundColor=8b5cf6",
       }));
       setFavorites(favPodcasts);
       setFavoriteIds(new Set(data.map(fav => fav.podcast_id)));
