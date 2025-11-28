@@ -113,7 +113,7 @@ export const EbookConversationHistory = ({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right" className="w-full sm:w-[500px] flex flex-col p-0">
+      <SheetContent side="right" className="w-full sm:w-[600px] flex flex-col p-0">
         <SheetHeader className="p-6 pb-4 border-b border-border">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-full bg-pastel-purple/20 flex items-center justify-center">
