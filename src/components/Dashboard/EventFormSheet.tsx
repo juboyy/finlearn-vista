@@ -389,7 +389,7 @@ export function EventFormSheet({ open, onOpenChange, eventId, onSave }: EventFor
                       )}
                     >
                       <CalendarIcon className="mr-2 h-5 w-5" />
-                      {startDate ? format(startDate, "dd/MM/yyyy") : "Selecione a data"}
+                      {startDate ? format(startDate, "dd/MM/yyyy") : "Data"}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="start">
@@ -452,7 +452,7 @@ export function EventFormSheet({ open, onOpenChange, eventId, onSave }: EventFor
                       )}
                     >
                       <CalendarIcon className="mr-2 h-5 w-5" />
-                      {endDate ? format(endDate, "dd/MM/yyyy") : "Selecione a data"}
+                      {endDate ? format(endDate, "dd/MM/yyyy") : "Data"}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="start">
