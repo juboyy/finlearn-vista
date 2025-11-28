@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-import { X, Plus, Trash2, Users, BookOpen, GraduationCap, Mic, Video, LineChart, FileCheck, Calendar as CalendarIcon, Clock } from "lucide-react";
+import { X, Plus, Trash2, Users, BookOpen, GraduationCap, Mic, Video, LineChart, FileCheck, Calendar as CalendarIcon, Clock, Briefcase, Coffee, Phone, Mail, Presentation, Target } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
@@ -46,6 +46,7 @@ export function EventFormSheet({ open, onOpenChange, eventId, onSave }: EventFor
     location: "",
     color: "pastel-blue",
   });
+  const [eventSubtype, setEventSubtype] = useState("");
   const [startDate, setStartDate] = useState<Date>();
   const [startTime, setStartTime] = useState("09:00");
   const [endDate, setEndDate] = useState<Date>();
@@ -274,6 +275,65 @@ export function EventFormSheet({ open, onOpenChange, eventId, onSave }: EventFor
     { value: "review", label: "Revisão", icon: FileCheck },
   ];
 
+  const eventSubtypes: Record<string, Array<{ value: string; label: string; icon: any }>> = {
+    meeting: [
+      { value: "team", label: "Reunião de Equipe", icon: Users },
+      { value: "client", label: "Reunião com Cliente", icon: Briefcase },
+      { value: "oneonone", label: "Reunião 1:1", icon: Coffee },
+      { value: "planning", label: "Planejamento", icon: Target },
+      { value: "review", label: "Revisão de Projeto", icon: FileCheck },
+      { value: "presentation", label: "Apresentação", icon: Presentation },
+    ],
+    study: [
+      { value: "reading", label: "Leitura de Material", icon: BookOpen },
+      { value: "course", label: "Curso Online", icon: GraduationCap },
+      { value: "research", label: "Pesquisa", icon: LineChart },
+      { value: "practice", label: "Exercícios Práticos", icon: Target },
+      { value: "video", label: "Videoaula", icon: Video },
+      { value: "podcast", label: "Podcast Educativo", icon: Mic },
+    ],
+    training: [
+      { value: "workshop", label: "Workshop", icon: Users },
+      { value: "certification", label: "Certificação", icon: GraduationCap },
+      { value: "onboarding", label: "Onboarding", icon: Target },
+      { value: "skills", label: "Desenvolvimento de Skills", icon: LineChart },
+      { value: "compliance", label: "Treinamento de Compliance", icon: FileCheck },
+      { value: "technical", label: "Capacitação Técnica", icon: Briefcase },
+    ],
+    podcast: [
+      { value: "interview", label: "Entrevista", icon: Mic },
+      { value: "news", label: "Notícias", icon: Mail },
+      { value: "educational", label: "Educacional", icon: BookOpen },
+      { value: "business", label: "Negócios", icon: Briefcase },
+      { value: "tech", label: "Tecnologia", icon: LineChart },
+      { value: "finance", label: "Finanças", icon: Target },
+    ],
+    video: [
+      { value: "tutorial", label: "Tutorial", icon: GraduationCap },
+      { value: "conference", label: "Conferência", icon: Presentation },
+      { value: "webinar", label: "Webinar", icon: Video },
+      { value: "demo", label: "Demonstração", icon: Target },
+      { value: "review", label: "Revisão em Vídeo", icon: FileCheck },
+      { value: "interview", label: "Entrevista em Vídeo", icon: Users },
+    ],
+    analysis: [
+      { value: "data", label: "Análise de Dados", icon: LineChart },
+      { value: "market", label: "Análise de Mercado", icon: Briefcase },
+      { value: "performance", label: "Análise de Performance", icon: Target },
+      { value: "risk", label: "Análise de Risco", icon: FileCheck },
+      { value: "financial", label: "Análise Financeira", icon: Target },
+      { value: "competitive", label: "Análise Competitiva", icon: Users },
+    ],
+    review: [
+      { value: "code", label: "Revisão de Código", icon: FileCheck },
+      { value: "document", label: "Revisão de Documento", icon: BookOpen },
+      { value: "project", label: "Revisão de Projeto", icon: Briefcase },
+      { value: "performance", label: "Revisão de Performance", icon: Target },
+      { value: "process", label: "Revisão de Processo", icon: LineChart },
+      { value: "quality", label: "Revisão de Qualidade", icon: GraduationCap },
+    ],
+  };
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent className="w-[650px] overflow-y-auto bg-background">
@@ -306,7 +366,10 @@ export function EventFormSheet({ open, onOpenChange, eventId, onSave }: EventFor
               </Label>
               <Select
                 value={formData.activity_type}
-                onValueChange={(value) => setFormData({ ...formData, activity_type: value })}
+                onValueChange={(value) => {
+                  setFormData({ ...formData, activity_type: value });
+                  setEventSubtype("");
+                }}
               >
                 <SelectTrigger className="h-12 text-base border-2 border-border focus:border-primary">
                   <SelectValue />
@@ -370,6 +433,33 @@ export function EventFormSheet({ open, onOpenChange, eventId, onSave }: EventFor
               </Select>
             </div>
           </div>
+
+          {/* Event Subtype - Conditional */}
+          {formData.activity_type && eventSubtypes[formData.activity_type] && (
+            <div className="space-y-3">
+              <Label htmlFor="subtype" className="text-base font-semibold text-foreground">
+                Categoria Específica
+              </Label>
+              <Select
+                value={eventSubtype}
+                onValueChange={setEventSubtype}
+              >
+                <SelectTrigger className="h-12 text-base border-2 border-border focus:border-primary">
+                  <SelectValue placeholder="Selecione a categoria" />
+                </SelectTrigger>
+                <SelectContent>
+                  {eventSubtypes[formData.activity_type].map((subtype) => (
+                    <SelectItem key={subtype.value} value={subtype.value}>
+                      <div className="flex items-center gap-3">
+                        <subtype.icon className="w-5 h-5 text-muted-foreground" />
+                        <span>{subtype.label}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
 
           {/* Date and Time */}
           <div className="p-6 rounded-xl bg-muted/30 border border-border space-y-4">
