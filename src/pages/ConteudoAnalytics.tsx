@@ -358,13 +358,18 @@ const ConteudoAnalytics = () => {
                                 'Relatórios': '/relatorios-analytics',
                                 'Newspaper': '/newspaper-analytics',
                                 'Estudos Acadêmicos': '/estudos-academicos-analytics',
-                                'Newsletter': '/newsletter-analytics',
+                                'Newsletters': '/newsletter-analytics',
                                 'Infográficos': '/infografico-analytics',
                                 'Entrevistas': '/entrevistas-analytics',
                                 'Planilhas': '/planilhas-analytics',
                                 'Whitepaper': '/whitepaper-analytics'
                               };
-                              if (routes[content.name]) navigate(routes[content.name]);
+                              const route = routes[content.name];
+                              if (route) {
+                                navigate(route);
+                              } else {
+                                console.warn(`Rota não encontrada para: ${content.name}`);
+                              }
                             }}
                             className={`text-sm font-bold ${content.textColor} hover:text-slate-800 transition-colors`}
                           >
