@@ -711,7 +711,7 @@ const LerEbook = () => {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => navigate(-1)}
+            onClick={() => navigate("/biblioteca")}
             className="mb-4"
           >
             <ArrowLeft className="mr-2" size={16} />
