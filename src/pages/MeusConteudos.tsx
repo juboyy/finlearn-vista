@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'relatorios' | 'documentos' | 'estudos' | 'infograficos' | 'whitepaper' | 'apresentacoes' | 'live';
-type FilterType = 'todos' | 'rascunho' | 'revisao' | 'publicado';
+type FilterType = 'todos' | 'rascunho' | 'revisao' | 'concluido' | 'publicado';
 
 export default function MeusConteudos() {
   const [activeTab, setActiveTab] = useState<TabType>('todos');
@@ -197,6 +197,16 @@ export default function MeusConteudos() {
                     }`}
                   >
                     Em Revisão
+                  </button>
+                  <button 
+                    onClick={() => setActiveFilter('concluido')}
+                    className={`flex-1 px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                      activeFilter === 'concluido' 
+                        ? 'text-primary-foreground bg-primary' 
+                        : 'text-muted-foreground hover:bg-accent/10'
+                    }`}
+                  >
+                    Concluído
                   </button>
                   <button 
                     onClick={() => setActiveFilter('publicado')}
