@@ -122,7 +122,11 @@ export function EventFormSheet({ open, onOpenChange, eventId, onSave }: EventFor
         const { error } = await supabase
           .from("agenda_activities")
           .update({
-            ...formData,
+            title: formData.title,
+            description: formData.description,
+            activity_type: formData.activity_type,
+            location: formData.location,
+            color: formData.color,
             start_time: new Date(formData.start_time).toISOString(),
             end_time: new Date(formData.end_time).toISOString(),
           })
@@ -148,7 +152,11 @@ export function EventFormSheet({ open, onOpenChange, eventId, onSave }: EventFor
         const { data, error } = await supabase
           .from("agenda_activities")
           .insert({
-            ...formData,
+            title: formData.title,
+            description: formData.description,
+            activity_type: formData.activity_type,
+            location: formData.location,
+            color: formData.color,
             start_time: new Date(formData.start_time).toISOString(),
             end_time: new Date(formData.end_time).toISOString(),
             status: "pending",
