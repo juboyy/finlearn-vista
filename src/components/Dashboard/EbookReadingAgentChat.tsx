@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Send, Loader2 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Send, Loader2, Sparkles } from "lucide-react";
 import { useEbookReadingAgent } from "@/hooks/useEbookReadingAgent";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 import ReactMarkdown from "react-markdown";
 
 interface EbookReadingAgentChatProps {
@@ -23,7 +26,10 @@ export const EbookReadingAgentChat = ({
   currentPage,
 }: EbookReadingAgentChatProps) => {
   const [inputMessage, setInputMessage] = useState("");
+  const [suggestedQuestions, setSuggestedQuestions] = useState<string[]>([]);
+  const [loadingSuggestions, setLoadingSuggestions] = useState(false);
   const { messages, isLoading, sendMessage } = useEbookReadingAgent(ebookTitle, ebookContent, currentPage);
+  const { toast } = useToast();
 
   const handleSendMessage = () => {
     if (!inputMessage.trim() || isLoading) return;
@@ -37,6 +43,41 @@ export const EbookReadingAgentChat = ({
       handleSendMessage();
     }
   };
+
+  const handleSuggestionClick = (question: string) => {
+    sendMessage(question);
+    setSuggestedQuestions([]);
+  };
+
+  const loadSuggestions = async () => {
+    setLoadingSuggestions(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("generate-reading-questions", {
+        body: { ebookTitle, ebookContent, currentPage },
+      });
+
+      if (error) throw error;
+      
+      if (data?.questions) {
+        setSuggestedQuestions(data.questions);
+      }
+    } catch (error) {
+      console.error("Erro ao carregar sugestões:", error);
+      toast({
+        title: "Erro",
+        description: "Não foi possível carregar sugestões de perguntas.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoadingSuggestions(false);
+    }
+  };
+
+  useEffect(() => {
+    if (open && messages.length === 0) {
+      loadSuggestions();
+    }
+  }, [open, currentPage]);
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -54,14 +95,38 @@ export const EbookReadingAgentChat = ({
           {messages.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-center py-12">
               <div className="w-16 h-16 rounded-full bg-pastel-blue/20 flex items-center justify-center mb-4">
-                <Send className="w-8 h-8 text-pastel-blue" />
+                <Sparkles className="w-8 h-8 text-pastel-blue" />
               </div>
               <h3 className="text-lg font-medium text-foreground mb-2">
                 Como posso ajudar?
               </h3>
-              <p className="text-sm text-muted-foreground max-w-sm">
+              <p className="text-sm text-muted-foreground max-w-sm mb-6">
                 Faça perguntas sobre o conteúdo do e-book, peça explicações ou discuta conceitos do mercado financeiro.
               </p>
+
+              {loadingSuggestions ? (
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <span className="text-sm">Gerando sugestões...</span>
+                </div>
+              ) : suggestedQuestions.length > 0 ? (
+                <div className="w-full max-w-md space-y-2">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Sparkles className="w-4 h-4 text-pastel-purple" />
+                    <span className="text-sm font-medium text-foreground">Perguntas sugeridas:</span>
+                  </div>
+                  {suggestedQuestions.map((question, index) => (
+                    <Button
+                      key={index}
+                      variant="outline"
+                      className="w-full justify-start text-left h-auto py-3 px-4 hover:bg-pastel-blue/20 hover:border-pastel-blue"
+                      onClick={() => handleSuggestionClick(question)}
+                    >
+                      <span className="text-sm text-foreground">{question}</span>
+                    </Button>
+                  ))}
+                </div>
+              ) : null}
             </div>
           ) : (
             <div className="space-y-4">
