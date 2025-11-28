@@ -4,7 +4,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sh
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import { BookOpen, Heart, Star, Play, Share2, Clock, Sparkles, Bookmark } from "lucide-react";
+import { BookOpen, Heart, Star, Play, Share2, Clock, Sparkles, Bookmark, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
 
 // Import ebook cover images
@@ -42,6 +42,7 @@ export const EbookPanel = ({
   onOpenChange
 }: EbookPanelProps) => {
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
+  const [readingEbook, setReadingEbook] = useState<Ebook | null>(null);
   const navigate = useNavigate();
   const toggleFavorite = (id: string) => {
     const newFavorites = new Set(favorites);
@@ -216,8 +217,7 @@ export const EbookPanel = ({
             {/* Hover overlay with quick action */}
             <div className="absolute inset-0 bg-black/60 opacity-0 group-hover/image:opacity-100 transition-opacity duration-300 flex items-end justify-center p-4">
               <Button size="sm" className="bg-pastel-purple hover:bg-pastel-pink text-foreground font-semibold shadow-lg" onClick={() => {
-                onOpenChange(false);
-                navigate(`/ler-ebook/${ebook.id}`);
+                setReadingEbook(ebook);
               }}>
                 <Play size={14} className="mr-2" />
                 Ler Agora
@@ -294,11 +294,89 @@ export const EbookPanel = ({
       </div>;
   };
   return <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right" className="w-[90vw] sm:w-[400px] max-w-[400px] p-0 bg-background backdrop-blur-xl border-l-2 border-pastel-blue/20 overflow-y-auto">
+      <SheetContent side="right" className="w-[90vw] sm:w-[480px] max-w-[480px] p-0 bg-background backdrop-blur-xl border-l-2 border-pastel-blue/20 overflow-y-auto">
         {/* Animated background pattern */}
         <div className="absolute inset-0 bg-muted/10 pointer-events-none" />
         
-        <div className="relative">
+        {readingEbook ? (
+          /* Reading Preview */
+          <div className="relative">
+            <div className="p-6 border-b border-border/50 bg-background flex items-center justify-between">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setReadingEbook(null)}
+                className="gap-2"
+              >
+                <ChevronRight className="h-4 w-4 rotate-180" />
+                Voltar
+              </Button>
+              <h2 className="text-lg font-semibold text-foreground line-clamp-1 flex-1 text-center px-4">
+                {readingEbook.title}
+              </h2>
+              <Button
+                size="sm"
+                className="bg-pastel-purple hover:bg-pastel-pink text-foreground font-semibold"
+                onClick={() => {
+                  onOpenChange(false);
+                  navigate(`/ler-ebook/${readingEbook.id}`);
+                }}
+              >
+                <Play className="h-4 w-4 mr-2" />
+                Leitura Completa
+              </Button>
+            </div>
+            
+            <div className="p-6 space-y-6">
+              {/* Cover and info */}
+              <div className="flex gap-4">
+                <img 
+                  src={readingEbook.coverImage} 
+                  alt={readingEbook.title}
+                  className="w-32 h-44 object-cover rounded-lg shadow-lg"
+                />
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold text-foreground mb-2">{readingEbook.title}</h3>
+                  <div className="flex items-center gap-2 mb-2">
+                    <img 
+                      src={readingEbook.authorAvatar} 
+                      alt={readingEbook.author}
+                      className="w-6 h-6 rounded-full"
+                    />
+                    <span className="text-sm text-muted-foreground">{readingEbook.author}</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground mb-3">{readingEbook.description}</p>
+                  <div className="flex items-center gap-2">
+                    <Star size={16} className="fill-yellow-500 text-yellow-500" />
+                    <span className="text-sm font-semibold">{readingEbook.rating}</span>
+                    <span className="text-xs text-muted-foreground">({readingEbook.reviews} avaliações)</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Preview content */}
+              <div className="border-t pt-6">
+                <h4 className="text-lg font-semibold text-foreground mb-4">Prévia do Conteúdo</h4>
+                <div className="prose prose-sm max-w-none text-foreground space-y-4">
+                  <h5 className="text-base font-bold text-foreground">Capítulo 1: Introdução</h5>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                  </p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  </p>
+                  <div className="bg-muted/30 p-4 rounded-lg">
+                    <p className="text-xs text-muted-foreground italic">
+                      Esta é apenas uma prévia. Clique em "Leitura Completa" para acessar todo o conteúdo do eBook.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          /* Library View */
+          <div className="relative">
           <SheetHeader className="p-6 pb-4 border-b border-border/50 bg-background">
             <div className="flex items-center gap-4">
               <div className="p-3 rounded-xl bg-pastel-yellow border-2 border-pastel-yellow">
@@ -408,6 +486,7 @@ export const EbookPanel = ({
             </div>
           </div>
         </div>
+        )}
       </SheetContent>
     </Sheet>;
 };
