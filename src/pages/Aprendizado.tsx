@@ -7,6 +7,9 @@ import { WhitepapersPendentes } from "@/components/Dashboard/WhitepapersPendente
 import { ApresentacoesPendentes } from "@/components/Dashboard/ApresentacoesPendentes";
 import { NewspapersNaoLidas } from "@/components/Dashboard/NewspapersNaoLidas";
 import { NewspaperAnalytics } from "@/components/Dashboard/NewspaperAnalytics";
+import { PodcastsAnalytics } from "@/components/Dashboard/PodcastsAnalytics";
+import { CursosAnalytics } from "@/components/Dashboard/CursosAnalytics";
+import { WebinarsAnalyticsConsumption } from "@/components/Dashboard/WebinarsAnalyticsConsumption";
 import { Bell, Play, Clock, BookOpen, TrendingUp, Headphones, Calendar, Users, MessageCircle, Star, BookMarked, Video, Award, Heart, CheckCircle, PlayCircle, Trophy, ChartLine, Shield, Bitcoin, Gavel, PieChart, Repeat, Globe, Leaf, Plus, BookOpenCheck, CreditCard, FileText, Bookmark, Quote, Download, Share2, Bot, Eye, Percent, DollarSign, Lightbulb, AlertTriangle, Coins, Mic, Search, ChevronLeft, ChevronRight, Circle } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -355,37 +358,17 @@ const Aprendizado = () => {
           setShowAnalytics(false);
         }
       }} onAnalyticsClick={() => {
-        const analyticsRoutes: Record<TabType, string> = {
-          'todos': '/conteudo-analytics',
-          'podcasts': '/podcast-analytics',
-          'cursos': '/cursos-analytics',
-          'avatar-ia': '/avatar-ia-analytics',
-          'ebooks': '/ebooks-analytics',
-          'webinars': '/webinars-analytics',
-          'artigos': '/artigos-analytics',
-          'analises': '/analises-analytics',
-          'relatorios': '/relatorios-analytics',
-          'documentos': '', // handled separately
-          'estudos': '/estudos-academicos-analytics',
-          'infograficos': '/infografico-analytics',
-          'whitepaper': '/whitepaper-analytics',
-          'apresentacoes': '/apresentacoes-analytics',
-          'live': '/live-analytics',
-          'entrevistas': '/entrevistas-analytics'
-        };
-        
-        if (activeTab === 'documentos') {
-          setShowAnalytics(!showAnalytics);
-          setShowHistorico(false);
-        } else {
-          const route = analyticsRoutes[activeTab];
-          if (route) {
-            navigate(route);
-          }
-        }
-      }} showHistoricoButton={true} showAnalyticsButton={true} isHistoricoActive={showHistorico} isAnalyticsActive={showAnalytics} />
+        setShowAnalytics(!showAnalytics);
+        setShowHistorico(false);
+      }} showHistoricoButton={activeTab === 'documentos'} showAnalyticsButton={true} isHistoricoActive={showHistorico} isAnalyticsActive={showAnalytics} />
 
-        {showAnalytics && activeTab === 'documentos' ? <NewspaperAnalytics /> : activeTab !== 'documentos' ? <div className="flex-1 p-8 pb-32">
+        {showAnalytics ? (
+          activeTab === 'documentos' ? <NewspaperAnalytics /> :
+          activeTab === 'podcasts' ? <PodcastsAnalytics /> :
+          activeTab === 'cursos' ? <CursosAnalytics /> :
+          activeTab === 'webinars' ? <WebinarsAnalyticsConsumption /> :
+          <NewspaperAnalytics /> // Default fallback
+        ) : activeTab !== 'documentos' ? <div className="flex-1 p-8 pb-32">
           {activeTab === 'todos' && <>
 
               <div className="grid grid-cols-3 gap-6 mb-8">

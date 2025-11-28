@@ -2,13 +2,11 @@ import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { MenutabbarFix } from "@/components/Dashboard/MenutabbarFix";
 import { Bell } from "lucide-react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'relatorios' | 'documentos' | 'estudos' | 'infograficos' | 'whitepaper' | 'apresentacoes' | 'live' | 'entrevistas';
 
 const Podcasts = () => {
   const [activeTab, setActiveTab] = useState<TabType>('podcasts');
-  const navigate = useNavigate();
   
   return (
     <div className="flex h-screen overflow-hidden">
@@ -39,31 +37,6 @@ const Podcasts = () => {
         <MenutabbarFix 
           activeTab={activeTab} 
           setActiveTab={setActiveTab}
-          showAnalyticsButton={true}
-          onAnalyticsClick={() => {
-            const analyticsRoutes: Record<TabType, string> = {
-              'todos': '/conteudo-analytics',
-              'podcasts': '/podcast-analytics',
-              'cursos': '/cursos-analytics',
-              'avatar-ia': '/avatar-ia-analytics',
-              'ebooks': '/ebooks-analytics',
-              'webinars': '/webinars-analytics',
-              'artigos': '/artigos-analytics',
-              'analises': '/analises-analytics',
-              'relatorios': '/relatorios-analytics',
-              'documentos': '/newspaper-analytics',
-              'estudos': '/estudos-academicos-analytics',
-              'infograficos': '/infografico-analytics',
-              'whitepaper': '/whitepaper-analytics',
-              'apresentacoes': '/apresentacoes-analytics',
-              'live': '/live-analytics',
-              'entrevistas': '/entrevistas-analytics'
-            };
-            const route = analyticsRoutes[activeTab];
-            if (route) {
-              navigate(route);
-            }
-          }}
         />
 
         <div className="flex-1 p-8 pb-32">
