@@ -65,27 +65,27 @@ export const EbookReader = ({
 
   // Mock content - In production, load from file/API
   const mockContent = `
-    Capítulo 1: Introdução ao Mercado Financeiro
+    <h1 style="font-size: 2.25rem; font-weight: 800; margin-bottom: 2rem; color: hsl(var(--foreground)); line-height: 1.2;">Capítulo 1: Introdução ao Mercado Financeiro</h1>
 
-    O mercado financeiro é um sistema complexo e dinâmico que conecta investidores, empresas e instituições financeiras. Neste capítulo, exploraremos os fundamentos essenciais para compreender como o mercado funciona e qual o papel de cada participante.
+    <p style="margin-bottom: 1.75rem; line-height: 1.8; font-size: 1.0625rem;">O mercado financeiro é um <strong>sistema complexo e dinâmico</strong> que conecta investidores, empresas e instituições financeiras. Neste capítulo, exploraremos os fundamentos essenciais para compreender como o mercado funciona e qual o papel de cada participante.</p>
 
-    1.1 Conceitos Fundamentais
+    <h2 style="font-size: 1.75rem; font-weight: 700; margin-top: 3rem; margin-bottom: 1.5rem; color: hsl(var(--foreground)); line-height: 1.3;">1.1 Conceitos Fundamentais</h2>
 
-    O mercado financeiro pode ser dividido em diversos segmentos, cada um com suas características específicas. O mercado de capitais, por exemplo, é onde empresas captam recursos através da emissão de ações e títulos de dívida. Já o mercado monetário lida com operações de curto prazo e alta liquidez.
+    <p style="margin-bottom: 1.75rem; line-height: 1.8; font-size: 1.0625rem;">O mercado financeiro pode ser dividido em <strong>diversos segmentos</strong>, cada um com suas características específicas. O <strong>mercado de capitais</strong>, por exemplo, é onde empresas captam recursos através da emissão de ações e títulos de dívida. Já o <strong>mercado monetário</strong> lida com operações de curto prazo e alta liquidez.</p>
 
-    A eficiência do mercado é um conceito fundamental que sugere que os preços dos ativos refletem todas as informações disponíveis. Esta hipótese, proposta por Eugene Fama, tem implicações importantes para estratégias de investimento e análise de mercado.
+    <p style="margin-bottom: 1.75rem; line-height: 1.8; font-size: 1.0625rem;">A <strong>eficiência do mercado</strong> é um conceito fundamental que sugere que os preços dos ativos refletem todas as informações disponíveis. Esta hipótese, proposta por <strong>Eugene Fama</strong>, tem implicações importantes para estratégias de investimento e análise de mercado.</p>
 
-    1.2 Participantes do Mercado
+    <h2 style="font-size: 1.75rem; font-weight: 700; margin-top: 3rem; margin-bottom: 1.5rem; color: hsl(var(--foreground)); line-height: 1.3;">1.2 Participantes do Mercado</h2>
 
-    Os principais participantes incluem investidores institucionais, como fundos de pensão e gestoras de recursos, investidores individuais (pessoas físicas), e intermediários financeiros, como corretoras e bancos de investimento.
+    <p style="margin-bottom: 1.75rem; line-height: 1.8; font-size: 1.0625rem;">Os principais participantes incluem <strong>investidores institucionais</strong>, como fundos de pensão e gestoras de recursos, <strong>investidores individuais</strong> (pessoas físicas), e <strong>intermediários financeiros</strong>, como corretoras e bancos de investimento.</p>
 
-    Cada participante tem objetivos e restrições diferentes. Investidores institucionais geralmente possuem horizontes de investimento mais longos e maior tolerância ao risco, enquanto investidores individuais podem ter objetivos mais variados.
+    <p style="margin-bottom: 1.75rem; line-height: 1.8; font-size: 1.0625rem;">Cada participante tem objetivos e restrições diferentes. Investidores institucionais geralmente possuem horizontes de investimento mais longos e maior tolerância ao risco, enquanto investidores individuais podem ter objetivos mais variados.</p>
 
-    1.3 Regulação e Supervisão
+    <h2 style="font-size: 1.75rem; font-weight: 700; margin-top: 3rem; margin-bottom: 1.5rem; color: hsl(var(--foreground)); line-height: 1.3;">1.3 Regulação e Supervisão</h2>
 
-    A regulação do mercado financeiro é essencial para garantir sua integridade e proteger investidores. No Brasil, a CVM (Comissão de Valores Mobiliários) é o principal órgão regulador do mercado de capitais, estabelecendo regras e fiscalizando sua aplicação.
+    <p style="margin-bottom: 1.75rem; line-height: 1.8; font-size: 1.0625rem;">A regulação do mercado financeiro é essencial para garantir sua <strong>integridade</strong> e proteger investidores. No Brasil, a <strong>CVM (Comissão de Valores Mobiliários)</strong> é o principal órgão regulador do mercado de capitais, estabelecendo regras e fiscalizando sua aplicação.</p>
 
-    A supervisão adequada contribui para a estabilidade do sistema financeiro e para a confiança dos investidores, elementos cruciais para o desenvolvimento econômico sustentável.
+    <p style="margin-bottom: 1.75rem; line-height: 1.8; font-size: 1.0625rem;">A supervisão adequada contribui para a <strong>estabilidade do sistema financeiro</strong> e para a confiança dos investidores, elementos cruciais para o desenvolvimento econômico sustentável.</p>
   `;
 
   const highlightColors = [
@@ -222,7 +222,11 @@ export const EbookReader = ({
           <ScrollArea className="flex-1">
             <div
               ref={contentRef}
-              className="p-8 max-w-3xl mx-auto leading-relaxed text-foreground select-text"
+              className="p-12 max-w-4xl mx-auto text-foreground select-text"
+              style={{
+                fontFamily: "'Georgia', 'Merriweather', serif",
+                letterSpacing: '0.01em'
+              }}
               onMouseUp={handleTextSelection}
               dangerouslySetInnerHTML={{ __html: renderContentWithAnnotations() }}
             />
