@@ -160,6 +160,22 @@ export default function MinhaAgendaDia() {
                   </div>
                 </div>
               </section>
+
+              {/* Atividades Realizadas Card */}
+              <section className="bg-white rounded-xl p-6 border border-slate-200">
+                <button 
+                  onClick={() => navigate('/minha-agenda/atividades-realizadas')}
+                  className="w-full flex items-center justify-between p-4 rounded-lg bg-pastel-green bg-opacity-20 hover:bg-opacity-30 transition cursor-pointer group"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-pastel-green rounded-lg flex items-center justify-center">
+                      <CalendarCheck size={18} className="text-slate-700" />
+                    </div>
+                    <span className="text-sm font-semibold text-slate-800">Atividades realizadas</span>
+                  </div>
+                  <ChevronRight size={16} className="text-slate-400 group-hover:text-slate-600 transition" />
+                </button>
+              </section>
             </aside>
 
             {/* Main Calendar Area */}
