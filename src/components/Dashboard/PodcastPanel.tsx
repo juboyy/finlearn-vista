@@ -34,6 +34,7 @@ interface Podcast {
   title: string;
   topic: string;
   image: string;
+  creator?: string;
   audioUrl?: string;
   duration?: string;
 }
@@ -56,6 +57,7 @@ const nowPlayingPodcasts: Podcast[] = [
     id: "1",
     title: "Mercados em Foco #142",
     topic: "Volatilidade e Estratégias",
+    creator: "FinTech Brasil",
     image: ep142Image,
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
     duration: "45:32",
@@ -64,6 +66,7 @@ const nowPlayingPodcasts: Podcast[] = [
     id: "2",
     title: "Mercados em Foco #141",
     topic: "Taxa Selic e Impactos",
+    creator: "FinTech Brasil",
     image: ep141Image,
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
     duration: "52:18",
@@ -72,6 +75,7 @@ const nowPlayingPodcasts: Podcast[] = [
     id: "3",
     title: "Mercados em Foco #140",
     topic: "Tendências 2025",
+    creator: "FinTech Brasil",
     image: ep140Image,
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
     duration: "48:45",
@@ -83,6 +87,7 @@ const continuePodcasts: Podcast[] = [
     id: "4",
     title: "Mercados em Foco #139",
     topic: "Bancos e Fintechs",
+    creator: "FinTech Brasil",
     image: ep139Image,
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
     duration: "51:23",
@@ -91,6 +96,7 @@ const continuePodcasts: Podcast[] = [
     id: "5",
     title: "Mercados em Foco #138",
     topic: "Criptomoedas em 2025",
+    creator: "FinTech Brasil",
     image: ep138Image,
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
     duration: "47:55",
@@ -99,6 +105,7 @@ const continuePodcasts: Podcast[] = [
     id: "6",
     title: "Mercados em Foco #137",
     topic: "Open Finance",
+    creator: "FinTech Brasil",
     image: ep137Image,
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",
     duration: "49:38",
@@ -110,6 +117,7 @@ const recommendedPodcasts: Podcast[] = [
     id: "7",
     title: "Mercados em Foco #136",
     topic: "ESG no Mercado Financeiro",
+    creator: "FinTech Brasil",
     image: ep136Image,
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3",
     duration: "51:25",
@@ -118,6 +126,7 @@ const recommendedPodcasts: Podcast[] = [
     id: "8",
     title: "Mercados em Foco #135",
     topic: "Cartões de Crédito",
+    creator: "FinTech Brasil",
     image: ep135Image,
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3",
     duration: "43:52",
@@ -199,6 +208,9 @@ const PodcastCard = ({ podcast, isFavorite, onToggleFavorite, isPlaying, onPlayP
             {podcast.title}
           </h4>
           <p className="text-sm text-muted-foreground/80 font-medium">{podcast.topic}</p>
+          {podcast.creator && (
+            <p className="text-xs text-muted-foreground/60 font-medium mt-1">{podcast.creator}</p>
+          )}
         </div>
         
         <div className="flex items-center gap-1">
@@ -300,6 +312,7 @@ export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
         title: fav.podcast_title,
         topic: fav.podcast_topic,
         image: fav.podcast_image,
+        creator: "FinTech Brasil",
       }));
       setFavorites(favPodcasts);
       setFavoriteIds(new Set(data.map(fav => fav.podcast_id)));
