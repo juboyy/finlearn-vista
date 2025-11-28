@@ -5,12 +5,13 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Send, Loader2, Sparkles, Bot } from "lucide-react";
+import { Send, Loader2, Sparkles, Bot, History as HistoryIcon } from "lucide-react";
 import { useEbookReadingAgent } from "@/hooks/useEbookReadingAgent";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import ReactMarkdown from "react-markdown";
 import auxiliarAvatar from "@/assets/auxiliar-do-dia-avatar.png";
+import { EbookConversationHistory } from "./EbookConversationHistory";
 
 interface EbookReadingAgentChatProps {
   open: boolean;
@@ -30,7 +31,12 @@ export const EbookReadingAgentChat = ({
   const [inputMessage, setInputMessage] = useState("");
   const [suggestedQuestions, setSuggestedQuestions] = useState<string[]>([]);
   const [loadingSuggestions, setLoadingSuggestions] = useState(false);
-  const { messages, isLoading, sendMessage } = useEbookReadingAgent(ebookTitle, ebookContent, currentPage);
+  const [showHistory, setShowHistory] = useState(false);
+  const { messages, isLoading, sendMessage, loadConversation } = useEbookReadingAgent(
+    ebookTitle,
+    ebookContent,
+    currentPage
+  );
   const { toast } = useToast();
 
   const handleSendMessage = () => {
@@ -120,6 +126,14 @@ export const EbookReadingAgentChat = ({
                 {ebookTitle} - Página {currentPage}
               </p>
             </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setShowHistory(true)}
+              className="shrink-0"
+            >
+              <HistoryIcon className="w-5 h-5" />
+            </Button>
           </div>
         </SheetHeader>
 
@@ -219,6 +233,13 @@ export const EbookReadingAgentChat = ({
           </div>
         </div>
       </SheetContent>
+
+      <EbookConversationHistory
+        open={showHistory}
+        onOpenChange={setShowHistory}
+        ebookId="ebook-001"
+        onLoadConversation={loadConversation}
+      />
     </Sheet>
   );
 };

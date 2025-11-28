@@ -1,15 +1,50 @@
 import { useState, useCallback } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 type Message = {
   role: "user" | "assistant";
   content: string;
 };
 
-export const useEbookReadingAgent = (ebookTitle: string, ebookContent: string, currentPage: number) => {
+export const useEbookReadingAgent = (
+  ebookTitle: string,
+  ebookContent: string,
+  currentPage: number,
+  conversationId?: string
+) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentConversationId, setCurrentConversationId] = useState<string | undefined>(conversationId);
   const { toast } = useToast();
+
+  const loadConversation = useCallback(async (convId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from("ebook_reading_messages")
+        .select("*")
+        .eq("conversation_id", convId)
+        .order("created_at", { ascending: true });
+
+      if (error) throw error;
+
+      if (data) {
+        const loadedMessages = data.map((msg) => ({
+          role: msg.role as "user" | "assistant",
+          content: msg.content,
+        }));
+        setMessages(loadedMessages);
+        setCurrentConversationId(convId);
+      }
+    } catch (error) {
+      console.error("Erro ao carregar conversa:", error);
+      toast({
+        title: "Erro",
+        description: "Não foi possível carregar a conversa.",
+        variant: "destructive",
+      });
+    }
+  }, [toast]);
 
   const sendMessage = useCallback(
     async (userMessage: string) => {
@@ -20,10 +55,47 @@ export const useEbookReadingAgent = (ebookTitle: string, ebookContent: string, c
       setIsLoading(true);
 
       let assistantContent = "";
-      
+      let convId = currentConversationId;
+
+      // Criar nova conversa se não existir
+      if (!convId) {
+        try {
+          const { data: convData, error: convError } = await supabase
+            .from("ebook_reading_conversations")
+            .insert({
+              ebook_id: "ebook-001",
+              ebook_title: ebookTitle,
+              conversation_title: userMessage.substring(0, 50),
+              last_page: currentPage,
+            })
+            .select()
+            .single();
+
+          if (convError) throw convError;
+          convId = convData.id;
+          setCurrentConversationId(convId);
+        } catch (error) {
+          console.error("Erro ao criar conversa:", error);
+        }
+      }
+
+      // Salvar mensagem do usuário
+      if (convId) {
+        try {
+          await supabase.from("ebook_reading_messages").insert({
+            conversation_id: convId,
+            role: "user",
+            content: userMessage,
+            page_number: currentPage,
+          });
+        } catch (error) {
+          console.error("Erro ao salvar mensagem:", error);
+        }
+      }
+
       try {
         const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ebook-reading-agent`;
-        
+
         const response = await fetch(CHAT_URL, {
           method: "POST",
           headers: {
@@ -80,7 +152,7 @@ export const useEbookReadingAgent = (ebookTitle: string, ebookContent: string, c
         while (!streamDone) {
           const { done, value } = await reader.read();
           if (done) break;
-          
+
           textBuffer += decoder.decode(value, { stream: true });
 
           let newlineIndex: number;
@@ -112,6 +184,26 @@ export const useEbookReadingAgent = (ebookTitle: string, ebookContent: string, c
           }
         }
 
+        // Salvar resposta do assistente
+        if (convId && assistantContent) {
+          try {
+            await supabase.from("ebook_reading_messages").insert({
+              conversation_id: convId,
+              role: "assistant",
+              content: assistantContent,
+              page_number: currentPage,
+            });
+
+            // Atualizar última página da conversa
+            await supabase
+              .from("ebook_reading_conversations")
+              .update({ last_page: currentPage })
+              .eq("id", convId);
+          } catch (error) {
+            console.error("Erro ao salvar resposta:", error);
+          }
+        }
+
         setIsLoading(false);
       } catch (error) {
         console.error("Erro ao enviar mensagem:", error);
@@ -124,8 +216,8 @@ export const useEbookReadingAgent = (ebookTitle: string, ebookContent: string, c
         setIsLoading(false);
       }
     },
-    [messages, ebookTitle, ebookContent, currentPage, toast]
+    [messages, ebookTitle, ebookContent, currentPage, currentConversationId, toast]
   );
 
-  return { messages, isLoading, sendMessage };
+  return { messages, isLoading, sendMessage, loadConversation, currentConversationId };
 };

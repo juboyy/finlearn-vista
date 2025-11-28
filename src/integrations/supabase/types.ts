@@ -224,6 +224,74 @@ export type Database = {
         }
         Relationships: []
       }
+      ebook_reading_conversations: {
+        Row: {
+          conversation_title: string | null
+          created_at: string
+          ebook_id: string
+          ebook_title: string
+          id: string
+          last_page: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          conversation_title?: string | null
+          created_at?: string
+          ebook_id: string
+          ebook_title: string
+          id?: string
+          last_page?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          conversation_title?: string | null
+          created_at?: string
+          ebook_id?: string
+          ebook_title?: string
+          id?: string
+          last_page?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      ebook_reading_messages: {
+        Row: {
+          content: string
+          conversation_id: string
+          created_at: string
+          id: string
+          page_number: number | null
+          role: string
+        }
+        Insert: {
+          content: string
+          conversation_id: string
+          created_at?: string
+          id?: string
+          page_number?: number | null
+          role: string
+        }
+        Update: {
+          content?: string
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          page_number?: number | null
+          role?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ebook_reading_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "ebook_reading_conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       presentations: {
         Row: {
           author_name: string
