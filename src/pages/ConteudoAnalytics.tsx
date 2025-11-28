@@ -140,7 +140,8 @@ const ConteudoAnalytics = () => {
     { name: 'Newsletters', subtitle: 'Resumos semanais', icon: 'fa-envelope-open-text', color: 'bg-[hsl(206,35%,75%)]', views: '65.4k', trend: '9%', trendUp: true, quantity: '42 envios', status: 'Ativo', textColor: 'text-[hsl(206,35%,40%)]' },
     { name: 'Infográficos', subtitle: 'Dados visuais', icon: 'fa-images', color: 'bg-[hsl(270,35%,78%)]', views: '32.8k', trend: '11%', trendUp: true, quantity: '105 imagens', status: 'Ativo', textColor: 'text-[hsl(270,35%,40%)]' },
     { name: 'Entrevistas', subtitle: 'Conversas com líderes', icon: 'fa-comments', color: 'bg-[hsl(48,40%,75%)]', views: '15.2k', trend: '3%', trendUp: true, quantity: '24 posts', status: 'Ativo', textColor: 'text-[hsl(48,40%,40%)]' },
-    { name: 'Planilhas', subtitle: 'Modelos financeiros', icon: 'fa-table', color: 'bg-[hsl(142,35%,75%)]', views: '4.1k', trend: '0%', trendUp: false, quantity: '15 arquivos', status: 'Ativo', textColor: 'text-[hsl(142,35%,40%)]' }
+    { name: 'Planilhas', subtitle: 'Modelos financeiros', icon: 'fa-table', color: 'bg-[hsl(142,35%,75%)]', views: '4.1k', trend: '0%', trendUp: false, quantity: '15 arquivos', status: 'Ativo', textColor: 'text-[hsl(142,35%,40%)]' },
+    { name: 'Whitepaper', subtitle: 'Documentos técnicos', icon: 'fa-file-lines', color: 'bg-[hsl(206,35%,75%)]', views: '6.8k', trend: '7%', trendUp: true, quantity: '28 documentos', status: 'Ativo', textColor: 'text-[hsl(206,35%,40%)]' }
   ];
 
   return (
