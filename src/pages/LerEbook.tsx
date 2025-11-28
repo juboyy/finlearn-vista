@@ -252,7 +252,7 @@ const LerEbook = () => {
   const handleCreatePageFromSelection = () => {
     removePreviewHighlight();
     const pageTitle = selectedText.substring(0, 100);
-    navigate(`/novo-documento?title=${encodeURIComponent(pageTitle)}`);
+    navigate(`/editor-markdown?title=${encodeURIComponent(pageTitle)}`);
   };
 
   const handleAddNote = async () => {

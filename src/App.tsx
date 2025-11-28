@@ -104,6 +104,7 @@ import NovoEbookEtapa3 from "./pages/NovoEbookEtapa3";
 import ResumoEbook from "./pages/ResumoEbook";
 import HistoricoPodcasts from "./pages/HistoricoPodcasts";
 import LerEbook from "./pages/LerEbook";
+import EditorMarkdown from "./pages/EditorMarkdown";
 
 import NotFound from "./pages/NotFound";
 
@@ -221,9 +222,10 @@ const App = () => {
           <Route path="/novo-ebook" element={<NovoEbook />} />
           <Route path="/novo-ebook/etapa-2" element={<NovoEbookEtapa2 />} />
           <Route path="/novo-ebook/etapa-3" element={<NovoEbookEtapa3 />} />
-          <Route path="/resumo-ebook" element={<ResumoEbook />} />
-          <Route path="/historico-podcasts" element={<HistoricoPodcasts />} />
-          
+           <Route path="/resumo-ebook" element={<ResumoEbook />} />
+           <Route path="/historico-podcasts" element={<HistoricoPodcasts />} />
+           <Route path="/editor-markdown" element={<EditorMarkdown />} />
+           
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
