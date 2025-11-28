@@ -192,7 +192,7 @@ export const EbookPanel = ({
     isFree: false,
     category: "ESG"
   }];
-  const EbookCard = ({
+    const EbookCard = ({
     ebook,
     showProgress = false
   }: {
@@ -200,7 +200,7 @@ export const EbookPanel = ({
     showProgress?: boolean;
   }) => {
     const isFavorited = favorites.has(ebook.id);
-    return <div className="group relative bg-card border-2 border-border rounded-xl p-4 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:scale-[1.02] hover:border-primary/40 overflow-hidden">
+    return <div className="group relative bg-card border-2 border-border rounded-xl p-4 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:scale-[1.02] hover:border-primary/40 overflow-hidden max-w-[75%] mx-auto">
         {/* Animated background on hover */}
         <div className="absolute inset-0 bg-muted/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         
@@ -306,7 +306,7 @@ export const EbookPanel = ({
       </div>;
   };
   return <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right" className="w-[67.5vw] sm:w-[360px] max-w-[360px] p-0 bg-background backdrop-blur-xl border-l-2 border-pastel-blue/20 overflow-y-auto">
+      <SheetContent side="right" className="w-[90vw] sm:w-[480px] max-w-[480px] p-0 bg-background backdrop-blur-xl border-l-2 border-pastel-blue/20 overflow-y-auto">
         {/* Animated background pattern */}
         <div className="absolute inset-0 bg-muted/10 pointer-events-none" />
         
