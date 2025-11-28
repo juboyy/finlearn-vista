@@ -403,18 +403,18 @@ export default function LiveAnalytics() {
 
                     <div className="flex items-center gap-4">
                       <div className="flex items-center gap-2">
-                        <Eye className="w-4 h-4 text-muted-foreground" />
-                        <span className="text-sm font-semibold text-foreground">{live.views}</span>
+                        <Eye className="w-4 h-4 text-pastel-purple" />
+                        <span className="text-sm font-bold text-foreground">{live.views}</span>
                       </div>
 
                       <div className="flex items-center gap-2">
-                        <TrendingUp className="w-4 h-4 text-muted-foreground" />
-                        <span className="text-sm font-semibold text-foreground">{live.retention}</span>
+                        <TrendingUp className="w-4 h-4 text-pastel-green" />
+                        <span className="text-sm font-bold text-foreground">{live.retention}</span>
                       </div>
 
                       <div className="flex items-center gap-2">
-                        <Clock className="w-4 h-4 text-muted-foreground" />
-                        <span className="text-sm font-semibold text-foreground">{live.avgTime}</span>
+                        <Clock className="w-4 h-4 text-pastel-pink" />
+                        <span className="text-sm font-bold text-foreground">{live.avgTime}</span>
                       </div>
                     </div>
 
