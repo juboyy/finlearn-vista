@@ -11,6 +11,7 @@ export interface EbookAnnotation {
   selected_text: string;
   annotation_content?: string;
   highlight_color: string;
+  highlight_name?: string;
   page_number?: number;
   chapter_name?: string;
   position_start: number;
@@ -166,7 +167,8 @@ export const useEbookAnnotations = (ebookId: string, ebookTitle: string) => {
     color: string = "#fef3c7",
     content?: string,
     pageNumber?: number,
-    chapterName?: string
+    chapterName?: string,
+    highlightName?: string
   ) => {
     try {
       const { data, error } = await supabase
@@ -178,6 +180,7 @@ export const useEbookAnnotations = (ebookId: string, ebookTitle: string) => {
           selected_text: selectedText,
           annotation_content: content,
           highlight_color: color,
+          highlight_name: highlightName,
           position_start: positionStart,
           position_end: positionEnd,
           page_number: pageNumber,

@@ -137,6 +137,7 @@ export type Database = {
           ebook_id: string
           ebook_title: string
           highlight_color: string | null
+          highlight_name: string | null
           id: string
           is_deleted: boolean | null
           page_number: number | null
@@ -154,6 +155,7 @@ export type Database = {
           ebook_id: string
           ebook_title: string
           highlight_color?: string | null
+          highlight_name?: string | null
           id?: string
           is_deleted?: boolean | null
           page_number?: number | null
@@ -171,6 +173,7 @@ export type Database = {
           ebook_id?: string
           ebook_title?: string
           highlight_color?: string | null
+          highlight_name?: string | null
           id?: string
           is_deleted?: boolean | null
           page_number?: number | null
