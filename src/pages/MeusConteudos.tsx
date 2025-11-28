@@ -1,8 +1,14 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { MenutabbarFix } from "@/components/Dashboard/MenutabbarFix";
-import { ArrowLeft, Plus, Filter, ArrowDownWideNarrow, BookOpen, Video, PieChart, Calculator, Search, FileText, Bell, Crown, Podcast, Newspaper, TrendingUp, Users as UsersIcon, Book, GraduationCap, Bot, FileCheck, FlaskConical, Eye, Pen, MoreVertical } from "lucide-react";
+import { ArrowLeft, Plus, Filter, ArrowDownWideNarrow, BookOpen, Video, PieChart, Calculator, Search, FileText, Bell, Crown, Podcast, Newspaper, TrendingUp, Users as UsersIcon, Book, GraduationCap, Bot, FileCheck, FlaskConical, Eye, Pen, MoreVertical, FileSearch, BarChart3 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'relatorios' | 'documentos' | 'estudos' | 'infograficos' | 'whitepaper' | 'apresentacoes' | 'live';
 type FilterType = 'todos' | 'rascunho' | 'revisao' | 'publicado';
 
@@ -284,9 +290,23 @@ export default function MeusConteudos() {
                               <button className="w-8 h-8 rounded-lg hover:bg-accent/10 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
                                 <Pen className="w-4 h-4" />
                               </button>
-                              <button className="w-8 h-8 rounded-lg hover:bg-accent/10 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
-                                <MoreVertical className="w-4 h-4" />
-                              </button>
+                              <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                  <button className="w-8 h-8 rounded-lg hover:bg-accent/10 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
+                                    <MoreVertical className="w-4 h-4" />
+                                  </button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end" className="w-48 bg-card border-border z-50">
+                                  <DropdownMenuItem className="cursor-pointer hover:bg-accent/10 text-foreground">
+                                    <FileSearch className="w-4 h-4 mr-2" />
+                                    Detalhes
+                                  </DropdownMenuItem>
+                                  <DropdownMenuItem className="cursor-pointer hover:bg-accent/10 text-foreground">
+                                    <BarChart3 className="w-4 h-4 mr-2" />
+                                    Analytics
+                                  </DropdownMenuItem>
+                                </DropdownMenuContent>
+                              </DropdownMenu>
                             </div>
                           </td>
                         </tr>)}
