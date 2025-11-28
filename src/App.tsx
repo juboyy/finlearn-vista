@@ -109,6 +109,9 @@ import ArtigoAnalytics from "./pages/ArtigoAnalytics";
 import ConteudoAnalytics from "./pages/ConteudoAnalytics";
 import ApresentacoesAnalytics from "./pages/ApresentacoesAnalytics";
 import LiveAnalytics from "./pages/LiveAnalytics";
+import PodcastAnalytics from "./pages/PodcastAnalytics";
+import CursosAnalytics from "./pages/CursosAnalytics";
+import AvatarIAAnalytics from "./pages/AvatarIAAnalytics";
 
 import NotFound from "./pages/NotFound";
 
@@ -233,6 +236,9 @@ const App = () => {
            <Route path="/conteudo-analytics" element={<ConteudoAnalytics />} />
           <Route path="/apresentacoes-analytics" element={<ApresentacoesAnalytics />} />
           <Route path="/live-analytics" element={<LiveAnalytics />} />
+          <Route path="/podcast-analytics" element={<PodcastAnalytics />} />
+          <Route path="/cursos-analytics" element={<CursosAnalytics />} />
+          <Route path="/avatar-ia-analytics" element={<AvatarIAAnalytics />} />
            
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
