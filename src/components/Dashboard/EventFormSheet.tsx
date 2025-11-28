@@ -434,7 +434,7 @@ export function EventFormSheet({ open, onOpenChange, eventId, onSave }: EventFor
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="w-[650px] overflow-y-auto bg-background">
+      <SheetContent className="w-[90vw] sm:w-[480px] max-w-[480px] overflow-y-auto bg-background">
         <SheetHeader className="pb-6 border-b border-border">
           <SheetTitle className="text-3xl font-bold text-foreground">
             {eventId ? "Editar Evento" : "Novo Evento"}
