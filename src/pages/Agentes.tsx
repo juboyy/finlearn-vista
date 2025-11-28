@@ -558,7 +558,7 @@ export default function Agentes() {
               ))}
               <Button 
                 variant="outline" 
-                className="bg-[hsl(45,35%,75%)] text-[hsl(220,15%,30%)] border-[hsl(45,35%,65%)] hover:bg-[hsl(45,35%,65%)]"
+                className="bg-pastel-yellow text-pastel-gray-dark border-pastel-yellow hover:bg-pastel-yellow/80"
                 asChild
               >
                 <Link to="/meus-agentes">
