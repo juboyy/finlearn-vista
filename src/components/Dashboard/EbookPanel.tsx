@@ -302,7 +302,7 @@ export const EbookPanel = ({
         <div className="relative">
           <SheetHeader className="p-6 pb-4 border-b border-border/50 bg-background">
             <div className="flex items-center gap-4">
-              <div className="p-3 rounded-xl bg-pastel-purple border-2 border-pastel-purple">
+              <div className="p-3 rounded-xl bg-pastel-yellow border-2 border-pastel-yellow">
                 <BookOpen size={28} className="text-slate-700" />
               </div>
               <div>
