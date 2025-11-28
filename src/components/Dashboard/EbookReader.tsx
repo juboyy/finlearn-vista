@@ -51,6 +51,7 @@ export const EbookReader = ({
   const [showNoteDialog, setShowNoteDialog] = useState(false);
   const [noteContent, setNoteContent] = useState("");
   const [selectedColor, setSelectedColor] = useState("#fef08a");
+  const [previewColor, setPreviewColor] = useState("#fef08a");
   const [highlightOpacity, setHighlightOpacity] = useState(0.7);
   const [showSidebar, setShowSidebar] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -290,6 +291,7 @@ export const EbookReader = ({
                           <button
                             key={color.color}
                             onClick={() => handleHighlight(color.color)}
+                            onMouseEnter={() => setPreviewColor(color.color)}
                             className="w-10 h-10 rounded-lg border-2 border-border hover:scale-110 hover:border-foreground transition-all shadow-sm"
                             style={{ backgroundColor: color.color }}
                             title={color.name}
@@ -316,6 +318,28 @@ export const EbookReader = ({
                       <div className="flex justify-between text-xs text-muted-foreground">
                         <span>Suave</span>
                         <span>Intenso</span>
+                      </div>
+                    </div>
+
+                    {/* Preview do highlight em tempo real */}
+                    <div className="pt-3 border-t border-border">
+                      <label className="text-xs font-medium text-muted-foreground mb-2 block">
+                        Prévia do Destaque
+                      </label>
+                      <div className="p-3 bg-background rounded-lg border border-border">
+                        <p className="text-sm text-foreground leading-relaxed">
+                          Este é um exemplo de{" "}
+                          <mark
+                            className="px-1 rounded transition-all duration-200"
+                            style={{
+                              backgroundColor: `rgba(${parseInt(previewColor.slice(1, 3), 16)}, ${parseInt(previewColor.slice(3, 5), 16)}, ${parseInt(previewColor.slice(5, 7), 16)}, ${highlightOpacity})`,
+                              fontWeight: 500
+                            }}
+                          >
+                            texto destacado
+                          </mark>{" "}
+                          com a cor e intensidade selecionadas.
+                        </p>
                       </div>
                     </div>
 
