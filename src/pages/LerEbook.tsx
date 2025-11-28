@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Bookmark, Highlighter, MessageSquare, ChevronLeft, ChevronRight, Search, X, Edit2, Trash2, Save, ArrowUpDown } from "lucide-react";
+import { ArrowLeft, Bookmark, Highlighter, MessageSquare, ChevronLeft, ChevronRight, Search, X, Edit2, Trash2, Save, ArrowUpDown, Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
@@ -736,19 +736,25 @@ const LerEbook = () => {
                   )}
                 </div>
               </div>
-              <div className="flex items-center gap-2">
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  onClick={() => setShowSearch(!showSearch)}
-                  className={showSearch ? "bg-pastel-blue" : ""}
-                >
-                  <Search size={16} className="mr-2" />
-                  Buscar
-                </Button>
-                <Button variant="outline" size="sm" onClick={handleAddBookmark}>
-                  <Bookmark size={16} className="mr-2" />
-                  Marcar Página
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => setShowSearch(!showSearch)}
+                    className={showSearch ? "bg-pastel-blue" : ""}
+                  >
+                    <Search size={16} className="mr-2" />
+                    Buscar
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={handleAddBookmark}>
+                    <Bookmark size={16} className="mr-2" />
+                    Marcar Página
+                  </Button>
+                </div>
+                <Button variant="outline" size="sm" className="w-full">
+                  <Bot size={16} className="mr-2" />
+                  Agente de Leitura
                 </Button>
               </div>
             </div>
