@@ -36,6 +36,7 @@ const LerEbook = () => {
   const [activeTab, setActiveTab] = useState<"bookmarks" | "highlights" | "notes">("bookmarks");
   const [renderKey, setRenderKey] = useState(0);
   const [previewRange, setPreviewRange] = useState<Range | null>(null);
+  const [highlightName, setHighlightName] = useState("");
   const contentRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -139,6 +140,7 @@ const LerEbook = () => {
       }
     } else {
       setShowHighlightMenu(false);
+      setHighlightName("");
       removePreviewHighlight();
       setPreviewRange(null);
     }
@@ -190,6 +192,7 @@ const LerEbook = () => {
   useEffect(() => {
     removePreviewHighlight();
     setShowHighlightMenu(false);
+    setHighlightName("");
     setPreviewRange(null);
   }, [currentPage]);
 
@@ -212,13 +215,16 @@ const LerEbook = () => {
         selectedText.length,
         selectedColor,
         undefined,
-        currentPage
+        currentPage,
+        undefined,
+        highlightName.trim() || undefined
       );
       
       // Force re-render to show the highlight immediately
       setRenderKey(prev => prev + 1);
       setShowHighlightMenu(false);
       setShowNoteInput(false);
+      setHighlightName("");
       setPreviewRange(null);
       window.getSelection()?.removeAllRanges();
     }
@@ -235,6 +241,7 @@ const LerEbook = () => {
     );
     setShowHighlightMenu(false);
     setShowNoteInput(false);
+    setHighlightName("");
     setPreviewRange(null);
     window.getSelection()?.removeAllRanges();
   };
@@ -256,6 +263,7 @@ const LerEbook = () => {
       setShowHighlightMenu(false);
       setShowNoteInput(false);
       setNoteContent("");
+      setHighlightName("");
       setPreviewRange(null);
       window.getSelection()?.removeAllRanges();
     }
@@ -834,7 +842,7 @@ const LerEbook = () => {
                 >
                   <div className="space-y-2">
                     <div className="flex items-start justify-between gap-2">
-                      <div className="flex-1 min-w-0">
+                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
                           <Badge variant="outline" className="text-xs" style={{ backgroundColor: 'hsl(var(--accent) / 0.2)', color: 'hsl(var(--foreground))', borderColor: 'hsl(var(--border))' }}>
                             {annotation.annotation_type === 'highlight' ? 'Destaque' : 'Anotação'}
@@ -845,6 +853,11 @@ const LerEbook = () => {
                             </span>
                           )}
                         </div>
+                        {annotation.highlight_name && (
+                          <p className="text-sm font-semibold mb-1 text-foreground">
+                            {annotation.highlight_name}
+                          </p>
+                        )}
                         <p className="text-sm font-medium line-clamp-2 mb-1 text-foreground">
                           {annotation.selected_text}
                         </p>
@@ -1117,6 +1130,11 @@ const LerEbook = () => {
                     key={annotation.id}
                     className="p-3 bg-muted rounded-lg group"
                   >
+                    {annotation.highlight_name && (
+                      <div className="text-sm font-medium text-foreground mb-2">
+                        {annotation.highlight_name}
+                      </div>
+                    )}
                     <div
                       className="text-sm text-foreground mb-2 p-2 rounded cursor-pointer"
                       style={{ backgroundColor: annotation.highlight_color || undefined }}
@@ -1251,6 +1269,16 @@ const LerEbook = () => {
         >
           {!showNoteInput ? (
             <div className="space-y-2">
+              {/* Name Input */}
+              <div className="pb-2 border-b border-border">
+                <Input
+                  value={highlightName}
+                  onChange={(e) => setHighlightName(e.target.value)}
+                  placeholder="Nome do destaque (opcional)"
+                  className="w-full text-sm"
+                />
+              </div>
+
               {/* Color Selection */}
               <div className="flex items-center gap-2 pb-2 border-b border-border">
                 <span className="text-xs text-muted-foreground mr-1">Cor:</span>
@@ -1324,6 +1352,7 @@ const LerEbook = () => {
                     setShowNoteInput(false);
                     setNoteContent("");
                     setShowHighlightMenu(false);
+                    setHighlightName("");
                     setPreviewRange(null);
                     window.getSelection()?.removeAllRanges();
                   }}
