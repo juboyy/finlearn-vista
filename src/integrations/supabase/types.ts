@@ -14,6 +14,57 @@ export type Database = {
   }
   public: {
     Tables: {
+      agenda_activities: {
+        Row: {
+          activity_type: string
+          color: string
+          completed_at: string | null
+          created_at: string
+          description: string | null
+          end_time: string
+          icon: string | null
+          id: string
+          location: string | null
+          start_time: string
+          status: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          activity_type: string
+          color?: string
+          completed_at?: string | null
+          created_at?: string
+          description?: string | null
+          end_time: string
+          icon?: string | null
+          id?: string
+          location?: string | null
+          start_time: string
+          status?: string
+          title: string
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          activity_type?: string
+          color?: string
+          completed_at?: string | null
+          created_at?: string
+          description?: string | null
+          end_time?: string
+          icon?: string | null
+          id?: string
+          location?: string | null
+          start_time?: string
+          status?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       assistant_suggestions: {
         Row: {
           content: string
