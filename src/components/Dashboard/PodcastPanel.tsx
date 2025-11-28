@@ -1,5 +1,5 @@
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Play, Share2, Heart } from "lucide-react";
+import { Play, Share2, Heart, History } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
@@ -17,6 +17,7 @@ import {
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface Podcast {
   id: string;
@@ -188,6 +189,7 @@ const PodcastCard = ({ podcast, isFavorite, onToggleFavorite }: PodcastCardProps
 };
 
 export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
+  const navigate = useNavigate();
   const [favorites, setFavorites] = useState<Podcast[]>([]);
   const [favoriteIds, setFavoriteIds] = useState<Set<string>>(new Set());
 
@@ -264,10 +266,23 @@ export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="right" className="w-[400px] sm:w-[540px] overflow-y-auto bg-gradient-to-b from-background to-muted/20">
         <SheetHeader className="pb-6 border-b border-border/50">
-          <SheetTitle className="text-2xl font-bold bg-gradient-to-r from-pastel-purple to-pastel-pink bg-clip-text text-transparent">
-            Podcasts
-          </SheetTitle>
-          <p className="text-sm text-muted-foreground mt-1">Seu conteúdo de áudio favorito</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <SheetTitle className="text-2xl font-bold bg-gradient-to-r from-pastel-purple to-pastel-pink bg-clip-text text-transparent">
+                Podcasts
+              </SheetTitle>
+              <p className="text-sm text-muted-foreground mt-1">Seu conteúdo de áudio favorito</p>
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => navigate("/historico-podcasts")}
+              className="border-2 border-pastel-blue hover:bg-pastel-blue/10"
+            >
+              <History className="h-4 w-4 mr-2" />
+              Histórico
+            </Button>
+          </div>
         </SheetHeader>
 
         <div className="mt-8 space-y-8">
