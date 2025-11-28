@@ -116,39 +116,57 @@ const PodcastCard = ({ podcast, isFavorite, onToggleFavorite }: PodcastCardProps
   };
 
   return (
-    <div className="group relative flex flex-col gap-3 p-4 rounded-xl border-2 border-border bg-gradient-to-br from-card to-card/50 hover:shadow-lg hover:border-pastel-purple/50 transition-all duration-300 hover:scale-[1.02]">
-      <div className="flex items-start gap-4">
-        <div className="relative shrink-0">
+    <div className="group relative flex flex-col gap-3 p-5 rounded-2xl border-2 border-border/50 bg-gradient-to-br from-card via-card/95 to-muted/30 hover:shadow-2xl hover:shadow-pastel-purple/20 hover:border-pastel-purple/60 transition-all duration-500 hover:scale-[1.03] hover:-translate-y-1 overflow-hidden">
+      {/* Animated background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-pastel-purple/5 via-transparent to-pastel-pink/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      
+      {/* Glowing edge effect */}
+      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" 
+           style={{
+             background: 'radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(139, 92, 246, 0.15), transparent 40%)'
+           }} />
+      
+      <div className="relative flex items-start gap-4">
+        <div className="relative shrink-0 group/image">
+          <div className="absolute inset-0 bg-gradient-to-br from-pastel-purple/30 to-pastel-pink/30 rounded-xl blur-xl opacity-0 group-hover:opacity-70 transition-all duration-500 scale-90 group-hover:scale-110" />
           <img
             src={podcast.image}
             alt={podcast.title}
-            className="w-20 h-20 rounded-lg object-cover shadow-md ring-2 ring-pastel-purple/20 group-hover:ring-pastel-pink/40 transition-all"
+            className="relative w-24 h-24 rounded-xl object-cover shadow-lg ring-2 ring-pastel-purple/30 group-hover:ring-4 group-hover:ring-pastel-pink/50 transition-all duration-500 group-hover:scale-105"
           />
-          <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-pastel-purple/90 rounded-full flex items-center justify-center shadow-md backdrop-blur-sm">
-            <Play className="h-3 w-3 text-white fill-white" />
+          <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-gradient-to-br from-pastel-purple to-pastel-pink rounded-full flex items-center justify-center shadow-lg backdrop-blur-sm group-hover:scale-110 transition-transform duration-300">
+            <Play className="h-4 w-4 text-white fill-white animate-pulse" />
           </div>
+          {/* Shine effect */}
+          <div className="absolute inset-0 rounded-xl bg-gradient-to-tr from-transparent via-white/20 to-transparent opacity-0 group-hover/image:opacity-100 transition-opacity duration-500 translate-x-[-100%] group-hover/image:translate-x-[100%] transition-transform duration-1000" />
         </div>
+        
         <div className="flex-1 min-w-0">
-          <h4 className="font-semibold text-base text-foreground mb-1 line-clamp-2 group-hover:text-pastel-purple transition-colors">
+          <h4 className="font-bold text-base text-foreground mb-1.5 line-clamp-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-pastel-purple group-hover:to-pastel-pink group-hover:bg-clip-text transition-all duration-300">
             {podcast.title}
           </h4>
-          <p className="text-sm text-muted-foreground">{podcast.topic}</p>
+          <p className="text-sm text-muted-foreground/80 font-medium">{podcast.topic}</p>
         </div>
+        
         <div className="flex items-center gap-1">
           <Button
             variant="ghost"
             size="icon"
-            className={`h-8 w-8 shrink-0 ${isFavorite ? 'text-red-500 hover:text-red-600' : 'text-muted-foreground hover:text-foreground'}`}
+            className={`h-9 w-9 shrink-0 rounded-xl transition-all duration-300 ${
+              isFavorite 
+                ? 'text-red-500 hover:text-red-600 hover:bg-red-50 hover:scale-110' 
+                : 'text-muted-foreground hover:text-red-500 hover:bg-red-50/50 hover:scale-110'
+            }`}
             onClick={() => onToggleFavorite(podcast)}
           >
-            <Heart className={`h-4 w-4 ${isFavorite ? 'fill-current' : ''}`} />
+            <Heart className={`h-4 w-4 transition-all duration-300 ${isFavorite ? 'fill-current scale-110' : ''}`} />
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-8 w-8 shrink-0 text-muted-foreground hover:text-foreground"
+                className="h-9 w-9 shrink-0 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted hover:scale-110 transition-all duration-300"
               >
                 <Share2 className="h-4 w-4" />
               </Button>
@@ -173,17 +191,20 @@ const PodcastCard = ({ podcast, isFavorite, onToggleFavorite }: PodcastCardProps
           </DropdownMenu>
         </div>
       </div>
-    
-    {/* Progress bar - full width */}
-    <div className="space-y-1.5">
-      <div className="flex items-center justify-between text-xs text-muted-foreground">
-        <span>Em reprodução</span>
-        <span className="font-medium">24:30</span>
+      
+      {/* Progress bar - full width */}
+      <div className="relative space-y-2">
+        <div className="flex items-center justify-between text-xs font-semibold">
+          <span className="text-pastel-purple">Em reprodução</span>
+          <span className="text-foreground/90 font-mono">24:30</span>
+        </div>
+        <div className="relative w-full h-2.5 bg-gradient-to-r from-muted via-muted/80 to-muted rounded-full overflow-hidden shadow-inner">
+          <div className="absolute inset-0 bg-gradient-to-r from-pastel-purple/20 via-pastel-pink/20 to-pastel-purple/20 animate-pulse" />
+          <div className="relative h-full bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 w-[60%] rounded-full transition-all duration-500 shadow-lg">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-[shimmer_2s_ease-in-out_infinite]" />
+          </div>
+        </div>
       </div>
-      <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
-        <div className="h-full bg-slate-700 w-[60%] rounded-full transition-all duration-500"></div>
-      </div>
-    </div>
     </div>
   );
 };
@@ -264,20 +285,27 @@ export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right" className="w-[400px] sm:w-[540px] overflow-y-auto bg-gradient-to-b from-background to-muted/20">
-        <SheetHeader className="pb-6 border-b border-border/50">
+      <SheetContent side="right" className="w-[400px] sm:w-[540px] overflow-y-auto bg-gradient-to-br from-background via-background to-muted/30 backdrop-blur-xl border-l-2 border-pastel-purple/20">
+        {/* Animated background pattern */}
+        <div className="absolute inset-0 opacity-[0.03]" 
+             style={{
+               backgroundImage: `radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)`,
+               backgroundSize: '40px 40px'
+             }} />
+        
+        <SheetHeader className="relative pb-8 border-b-2 border-gradient-to-r from-pastel-purple/30 via-pastel-pink/30 to-pastel-blue/30">
           <div className="flex items-center justify-between">
-            <div>
-              <SheetTitle className="text-2xl font-bold bg-gradient-to-r from-pastel-purple to-pastel-pink bg-clip-text text-transparent">
+            <div className="space-y-1">
+              <SheetTitle className="text-3xl font-black bg-gradient-to-r from-pastel-purple via-pastel-pink to-pastel-blue bg-clip-text text-transparent animate-gradient">
                 Podcasts
               </SheetTitle>
-              <p className="text-sm text-muted-foreground mt-1">Seu conteúdo de áudio favorito</p>
+              <p className="text-sm text-muted-foreground/90 font-medium">Seu conteúdo de áudio favorito</p>
             </div>
             <Button
               variant="outline"
               size="sm"
               onClick={() => navigate("/historico-podcasts")}
-              className="border-2 border-pastel-blue hover:bg-pastel-blue/10"
+              className="border-2 border-pastel-blue/40 hover:bg-gradient-to-r hover:from-pastel-blue/10 hover:to-pastel-purple/10 hover:border-pastel-blue hover:scale-105 transition-all duration-300 shadow-sm hover:shadow-md"
             >
               <History className="h-4 w-4 mr-2" />
               Histórico
@@ -285,15 +313,19 @@ export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
           </div>
         </SheetHeader>
 
-        <div className="mt-8 space-y-8">
+        <div className="relative mt-10 space-y-10">
           {/* Meus Favoritos */}
           {favorites.length > 0 && (
             <div className="px-12 animate-fade-in">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                <h3 className="text-base font-bold text-foreground">
+              <div className="flex items-center gap-3 mb-5 group">
+                <div className="relative">
+                  <div className="w-3 h-3 bg-gradient-to-br from-red-500 to-red-600 rounded-full shadow-lg shadow-red-500/50"></div>
+                  <div className="absolute inset-0 w-3 h-3 bg-red-500 rounded-full animate-ping opacity-75"></div>
+                </div>
+                <h3 className="text-lg font-black text-foreground tracking-tight group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-red-500 group-hover:to-red-600 group-hover:bg-clip-text transition-all duration-300">
                   Meus Favoritos
                 </h3>
+                <div className="flex-1 h-px bg-gradient-to-r from-red-500/50 to-transparent"></div>
               </div>
               <Carousel className="w-full">
                 <CarouselContent>
@@ -315,11 +347,15 @@ export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
 
           {/* Rolando agora */}
           <div className="px-12 animate-fade-in">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-2 h-2 bg-pastel-pink rounded-full animate-pulse"></div>
-              <h3 className="text-base font-bold text-foreground">
+            <div className="flex items-center gap-3 mb-5 group">
+              <div className="relative">
+                <div className="w-3 h-3 bg-gradient-to-br from-pastel-pink to-pink-400 rounded-full shadow-lg shadow-pastel-pink/50 animate-pulse"></div>
+                <div className="absolute inset-0 w-3 h-3 bg-pastel-pink rounded-full animate-ping opacity-75"></div>
+              </div>
+              <h3 className="text-lg font-black text-foreground tracking-tight group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-pastel-pink group-hover:to-pink-400 group-hover:bg-clip-text transition-all duration-300">
                 Rolando agora
               </h3>
+              <div className="flex-1 h-px bg-gradient-to-r from-pastel-pink/50 to-transparent"></div>
             </div>
             <Carousel className="w-full">
               <CarouselContent>
@@ -340,11 +376,14 @@ export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
 
           {/* Continuar de onde parou */}
           <div className="px-12 animate-fade-in" style={{ animationDelay: "0.1s" }}>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-2 h-2 bg-pastel-blue rounded-full"></div>
-              <h3 className="text-base font-bold text-foreground">
+            <div className="flex items-center gap-3 mb-5 group">
+              <div className="relative">
+                <div className="w-3 h-3 bg-gradient-to-br from-pastel-blue to-blue-400 rounded-full shadow-lg shadow-pastel-blue/50"></div>
+              </div>
+              <h3 className="text-lg font-black text-foreground tracking-tight group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-pastel-blue group-hover:to-blue-400 group-hover:bg-clip-text transition-all duration-300">
                 Continuar de onde parou
               </h3>
+              <div className="flex-1 h-px bg-gradient-to-r from-pastel-blue/50 to-transparent"></div>
             </div>
             <Carousel className="w-full">
               <CarouselContent>
@@ -364,12 +403,15 @@ export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
           </div>
 
           {/* Recomendadas para você */}
-          <div className="px-12 animate-fade-in" style={{ animationDelay: "0.2s" }}>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-2 h-2 bg-pastel-green rounded-full"></div>
-              <h3 className="text-base font-bold text-foreground">
+          <div className="px-12 pb-8 animate-fade-in" style={{ animationDelay: "0.2s" }}>
+            <div className="flex items-center gap-3 mb-5 group">
+              <div className="relative">
+                <div className="w-3 h-3 bg-gradient-to-br from-pastel-green to-green-400 rounded-full shadow-lg shadow-pastel-green/50"></div>
+              </div>
+              <h3 className="text-lg font-black text-foreground tracking-tight group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-pastel-green group-hover:to-green-400 group-hover:bg-clip-text transition-all duration-300">
                 Recomendadas para você
               </h3>
+              <div className="flex-1 h-px bg-gradient-to-r from-pastel-green/50 to-transparent"></div>
             </div>
             <Carousel className="w-full">
               <CarouselContent>
