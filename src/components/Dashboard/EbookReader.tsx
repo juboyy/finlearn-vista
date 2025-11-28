@@ -54,6 +54,8 @@ export const EbookReader = ({
   const [previewColor, setPreviewColor] = useState("#fef08a");
   const [highlightOpacity, setHighlightOpacity] = useState(0.7);
   const [showSidebar, setShowSidebar] = useState(false);
+  const [editingAnnotationId, setEditingAnnotationId] = useState<string | null>(null);
+  const [editMenuPosition, setEditMenuPosition] = useState<{ top: number; left: number } | null>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -66,6 +68,19 @@ export const EbookReader = ({
     createBookmark,
     deleteBookmark,
   } = useEbookAnnotations(ebookId, ebookTitle);
+
+  // Close edit menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (editingAnnotationId && !target.closest('.editable-highlight') && !target.closest('[class*="animate-fade-in"]')) {
+        closeEditMenu();
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [editingAnnotationId]);
 
   // Mock content - In production, load from file/API
   const mockContent = `
@@ -183,6 +198,38 @@ export const EbookReader = ({
     window.getSelection()?.removeAllRanges();
   };
 
+  const handleHighlightClick = (e: React.MouseEvent, annotationId: string) => {
+    e.stopPropagation();
+    const target = e.currentTarget as HTMLElement;
+    const rect = target.getBoundingClientRect();
+    
+    setEditingAnnotationId(annotationId);
+    setEditMenuPosition({
+      top: rect.top - 60,
+      left: rect.left + (rect.width / 2)
+    });
+  };
+
+  const handleUpdateHighlight = async (color: string) => {
+    if (!editingAnnotationId) return;
+    
+    const r = parseInt(color.slice(1, 3), 16);
+    const g = parseInt(color.slice(3, 5), 16);
+    const b = parseInt(color.slice(5, 7), 16);
+    const colorWithOpacity = `rgba(${r}, ${g}, ${b}, ${highlightOpacity})`;
+    
+    await updateAnnotation(editingAnnotationId, { 
+      highlight_color: colorWithOpacity 
+    });
+    setEditingAnnotationId(null);
+    setEditMenuPosition(null);
+  };
+
+  const closeEditMenu = () => {
+    setEditingAnnotationId(null);
+    setEditMenuPosition(null);
+  };
+
   // Apply highlights to content
   const renderContentWithAnnotations = () => {
     if (annotations.length === 0) return mockContent;
@@ -198,7 +245,14 @@ export const EbookReader = ({
         highlightedRanges.push({
           start: annotation.position_start,
           end: annotation.position_end,
-          html: `<mark style="background-color: ${annotation.highlight_color}; padding: 3px 2px; border-radius: 2px; font-weight: 500;" data-annotation-id="${annotation.id}">${annotation.selected_text}</mark>`
+          html: `<mark 
+            onclick="handleHighlightClick(event, '${annotation.id}')" 
+            style="background-color: ${annotation.highlight_color}; padding: 3px 2px; border-radius: 2px; font-weight: 500; cursor: pointer; transition: all 0.2s;" 
+            data-annotation-id="${annotation.id}"
+            class="editable-highlight"
+            onmouseover="this.style.boxShadow='0 0 0 2px hsl(var(--primary))'"
+            onmouseout="this.style.boxShadow='none'"
+          >${annotation.selected_text}</mark>`
         });
       }
     });
@@ -261,9 +315,79 @@ export const EbookReader = ({
                 letterSpacing: '0.01em'
               }}
               onMouseUp={handleTextSelection}
+              onClick={(e) => {
+                const target = e.target as HTMLElement;
+                if (target.classList.contains('editable-highlight')) {
+                  const annotationId = target.getAttribute('data-annotation-id');
+                  if (annotationId) {
+                    handleHighlightClick(e as any, annotationId);
+                  }
+                }
+              }}
               dangerouslySetInnerHTML={{ __html: renderContentWithAnnotations() }}
             />
           </ScrollArea>
+
+          {/* Edit Highlight Menu */}
+          {editingAnnotationId && editMenuPosition && (
+            <div
+              className="fixed z-50 bg-card border-2 border-border rounded-xl shadow-2xl p-4 animate-fade-in"
+              style={{
+                top: `${editMenuPosition.top}px`,
+                left: `${editMenuPosition.left}px`,
+                transform: "translateX(-50%)",
+                minWidth: "280px"
+              }}
+            >
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-sm font-semibold text-foreground">Editar Destaque</h4>
+                  <Button size="sm" variant="ghost" onClick={closeEditMenu} className="h-6 w-6 p-0">
+                    ✕
+                  </Button>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-medium text-muted-foreground">Nova Cor</label>
+                  <div className="flex gap-2">
+                    {highlightColors.map((color) => (
+                      <button
+                        key={color.color}
+                        onClick={() => handleUpdateHighlight(color.color)}
+                        onMouseEnter={() => setPreviewColor(color.color)}
+                        className="w-10 h-10 rounded-lg border-2 border-border hover:scale-110 hover:border-foreground transition-all shadow-sm"
+                        style={{ backgroundColor: color.color }}
+                        title={color.name}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs font-medium text-muted-foreground">Intensidade</label>
+                    <span className="text-xs text-muted-foreground font-semibold">
+                      {Math.round(highlightOpacity * 100)}%
+                    </span>
+                  </div>
+                  <Slider
+                    value={[highlightOpacity * 100]}
+                    onValueChange={(value) => setHighlightOpacity(value[0] / 100)}
+                    min={30}
+                    max={100}
+                    step={5}
+                    className="w-full"
+                  />
+                </div>
+
+                <div className="pt-2 border-t border-border">
+                  <p className="text-xs text-muted-foreground italic">
+                    Clique em uma cor para atualizar
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Annotation Menu Popover */}
           {showAnnotationMenu && menuPosition && (
