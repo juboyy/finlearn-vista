@@ -31,6 +31,8 @@ interface Ebook {
   isFree: boolean;
   progress?: number;
   category: string;
+  discount?: number;
+  originalPrice?: number;
 }
 
 interface EbookPanelProps {
@@ -66,7 +68,9 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
       description: "Estratégias avançadas para gerenciamento de riscos em instituições financeiras",
       rating: 4.8,
       reviews: 342,
-      price: 89.90,
+      price: 62.93,
+      originalPrice: 89.90,
+      discount: 30,
       isFree: false,
       category: "Gestão de Riscos"
     },
@@ -105,7 +109,9 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
       description: "Tecnologia blockchain aplicada ao mercado financeiro",
       rating: 4.6,
       reviews: 421,
-      price: 79.90,
+      price: 55.93,
+      originalPrice: 79.90,
+      discount: 30,
       isFree: false,
       category: "Tecnologia"
     }
@@ -149,7 +155,9 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
       description: "Tendências e perspectivas do mercado de capitais",
       rating: 4.9,
       reviews: 845,
-      price: 149.90,
+      price: 104.93,
+      originalPrice: 149.90,
+      discount: 30,
       isFree: false,
       progress: 28,
       category: "Mercado de Capitais"
@@ -166,7 +174,9 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
       description: "Guia avançado sobre derivativos e estratégias de hedge",
       rating: 4.7,
       reviews: 412,
-      price: 179.90,
+      price: 125.93,
+      originalPrice: 179.90,
+      discount: 30,
       isFree: false,
       category: "Derivativos"
     },
@@ -202,15 +212,22 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
             <Badge className="bg-pastel-blue text-foreground border-0 px-3 py-1 font-semibold">
               {ebook.category}
             </Badge>
-            <button
-              onClick={() => toggleFavorite(ebook.id)}
-              className="p-2 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background hover:scale-110 transition-all duration-300"
-            >
-              <Heart
-                size={16}
-                className={isFavorited ? "fill-red-500 text-red-500" : "text-muted-foreground"}
-              />
-            </button>
+            <div className="flex items-center gap-2">
+              {ebook.discount && (
+                <Badge className="bg-pastel-pink text-foreground font-bold px-2 py-1">
+                  -{ebook.discount}%
+                </Badge>
+              )}
+              <button
+                onClick={() => toggleFavorite(ebook.id)}
+                className="p-2 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background hover:scale-110 transition-all duration-300"
+              >
+                <Heart
+                  size={16}
+                  className={isFavorited ? "fill-red-500 text-red-500" : "text-muted-foreground"}
+                />
+              </button>
+            </div>
           </div>
 
           {/* Cover Image */}
@@ -283,15 +300,22 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
               <span className="text-xs text-muted-foreground">({ebook.reviews})</span>
             </div>
             
-            <div className="flex items-center gap-2">
+            <div className="flex flex-col items-end gap-1">
               {ebook.isFree ? (
                 <Badge className="bg-pastel-green text-foreground font-bold px-3 py-1">
                   GRÁTIS
                 </Badge>
               ) : (
-                <span className="text-lg font-bold text-muted-foreground">
-                  R$ {ebook.price.toFixed(2).replace('.', ',')}
-                </span>
+                <>
+                  {ebook.discount && ebook.originalPrice && (
+                    <span className="text-xs text-muted-foreground line-through">
+                      R$ {ebook.originalPrice.toFixed(2).replace('.', ',')}
+                    </span>
+                  )}
+                  <span className="text-lg font-bold text-muted-foreground">
+                    R$ {ebook.price.toFixed(2).replace('.', ',')}
+                  </span>
+                </>
               )}
             </div>
           </div>
