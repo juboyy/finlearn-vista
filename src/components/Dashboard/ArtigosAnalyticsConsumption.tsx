@@ -7,15 +7,46 @@ export const ArtigosAnalyticsConsumption = () => {
     if (typeof window !== 'undefined' && (window as any).Plotly) {
       initializeCharts();
     }
-  }, []);
+  }, [selectedPeriod]);
+
+  const getDataByPeriod = () => {
+    const data = {
+      '7d': {
+        weekly: { x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], y: [8, 12, 9, 15, 11, 4, 2] },
+        total: 284, growth: 32, avgDaily: 4.2, saved: 47,
+        timeData: { x: ['0-5 min', '5-10 min', '10-20 min', '20+ min'], y: [25, 42, 28, 15] },
+        monthly: { x: ['Dia 1', 'Dia 2', 'Dia 3', 'Dia 4', 'Dia 5', 'Dia 6', 'Dia 7'], y: [8, 12, 9, 15, 11, 4, 2] }
+      },
+      '30d': {
+        weekly: { x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], y: [8, 12, 9, 15, 11, 4, 2] },
+        total: 284, growth: 32, avgDaily: 4.2, saved: 47,
+        timeData: { x: ['0-5 min', '5-10 min', '10-20 min', '20+ min'], y: [25, 42, 28, 15] },
+        monthly: { x: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4'], y: [52, 61, 58, 67] }
+      },
+      '90d': {
+        weekly: { x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], y: [9, 13, 10, 16, 12, 5, 3] },
+        total: 842, growth: 95, avgDaily: 4.5, saved: 128,
+        timeData: { x: ['0-5 min', '5-10 min', '10-20 min', '20+ min'], y: [28, 45, 32, 18] },
+        monthly: { x: ['Mês 1', 'Mês 2', 'Mês 3'], y: [245, 278, 319] }
+      },
+      '1y': {
+        weekly: { x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], y: [10, 14, 11, 17, 13, 6, 4] },
+        total: 3456, growth: 412, avgDaily: 4.8, saved: 542,
+        timeData: { x: ['0-5 min', '5-10 min', '10-20 min', '20+ min'], y: [32, 48, 35, 22] },
+        monthly: { x: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'], y: [245, 268, 289, 302, 315, 328, 342, 355, 368, 382, 395, 412] }
+      }
+    };
+    return data[selectedPeriod];
+  };
 
   const initializeCharts = () => {
+    const periodData = getDataByPeriod();
     const Plotly = (window as any).Plotly;
 
     // Leitura Semanal
     const weeklyData = [{
-      x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
-      y: [8, 12, 9, 15, 11, 4, 2],
+      x: periodData.weekly.x,
+      y: periodData.weekly.y,
       type: 'bar',
       marker: { color: '#B8D4E8' }
     }];
@@ -45,8 +76,8 @@ export const ArtigosAnalyticsConsumption = () => {
 
     // Tempo de Leitura
     const timeData = [{
-      x: ['0-5 min', '5-10 min', '10-20 min', '20+ min'],
-      y: [25, 42, 28, 15],
+      x: periodData.timeData.x,
+      y: periodData.timeData.y,
       type: 'bar',
       marker: { color: ['#E8C5D8', '#E8E0C5', '#C5E8D4', '#B8D4E8'] }
     }];
@@ -61,8 +92,8 @@ export const ArtigosAnalyticsConsumption = () => {
 
     // Engajamento Mensal
     const monthlyData = [{
-      x: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
-      y: [45, 52, 48, 61, 58, 67],
+      x: periodData.monthly.x,
+      y: periodData.monthly.y,
       type: 'scatter',
       mode: 'lines+markers',
       line: { color: '#B8D4E8', width: 3 },
@@ -136,10 +167,10 @@ export const ArtigosAnalyticsConsumption = () => {
             <span className="text-sm text-slate-500 font-medium">Total Lidos</span>
             <i className="fas fa-newspaper text-slate-400"></i>
           </div>
-          <p className="text-3xl font-bold text-slate-800">284</p>
+          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod().total}</p>
           <p className="text-xs text-emerald-600 font-medium mt-2">
             <i className="fas fa-arrow-up mr-1"></i>
-            +32 este mês
+            +{getDataByPeriod().growth} no período
           </p>
         </div>
 
@@ -160,7 +191,7 @@ export const ArtigosAnalyticsConsumption = () => {
             <span className="text-sm text-slate-500 font-medium">Média Diária</span>
             <i className="fas fa-chart-bar text-slate-400"></i>
           </div>
-          <p className="text-3xl font-bold text-slate-800">4.2</p>
+          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod().avgDaily}</p>
           <p className="text-xs text-slate-500 font-medium mt-2">
             Artigos por dia
           </p>
@@ -171,7 +202,7 @@ export const ArtigosAnalyticsConsumption = () => {
             <span className="text-sm text-slate-500 font-medium">Salvos</span>
             <i className="fas fa-bookmark text-slate-400"></i>
           </div>
-          <p className="text-3xl font-bold text-slate-800">47</p>
+          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod().saved}</p>
           <p className="text-xs text-slate-500 font-medium mt-2">
             Para ler depois
           </p>
