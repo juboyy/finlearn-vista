@@ -723,9 +723,9 @@ const PerfilMentor = () => {
             {showReceipt ? (
               <>
                 {/* Recibo */}
-                <div ref={receiptRef} className="bg-white space-y-6">
+                <div ref={receiptRef} className="bg-white space-y-6 px-[7.5%]">
                   {/* Cabeçalho do Recibo */}
-                  <div className="text-center border-b-2 border-slate-300 pb-6 px-6 pt-6">
+                  <div className="text-center border-b-2 border-slate-300 pb-6 pt-6">
                     <h2 className="text-3xl font-bold text-slate-800 mb-2">RECIBO DE PAGAMENTO</h2>
                     <p className="text-sm text-slate-600">Comprovante de Agendamento de Mentoria</p>
                   </div>
@@ -838,7 +838,7 @@ const PerfilMentor = () => {
                   </div>
 
                   {/* Assinatura Digital */}
-                  <div className="text-center pt-4 border-t-2 border-slate-300 px-6 pb-6">
+                  <div className="text-center pt-4 border-t-2 border-slate-300 pb-6">
                     <p className="text-xs text-slate-500">Documento gerado eletronicamente em {new Date().toLocaleDateString('pt-BR')} às {new Date().toLocaleTimeString('pt-BR')}</p>
                     <p className="text-xs text-slate-500 mt-1">FinLearn - Todos os direitos reservados</p>
                   </div>
