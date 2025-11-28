@@ -1,5 +1,5 @@
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Play, Share2, Heart, History } from "lucide-react";
+import { Play, Share2, Heart, History, Pause } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
@@ -24,6 +24,8 @@ interface Podcast {
   title: string;
   topic: string;
   image: string;
+  audioUrl?: string;
+  duration?: string;
 }
 
 interface PodcastPanelProps {
@@ -35,6 +37,8 @@ interface PodcastCardProps {
   podcast: Podcast;
   isFavorite: boolean;
   onToggleFavorite: (podcast: Podcast) => void;
+  isPlaying: boolean;
+  onPlayPause: (podcast: Podcast) => void;
 }
 
 const nowPlayingPodcasts: Podcast[] = [
@@ -43,18 +47,24 @@ const nowPlayingPodcasts: Podcast[] = [
     title: "Mercados em Foco #142",
     topic: "Volatilidade e Estratégias",
     image: "/src/assets/podcast-ep142-volatilidade.png",
+    audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+    duration: "45:32",
   },
   {
     id: "2",
     title: "Mercados em Foco #141",
     topic: "Taxa Selic e Impactos",
     image: "/src/assets/podcast-ep141-selic.png",
+    audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+    duration: "52:18",
   },
   {
     id: "3",
     title: "Mercados em Foco #140",
     topic: "Tendências 2025",
     image: "/src/assets/podcast-ep140-tendencias-2025.png",
+    audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+    duration: "48:45",
   },
 ];
 
@@ -64,18 +74,24 @@ const continuePodcasts: Podcast[] = [
     title: "Mercados em Foco #139",
     topic: "Bancos e Fintechs",
     image: "/src/assets/podcast-ep139-bancos-fintechs.png",
+    audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+    duration: "51:23",
   },
   {
     id: "5",
     title: "Mercados em Foco #138",
     topic: "Criptomoedas em 2025",
     image: "/src/assets/podcast-ep138-cripto.png",
+    audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
+    duration: "47:55",
   },
   {
     id: "6",
     title: "Mercados em Foco #137",
     topic: "Open Finance",
     image: "/src/assets/podcast-ep137-open-finance.png",
+    audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",
+    duration: "49:38",
   },
 ];
 
@@ -85,16 +101,20 @@ const recommendedPodcasts: Podcast[] = [
     title: "Mercados em Foco #136",
     topic: "ESG no Mercado Financeiro",
     image: "/src/assets/podcast-ep136-esg.png",
+    audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3",
+    duration: "51:25",
   },
   {
     id: "8",
     title: "Mercados em Foco #135",
     topic: "Cartões de Crédito",
     image: "/src/assets/podcast-ep135-cartoes.png",
+    audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3",
+    duration: "43:52",
   },
 ];
 
-const PodcastCard = ({ podcast, isFavorite, onToggleFavorite }: PodcastCardProps) => {
+const PodcastCard = ({ podcast, isFavorite, onToggleFavorite, isPlaying, onPlayPause }: PodcastCardProps) => {
   const handleShare = (platform: string) => {
     const url = encodeURIComponent(window.location.href);
     const text = encodeURIComponent(`${podcast.title} - ${podcast.topic}`);
@@ -134,9 +154,32 @@ const PodcastCard = ({ podcast, isFavorite, onToggleFavorite }: PodcastCardProps
             alt={podcast.title}
             className="relative w-24 h-24 rounded-xl object-cover shadow-lg ring-2 ring-pastel-purple/30 group-hover:ring-4 group-hover:ring-pastel-pink/50 transition-all duration-500 group-hover:scale-105"
           />
-          <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-gradient-to-br from-pastel-purple to-pastel-pink rounded-full flex items-center justify-center shadow-lg backdrop-blur-sm group-hover:scale-110 transition-transform duration-300">
-            <Play className="h-4 w-4 text-white fill-white animate-pulse" />
-          </div>
+          
+          {/* Quick Play Button */}
+          <button
+            onClick={() => onPlayPause(podcast)}
+            className="absolute inset-0 w-24 h-24 flex items-center justify-center bg-black/40 backdrop-blur-sm rounded-xl opacity-0 group-hover/image:opacity-100 transition-all duration-300 hover:bg-black/50"
+          >
+            <div className="w-12 h-12 bg-gradient-to-br from-pastel-purple to-pastel-pink rounded-full flex items-center justify-center shadow-2xl shadow-pastel-purple/50 hover:scale-110 transition-transform">
+              {isPlaying ? (
+                <Pause className="h-6 w-6 text-white fill-white" />
+              ) : (
+                <Play className="h-6 w-6 text-white fill-white ml-0.5" />
+              )}
+            </div>
+          </button>
+          
+          {/* Playing indicator badge */}
+          {isPlaying && (
+            <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-gradient-to-br from-pastel-purple to-pastel-pink rounded-full flex items-center justify-center shadow-lg backdrop-blur-sm animate-pulse">
+              <div className="flex items-center gap-0.5">
+                <div className="w-1 h-3 bg-white rounded-full animate-[pulse_0.8s_ease-in-out_infinite]" />
+                <div className="w-1 h-4 bg-white rounded-full animate-[pulse_0.8s_ease-in-out_0.1s_infinite]" />
+                <div className="w-1 h-3 bg-white rounded-full animate-[pulse_0.8s_ease-in-out_0.2s_infinite]" />
+              </div>
+            </div>
+          )}
+          
           {/* Shine effect */}
           <div className="absolute inset-0 rounded-xl bg-gradient-to-tr from-transparent via-white/20 to-transparent opacity-0 group-hover/image:opacity-100 transition-opacity duration-500 translate-x-[-100%] group-hover/image:translate-x-[100%] transition-transform duration-1000" />
         </div>
@@ -213,12 +256,22 @@ export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
   const navigate = useNavigate();
   const [favorites, setFavorites] = useState<Podcast[]>([]);
   const [favoriteIds, setFavoriteIds] = useState<Set<string>>(new Set());
+  const [currentlyPlaying, setCurrentlyPlaying] = useState<string | null>(null);
+  const [audioRef] = useState(new Audio());
 
   useEffect(() => {
     if (open) {
       loadFavorites();
     }
   }, [open]);
+
+  useEffect(() => {
+    // Cleanup audio on unmount
+    return () => {
+      audioRef.pause();
+      audioRef.src = "";
+    };
+  }, []);
 
   const loadFavorites = async () => {
     const { data, error } = await supabase
@@ -283,6 +336,26 @@ export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
     }
   };
 
+  const handlePlayPause = (podcast: Podcast) => {
+    if (!podcast.audioUrl) {
+      toast.error("Áudio não disponível para este podcast");
+      return;
+    }
+
+    if (currentlyPlaying === podcast.id) {
+      // Pause current podcast
+      audioRef.pause();
+      setCurrentlyPlaying(null);
+      toast.info("Podcast pausado");
+    } else {
+      // Play new podcast
+      audioRef.src = podcast.audioUrl;
+      audioRef.play();
+      setCurrentlyPlaying(podcast.id);
+      toast.success(`Reproduzindo: ${podcast.title}`);
+    }
+  };
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="right" className="w-[400px] sm:w-[540px] overflow-y-auto bg-gradient-to-br from-background via-background to-muted/30 backdrop-blur-xl border-l-2 border-pastel-purple/20">
@@ -335,6 +408,8 @@ export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
                         podcast={podcast} 
                         isFavorite={true}
                         onToggleFavorite={toggleFavorite}
+                        isPlaying={currentlyPlaying === podcast.id}
+                        onPlayPause={handlePlayPause}
                       />
                     </CarouselItem>
                   ))}
@@ -365,6 +440,8 @@ export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
                       podcast={podcast}
                       isFavorite={favoriteIds.has(podcast.id)}
                       onToggleFavorite={toggleFavorite}
+                      isPlaying={currentlyPlaying === podcast.id}
+                      onPlayPause={handlePlayPause}
                     />
                   </CarouselItem>
                 ))}
@@ -393,6 +470,8 @@ export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
                       podcast={podcast}
                       isFavorite={favoriteIds.has(podcast.id)}
                       onToggleFavorite={toggleFavorite}
+                      isPlaying={currentlyPlaying === podcast.id}
+                      onPlayPause={handlePlayPause}
                     />
                   </CarouselItem>
                 ))}
@@ -421,6 +500,8 @@ export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
                       podcast={podcast}
                       isFavorite={favoriteIds.has(podcast.id)}
                       onToggleFavorite={toggleFavorite}
+                      isPlaying={currentlyPlaying === podcast.id}
+                      onPlayPause={handlePlayPause}
                     />
                   </CarouselItem>
                 ))}
