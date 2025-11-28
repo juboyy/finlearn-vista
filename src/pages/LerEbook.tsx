@@ -5,6 +5,9 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 import { useEbookAnnotations } from "@/hooks/useEbookAnnotations";
 import { supabase } from "@/integrations/supabase/client";
 import ebookGestaoRiscos from "@/assets/ebook-gestao-riscos.png";
@@ -28,6 +31,7 @@ const LerEbook = () => {
   const [editingBookmarkId, setEditingBookmarkId] = useState<string | null>(null);
   const [editingBookmarkName, setEditingBookmarkName] = useState("");
   const [sortBy, setSortBy] = useState<"date" | "page" | "type">("date");
+  const [hoveredAnnotationId, setHoveredAnnotationId] = useState<string | null>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -470,6 +474,11 @@ const LerEbook = () => {
           // Create annotation element
           const span = document.createElement('span');
           span.setAttribute('data-annotation-id', annotation.id);
+          span.setAttribute('data-annotation-type', annotation.annotation_type);
+          span.setAttribute('data-annotation-color', annotation.highlight_color || '');
+          span.setAttribute('data-annotation-content', annotation.annotation_content || '');
+          span.setAttribute('data-annotation-text', annotation.selected_text);
+          span.setAttribute('data-annotation-page', String(annotation.page_number || 0));
           span.style.padding = '3px 2px';
           span.style.borderRadius = '3px';
           span.style.cursor = 'pointer';
@@ -479,6 +488,7 @@ const LerEbook = () => {
           if (annotation.annotation_type === 'highlight') {
             span.style.backgroundColor = annotation.highlight_color || 'rgba(255, 235, 59, 0.4)';
             span.title = 'Destaque';
+            span.textContent = annotation.selected_text;
           } else if (annotation.annotation_type === 'note') {
             span.style.backgroundColor = 'rgba(59, 130, 246, 0.2)';
             span.style.borderBottom = '2px solid rgba(59, 130, 246, 0.6)';
@@ -491,10 +501,6 @@ const LerEbook = () => {
             icon.style.marginLeft = '2px';
             span.appendChild(document.createTextNode(annotation.selected_text));
             span.appendChild(icon);
-          }
-          
-          if (annotation.annotation_type !== 'note') {
-            span.textContent = annotation.selected_text;
           }
           
           fragment.appendChild(span);
@@ -527,7 +533,41 @@ const LerEbook = () => {
       doc.body.insertBefore(bookmarkIndicator, doc.body.firstChild);
     }
     
+    // Add event listeners for hover effects
+    setTimeout(() => {
+      const annotationElements = document.querySelectorAll('[data-annotation-id]');
+      annotationElements.forEach((element) => {
+        const htmlElement = element as HTMLElement;
+        const annotationId = htmlElement.getAttribute('data-annotation-id');
+        
+        htmlElement.addEventListener('mouseenter', () => {
+          if (annotationId) {
+            setHoveredAnnotationId(annotationId);
+          }
+        });
+        
+        htmlElement.addEventListener('mouseleave', () => {
+          setTimeout(() => setHoveredAnnotationId(null), 200);
+        });
+      });
+    }, 100);
+    
     return doc.body.innerHTML;
+  };
+  
+  const handleQuickDelete = (annotationId: string) => {
+    handleDeleteAnnotation(annotationId);
+    setHoveredAnnotationId(null);
+  };
+  
+  const handleQuickEdit = (annotationId: string, currentContent: string) => {
+    handleStartEditAnnotation(annotationId, currentContent);
+    setHoveredAnnotationId(null);
+  };
+  
+  const handleQuickColorChange = async (annotationId: string, newColor: string) => {
+    await updateAnnotation(annotationId, { highlight_color: newColor });
+    setHoveredAnnotationId(null);
   };
 
   const handleNextSearchResult = () => {
@@ -683,13 +723,100 @@ const LerEbook = () => {
 
         {/* Reading Content */}
         <ScrollArea className="flex-1">
-          <div className="max-w-4xl mx-auto p-12">
+          <div className="max-w-4xl mx-auto p-12 relative">
             <div
               ref={contentRef}
               className="prose prose-slate dark:prose-invert max-w-none"
               onMouseUp={handleTextSelection}
               dangerouslySetInnerHTML={{ __html: getContentWithAnnotations() }}
             />
+            
+            {/* Hover Popover for Annotations */}
+            {hoveredAnnotationId && (() => {
+              const annotation = annotations.find(a => a.id === hoveredAnnotationId);
+              if (!annotation) return null;
+              
+              const element = document.querySelector(`[data-annotation-id="${hoveredAnnotationId}"]`);
+              if (!element) return null;
+              
+              const rect = element.getBoundingClientRect();
+              const scrollContainer = document.querySelector('.scroll-area-viewport');
+              const scrollTop = scrollContainer ? scrollContainer.scrollTop : 0;
+              
+              return (
+                <div
+                  className="fixed z-50 bg-background border border-border rounded-lg shadow-lg p-3 min-w-[280px] max-w-[320px]"
+                  style={{
+                    top: `${rect.bottom + scrollTop + 8}px`,
+                    left: `${rect.left}px`,
+                  }}
+                  onMouseEnter={() => setHoveredAnnotationId(hoveredAnnotationId)}
+                  onMouseLeave={() => setHoveredAnnotationId(null)}
+                >
+                  <div className="space-y-2">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <Badge variant="outline" className="text-xs" style={{ backgroundColor: 'hsl(var(--accent) / 0.2)', color: 'hsl(var(--foreground))', borderColor: 'hsl(var(--border))' }}>
+                            {annotation.annotation_type === 'highlight' ? 'Destaque' : 'Anotação'}
+                          </Badge>
+                          {annotation.page_number && (
+                            <span className="text-xs text-muted-foreground">
+                              Pág. {annotation.page_number}
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-sm font-medium line-clamp-2 mb-1 text-foreground">
+                          {annotation.selected_text}
+                        </p>
+                        {annotation.annotation_content && (
+                          <p className="text-xs text-muted-foreground line-clamp-2">
+                            {annotation.annotation_content}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                    
+                    <Separator />
+                    
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="h-7 px-2 text-xs"
+                        onClick={() => handleQuickEdit(annotation.id, annotation.annotation_content || '')}
+                      >
+                        <Edit2 className="h-3 w-3 mr-1" />
+                        Editar
+                      </Button>
+                      
+                      {annotation.annotation_type === 'highlight' && (
+                        <div className="flex items-center gap-1">
+                          {['#fef08a', '#bfdbfe', '#d9f99d', '#fecaca', '#e9d5ff'].map((color) => (
+                            <button
+                              key={color}
+                              className="w-5 h-5 rounded-full border border-border hover:scale-110 transition-transform"
+                              style={{ backgroundColor: color }}
+                              onClick={() => handleQuickColorChange(annotation.id, color)}
+                            />
+                          ))}
+                        </div>
+                      )}
+                      
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="h-7 px-2 text-xs text-destructive hover:text-destructive hover:bg-destructive/10 ml-auto"
+                        onClick={() => handleQuickDelete(annotation.id)}
+                      >
+                        <Trash2 className="h-3 w-3 mr-1" />
+                        Excluir
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
           </div>
         </ScrollArea>
 
