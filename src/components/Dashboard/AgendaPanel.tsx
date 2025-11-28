@@ -82,7 +82,7 @@ export function AgendaPanel({ open, onOpenChange }: AgendaPanelProps) {
   return (
     <>
       <Sheet open={open} onOpenChange={onOpenChange}>
-        <SheetContent className="w-[600px] sm:w-[700px] overflow-y-auto">
+        <SheetContent className="w-[90vw] sm:w-[480px] max-w-[480px] overflow-y-auto">
           <SheetHeader className="border-b-2 border-border pb-4">
             <SheetTitle className="text-2xl text-foreground">Minha Agenda</SheetTitle>
             <p className="text-sm text-muted-foreground mt-1">{formatDate(selectedDate)}</p>
