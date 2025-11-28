@@ -398,26 +398,28 @@ export function EventFormSheet({ open, onOpenChange, eventId, onSave }: EventFor
               <h3 className="text-lg font-semibold text-foreground">Convidar Pessoas</h3>
             </div>
             
-            <div className="flex gap-3">
+            <div className="space-y-3">
               <Input
                 placeholder="Email do convidado"
                 value={newInvitee.email}
                 onChange={(e) => setNewInvitee({ ...newInvitee, email: e.target.value })}
-                className="flex-1 h-12 border-2 border-border focus:border-primary"
+                className="w-full h-12 border-2 border-border focus:border-primary"
               />
-              <Input
-                placeholder="Nome (opcional)"
-                value={newInvitee.name}
-                onChange={(e) => setNewInvitee({ ...newInvitee, name: e.target.value })}
-                className="flex-1 h-12 border-2 border-border focus:border-primary"
-              />
-              <Button
-                type="button"
-                onClick={addInvitation}
-                className="h-12 px-6 bg-[hsl(142,35%,65%)] hover:bg-[hsl(142,35%,55%)] text-[hsl(142,35%,15%)]"
-              >
-                <Plus size={20} />
-              </Button>
+              <div className="flex gap-3">
+                <Input
+                  placeholder="Nome (opcional)"
+                  value={newInvitee.name}
+                  onChange={(e) => setNewInvitee({ ...newInvitee, name: e.target.value })}
+                  className="flex-1 h-12 border-2 border-border focus:border-primary"
+                />
+                <Button
+                  type="button"
+                  onClick={addInvitation}
+                  className="h-12 px-6 bg-[hsl(142,35%,65%)] hover:bg-[hsl(142,35%,55%)] text-[hsl(142,35%,15%)]"
+                >
+                  <Plus size={20} />
+                </Button>
+              </div>
             </div>
 
             {invitations.length > 0 && (
