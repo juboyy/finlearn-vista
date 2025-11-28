@@ -317,7 +317,7 @@ export const EbookPanel = ({
             </div>
           </SheetHeader>
 
-          <div className="p-6 space-y-8">
+          <div className="p-6 space-y-14">
             {/* New Releases Section */}
             <div className="space-y-4 group/section">
               <div className="flex items-center justify-between">
