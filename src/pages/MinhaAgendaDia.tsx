@@ -1,12 +1,41 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { Bell, ChevronLeft, ChevronRight, CalendarCheck, Clock, BookOpen, Users } from "lucide-react";
-import { useState } from "react";
+import { Bell, ChevronLeft, ChevronRight, CalendarCheck, Clock, BookOpen, Users, Plus } from "lucide-react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { EventFormSheet } from "@/components/Dashboard/EventFormSheet";
+import { supabase } from "@/integrations/supabase/client";
 
 export default function MinhaAgendaDia() {
   const [showAddEventModal, setShowAddEventModal] = useState(false);
   const [showGoogleModal, setShowGoogleModal] = useState(false);
+  const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
+  const [activities, setActivities] = useState<any[]>([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    loadActivities();
+  }, []);
+
+  const loadActivities = async () => {
+    const { data } = await supabase
+      .from("agenda_activities")
+      .select("*")
+      .order("start_time", { ascending: true });
+    
+    if (data) {
+      setActivities(data);
+    }
+  };
+
+  const handleEditEvent = (eventId: string) => {
+    setSelectedEventId(eventId);
+    setShowAddEventModal(true);
+  };
+
+  const handleNewEvent = () => {
+    setSelectedEventId(null);
+    setShowAddEventModal(true);
+  };
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -32,11 +61,11 @@ export default function MinhaAgendaDia() {
                 <span>Conectar Google Calendar</span>
               </button>
               <button 
-                onClick={() => setShowAddEventModal(true)}
-                className="px-4 py-2 bg-pastel-purple text-white rounded-lg font-medium hover:bg-opacity-90 transition"
+                onClick={handleNewEvent}
+                className="flex items-center gap-2 px-4 py-2 bg-pastel-green rounded-lg font-medium hover:bg-pastel-green/90 transition"
               >
-                <i className="fas fa-plus mr-2"></i>
-                Novo Evento
+                <Plus size={18} className="text-slate-600" />
+                <span className="text-slate-600">Novo Evento</span>
               </button>
             </div>
           </div>
@@ -237,7 +266,10 @@ export default function MinhaAgendaDia() {
                       ))}
                       
                       {/* Event 1 - 08:00 */}
-                      <div className="absolute top-[40px] left-3 right-3 h-[75px] bg-pastel-rose rounded-lg px-4 py-3 shadow-sm border border-slate-200 cursor-pointer hover:shadow-md transition flex items-center">
+                      <div 
+                        onClick={() => activities[0] && handleEditEvent(activities[0].id)}
+                        className="absolute top-[40px] left-3 right-3 h-[75px] bg-pastel-rose rounded-lg px-4 py-3 shadow-sm border border-slate-200 cursor-pointer hover:shadow-md transition flex items-center"
+                      >
                         <div className="flex items-center gap-3 w-full">
                           <div className="flex-shrink-0">
                             <i className="fas fa-podcast text-slate-700 text-sm"></i>
@@ -660,6 +692,14 @@ export default function MinhaAgendaDia() {
           </div>
         </div>
       )}
+
+      {/* Event Form Sheet */}
+      <EventFormSheet
+        open={showAddEventModal}
+        onOpenChange={setShowAddEventModal}
+        eventId={selectedEventId}
+        onSave={loadActivities}
+      />
     </div>
   );
 }

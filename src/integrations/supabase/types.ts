@@ -65,6 +65,44 @@ export type Database = {
         }
         Relationships: []
       }
+      agenda_activity_invitations: {
+        Row: {
+          activity_id: string
+          id: string
+          invited_at: string
+          invitee_email: string
+          invitee_name: string | null
+          responded_at: string | null
+          status: string
+        }
+        Insert: {
+          activity_id: string
+          id?: string
+          invited_at?: string
+          invitee_email: string
+          invitee_name?: string | null
+          responded_at?: string | null
+          status?: string
+        }
+        Update: {
+          activity_id?: string
+          id?: string
+          invited_at?: string
+          invitee_email?: string
+          invitee_name?: string | null
+          responded_at?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agenda_activity_invitations_activity_id_fkey"
+            columns: ["activity_id"]
+            isOneToOne: false
+            referencedRelation: "agenda_activities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       assistant_suggestions: {
         Row: {
           content: string
