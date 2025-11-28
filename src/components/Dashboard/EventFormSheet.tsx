@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { X, Plus, Trash2 } from "lucide-react";
+import { X, Plus, Trash2, Users, BookOpen, GraduationCap, Mic, Video, LineChart, FileCheck } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
@@ -223,180 +223,223 @@ export function EventFormSheet({ open, onOpenChange, eventId, onSave }: EventFor
     setInvitations(invitations.filter((_, i) => i !== index));
   };
 
+  const activityTypes = [
+    { value: "meeting", label: "Reunião", icon: Users },
+    { value: "study", label: "Estudo", icon: BookOpen },
+    { value: "training", label: "Treinamento", icon: GraduationCap },
+    { value: "podcast", label: "Podcast", icon: Mic },
+    { value: "video", label: "Vídeo", icon: Video },
+    { value: "analysis", label: "Análise", icon: LineChart },
+    { value: "review", label: "Revisão", icon: FileCheck },
+  ];
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="w-[600px] overflow-y-auto">
-        <SheetHeader>
-          <SheetTitle className="text-2xl font-bold text-slate-800">
+      <SheetContent className="w-[650px] overflow-y-auto bg-background">
+        <SheetHeader className="pb-6 border-b border-border">
+          <SheetTitle className="text-3xl font-bold text-foreground">
             {eventId ? "Editar Evento" : "Novo Evento"}
           </SheetTitle>
         </SheetHeader>
 
-        <div className="mt-8 space-y-6">
+        <div className="mt-8 space-y-8">
           {/* Title */}
-          <div className="space-y-2">
-            <Label htmlFor="title" className="text-sm font-semibold text-slate-700">
-              Título *
+          <div className="space-y-3">
+            <Label htmlFor="title" className="text-base font-semibold text-foreground">
+              Título do Evento *
             </Label>
             <Input
               id="title"
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               placeholder="Ex: Reunião com cliente"
-              className="border-slate-300"
+              className="h-12 text-base border-2 border-border focus:border-primary transition-colors"
             />
           </div>
 
           {/* Type and Color */}
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="type" className="text-sm font-semibold text-slate-700">
-                Tipo *
+          <div className="grid grid-cols-2 gap-6">
+            <div className="space-y-3">
+              <Label htmlFor="type" className="text-base font-semibold text-foreground">
+                Tipo de Evento *
               </Label>
               <Select
                 value={formData.activity_type}
                 onValueChange={(value) => setFormData({ ...formData, activity_type: value })}
               >
-                <SelectTrigger className="border-slate-300">
+                <SelectTrigger className="h-12 text-base border-2 border-border focus:border-primary">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="meeting">Reunião</SelectItem>
-                  <SelectItem value="study">Estudo</SelectItem>
-                  <SelectItem value="training">Treinamento</SelectItem>
-                  <SelectItem value="podcast">Podcast</SelectItem>
-                  <SelectItem value="video">Vídeo</SelectItem>
-                  <SelectItem value="analysis">Análise</SelectItem>
-                  <SelectItem value="review">Revisão</SelectItem>
+                  {activityTypes.map((type) => (
+                    <SelectItem key={type.value} value={type.value}>
+                      <div className="flex items-center gap-3">
+                        <type.icon className="w-5 h-5 text-muted-foreground" />
+                        <span>{type.label}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="color" className="text-sm font-semibold text-slate-700">
-                Cor
+            <div className="space-y-3">
+              <Label htmlFor="color" className="text-base font-semibold text-foreground">
+                Cor de Destaque
               </Label>
               <Select
                 value={formData.color}
                 onValueChange={(value) => setFormData({ ...formData, color: value })}
               >
-                <SelectTrigger className="border-slate-300">
+                <SelectTrigger className="h-12 text-base border-2 border-border focus:border-primary">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="pastel-blue">Azul</SelectItem>
-                  <SelectItem value="pastel-green">Verde</SelectItem>
-                  <SelectItem value="pastel-rose">Rosa</SelectItem>
-                  <SelectItem value="pastel-purple">Roxo</SelectItem>
-                  <SelectItem value="pastel-peach">Pêssego</SelectItem>
+                  <SelectItem value="pastel-blue">
+                    <div className="flex items-center gap-3">
+                      <div className="w-5 h-5 rounded-full bg-[hsl(206,35%,75%)]" />
+                      <span>Azul</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="pastel-green">
+                    <div className="flex items-center gap-3">
+                      <div className="w-5 h-5 rounded-full bg-[hsl(142,35%,75%)]" />
+                      <span>Verde</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="pastel-rose">
+                    <div className="flex items-center gap-3">
+                      <div className="w-5 h-5 rounded-full bg-[hsl(350,35%,75%)]" />
+                      <span>Rosa</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="pastel-purple">
+                    <div className="flex items-center gap-3">
+                      <div className="w-5 h-5 rounded-full bg-[hsl(270,35%,75%)]" />
+                      <span>Roxo</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="pastel-peach">
+                    <div className="flex items-center gap-3">
+                      <div className="w-5 h-5 rounded-full bg-[hsl(25,35%,75%)]" />
+                      <span>Pêssego</span>
+                    </div>
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
           </div>
 
           {/* Date and Time */}
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="start_time" className="text-sm font-semibold text-slate-700">
-                Início *
-              </Label>
-              <Input
-                id="start_time"
-                type="datetime-local"
-                value={formData.start_time}
-                onChange={(e) => setFormData({ ...formData, start_time: e.target.value })}
-                className="border-slate-300"
-              />
-            </div>
+          <div className="p-6 rounded-xl bg-muted/30 border border-border space-y-4">
+            <h3 className="text-lg font-semibold text-foreground mb-4">Data e Horário</h3>
+            <div className="grid grid-cols-2 gap-6">
+              <div className="space-y-3">
+                <Label htmlFor="start_time" className="text-base font-medium text-foreground">
+                  Início *
+                </Label>
+                <Input
+                  id="start_time"
+                  type="datetime-local"
+                  value={formData.start_time}
+                  onChange={(e) => setFormData({ ...formData, start_time: e.target.value })}
+                  className="h-12 border-2 border-border focus:border-primary"
+                />
+              </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="end_time" className="text-sm font-semibold text-slate-700">
-                Término *
-              </Label>
-              <Input
-                id="end_time"
-                type="datetime-local"
-                value={formData.end_time}
-                onChange={(e) => setFormData({ ...formData, end_time: e.target.value })}
-                className="border-slate-300"
-              />
+              <div className="space-y-3">
+                <Label htmlFor="end_time" className="text-base font-medium text-foreground">
+                  Término *
+                </Label>
+                <Input
+                  id="end_time"
+                  type="datetime-local"
+                  value={formData.end_time}
+                  onChange={(e) => setFormData({ ...formData, end_time: e.target.value })}
+                  className="h-12 border-2 border-border focus:border-primary"
+                />
+              </div>
             </div>
           </div>
 
           {/* Location */}
-          <div className="space-y-2">
-            <Label htmlFor="location" className="text-sm font-semibold text-slate-700">
-              Local
+          <div className="space-y-3">
+            <Label htmlFor="location" className="text-base font-semibold text-foreground">
+              Local do Evento
             </Label>
             <Input
               id="location"
               value={formData.location}
               onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-              placeholder="Ex: Sala de reuniões 2"
-              className="border-slate-300"
+              placeholder="Ex: Sala de reuniões 2, Link do Zoom, etc."
+              className="h-12 text-base border-2 border-border focus:border-primary"
             />
           </div>
 
           {/* Description */}
-          <div className="space-y-2">
-            <Label htmlFor="description" className="text-sm font-semibold text-slate-700">
-              Descrição
+          <div className="space-y-3">
+            <Label htmlFor="description" className="text-base font-semibold text-foreground">
+              Descrição do Evento
             </Label>
             <Textarea
               id="description"
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              placeholder="Adicione detalhes sobre o evento..."
-              rows={4}
-              className="border-slate-300 resize-none"
+              placeholder="Adicione detalhes importantes sobre o evento, agenda, objetivos..."
+              rows={5}
+              className="text-base border-2 border-border focus:border-primary resize-none"
             />
           </div>
 
           {/* Invitations */}
-          <div className="space-y-4">
-            <Label className="text-sm font-semibold text-slate-700">Convidar Pessoas</Label>
+          <div className="p-6 rounded-xl bg-muted/30 border border-border space-y-5">
+            <div className="flex items-center gap-3 mb-4">
+              <Users className="w-6 h-6 text-primary" />
+              <h3 className="text-lg font-semibold text-foreground">Convidar Pessoas</h3>
+            </div>
             
-            <div className="flex gap-2">
+            <div className="flex gap-3">
               <Input
-                placeholder="Email"
+                placeholder="Email do convidado"
                 value={newInvitee.email}
                 onChange={(e) => setNewInvitee({ ...newInvitee, email: e.target.value })}
-                className="flex-1 border-slate-300"
+                className="flex-1 h-12 border-2 border-border focus:border-primary"
               />
               <Input
                 placeholder="Nome (opcional)"
                 value={newInvitee.name}
                 onChange={(e) => setNewInvitee({ ...newInvitee, name: e.target.value })}
-                className="flex-1 border-slate-300"
+                className="flex-1 h-12 border-2 border-border focus:border-primary"
               />
               <Button
                 type="button"
                 onClick={addInvitation}
-                className="bg-pastel-green hover:bg-pastel-green/90"
+                className="h-12 px-6 bg-[hsl(142,35%,65%)] hover:bg-[hsl(142,35%,55%)] text-[hsl(142,35%,15%)]"
               >
-                <Plus size={16} />
+                <Plus size={20} />
               </Button>
             </div>
 
             {invitations.length > 0 && (
-              <div className="space-y-2">
+              <div className="space-y-3 mt-4">
+                <p className="text-sm font-medium text-muted-foreground">{invitations.length} pessoa(s) convidada(s)</p>
                 {invitations.map((inv, index) => (
                   <div
                     key={index}
-                    className="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200"
+                    className="flex items-center justify-between p-4 bg-background rounded-lg border-2 border-border hover:border-primary transition-colors"
                   >
                     <div>
-                      <p className="text-sm font-medium text-slate-800">{inv.email}</p>
-                      {inv.name && <p className="text-xs text-slate-500">{inv.name}</p>}
+                      <p className="text-base font-semibold text-foreground">{inv.email}</p>
+                      {inv.name && <p className="text-sm text-muted-foreground mt-1">{inv.name}</p>}
                     </div>
                     <Button
                       type="button"
                       variant="ghost"
                       size="sm"
                       onClick={() => removeInvitation(index)}
-                      className="text-slate-400 hover:text-red-500"
+                      className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
                     >
-                      <X size={16} />
+                      <X size={20} />
                     </Button>
                   </div>
                 ))}
@@ -405,17 +448,17 @@ export function EventFormSheet({ open, onOpenChange, eventId, onSave }: EventFor
           </div>
 
           {/* Actions */}
-          <div className="flex gap-3 pt-4 border-t border-slate-200">
+          <div className="flex gap-4 pt-6 border-t-2 border-border mt-8">
             {eventId && (
               <Button
                 type="button"
                 variant="outline"
                 onClick={handleDelete}
                 disabled={loading}
-                className="border-red-300 text-red-600 hover:bg-red-50"
+                className="h-14 px-6 border-2 border-destructive/50 text-destructive hover:bg-destructive/10 hover:border-destructive"
               >
-                <Trash2 size={16} className="mr-2" />
-                Excluir
+                <Trash2 size={20} className="mr-2" />
+                Excluir Evento
               </Button>
             )}
             <Button
@@ -423,7 +466,7 @@ export function EventFormSheet({ open, onOpenChange, eventId, onSave }: EventFor
               variant="outline"
               onClick={() => onOpenChange(false)}
               disabled={loading}
-              className="flex-1"
+              className="flex-1 h-14 text-base border-2 hover:bg-muted"
             >
               Cancelar
             </Button>
@@ -431,9 +474,9 @@ export function EventFormSheet({ open, onOpenChange, eventId, onSave }: EventFor
               type="button"
               onClick={handleSave}
               disabled={loading}
-              className="flex-1 bg-pastel-green hover:bg-pastel-green/90 text-slate-700"
+              className="flex-1 h-14 text-base font-semibold bg-[hsl(142,35%,65%)] hover:bg-[hsl(142,35%,55%)] text-[hsl(142,35%,15%)]"
             >
-              {loading ? "Salvando..." : eventId ? "Atualizar" : "Criar Evento"}
+              {loading ? "Salvando..." : eventId ? "Atualizar Evento" : "Criar Evento"}
             </Button>
           </div>
         </div>
