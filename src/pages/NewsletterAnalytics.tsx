@@ -263,7 +263,7 @@ export default function NewsletterAnalytics() {
           </div>
         </header>
 
-        <div className="p-8">
+        <div className="py-8 px-4">
           {/* Overview KPIs */}
           <section className="grid grid-cols-5 gap-6 mb-8">
             <div className="bg-white rounded-xl p-6 border border-slate-200">
