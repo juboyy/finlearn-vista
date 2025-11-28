@@ -106,6 +106,7 @@ import HistoricoPodcasts from "./pages/HistoricoPodcasts";
 import LerEbook from "./pages/LerEbook";
 import EditorMarkdown from "./pages/EditorMarkdown";
 import ArtigoAnalytics from "./pages/ArtigoAnalytics";
+import ConteudoAnalytics from "./pages/ConteudoAnalytics";
 
 import NotFound from "./pages/NotFound";
 
@@ -227,6 +228,7 @@ const App = () => {
            <Route path="/historico-podcasts" element={<HistoricoPodcasts />} />
            <Route path="/editor-markdown" element={<EditorMarkdown />} />
            <Route path="/artigo-analytics" element={<ArtigoAnalytics />} />
+           <Route path="/conteudo-analytics" element={<ConteudoAnalytics />} />
            
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

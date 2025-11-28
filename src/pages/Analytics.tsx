@@ -75,7 +75,7 @@ const Analytics = () => {
                 { icon: 'fa-robot', label: 'AI Agents', color: 'bg-pastel-purple', path: '/agentes-analytics' },
                 { icon: 'fa-chart-area', label: 'Consumo', color: 'bg-pastel-green', path: '/consumo-analytics' },
                 { icon: 'fa-gauge-high', label: 'Performance', color: 'bg-pastel-blue', path: '/performance-seo' },
-                { icon: 'fa-file-lines', label: 'Conteúdo', color: 'bg-pastel-peach', path: null },
+                { icon: 'fa-file-lines', label: 'Conteúdo', color: 'bg-pastel-peach', path: '/conteudo-analytics' },
                 { icon: 'fa-user-circle', label: 'Perfil', color: 'bg-pastel-pink', path: '/perfil-analytics' }
               ].map((btn, idx) => (
                 <button 
