@@ -368,7 +368,7 @@ export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right" className="w-[90vw] sm:w-[936px] max-w-[936px] overflow-y-auto overflow-x-hidden bg-gradient-to-br from-background via-background to-muted/30 backdrop-blur-xl border-l-2 border-pastel-purple/20">
+      <SheetContent side="right" className="w-[90vw] sm:w-[636px] max-w-[636px] overflow-y-auto overflow-x-hidden bg-gradient-to-br from-background via-background to-muted/30 backdrop-blur-xl border-l-2 border-pastel-purple/20">
         {/* Animated background pattern */}
         <div className="absolute inset-0 opacity-[0.03]" 
              style={{
