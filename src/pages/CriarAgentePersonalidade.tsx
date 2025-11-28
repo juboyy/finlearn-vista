@@ -833,7 +833,26 @@ export function CriarAgentePersonalidade() {
                   {memoryGB[0]} GB
                 </span>
               </div>
-              <p className="text-xs text-muted-foreground mt-2">
+              
+              {/* Preset Buttons */}
+              <div className="flex items-center gap-2 mt-4">
+                <span className="text-xs text-muted-foreground mr-2">Presets:</span>
+                {[5, 10, 25, 50, 100].map((preset) => (
+                  <button
+                    key={preset}
+                    onClick={() => setMemoryGB([preset])}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border ${
+                      memoryGB[0] === preset
+                        ? 'bg-pastel-blue border-sky-300 text-sky-700'
+                        : 'bg-secondary border-border text-muted-foreground hover:bg-pastel-blue/50 hover:border-sky-200'
+                    }`}
+                  >
+                    {preset} GB
+                  </button>
+                ))}
+              </div>
+              
+              <p className="text-xs text-muted-foreground mt-3">
                 Tipo selecionado: {currentMemoryLimit.label} (recomendado até {currentMemoryLimit.max} GB)
               </p>
             </div>
