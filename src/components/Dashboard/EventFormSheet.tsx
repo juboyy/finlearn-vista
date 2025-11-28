@@ -7,7 +7,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-import { X, Plus, Trash2, Users, BookOpen, GraduationCap, Mic, Video, LineChart, FileCheck, Calendar as CalendarIcon, Clock, Briefcase, Coffee, Phone, Mail, Presentation, Target, Paperclip, Upload, File } from "lucide-react";
+import { X, Plus, Trash2, Users, BookOpen, GraduationCap, Mic, Video, LineChart, FileCheck, Calendar as CalendarIcon, Clock, Briefcase, Coffee, Phone, Mail, Presentation, Target, Paperclip, Upload, File, Eye } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
@@ -55,6 +56,7 @@ export function EventFormSheet({ open, onOpenChange, eventId, onSave }: EventFor
   const [newInvitee, setNewInvitee] = useState({ email: "", name: "" });
   const [attachments, setAttachments] = useState<Array<{ name: string; url: string; size: number }>>([]);
   const [uploading, setUploading] = useState(false);
+  const [previewFile, setPreviewFile] = useState<{ name: string; url: string; type: string } | null>(null);
 
   useEffect(() => {
     if (open && eventId) {
@@ -200,6 +202,20 @@ export function EventFormSheet({ open, onOpenChange, eventId, onSave }: EventFor
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+  };
+
+  const getFileType = (fileName: string) => {
+    const ext = fileName.split('.').pop()?.toLowerCase();
+    if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'].includes(ext || '')) return 'image';
+    if (ext === 'pdf') return 'pdf';
+    return 'other';
+  };
+
+  const handlePreviewFile = (attachment: { name: string; url: string }) => {
+    const fileType = getFileType(attachment.name);
+    if (fileType === 'image' || fileType === 'pdf') {
+      setPreviewFile({ ...attachment, type: fileType });
+    }
   };
 
   const handleSave = async () => {
@@ -795,40 +811,56 @@ export function EventFormSheet({ open, onOpenChange, eventId, onSave }: EventFor
               {attachments.length > 0 && (
                 <div className="space-y-3 mt-4">
                   <p className="text-sm font-medium text-muted-foreground">{attachments.length} arquivo(s) anexado(s)</p>
-                  {attachments.map((file, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center justify-between p-4 bg-background rounded-lg border-2 border-border hover:border-primary transition-colors"
-                    >
-                      <div className="flex items-center gap-3 flex-1 min-w-0">
-                        <File className="w-5 h-5 text-primary flex-shrink-0" />
-                        <div className="flex-1 min-w-0">
-                          <p className="text-base font-semibold text-foreground truncate">{file.name}</p>
-                          <p className="text-sm text-muted-foreground">{formatFileSize(file.size)}</p>
+                  {attachments.map((file, index) => {
+                    const fileType = getFileType(file.name);
+                    const canPreview = fileType === 'image' || fileType === 'pdf';
+                    
+                    return (
+                      <div
+                        key={index}
+                        className="flex items-center justify-between p-4 bg-background rounded-lg border-2 border-border hover:border-primary transition-colors"
+                      >
+                        <div className="flex items-center gap-3 flex-1 min-w-0">
+                          <File className="w-5 h-5 text-primary flex-shrink-0" />
+                          <div className="flex-1 min-w-0">
+                            <p className="text-base font-semibold text-foreground truncate">{file.name}</p>
+                            <p className="text-sm text-muted-foreground">{formatFileSize(file.size)}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2 flex-shrink-0">
+                          {canPreview && (
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handlePreviewFile(file)}
+                              className="text-muted-foreground hover:text-primary"
+                            >
+                              <Eye size={16} />
+                            </Button>
+                          )}
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => window.open(file.url, '_blank')}
+                            className="text-muted-foreground hover:text-primary"
+                          >
+                            <Upload size={16} className="rotate-180" />
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => removeAttachment(index)}
+                            className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                          >
+                            <Trash2 size={16} />
+                          </Button>
                         </div>
                       </div>
-                      <div className="flex items-center gap-2 flex-shrink-0">
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => window.open(file.url, '_blank')}
-                          className="text-muted-foreground hover:text-primary"
-                        >
-                          <Upload size={16} className="rotate-180" />
-                        </Button>
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => removeAttachment(index)}
-                          className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                        >
-                          <Trash2 size={16} />
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
             </div>
@@ -868,6 +900,31 @@ export function EventFormSheet({ open, onOpenChange, eventId, onSave }: EventFor
           </div>
         </div>
       </SheetContent>
+
+      {/* File Preview Dialog */}
+      <Dialog open={!!previewFile} onOpenChange={() => setPreviewFile(null)}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden">
+          <DialogHeader>
+            <DialogTitle className="text-foreground">{previewFile?.name}</DialogTitle>
+          </DialogHeader>
+          <div className="w-full h-[calc(90vh-120px)] overflow-auto">
+            {previewFile?.type === 'image' && (
+              <img 
+                src={previewFile.url} 
+                alt={previewFile.name}
+                className="w-full h-auto object-contain"
+              />
+            )}
+            {previewFile?.type === 'pdf' && (
+              <iframe
+                src={previewFile.url}
+                className="w-full h-full border-0"
+                title={previewFile.name}
+              />
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </Sheet>
   );
 }
