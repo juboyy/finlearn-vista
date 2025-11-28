@@ -1,5 +1,5 @@
 import { BarChart3, Grid3x3, List, ChevronLeft, ChevronRight } from "lucide-react";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'relatorios' | 'documentos' | 'estudos' | 'infograficos' | 'whitepaper' | 'apresentacoes' | 'live';
 interface MenutabbarFixProps {
   activeTab: TabType;
@@ -8,6 +8,8 @@ interface MenutabbarFixProps {
   onAnalyticsClick?: () => void;
   showHistoricoButton?: boolean;
   showAnalyticsButton?: boolean;
+  isHistoricoActive?: boolean;
+  isAnalyticsActive?: boolean;
 }
 export const MenutabbarFix = ({
   activeTab,
@@ -15,10 +17,12 @@ export const MenutabbarFix = ({
   onHistoricoClick,
   onAnalyticsClick,
   showHistoricoButton = false,
-  showAnalyticsButton = false
+  showAnalyticsButton = false,
+  isHistoricoActive = false,
+  isAnalyticsActive = false
 }: MenutabbarFixProps) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [activeActionButton, setActiveActionButton] = useState<'analytics' | 'historico' | null>(null);
+  
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
       const scrollAmount = 200;
@@ -39,106 +43,63 @@ export const MenutabbarFix = ({
       }}>
           <button onClick={() => {
           setActiveTab('todos');
-          setActiveActionButton(null);
         }} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'todos' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
             <i className="fas fa-table-cells"></i>
             <span>Todos</span>
           </button>
-          <button onClick={() => {
-          setActiveTab('podcasts');
-          setActiveActionButton(null);
-        }} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'podcasts' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
+          <button onClick={() => setActiveTab('podcasts')} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'podcasts' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
             <i className="fas fa-podcast"></i>
             <span>Podcasts</span>
           </button>
-          <button onClick={() => {
-          setActiveTab('cursos');
-          setActiveActionButton(null);
-        }} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'cursos' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
+          <button onClick={() => setActiveTab('cursos')} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'cursos' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
             <i className="fas fa-graduation-cap"></i>
             <span>Cursos</span>
           </button>
-          <button onClick={() => {
-          setActiveTab('avatar-ia');
-          setActiveActionButton(null);
-        }} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'avatar-ia' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
+          <button onClick={() => setActiveTab('avatar-ia')} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'avatar-ia' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
             <i className="fas fa-robot"></i>
             <span>Avatar IA</span>
           </button>
-          <button onClick={() => {
-          setActiveTab('ebooks');
-          setActiveActionButton(null);
-        }} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'ebooks' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
+          <button onClick={() => setActiveTab('ebooks')} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'ebooks' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
             <i className="fas fa-book-open"></i>
             <span>E-books</span>
           </button>
-          <button onClick={() => {
-          setActiveTab('webinars');
-          setActiveActionButton(null);
-        }} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'webinars' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
+          <button onClick={() => setActiveTab('webinars')} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'webinars' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
             <i className="fas fa-video"></i>
             <span>Webinars</span>
           </button>
-          <button onClick={() => {
-          setActiveTab('artigos');
-          setActiveActionButton(null);
-        }} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'artigos' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
+          <button onClick={() => setActiveTab('artigos')} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'artigos' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
             <i className="fas fa-newspaper"></i>
             <span>Artigos</span>
           </button>
-          <button onClick={() => {
-          setActiveTab('analises');
-          setActiveActionButton(null);
-        }} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'analises' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
+          <button onClick={() => setActiveTab('analises')} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'analises' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
             <i className="fas fa-chart-line"></i>
             <span>Análises</span>
           </button>
-          <button onClick={() => {
-          setActiveTab('relatorios');
-          setActiveActionButton(null);
-        }} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'relatorios' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
+          <button onClick={() => setActiveTab('relatorios')} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'relatorios' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
             <i className="fas fa-file-invoice"></i>
             <span>Relatórios</span>
           </button>
-          <button onClick={() => {
-          setActiveTab('documentos');
-          setActiveActionButton(null);
-        }} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'documentos' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
+          <button onClick={() => setActiveTab('documentos')} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'documentos' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
             <i className="fas fa-file-alt"></i>
             <span>Newspaper</span>
           </button>
-          <button onClick={() => {
-          setActiveTab('estudos');
-          setActiveActionButton(null);
-        }} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'estudos' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
+          <button onClick={() => setActiveTab('estudos')} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'estudos' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
             <i className="fas fa-flask"></i>
             <span>Estudos Acadêmicos</span>
           </button>
-          <button onClick={() => {
-          setActiveTab('infograficos');
-          setActiveActionButton(null);
-        }} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'infograficos' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
+          <button onClick={() => setActiveTab('infograficos')} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'infograficos' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
             <i className="fas fa-chart-pie"></i>
             <span>Infográficos</span>
           </button>
-          <button onClick={() => {
-          setActiveTab('whitepaper');
-          setActiveActionButton(null);
-        }} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'whitepaper' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
+          <button onClick={() => setActiveTab('whitepaper')} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'whitepaper' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
             <i className="fas fa-file-lines"></i>
             <span>Whitepaper</span>
           </button>
-          <button onClick={() => {
-          setActiveTab('apresentacoes');
-          setActiveActionButton(null);
-        }} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'apresentacoes' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
+          <button onClick={() => setActiveTab('apresentacoes')} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'apresentacoes' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
             <i className="fas fa-display"></i>
             <span>Apresentações</span>
           </button>
-          <button onClick={() => {
-          setActiveTab('live');
-          setActiveActionButton(null);
-        }} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'live' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
+          <button onClick={() => setActiveTab('live')} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'live' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
             <i className="fas fa-circle-dot"></i>
             <span>Live</span>
           </button>
@@ -165,13 +126,10 @@ export const MenutabbarFix = ({
         
         {showAnalyticsButton && onAnalyticsClick && (
           <button 
-            onClick={() => {
-              onAnalyticsClick();
-              setActiveActionButton(activeActionButton === 'analytics' ? null : 'analytics');
-            }}
+            onClick={onAnalyticsClick}
             className={`px-5 py-3 rounded-lg font-medium transition-all duration-200 hover:scale-105 active:scale-95 flex items-center gap-2 whitespace-nowrap ${
-              activeActionButton === 'analytics' 
-                ? 'bg-pastel-blue text-slate-800 border border-slate-300' 
+              isAnalyticsActive
+                ? 'bg-pastel-green text-slate-800 border border-slate-300' 
                 : 'bg-pastel-blue text-slate-700 border border-slate-200 hover:bg-opacity-80'
             }`}
           >
@@ -182,13 +140,10 @@ export const MenutabbarFix = ({
         
         {showHistoricoButton && onHistoricoClick && (
           <button 
-            onClick={() => {
-              onHistoricoClick();
-              setActiveActionButton(activeActionButton === 'historico' ? null : 'historico');
-            }}
+            onClick={onHistoricoClick}
             className={`px-5 py-3 rounded-lg font-medium transition-all duration-200 hover:scale-105 active:scale-95 flex items-center gap-2 whitespace-nowrap ${
-              activeActionButton === 'historico' 
-                ? 'bg-pastel-blue text-slate-800 border border-slate-300' 
+              isHistoricoActive
+                ? 'bg-pastel-green text-slate-800 border border-slate-300' 
                 : 'bg-pastel-blue text-slate-700 border border-slate-200 hover:bg-opacity-80'
             }`}
           >
