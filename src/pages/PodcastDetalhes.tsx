@@ -31,6 +31,7 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useProductViewTracker } from "@/hooks/useProductViewTracker";
+import { usePodcastProgress } from "@/hooks/usePodcastProgress";
 import ep142Image from "@/assets/podcast-ep142-volatilidade.png";
 import ep141Image from "@/assets/podcast-ep141-selic.png";
 import ep140Image from "@/assets/podcast-ep140-tendencias-2025.png";
@@ -165,6 +166,18 @@ export default function PodcastDetalhes() {
   ];
 
   const currentEpisode = episodes.find(ep => ep.number === selectedEpisode) || episodes[0];
+
+  // Track podcast listening progress
+  usePodcastProgress({
+    podcastId: `podcast-${id}-episode-${selectedEpisode}`,
+    podcastTitle: currentEpisode.title,
+    podcastTopic: "Mercados em Foco",
+    podcastImage: currentEpisode.image,
+    episodeNumber: selectedEpisode,
+    currentTimeSeconds: currentTime,
+    totalDurationSeconds: duration,
+    isPlaying: isPlaying,
+  });
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
