@@ -98,8 +98,12 @@ export const useEbookAnnotations = (ebookId: string, ebookTitle: string) => {
         (payload) => {
           console.log("Annotation change:", payload);
           if (payload.eventType === "INSERT") {
-            setAnnotations((prev) => [...prev, payload.new as EbookAnnotation]);
-            toast.success("Nova anotação sincronizada");
+            // Only add if not already in state (avoid duplicates from optimistic update)
+            setAnnotations((prev) => {
+              const exists = prev.some(ann => ann.id === payload.new.id);
+              if (exists) return prev;
+              return [...prev, payload.new as EbookAnnotation];
+            });
           } else if (payload.eventType === "UPDATE") {
             setAnnotations((prev) =>
               prev.map((ann) =>
@@ -185,6 +189,11 @@ export const useEbookAnnotations = (ebookId: string, ebookTitle: string) => {
         .single();
 
       if (error) throw error;
+      
+      // Add to local state immediately for instant feedback
+      if (data) {
+        setAnnotations((prev) => [...prev, data as EbookAnnotation]);
+      }
       
       toast.success(
         type === "highlight" ? "Texto destacado" : 
