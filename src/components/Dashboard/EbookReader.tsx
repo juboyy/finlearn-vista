@@ -176,20 +176,28 @@ export const EbookReader = ({
 
   // Apply highlights to content
   const renderContentWithAnnotations = () => {
-    let content = mockContent;
+    if (annotations.length === 0) return mockContent;
+
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(mockContent, 'text/html');
+    const contentText = doc.body.textContent || '';
+    
     const sortedAnnotations = [...annotations].sort((a, b) => b.position_start - a.position_start);
 
+    let result = mockContent;
+    
     sortedAnnotations.forEach((annotation) => {
       if (annotation.annotation_type === "highlight" && !annotation.is_deleted) {
-        const before = content.substring(0, annotation.position_start);
-        const highlighted = content.substring(annotation.position_start, annotation.position_end);
-        const after = content.substring(annotation.position_end);
+        const textToHighlight = annotation.selected_text;
+        const highlightMarkup = `<mark style="background-color: ${annotation.highlight_color}; padding: 2px 4px; border-radius: 3px;" data-annotation-id="${annotation.id}">${textToHighlight}</mark>`;
         
-        content = `${before}<mark style="background-color: ${annotation.highlight_color}; padding: 2px 0;" data-annotation-id="${annotation.id}">${highlighted}</mark>${after}`;
+        // Replace first occurrence of the exact text
+        const regex = new RegExp(textToHighlight.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
+        result = result.replace(regex, highlightMarkup);
       }
     });
 
-    return content;
+    return result;
   };
 
   return (
