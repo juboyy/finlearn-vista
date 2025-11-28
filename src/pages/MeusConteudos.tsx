@@ -16,22 +16,22 @@ export default function MeusConteudos() {
     bgColor: "bg-[#D8BFD8]",
     title: "Regulação do Open Finance no Brasil",
     subtitle: "Episódio #42 • 45min",
-    status: "Publicado",
-    statusColor: "bg-[#98D8C8]",
-    statusDot: "bg-[#6FA997]",
+    status: "Rascunho",
+    statusColor: "bg-[#F4E4A6]",
+    statusDot: "bg-[#D4C186]",
     date: "15 Out 2024",
-    views: "2.4k"
+    views: "-"
   }, {
     type: "Artigo",
     icon: <Newspaper className="w-5 h-5" />,
     bgColor: "bg-[#B8C5D6]",
     title: "Tendências de Pagamentos Digitais 2025",
     subtitle: "8min de leitura",
-    status: "Rascunho",
-    statusColor: "bg-[#F4E4A6]",
-    statusDot: "bg-[#D4C186]",
+    status: "Publicado",
+    statusColor: "bg-[#98D8C8]",
+    statusDot: "bg-[#6FA997]",
     date: "18 Out 2024",
-    views: "-"
+    views: "1.8k"
   }, {
     type: "Análise",
     icon: <TrendingUp className="w-5 h-5" />,
