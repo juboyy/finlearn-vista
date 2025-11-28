@@ -198,18 +198,6 @@ export const EbookReader = ({
     window.getSelection()?.removeAllRanges();
   };
 
-  const handleHighlightClick = (e: React.MouseEvent, annotationId: string) => {
-    e.stopPropagation();
-    const target = e.currentTarget as HTMLElement;
-    const rect = target.getBoundingClientRect();
-    
-    setEditingAnnotationId(annotationId);
-    setEditMenuPosition({
-      top: rect.top - 60,
-      left: rect.left + (rect.width / 2)
-    });
-  };
-
   const handleUpdateHighlight = async (color: string) => {
     if (!editingAnnotationId) return;
     
@@ -235,38 +223,22 @@ export const EbookReader = ({
     if (annotations.length === 0) return mockContent;
 
     let result = mockContent;
-    const sortedAnnotations = [...annotations].sort((a, b) => a.position_start - b.position_start);
+    const sortedAnnotations = [...annotations].sort((a, b) => b.position_start - a.position_start);
 
-    // Create a map to track already highlighted positions
-    const highlightedRanges: Array<{ start: number; end: number; html: string }> = [];
-    
     sortedAnnotations.forEach((annotation) => {
       if (annotation.annotation_type === "highlight" && !annotation.is_deleted) {
-        highlightedRanges.push({
-          start: annotation.position_start,
-          end: annotation.position_end,
-          html: `<mark 
-            onclick="handleHighlightClick(event, '${annotation.id}')" 
-            style="background-color: ${annotation.highlight_color}; padding: 3px 2px; border-radius: 2px; font-weight: 500; cursor: pointer; transition: all 0.2s;" 
+        const textToFind = annotation.selected_text;
+        const escapedText = textToFind.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const regex = new RegExp(`(${escapedText})`, 'gi');
+        
+        result = result.replace(regex, (match) => {
+          return `<mark 
+            style="background-color: ${annotation.highlight_color}; padding: 3px 2px; border-radius: 2px; font-weight: 500; cursor: pointer; transition: all 0.2s; box-shadow: none;" 
             data-annotation-id="${annotation.id}"
             class="editable-highlight"
-            onmouseover="this.style.boxShadow='0 0 0 2px hsl(var(--primary))'"
-            onmouseout="this.style.boxShadow='none'"
-          >${annotation.selected_text}</mark>`
+          >${match}</mark>`;
         });
       }
-    });
-
-    // Apply highlights in reverse order to maintain positions
-    highlightedRanges.reverse().forEach(({ start, end, html }) => {
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(result, 'text/html');
-      const textContent = doc.body.textContent || '';
-      
-      const before = result.substring(0, result.indexOf(textContent.substring(start, end)));
-      const after = result.substring(result.indexOf(textContent.substring(start, end)) + (end - start));
-      
-      result = before + html + after;
     });
 
     return result;
@@ -320,8 +292,25 @@ export const EbookReader = ({
                 if (target.classList.contains('editable-highlight')) {
                   const annotationId = target.getAttribute('data-annotation-id');
                   if (annotationId) {
-                    handleHighlightClick(e as any, annotationId);
+                    const rect = target.getBoundingClientRect();
+                    setEditingAnnotationId(annotationId);
+                    setEditMenuPosition({
+                      top: rect.top - 60,
+                      left: rect.left + (rect.width / 2)
+                    });
                   }
+                }
+              }}
+              onMouseOver={(e) => {
+                const target = e.target as HTMLElement;
+                if (target.classList.contains('editable-highlight')) {
+                  target.style.boxShadow = '0 0 0 2px hsl(var(--primary))';
+                }
+              }}
+              onMouseOut={(e) => {
+                const target = e.target as HTMLElement;
+                if (target.classList.contains('editable-highlight')) {
+                  target.style.boxShadow = 'none';
                 }
               }}
               dangerouslySetInnerHTML={{ __html: renderContentWithAnnotations() }}
