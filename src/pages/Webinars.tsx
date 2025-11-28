@@ -2,11 +2,13 @@ import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { MenutabbarFix } from "@/components/Dashboard/MenutabbarFix";
 import { useState } from "react";
 import { Bell } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'relatorios' | 'documentos' | 'estudos' | 'infograficos' | 'whitepaper' | 'apresentacoes' | 'live' | 'entrevistas';
 
 export default function Webinars() {
   const [activeTab, setActiveTab] = useState<TabType>('webinars');
+  const navigate = useNavigate();
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -33,7 +35,35 @@ export default function Webinars() {
           </div>
         </header>
 
-        <MenutabbarFix activeTab={activeTab} setActiveTab={setActiveTab} />
+        <MenutabbarFix 
+          activeTab={activeTab} 
+          setActiveTab={setActiveTab}
+          showAnalyticsButton={true}
+          onAnalyticsClick={() => {
+            const analyticsRoutes: Record<TabType, string> = {
+              'todos': '/conteudo-analytics',
+              'podcasts': '/podcast-analytics',
+              'cursos': '/cursos-analytics',
+              'avatar-ia': '/avatar-ia-analytics',
+              'ebooks': '/ebooks-analytics',
+              'webinars': '/webinars-analytics',
+              'artigos': '/artigos-analytics',
+              'analises': '/analises-analytics',
+              'relatorios': '/relatorios-analytics',
+              'documentos': '/newspaper-analytics',
+              'estudos': '/estudos-academicos-analytics',
+              'infograficos': '/infografico-analytics',
+              'whitepaper': '/whitepaper-analytics',
+              'apresentacoes': '/apresentacoes-analytics',
+              'live': '/live-analytics',
+              'entrevistas': '/entrevistas-analytics'
+            };
+            const route = analyticsRoutes[activeTab];
+            if (route) {
+              navigate(route);
+            }
+          }}
+        />
 
         <div className="p-8">
           {/* Live Webinars Section */}
