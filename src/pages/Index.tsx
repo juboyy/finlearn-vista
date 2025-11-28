@@ -12,6 +12,7 @@ import { InsightsDoDia } from "@/components/Dashboard/InsightsDoDia";
 import { ExplainChartChat } from "@/components/Dashboard/ExplainChartChat";
 import { EventDetailsSheet } from "@/components/Dashboard/EventDetailsSheet";
 import { PodcastPanel } from "@/components/Dashboard/PodcastPanel";
+import { EbookPanel } from "@/components/Dashboard/EbookPanel";
 import { Button } from "@/components/ui/button";
 import {
   Tooltip,
@@ -26,6 +27,7 @@ import { useUserAgents } from "@/hooks/useUserAgents";
 
 const Index = () => {
   const [podcastPanelOpen, setPodcastPanelOpen] = useState(false);
+  const [ebookPanelOpen, setEbookPanelOpen] = useState(false);
   const [insightsOpen, setInsightsOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [explainChartOpen, setExplainChartOpen] = useState(false);
@@ -300,6 +302,7 @@ const Index = () => {
                   title="eBooks"
                   description="Material complementar"
                   bgColor="bg-pastel-peach"
+                  onClick={() => setEbookPanelOpen(true)}
                 />
               </div>
             </section>
@@ -465,6 +468,10 @@ const Index = () => {
       <PodcastPanel 
         open={podcastPanelOpen} 
         onOpenChange={setPodcastPanelOpen}
+      />
+      <EbookPanel 
+        open={ebookPanelOpen} 
+        onOpenChange={setEbookPanelOpen}
       />
     </div>
   );
