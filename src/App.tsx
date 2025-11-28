@@ -103,6 +103,7 @@ import NovoEbookEtapa2 from "./pages/NovoEbookEtapa2";
 import NovoEbookEtapa3 from "./pages/NovoEbookEtapa3";
 import ResumoEbook from "./pages/ResumoEbook";
 import HistoricoPodcasts from "./pages/HistoricoPodcasts";
+import LerEbook from "./pages/LerEbook";
 
 import NotFound from "./pages/NotFound";
 
@@ -158,6 +159,7 @@ const App = () => {
           <Route path="/podcasts" element={<Podcasts />} />
           <Route path="/webinars" element={<Webinars />} />
           <Route path="/ebook/:id" element={<EbookDetalhes />} />
+          <Route path="/ler-ebook/:id" element={<LerEbook />} />
           <Route path="/minha-conta" element={<MinhaConta />} />
           <Route path="/assinaturas" element={<Assinaturas />} />
           <Route path="/configuracoes" element={<Configuracoes />} />
