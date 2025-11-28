@@ -102,6 +102,7 @@ import NovoEbook from "./pages/NovoEbook";
 import NovoEbookEtapa2 from "./pages/NovoEbookEtapa2";
 import NovoEbookEtapa3 from "./pages/NovoEbookEtapa3";
 import ResumoEbook from "./pages/ResumoEbook";
+import HistoricoPodcasts from "./pages/HistoricoPodcasts";
 
 import NotFound from "./pages/NotFound";
 
@@ -219,6 +220,7 @@ const App = () => {
           <Route path="/novo-ebook/etapa-2" element={<NovoEbookEtapa2 />} />
           <Route path="/novo-ebook/etapa-3" element={<NovoEbookEtapa3 />} />
           <Route path="/resumo-ebook" element={<ResumoEbook />} />
+          <Route path="/historico-podcasts" element={<HistoricoPodcasts />} />
           
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

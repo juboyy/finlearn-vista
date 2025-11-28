@@ -487,6 +487,51 @@ export type Database = {
         }
         Relationships: []
       }
+      user_podcast_history: {
+        Row: {
+          created_at: string
+          current_time_seconds: number
+          episode_number: number | null
+          id: string
+          last_played_at: string
+          podcast_id: string
+          podcast_image: string
+          podcast_title: string
+          podcast_topic: string
+          progress_percentage: number
+          total_duration_seconds: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          current_time_seconds?: number
+          episode_number?: number | null
+          id?: string
+          last_played_at?: string
+          podcast_id: string
+          podcast_image: string
+          podcast_title: string
+          podcast_topic: string
+          progress_percentage?: number
+          total_duration_seconds: number
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          current_time_seconds?: number
+          episode_number?: number | null
+          id?: string
+          last_played_at?: string
+          podcast_id?: string
+          podcast_image?: string
+          podcast_title?: string
+          podcast_topic?: string
+          progress_percentage?: number
+          total_duration_seconds?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_preferences: {
         Row: {
           created_at: string
