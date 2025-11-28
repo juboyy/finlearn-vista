@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Bookmark, Highlighter, MessageSquare, ChevronLeft, ChevronRight, Search, X, Edit2, Trash2, Save, ArrowUpDown, Bot } from "lucide-react";
+import { ArrowLeft, Bookmark, Highlighter, MessageSquare, ChevronLeft, ChevronRight, Search, X, Edit2, Trash2, Save, ArrowUpDown, Bot, FileEdit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
@@ -247,6 +247,12 @@ const LerEbook = () => {
     setHighlightName("");
     setPreviewRange(null);
     window.getSelection()?.removeAllRanges();
+  };
+
+  const handleCreatePageFromSelection = () => {
+    removePreviewHighlight();
+    const pageTitle = selectedText.substring(0, 100);
+    navigate(`/novo-documento?title=${encodeURIComponent(pageTitle)}`);
   };
 
   const handleAddNote = async () => {
@@ -1335,6 +1341,10 @@ const LerEbook = () => {
                 <Button size="sm" variant="outline" onClick={handleShowNoteInput} className="flex-1">
                   <MessageSquare size={14} className="mr-2" />
                   Anotar
+                </Button>
+                <Button size="sm" variant="outline" onClick={handleCreatePageFromSelection} className="flex-1">
+                  <FileEdit size={14} className="mr-2" />
+                  Página
                 </Button>
               </div>
             </div>
