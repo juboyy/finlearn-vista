@@ -33,11 +33,28 @@ export function CriarAgentePersonalidade() {
   const [customBackground, setCustomBackground] = useState(false);
 
   // State for memory integrations
+  const [memoryType, setMemoryType] = useState("medium");
+  const [memoryGB, setMemoryGB] = useState([5]);
   const [googleDriveEnabled, setGoogleDriveEnabled] = useState(false);
   const [notionEnabled, setNotionEnabled] = useState(false);
   const [googleSheetsEnabled, setGoogleSheetsEnabled] = useState(false);
   const [webhookEnabled, setWebhookEnabled] = useState(false);
   const [dropboxEnabled, setDropboxEnabled] = useState(false);
+
+  const getMemoryLimits = (type: string) => {
+    switch (type) {
+      case "short":
+        return { max: 2, label: "Curto Prazo", description: "Ideal para tarefas pontuais e conversas breves" };
+      case "medium":
+        return { max: 10, label: "Médio Prazo", description: "Balanceado para uso geral e projetos" };
+      case "long":
+        return { max: 50, label: "Longo Prazo", description: "Máxima capacidade para projetos complexos" };
+      default:
+        return { max: 10, label: "Médio Prazo", description: "Balanceado para uso geral" };
+    }
+  };
+
+  const currentMemoryLimit = getMemoryLimits(memoryType);
 
   const reasoningTraits = [
     {
@@ -743,22 +760,108 @@ export function CriarAgentePersonalidade() {
             </div>
             
             <p className="text-sm text-muted-foreground mb-6">
-              Configure se o agente poderá acessar e trazer informações de fontes externas para enriquecer suas respostas
+              Configure a capacidade de memória e fontes de dados que o agente poderá acessar
             </p>
 
-            <div className="space-y-4">
-              <div className="flex items-center justify-between p-4 rounded-xl bg-secondary border border-border">
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 rounded-lg bg-pastel-blue flex items-center justify-center">
-                    <Cloud className="text-sky-600" size={20} />
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-foreground">Google Drive</p>
-                    <p className="text-xs text-muted-foreground">Acesso a documentos e arquivos</p>
-                  </div>
+            {/* Memory Type Selection */}
+            <div className="mb-6">
+              <Label className="block text-sm font-semibold text-foreground mb-3">Tipo de Memória</Label>
+              <div className="grid grid-cols-3 gap-3">
+                <div 
+                  onClick={() => {
+                    setMemoryType("short");
+                    setMemoryGB([Math.min(memoryGB[0], 2)]);
+                  }}
+                  className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
+                    memoryType === "short" 
+                      ? 'bg-pastel-blue border-sky-300' 
+                      : 'bg-secondary border-border hover:border-sky-200'
+                  }`}
+                >
+                  <p className="text-sm font-bold text-foreground mb-1">Curto Prazo</p>
+                  <p className="text-xs text-muted-foreground mb-2">Até 2 GB</p>
+                  <p className="text-xs text-muted-foreground">Para tarefas pontuais e conversas breves</p>
                 </div>
-                <Switch checked={googleDriveEnabled} onCheckedChange={setGoogleDriveEnabled} />
+
+                <div 
+                  onClick={() => {
+                    setMemoryType("medium");
+                    setMemoryGB([Math.min(memoryGB[0], 10)]);
+                  }}
+                  className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
+                    memoryType === "medium" 
+                      ? 'bg-pastel-blue border-sky-300' 
+                      : 'bg-secondary border-border hover:border-sky-200'
+                  }`}
+                >
+                  <p className="text-sm font-bold text-foreground mb-1">Médio Prazo</p>
+                  <p className="text-xs text-muted-foreground mb-2">Até 10 GB</p>
+                  <p className="text-xs text-muted-foreground">Balanceado para uso geral e projetos</p>
+                </div>
+
+                <div 
+                  onClick={() => {
+                    setMemoryType("long");
+                  }}
+                  className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
+                    memoryType === "long" 
+                      ? 'bg-pastel-blue border-sky-300' 
+                      : 'bg-secondary border-border hover:border-sky-200'
+                  }`}
+                >
+                  <p className="text-sm font-bold text-foreground mb-1">Longo Prazo</p>
+                  <p className="text-xs text-muted-foreground mb-2">Até 50 GB</p>
+                  <p className="text-xs text-muted-foreground">Máxima capacidade para projetos complexos</p>
+                </div>
               </div>
+            </div>
+
+            {/* Memory GB Slider */}
+            <div className="mb-6">
+              <Label className="block text-sm font-semibold text-foreground mb-3">
+                Capacidade de Armazenamento
+              </Label>
+              <div className="flex items-center space-x-4">
+                <span className="text-xs text-muted-foreground">0 GB</span>
+                <Slider 
+                  value={memoryGB} 
+                  onValueChange={setMemoryGB} 
+                  min={0} 
+                  max={currentMemoryLimit.max} 
+                  step={0.5} 
+                  className="flex-1" 
+                />
+                <span className="px-4 py-2 bg-pastel-blue rounded-lg text-foreground font-bold text-sm min-w-[80px] text-center">
+                  {memoryGB[0]} GB
+                </span>
+              </div>
+              <p className="text-xs text-muted-foreground mt-2">
+                Máximo disponível: {currentMemoryLimit.max} GB ({currentMemoryLimit.label})
+              </p>
+            </div>
+
+            {/* External Data Sources */}
+            <div className="border-t border-border pt-6">
+              <Label className="block text-sm font-semibold text-foreground mb-3">
+                Fontes de Dados Externas
+              </Label>
+              <p className="text-xs text-muted-foreground mb-4">
+                Permita que o agente acesse informações de integrações externas
+              </p>
+
+              <div className="space-y-3">
+                <div className="flex items-center justify-between p-4 rounded-xl bg-secondary border border-border">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 rounded-lg bg-pastel-blue flex items-center justify-center">
+                      <Cloud className="text-sky-600" size={20} />
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-foreground">Google Drive</p>
+                      <p className="text-xs text-muted-foreground">Acesso a documentos e arquivos</p>
+                    </div>
+                  </div>
+                  <Switch checked={googleDriveEnabled} onCheckedChange={setGoogleDriveEnabled} />
+                </div>
 
               <div className="flex items-center justify-between p-4 rounded-xl bg-secondary border border-border">
                 <div className="flex items-center space-x-3">
@@ -811,6 +914,7 @@ export function CriarAgentePersonalidade() {
                 </div>
                 <Switch checked={dropboxEnabled} onCheckedChange={setDropboxEnabled} />
               </div>
+            </div>
             </div>
           </div>
 
