@@ -220,6 +220,30 @@ export type Database = {
         }
         Relationships: []
       }
+      documents: {
+        Row: {
+          content: string | null
+          embedding: string | null
+          fts: unknown
+          id: number
+          metadata: Json | null
+        }
+        Insert: {
+          content?: string | null
+          embedding?: string | null
+          fts?: unknown
+          id?: never
+          metadata?: Json | null
+        }
+        Update: {
+          content?: string | null
+          embedding?: string | null
+          fts?: unknown
+          id?: never
+          metadata?: Json | null
+        }
+        Relationships: []
+      }
       ebook_annotations: {
         Row: {
           annotation_content: string | null
@@ -937,6 +961,22 @@ export type Database = {
     }
     Functions: {
       deactivate_expired_promotions: { Args: never; Returns: undefined }
+      hybrid_search: {
+        Args: {
+          full_text_weight?: number
+          match_count: number
+          query_embedding: string
+          query_text: string
+          rrf_k?: number
+          semantic_weight?: number
+        }
+        Returns: {
+          content: string
+          id: number
+          rank: number
+          score: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

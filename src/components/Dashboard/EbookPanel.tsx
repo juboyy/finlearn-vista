@@ -43,6 +43,7 @@ export const EbookPanel = ({
 }: EbookPanelProps) => {
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
   const [readingEbook, setReadingEbook] = useState<Ebook | null>(null);
+  const [bookmarked, setBookmarked] = useState<Set<string>>(new Set());
   const navigate = useNavigate();
   const toggleFavorite = (id: string) => {
     const newFavorites = new Set(favorites);
@@ -54,6 +55,18 @@ export const EbookPanel = ({
       toast.success("Adicionado à wishlist");
     }
     setFavorites(newFavorites);
+  };
+
+  const toggleBookmark = (id: string) => {
+    const newBookmarks = new Set(bookmarked);
+    if (newBookmarks.has(id)) {
+      newBookmarks.delete(id);
+      toast.success("Bookmark removido");
+    } else {
+      newBookmarks.add(id);
+      toast.success("Marcado onde parou");
+    }
+    setBookmarked(newBookmarks);
   };
 
   // Mock data - In production, fetch from API
@@ -314,17 +327,27 @@ export const EbookPanel = ({
               <h2 className="text-lg font-semibold text-foreground line-clamp-1 flex-1 text-center px-4">
                 {readingEbook.title}
               </h2>
-              <Button
-                size="sm"
-                className="bg-pastel-purple hover:bg-pastel-pink text-foreground font-semibold"
-                onClick={() => {
-                  onOpenChange(false);
-                  navigate(`/ler-ebook/${readingEbook.id}`);
-                }}
-              >
-                <Play className="h-4 w-4 mr-2" />
-                Leitura Completa
-              </Button>
+              <div className="flex items-center gap-2">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className={`border-2 ${bookmarked.has(readingEbook.id) ? 'bg-pastel-yellow border-pastel-yellow' : 'border-border hover:bg-muted'}`}
+                  onClick={() => toggleBookmark(readingEbook.id)}
+                >
+                  <Bookmark size={16} className={bookmarked.has(readingEbook.id) ? 'fill-current' : ''} />
+                </Button>
+                <Button
+                  size="sm"
+                  className="bg-pastel-purple hover:bg-pastel-pink text-foreground font-semibold"
+                  onClick={() => {
+                    onOpenChange(false);
+                    navigate(`/ler-ebook/${readingEbook.id}`);
+                  }}
+                >
+                  <Play className="h-4 w-4 mr-2" />
+                  Leitura Completa
+                </Button>
+              </div>
             </div>
             
             <div className="p-6 space-y-6">
