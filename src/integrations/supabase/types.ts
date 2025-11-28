@@ -292,6 +292,68 @@ export type Database = {
           },
         ]
       }
+      markdown_chapters: {
+        Row: {
+          content: string
+          created_at: string
+          document_id: string
+          id: string
+          position: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          content?: string
+          created_at?: string
+          document_id: string
+          id?: string
+          position: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          document_id?: string
+          id?: string
+          position?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "markdown_chapters_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "markdown_documents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      markdown_documents: {
+        Row: {
+          created_at: string
+          id: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          title: string
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       presentations: {
         Row: {
           author_name: string
