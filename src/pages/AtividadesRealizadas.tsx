@@ -1,9 +1,11 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Bell, ChevronLeft, ChevronRight, CalendarCheck, Clock, BookOpen, Users, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export default function AtividadesRealizadas() {
   const navigate = useNavigate();
+  const [selectedPeriod, setSelectedPeriod] = useState<"hoje" | "semana" | "mes">("hoje");
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -126,10 +128,53 @@ export default function AtividadesRealizadas() {
             </aside>
 
             {/* Main Content Area */}
-            <div className="flex-1">
+            <div className="flex-1 space-y-6">
+              {/* Filtros de Período */}
+              <section className="bg-white rounded-xl p-6 border border-slate-200">
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => setSelectedPeriod("hoje")}
+                    className={`px-6 py-2.5 rounded-lg text-sm font-medium transition ${
+                      selectedPeriod === "hoje"
+                        ? "bg-pastel-blue text-white"
+                        : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                    }`}
+                  >
+                    Hoje
+                  </button>
+                  <button
+                    onClick={() => setSelectedPeriod("semana")}
+                    className={`px-6 py-2.5 rounded-lg text-sm font-medium transition ${
+                      selectedPeriod === "semana"
+                        ? "bg-pastel-blue text-white"
+                        : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                    }`}
+                  >
+                    Esta Semana
+                  </button>
+                  <button
+                    onClick={() => setSelectedPeriod("mes")}
+                    className={`px-6 py-2.5 rounded-lg text-sm font-medium transition ${
+                      selectedPeriod === "mes"
+                        ? "bg-pastel-blue text-white"
+                        : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                    }`}
+                  >
+                    Este Mês
+                  </button>
+                </div>
+              </section>
+
               {/* Lista de Atividades */}
               <section className="bg-white rounded-xl p-6 border border-slate-200">
-                <h2 className="text-lg font-semibold text-slate-800 mb-4">Lista de Atividades</h2>
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-lg font-semibold text-slate-800">Lista de Atividades</h2>
+                  <span className="text-sm text-slate-500">
+                    {selectedPeriod === "hoje" && "Atividades de hoje"}
+                    {selectedPeriod === "semana" && "Atividades desta semana"}
+                    {selectedPeriod === "mes" && "Atividades deste mês"}
+                  </span>
+                </div>
                 <div className="space-y-3">
                   {/* Event 1 */}
                   <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200 hover:border-pastel-rose hover:bg-slate-50 transition cursor-pointer">
