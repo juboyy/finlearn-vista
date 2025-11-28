@@ -13,7 +13,7 @@ export function CriarAgenteResumo() {
 
       <main className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
-        <header className="sticky top-0 z-10 bg-card border-b border-border">
+        <header className="bg-card/80 backdrop-blur-xl border-b border-border sticky top-0 z-40">
           <div className="px-8 py-4">
             <div className="flex items-center justify-between">
               <div>
@@ -43,9 +43,9 @@ export function CriarAgenteResumo() {
               </div>
             </div>
           </div>
-
-          <AgentStepWizard currentStep={4} />
         </header>
+
+        <AgentStepWizard currentStep={4} />
 
         {/* Content */}
         <div className="flex-1 overflow-y-auto bg-background">
