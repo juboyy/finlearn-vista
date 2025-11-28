@@ -1,6 +1,6 @@
 import { BarChart3, Grid3x3, List, ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef } from "react";
-type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'relatorios' | 'documentos' | 'estudos' | 'infograficos' | 'whitepaper' | 'apresentacoes' | 'live';
+type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'relatorios' | 'documentos' | 'estudos' | 'infograficos' | 'whitepaper' | 'apresentacoes' | 'live' | 'entrevistas';
 interface MenutabbarFixProps {
   activeTab: TabType;
   setActiveTab: (tab: TabType) => void;
@@ -102,6 +102,10 @@ export const MenutabbarFix = ({
           <button onClick={() => setActiveTab('live')} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'live' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
             <i className="fas fa-circle-dot"></i>
             <span>Live</span>
+          </button>
+          <button onClick={() => setActiveTab('entrevistas')} className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out flex items-center gap-2 whitespace-nowrap text-sm hover:scale-105 active:scale-95 ${activeTab === 'entrevistas' ? 'bg-pastel-blue text-slate-800 shadow-sm' : 'text-slate-600 hover:bg-pastel-pink/20'}`}>
+            <i className="fas fa-comments"></i>
+            <span>Entrevistas</span>
           </button>
         </div>
         <button onClick={() => scroll('right')} className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-white border border-slate-200 rounded-full flex items-center justify-center text-slate-600 hover:bg-slate-50 transition shadow-sm">
