@@ -680,7 +680,7 @@ const LerEbook = () => {
   return (
     <div className="flex h-screen overflow-hidden bg-background">
       {/* Left Sidebar - Chapters */}
-      <div className="w-80 bg-card border-r border-border flex flex-col">
+      <div className="w-64 bg-card border-r border-border flex flex-col">
         <div className="p-6 border-b border-border">
           <Button
             variant="ghost"
