@@ -96,7 +96,6 @@ export const useEbookAnnotations = (ebookId: string, ebookTitle: string) => {
           filter: `ebook_id=eq.${ebookId}`,
         },
         (payload) => {
-          console.log("Annotation change:", payload);
           if (payload.eventType === "INSERT") {
             // Only add if not already in state (avoid duplicates from optimistic update)
             setAnnotations((prev) => {
@@ -136,7 +135,6 @@ export const useEbookAnnotations = (ebookId: string, ebookTitle: string) => {
           filter: `ebook_id=eq.${ebookId}`,
         },
         (payload) => {
-          console.log("Bookmark change:", payload);
           if (payload.eventType === "INSERT") {
             setBookmarks((prev) => [...prev, payload.new as EbookBookmark]);
             toast.success("Marcador sincronizado");

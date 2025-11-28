@@ -35,6 +35,7 @@ const LerEbook = () => {
   const [hoveredAnnotationId, setHoveredAnnotationId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<"bookmarks" | "highlights" | "notes">("bookmarks");
   const [renderKey, setRenderKey] = useState(0);
+  const [previewRange, setPreviewRange] = useState<Range | null>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -129,23 +130,80 @@ const LerEbook = () => {
       const range = selection?.getRangeAt(0);
       const rect = range?.getBoundingClientRect();
       
-      if (rect) {
+      if (rect && range) {
         setSelectedText(text);
+        setPreviewRange(range.cloneRange());
         setHighlightMenuPosition({ x: rect.left, y: rect.top - 60 });
         setShowHighlightMenu(true);
+        applyPreviewHighlight(range.cloneRange(), selectedColor);
       }
     } else {
       setShowHighlightMenu(false);
+      removePreviewHighlight();
+      setPreviewRange(null);
     }
   };
 
+  // Apply preview highlight effect
+  const applyPreviewHighlight = (range: Range, color: string) => {
+    removePreviewHighlight();
+    
+    const span = document.createElement('span');
+    span.setAttribute('data-preview-highlight', 'true');
+    span.style.backgroundColor = color;
+    span.style.padding = '3px 2px';
+    span.style.borderRadius = '3px';
+    span.style.transition = 'background-color 0.2s';
+    
+    try {
+      range.surroundContents(span);
+    } catch (e) {
+      // If surroundContents fails (e.g., partial element selection), use a different approach
+      const contents = range.extractContents();
+      span.appendChild(contents);
+      range.insertNode(span);
+    }
+  };
+
+  // Remove preview highlight
+  const removePreviewHighlight = () => {
+    const previewElements = document.querySelectorAll('[data-preview-highlight="true"]');
+    previewElements.forEach((element) => {
+      const parent = element.parentNode;
+      if (parent) {
+        while (element.firstChild) {
+          parent.insertBefore(element.firstChild, element);
+        }
+        parent.removeChild(element);
+      }
+    });
+  };
+
+  // Update preview color when color selection changes
+  useEffect(() => {
+    if (showHighlightMenu && previewRange) {
+      applyPreviewHighlight(previewRange.cloneRange(), selectedColor);
+    }
+  }, [selectedColor]);
+
+  // Cleanup preview on page change
+  useEffect(() => {
+    removePreviewHighlight();
+    setShowHighlightMenu(false);
+    setPreviewRange(null);
+  }, [currentPage]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      removePreviewHighlight();
+    };
+  }, []);
+
   const handleHighlight = async () => {
     if (selectedText) {
-      console.log('Criando destaque:', {
-        texto: selectedText,
-        cor: selectedColor,
-        pagina: currentPage
-      });
+      // Remove preview first
+      removePreviewHighlight();
       
       await createAnnotation(
         "highlight",
@@ -157,18 +215,18 @@ const LerEbook = () => {
         currentPage
       );
       
-      console.log('Destaque criado. Total de anotações:', annotations.length + 1);
-      
       // Force re-render to show the highlight immediately
       setRenderKey(prev => prev + 1);
       setShowHighlightMenu(false);
       setShowNoteInput(false);
+      setPreviewRange(null);
       window.getSelection()?.removeAllRanges();
     }
   };
 
   const handleAddBookmarkFromSelection = () => {
     const chapter = ebookData.chapters.find(ch => ch.page <= currentPage);
+    removePreviewHighlight();
     createBookmark(
       currentPage,
       undefined,
@@ -177,11 +235,14 @@ const LerEbook = () => {
     );
     setShowHighlightMenu(false);
     setShowNoteInput(false);
+    setPreviewRange(null);
     window.getSelection()?.removeAllRanges();
   };
 
   const handleAddNote = async () => {
     if (selectedText && noteContent.trim()) {
+      removePreviewHighlight();
+      
       await createAnnotation(
         "note",
         selectedText,
@@ -195,6 +256,7 @@ const LerEbook = () => {
       setShowHighlightMenu(false);
       setShowNoteInput(false);
       setNoteContent("");
+      setPreviewRange(null);
       window.getSelection()?.removeAllRanges();
     }
   };
@@ -400,9 +462,6 @@ const LerEbook = () => {
   const getContentWithAnnotations = () => {
     let content = ebookData.content;
     
-    console.log('Aplicando anotações. Total:', annotations.length);
-    console.log('Anotações da página atual:', annotations.filter(a => a.page_number === currentPage));
-    
     // Apply search highlights first if there's a search query
     if (searchQuery.trim()) {
       const parser = new DOMParser();
@@ -505,7 +564,6 @@ const LerEbook = () => {
           
           if (annotation.annotation_type === 'highlight') {
             const bgColor = annotation.highlight_color || 'rgba(255, 235, 59, 0.6)';
-            console.log('Aplicando destaque:', { texto: annotation.selected_text, cor: bgColor });
             span.style.backgroundColor = bgColor;
             span.title = 'Destaque';
             span.textContent = annotation.selected_text;
@@ -1219,7 +1277,12 @@ const LerEbook = () => {
 
               {/* Action Buttons */}
               <div className="flex gap-2">
-                <Button size="sm" onClick={handleHighlight} className="flex-1">
+                <Button 
+                  size="sm" 
+                  onClick={handleHighlight} 
+                  className="flex-1"
+                  style={{ backgroundColor: selectedColor, color: 'hsl(var(--foreground))' }}
+                >
                   <Highlighter size={14} className="mr-2" />
                   Destacar
                 </Button>
@@ -1257,8 +1320,12 @@ const LerEbook = () => {
                   size="sm" 
                   variant="outline" 
                   onClick={() => {
+                    removePreviewHighlight();
                     setShowNoteInput(false);
                     setNoteContent("");
+                    setShowHighlightMenu(false);
+                    setPreviewRange(null);
+                    window.getSelection()?.removeAllRanges();
                   }}
                   className="flex-1"
                 >
