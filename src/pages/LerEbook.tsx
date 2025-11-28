@@ -20,7 +20,7 @@ const LerEbook = () => {
   const [selectedText, setSelectedText] = useState("");
   const [showHighlightMenu, setShowHighlightMenu] = useState(false);
   const [highlightMenuPosition, setHighlightMenuPosition] = useState({ x: 0, y: 0 });
-  const [selectedColor, setSelectedColor] = useState("rgba(255, 235, 59, 0.4)");
+  const [selectedColor, setSelectedColor] = useState("rgba(255, 235, 59, 0.6)");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<number[]>([]);
   const [currentSearchIndex, setCurrentSearchIndex] = useState(0);
@@ -34,6 +34,7 @@ const LerEbook = () => {
   const [sortBy, setSortBy] = useState<"date" | "page" | "type">("date");
   const [hoveredAnnotationId, setHoveredAnnotationId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<"bookmarks" | "highlights" | "notes">("bookmarks");
+  const [renderKey, setRenderKey] = useState(0);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -150,6 +151,8 @@ const LerEbook = () => {
         currentPage
       );
       
+      // Force re-render to show the highlight immediately
+      setRenderKey(prev => prev + 1);
       setShowHighlightMenu(false);
       setShowNoteInput(false);
       window.getSelection()?.removeAllRanges();
@@ -730,7 +733,7 @@ const LerEbook = () => {
           <div className="max-w-4xl mx-auto p-12 relative">
             <div
               ref={contentRef}
-              key={`content-${annotations.length}-${currentPage}`}
+              key={`content-${annotations.length}-${currentPage}-${renderKey}`}
               className="prose prose-slate dark:prose-invert max-w-none"
               onMouseUp={handleTextSelection}
               dangerouslySetInnerHTML={{ __html: getContentWithAnnotations() }}
@@ -1182,11 +1185,11 @@ const LerEbook = () => {
                 <span className="text-xs text-muted-foreground mr-1">Cor:</span>
                 <div className="flex gap-1">
                   {[
-                    { color: "rgba(255, 235, 59, 0.4)", label: "Amarelo" },
-                    { color: "rgba(76, 175, 80, 0.4)", label: "Verde" },
-                    { color: "rgba(33, 150, 243, 0.4)", label: "Azul" },
-                    { color: "rgba(255, 152, 0, 0.4)", label: "Laranja" },
-                    { color: "rgba(156, 39, 176, 0.4)", label: "Roxo" },
+                    { color: "rgba(255, 235, 59, 0.6)", label: "Amarelo" },
+                    { color: "rgba(76, 175, 80, 0.6)", label: "Verde" },
+                    { color: "rgba(33, 150, 243, 0.6)", label: "Azul" },
+                    { color: "rgba(255, 152, 0, 0.6)", label: "Laranja" },
+                    { color: "rgba(156, 39, 176, 0.6)", label: "Roxo" },
                   ].map((colorOption) => (
                     <button
                       key={colorOption.color}
