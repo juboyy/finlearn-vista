@@ -110,7 +110,6 @@ import ConteudoAnalytics from "./pages/ConteudoAnalytics";
 import ApresentacoesAnalytics from "./pages/ApresentacoesAnalytics";
 import LiveAnalytics from "./pages/LiveAnalytics";
 import EstudosAcademicosAnalytics from "./pages/EstudosAcademicosAnalytics";
-import NewsletterAnalytics from "./pages/NewsletterAnalytics";
 import InfograficoAnalytics from "./pages/InfograficoAnalytics";
 import EntrevistasAnalytics from "./pages/EntrevistasAnalytics";
 import PlanilhasAnalytics from "./pages/PlanilhasAnalytics";

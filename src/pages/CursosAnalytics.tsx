@@ -109,7 +109,7 @@ const CursosAnalytics = () => {
           marker: {
             colors: [pastelBlue, pastelOrange, pastelPink, pastelGreen, pastelPurple]
           },
-          textinfo: 'percent',
+          textinfo: 'none',
           textposition: 'inside',
           hoverinfo: 'label+percent+value',
           hole: 0.4

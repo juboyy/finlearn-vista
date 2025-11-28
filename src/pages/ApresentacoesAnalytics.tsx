@@ -133,7 +133,7 @@ const ApresentacoesAnalytics = () => {
           marker: {
             colors: [pastelBlue, pastelPurple, pastelGreen, pastelPink, pastelOrange]
           },
-          textinfo: 'percent',
+          textinfo: 'none',
           textposition: 'inside',
           hoverinfo: 'label+percent+value',
           hole: 0.5,

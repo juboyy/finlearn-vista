@@ -42,6 +42,8 @@ export default function ArtigoAnalytics() {
       marker: {
         colors: ['#B8D4E8', '#D4C5E8', '#C5E8D4']
       },
+      textinfo: 'none',
+      hovertemplate: '<b>%{label}</b><br>%{value} visualizações<br>%{percent}<extra></extra>',
       hole: 0.4
     }
   ];

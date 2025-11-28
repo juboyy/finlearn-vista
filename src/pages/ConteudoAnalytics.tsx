@@ -93,7 +93,7 @@ const ConteudoAnalytics = () => {
           marker: {
             colors: [pastelBlue, pastelPink, pastelPurple, pastelGreen, pastelOrange, pastelYellow]
           },
-          textinfo: 'percent',
+          textinfo: 'none',
           textposition: 'inside',
           hoverinfo: 'label+percent+value',
           hole: 0.5,
@@ -356,7 +356,13 @@ const ConteudoAnalytics = () => {
                                 'Artigos': '/artigos-analytics',
                                 'Análises Técnicas': '/analises-analytics',
                                 'Relatórios': '/relatorios-analytics',
-                                'Newspaper': '/newspaper-analytics'
+                                'Newspaper': '/newspaper-analytics',
+                                'Estudos Acadêmicos': '/estudos-academicos-analytics',
+                                'Newsletter': '/newsletter-analytics',
+                                'Infográficos': '/infografico-analytics',
+                                'Entrevistas': '/entrevistas-analytics',
+                                'Planilhas': '/planilhas-analytics',
+                                'Whitepaper': '/whitepaper-analytics'
                               };
                               if (routes[content.name]) navigate(routes[content.name]);
                             }}

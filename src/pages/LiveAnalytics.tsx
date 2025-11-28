@@ -78,6 +78,8 @@ export default function LiveAnalytics() {
         "hsl(280, 40%, 65%)",
       ],
     },
+    textinfo: "none" as const,
+    hovertemplate: "<b>%{label}</b><br>%{value} profissionais<br>%{percent}<extra></extra>",
     hole: 0.4,
   };
 
