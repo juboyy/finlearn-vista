@@ -200,6 +200,22 @@ export default {
             transform: "translateX(100%)",
           },
         },
+        "shimmer": {
+          "0%": {
+            transform: "translateX(-100%)",
+          },
+          "100%": {
+            transform: "translateX(100%)",
+          },
+        },
+        "gradient": {
+          "0%, 100%": {
+            backgroundPosition: "0% 50%",
+          },
+          "50%": {
+            backgroundPosition: "100% 50%",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -207,6 +223,8 @@ export default {
         "fade-in": "fade-in 0.6s ease-out forwards",
         "scale-in": "scale-in 0.4s ease-out",
         "loading-bar": "loading-bar 1.5s ease-in-out infinite",
+        "shimmer": "shimmer 2s ease-in-out infinite",
+        "gradient": "gradient 3s ease infinite",
       },
     },
   },
