@@ -18,6 +18,17 @@ import { BookOpen, Heart, Star, Play, Share2, Clock, Sparkles, Bookmark } from "
 import { toast } from "sonner";
 import { EbookReader } from "./EbookReader";
 
+// Import ebook cover images
+import ebookGestaoRiscos from "@/assets/ebook-gestao-riscos.png";
+import ebookOpenFinance from "@/assets/ebook-open-finance.png";
+import ebookCompliance from "@/assets/ebook-compliance.png";
+import ebookBlockchain from "@/assets/ebook-blockchain.png";
+import ebookAnaliseTecnica from "@/assets/ebook-analise-tecnica.png";
+import ebookPortfolio from "@/assets/ebook-portfolio.png";
+import ebookMercadoCapitais from "@/assets/ebook-mercado-capitais.png";
+import ebookDerivatives from "@/assets/ebook-derivatives.png";
+import ebookESG from "@/assets/ebook-esg.png";
+
 interface Ebook {
   id: string;
   title: string;
@@ -64,7 +75,7 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
       title: "Gestão de Riscos no Mercado Financeiro",
       author: "Ana Clara Silva",
       authorAvatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg",
-      coverImage: "/placeholder.svg",
+      coverImage: ebookGestaoRiscos,
       description: "Estratégias avançadas para gerenciamento de riscos em instituições financeiras",
       rating: 4.8,
       reviews: 342,
@@ -79,7 +90,7 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
       title: "Open Finance: O Futuro dos Pagamentos",
       author: "Ricardo Santos",
       authorAvatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg",
-      coverImage: "/placeholder.svg",
+      coverImage: ebookOpenFinance,
       description: "Guia completo sobre Open Finance e suas aplicações práticas",
       rating: 4.9,
       reviews: 567,
@@ -92,7 +103,7 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
       title: "Compliance e Regulamentação Bancária",
       author: "Marina Costa",
       authorAvatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg",
-      coverImage: "/placeholder.svg",
+      coverImage: ebookCompliance,
       description: "Manual essencial sobre compliance no setor financeiro",
       rating: 4.7,
       reviews: 289,
@@ -105,7 +116,7 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
       title: "Blockchain e Criptoativos",
       author: "João Pedro Lima",
       authorAvatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg",
-      coverImage: "/placeholder.svg",
+      coverImage: ebookBlockchain,
       description: "Tecnologia blockchain aplicada ao mercado financeiro",
       rating: 4.6,
       reviews: 421,
@@ -123,7 +134,7 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
       title: "Análise Técnica para Iniciantes",
       author: "Sofia Rodrigues",
       authorAvatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg",
-      coverImage: "/placeholder.svg",
+      coverImage: ebookAnaliseTecnica,
       description: "Fundamentos de análise técnica aplicada ao mercado",
       rating: 4.5,
       reviews: 678,
@@ -137,7 +148,7 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
       title: "Gestão de Portfólio",
       author: "Carlos Mendes",
       authorAvatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg",
-      coverImage: "/placeholder.svg",
+      coverImage: ebookPortfolio,
       description: "Estratégias para otimização de carteiras de investimento",
       rating: 4.8,
       reviews: 523,
@@ -151,7 +162,7 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
       title: "Mercado de Capitais 2025",
       author: "Patricia Lima",
       authorAvatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg",
-      coverImage: "/placeholder.svg",
+      coverImage: ebookMercadoCapitais,
       description: "Tendências e perspectivas do mercado de capitais",
       rating: 4.9,
       reviews: 845,
@@ -170,7 +181,7 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
       title: "Derivatives & Hedging Strategies",
       author: "Roberto Alves",
       authorAvatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-7.jpg",
-      coverImage: "/placeholder.svg",
+      coverImage: ebookDerivatives,
       description: "Guia avançado sobre derivativos e estratégias de hedge",
       rating: 4.7,
       reviews: 412,
@@ -185,7 +196,7 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
       title: "ESG: Investimentos Sustentáveis",
       author: "Juliana Santos",
       authorAvatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-9.jpg",
-      coverImage: "/placeholder.svg",
+      coverImage: ebookESG,
       description: "Como integrar critérios ESG em decisões de investimento",
       rating: 4.8,
       reviews: 634,
@@ -232,9 +243,11 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
 
           {/* Cover Image */}
           <div className="relative mb-4 rounded-lg overflow-hidden group/image">
-            <div className="w-full h-48 bg-muted flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
-              <BookOpen size={64} className="text-muted-foreground/30" />
-            </div>
+            <img
+              src={ebook.coverImage}
+              alt={ebook.title}
+              className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
+            />
             
             {/* Hover overlay with quick action */}
             <div className="absolute inset-0 bg-black/60 opacity-0 group-hover/image:opacity-100 transition-opacity duration-300 flex items-end justify-center p-4">
@@ -389,8 +402,8 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselPrevious className="left-2" />
-                <CarouselNext className="right-2" />
+                <CarouselPrevious className="left-[-20px] top-[140px]" />
+                <CarouselNext className="right-[-20px] top-[140px]" />
               </Carousel>
             </div>
 
@@ -418,8 +431,8 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselPrevious className="left-2" />
-                <CarouselNext className="right-2" />
+                <CarouselPrevious className="left-[-20px] top-[140px]" />
+                <CarouselNext className="right-[-20px] top-[140px]" />
               </Carousel>
             </div>
 
@@ -454,8 +467,8 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselPrevious className="left-2" />
-                <CarouselNext className="right-2" />
+                <CarouselPrevious className="left-[-20px] top-[140px]" />
+                <CarouselNext className="right-[-20px] top-[140px]" />
               </Carousel>
             </div>
           </div>
