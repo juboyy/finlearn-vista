@@ -313,7 +313,7 @@ export const EbookPanel = ({
         {readingEbook ? (
           /* Reading Preview */
           <div className="relative">
-            <div className="p-6 border-b border-border/50 bg-background flex items-center justify-between">
+            <div className="p-6 border-b border-border/50 bg-background flex items-center gap-3">
               <Button
                 variant="ghost"
                 size="sm"
@@ -323,27 +323,25 @@ export const EbookPanel = ({
                 <ChevronRight className="h-4 w-4 rotate-180" />
                 Voltar
               </Button>
-              <div className="flex items-center gap-2">
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className={`border-2 ${bookmarked.has(readingEbook.id) ? 'bg-pastel-yellow border-pastel-yellow' : 'border-border hover:bg-muted'}`}
-                  onClick={() => toggleBookmark(readingEbook.id)}
-                >
-                  <Bookmark size={16} className={bookmarked.has(readingEbook.id) ? 'fill-current' : ''} />
-                </Button>
-                <Button
-                  size="sm"
-                  className="bg-pastel-purple hover:bg-pastel-pink text-foreground font-semibold"
-                  onClick={() => {
-                    onOpenChange(false);
-                    navigate(`/ler-ebook/${readingEbook.id}`);
-                  }}
-                >
-                  <Play className="h-4 w-4 mr-2" />
-                  Leitura Completa
-                </Button>
-              </div>
+              <Button
+                size="sm"
+                variant="outline"
+                className={`border-2 ${bookmarked.has(readingEbook.id) ? 'bg-pastel-yellow border-pastel-yellow' : 'border-border hover:bg-muted'}`}
+                onClick={() => toggleBookmark(readingEbook.id)}
+              >
+                <Bookmark size={16} className={bookmarked.has(readingEbook.id) ? 'fill-current' : ''} />
+              </Button>
+              <Button
+                size="sm"
+                className="bg-pastel-purple hover:bg-pastel-pink text-foreground font-semibold"
+                onClick={() => {
+                  onOpenChange(false);
+                  navigate(`/ler-ebook/${readingEbook.id}`);
+                }}
+              >
+                <Play className="h-4 w-4 mr-2" />
+                Leitura Completa
+              </Button>
             </div>
             
             <div className="p-6 space-y-6">
