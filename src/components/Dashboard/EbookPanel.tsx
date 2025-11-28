@@ -189,17 +189,17 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
     const isFavorited = favorites.has(ebook.id);
     
     return (
-      <div className="group relative bg-gradient-to-br from-card via-card to-muted/20 border-2 border-border rounded-xl p-4 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:scale-[1.02] hover:border-primary/40 overflow-hidden">
-        {/* Animated background gradient on hover */}
-        <div className="absolute inset-0 bg-gradient-to-br from-pastel-purple/5 via-pastel-pink/5 to-pastel-blue/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      <div className="group relative bg-card border-2 border-border rounded-xl p-4 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:scale-[1.02] hover:border-primary/40 overflow-hidden">
+        {/* Animated background on hover */}
+        <div className="absolute inset-0 bg-muted/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         
         {/* Shine effect */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+        <div className="absolute inset-0 bg-background/5 -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
         
         <div className="relative">
           {/* Badge and favorite */}
           <div className="flex items-center justify-between mb-3">
-            <Badge className="bg-gradient-to-r from-pastel-blue to-pastel-purple text-foreground border-0 px-3 py-1 font-semibold">
+            <Badge className="bg-pastel-blue text-foreground border-0 px-3 py-1 font-semibold">
               {ebook.category}
             </Badge>
             <button
@@ -215,15 +215,15 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
 
           {/* Cover Image */}
           <div className="relative mb-4 rounded-lg overflow-hidden group/image">
-            <div className="w-full h-48 bg-gradient-to-br from-muted via-muted/80 to-muted/60 flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
+            <div className="w-full h-48 bg-muted flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
               <BookOpen size={64} className="text-muted-foreground/30" />
             </div>
             
             {/* Hover overlay with quick action */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover/image:opacity-100 transition-opacity duration-300 flex items-end justify-center p-4">
+            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover/image:opacity-100 transition-opacity duration-300 flex items-end justify-center p-4">
               <Button
                 size="sm"
-                className="bg-gradient-to-r from-pastel-purple to-pastel-pink hover:from-pastel-pink hover:to-pastel-purple text-foreground font-semibold shadow-lg"
+                className="bg-pastel-purple hover:bg-pastel-pink text-foreground font-semibold shadow-lg"
                 onClick={() => {
                   setSelectedEbook(ebook);
                   setReaderOpen(true);
@@ -238,7 +238,7 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
             {showProgress && ebook.progress !== undefined && (
               <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-muted/50">
                 <div 
-                  className="h-full bg-gradient-to-r from-pastel-green to-pastel-blue transition-all duration-300"
+                  className="h-full bg-pastel-green transition-all duration-300"
                   style={{ width: `${ebook.progress}%` }}
                 />
               </div>
@@ -256,7 +256,7 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
           </div>
 
           {/* Title */}
-          <h3 className="font-bold text-foreground line-clamp-2 min-h-[2.5rem] mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-pastel-purple group-hover:to-pastel-pink transition-all duration-300">
+          <h3 className="font-bold text-foreground line-clamp-2 min-h-[2.5rem] mb-2 group-hover:text-primary transition-all duration-300">
             {ebook.title}
           </h3>
 
@@ -285,11 +285,11 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
             
             <div className="flex items-center gap-2">
               {ebook.isFree ? (
-                <Badge className="bg-gradient-to-r from-pastel-green to-pastel-blue text-foreground font-bold px-3 py-1">
+                <Badge className="bg-pastel-green text-foreground font-bold px-3 py-1">
                   GRÁTIS
                 </Badge>
               ) : (
-                <span className="text-lg font-bold bg-gradient-to-r from-pastel-purple to-pastel-pink bg-clip-text text-transparent">
+                <span className="text-lg font-bold text-pastel-purple">
                   R$ {ebook.price.toFixed(2).replace('.', ',')}
                 </span>
               )}
@@ -300,7 +300,7 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
           <div className="flex gap-2 mt-3">
             <Button
               size="sm"
-              className="flex-1 bg-gradient-to-r from-pastel-blue to-pastel-purple hover:from-pastel-purple hover:to-pastel-pink text-foreground font-semibold"
+              className="flex-1 bg-pastel-blue hover:bg-pastel-purple text-foreground font-semibold"
               onClick={() => {
                 setSelectedEbook(ebook);
                 setReaderOpen(true);
@@ -325,14 +325,14 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="right"
-        className="w-full sm:w-[600px] md:w-[700px] lg:w-[800px] p-0 bg-gradient-to-br from-background via-background to-muted/30 backdrop-blur-xl border-l-2 border-pastel-blue/20 overflow-y-auto"
+        className="w-full sm:w-[600px] md:w-[700px] lg:w-[800px] p-0 bg-background backdrop-blur-xl border-l-2 border-pastel-blue/20 overflow-y-auto"
       >
         {/* Animated background pattern */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,hsl(var(--pastel-purple)/0.08),transparent_50%),radial-gradient(circle_at_70%_80%,hsl(var(--pastel-pink)/0.08),transparent_50%)] pointer-events-none animate-pulse" style={{ animationDuration: '4s' }} />
+        <div className="absolute inset-0 bg-muted/10 pointer-events-none" />
         
         <div className="relative">
-          <SheetHeader className="p-6 pb-4 border-b border-border/50 bg-gradient-to-r from-background/95 via-background to-background/95 backdrop-blur-sm sticky top-0 z-10">
-            <SheetTitle className="font-black text-3xl bg-gradient-to-r from-pastel-purple via-pastel-pink to-pastel-blue bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
+          <SheetHeader className="p-6 pb-4 border-b border-border/50 bg-background backdrop-blur-sm sticky top-0 z-10">
+            <SheetTitle className="font-black text-3xl text-pastel-purple">
               Biblioteca de eBooks
             </SheetTitle>
             <p className="text-sm text-muted-foreground mt-2">
@@ -345,28 +345,28 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
             <div className="space-y-4 group/section">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-gradient-to-br from-pastel-pink to-pastel-purple">
+                  <div className="p-2 rounded-lg bg-pastel-pink">
                     <Sparkles size={20} className="text-foreground" />
                   </div>
-                  <h3 className="text-lg font-black text-foreground group-hover/section:text-transparent group-hover/section:bg-clip-text group-hover/section:bg-gradient-to-r group-hover/section:from-pastel-pink group-hover/section:to-pastel-purple transition-all duration-300">
+                  <h3 className="text-lg font-black text-foreground group-hover/section:text-pastel-pink transition-all duration-300">
                     Lançamentos
                   </h3>
-                  <Badge className="bg-gradient-to-r from-pastel-pink to-pastel-purple text-foreground animate-pulse">
+                  <Badge className="bg-pastel-pink text-foreground animate-pulse">
                     Novo
                   </Badge>
                 </div>
               </div>
               
-              <Carousel className="w-full">
+              <Carousel className="w-full" opts={{ align: "start" }}>
                 <CarouselContent className="-ml-4">
                   {newReleases.map((ebook) => (
-                    <CarouselItem key={ebook.id} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/2">
+                    <CarouselItem key={ebook.id} className="pl-4 basis-full">
                       <EbookCard ebook={ebook} />
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselPrevious className="hidden sm:flex" />
-                <CarouselNext className="hidden sm:flex" />
+                <CarouselPrevious className="left-2" />
+                <CarouselNext className="right-2" />
               </Carousel>
             </div>
 
@@ -374,28 +374,28 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
             <div className="space-y-4 group/section">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-gradient-to-br from-pastel-blue to-pastel-green">
+                  <div className="p-2 rounded-lg bg-pastel-blue">
                     <Clock size={20} className="text-foreground" />
                   </div>
-                  <h3 className="text-lg font-black text-foreground group-hover/section:text-transparent group-hover/section:bg-clip-text group-hover/section:bg-gradient-to-r group-hover/section:from-pastel-blue group-hover/section:to-pastel-green transition-all duration-300">
+                  <h3 className="text-lg font-black text-foreground group-hover/section:text-pastel-blue transition-all duration-300">
                     Continuar de onde parou
                   </h3>
-                  <Badge className="bg-gradient-to-r from-pastel-blue to-pastel-green text-foreground">
+                  <Badge className="bg-pastel-blue text-foreground">
                     {continueReading.length} em andamento
                   </Badge>
                 </div>
               </div>
               
-              <Carousel className="w-full">
+              <Carousel className="w-full" opts={{ align: "start" }}>
                 <CarouselContent className="-ml-4">
                   {continueReading.map((ebook) => (
-                    <CarouselItem key={ebook.id} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/2">
+                    <CarouselItem key={ebook.id} className="pl-4 basis-full">
                       <EbookCard ebook={ebook} showProgress={true} />
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselPrevious className="hidden sm:flex" />
-                <CarouselNext className="hidden sm:flex" />
+                <CarouselPrevious className="left-2" />
+                <CarouselNext className="right-2" />
               </Carousel>
             </div>
 
@@ -403,35 +403,35 @@ export const EbookPanel = ({ open, onOpenChange }: EbookPanelProps) => {
             <div className="space-y-4 group/section">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-gradient-to-br from-pastel-purple to-pastel-blue">
+                  <div className="p-2 rounded-lg bg-pastel-purple">
                     <Bookmark size={20} className="text-foreground" />
                   </div>
-                  <h3 className="text-lg font-black text-foreground group-hover/section:text-transparent group-hover/section:bg-clip-text group-hover/section:bg-gradient-to-r group-hover/section:from-pastel-purple group-hover/section:to-pastel-blue transition-all duration-300">
+                  <h3 className="text-lg font-black text-foreground group-hover/section:text-pastel-purple transition-all duration-300">
                     Wishlist
                   </h3>
-                  <Badge className="bg-gradient-to-r from-pastel-purple to-pastel-blue text-foreground">
+                  <Badge className="bg-pastel-purple text-foreground">
                     {wishlist.length} itens
                   </Badge>
                 </div>
                 <Button
                   size="sm"
                   variant="ghost"
-                  className="text-xs text-muted-foreground hover:text-foreground hover:bg-gradient-to-r hover:from-pastel-purple/10 hover:to-pastel-blue/10"
+                  className="text-xs text-muted-foreground hover:text-foreground hover:bg-pastel-purple/10"
                 >
                   Ver todos
                 </Button>
               </div>
               
-              <Carousel className="w-full">
+              <Carousel className="w-full" opts={{ align: "start" }}>
                 <CarouselContent className="-ml-4">
                   {wishlist.map((ebook) => (
-                    <CarouselItem key={ebook.id} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/2">
+                    <CarouselItem key={ebook.id} className="pl-4 basis-full">
                       <EbookCard ebook={ebook} />
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselPrevious className="hidden sm:flex" />
-                <CarouselNext className="hidden sm:flex" />
+                <CarouselPrevious className="left-2" />
+                <CarouselNext className="right-2" />
               </Carousel>
             </div>
           </div>
