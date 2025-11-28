@@ -1,9 +1,12 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Bell, Search } from "lucide-react";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Plotly from 'plotly.js-dist';
 
 const ConteudoAnalytics = () => {
+  const navigate = useNavigate();
+
   useEffect(() => {
     const pastelBlue = '#8AAACF';
     const pastelGreen = '#8EBC9F';
@@ -340,7 +343,14 @@ const ConteudoAnalytics = () => {
                           </span>
                         </td>
                         <td className="px-6 py-4 text-right">
-                          <button className={`text-sm font-bold ${content.textColor} hover:text-slate-800 transition-colors`}>
+                          <button 
+                            onClick={() => {
+                              if (content.name === 'Apresentações') {
+                                navigate('/apresentacoes-analytics');
+                              }
+                            }}
+                            className={`text-sm font-bold ${content.textColor} hover:text-slate-800 transition-colors`}
+                          >
                             Ver detalhes <i className="fa-solid fa-chevron-right ml-1 text-[10px]"></i>
                           </button>
                         </td>
