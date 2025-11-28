@@ -108,6 +108,7 @@ import EditorMarkdown from "./pages/EditorMarkdown";
 import ArtigoAnalytics from "./pages/ArtigoAnalytics";
 import ConteudoAnalytics from "./pages/ConteudoAnalytics";
 import ApresentacoesAnalytics from "./pages/ApresentacoesAnalytics";
+import LiveAnalytics from "./pages/LiveAnalytics";
 
 import NotFound from "./pages/NotFound";
 
@@ -230,7 +231,8 @@ const App = () => {
            <Route path="/editor-markdown" element={<EditorMarkdown />} />
            <Route path="/artigo-analytics" element={<ArtigoAnalytics />} />
            <Route path="/conteudo-analytics" element={<ConteudoAnalytics />} />
-           <Route path="/apresentacoes-analytics" element={<ApresentacoesAnalytics />} />
+          <Route path="/apresentacoes-analytics" element={<ApresentacoesAnalytics />} />
+          <Route path="/live-analytics" element={<LiveAnalytics />} />
            
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
