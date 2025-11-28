@@ -634,16 +634,16 @@ const LerEbook = () => {
       <div className="flex-1 flex flex-col">
         {/* Header with Cover and Authors */}
         <div className="bg-card border-b border-border">
-          <div className="p-6">
-            <div className="flex items-center gap-6">
+          <div className="p-4">
+            <div className="flex items-center gap-4">
               <img
                 src={ebookData.coverImage}
                 alt={ebookData.title}
-                className="w-24 h-32 object-cover rounded-lg shadow-md"
+                className="w-18 h-24 object-cover rounded-lg shadow-md"
               />
               <div className="flex-1">
-                <h1 className="text-2xl font-bold text-foreground mb-2">{ebookData.title}</h1>
-                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                <h1 className="text-xl font-bold text-foreground mb-1.5">{ebookData.title}</h1>
+                <div className="flex items-center gap-3 text-sm text-muted-foreground">
                   <div>
                     <span className="font-medium">Autor:</span> {ebookData.author}
                   </div>
