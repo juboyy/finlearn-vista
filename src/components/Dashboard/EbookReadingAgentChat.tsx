@@ -4,11 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
-import { Send, Loader2, Sparkles } from "lucide-react";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Send, Loader2, Sparkles, Bot } from "lucide-react";
 import { useEbookReadingAgent } from "@/hooks/useEbookReadingAgent";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import ReactMarkdown from "react-markdown";
+import auxiliarAvatar from "@/assets/auxiliar-do-dia-avatar.png";
 
 interface EbookReadingAgentChatProps {
   open: boolean;
@@ -103,12 +105,22 @@ export const EbookReadingAgentChat = ({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="right" className="w-full sm:w-[500px] flex flex-col p-0">
         <SheetHeader className="p-6 pb-4 border-b border-border">
-          <SheetTitle className="text-xl font-semibold text-foreground">
-            Agente de Leitura
-          </SheetTitle>
-          <p className="text-sm text-muted-foreground mt-1">
-            {ebookTitle} - Página {currentPage}
-          </p>
+          <div className="flex items-center gap-3">
+            <Avatar className="h-12 w-12">
+              <AvatarImage src={auxiliarAvatar} alt="Agente de Leitura" />
+              <AvatarFallback>
+                <Bot className="h-6 w-6" />
+              </AvatarFallback>
+            </Avatar>
+            <div className="flex-1">
+              <SheetTitle className="text-xl font-semibold text-foreground">
+                Agente de Leitura
+              </SheetTitle>
+              <p className="text-sm text-muted-foreground mt-1">
+                {ebookTitle} - Página {currentPage}
+              </p>
+            </div>
+          </div>
         </SheetHeader>
 
         <ScrollArea className="flex-1 p-6">
