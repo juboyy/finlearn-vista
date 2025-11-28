@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Bookmark, Highlighter, MessageSquare, ChevronLeft, ChevronRight, Search, X, Edit2, Trash2, Save } from "lucide-react";
+import { ArrowLeft, Bookmark, Highlighter, MessageSquare, ChevronLeft, ChevronRight, Search, X, Edit2, Trash2, Save, ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useEbookAnnotations } from "@/hooks/useEbookAnnotations";
 import { supabase } from "@/integrations/supabase/client";
 import ebookGestaoRiscos from "@/assets/ebook-gestao-riscos.png";
@@ -26,6 +27,7 @@ const LerEbook = () => {
   const [editingAnnotationContent, setEditingAnnotationContent] = useState("");
   const [editingBookmarkId, setEditingBookmarkId] = useState<string | null>(null);
   const [editingBookmarkName, setEditingBookmarkName] = useState("");
+  const [sortBy, setSortBy] = useState<"date" | "page" | "type">("date");
   const contentRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -237,6 +239,48 @@ const LerEbook = () => {
       await deleteBookmark(bookmarkId);
     }
   };
+
+  // Sort annotations and bookmarks
+  const getSortedAnnotations = () => {
+    const filtered = annotations.filter(a => a.annotation_type === "highlight" || a.annotation_type === "note");
+    
+    switch (sortBy) {
+      case "date":
+        return [...filtered].sort((a, b) => 
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        );
+      case "page":
+        return [...filtered].sort((a, b) => 
+          (a.page_number || 0) - (b.page_number || 0)
+        );
+      case "type":
+        return [...filtered].sort((a, b) => 
+          a.annotation_type.localeCompare(b.annotation_type)
+        );
+      default:
+        return filtered;
+    }
+  };
+
+  const getSortedBookmarks = () => {
+    switch (sortBy) {
+      case "date":
+        return [...bookmarks].sort((a, b) => 
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        );
+      case "page":
+        return [...bookmarks].sort((a, b) => 
+          a.page_number - b.page_number
+        );
+      default:
+        return bookmarks;
+    }
+  };
+
+  const sortedAnnotations = getSortedAnnotations();
+  const sortedHighlights = sortedAnnotations.filter(a => a.annotation_type === "highlight");
+  const sortedNotes = sortedAnnotations.filter(a => a.annotation_type === "note");
+  const sortedBookmarks = getSortedBookmarks();
 
   const handleAddBookmark = () => {
     const chapter = ebookData.chapters.find(ch => ch.page <= currentPage);
@@ -527,7 +571,22 @@ const LerEbook = () => {
       {/* Right Sidebar - Bookmarks & Annotations */}
       <div className="w-80 bg-card border-l border-border flex flex-col">
         <div className="p-6 border-b border-border">
-          <h2 className="text-lg font-semibold text-foreground">Marcadores & Anotações</h2>
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-lg font-semibold text-foreground">Marcadores & Anotações</h2>
+          </div>
+          <div className="flex items-center gap-2">
+            <ArrowUpDown size={14} className="text-muted-foreground" />
+            <Select value={sortBy} onValueChange={(value: "date" | "page" | "type") => setSortBy(value)}>
+              <SelectTrigger className="h-8 text-xs">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="date">Ordenar por Data</SelectItem>
+                <SelectItem value="page">Ordenar por Página</SelectItem>
+                <SelectItem value="type">Ordenar por Tipo</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
         <ScrollArea className="flex-1">
           <div className="p-4 space-y-6">
@@ -535,10 +594,10 @@ const LerEbook = () => {
             <div>
               <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
                 <Bookmark size={16} />
-                Marcadores ({bookmarks.length})
+                Marcadores ({sortedBookmarks.length})
               </h3>
               <div className="space-y-2">
-                {bookmarks.map((bookmark) => (
+                {sortedBookmarks.map((bookmark) => (
                   <div
                     key={bookmark.id}
                     className="p-3 bg-muted rounded-lg group"
@@ -620,7 +679,7 @@ const LerEbook = () => {
                     )}
                   </div>
                 ))}
-                {bookmarks.length === 0 && (
+                {sortedBookmarks.length === 0 && (
                   <p className="text-sm text-muted-foreground">Nenhum marcador ainda</p>
                 )}
               </div>
@@ -630,12 +689,10 @@ const LerEbook = () => {
             <div>
               <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
                 <Highlighter size={16} />
-                Destaques ({annotations.filter(a => a.annotation_type === "highlight").length})
+                Destaques ({sortedHighlights.length})
               </h3>
               <div className="space-y-2">
-                {annotations
-                  .filter((a) => a.annotation_type === "highlight")
-                  .map((annotation) => (
+                {sortedHighlights.map((annotation) => (
                     <div
                       key={annotation.id}
                       className="p-3 bg-muted rounded-lg group"
@@ -663,7 +720,7 @@ const LerEbook = () => {
                       </div>
                     </div>
                   ))}
-                {annotations.filter(a => a.annotation_type === "highlight").length === 0 && (
+                {sortedHighlights.length === 0 && (
                   <p className="text-sm text-muted-foreground">Nenhum destaque ainda</p>
                 )}
               </div>
@@ -673,12 +730,10 @@ const LerEbook = () => {
             <div>
               <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
                 <MessageSquare size={16} />
-                Anotações ({annotations.filter(a => a.annotation_type === "note").length})
+                Anotações ({sortedNotes.length})
               </h3>
               <div className="space-y-2">
-                {annotations
-                  .filter((a) => a.annotation_type === "note")
-                  .map((annotation) => (
+                {sortedNotes.map((annotation) => (
                     <div
                       key={annotation.id}
                       className="p-3 bg-muted rounded-lg group"
@@ -759,7 +814,7 @@ const LerEbook = () => {
                       )}
                     </div>
                   ))}
-                {annotations.filter(a => a.annotation_type === "note").length === 0 && (
+                {sortedNotes.length === 0 && (
                   <p className="text-sm text-muted-foreground">Nenhuma anotação ainda</p>
                 )}
               </div>
