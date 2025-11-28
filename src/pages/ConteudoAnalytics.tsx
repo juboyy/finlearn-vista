@@ -152,12 +152,12 @@ const ConteudoAnalytics = () => {
       <SidebarFix />
       
       <main className="flex-1 overflow-y-auto h-full relative bg-slate-50/50">
-        <header className="sticky top-0 z-20 bg-white/90 backdrop-blur-md border-b border-slate-200 px-6 py-5 flex justify-between items-center">
-          <div>
+        <header className="sticky top-0 z-20 bg-white/90 backdrop-blur-md border-b border-slate-200 py-5 flex justify-between items-center">
+          <div className="px-6">
             <h1 className="text-2xl font-bold text-slate-800 tracking-tight">Performance de Conteúdos Criados</h1>
             <p className="text-sm text-slate-500 mt-1 font-medium">Análise sintética de produção e engajamento por formato.</p>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 px-6">
             <div className="relative group">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 w-4 h-4 group-hover:text-slate-700 transition-colors" />
               <input
@@ -173,9 +173,9 @@ const ConteudoAnalytics = () => {
           </div>
         </header>
 
-        <div className="px-6 py-8 space-y-8">
+        <div className="py-8 space-y-8">
           {/* KPI Section */}
-          <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-6">
             <div className="bg-white border border-slate-200 rounded-xl p-6 flex items-center justify-between shadow-sm">
               <div>
                 <p className="text-sm font-semibold text-slate-500">Total de Conteúdos</p>
@@ -230,7 +230,7 @@ const ConteudoAnalytics = () => {
           </section>
 
           {/* Chart Section */}
-          <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 px-6">
             <div className="bg-white border border-slate-200 rounded-xl p-6 lg:col-span-2 shadow-sm">
               <div className="flex justify-between items-center mb-6">
                 <div>
@@ -256,7 +256,7 @@ const ConteudoAnalytics = () => {
           </section>
 
           {/* Detailed Content Table */}
-          <section className="space-y-6">
+          <section className="space-y-6 px-6">
             <div className="flex justify-between items-end">
               <div>
                 <h2 className="text-xl font-bold text-slate-800">Análise por Tipo de Conteúdo</h2>
