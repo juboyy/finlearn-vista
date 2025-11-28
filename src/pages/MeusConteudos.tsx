@@ -1,7 +1,7 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { MenutabbarFix } from "@/components/Dashboard/MenutabbarFix";
 import { ArrowLeft, Plus, Filter, ArrowDownWideNarrow, BookOpen, Video, PieChart, Calculator, Search, FileText, Bell, Crown, Podcast, Newspaper, TrendingUp, Users as UsersIcon, Book, GraduationCap, Bot, FileCheck, FlaskConical, Eye, Pen, MoreVertical, FileSearch, BarChart3 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import {
   DropdownMenu,
@@ -15,6 +15,7 @@ type FilterType = 'todos' | 'rascunho' | 'revisao' | 'concluido' | 'publicado';
 export default function MeusConteudos() {
   const [activeTab, setActiveTab] = useState<TabType>('todos');
   const [activeFilter, setActiveFilter] = useState<FilterType>('todos');
+  const navigate = useNavigate();
   
   const contentItems = [{
     type: "Podcast",
@@ -158,7 +159,35 @@ export default function MeusConteudos() {
         </header>
 
         {/* MenutabbarFix */}
-        <MenutabbarFix activeTab={activeTab} setActiveTab={setActiveTab} />
+        <MenutabbarFix 
+          activeTab={activeTab} 
+          setActiveTab={setActiveTab}
+          showAnalyticsButton={true}
+          onAnalyticsClick={() => {
+            const analyticsRoutes: Record<TabType, string> = {
+              'todos': '/conteudo-analytics',
+              'podcasts': '/podcast-analytics',
+              'cursos': '/cursos-analytics',
+              'avatar-ia': '/avatar-ia-analytics',
+              'ebooks': '/ebooks-analytics',
+              'webinars': '/webinars-analytics',
+              'artigos': '/artigos-analytics',
+              'analises': '/analises-analytics',
+              'relatorios': '/relatorios-analytics',
+              'documentos': '/newspaper-analytics',
+              'estudos': '/estudos-academicos-analytics',
+              'infograficos': '/infografico-analytics',
+              'whitepaper': '/whitepaper-analytics',
+              'apresentacoes': '/apresentacoes-analytics',
+              'live': '/live-analytics',
+              'entrevistas': '/entrevistas-analytics'
+            };
+            const route = analyticsRoutes[activeTab];
+            if (route) {
+              navigate(route);
+            }
+          }}
+        />
 
         {/* Main Content */}
         <div className="flex-1 flex overflow-hidden">

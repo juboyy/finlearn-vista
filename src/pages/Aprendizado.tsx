@@ -355,9 +355,33 @@ const Aprendizado = () => {
           setShowAnalytics(false);
         }
       }} onAnalyticsClick={() => {
+        const analyticsRoutes: Record<TabType, string> = {
+          'todos': '/conteudo-analytics',
+          'podcasts': '/podcast-analytics',
+          'cursos': '/cursos-analytics',
+          'avatar-ia': '/avatar-ia-analytics',
+          'ebooks': '/ebooks-analytics',
+          'webinars': '/webinars-analytics',
+          'artigos': '/artigos-analytics',
+          'analises': '/analises-analytics',
+          'relatorios': '/relatorios-analytics',
+          'documentos': '', // handled separately
+          'estudos': '/estudos-academicos-analytics',
+          'infograficos': '/infografico-analytics',
+          'whitepaper': '/whitepaper-analytics',
+          'apresentacoes': '/apresentacoes-analytics',
+          'live': '/live-analytics',
+          'entrevistas': '/entrevistas-analytics'
+        };
+        
         if (activeTab === 'documentos') {
           setShowAnalytics(!showAnalytics);
           setShowHistorico(false);
+        } else {
+          const route = analyticsRoutes[activeTab];
+          if (route) {
+            navigate(route);
+          }
         }
       }} showHistoricoButton={true} showAnalyticsButton={true} isHistoricoActive={showHistorico} isAnalyticsActive={showAnalytics} />
 
