@@ -11,6 +11,7 @@ import { Slider } from "@/components/ui/slider";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
+import { AgentStepWizard } from "@/components/Dashboard/AgentStepWizard";
 const CriarAgente = () => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
@@ -113,19 +114,6 @@ const CriarAgente = () => {
     label: "Criativo",
     desc: "Inovador, versátil e inspirador"
   }];
-  const steps = [{
-    number: 1,
-    label: "Informações Básicas"
-  }, {
-    number: 2,
-    label: "Configuração"
-  }, {
-    number: 3,
-    label: "Personalidade"
-  }, {
-    number: 4,
-    label: "Finalização"
-  }];
   return <div className="flex min-h-screen bg-background">
       <SidebarFix />
 
@@ -163,22 +151,7 @@ const CriarAgente = () => {
           </div>
         </header>
 
-        {/* Wizard Steps */}
-        <div className="px-8 py-6 border-b border-border bg-card">
-          <div className="max-w-5xl mx-auto flex items-center justify-between">
-            {steps.map((step, idx) => <div key={step.number} className="flex items-center flex-1">
-                <div className="flex flex-col items-center">
-                  <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg mb-2 transition-colors ${currentStep >= step.number ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground'}`}>
-                    {step.number}
-                  </div>
-                  <span className={`text-sm font-medium ${currentStep >= step.number ? 'text-foreground' : 'text-muted-foreground'}`}>
-                    {step.label}
-                  </span>
-                </div>
-                {idx < steps.length - 1 && <div className={`flex-1 h-1 mx-4 mt-[-20px] transition-colors ${currentStep > step.number ? 'bg-primary' : 'bg-border'}`}></div>}
-              </div>)}
-          </div>
-        </div>
+        <AgentStepWizard currentStep={1} />
 
         {/* Form Content */}
         <div className="px-8 py-8">
