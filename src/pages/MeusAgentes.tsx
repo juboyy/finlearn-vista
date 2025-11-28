@@ -202,7 +202,7 @@ export default function MeusAgentes() {
                               {agent.credits} / {agent.max_credits}
                             </span>
                           </div>
-                          <div className="w-full h-2 bg-background rounded-full overflow-hidden">
+                          <div className="w-full h-2 bg-white rounded-full overflow-hidden">
                             <div 
                               className={`h-full ${agent.is_active ? progressColor : 'bg-muted-foreground/30'} rounded-full transition-all`}
                               style={{ width: `${percentage}%` }}
