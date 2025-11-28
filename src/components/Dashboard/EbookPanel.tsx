@@ -323,9 +323,6 @@ export const EbookPanel = ({
                 <ChevronRight className="h-4 w-4 rotate-180" />
                 Voltar
               </Button>
-              <h2 className="text-lg font-semibold text-foreground line-clamp-1 flex-1 text-center px-4">
-                {readingEbook.title}
-              </h2>
               <div className="flex items-center gap-2">
                 <Button
                   size="sm"
