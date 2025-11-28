@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { ArrowLeft, Save, Eye } from "lucide-react";
+import { ArrowLeft, Save } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -16,7 +16,6 @@ const EditorMarkdown = () => {
   const { toast } = useToast();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [isPreview, setIsPreview] = useState(false);
 
   useEffect(() => {
     const titleParam = searchParams.get("title");
@@ -88,16 +87,7 @@ const EditorMarkdown = () => {
           </div>
         </ScrollArea>
 
-        <div className="p-4 border-t border-border space-y-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setIsPreview(!isPreview)}
-            className="w-full"
-          >
-            <Eye className="mr-2 h-4 w-4" />
-            {isPreview ? "Editar" : "Visualizar"}
-          </Button>
+        <div className="p-4 border-t border-border">
           <Button size="sm" onClick={handleSave} className="w-full">
             <Save className="mr-2 h-4 w-4" />
             Salvar Documento
@@ -105,7 +95,7 @@ const EditorMarkdown = () => {
         </div>
       </div>
 
-      {/* Center Content - Editor/Preview Area */}
+      {/* Center Content - Split View: Editor & Preview */}
       <div className="flex-1 flex flex-col">
         {/* Header */}
         <div className="bg-card border-b border-border p-6">
@@ -117,25 +107,73 @@ const EditorMarkdown = () => {
           />
         </div>
 
-        {/* Content Area */}
-        <ScrollArea className="flex-1">
-          <div className="max-w-4xl mx-auto p-12">
-            {!isPreview ? (
-              <Textarea
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                placeholder="Comece a escrever em markdown..."
-                className="min-h-[600px] resize-none border-none focus-visible:ring-0 text-base leading-relaxed"
-              />
-            ) : (
-              <div className="prose prose-slate dark:prose-invert max-w-none">
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                  {content || "*Nenhum conteúdo ainda*"}
-                </ReactMarkdown>
+        {/* Split Content Area */}
+        <div className="flex-1 flex">
+          {/* Editor Column */}
+          <div className="flex-1 border-r border-border">
+            <div className="bg-muted/30 px-4 py-2 border-b border-border">
+              <span className="text-sm font-medium text-muted-foreground">
+                Editor Markdown
+              </span>
+            </div>
+            <ScrollArea className="h-[calc(100vh-200px)]">
+              <div className="p-6">
+                <Textarea
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  placeholder="Comece a escrever em markdown...
+
+# Título 1
+## Título 2
+### Título 3
+
+**Texto em negrito**
+*Texto em itálico*
+
+- Item de lista
+- Outro item
+
+1. Lista numerada
+2. Segundo item
+
+[Link](https://exemplo.com)
+![Imagem](url-da-imagem)"
+                  className="min-h-[800px] resize-none border-none focus-visible:ring-0 text-base leading-relaxed bg-transparent"
+                />
               </div>
-            )}
+            </ScrollArea>
           </div>
-        </ScrollArea>
+
+          {/* Preview Column */}
+          <div className="flex-1">
+            <div className="bg-muted/30 px-4 py-2 border-b border-border">
+              <span className="text-sm font-medium text-muted-foreground">
+                Visualização
+              </span>
+            </div>
+            <ScrollArea className="h-[calc(100vh-200px)]">
+              <div className="p-12">
+                <div 
+                  className="prose prose-slate dark:prose-invert max-w-none"
+                  style={{
+                    fontSize: '1rem',
+                    lineHeight: '1.8'
+                  }}
+                >
+                  {content ? (
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                      {content}
+                    </ReactMarkdown>
+                  ) : (
+                    <p className="text-muted-foreground italic">
+                      A visualização do seu conteúdo aparecerá aqui...
+                    </p>
+                  )}
+                </div>
+              </div>
+            </ScrollArea>
+          </div>
+        </div>
       </div>
     </div>
   );
