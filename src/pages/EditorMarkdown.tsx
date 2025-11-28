@@ -270,11 +270,11 @@ const EditorMarkdown = () => {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => navigate(-1)}
+            onClick={() => navigate("/biblioteca")}
             className="w-full justify-start mb-2"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Voltar
+            Voltar para Biblioteca
           </Button>
           <Button
             size="sm"
