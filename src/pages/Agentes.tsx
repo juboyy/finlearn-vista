@@ -361,7 +361,7 @@ export default function Agentes() {
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Escolha um especialista..." />
                     </SelectTrigger>
-                    <SelectContent className="bg-card border-border z-[60]">
+                    <SelectContent className="bg-card border-border z-[60] max-h-[480px]">
                       {specializedAgents.map((agent) => (
                         <SelectItem 
                           key={agent.id} 
