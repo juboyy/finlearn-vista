@@ -1,0 +1,431 @@
+import { useState, useRef, useEffect } from "react";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Highlighter,
+  StickyNote,
+  Bookmark,
+  ChevronLeft,
+  ChevronRight,
+  Palette,
+  Trash2,
+  BookMarked,
+  List,
+} from "lucide-react";
+import { useEbookAnnotations } from "@/hooks/useEbookAnnotations";
+import { cn } from "@/lib/utils";
+
+interface EbookReaderProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  ebookId: string;
+  ebookTitle: string;
+}
+
+export const EbookReader = ({
+  open,
+  onOpenChange,
+  ebookId,
+  ebookTitle,
+}: EbookReaderProps) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedText, setSelectedText] = useState("");
+  const [selectionRange, setSelectionRange] = useState<{ start: number; end: number } | null>(null);
+  const [showAnnotationMenu, setShowAnnotationMenu] = useState(false);
+  const [showNoteDialog, setShowNoteDialog] = useState(false);
+  const [noteContent, setNoteContent] = useState("");
+  const [selectedColor, setSelectedColor] = useState("#fef3c7");
+  const [showSidebar, setShowSidebar] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  const {
+    annotations,
+    bookmarks,
+    loading,
+    createAnnotation,
+    updateAnnotation,
+    deleteAnnotation,
+    createBookmark,
+    deleteBookmark,
+  } = useEbookAnnotations(ebookId, ebookTitle);
+
+  // Mock content - In production, load from file/API
+  const mockContent = `
+    Capítulo 1: Introdução ao Mercado Financeiro
+
+    O mercado financeiro é um sistema complexo e dinâmico que conecta investidores, empresas e instituições financeiras. Neste capítulo, exploraremos os fundamentos essenciais para compreender como o mercado funciona e qual o papel de cada participante.
+
+    1.1 Conceitos Fundamentais
+
+    O mercado financeiro pode ser dividido em diversos segmentos, cada um com suas características específicas. O mercado de capitais, por exemplo, é onde empresas captam recursos através da emissão de ações e títulos de dívida. Já o mercado monetário lida com operações de curto prazo e alta liquidez.
+
+    A eficiência do mercado é um conceito fundamental que sugere que os preços dos ativos refletem todas as informações disponíveis. Esta hipótese, proposta por Eugene Fama, tem implicações importantes para estratégias de investimento e análise de mercado.
+
+    1.2 Participantes do Mercado
+
+    Os principais participantes incluem investidores institucionais, como fundos de pensão e gestoras de recursos, investidores individuais (pessoas físicas), e intermediários financeiros, como corretoras e bancos de investimento.
+
+    Cada participante tem objetivos e restrições diferentes. Investidores institucionais geralmente possuem horizontes de investimento mais longos e maior tolerância ao risco, enquanto investidores individuais podem ter objetivos mais variados.
+
+    1.3 Regulação e Supervisão
+
+    A regulação do mercado financeiro é essencial para garantir sua integridade e proteger investidores. No Brasil, a CVM (Comissão de Valores Mobiliários) é o principal órgão regulador do mercado de capitais, estabelecendo regras e fiscalizando sua aplicação.
+
+    A supervisão adequada contribui para a estabilidade do sistema financeiro e para a confiança dos investidores, elementos cruciais para o desenvolvimento econômico sustentável.
+  `;
+
+  const highlightColors = [
+    { name: "Amarelo", color: "#fef3c7" },
+    { name: "Verde", color: "#d1fae5" },
+    { name: "Rosa", color: "#fce7f3" },
+    { name: "Azul", color: "#dbeafe" },
+    { name: "Roxo", color: "#e9d5ff" },
+  ];
+
+  const handleTextSelection = () => {
+    const selection = window.getSelection();
+    if (selection && selection.toString().trim().length > 0) {
+      const text = selection.toString();
+      const range = selection.getRangeAt(0);
+      
+      // Calculate position in content
+      const preSelectionRange = range.cloneRange();
+      if (contentRef.current) {
+        preSelectionRange.selectNodeContents(contentRef.current);
+        preSelectionRange.setEnd(range.startContainer, range.startOffset);
+        const start = preSelectionRange.toString().length;
+        const end = start + text.length;
+
+        setSelectedText(text);
+        setSelectionRange({ start, end });
+        setShowAnnotationMenu(true);
+      }
+    }
+  };
+
+  const handleHighlight = async (color: string) => {
+    if (selectedText && selectionRange) {
+      await createAnnotation(
+        "highlight",
+        selectedText,
+        selectionRange.start,
+        selectionRange.end,
+        color,
+        undefined,
+        currentPage
+      );
+      clearSelection();
+    }
+  };
+
+  const handleAddNote = () => {
+    setShowNoteDialog(true);
+    setShowAnnotationMenu(false);
+  };
+
+  const handleSaveNote = async () => {
+    if (selectedText && selectionRange && noteContent) {
+      await createAnnotation(
+        "note",
+        selectedText,
+        selectionRange.start,
+        selectionRange.end,
+        selectedColor,
+        noteContent,
+        currentPage
+      );
+      setNoteContent("");
+      setShowNoteDialog(false);
+      clearSelection();
+    }
+  };
+
+  const handleAddBookmark = async () => {
+    const previewText = selectedText || mockContent.substring(0, 100);
+    await createBookmark(currentPage, `Página ${currentPage}`, "Capítulo 1", previewText);
+    clearSelection();
+  };
+
+  const clearSelection = () => {
+    setSelectedText("");
+    setSelectionRange(null);
+    setShowAnnotationMenu(false);
+    window.getSelection()?.removeAllRanges();
+  };
+
+  // Apply highlights to content
+  const renderContentWithAnnotations = () => {
+    let content = mockContent;
+    const sortedAnnotations = [...annotations].sort((a, b) => b.position_start - a.position_start);
+
+    sortedAnnotations.forEach((annotation) => {
+      if (annotation.annotation_type === "highlight" && !annotation.is_deleted) {
+        const before = content.substring(0, annotation.position_start);
+        const highlighted = content.substring(annotation.position_start, annotation.position_end);
+        const after = content.substring(annotation.position_end);
+        
+        content = `${before}<mark style="background-color: ${annotation.highlight_color}; padding: 2px 0;" data-annotation-id="${annotation.id}">${highlighted}</mark>${after}`;
+      }
+    });
+
+    return content;
+  };
+
+  return (
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent
+        side="right"
+        className="w-full p-0 bg-background border-none flex"
+      >
+        {/* Main Reader */}
+        <div className="flex-1 flex flex-col">
+          <SheetHeader className="p-6 pb-4 border-b border-border bg-card">
+            <div className="flex items-center justify-between">
+              <SheetTitle className="text-2xl font-bold">{ebookTitle}</SheetTitle>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setShowSidebar(!showSidebar)}
+                className="hover:bg-muted"
+              >
+                <List size={20} />
+              </Button>
+            </div>
+            <div className="flex items-center gap-2 mt-4">
+              <Badge variant="outline" className="text-xs">
+                Página {currentPage}
+              </Badge>
+              <Badge variant="outline" className="text-xs">
+                {annotations.length} anotações
+              </Badge>
+              <Badge variant="outline" className="text-xs">
+                {bookmarks.length} marcadores
+              </Badge>
+            </div>
+          </SheetHeader>
+
+          {/* Reading Area */}
+          <ScrollArea className="flex-1">
+            <div
+              ref={contentRef}
+              className="p-8 max-w-3xl mx-auto leading-relaxed text-foreground select-text"
+              onMouseUp={handleTextSelection}
+              dangerouslySetInnerHTML={{ __html: renderContentWithAnnotations() }}
+            />
+          </ScrollArea>
+
+          {/* Annotation Menu Popover */}
+          {showAnnotationMenu && (
+            <div
+              className="fixed z-50 bg-card border-2 border-border rounded-xl shadow-2xl p-2 flex gap-2"
+              style={{
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+            >
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button size="sm" variant="ghost" className="gap-2">
+                    <Highlighter size={16} />
+                    Destacar
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-2">
+                  <div className="flex gap-2">
+                    {highlightColors.map((color) => (
+                      <button
+                        key={color.color}
+                        onClick={() => handleHighlight(color.color)}
+                        className="w-8 h-8 rounded-full border-2 border-border hover:scale-110 transition-transform"
+                        style={{ backgroundColor: color.color }}
+                        title={color.name}
+                      />
+                    ))}
+                  </div>
+                </PopoverContent>
+              </Popover>
+
+              <Button size="sm" variant="ghost" className="gap-2" onClick={handleAddNote}>
+                <StickyNote size={16} />
+                Nota
+              </Button>
+
+              <Button size="sm" variant="ghost" className="gap-2" onClick={handleAddBookmark}>
+                <Bookmark size={16} />
+                Marcar
+              </Button>
+
+              <Button size="sm" variant="ghost" onClick={clearSelection}>
+                ✕
+              </Button>
+            </div>
+          )}
+
+          {/* Note Dialog */}
+          {showNoteDialog && (
+            <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+              <div className="bg-card border-2 border-border rounded-xl p-6 max-w-md w-full space-y-4">
+                <h3 className="text-lg font-semibold">Adicionar Nota</h3>
+                <div className="space-y-2">
+                  <p className="text-sm text-muted-foreground">
+                    "{selectedText.substring(0, 100)}..."
+                  </p>
+                  <Textarea
+                    placeholder="Escreva sua nota aqui..."
+                    value={noteContent}
+                    onChange={(e) => setNoteContent(e.target.value)}
+                    rows={4}
+                  />
+                  <div className="flex gap-2">
+                    <span className="text-sm text-muted-foreground">Cor:</span>
+                    {highlightColors.map((color) => (
+                      <button
+                        key={color.color}
+                        onClick={() => setSelectedColor(color.color)}
+                        className={cn(
+                          "w-6 h-6 rounded-full border-2 hover:scale-110 transition-transform",
+                          selectedColor === color.color ? "border-foreground" : "border-border"
+                        )}
+                        style={{ backgroundColor: color.color }}
+                      />
+                    ))}
+                  </div>
+                </div>
+                <div className="flex gap-2 justify-end">
+                  <Button variant="outline" onClick={() => setShowNoteDialog(false)}>
+                    Cancelar
+                  </Button>
+                  <Button onClick={handleSaveNote}>Salvar Nota</Button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Navigation */}
+          <div className="p-4 border-t border-border bg-card flex items-center justify-between">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+              disabled={currentPage === 1}
+            >
+              <ChevronLeft size={16} className="mr-2" />
+              Anterior
+            </Button>
+            <span className="text-sm text-muted-foreground">Página {currentPage} de 150</span>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCurrentPage(Math.min(150, currentPage + 1))}
+              disabled={currentPage === 150}
+            >
+              Próxima
+              <ChevronRight size={16} className="ml-2" />
+            </Button>
+          </div>
+        </div>
+
+        {/* Annotations & Bookmarks Sidebar */}
+        {showSidebar && (
+          <div className="w-80 border-l border-border bg-card overflow-y-auto">
+            <div className="p-4 space-y-6">
+              {/* Annotations Section */}
+              <div className="space-y-3">
+                <h3 className="font-semibold text-foreground flex items-center gap-2">
+                  <Highlighter size={16} />
+                  Anotações ({annotations.length})
+                </h3>
+                <ScrollArea className="h-64">
+                  <div className="space-y-2">
+                    {annotations.map((annotation) => (
+                      <div
+                        key={annotation.id}
+                        className="p-3 rounded-lg border border-border bg-background hover:bg-muted transition-colors"
+                        style={{ borderLeftColor: annotation.highlight_color, borderLeftWidth: "4px" }}
+                      >
+                        <p className="text-xs text-muted-foreground mb-1">
+                          Página {annotation.page_number}
+                        </p>
+                        <p className="text-sm font-medium mb-1">"{annotation.selected_text.substring(0, 80)}..."</p>
+                        {annotation.annotation_content && (
+                          <p className="text-xs text-muted-foreground mt-2 italic">
+                            {annotation.annotation_content}
+                          </p>
+                        )}
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="mt-2 h-6 text-xs"
+                          onClick={() => deleteAnnotation(annotation.id)}
+                        >
+                          <Trash2 size={12} className="mr-1" />
+                          Excluir
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                </ScrollArea>
+              </div>
+
+              {/* Bookmarks Section */}
+              <div className="space-y-3">
+                <h3 className="font-semibold text-foreground flex items-center gap-2">
+                  <BookMarked size={16} />
+                  Marcadores ({bookmarks.length})
+                </h3>
+                <ScrollArea className="h-48">
+                  <div className="space-y-2">
+                    {bookmarks.map((bookmark) => (
+                      <div
+                        key={bookmark.id}
+                        className="p-3 rounded-lg border border-border bg-background hover:bg-muted transition-colors cursor-pointer"
+                        onClick={() => setCurrentPage(bookmark.page_number)}
+                      >
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <p className="text-sm font-medium">
+                              {bookmark.bookmark_name || `Página ${bookmark.page_number}`}
+                            </p>
+                            <p className="text-xs text-muted-foreground mt-1">
+                              {bookmark.preview_text?.substring(0, 60)}...
+                            </p>
+                          </div>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            className="h-6 w-6 p-0"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              deleteBookmark(bookmark.id);
+                            }}
+                          >
+                            <Trash2 size={12} />
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </ScrollArea>
+              </div>
+            </div>
+          </div>
+        )}
+      </SheetContent>
+    </Sheet>
+  );
+};

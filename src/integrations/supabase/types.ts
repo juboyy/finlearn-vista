@@ -128,6 +128,99 @@ export type Database = {
         }
         Relationships: []
       }
+      ebook_annotations: {
+        Row: {
+          annotation_content: string | null
+          annotation_type: string
+          chapter_name: string | null
+          created_at: string
+          ebook_id: string
+          ebook_title: string
+          highlight_color: string | null
+          id: string
+          is_deleted: boolean | null
+          page_number: number | null
+          position_end: number
+          position_start: number
+          selected_text: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          annotation_content?: string | null
+          annotation_type: string
+          chapter_name?: string | null
+          created_at?: string
+          ebook_id: string
+          ebook_title: string
+          highlight_color?: string | null
+          id?: string
+          is_deleted?: boolean | null
+          page_number?: number | null
+          position_end: number
+          position_start: number
+          selected_text: string
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          annotation_content?: string | null
+          annotation_type?: string
+          chapter_name?: string | null
+          created_at?: string
+          ebook_id?: string
+          ebook_title?: string
+          highlight_color?: string | null
+          id?: string
+          is_deleted?: boolean | null
+          page_number?: number | null
+          position_end?: number
+          position_start?: number
+          selected_text?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      ebook_bookmarks: {
+        Row: {
+          bookmark_name: string | null
+          chapter_name: string | null
+          created_at: string
+          ebook_id: string
+          ebook_title: string
+          id: string
+          page_number: number
+          preview_text: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          bookmark_name?: string | null
+          chapter_name?: string | null
+          created_at?: string
+          ebook_id: string
+          ebook_title: string
+          id?: string
+          page_number: number
+          preview_text?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          bookmark_name?: string | null
+          chapter_name?: string | null
+          created_at?: string
+          ebook_id?: string
+          ebook_title?: string
+          id?: string
+          page_number?: number
+          preview_text?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       presentations: {
         Row: {
           author_name: string
