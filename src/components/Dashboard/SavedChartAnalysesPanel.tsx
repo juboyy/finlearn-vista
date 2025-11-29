@@ -1,13 +1,14 @@
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
-import { Trash2, Calendar, BarChart3, FileText, ChevronDown, ChevronUp, Copy } from "lucide-react";
+import { Trash2, Calendar, BarChart3, FileText, ChevronDown, ChevronUp, Copy, Download } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { useSavedChartAnalyses, SavedChartAnalysis } from "@/hooks/useSavedChartAnalyses";
 import ReactMarkdown from "react-markdown";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import jsPDF from "jspdf";
 
 interface SavedChartAnalysesPanelProps {
   open: boolean;
@@ -88,6 +89,113 @@ const AnalysisCard = ({ analysis, onDelete }: AnalysisCardProps) => {
     });
   };
 
+  const handleExportPDF = () => {
+    try {
+      const pdf = new jsPDF();
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+      const margin = 20;
+      const maxWidth = pageWidth - (margin * 2);
+      let yPosition = margin;
+
+      // Título do documento
+      pdf.setFontSize(20);
+      pdf.setTextColor(71, 85, 105); // slate-600
+      pdf.text("Análise de Gráfico", margin, yPosition);
+      yPosition += 15;
+
+      // Linha separadora
+      pdf.setDrawColor(203, 213, 225); // slate-300
+      pdf.line(margin, yPosition, pageWidth - margin, yPosition);
+      yPosition += 10;
+
+      // Metadados
+      pdf.setFontSize(10);
+      pdf.setTextColor(100, 116, 139); // slate-500
+      pdf.text(`Data: ${format(new Date(analysis.created_at), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}`, margin, yPosition);
+      yPosition += 7;
+      pdf.text(`Tipo de Métrica: ${analysis.metric_type}`, margin, yPosition);
+      yPosition += 12;
+
+      // Título da análise
+      pdf.setFontSize(16);
+      pdf.setTextColor(30, 41, 59); // slate-800
+      const titleLines = pdf.splitTextToSize(analysis.chart_title, maxWidth);
+      pdf.text(titleLines, margin, yPosition);
+      yPosition += (titleLines.length * 8) + 10;
+
+      // Área selecionada (se houver)
+      if (analysis.selection_area) {
+        pdf.setFontSize(11);
+        pdf.setTextColor(71, 85, 105);
+        pdf.text("Área Selecionada:", margin, yPosition);
+        yPosition += 7;
+        pdf.setFontSize(10);
+        pdf.setTextColor(100, 116, 139);
+        const areaLines = pdf.splitTextToSize(analysis.selection_area, maxWidth);
+        pdf.text(areaLines, margin, yPosition);
+        yPosition += (areaLines.length * 6) + 10;
+      }
+
+      // Conteúdo da análise
+      pdf.setFontSize(11);
+      pdf.setTextColor(71, 85, 105);
+      pdf.text("Análise:", margin, yPosition);
+      yPosition += 7;
+
+      // Processar o conteúdo markdown para texto simples
+      const cleanContent = analysis.analysis_content
+        .replace(/#{1,6}\s/g, '') // Remove markdown headers
+        .replace(/\*\*(.*?)\*\*/g, '$1') // Remove bold
+        .replace(/\*(.*?)\*/g, '$1') // Remove italic
+        .replace(/\[(.*?)\]\(.*?\)/g, '$1'); // Remove links
+
+      pdf.setFontSize(10);
+      pdf.setTextColor(30, 41, 59);
+      const contentLines = pdf.splitTextToSize(cleanContent, maxWidth);
+      
+      // Adicionar conteúdo com paginação
+      contentLines.forEach((line: string) => {
+        if (yPosition > pageHeight - margin) {
+          pdf.addPage();
+          yPosition = margin;
+        }
+        pdf.text(line, margin, yPosition);
+        yPosition += 6;
+      });
+
+      // Rodapé
+      const totalPages = pdf.internal.pages.length - 1;
+      for (let i = 1; i <= totalPages; i++) {
+        pdf.setPage(i);
+        pdf.setFontSize(8);
+        pdf.setTextColor(148, 163, 184); // slate-400
+        pdf.text(
+          `Página ${i} de ${totalPages} | Gerado em ${format(new Date(), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}`,
+          pageWidth / 2,
+          pageHeight - 10,
+          { align: 'center' }
+        );
+      }
+
+      // Salvar PDF
+      const fileName = `analise-${analysis.metric_type.toLowerCase().replace(/\s/g, '-')}-${format(new Date(analysis.created_at), 'dd-MM-yyyy')}.pdf`;
+      pdf.save(fileName);
+
+      toast({
+        title: "PDF exportado com sucesso",
+        description: `O arquivo ${fileName} foi baixado`,
+      });
+    } catch (error) {
+      console.error('Erro ao exportar PDF:', error);
+      toast({
+        title: "Erro ao exportar PDF",
+        description: "Ocorreu um erro ao gerar o arquivo PDF",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="bg-card border-2 border-slate-700 rounded-xl p-4 space-y-3 hover:border-slate-600 transition-colors">
       {/* Header */}
@@ -113,8 +221,18 @@ const AnalysisCard = ({ analysis, onDelete }: AnalysisCardProps) => {
           <Button
             variant="ghost"
             size="icon"
+            onClick={handleExportPDF}
+            className="hover:bg-green-500/10 hover:text-green-600"
+            title="Exportar PDF"
+          >
+            <Download className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
             onClick={handleCopy}
             className="hover:bg-primary/10 hover:text-primary"
+            title="Copiar análise"
           >
             <Copy className="h-4 w-4" />
           </Button>
@@ -123,6 +241,7 @@ const AnalysisCard = ({ analysis, onDelete }: AnalysisCardProps) => {
             size="icon"
             onClick={() => onDelete(analysis.id)}
             className="hover:bg-destructive/10 hover:text-destructive"
+            title="Excluir análise"
           >
             <Trash2 className="h-4 w-4" />
           </Button>
