@@ -21,8 +21,8 @@ export interface UserAgent {
 
 const DEFAULT_AGENTS = [
   {
-    agent_key: "ana-analista-tecnica",
-    agent_name: "Ana - Analista Técnica",
+    agent_key: "athena-analista-tecnica",
+    agent_name: "Athena - Analista Técnica",
     agent_description: "Especialista em análise técnica, padrões gráficos e estratégias de trading. Fornece insights detalhados sobre movimentos de mercado.",
     agent_category: "Análise Técnica",
     agent_image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/f28f1efee6-bb8cd63f0a8ea0129291.png",
@@ -33,8 +33,8 @@ const DEFAULT_AGENTS = [
     is_active: true
   },
   {
-    agent_key: "ricardo-renda-fixa",
-    agent_name: "Ricardo - Especialista em Renda Fixa",
+    agent_key: "aristoteles-renda-fixa",
+    agent_name: "Aristóteles - Especialista em Renda Fixa",
     agent_description: "Expert em títulos públicos, CDBs, LCIs e estratégias conservadoras. Ajuda na construção de carteiras de renda fixa eficientes.",
     agent_category: "Renda Fixa",
     agent_image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4f08e86bcd-772ce53ecbb47d504bde.png",
@@ -45,8 +45,8 @@ const DEFAULT_AGENTS = [
     is_active: true
   },
   {
-    agent_key: "marina-mercado-capitais",
-    agent_name: "Marina - Mercado de Capitais",
+    agent_key: "afrodite-mercado-capitais",
+    agent_name: "Afrodite - Mercado de Capitais",
     agent_description: "Especialista em IPOs, ofertas públicas, estruturação de operações e regulação do mercado de capitais brasileiro.",
     agent_category: "Mercado de Capitais",
     agent_image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/521bb99722-72b06772970c6fd465e6.png",
@@ -57,8 +57,8 @@ const DEFAULT_AGENTS = [
     is_active: true
   },
   {
-    agent_key: "joao-educador",
-    agent_name: "Professor João - Educador",
+    agent_key: "socrates-educador",
+    agent_name: "Sócrates - Educador",
     agent_description: "Educador financeiro com foco em fundamentos e teoria econômica. Explica conceitos complexos de forma didática.",
     agent_category: "Educação",
     agent_image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4450be57c6-3f9f4c9c029e3c4d7519.png",
