@@ -33,6 +33,8 @@ export const SelectableChartWrapper = ({
   const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
     
+    console.log('MouseDown event captured');
+    
     const rect = containerRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
@@ -68,6 +70,7 @@ export const SelectableChartWrapper = ({
   };
 
   const handleAskAgent = () => {
+    console.log('Ask Agent button clicked');
     if (onAskAgent) {
       const selectionData: SelectionData = {
         startX: Math.min(selectionStart.x, selectionEnd.x),
@@ -77,6 +80,7 @@ export const SelectableChartWrapper = ({
         chartTitle,
         chartData
       };
+      console.log('Calling onAskAgent with:', selectionData);
       onAskAgent(selectionData);
     }
     setShowButton(false);
@@ -102,7 +106,12 @@ export const SelectableChartWrapper = ({
   return (
     <div
       ref={containerRef}
-      className={`relative transition-all ${isSelecting ? 'cursor-grabbing' : 'cursor-crosshair'}`}
+      className="relative"
+      style={{ 
+        userSelect: 'none',
+        cursor: isSelecting ? 'grabbing' : 'crosshair',
+        position: 'relative'
+      }}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
@@ -111,9 +120,10 @@ export const SelectableChartWrapper = ({
           setIsSelecting(false);
         }
       }}
-      style={{ userSelect: 'none' }}
     >
-      {children}
+      <div style={{ pointerEvents: isSelecting ? 'none' : 'auto' }}>
+        {children}
+      </div>
       
       {/* Área de seleção visual */}
       {(isSelecting || showButton) && (
@@ -151,11 +161,12 @@ export const SelectableChartWrapper = ({
       {/* Botão flutuante */}
       {showButton && (
         <div
-          className="absolute z-10 flex gap-2 animate-in fade-in-0 slide-in-from-bottom-2 duration-300"
+          className="absolute z-50 flex gap-2 animate-in fade-in-0 slide-in-from-bottom-2 duration-300"
           style={{
             left: buttonX,
             top: buttonY,
             transform: 'translateX(-50%)',
+            pointerEvents: 'auto'
           }}
         >
           <Button
