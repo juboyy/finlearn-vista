@@ -87,15 +87,17 @@ export const WhitepaperAnalyticsConsumption = () => {
       values: [40, 25, 20, 15],
       labels: ['Tecnologia', 'Regulação', 'Blockchain', 'Inovação'],
       type: 'pie',
+      hole: 0.4,
       marker: { colors: ['#B8D4E8', '#C5E8D4', '#F4C8D8', '#D8BFD8'] },
-      textinfo: 'label+percent',
+      textinfo: 'none',
       hovertemplate: '<b>%{label}</b><br>%{value} whitepapers (%{percent})<br><i>Clique para ver detalhes</i><extra></extra>',
       hoverlabel: { bgcolor: '#334155', font: { color: 'white', size: 14 } }
     }];
 
     Plotly.newPlot('whitepaper-categories-chart', categoriesData, {
-      margin: { l: 20, r: 20, t: 20, b: 20 },
-      showlegend: false,
+      margin: { l: 20, r: 20, t: 0, b: 60 },
+      showlegend: true,
+      legend: { orientation: 'h', y: -0.1, font: { size: 11 } },
       paper_bgcolor: '#ffffff',
       hovermode: 'closest'
     }, { displayModeBar: false }).then(() => {

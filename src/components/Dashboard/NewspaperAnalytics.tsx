@@ -275,27 +275,23 @@ export const NewspaperAnalytics = () => {
       displayModeBar: false
     });
 
-    // Content Types Chart (Pie Chart)
+    // Content Types Chart (Donut Chart)
     const contentTypesData = [{
       values: [42, 28, 18, 12],
       labels: ['Notícias', 'Análises', 'Relatórios', 'Estudos'],
       type: 'pie',
+      hole: 0.4,
       marker: {
         colors: ['#B8D4E8', '#C5E8D4', '#E8C5D8', '#E8E0C5']
       },
-      textinfo: 'label+percent',
-      textposition: 'inside',
+      textinfo: 'none',
       hovertemplate: '<b>%{label}</b><br>%{value} artigos (%{percent})<br><i>Clique para ver detalhes</i><extra></extra>',
       hoverlabel: { bgcolor: '#334155', font: { color: 'white', size: 14 } }
     }];
     const contentTypesLayout = {
-      margin: {
-        l: 20,
-        r: 20,
-        t: 20,
-        b: 20
-      },
-      showlegend: false,
+      margin: { l: 20, r: 20, t: 0, b: 60 },
+      showlegend: true,
+      legend: { orientation: 'h', y: -0.1, font: { size: 11 } },
       paper_bgcolor: '#ffffff',
       hovermode: 'closest'
     };

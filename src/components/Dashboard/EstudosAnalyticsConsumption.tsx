@@ -82,15 +82,17 @@ export const EstudosAnalyticsConsumption = () => {
       values: [30, 25, 20, 15, 10],
       labels: ['Finanças', 'Economia', 'Tecnologia', 'Regulação', 'Outros'],
       type: 'pie',
+      hole: 0.4,
       marker: { colors: ['#D8BFD8', '#C5E8D4', '#F4C8D8', '#B8D4E8', '#F4E4A6'] },
-      textinfo: 'label+percent',
+      textinfo: 'none',
       hovertemplate: '<b>%{label}</b><br>%{value} estudos (%{percent})<br><i>Clique para ver detalhes</i><extra></extra>',
       hoverlabel: { bgcolor: '#334155', font: { color: 'white', size: 14 } }
     }];
 
     Plotly.newPlot('estudos-areas-chart', areasData, {
-      margin: { l: 20, r: 20, t: 20, b: 20 },
-      showlegend: false,
+      margin: { l: 20, r: 20, t: 0, b: 60 },
+      showlegend: true,
+      legend: { orientation: 'h', y: -0.1, font: { size: 11 } },
       paper_bgcolor: '#ffffff',
       hovermode: 'closest'
     }, { displayModeBar: false }).then(() => {

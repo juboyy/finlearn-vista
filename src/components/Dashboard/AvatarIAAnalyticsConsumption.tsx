@@ -88,15 +88,17 @@ export const AvatarIAAnalyticsConsumption = () => {
       values: [30, 25, 22, 13, 10],
       labels: ['Análise', 'Compliance', 'Educação', 'Estratégia', 'Outros'],
       type: 'pie',
+      hole: 0.4,
       marker: { colors: ['#F4C8D8', '#C5E8D4', '#D8BFD8', '#B8D4E8', '#F4E4A6'] },
-      textinfo: 'label+percent',
+      textinfo: 'none',
       hovertemplate: '<b>%{label}</b><br>%{value} sessões (%{percent})<br><i>Clique para ver detalhes</i><extra></extra>',
       hoverlabel: { bgcolor: '#334155', font: { color: 'white', size: 14 } }
     }];
 
     Plotly.newPlot('avatar-specialties-chart', specialtiesData, {
-      margin: { l: 20, r: 20, t: 20, b: 20 },
-      showlegend: false,
+      margin: { l: 20, r: 20, t: 0, b: 60 },
+      showlegend: true,
+      legend: { orientation: 'h', y: -0.1, font: { size: 11 } },
       paper_bgcolor: '#ffffff',
       hovermode: 'closest'
     }, { displayModeBar: false }).then(() => {

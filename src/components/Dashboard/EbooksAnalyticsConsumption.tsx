@@ -67,15 +67,17 @@ export const EbooksAnalyticsConsumption = () => {
       values: [35, 28, 22, 15],
       labels: ['Mercado Financeiro', 'Tecnologia', 'Compliance', 'Gestão'],
       type: 'pie',
+      hole: 0.4,
       marker: { colors: ['#D8BFD8', '#C5E8D4', '#F4C8D8', '#B8D4E8'] },
-      textinfo: 'label+percent',
+      textinfo: 'none',
       hovertemplate: '<b>%{label}</b><br>%{value} e-books (%{percent})<br><i>Clique para ver detalhes</i><extra></extra>',
       hoverlabel: { bgcolor: '#334155', font: { color: 'white', size: 14 } }
     }];
 
     Plotly.newPlot('ebooks-categories-chart', categoriesData, {
-      margin: { l: 20, r: 20, t: 20, b: 20 },
-      showlegend: false,
+      margin: { l: 20, r: 20, t: 0, b: 60 },
+      showlegend: true,
+      legend: { orientation: 'h', y: -0.1, font: { size: 11 } },
       paper_bgcolor: '#ffffff',
       hovermode: 'closest'
     }, { displayModeBar: false }).then(() => {
