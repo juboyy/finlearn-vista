@@ -1,12 +1,15 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { MenutabbarFix } from "@/components/Dashboard/MenutabbarFix";
+import { LiveChatPanel } from "@/components/Dashboard/LiveChatPanel";
 import { useState } from "react";
-import { Bell } from "lucide-react";
+import { Bell, PlayCircle, Eye, X } from "lucide-react";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'relatorios' | 'documentos' | 'estudos' | 'infograficos' | 'whitepaper' | 'apresentacoes' | 'live' | 'entrevistas';
 
 export default function Live() {
   const [activeTab, setActiveTab] = useState<TabType>('live');
+  const [selectedLive, setSelectedLive] = useState<string | null>(null);
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -91,7 +94,10 @@ export default function Live() {
                       <span>1.8k curtidas</span>
                     </div>
                   </div>
-                  <button className="w-full px-6 py-3 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center justify-center gap-2 mt-auto">
+                  <button 
+                    onClick={() => setSelectedLive("live-1")}
+                    className="w-full px-6 py-3 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center justify-center gap-2 mt-auto"
+                  >
                     <i className="fas fa-play"></i>
                     Assistir Agora
                   </button>
@@ -138,13 +144,102 @@ export default function Live() {
                       <span>1.3k curtidas</span>
                     </div>
                   </div>
-                  <button className="w-full px-6 py-3 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center justify-center gap-2 mt-auto">
+                  <button 
+                    onClick={() => setSelectedLive("live-2")}
+                    className="w-full px-6 py-3 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center justify-center gap-2 mt-auto"
+                  >
                     <i className="fas fa-play"></i>
                     Assistir Agora
                   </button>
                 </div>
               </div>
             </div>
+
+            {/* Live Viewer Modal with Chat */}
+            <Dialog open={!!selectedLive} onOpenChange={() => setSelectedLive(null)}>
+              <DialogContent className="max-w-7xl h-[90vh] p-0">
+                <div className="flex h-full">
+                  {/* Video Player Area */}
+                  <div className="flex-1 flex flex-col bg-slate-900">
+                    <div className="flex items-center justify-between p-4 border-b border-slate-700">
+                      <div className="flex items-center gap-3">
+                        <span className="px-3 py-1.5 bg-pastel-purple text-slate-700 text-sm font-medium rounded-full flex items-center gap-2">
+                          <span className="w-2 h-2 bg-slate-700 rounded-full animate-pulse"></span>
+                          AO VIVO
+                        </span>
+                        <div className="flex items-center gap-2 text-white">
+                          <Eye className="w-4 h-4" />
+                          <span className="text-sm font-medium">
+                            {selectedLive === "live-1" ? "2.1k" : selectedLive === "live-2" ? "1.5k" : "892"} assistindo
+                          </span>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => setSelectedLive(null)}
+                        className="text-white hover:text-slate-300 transition"
+                      >
+                        <X className="w-6 h-6" />
+                      </button>
+                    </div>
+                    
+                    <div className="flex-1 flex items-center justify-center bg-slate-800">
+                      <div className="text-center text-white">
+                        <PlayCircle className="w-24 h-24 mx-auto mb-4 opacity-50" />
+                        <p className="text-lg">Player de vídeo ao vivo</p>
+                        <p className="text-sm text-slate-400 mt-2">Transmissão em tempo real</p>
+                      </div>
+                    </div>
+
+                    <div className="p-4 border-t border-slate-700">
+                      <h3 className="text-xl font-semibold text-white mb-2">
+                        {selectedLive === "live-1" 
+                          ? "Análise do Mercado em Tempo Real"
+                          : selectedLive === "live-2"
+                          ? "Perguntas e Respostas: Investimentos 2025"
+                          : "Lançamento: Nova Plataforma Open Finance"
+                        }
+                      </h3>
+                      <div className="flex items-center gap-4 text-sm text-slate-300">
+                        <div className="flex items-center gap-2">
+                          <img 
+                            src={selectedLive === "live-1"
+                              ? "https://storage.googleapis.com/uxpilot-auth.appspot.com/b24014b83d-0b455d5abe744d3f9416.png"
+                              : selectedLive === "live-2"
+                              ? "https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-2bbdc31a97c8479658e1.png"
+                              : "https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-db60e1b43d477718b599.png"
+                            }
+                            alt="Palestrante" 
+                            className="w-8 h-8 rounded-full"
+                          />
+                          <span>
+                            {selectedLive === "live-1" 
+                              ? "Dr. Carlos Mendes" 
+                              : selectedLive === "live-2"
+                              ? "Prof. Roberto Lima"
+                              : "Fintech XYZ"
+                            }
+                          </span>
+                        </div>
+                        <span>•</span>
+                        <span>
+                          {selectedLive === "live-1" 
+                            ? "Mercado em Tempo Real" 
+                            : selectedLive === "live-2"
+                            ? "Q&A Interativo"
+                            : "Lançamento de Produto"
+                          }
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Chat Panel */}
+                  <div className="w-96 border-l border-border">
+                    <LiveChatPanel liveId={selectedLive || ""} />
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
 
             {/* Third Live */}
             <div className="mt-6">
@@ -191,7 +286,10 @@ export default function Live() {
                             <span>645</span>
                           </div>
                         </div>
-                        <button className="px-6 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2">
+                        <button 
+                          onClick={() => setSelectedLive("live-3")}
+                          className="px-6 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2"
+                        >
                           <i className="fas fa-play"></i>
                           Assistir
                         </button>
