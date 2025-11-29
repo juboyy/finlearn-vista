@@ -654,7 +654,14 @@ export const PodcastsAnalytics = () => {
       {/* AI Insights */}
       <section className="bg-white border border-slate-200 rounded-xl p-6 mb-8">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-bold text-slate-800">Insights Personalizados por IA</h2>
+          <div className="flex items-center gap-3">
+            <img 
+              src="/src/assets/auxiliar-do-dia-avatar.png" 
+              alt="AI Agent" 
+              className="w-10 h-10 rounded-full"
+            />
+            <h2 className="text-lg font-bold text-slate-800">Insights Personalizados por IA</h2>
+          </div>
           {loadingInsights && <div className="w-5 h-5 border-2 border-slate-300 border-t-slate-600 rounded-full animate-spin"></div>}
         </div>
         {loadingInsights ? (
