@@ -601,21 +601,50 @@ export default function EventosPresenciais() {
       </main>
 
       <Sheet open={filterOpen} onOpenChange={setFilterOpen}>
-        <SheetContent className="w-[400px] sm:w-[540px] overflow-y-auto">
-          <SheetHeader>
-            <SheetTitle className="text-slate-800">Filtros de Eventos</SheetTitle>
-            <SheetDescription className="text-slate-600">
-              Personalize sua busca por eventos presenciais
-            </SheetDescription>
+        <SheetContent className="w-[400px] sm:w-[540px] overflow-y-auto bg-gradient-to-br from-slate-50 to-white">
+          <SheetHeader className="space-y-3 pb-6 border-b border-slate-200">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-pastel-blue to-pastel-purple flex items-center justify-center">
+                <Filter className="w-6 h-6 text-slate-700" />
+              </div>
+              <div>
+                <SheetTitle className="text-2xl font-bold text-slate-800">Filtros de Eventos</SheetTitle>
+                <SheetDescription className="text-slate-600">
+                  Personalize sua busca por eventos presenciais
+                </SheetDescription>
+              </div>
+            </div>
+            {(selectedCategories.length > 0 || selectedLocations.length > 0 || selectedSpeakers.length > 0) && (
+              <div className="flex items-center gap-2 pt-2">
+                <span className="text-xs text-slate-600">Filtros ativos:</span>
+                <span className="px-2 py-1 bg-pastel-green text-slate-800 text-xs font-medium rounded-full">
+                  {selectedCategories.length + selectedLocations.length + selectedSpeakers.length}
+                </span>
+              </div>
+            )}
           </SheetHeader>
 
           <div className="space-y-6 mt-6">
             {/* Categoria */}
-            <div>
-              <Label className="text-sm font-semibold text-slate-800 mb-3 block">Categoria</Label>
-              <div className="space-y-2">
+            <div className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow animate-fade-in">
+              <div className="flex items-center gap-2 mb-4">
+                <Tag className="w-5 h-5 text-pastel-purple" />
+                <Label className="text-base font-semibold text-slate-800">Categoria</Label>
+                {selectedCategories.length > 0 && (
+                  <span className="ml-auto px-2 py-0.5 bg-pastel-purple text-slate-800 text-xs font-medium rounded-full">
+                    {selectedCategories.length}
+                  </span>
+                )}
+              </div>
+              <div className="grid grid-cols-2 gap-2">
                 {categories.map((category) => (
-                  <div key={category} className="flex items-center space-x-2">
+                  <div
+                    key={category}
+                    className={`flex items-center space-x-2 p-2 rounded-lg transition-all cursor-pointer hover:bg-pastel-blue/20 ${
+                      selectedCategories.includes(category) ? 'bg-pastel-blue/30 border border-pastel-blue' : 'border border-transparent'
+                    }`}
+                    onClick={() => handleCategoryToggle(category)}
+                  >
                     <Checkbox
                       id={`category-${category}`}
                       checked={selectedCategories.includes(category)}
@@ -623,7 +652,7 @@ export default function EventosPresenciais() {
                     />
                     <label
                       htmlFor={`category-${category}`}
-                      className="text-sm text-slate-700 cursor-pointer"
+                      className="text-sm text-slate-700 cursor-pointer flex-1"
                     >
                       {category}
                     </label>
@@ -633,11 +662,25 @@ export default function EventosPresenciais() {
             </div>
 
             {/* Local */}
-            <div>
-              <Label className="text-sm font-semibold text-slate-800 mb-3 block">Local</Label>
+            <div className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow animate-fade-in" style={{ animationDelay: '0.1s' }}>
+              <div className="flex items-center gap-2 mb-4">
+                <MapPin className="w-5 h-5 text-pastel-green" />
+                <Label className="text-base font-semibold text-slate-800">Local</Label>
+                {selectedLocations.length > 0 && (
+                  <span className="ml-auto px-2 py-0.5 bg-pastel-green text-slate-800 text-xs font-medium rounded-full">
+                    {selectedLocations.length}
+                  </span>
+                )}
+              </div>
               <div className="space-y-2">
                 {locations.map((location) => (
-                  <div key={location} className="flex items-center space-x-2">
+                  <div
+                    key={location}
+                    className={`flex items-center space-x-2 p-2 rounded-lg transition-all cursor-pointer hover:bg-pastel-green/20 ${
+                      selectedLocations.includes(location) ? 'bg-pastel-green/30 border border-pastel-green' : 'border border-transparent'
+                    }`}
+                    onClick={() => handleLocationToggle(location)}
+                  >
                     <Checkbox
                       id={`location-${location}`}
                       checked={selectedLocations.includes(location)}
@@ -645,7 +688,7 @@ export default function EventosPresenciais() {
                     />
                     <label
                       htmlFor={`location-${location}`}
-                      className="text-sm text-slate-700 cursor-pointer"
+                      className="text-sm text-slate-700 cursor-pointer flex-1"
                     >
                       {location}
                     </label>
@@ -655,55 +698,86 @@ export default function EventosPresenciais() {
             </div>
 
             {/* Faixa de Preço */}
-            <div>
-              <Label className="text-sm font-semibold text-slate-800 mb-3 block">
-                Faixa de Preço: R$ {priceRange[0]} - R$ {priceRange[1]}
-              </Label>
-              <Slider
-                value={priceRange}
-                onValueChange={setPriceRange}
-                max={2000}
-                min={0}
-                step={50}
-                className="mt-2"
-              />
-              <div className="flex justify-between mt-2">
-                <span className="text-xs text-slate-500">R$ 0</span>
-                <span className="text-xs text-slate-500">R$ 2.000</span>
+            <div className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow animate-fade-in" style={{ animationDelay: '0.2s' }}>
+              <div className="flex items-center gap-2 mb-4">
+                <Tag className="w-5 h-5 text-pastel-yellow" />
+                <Label className="text-base font-semibold text-slate-800">Faixa de Preço</Label>
+              </div>
+              <div className="bg-gradient-to-r from-pastel-yellow/20 to-pastel-orange/20 rounded-lg p-4">
+                <div className="text-center mb-3">
+                  <span className="text-2xl font-bold text-slate-800">
+                    R$ {priceRange[0]} - R$ {priceRange[1]}
+                  </span>
+                </div>
+                <Slider
+                  value={priceRange}
+                  onValueChange={setPriceRange}
+                  max={2000}
+                  min={0}
+                  step={50}
+                  className="mt-2"
+                />
+                <div className="flex justify-between mt-3">
+                  <span className="text-xs font-medium text-slate-600">R$ 0</span>
+                  <span className="text-xs font-medium text-slate-600">R$ 2.000</span>
+                </div>
               </div>
             </div>
 
             {/* Data */}
-            <div>
-              <Label className="text-sm font-semibold text-slate-800 mb-3 block">Período</Label>
+            <div className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow animate-fade-in" style={{ animationDelay: '0.3s' }}>
+              <div className="flex items-center gap-2 mb-4">
+                <Calendar className="w-5 h-5 text-pastel-pink" />
+                <Label className="text-base font-semibold text-slate-800">Período</Label>
+              </div>
               <div className="space-y-3">
-                <div>
-                  <Label className="text-xs text-slate-600 mb-1 block">Data Inicial</Label>
-                  <Input
-                    type="date"
-                    value={dateRange.start}
-                    onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
-                    className="bg-white border-slate-200"
-                  />
+                <div className="relative">
+                  <Label className="text-xs text-slate-600 mb-1.5 block font-medium">Data Inicial</Label>
+                  <div className="relative">
+                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                    <Input
+                      type="date"
+                      value={dateRange.start}
+                      onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
+                      className="bg-pastel-pink/10 border-pastel-pink/30 pl-10 hover:bg-pastel-pink/20 transition-colors"
+                    />
+                  </div>
                 </div>
-                <div>
-                  <Label className="text-xs text-slate-600 mb-1 block">Data Final</Label>
-                  <Input
-                    type="date"
-                    value={dateRange.end}
-                    onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
-                    className="bg-white border-slate-200"
-                  />
+                <div className="relative">
+                  <Label className="text-xs text-slate-600 mb-1.5 block font-medium">Data Final</Label>
+                  <div className="relative">
+                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                    <Input
+                      type="date"
+                      value={dateRange.end}
+                      onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
+                      className="bg-pastel-pink/10 border-pastel-pink/30 pl-10 hover:bg-pastel-pink/20 transition-colors"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Palestrantes */}
-            <div>
-              <Label className="text-sm font-semibold text-slate-800 mb-3 block">Palestrantes</Label>
+            <div className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow animate-fade-in" style={{ animationDelay: '0.4s' }}>
+              <div className="flex items-center gap-2 mb-4">
+                <Mic className="w-5 h-5 text-pastel-orange" />
+                <Label className="text-base font-semibold text-slate-800">Palestrantes</Label>
+                {selectedSpeakers.length > 0 && (
+                  <span className="ml-auto px-2 py-0.5 bg-pastel-orange text-slate-800 text-xs font-medium rounded-full">
+                    {selectedSpeakers.length}
+                  </span>
+                )}
+              </div>
               <div className="space-y-2">
                 {speakers.map((speaker) => (
-                  <div key={speaker} className="flex items-center space-x-2">
+                  <div
+                    key={speaker}
+                    className={`flex items-center space-x-2 p-2 rounded-lg transition-all cursor-pointer hover:bg-pastel-orange/20 ${
+                      selectedSpeakers.includes(speaker) ? 'bg-pastel-orange/30 border border-pastel-orange' : 'border border-transparent'
+                    }`}
+                    onClick={() => handleSpeakerToggle(speaker)}
+                  >
                     <Checkbox
                       id={`speaker-${speaker}`}
                       checked={selectedSpeakers.includes(speaker)}
@@ -711,7 +785,7 @@ export default function EventosPresenciais() {
                     />
                     <label
                       htmlFor={`speaker-${speaker}`}
-                      className="text-sm text-slate-700 cursor-pointer"
+                      className="text-sm text-slate-700 cursor-pointer flex-1"
                     >
                       {speaker}
                     </label>
@@ -721,18 +795,20 @@ export default function EventosPresenciais() {
             </div>
 
             {/* Botões de Ação */}
-            <div className="flex gap-3 pt-4 border-t border-slate-200">
+            <div className="flex gap-3 pt-4 pb-6 border-t border-slate-200 sticky bottom-0 bg-white">
               <Button
                 variant="outline"
                 onClick={clearFilters}
-                className="flex-1 border-slate-200 text-slate-700 hover:bg-slate-50"
+                className="flex-1 border-slate-300 text-slate-700 hover:bg-slate-100 hover:border-slate-400 font-medium transition-all hover:scale-105"
               >
+                <X className="w-4 h-4 mr-2" />
                 Limpar Filtros
               </Button>
               <Button
                 onClick={() => setFilterOpen(false)}
-                className="flex-1 bg-pastel-blue text-slate-800 hover:bg-pastel-blue/80"
+                className="flex-1 bg-gradient-to-r from-pastel-blue to-pastel-purple text-slate-800 hover:from-pastel-blue/80 hover:to-pastel-purple/80 font-semibold shadow-lg transition-all hover:scale-105 hover:shadow-xl"
               >
+                <Filter className="w-4 h-4 mr-2" />
                 Aplicar Filtros
               </Button>
             </div>
