@@ -264,14 +264,165 @@ export const WebinarsAnalyticsConsumption = () => {
         </button>
       </div>
 
-      {/* AI Insights */}
+      {/* Main KPIs - 5 cards inline */}
+      <div className="flex gap-6 mb-8">
+        <div className="bg-white rounded-xl p-6 border border-slate-200 flex-1">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Total Assistidos</span>
+            <i className="fas fa-video text-slate-400"></i>
+          </div>
+          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod().totalWatched}</p>
+          <p className="text-xs text-emerald-600 font-medium mt-2">
+            <i className="fas fa-arrow-up mr-1"></i>
+            +24% este período
+          </p>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200 flex-1">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Horas Totais</span>
+            <i className="fas fa-clock text-slate-400"></i>
+          </div>
+          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod().totalHours}h</p>
+          <p className="text-xs text-emerald-600 font-medium mt-2">
+            <i className="fas fa-arrow-up mr-1"></i>
+            +18% este período
+          </p>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200 flex-1">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Taxa de Participação</span>
+            <i className="fas fa-users text-slate-400"></i>
+          </div>
+          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod().participation}%</p>
+          <p className="text-xs text-slate-500 font-medium mt-2">
+            Tempo médio assistido
+          </p>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200 flex-1">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Certificados</span>
+            <i className="fas fa-certificate text-slate-400"></i>
+          </div>
+          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod().certificates}</p>
+          <p className="text-xs text-emerald-600 font-medium mt-2">
+            <i className="fas fa-arrow-up mr-1"></i>
+            Obtidos
+          </p>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200 flex-1">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Taxa de Conclusão</span>
+            <i className="fas fa-check-circle text-slate-400"></i>
+          </div>
+          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod().avgCompletion}%</p>
+          <p className="text-xs text-slate-500 font-medium mt-2">
+            Média de conclusão
+          </p>
+        </div>
+      </div>
+
+      {/* Meta + Top Hosts Row */}
+      <div className="grid grid-cols-3 gap-6 mb-8">
+        <div className="col-span-2 bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-sm text-slate-500 font-medium">Meta de Webinars do Mês</span>
+            <i className="fas fa-target text-slate-400"></i>
+          </div>
+          <div className="space-y-2">
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <p className="text-xs font-bold text-slate-800">15 de 20 webinars</p>
+                <p className="text-[10px] font-bold text-slate-600">75%</p>
+              </div>
+              <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                <div className="h-full bg-[hsl(280,35%,65%)] rounded-full" style={{ width: '75%' }}></div>
+              </div>
+            </div>
+            <p className="text-[10px] text-slate-500">Faltam 5 webinars</p>
+            <div className="flex items-center gap-1.5 pt-1">
+              <i className="fas fa-fire text-orange-500 text-xs"></i>
+              <p className="text-[10px] font-bold text-slate-700">Sequência de 12 dias!</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-sm text-slate-500 font-medium">Hosts Mais Assistidos</span>
+            <i className="fas fa-users text-slate-400"></i>
+          </div>
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-full bg-[hsl(206,35%,75%)] flex items-center justify-center text-xs font-bold text-slate-700">FT</div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-bold text-slate-800 truncate">Fintech Brasil</p>
+                <p className="text-[10px] text-slate-500">24 webinars</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-full bg-[hsl(142,35%,75%)] flex items-center justify-center text-xs font-bold text-slate-700">PE</div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-bold text-slate-800 truncate">Payments Evolution</p>
+                <p className="text-[10px] text-slate-500">18 webinars</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 4 Additional Cards Grid */}
+      <div className="grid grid-cols-4 gap-6 mb-8">
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Perguntas Feitas</span>
+            <i className="fas fa-comment text-slate-400"></i>
+          </div>
+          <p className="text-2xl font-bold text-slate-800">{getDataByPeriod().questions}</p>
+          <p className="text-xs text-slate-500 font-medium mt-2">Em webinars ao vivo</p>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Média Semanal</span>
+            <i className="fas fa-calendar-week text-slate-400"></i>
+          </div>
+          <p className="text-2xl font-bold text-slate-800">{getDataByPeriod().avgPerWeek}</p>
+          <p className="text-xs text-slate-500 font-medium mt-2">Webinars por semana</p>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Favoritos</span>
+            <i className="fas fa-star text-slate-400"></i>
+          </div>
+          <p className="text-2xl font-bold text-slate-800">{getDataByPeriod().favorites}</p>
+          <p className="text-xs text-slate-500 font-medium mt-2">Salvos para revisitar</p>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Compartilhamentos</span>
+            <i className="fas fa-share text-slate-400"></i>
+          </div>
+          <p className="text-2xl font-bold text-slate-800">{getDataByPeriod().shares}</p>
+          <p className="text-xs text-slate-500 font-medium mt-2">Com sua rede</p>
+        </div>
+      </div>
+
+      {/* AI Insights with Agent Avatar */}
       <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 mb-8 border border-blue-100">
         <div className="flex items-start gap-3">
-          <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-            <i className="fas fa-lightbulb text-blue-600"></i>
-          </div>
+          <img 
+            src="/src/assets/auxiliar-do-dia-avatar.png" 
+            alt="AI Agent" 
+            className="w-10 h-10 rounded-full flex-shrink-0"
+          />
           <div className="flex-1">
-            <h3 className="text-lg font-semibold text-slate-800 mb-2">Insights Personalizados</h3>
+            <h3 className="text-lg font-semibold text-slate-800 mb-2">Insights Personalizados por IA</h3>
             {loadingInsights ? (
               <div className="flex items-center gap-2 text-slate-600">
                 <i className="fas fa-spinner fa-spin"></i>
@@ -284,159 +435,6 @@ export const WebinarsAnalyticsConsumption = () => {
         </div>
       </div>
 
-      {/* KPIs - 9 cards */}
-      <div className="grid grid-cols-3 gap-6 mb-8">
-        <div className="bg-white rounded-xl p-6 border border-slate-200">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-slate-500 font-medium">Total Assistidos</span>
-            <i className="fas fa-video text-slate-400"></i>
-          </div>
-          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod().totalWatched}</p>
-          <p className="text-xs text-emerald-600 font-medium mt-2">
-            <i className="fas fa-arrow-up mr-1"></i>
-            +24% este período
-          </p>
-        </div>
-
-        <div className="bg-white rounded-xl p-6 border border-slate-200">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-slate-500 font-medium">Horas Totais</span>
-            <i className="fas fa-clock text-slate-400"></i>
-          </div>
-          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod().totalHours}h</p>
-          <p className="text-xs text-emerald-600 font-medium mt-2">
-            <i className="fas fa-arrow-up mr-1"></i>
-            +18% este período
-          </p>
-        </div>
-
-        <div className="bg-white rounded-xl p-6 border border-slate-200">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-slate-500 font-medium">Taxa de Participação</span>
-            <i className="fas fa-users text-slate-400"></i>
-          </div>
-          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod().participation}%</p>
-          <p className="text-xs text-slate-500 font-medium mt-2">
-            Tempo médio assistido
-          </p>
-        </div>
-
-        <div className="bg-white rounded-xl p-6 border border-slate-200">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-slate-500 font-medium">Perguntas Feitas</span>
-            <i className="fas fa-comment text-slate-400"></i>
-          </div>
-          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod().questions}</p>
-          <p className="text-xs text-slate-500 font-medium mt-2">
-            Em webinars ao vivo
-          </p>
-        </div>
-
-        <div className="bg-white rounded-xl p-6 border border-slate-200">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-slate-500 font-medium">Certificados</span>
-            <i className="fas fa-certificate text-slate-400"></i>
-          </div>
-          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod().certificates}</p>
-          <p className="text-xs text-emerald-600 font-medium mt-2">
-            <i className="fas fa-arrow-up mr-1"></i>
-            Obtidos
-          </p>
-        </div>
-
-        <div className="bg-white rounded-xl p-6 border border-slate-200">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-slate-500 font-medium">Taxa de Conclusão</span>
-            <i className="fas fa-check-circle text-slate-400"></i>
-          </div>
-          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod().avgCompletion}%</p>
-          <p className="text-xs text-slate-500 font-medium mt-2">
-            Média de conclusão
-          </p>
-        </div>
-
-        <div className="bg-white rounded-xl p-6 border border-slate-200">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-slate-500 font-medium">Média Semanal</span>
-            <i className="fas fa-calendar-week text-slate-400"></i>
-          </div>
-          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod().avgPerWeek}</p>
-          <p className="text-xs text-slate-500 font-medium mt-2">
-            Webinars por semana
-          </p>
-        </div>
-
-        <div className="bg-white rounded-xl p-6 border border-slate-200">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-slate-500 font-medium">Favoritos</span>
-            <i className="fas fa-star text-slate-400"></i>
-          </div>
-          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod().favorites}</p>
-          <p className="text-xs text-slate-500 font-medium mt-2">
-            Salvos para revisitar
-          </p>
-        </div>
-
-        <div className="bg-white rounded-xl p-6 border border-slate-200">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-slate-500 font-medium">Compartilhamentos</span>
-            <i className="fas fa-share text-slate-400"></i>
-          </div>
-          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod().shares}</p>
-          <p className="text-xs text-slate-500 font-medium mt-2">
-            Com sua rede
-          </p>
-        </div>
-      </div>
-
-      {/* Creators Mais Acessados */}
-      <div className="bg-white rounded-xl p-6 border border-slate-200">
-        <div className="flex items-center justify-between mb-3">
-          <span className="text-sm text-slate-500 font-medium">Hosts Mais Assistidos</span>
-          <i className="fas fa-users text-slate-400"></i>
-        </div>
-        <div className="space-y-2">
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-full bg-[hsl(206,35%,75%)] flex items-center justify-center text-xs font-bold text-slate-700">FT</div>
-            <div className="flex-1 min-w-0">
-              <p className="text-xs font-bold text-slate-800 truncate">Fintech Brasil</p>
-              <p className="text-[10px] text-slate-500">24 webinars</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-full bg-[hsl(142,35%,75%)] flex items-center justify-center text-xs font-bold text-slate-700">PE</div>
-            <div className="flex-1 min-w-0">
-              <p className="text-xs font-bold text-slate-800 truncate">Payments Evolution</p>
-              <p className="text-[10px] text-slate-500">18 webinars</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Progresso de Meta do Mês */}
-      <div className="bg-white rounded-xl p-6 border border-slate-200">
-        <div className="flex items-center justify-between mb-3">
-          <span className="text-sm text-slate-500 font-medium">Meta do Mês</span>
-          <i className="fas fa-target text-slate-400"></i>
-        </div>
-        <div className="space-y-2">
-          <div>
-            <div className="flex items-center justify-between mb-1.5">
-              <p className="text-xs font-bold text-slate-800">16 de 20 webinars</p>
-              <p className="text-[10px] font-bold text-slate-600">80%</p>
-            </div>
-            <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
-              <div className="h-full bg-[hsl(142,35%,65%)] rounded-full" style={{ width: '80%' }}></div>
-            </div>
-          </div>
-          <p className="text-[10px] text-slate-500">Faltam 4 webinars</p>
-          <div className="flex items-center gap-1.5 pt-1">
-            <i className="fas fa-fire text-orange-500 text-xs"></i>
-            <p className="text-[10px] font-bold text-slate-700">Sequência de 23 dias!</p>
-          </div>
-        </div>
-       </div>
-
       {/* Charts Grid */}
       <div className="grid grid-cols-2 gap-6 mb-8">
         <div className="bg-white rounded-xl p-6 border border-slate-200">
@@ -444,9 +442,8 @@ export const WebinarsAnalyticsConsumption = () => {
           <div id="webinars-participation-chart" className="h-64"></div>
         </div>
 
-        <div className="bg-white rounded-xl p-6 border border-slate-200 cursor-pointer hover:shadow-lg transition" onClick={() => {}}>
-          <h3 className="text-lg font-semibold text-slate-800 mb-2">Distribuição por Categoria</h3>
-          <p className="text-xs text-slate-500 mb-4">Clique em uma categoria para ver detalhes</p>
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <h3 className="text-lg font-semibold text-slate-800 mb-4">Distribuição por Categoria</h3>
           <div id="webinars-categories-chart" className="h-64"></div>
         </div>
 
@@ -466,53 +463,25 @@ export const WebinarsAnalyticsConsumption = () => {
         </div>
 
         <div className="bg-white rounded-xl p-6 border border-slate-200">
-          <h3 className="text-lg font-semibold text-slate-800 mb-4">Participação por Horário</h3>
+          <h3 className="text-lg font-semibold text-slate-800 mb-4">Interação por Horário</h3>
           <div id="webinars-hourly-chart" className="h-64"></div>
         </div>
       </div>
 
-      {/* Drill-Down Modal */}
-      {showDrillDown && selectedTopic && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={() => setShowDrillDown(false)}>
-          <div className="bg-white rounded-xl p-8 max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-2xl font-bold text-slate-800">Webinars: {selectedTopic}</h3>
-              <button onClick={() => setShowDrillDown(false)} className="text-slate-400 hover:text-slate-600">
-                <i className="fas fa-times text-xl"></i>
-              </button>
-            </div>
-            <div className="space-y-3">
-              {webinarsByTopic[selectedTopic]?.map((webinar, idx) => (
-                <div key={idx} className="p-4 border border-slate-200 rounded-lg hover:bg-slate-50 transition">
-                  <p className="font-medium text-slate-800 mb-1">{webinar.title}</p>
-                  <p className="text-sm text-slate-600 mb-2">{webinar.host} • {webinar.duration}</p>
-                  <div className="flex items-center gap-4">
-                    <div className="flex-1 bg-slate-100 rounded-full h-2">
-                      <div className="bg-emerald-500 h-2 rounded-full" style={{ width: `${webinar.completionRate}%` }}></div>
-                    </div>
-                    <span className="text-sm font-medium text-slate-700">{webinar.completionRate}%</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Webinars Recentes */}
+      {/* Webinars Assistidos Recentemente */}
       <div className="bg-white rounded-xl p-6 border border-slate-200">
         <h3 className="text-lg font-semibold text-slate-800 mb-4">Webinars Assistidos Recentemente</h3>
         <div className="space-y-3">
           {[
-            { title: 'Análise Semanal do Mercado', host: 'Dr. Carlos Mendes', duration: '2h', completion: 95, date: 'Hoje' },
-            { title: 'Bitcoin e Altcoins: Tendências 2025', host: 'Ana Paula Costa', duration: '1.5h', completion: 88, date: 'Ontem' },
-            { title: 'Cenário Macroeconômico 2025', host: 'Dr. Roberto Lima', duration: '2h', completion: 72, date: '2 dias atrás' },
-            { title: 'IA no Trading Algorítmico', host: 'Prof. Ana Santos', duration: '1.5h', completion: 100, date: '3 dias atrás' },
-            { title: 'Investimentos Sustentáveis', host: 'Profa. Marina Costa', duration: '2h', completion: 85, date: '5 dias atrás' }
+            { title: 'Análise Semanal do Mercado Financeiro', host: 'Dr. Carlos Mendes', duration: '2h', date: 'Hoje', completion: 95 },
+            { title: 'IA no Trading Algorítmico', host: 'Prof. Ana Santos', duration: '1.5h', date: 'Ontem', completion: 100 },
+            { title: 'Compliance em Fintechs', host: 'Dra. Maria Costa', duration: '2h', date: '3 dias atrás', completion: 88 },
+            { title: 'Investimentos Sustentáveis e ESG', host: 'Prof. Roberto Lima', duration: '1h 45min', date: '5 dias atrás', completion: 82 },
+            { title: 'Blockchain e Tokenização de Ativos', host: 'Eng. Paula Santos', duration: '2h 15min', date: '1 semana atrás', completion: 90 }
           ].map((webinar, idx) => (
             <div key={idx} className="flex items-center justify-between p-3 border border-slate-100 rounded-lg hover:bg-slate-50 transition">
               <div className="flex items-center gap-3 flex-1">
-                <div className="w-10 h-10 bg-pastel-pink rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-pastel-purple rounded-lg flex items-center justify-center">
                   <i className="fas fa-video text-slate-700"></i>
                 </div>
                 <div className="flex-1">
@@ -520,16 +489,46 @@ export const WebinarsAnalyticsConsumption = () => {
                   <p className="text-xs text-slate-500">{webinar.host} • {webinar.duration} • {webinar.date}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3">
                 <div className="text-right">
-                  <p className="text-sm font-medium text-slate-700">{webinar.completion}%</p>
-                  <p className="text-xs text-slate-500">assistido</p>
+                  <p className="text-xs font-medium text-slate-600">{webinar.completion}%</p>
+                  <p className="text-[10px] text-slate-400">concluído</p>
                 </div>
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      {/* Modal de Drill-Down */}
+      {showDrillDown && selectedTopic && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={() => setShowDrillDown(false)}>
+          <div className="bg-white rounded-xl p-8 max-w-2xl w-full mx-4" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-2xl font-bold text-slate-800">Webinars: {selectedTopic}</h3>
+              <button onClick={() => setShowDrillDown(false)} className="text-slate-400 hover:text-slate-600">
+                <i className="fas fa-times text-xl"></i>
+              </button>
+            </div>
+            <div className="space-y-4">
+              {webinarsByTopic[selectedTopic]?.map((webinar, idx) => (
+                <div key={idx} className="border border-slate-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-slate-800 mb-2">{webinar.title}</h4>
+                  <p className="text-sm text-slate-600 mb-2">Host: {webinar.host}</p>
+                  <div className="flex items-center gap-4 text-xs text-slate-500">
+                    <span><i className="fas fa-clock mr-1"></i>{webinar.duration}</span>
+                    <span><i className="fas fa-calendar mr-1"></i>{webinar.date}</span>
+                    <span className="flex items-center gap-1">
+                      <i className="fas fa-check-circle mr-1"></i>
+                      {webinar.completionRate}% concluído
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
