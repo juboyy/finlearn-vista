@@ -102,7 +102,7 @@ export const SelectableChartWrapper = ({
   return (
     <div
       ref={containerRef}
-      className="relative cursor-crosshair"
+      className={`relative transition-all ${isSelecting ? 'cursor-grabbing' : 'cursor-crosshair'}`}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
