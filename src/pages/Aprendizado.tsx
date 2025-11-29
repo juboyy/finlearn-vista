@@ -1575,7 +1575,7 @@ const Aprendizado = () => {
                           <span className="text-sm font-medium text-foreground">4</span>
                         </div>
                       </div>
-                      <div className="w-full bg-muted rounded-full h-2">
+                      <div className="w-full bg-pastel-orange rounded-full h-2">
                         <div className="bg-pastel-blue h-2 rounded-full" style={{
                       width: '80%'
                     }}></div>
@@ -1598,7 +1598,7 @@ const Aprendizado = () => {
                           <span className="text-sm font-medium text-foreground">3</span>
                         </div>
                       </div>
-                      <div className="w-full bg-muted rounded-full h-2">
+                      <div className="w-full bg-pastel-orange rounded-full h-2">
                         <div className="bg-pastel-green h-2 rounded-full" style={{
                       width: '60%'
                     }}></div>
@@ -1621,7 +1621,7 @@ const Aprendizado = () => {
                           <span className="text-sm font-medium text-foreground">2</span>
                         </div>
                       </div>
-                      <div className="w-full bg-muted rounded-full h-2">
+                      <div className="w-full bg-pastel-orange rounded-full h-2">
                         <div className="bg-pastel-purple h-2 rounded-full" style={{
                       width: '40%'
                     }}></div>
@@ -1644,7 +1644,7 @@ const Aprendizado = () => {
                           <span className="text-sm font-medium text-foreground">2</span>
                         </div>
                       </div>
-                      <div className="w-full bg-muted rounded-full h-2">
+                      <div className="w-full bg-pastel-orange rounded-full h-2">
                         <div className="bg-pastel-pink h-2 rounded-full" style={{
                       width: '40%'
                     }}></div>
@@ -1667,7 +1667,7 @@ const Aprendizado = () => {
                           <span className="text-sm font-medium text-foreground">1</span>
                         </div>
                       </div>
-                      <div className="w-full bg-muted rounded-full h-2">
+                      <div className="w-full bg-pastel-orange rounded-full h-2">
                         <div className="bg-pastel-peach h-2 rounded-full" style={{
                       width: '20%'
                     }}></div>
@@ -1748,7 +1748,7 @@ const Aprendizado = () => {
                         <span className="px-3 py-1 bg-yellow-100 text-yellow-700 text-xs font-medium rounded-full">Bestseller</span>
                       </div>
                       <div className="absolute top-3 right-3">
-                        <button className="w-8 h-8 bg-background rounded-full flex items-center justify-center hover:bg-muted transition">
+                        <button className="w-8 h-8 bg-background rounded-full flex items-center justify-center hover:bg-pastel-orange transition">
                           <Heart className="text-muted-foreground" size={16} />
                         </button>
                       </div>
@@ -1795,7 +1795,7 @@ const Aprendizado = () => {
                         <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/43ade140cc-54e09b01d95bfda73dc2.png" alt="Risk management" />
                       </div>
                       <div className="absolute top-3 right-3">
-                        <button className="w-8 h-8 bg-background rounded-full flex items-center justify-center hover:bg-muted transition">
+                        <button className="w-8 h-8 bg-background rounded-full flex items-center justify-center hover:bg-pastel-orange transition">
                           <Heart className="text-muted-foreground" size={16} />
                         </button>
                       </div>
@@ -1845,7 +1845,7 @@ const Aprendizado = () => {
                         <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">Novo</span>
                       </div>
                       <div className="absolute top-3 right-3">
-                        <button className="w-8 h-8 bg-background rounded-full flex items-center justify-center hover:bg-muted transition">
+                        <button className="w-8 h-8 bg-background rounded-full flex items-center justify-center hover:bg-pastel-orange transition">
                           <Heart className="text-muted-foreground" size={16} />
                         </button>
                       </div>
@@ -1895,7 +1895,7 @@ const Aprendizado = () => {
                         <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/efca16cd3f-1beea736c47851f428f1.png" alt="Compliance" />
                       </div>
                       <div className="absolute top-3 right-3">
-                        <button className="w-8 h-8 bg-background rounded-full flex items-center justify-center hover:bg-muted transition">
+                        <button className="w-8 h-8 bg-background rounded-full flex items-center justify-center hover:bg-pastel-orange transition">
                           <Heart className="text-muted-foreground" size={16} />
                         </button>
                       </div>
@@ -1942,7 +1942,7 @@ const Aprendizado = () => {
                         <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/8627363c2b-a72824be4bec8ab72346.png" alt="Investments" />
                       </div>
                       <div className="absolute top-3 right-3">
-                        <button className="w-8 h-8 bg-background rounded-full flex items-center justify-center hover:bg-muted transition">
+                        <button className="w-8 h-8 bg-background rounded-full flex items-center justify-center hover:bg-pastel-orange transition">
                           <Heart className="text-muted-foreground" size={16} />
                         </button>
                       </div>
@@ -1992,7 +1992,7 @@ const Aprendizado = () => {
                         <span className="px-3 py-1 bg-yellow-100 text-yellow-700 text-xs font-medium rounded-full">Bestseller</span>
                       </div>
                       <div className="absolute top-3 right-3">
-                        <button className="w-8 h-8 bg-background rounded-full flex items-center justify-center hover:bg-muted transition">
+                        <button className="w-8 h-8 bg-background rounded-full flex items-center justify-center hover:bg-pastel-orange transition">
                           <Heart className="text-muted-foreground" size={16} />
                         </button>
                       </div>
