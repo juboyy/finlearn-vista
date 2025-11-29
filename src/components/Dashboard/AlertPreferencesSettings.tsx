@@ -201,7 +201,7 @@ export function AlertPreferencesSettings({ userId }: AlertPreferencesSettingsPro
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="space-y-4">
         <div>
           <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
             <Settings className="h-5 w-5" style={{ color: 'hsl(210, 35%, 65%)' }} />
