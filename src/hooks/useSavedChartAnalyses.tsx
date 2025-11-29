@@ -64,8 +64,8 @@ export const useSavedChartAnalyses = () => {
       // Try to get the authenticated user, but don't require it for this demo
       const { data: { user } } = await supabase.auth.getUser();
       
-      // Generate a temporary user ID if not authenticated
-      const userId = user?.id || 'temp-user-' + Math.random().toString(36).substring(7);
+      // Generate a valid UUID if not authenticated
+      const userId = user?.id || crypto.randomUUID();
 
       const insertData = {
         user_id: userId,
