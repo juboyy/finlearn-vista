@@ -43,11 +43,12 @@ export const ConsumptionAnalyticsCards = ({
       const achieved = goalProgress.map(prog => Math.round((prog / 100) * goalTotal));
       const differences = goalProgress.map((prog, i) => prog - goalTargets[i]);
       
-      const trace = {
+      const progressTrace = {
         x: months,
         y: goalProgress,
         type: 'scatter',
         mode: 'lines+markers',
+        name: 'Progresso',
         line: { 
           color: 'hsl(142, 35%, 65%)', 
           width: 3,
@@ -78,7 +79,21 @@ export const ConsumptionAnalyticsCards = ({
           '<extra></extra>'
       };
 
-      Plotly.newPlot('goal-evolution-chart', [trace], {
+      const targetLine = {
+        x: months,
+        y: Array(months.length).fill(70),
+        type: 'scatter',
+        mode: 'lines',
+        name: 'Meta (70%)',
+        line: {
+          color: 'hsl(207, 35%, 60%)',
+          width: 2,
+          dash: 'dash'
+        },
+        hovertemplate: '<b>Meta Estabelecida</b><br>70%<extra></extra>'
+      };
+
+      Plotly.newPlot('goal-evolution-chart', [progressTrace, targetLine], {
         margin: { l: 30, r: 10, t: 10, b: 30 },
         paper_bgcolor: 'transparent',
         plot_bgcolor: 'transparent',
