@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Card } from '@/components/ui/card';
 import {
   Select,
   SelectContent,
@@ -21,8 +22,21 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { useAlertPreferences, CreateAlertPreference } from '@/hooks/useAlertPreferences';
-import { Settings, Plus, Trash2, TrendingUp, TrendingDown, Minus } from 'lucide-react';
+import { 
+  Settings, 
+  Plus, 
+  Trash2, 
+  TrendingUp, 
+  TrendingDown, 
+  Minus,
+  AlertTriangle,
+  Award,
+  Bell,
+  Eye,
+} from 'lucide-react';
 import { toast } from 'sonner';
+import { formatDistanceToNow } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 interface AlertPreferencesSettingsProps {
   userId: string | null;
@@ -130,6 +144,61 @@ export function AlertPreferencesSettings({ userId }: AlertPreferencesSettingsPro
     return labels[frequency] || frequency;
   };
 
+  // Generate preview alert message based on current form values
+  const getPreviewMessage = () => {
+    const contentType = contentTypes.find(t => t.value === newPreference.content_type)?.label || 'Conteúdo';
+    const metric = metricOptions.find(m => m.value === newPreference.metric_name)?.label || 'Métrica';
+    const direction = newPreference.threshold_direction === 'increase' ? 'aumento' : newPreference.threshold_direction === 'decrease' ? 'redução' : 'mudança';
+    
+    return `${contentType}: ${metric} teve ${direction} de ${newPreference.threshold_value}% em relação ao período anterior. Valor atual: 45 (anterior: ${Math.round(45 * (1 - newPreference.threshold_value / 100))})`;
+  };
+
+  const getPreviewSeverity = () => {
+    if (newPreference.threshold_value >= 50) return 'critical';
+    if (newPreference.threshold_value >= 30) return 'high';
+    if (newPreference.threshold_value >= 15) return 'medium';
+    return 'low';
+  };
+
+  const getSeverityColor = (severity: string) => {
+    switch (severity) {
+      case 'critical':
+        return 'hsl(0, 35%, 65%)';
+      case 'high':
+        return 'hsl(25, 35%, 65%)';
+      case 'medium':
+        return 'hsl(44, 35%, 65%)';
+      case 'low':
+        return 'hsl(142, 35%, 65%)';
+      default:
+        return 'hsl(210, 35%, 65%)';
+    }
+  };
+
+  const getSeverityLabel = (severity: string) => {
+    const labels: { [key: string]: string } = {
+      critical: 'Crítico',
+      high: 'Alto',
+      medium: 'Médio',
+      low: 'Baixo',
+    };
+    return labels[severity] || severity;
+  };
+
+  const getPreviewIcon = () => {
+    const severity = getPreviewSeverity();
+    if (severity === 'critical' || severity === 'high') {
+      return <AlertTriangle className="h-5 w-5" style={{ color: getSeverityColor(severity) }} />;
+    }
+    if (newPreference.threshold_direction === 'increase') {
+      return <TrendingUp className="h-5 w-5" style={{ color: 'hsl(142, 35%, 65%)' }} />;
+    }
+    if (newPreference.threshold_direction === 'decrease') {
+      return <TrendingDown className="h-5 w-5" style={{ color: 'hsl(0, 35%, 65%)' }} />;
+    }
+    return <Bell className="h-5 w-5" style={{ color: 'hsl(210, 35%, 65%)' }} />;
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -170,6 +239,66 @@ export function AlertPreferencesSettings({ userId }: AlertPreferencesSettingsPro
 
               <ScrollArea className="h-[calc(100vh-180px)] pr-4">
                 <div className="space-y-6 mt-6">
+                  {/* Preview Card */}
+                  <Card className="border-2 border-dashed" style={{ borderColor: 'hsl(210, 35%, 65%)' }}>
+                    <div className="p-4">
+                      <div className="flex items-center gap-2 mb-3">
+                        <Eye className="h-4 w-4" style={{ color: 'hsl(210, 35%, 65%)' }} />
+                        <span className="text-sm font-semibold text-foreground">
+                          Preview do Alerta
+                        </span>
+                      </div>
+                      
+                      <div 
+                        className="rounded-lg border bg-background p-4"
+                        style={{
+                          borderLeftWidth: '4px',
+                          borderLeftColor: getSeverityColor(getPreviewSeverity()),
+                        }}
+                      >
+                        <div className="flex items-start gap-3">
+                          <div className="flex-shrink-0 mt-1">
+                            {getPreviewIcon()}
+                          </div>
+                          
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-start justify-between gap-2 mb-2">
+                              <h3 className="font-semibold text-sm text-foreground">
+                                Alerta de {contentTypes.find(t => t.value === newPreference.content_type)?.label}
+                              </h3>
+                              
+                              <Badge 
+                                variant="outline"
+                                className="text-xs flex-shrink-0"
+                                style={{ 
+                                  borderColor: getSeverityColor(getPreviewSeverity()),
+                                  color: getSeverityColor(getPreviewSeverity()),
+                                }}
+                              >
+                                {getSeverityLabel(getPreviewSeverity())}
+                              </Badge>
+                            </div>
+                            
+                            <p className="text-sm text-muted-foreground mb-2">
+                              {getPreviewMessage()}
+                            </p>
+                            
+                            <span className="text-xs text-muted-foreground">
+                              {formatDistanceToNow(new Date(), {
+                                addSuffix: true,
+                                locale: ptBR,
+                              })}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <p className="text-xs text-muted-foreground mt-3 italic">
+                        Este é um exemplo de como seu alerta aparecerá quando for disparado.
+                      </p>
+                    </div>
+                  </Card>
+
                   <div className="space-y-2">
                     <Label>Tipo de Conteúdo</Label>
                     <Select
