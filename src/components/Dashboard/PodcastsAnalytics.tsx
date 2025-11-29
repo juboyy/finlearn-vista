@@ -374,62 +374,50 @@ export const PodcastsAnalytics = () => {
         {/* Hero Cards - Top 3 Métricas Principais */}
         <div className="grid grid-cols-3 gap-6">
           {/* Card 1 - Total de Episódios */}
-          <div className="relative bg-gradient-to-br from-pastel-blue to-pastel-blue/70 rounded-2xl p-8 overflow-hidden shadow-lg">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
-            <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full -ml-12 -mb-12"></div>
-            <div className="relative z-10">
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-14 h-14 bg-white/20 backdrop-blur rounded-xl flex items-center justify-center">
-                  <Headphones size={28} className="text-white" />
-                </div>
-                <div className="px-3 py-1.5 bg-white/20 backdrop-blur rounded-full">
-                  <p className="text-xs font-bold text-white flex items-center gap-1">
-                    <TrendingUp size={12} /> +{data.growth}%
-                  </p>
-                </div>
+          <div className="bg-pastel-blue rounded-2xl p-8 shadow-lg">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-14 h-14 bg-white/30 rounded-xl flex items-center justify-center">
+                <Headphones size={28} className="text-white" />
               </div>
-              <p className="text-sm font-medium text-white/80 mb-2">Total de Episódios</p>
-              <h2 className="text-5xl font-bold text-white mb-1">{data.total}</h2>
-              <p className="text-sm text-white/70">episódios ouvidos no período</p>
+              <div className="px-3 py-1.5 bg-white/30 rounded-full">
+                <p className="text-xs font-bold text-white flex items-center gap-1">
+                  <TrendingUp size={12} /> +{data.growth}%
+                </p>
+              </div>
             </div>
+            <p className="text-sm font-medium text-white/80 mb-2">Total de Episódios</p>
+            <h2 className="text-5xl font-bold text-white mb-1">{data.total}</h2>
+            <p className="text-sm text-white/70">episódios ouvidos no período</p>
           </div>
 
           {/* Card 2 - Horas de Escuta */}
-          <div className="relative bg-gradient-to-br from-pastel-green to-pastel-green/70 rounded-2xl p-8 overflow-hidden shadow-lg">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
-            <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full -ml-12 -mb-12"></div>
-            <div className="relative z-10">
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-14 h-14 bg-white/20 backdrop-blur rounded-xl flex items-center justify-center">
-                  <Clock size={28} className="text-white" />
-                </div>
-                <div className="px-3 py-1.5 bg-white/20 backdrop-blur rounded-full">
-                  <p className="text-xs font-bold text-white">Tempo Total</p>
-                </div>
+          <div className="bg-pastel-blue rounded-2xl p-8 shadow-lg">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-14 h-14 bg-white/30 rounded-xl flex items-center justify-center">
+                <Clock size={28} className="text-white" />
               </div>
-              <p className="text-sm font-medium text-white/80 mb-2">Horas de Escuta</p>
-              <h2 className="text-5xl font-bold text-white mb-1">{data.hours.toFixed(1)}h</h2>
-              <p className="text-sm text-white/70">de conteúdo consumido</p>
+              <div className="px-3 py-1.5 bg-white/30 rounded-full">
+                <p className="text-xs font-bold text-white">Tempo Total</p>
+              </div>
             </div>
+            <p className="text-sm font-medium text-white/80 mb-2">Horas de Escuta</p>
+            <h2 className="text-5xl font-bold text-white mb-1">{data.hours.toFixed(1)}h</h2>
+            <p className="text-sm text-white/70">de conteúdo consumido</p>
           </div>
 
           {/* Card 3 - Taxa de Conclusão */}
-          <div className="relative bg-gradient-to-br from-pastel-purple to-pastel-purple/70 rounded-2xl p-8 overflow-hidden shadow-lg">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
-            <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full -ml-12 -mb-12"></div>
-            <div className="relative z-10">
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-14 h-14 bg-white/20 backdrop-blur rounded-xl flex items-center justify-center">
-                  <CheckCircle size={28} className="text-white" />
-                </div>
-                <div className="px-3 py-1.5 bg-emerald-500/30 backdrop-blur rounded-full">
-                  <p className="text-xs font-bold text-white">Top 10%</p>
-                </div>
+          <div className="bg-pastel-blue rounded-2xl p-8 shadow-lg">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-14 h-14 bg-white/30 rounded-xl flex items-center justify-center">
+                <CheckCircle size={28} className="text-white" />
               </div>
-              <p className="text-sm font-medium text-white/80 mb-2">Taxa de Conclusão</p>
-              <h2 className="text-5xl font-bold text-white mb-1">{data.completion}%</h2>
-              <p className="text-sm text-white/70">média da plataforma: 60%</p>
+              <div className="px-3 py-1.5 bg-emerald-500/30 rounded-full">
+                <p className="text-xs font-bold text-white">Top 10%</p>
+              </div>
             </div>
+            <p className="text-sm font-medium text-white/80 mb-2">Taxa de Conclusão</p>
+            <h2 className="text-5xl font-bold text-white mb-1">{data.completion}%</h2>
+            <p className="text-sm text-white/70">média da plataforma: 60%</p>
           </div>
         </div>
 
