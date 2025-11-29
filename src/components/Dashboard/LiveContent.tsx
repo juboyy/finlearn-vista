@@ -1,7 +1,9 @@
-import { useState } from "react";
-import { PlayCircle, Eye, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { PlayCircle, Eye, X, Bell, BellOff } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { LiveChatPanel } from "./LiveChatPanel";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 import liveRecording1 from "@/assets/live-recording-1.png";
 import liveRecording2 from "@/assets/live-recording-2.png";
 import liveRecording3 from "@/assets/live-recording-3.png";
@@ -14,6 +16,101 @@ import liveNow2 from "@/assets/live-now-2.png";
 
 export const LiveContent = () => {
   const [selectedLive, setSelectedLive] = useState<string | null>(null);
+  const [followedLives, setFollowedLives] = useState<Set<string>>(new Set());
+  const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    fetchFollowedLives();
+  }, []);
+
+  const fetchFollowedLives = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { data, error } = await supabase
+        .from('user_followed_lives')
+        .select('live_id')
+        .eq('user_id', user.id);
+
+      if (error) throw error;
+
+      if (data) {
+        setFollowedLives(new Set(data.map(item => item.live_id)));
+      }
+    } catch (error) {
+      console.error('Erro ao carregar lives seguidas:', error);
+    }
+  };
+
+  const toggleFollowLive = async (liveId: string, liveTitle: string, scheduledTime: string, presenterName: string) => {
+    setLoading(true);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        toast({
+          title: "Autenticação necessária",
+          description: "Faça login para seguir lives.",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      const isFollowing = followedLives.has(liveId);
+
+      if (isFollowing) {
+        // Deixar de seguir
+        const { error } = await supabase
+          .from('user_followed_lives')
+          .delete()
+          .eq('user_id', user.id)
+          .eq('live_id', liveId);
+
+        if (error) throw error;
+
+        setFollowedLives(prev => {
+          const newSet = new Set(prev);
+          newSet.delete(liveId);
+          return newSet;
+        });
+
+        toast({
+          title: "Notificações desativadas",
+          description: `Você não receberá mais alertas sobre "${liveTitle}".`
+        });
+      } else {
+        // Seguir
+        const { error } = await supabase
+          .from('user_followed_lives')
+          .insert({
+            user_id: user.id,
+            live_id: liveId,
+            live_title: liveTitle,
+            live_scheduled_time: scheduledTime,
+            presenter_name: presenterName
+          });
+
+        if (error) throw error;
+
+        setFollowedLives(prev => new Set([...prev, liveId]));
+
+        toast({
+          title: "Notificações ativadas",
+          description: `Você receberá alertas quando "${liveTitle}" estiver prestes a começar.`
+        });
+      }
+    } catch (error) {
+      console.error('Erro ao seguir/deixar de seguir live:', error);
+      toast({
+        title: "Erro",
+        description: "Não foi possível atualizar suas notificações.",
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
@@ -225,8 +322,31 @@ export const LiveContent = () => {
                 <i className="fas fa-user-tie"></i>
                 <span>Lucas Ferreira</span>
               </div>
-              <button className="w-full px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
-                Ativar Notificação
+              <button 
+                onClick={() => toggleFollowLive(
+                  'upcoming-live-1', 
+                  'Estratégias de Day Trade',
+                  new Date().toISOString(),
+                  'Lucas Ferreira'
+                )}
+                disabled={loading}
+                className={`w-full px-4 py-2 rounded-lg font-medium transition flex items-center justify-center gap-2 ${
+                  followedLives.has('upcoming-live-1')
+                    ? 'bg-pastel-green text-slate-700 hover:bg-opacity-80'
+                    : 'bg-pastel-blue text-slate-700 hover:bg-opacity-80'
+                }`}
+              >
+                {followedLives.has('upcoming-live-1') ? (
+                  <>
+                    <BellOff className="w-4 h-4" />
+                    Desativar Notificação
+                  </>
+                ) : (
+                  <>
+                    <Bell className="w-4 h-4" />
+                    Ativar Notificação
+                  </>
+                )}
               </button>
             </div>
           </div>
