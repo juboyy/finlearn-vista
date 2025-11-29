@@ -39,6 +39,8 @@ export const useAgentChat = (agentName: string) => {
       const messageToSend = contextPrompt || input;
       const messageForBackend: Message = { role: "user", content: messageToSend };
       
+      console.log('Sending message to agent:', { input, contextPrompt, messageToSend });
+      
       const resp = await fetch(CHAT_URL, {
         method: "POST",
         headers: {
