@@ -106,6 +106,54 @@ export type Database = {
           },
         ]
       }
+      analytics_alert_preferences: {
+        Row: {
+          alert_frequency: string
+          content_type: string
+          created_at: string
+          id: string
+          is_enabled: boolean
+          metric_name: string
+          notification_channels: Json | null
+          severity_override: string | null
+          threshold_direction: string
+          threshold_type: string
+          threshold_value: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          alert_frequency?: string
+          content_type: string
+          created_at?: string
+          id?: string
+          is_enabled?: boolean
+          metric_name: string
+          notification_channels?: Json | null
+          severity_override?: string | null
+          threshold_direction?: string
+          threshold_type?: string
+          threshold_value: number
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          alert_frequency?: string
+          content_type?: string
+          created_at?: string
+          id?: string
+          is_enabled?: boolean
+          metric_name?: string
+          notification_channels?: Json | null
+          severity_override?: string | null
+          threshold_direction?: string
+          threshold_type?: string
+          threshold_value?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       analytics_alerts: {
         Row: {
           alert_type: string
@@ -1403,6 +1451,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      create_default_alert_preferences: {
+        Args: { p_user_id: string }
+        Returns: undefined
+      }
       deactivate_expired_promotions: { Args: never; Returns: undefined }
       hybrid_search: {
         Args: {

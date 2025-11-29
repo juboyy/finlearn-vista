@@ -46,6 +46,20 @@ serve(async (req) => {
 
     console.log('Detecting anomalies for user:', userId, 'content type:', contentType);
 
+    // Buscar preferências de alertas do usuário
+    const { data: userPreferences, error: preferencesError } = await supabase
+      .from('analytics_alert_preferences')
+      .select('*')
+      .eq('user_id', userId)
+      .eq('content_type', contentType)
+      .eq('is_enabled', true);
+
+    if (preferencesError) {
+      console.error('Error fetching user preferences:', preferencesError);
+    }
+
+    console.log('User preferences:', userPreferences);
+
     const alerts: Alert[] = [];
 
     // Buscar métricas históricas do usuário (últimos 30 dias)
@@ -68,52 +82,87 @@ serve(async (req) => {
       weekly_consumption: currentMetrics.weekly_consumption ? currentMetrics.weekly_consumption * 0.8 : 0,
     };
 
-    // Detectar anomalias
+    // Detectar anomalias baseado nas preferências do usuário
     for (const [metricName, currentValue] of Object.entries(currentMetrics)) {
+      // Buscar preferência do usuário para esta métrica
+      const userPref = userPreferences?.find(pref => pref.metric_name === metricName);
+      
       const previousValue = historicalMetrics[metricName as keyof typeof historicalMetrics];
       
       if (previousValue && currentValue) {
         const changePercentage = ((currentValue - previousValue) / previousValue) * 100;
         const absChange = Math.abs(changePercentage);
+        const isIncrease = changePercentage > 0;
 
-        let severity = 'low';
-        let alertType = 'trend';
+        // Se o usuário tem preferência configurada, usar os limites personalizados
+        if (userPref) {
+          const meetsThreshold = absChange >= userPref.threshold_value;
+          const meetsDirection = 
+            userPref.threshold_direction === 'both' ||
+            (userPref.threshold_direction === 'increase' && isIncrease) ||
+            (userPref.threshold_direction === 'decrease' && !isIncrease);
 
-        const threshold = thresholds[metricName as keyof typeof thresholds];
-        if (threshold) {
-          if (absChange >= threshold.critical) {
-            severity = 'critical';
-            alertType = 'anomaly';
-          } else if (absChange >= threshold.high) {
-            severity = 'high';
-            alertType = 'anomaly';
-          } else if (absChange >= 15) {
-            severity = 'medium';
+          if (meetsThreshold && meetsDirection) {
+            const severity = userPref.severity_override || 
+              (absChange >= 100 ? 'critical' : 
+               absChange >= 60 ? 'high' : 
+               absChange >= 30 ? 'medium' : 'low');
+
+            const direction = isIncrease ? 'aumento' : 'redução';
+            const emoji = isIncrease ? '📈' : '📉';
+
+            alerts.push({
+              user_id: userId,
+              alert_type: absChange >= 60 ? 'anomaly' : 'trend',
+              content_type: contentType,
+              metric_name: metricName,
+              current_value: currentValue,
+              previous_value: previousValue,
+              change_percentage: changePercentage,
+              severity,
+              title: `${emoji} ${direction.charAt(0).toUpperCase() + direction.slice(1)} detectada`,
+              message: `Sua métrica "${getMetricLabel(metricName)}" teve ${direction} de ${absChange.toFixed(1)}% em ${contentType}. Valor atual: ${currentValue.toFixed(1)}, valor anterior: ${previousValue.toFixed(1)}.`,
+              metadata: {
+                metric_label: getMetricLabel(metricName),
+                trend: isIncrease ? 'up' : 'down',
+                user_preference_id: userPref.id,
+              },
+            });
           }
-        }
+        } else {
+          // Se não houver preferência, usar thresholds padrão (mais altos para evitar spam)
+          const threshold = thresholds[metricName as keyof typeof thresholds];
+          if (threshold && absChange >= threshold.high) {
+            let severity = 'medium';
+            let alertType = 'trend';
 
-        // Criar alerta apenas se houver mudança significativa
-        if (absChange >= 15) {
-          const isIncrease = changePercentage > 0;
-          const direction = isIncrease ? 'aumento' : 'redução';
-          const emoji = isIncrease ? '📈' : '📉';
+            if (absChange >= threshold.critical) {
+              severity = 'critical';
+              alertType = 'anomaly';
+            } else if (absChange >= threshold.high) {
+              severity = 'high';
+            }
 
-          alerts.push({
-            user_id: userId,
-            alert_type: alertType,
-            content_type: contentType,
-            metric_name: metricName,
-            current_value: currentValue,
-            previous_value: previousValue,
-            change_percentage: changePercentage,
-            severity,
-            title: `${emoji} ${direction.charAt(0).toUpperCase() + direction.slice(1)} significativa detectada`,
-            message: `Sua métrica "${metricName}" teve ${direction} de ${absChange.toFixed(1)}% em ${contentType}. Valor atual: ${currentValue.toFixed(1)}, valor anterior: ${previousValue.toFixed(1)}.`,
-            metadata: {
-              metric_label: getMetricLabel(metricName),
-              trend: isIncrease ? 'up' : 'down',
-            },
-          });
+            const direction = isIncrease ? 'aumento' : 'redução';
+            const emoji = isIncrease ? '📈' : '📉';
+
+            alerts.push({
+              user_id: userId,
+              alert_type: alertType,
+              content_type: contentType,
+              metric_name: metricName,
+              current_value: currentValue,
+              previous_value: previousValue,
+              change_percentage: changePercentage,
+              severity,
+              title: `${emoji} ${direction.charAt(0).toUpperCase() + direction.slice(1)} significativa detectada`,
+              message: `Sua métrica "${getMetricLabel(metricName)}" teve ${direction} de ${absChange.toFixed(1)}% em ${contentType}. Valor atual: ${currentValue.toFixed(1)}, valor anterior: ${previousValue.toFixed(1)}.`,
+              metadata: {
+                metric_label: getMetricLabel(metricName),
+                trend: isIncrease ? 'up' : 'down',
+              },
+            });
+          }
         }
 
         // Detectar marcos/milestones

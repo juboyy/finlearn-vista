@@ -2,7 +2,9 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sh
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAnalyticsAlerts, AnalyticsAlert } from "@/hooks/useAnalyticsAlerts";
+import { AlertPreferencesSettings } from "./AlertPreferencesSettings";
 import { 
   AlertTriangle, 
   TrendingUp, 
@@ -13,6 +15,7 @@ import {
   CheckCheck,
   Trash2,
   X,
+  Settings,
 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -92,36 +95,47 @@ export function AnalyticsAlertsPanel({ open, onOpenChange, userId }: AnalyticsAl
               <X className="h-5 w-5" />
             </Button>
           </div>
-          
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Badge 
-                variant="secondary"
-                className="text-sm font-medium"
-                style={{ 
-                  backgroundColor: 'hsl(210, 35%, 65%, 0.2)',
-                  color: 'hsl(210, 35%, 65%)',
-                }}
-              >
-                {unreadCount} não lidos
-              </Badge>
-            </div>
-            
-            {unreadCount > 0 && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={markAllAsRead}
-                className="text-sm"
-              >
-                <CheckCheck className="h-4 w-4 mr-1" />
-                Marcar todos como lidos
-              </Button>
-            )}
-          </div>
         </SheetHeader>
 
-        <ScrollArea className="h-[calc(100vh-140px)] mt-4">
+        <Tabs defaultValue="alerts" className="mt-4">
+          <TabsList className="grid w-full grid-cols-2 mb-4">
+            <TabsTrigger value="alerts" className="flex items-center gap-2">
+              <Bell className="h-4 w-4" />
+              Alertas
+              {unreadCount > 0 && (
+                <Badge 
+                  className="ml-1 h-5 w-5 flex items-center justify-center p-0 text-xs"
+                  style={{ 
+                    backgroundColor: 'hsl(0, 35%, 65%)',
+                    color: 'white',
+                  }}
+                >
+                  {unreadCount}
+                </Badge>
+              )}
+            </TabsTrigger>
+            <TabsTrigger value="settings" className="flex items-center gap-2">
+              <Settings className="h-4 w-4" />
+              Configurações
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="alerts" className="mt-0">
+            {unreadCount > 0 && (
+              <div className="flex justify-end mb-3">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={markAllAsRead}
+                  className="text-sm"
+                >
+                  <CheckCheck className="h-4 w-4 mr-1" />
+                  Marcar todos como lidos
+                </Button>
+              </div>
+            )}
+
+            <ScrollArea className="h-[calc(100vh-240px)]">
           {isLoading ? (
             <div className="flex items-center justify-center py-12">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
@@ -216,7 +230,13 @@ export function AnalyticsAlertsPanel({ open, onOpenChange, userId }: AnalyticsAl
               ))}
             </div>
           )}
-        </ScrollArea>
+            </ScrollArea>
+          </TabsContent>
+
+          <TabsContent value="settings" className="mt-0">
+            <AlertPreferencesSettings userId={userId} />
+          </TabsContent>
+        </Tabs>
       </SheetContent>
     </Sheet>
   );
