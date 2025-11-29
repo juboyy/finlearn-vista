@@ -1224,7 +1224,7 @@ const Aprendizado = () => {
                     <h3 className="font-semibold text-slate-800 mb-1">Investimentos</h3>
                     <p className="text-sm text-black font-bold">67 episódios</p>
                   </div>
-                  <div className="bg-pastel-purple rounded-xl p-6 hover:shadow-lg transition cursor-pointer group">
+                  <div className="bg-pastel-orange rounded-xl p-6 hover:shadow-lg transition cursor-pointer group">
                     <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                       <i className="fas fa-landmark text-2xl text-slate-700"></i>
                     </div>
