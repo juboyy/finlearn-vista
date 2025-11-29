@@ -374,7 +374,7 @@ export const PodcastsAnalytics = () => {
         {/* Hero Cards - Top 3 Métricas Principais */}
         <div className="grid grid-cols-3 gap-6">
           {/* Card 1 - Total de Episódios */}
-          <div className="bg-pastel-blue rounded-2xl p-8 shadow-lg">
+          <div className="bg-pastel-blue rounded-2xl p-8">
             <div className="flex items-center justify-between mb-4">
               <div className="w-14 h-14 bg-white/30 rounded-xl flex items-center justify-center">
                 <Headphones size={28} className="text-white" />
@@ -391,7 +391,7 @@ export const PodcastsAnalytics = () => {
           </div>
 
           {/* Card 2 - Horas de Escuta */}
-          <div className="bg-pastel-blue rounded-2xl p-8 shadow-lg">
+          <div className="bg-pastel-blue rounded-2xl p-8">
             <div className="flex items-center justify-between mb-4">
               <div className="w-14 h-14 bg-white/30 rounded-xl flex items-center justify-center">
                 <Clock size={28} className="text-white" />
@@ -406,7 +406,7 @@ export const PodcastsAnalytics = () => {
           </div>
 
           {/* Card 3 - Taxa de Conclusão */}
-          <div className="bg-pastel-blue rounded-2xl p-8 shadow-lg">
+          <div className="bg-pastel-blue rounded-2xl p-8">
             <div className="flex items-center justify-between mb-4">
               <div className="w-14 h-14 bg-white/30 rounded-xl flex items-center justify-center">
                 <CheckCircle size={28} className="text-white" />
