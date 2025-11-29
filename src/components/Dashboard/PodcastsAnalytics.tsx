@@ -371,235 +371,255 @@ export const PodcastsAnalytics = () => {
 
       {/* KPIs Overview - Novo Layout Atrativo */}
       <section className="mb-8 space-y-6">
-        {/* Hero Cards - Top 3 Métricas Principais */}
-        <div className="grid grid-cols-3 gap-6">
+        {/* 5 Cards Principais na Mesma Linha */}
+        <div className="grid grid-cols-5 gap-4">
           {/* Card 1 - Total de Episódios */}
-          <div className="bg-pastel-blue rounded-2xl p-8">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-14 h-14 bg-white/30 rounded-xl flex items-center justify-center">
-                <Headphones size={28} className="text-white" />
+          <div className="bg-pastel-blue rounded-2xl p-6">
+            <div className="flex items-center justify-between mb-3">
+              <div className="w-12 h-12 bg-white/30 rounded-xl flex items-center justify-center">
+                <Headphones size={22} className="text-white" />
               </div>
-              <div className="px-3 py-1.5 bg-white/30 rounded-full">
-                <p className="text-xs font-bold text-white flex items-center gap-1">
-                  <TrendingUp size={12} /> +{data.growth}%
+              <div className="px-2 py-1 bg-white/30 rounded-full">
+                <p className="text-[10px] font-bold text-white flex items-center gap-1">
+                  <TrendingUp size={10} /> +{data.growth}%
                 </p>
               </div>
             </div>
-            <p className="text-sm font-medium text-white/80 mb-2">Total de Episódios</p>
-            <h2 className="text-5xl font-bold text-white mb-1">{data.total}</h2>
-            <p className="text-sm text-white/70">episódios ouvidos no período</p>
+            <p className="text-xs font-medium text-white/80 mb-1">Total de Episódios</p>
+            <h2 className="text-3xl font-bold text-white mb-1">{data.total}</h2>
+            <p className="text-[10px] text-white/70">episódios ouvidos</p>
           </div>
 
           {/* Card 2 - Horas de Escuta */}
-          <div className="bg-pastel-blue rounded-2xl p-8">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-14 h-14 bg-white/30 rounded-xl flex items-center justify-center">
-                <Clock size={28} className="text-white" />
+          <div className="bg-pastel-blue rounded-2xl p-6">
+            <div className="flex items-center justify-between mb-3">
+              <div className="w-12 h-12 bg-white/30 rounded-xl flex items-center justify-center">
+                <Clock size={22} className="text-white" />
               </div>
-              <div className="px-3 py-1.5 bg-white/30 rounded-full">
-                <p className="text-xs font-bold text-white">Tempo Total</p>
+              <div className="px-2 py-1 bg-white/30 rounded-full">
+                <p className="text-[10px] font-bold text-white">Tempo</p>
               </div>
             </div>
-            <p className="text-sm font-medium text-white/80 mb-2">Horas de Escuta</p>
-            <h2 className="text-5xl font-bold text-white mb-1">{data.hours.toFixed(1)}h</h2>
-            <p className="text-sm text-white/70">de conteúdo consumido</p>
+            <p className="text-xs font-medium text-white/80 mb-1">Horas de Escuta</p>
+            <h2 className="text-3xl font-bold text-white mb-1">{data.hours.toFixed(1)}h</h2>
+            <p className="text-[10px] text-white/70">de conteúdo</p>
           </div>
 
           {/* Card 3 - Taxa de Conclusão */}
-          <div className="bg-pastel-blue rounded-2xl p-8">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-14 h-14 bg-white/30 rounded-xl flex items-center justify-center">
-                <CheckCircle size={28} className="text-white" />
+          <div className="bg-pastel-blue rounded-2xl p-6">
+            <div className="flex items-center justify-between mb-3">
+              <div className="w-12 h-12 bg-white/30 rounded-xl flex items-center justify-center">
+                <CheckCircle size={22} className="text-white" />
               </div>
-              <div className="px-3 py-1.5 bg-emerald-500/30 rounded-full">
-                <p className="text-xs font-bold text-white">Top 10%</p>
+              <div className="px-2 py-1 bg-emerald-500/30 rounded-full">
+                <p className="text-[10px] font-bold text-white">Top 10%</p>
               </div>
             </div>
-            <p className="text-sm font-medium text-white/80 mb-2">Taxa de Conclusão</p>
-            <h2 className="text-5xl font-bold text-white mb-1">{data.completion}%</h2>
-            <p className="text-sm text-white/70">média da plataforma: 60%</p>
+            <p className="text-xs font-medium text-white/80 mb-1">Taxa de Conclusão</p>
+            <h2 className="text-3xl font-bold text-white mb-1">{data.completion}%</h2>
+            <p className="text-[10px] text-white/70">média: 60%</p>
+          </div>
+
+          {/* Card 4 - Streak */}
+          <div className="bg-pastel-blue rounded-2xl p-6 text-center">
+            <div className="w-12 h-12 bg-white/30 rounded-xl flex items-center justify-center mx-auto mb-3">
+              <Zap size={22} className="text-white" />
+            </div>
+            <p className="text-xs font-medium text-white/80 mb-1">Streak Atual</p>
+            <h3 className="text-3xl font-bold text-white mb-1">{data.streak}</h3>
+            <p className="text-[10px] text-white/70">dias consecutivos</p>
+          </div>
+
+          {/* Card 5 - Engajamento */}
+          <div className="bg-pastel-blue rounded-2xl p-6 text-center">
+            <div className="w-12 h-12 bg-white/30 rounded-xl flex items-center justify-center mx-auto mb-3">
+              <Target size={22} className="text-white" />
+            </div>
+            <p className="text-xs font-medium text-white/80 mb-1">Engajamento</p>
+            <h3 className="text-3xl font-bold text-white mb-1">{data.engagement}%</h3>
+            <p className="text-[10px] text-white/70">acima da média</p>
           </div>
         </div>
 
-        {/* Gráfico de Meta Grande + Cards Secundários */}
-        <div className="grid grid-cols-3 gap-6">
-          {/* Gráfico de Meta Grande - Ocupa 2 colunas */}
-          <div className="col-span-2 bg-white rounded-2xl p-8 border border-border shadow-sm">
-            <div className="flex items-center justify-between mb-6">
+        {/* Hosts Mais Ouvidos - Card Alongado */}
+        <div className="bg-white rounded-2xl p-6 border border-border">
+          <h3 className="text-lg font-bold text-foreground mb-4">Hosts Mais Ouvidos</h3>
+          <div className="grid grid-cols-5 gap-6">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-pastel-blue rounded-lg flex items-center justify-center flex-shrink-0">
+                <span className="text-sm font-bold text-pastel-gray-dark">FB</span>
+              </div>
               <div>
-                <h3 className="text-xl font-bold text-foreground mb-1">Meta de Escuta do Mês</h3>
-                <p className="text-sm text-muted-foreground">Acompanhe seu progresso e mantenha a consistência</p>
-              </div>
-              <div className="px-4 py-2 bg-pastel-green/[0.2] rounded-xl">
-                <p className="text-sm font-bold text-pastel-gray-dark">Streak de {data.streak} dias 🔥</p>
+                <p className="text-sm font-semibold text-foreground">Fintech Brasil</p>
+                <p className="text-xs text-muted-foreground">35 episódios</p>
               </div>
             </div>
-            
-            <div className="flex items-center gap-8">
-              {/* Gráfico Circular Grande */}
-              <div className="relative w-64 h-64 flex-shrink-0">
-                <svg className="w-64 h-64 transform -rotate-90">
-                  <circle
-                    cx="128"
-                    cy="128"
-                    r="110"
-                    fill="none"
-                    stroke="hsl(220, 15%, 95%)"
-                    strokeWidth="20"
-                  />
-                  <circle
-                    cx="128"
-                    cy="128"
-                    r="110"
-                    fill="none"
-                    stroke="hsl(152, 48%, 55%)"
-                    strokeWidth="20"
-                    strokeDasharray={`${2 * Math.PI * 110}`}
-                    strokeDashoffset={`${2 * Math.PI * 110 * (1 - (data.total / (selectedPeriod === '7d' ? 35 : selectedPeriod === '30d' ? 150 : selectedPeriod === '90d' ? 450 : 1900)))}`}
-                    strokeLinecap="round"
-                    className="transition-all duration-1000"
-                  />
-                </svg>
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <p className="text-5xl font-bold text-foreground">{Math.round((data.total / (selectedPeriod === '7d' ? 35 : selectedPeriod === '30d' ? 150 : selectedPeriod === '90d' ? 450 : 1900)) * 100)}%</p>
-                  <p className="text-sm text-muted-foreground mt-2">Concluído</p>
-                </div>
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center flex-shrink-0">
+                <span className="text-sm font-bold text-pastel-gray-dark">PE</span>
               </div>
-
-              {/* Estatísticas da Meta */}
-              <div className="flex-1 space-y-6">
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <p className="text-sm font-medium text-muted-foreground">Episódios Ouvidos</p>
-                    <p className="text-2xl font-bold text-foreground">{data.total}</p>
-                  </div>
-                  <div className="flex items-center justify-between mb-2">
-                    <p className="text-sm font-medium text-muted-foreground">Meta Total</p>
-                    <p className="text-2xl font-bold text-foreground">{selectedPeriod === '7d' ? 35 : selectedPeriod === '30d' ? 150 : selectedPeriod === '90d' ? 450 : 1900}</p>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <p className="text-sm font-medium text-muted-foreground">Faltam</p>
-                    <p className="text-2xl font-bold text-amber-600">{(selectedPeriod === '7d' ? 35 : selectedPeriod === '30d' ? 150 : selectedPeriod === '90d' ? 450 : 1900) - data.total}</p>
-                  </div>
-                </div>
-
-                <div className="pt-6 border-t border-border">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-muted/50 rounded-xl p-4">
-                      <p className="text-xs text-muted-foreground mb-1">Média Diária</p>
-                      <p className="text-2xl font-bold text-foreground">{(data.total / (selectedPeriod === '7d' ? 7 : selectedPeriod === '30d' ? 30 : selectedPeriod === '90d' ? 90 : 365)).toFixed(1)}</p>
-                      <p className="text-xs text-muted-foreground mt-1">episódios/dia</p>
-                    </div>
-                    <div className="bg-muted/50 rounded-xl p-4">
-                      <p className="text-xs text-muted-foreground mb-1">Dias Ativos</p>
-                      <p className="text-2xl font-bold text-foreground">{data.streak}</p>
-                      <p className="text-xs text-emerald-600 mt-1 font-bold">🔥 Sequência ativa</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-gradient-to-r from-pastel-green/[0.2] to-pastel-blue/[0.2] rounded-xl p-4">
-                  <p className="text-sm font-bold text-foreground mb-2">💪 Você está no caminho certo!</p>
-                  <p className="text-xs text-muted-foreground">Mantenha o ritmo atual para atingir sua meta em {Math.ceil(((selectedPeriod === '7d' ? 35 : selectedPeriod === '30d' ? 150 : selectedPeriod === '90d' ? 450 : 1900) - data.total) / (data.total / (selectedPeriod === '7d' ? 7 : selectedPeriod === '30d' ? 30 : selectedPeriod === '90d' ? 90 : 365)))} dias.</p>
-                </div>
+              <div>
+                <p className="text-sm font-semibold text-foreground">Payments Evolution</p>
+                <p className="text-xs text-muted-foreground">28 episódios</p>
               </div>
             </div>
-          </div>
-
-          {/* Coluna de Cards Secundários */}
-          <div className="space-y-6">
-            {/* Streak */}
-            <div className="bg-gradient-to-br from-pastel-yellow to-pastel-yellow/70 rounded-xl p-6 text-center">
-              <div className="w-12 h-12 bg-white/30 backdrop-blur rounded-xl flex items-center justify-center mx-auto mb-3">
-                <Zap size={24} className="text-white" />
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-pastel-purple rounded-lg flex items-center justify-center flex-shrink-0">
+                <span className="text-sm font-bold text-pastel-gray-dark">MF</span>
               </div>
-              <p className="text-sm font-medium text-white/80 mb-1">Streak Atual</p>
-              <h3 className="text-4xl font-bold text-white mb-1">{data.streak}</h3>
-              <p className="text-xs text-white/70">dias consecutivos</p>
+              <div>
+                <p className="text-sm font-semibold text-foreground">Mercado em Foco</p>
+                <p className="text-xs text-muted-foreground">22 episódios</p>
+              </div>
             </div>
-
-            {/* Engajamento */}
-            <div className="bg-gradient-to-br from-pastel-pink to-pastel-pink/70 rounded-xl p-6 text-center">
-              <div className="w-12 h-12 bg-white/30 backdrop-blur rounded-xl flex items-center justify-center mx-auto mb-3">
-                <Target size={24} className="text-white" />
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-pastel-pink rounded-lg flex items-center justify-center flex-shrink-0">
+                <span className="text-sm font-bold text-pastel-gray-dark">BI</span>
               </div>
-              <p className="text-sm font-medium text-white/80 mb-1">Engajamento</p>
-              <h3 className="text-4xl font-bold text-white mb-1">{data.engagement}%</h3>
-              <p className="text-xs text-white/70">acima da média</p>
+              <div>
+                <p className="text-sm font-semibold text-foreground">Banking Insights</p>
+                <p className="text-xs text-muted-foreground">18 episódios</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-pastel-yellow rounded-lg flex items-center justify-center flex-shrink-0">
+                <span className="text-sm font-bold text-pastel-gray-dark">CF</span>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-foreground">Cripto & Fintech</p>
+                <p className="text-xs text-muted-foreground">15 episódios</p>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Cards Menores em Grid */}
-        <div className="grid grid-cols-5 gap-4">
-          <div className="bg-white rounded-xl p-5 border border-border shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 bg-pastel-blue/[0.2] rounded-lg flex items-center justify-center">
-                <BarChart3 size={20} className="text-pastel-gray-dark" />
-              </div>
-              <p className="text-xs font-semibold text-muted-foreground">Duração Média</p>
+        {/* Gráfico de Meta Grande */}
+        <div className="bg-white rounded-2xl p-8 border border-border">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h3 className="text-xl font-bold text-foreground mb-1">Meta de Escuta do Mês</h3>
+              <p className="text-sm text-muted-foreground">Acompanhe seu progresso e mantenha a consistência</p>
             </div>
-            <h4 className="text-3xl font-bold text-foreground mb-1">{data.avgDuration}</h4>
-            <p className="text-xs text-muted-foreground">minutos por episódio</p>
+            <div className="px-4 py-2 bg-pastel-green/[0.2] rounded-xl">
+              <p className="text-sm font-bold text-pastel-gray-dark">Streak de {data.streak} dias 🔥</p>
+            </div>
           </div>
-
-          <div className="bg-white rounded-xl p-5 border border-border shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 bg-pastel-purple/[0.2] rounded-lg flex items-center justify-center">
-                <Award size={20} className="text-pastel-gray-dark" />
+          
+          <div className="flex items-center gap-8">
+            {/* Gráfico Circular Grande */}
+            <div className="relative w-64 h-64 flex-shrink-0">
+              <svg className="w-64 h-64 transform -rotate-90">
+                <circle
+                  cx="128"
+                  cy="128"
+                  r="110"
+                  fill="none"
+                  stroke="hsl(220, 15%, 95%)"
+                  strokeWidth="20"
+                />
+                <circle
+                  cx="128"
+                  cy="128"
+                  r="110"
+                  fill="none"
+                  stroke="hsl(152, 48%, 55%)"
+                  strokeWidth="20"
+                  strokeDasharray={`${2 * Math.PI * 110}`}
+                  strokeDashoffset={`${2 * Math.PI * 110 * (1 - (data.total / (selectedPeriod === '7d' ? 35 : selectedPeriod === '30d' ? 150 : selectedPeriod === '90d' ? 450 : 1900)))}`}
+                  strokeLinecap="round"
+                  className="transition-all duration-1000"
+                />
+              </svg>
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <p className="text-5xl font-bold text-foreground">{Math.round((data.total / (selectedPeriod === '7d' ? 35 : selectedPeriod === '30d' ? 150 : selectedPeriod === '90d' ? 450 : 1900)) * 100)}%</p>
+                <p className="text-sm text-muted-foreground mt-2">Concluído</p>
               </div>
-              <p className="text-xs font-semibold text-muted-foreground">Favoritos</p>
             </div>
-            <h4 className="text-3xl font-bold text-foreground mb-1">{data.favorites}</h4>
-            <p className="text-xs text-muted-foreground">episódios salvos</p>
-          </div>
 
-          <div className="bg-white rounded-xl p-5 border border-border shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 bg-pastel-green/[0.2] rounded-lg flex items-center justify-center">
-                <PlayCircle size={20} className="text-pastel-gray-dark" />
-              </div>
-              <p className="text-xs font-semibold text-muted-foreground">Velocidade</p>
-            </div>
-            <h4 className="text-3xl font-bold text-foreground mb-1">{data.speed}x</h4>
-            <p className="text-xs text-muted-foreground">velocidade média</p>
-          </div>
-
-          <div className="bg-white rounded-xl p-5 border border-border shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 bg-pastel-pink/[0.2] rounded-lg flex items-center justify-center">
-                <TrendingUp size={20} className="text-pastel-gray-dark" />
-              </div>
-              <p className="text-xs font-semibold text-muted-foreground">Meta Diária</p>
-            </div>
-            <h4 className="text-3xl font-bold text-foreground mb-1">1.5h</h4>
-            <p className="text-xs text-emerald-600 font-bold">✓ {Math.round(data.streak * 0.85)} dias</p>
-          </div>
-
-          <div className="bg-white rounded-xl p-5 border border-border shadow-sm hover:shadow-md transition-shadow">
-            <div className="mb-3">
-              <p className="text-xs font-semibold text-muted-foreground mb-2">Hosts Mais Ouvidos</p>
-            </div>
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <div className="w-6 h-6 bg-pastel-blue rounded flex items-center justify-center flex-shrink-0">
-                  <span className="text-[10px] font-bold text-pastel-gray-dark">FB</span>
+            {/* Estatísticas da Meta */}
+            <div className="flex-1 space-y-6">
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-sm font-medium text-muted-foreground">Episódios Ouvidos</p>
+                  <p className="text-2xl font-bold text-foreground">{data.total}</p>
                 </div>
-                <p className="text-[10px] text-muted-foreground truncate">Fintech Brasil</p>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-6 h-6 bg-pastel-green rounded flex items-center justify-center flex-shrink-0">
-                  <span className="text-[10px] font-bold text-pastel-gray-dark">PE</span>
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-sm font-medium text-muted-foreground">Meta Total</p>
+                  <p className="text-2xl font-bold text-foreground">{selectedPeriod === '7d' ? 35 : selectedPeriod === '30d' ? 150 : selectedPeriod === '90d' ? 450 : 1900}</p>
                 </div>
-                <p className="text-[10px] text-muted-foreground truncate">Payments Evolution</p>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-6 h-6 bg-pastel-purple rounded flex items-center justify-center flex-shrink-0">
-                  <span className="text-[10px] font-bold text-pastel-gray-dark">MF</span>
+                <div className="flex items-center justify-between">
+                  <p className="text-sm font-medium text-muted-foreground">Faltam</p>
+                  <p className="text-2xl font-bold text-amber-600">{(selectedPeriod === '7d' ? 35 : selectedPeriod === '30d' ? 150 : selectedPeriod === '90d' ? 450 : 1900) - data.total}</p>
                 </div>
-                <p className="text-[10px] text-muted-foreground truncate">Mercado em Foco</p>
+              </div>
+
+              <div className="pt-6 border-t border-border">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="bg-muted/50 rounded-xl p-4">
+                    <p className="text-xs text-muted-foreground mb-1">Média Diária</p>
+                    <p className="text-2xl font-bold text-foreground">{(data.total / (selectedPeriod === '7d' ? 7 : selectedPeriod === '30d' ? 30 : selectedPeriod === '90d' ? 90 : 365)).toFixed(1)}</p>
+                    <p className="text-xs text-muted-foreground mt-1">episódios/dia</p>
+                  </div>
+                  <div className="bg-muted/50 rounded-xl p-4">
+                    <p className="text-xs text-muted-foreground mb-1">Dias Ativos</p>
+                    <p className="text-2xl font-bold text-foreground">{data.streak}</p>
+                    <p className="text-xs text-emerald-600 mt-1 font-bold">🔥 Sequência ativa</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-r from-pastel-green/[0.2] to-pastel-blue/[0.2] rounded-xl p-4">
+                <p className="text-sm font-bold text-foreground mb-2">💪 Você está no caminho certo!</p>
+                <p className="text-xs text-muted-foreground">Mantenha o ritmo atual para atingir sua meta em {Math.ceil(((selectedPeriod === '7d' ? 35 : selectedPeriod === '30d' ? 150 : selectedPeriod === '90d' ? 450 : 1900) - data.total) / (data.total / (selectedPeriod === '7d' ? 7 : selectedPeriod === '30d' ? 30 : selectedPeriod === '90d' ? 90 : 365)))} dias.</p>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* 4 Cards Menores em Grid */}
+        <div className="grid grid-cols-4 gap-6">
+          <div className="bg-white rounded-xl p-6 border border-border">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 bg-pastel-blue/[0.2] rounded-lg flex items-center justify-center">
+                <BarChart3 size={24} className="text-pastel-gray-dark" />
+              </div>
+              <p className="text-sm font-semibold text-muted-foreground">Duração Média</p>
+            </div>
+            <h4 className="text-4xl font-bold text-foreground mb-2">{data.avgDuration}</h4>
+            <p className="text-sm text-muted-foreground">minutos por episódio</p>
+          </div>
+
+          <div className="bg-white rounded-xl p-6 border border-border">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 bg-pastel-purple/[0.2] rounded-lg flex items-center justify-center">
+                <Award size={24} className="text-pastel-gray-dark" />
+              </div>
+              <p className="text-sm font-semibold text-muted-foreground">Favoritos</p>
+            </div>
+            <h4 className="text-4xl font-bold text-foreground mb-2">{data.favorites}</h4>
+            <p className="text-sm text-muted-foreground">episódios salvos</p>
+          </div>
+
+          <div className="bg-white rounded-xl p-6 border border-border">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 bg-pastel-green/[0.2] rounded-lg flex items-center justify-center">
+                <PlayCircle size={24} className="text-pastel-gray-dark" />
+              </div>
+              <p className="text-sm font-semibold text-muted-foreground">Velocidade</p>
+            </div>
+            <h4 className="text-4xl font-bold text-foreground mb-2">{data.speed}x</h4>
+            <p className="text-sm text-muted-foreground">velocidade média</p>
+          </div>
+
+          <div className="bg-white rounded-xl p-6 border border-border">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 bg-pastel-pink/[0.2] rounded-lg flex items-center justify-center">
+                <TrendingUp size={24} className="text-pastel-gray-dark" />
+              </div>
+              <p className="text-sm font-semibold text-muted-foreground">Meta Diária</p>
+            </div>
+            <h4 className="text-4xl font-bold text-foreground mb-2">1.5h</h4>
+            <p className="text-sm text-emerald-600 font-bold">✓ {Math.round(data.streak * 0.85)} dias</p>
           </div>
         </div>
       </section>
