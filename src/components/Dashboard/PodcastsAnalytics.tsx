@@ -550,50 +550,50 @@ export const PodcastsAnalytics = () => {
           {/* Hosts Mais Ouvidos - 1/3 da largura, vertical */}
           <div className="bg-white rounded-2xl p-6 border border-border">
             <h3 className="text-lg font-bold text-foreground mb-6">Hosts Mais Ouvidos</h3>
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-pastel-blue rounded-lg flex items-center justify-center flex-shrink-0">
-                  <span className="text-sm font-bold text-pastel-gray-dark">FB</span>
+            <div className="space-y-6">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 bg-pastel-blue rounded-lg flex items-center justify-center flex-shrink-0">
+                  <span className="text-base font-bold text-pastel-gray-dark">FB</span>
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-semibold text-foreground">Fintech Brasil</p>
-                  <p className="text-xs text-muted-foreground">35 episódios</p>
+                  <p className="text-base font-bold text-foreground mb-0.5">Fintech Brasil</p>
+                  <p className="text-sm text-muted-foreground">35 episódios</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center flex-shrink-0">
-                  <span className="text-sm font-bold text-pastel-gray-dark">PE</span>
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 bg-pastel-green rounded-lg flex items-center justify-center flex-shrink-0">
+                  <span className="text-base font-bold text-pastel-gray-dark">PE</span>
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-semibold text-foreground">Payments Evolution</p>
-                  <p className="text-xs text-muted-foreground">28 episódios</p>
+                  <p className="text-base font-bold text-foreground mb-0.5">Payments Evolution</p>
+                  <p className="text-sm text-muted-foreground">28 episódios</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-pastel-purple rounded-lg flex items-center justify-center flex-shrink-0">
-                  <span className="text-sm font-bold text-pastel-gray-dark">MF</span>
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 bg-pastel-purple rounded-lg flex items-center justify-center flex-shrink-0">
+                  <span className="text-base font-bold text-pastel-gray-dark">MF</span>
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-semibold text-foreground">Mercado em Foco</p>
-                  <p className="text-xs text-muted-foreground">22 episódios</p>
+                  <p className="text-base font-bold text-foreground mb-0.5">Mercado em Foco</p>
+                  <p className="text-sm text-muted-foreground">22 episódios</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-pastel-pink rounded-lg flex items-center justify-center flex-shrink-0">
-                  <span className="text-sm font-bold text-pastel-gray-dark">BI</span>
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 bg-pastel-pink rounded-lg flex items-center justify-center flex-shrink-0">
+                  <span className="text-base font-bold text-pastel-gray-dark">BI</span>
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-semibold text-foreground">Banking Insights</p>
-                  <p className="text-xs text-muted-foreground">18 episódios</p>
+                  <p className="text-base font-bold text-foreground mb-0.5">Banking Insights</p>
+                  <p className="text-sm text-muted-foreground">18 episódios</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-pastel-yellow rounded-lg flex items-center justify-center flex-shrink-0">
-                  <span className="text-sm font-bold text-pastel-gray-dark">CF</span>
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 bg-pastel-yellow rounded-lg flex items-center justify-center flex-shrink-0">
+                  <span className="text-base font-bold text-pastel-gray-dark">CF</span>
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-semibold text-foreground">Cripto & Fintech</p>
-                  <p className="text-xs text-muted-foreground">15 episódios</p>
+                  <p className="text-base font-bold text-foreground mb-0.5">Cripto & Fintech</p>
+                  <p className="text-sm text-muted-foreground">15 episódios</p>
                 </div>
               </div>
             </div>
