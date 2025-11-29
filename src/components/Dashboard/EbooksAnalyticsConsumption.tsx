@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Plotly from 'plotly.js-dist';
 import { TrendingUp, Clock, CheckCircle, Book, BarChart3, Highlighter, Bookmark, Target, Award } from "lucide-react";
 import { PeriodComparisonToggle, getPeriodLabel } from "./PeriodComparisonToggle";
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 export const EbooksAnalyticsConsumption = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
@@ -387,6 +388,54 @@ export const EbooksAnalyticsConsumption = () => {
           </div>
           <h3 className="text-2xl font-bold text-slate-800 mt-1">200 pág</h3>
           <p className="text-xs text-emerald-600 font-bold mt-1">✓ Cumprida {Math.round(data.streak * 0.75)} vezes</p>
+        </div>
+
+        {/* Autores Mais Lidos */}
+        <div className="bg-white border border-slate-200 rounded-xl p-6">
+          <div className="flex items-center justify-between mb-3">
+            <p className="text-sm font-semibold text-slate-500">Autores Mais Lidos</p>
+            <i className="fas fa-users text-slate-400"></i>
+          </div>
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-full bg-[hsl(206,35%,75%)] flex items-center justify-center text-xs font-bold text-slate-700">CM</div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-bold text-slate-800 truncate">Dr. Carlos Mendes</p>
+                <p className="text-[10px] text-slate-500">3 e-books lidos</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-full bg-[hsl(142,35%,75%)] flex items-center justify-center text-xs font-bold text-slate-700">AS</div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-bold text-slate-800 truncate">Prof. Ana Santos</p>
+                <p className="text-[10px] text-slate-500">2 e-books lidos</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Progresso de Meta do Mês */}
+        <div className="bg-white border border-slate-200 rounded-xl p-6">
+          <div className="flex items-center justify-between mb-3">
+            <p className="text-sm font-semibold text-slate-500">Meta do Mês</p>
+            <i className="fas fa-target text-slate-400"></i>
+          </div>
+          <div className="space-y-2">
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <p className="text-xs font-bold text-slate-800">6 de 8 e-books</p>
+                <p className="text-[10px] font-bold text-slate-600">75%</p>
+              </div>
+              <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                <div className="h-full bg-[hsl(280,35%,65%)] rounded-full" style={{ width: '75%' }}></div>
+              </div>
+            </div>
+            <p className="text-[10px] text-slate-500">Faltam 2 e-books</p>
+            <div className="flex items-center gap-1.5 pt-1">
+              <i className="fas fa-fire text-orange-500 text-xs"></i>
+              <p className="text-[10px] font-bold text-slate-700">Sequência de {data.streak} dias!</p>
+            </div>
+          </div>
         </div>
       </section>
 

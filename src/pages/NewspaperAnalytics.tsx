@@ -3,6 +3,7 @@ import { Bell, Search, ChevronLeft, Download, TrendingUp, Eye, Newspaper, Clock 
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Plotly from 'plotly.js-dist';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const NewspaperAnalytics = () => {
   const navigate = useNavigate();
@@ -68,7 +69,7 @@ const NewspaperAnalytics = () => {
         </header>
 
         <div className="py-8 px-4 space-y-8">
-          <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="bg-white border border-slate-200 rounded-xl p-6 flex items-center justify-between shadow-sm">
               <div>
                 <p className="text-sm font-semibold text-slate-500">Total de Edições</p>
@@ -100,6 +101,61 @@ const NewspaperAnalytics = () => {
                 <p className="text-xs text-emerald-600 font-bold mt-1 flex items-center gap-1"><Clock size={12} /> 4% este mês</p>
               </div>
               <div className="w-12 h-12 rounded-xl bg-[hsl(24,42%,75%)] flex items-center justify-center text-slate-600"><Clock size={20} /></div>
+            </div>
+            
+            {/* Creators Mais Lidos */}
+            <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-sm font-semibold text-slate-500">Creators Mais Lidos</p>
+                <i className="fas fa-users text-slate-400"></i>
+              </div>
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-[hsl(206,35%,75%)] flex items-center justify-center text-xs font-bold text-slate-700">FT</div>
+                  <div className="flex-1">
+                    <p className="text-sm font-bold text-slate-800">FinTech Brasil</p>
+                    <p className="text-xs text-slate-500">124 edições lidas</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-[hsl(142,35%,75%)] flex items-center justify-center text-xs font-bold text-slate-700">BC</div>
+                  <div className="flex-1">
+                    <p className="text-sm font-bold text-slate-800">BACEN Insights</p>
+                    <p className="text-xs text-slate-500">98 edições lidas</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-[hsl(280,35%,75%)] flex items-center justify-center text-xs font-bold text-slate-700">MF</div>
+                  <div className="flex-1">
+                    <p className="text-sm font-bold text-slate-800">Mercado Financeiro</p>
+                    <p className="text-xs text-slate-500">87 edições lidas</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Progresso de Meta do Mês */}
+            <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-sm font-semibold text-slate-500">Meta do Mês</p>
+                <i className="fas fa-target text-slate-400"></i>
+              </div>
+              <div className="space-y-3">
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-sm font-bold text-slate-800">48 de 60 edições</p>
+                    <p className="text-xs font-bold text-slate-600">80%</p>
+                  </div>
+                  <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                    <div className="h-full bg-[hsl(142,35%,65%)] rounded-full" style={{ width: '80%' }}></div>
+                  </div>
+                </div>
+                <p className="text-xs text-slate-500">Faltam 12 edições para atingir sua meta mensal</p>
+                <div className="flex items-center gap-2 pt-2">
+                  <i className="fas fa-fire text-orange-500 text-sm"></i>
+                  <p className="text-xs font-bold text-slate-700">Sequência de 14 dias!</p>
+                </div>
+              </div>
             </div>
           </section>
 
