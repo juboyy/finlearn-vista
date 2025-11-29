@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAgentChat } from "@/hooks/useAgentChat";
 import { useSavedChartAnalyses } from "@/hooks/useSavedChartAnalyses";
+import { useToast } from "@/hooks/use-toast";
 import ReactMarkdown from "react-markdown";
 
 interface MetricsAgentChatProps {
@@ -70,6 +71,7 @@ export const MetricsAgentChat = ({ metricType, onClose, initialContext }: Metric
   const agent = agentConfig[metricType];
   const { messages, sendMessage, isLoading, clearMessages } = useAgentChat(agent.name);
   const { saveAnalysis } = useSavedChartAnalyses();
+  const { toast } = useToast();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [contextSent, setContextSent] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -119,11 +121,31 @@ Por favor, forneça:
   };
 
   const handleSaveAnalysis = async () => {
-    if (!initialContext || messages.length === 0) return;
+    console.log("handleSaveAnalysis called");
+    console.log("initialContext:", initialContext);
+    console.log("messages:", messages);
+    
+    if (!initialContext || messages.length === 0) {
+      toast({
+        title: "Nenhuma análise para salvar",
+        description: "Aguarde a análise do gráfico ser gerada.",
+        variant: "destructive",
+      });
+      return;
+    }
     
     // Find the last assistant message (the analysis)
     const lastAssistantMessage = [...messages].reverse().find(m => m.role === "assistant");
-    if (!lastAssistantMessage) return;
+    if (!lastAssistantMessage) {
+      toast({
+        title: "Nenhuma análise disponível",
+        description: "Aguarde a resposta do agente para salvar.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    console.log("Last assistant message:", lastAssistantMessage.content);
 
     setIsSaving(true);
     try {
