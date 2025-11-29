@@ -164,9 +164,13 @@ export const CursosAnalytics = () => {
     }, { displayModeBar: false });
 
     // Category Distribution Chart
+    const categoryValues = currentData.categoryDistribution.values;
+    const categoryLabels = currentData.categoryDistribution.labels;
+    const initialCategoryValues = new Array(categoryValues.length).fill(0);
+    
     Plotly.newPlot('cursos-categories-chart', [{
-      labels: currentData.categoryDistribution.labels,
-      values: currentData.categoryDistribution.values,
+      labels: categoryLabels,
+      values: initialCategoryValues,
       type: 'pie',
       hole: 0.4,
       marker: { colors: [pastelYellow, pastelBlue, pastelPurple, pastelPink, pastelOrange] },
@@ -178,12 +182,24 @@ export const CursosAnalytics = () => {
       showlegend: true,
       legend: { orientation: 'h', y: -0.1, font: { size: 11 } },
       paper_bgcolor: '#ffffff',
-      hovermode: 'closest',
-      transition: {
-        duration: 800,
-        easing: 'cubic-in-out'
-      }
+      hovermode: 'closest'
     }, { displayModeBar: false }).then(() => {
+      // Progressive animation for each slice
+      categoryValues.forEach((value: any, index: number) => {
+        setTimeout(() => {
+          const animatedValues = [...initialCategoryValues];
+          for (let i = 0; i <= index; i++) {
+            animatedValues[i] = categoryValues[i];
+          }
+          Plotly.animate('cursos-categories-chart', {
+            data: [{ values: animatedValues }]
+          }, {
+            transition: { duration: 400, easing: 'cubic-in-out' },
+            frame: { duration: 400 }
+          });
+        }, index * 200);
+      });
+      
       const categoriesChart = document.getElementById('cursos-categories-chart');
       if (categoriesChart) {
         categoriesChart.style.cursor = 'pointer';

@@ -83,9 +83,13 @@ export const WhitepaperAnalyticsConsumption = () => {
     }), { displayModeBar: false });
 
     // Whitepapers por Categoria
+    const categoryValues = [40, 25, 20, 15];
+    const categoryLabels = ['Tecnologia', 'Regulação', 'Blockchain', 'Inovação'];
+    const initialCategoryValues = new Array(categoryValues.length).fill(0);
+    
     const categoriesData = [{
-      values: [40, 25, 20, 15],
-      labels: ['Tecnologia', 'Regulação', 'Blockchain', 'Inovação'],
+      values: initialCategoryValues,
+      labels: categoryLabels,
       type: 'pie',
       hole: 0.4,
       marker: { colors: ['#B8D4E8', '#C5E8D4', '#F4C8D8', '#D8BFD8'] },
@@ -99,12 +103,24 @@ export const WhitepaperAnalyticsConsumption = () => {
       showlegend: true,
       legend: { orientation: 'h', y: -0.1, font: { size: 11 } },
       paper_bgcolor: '#ffffff',
-      hovermode: 'closest',
-      transition: {
-        duration: 800,
-        easing: 'cubic-in-out'
-      }
+      hovermode: 'closest'
     }, { displayModeBar: false }).then(() => {
+      // Progressive animation for each slice
+      categoryValues.forEach((value, index) => {
+        setTimeout(() => {
+          const animatedValues = [...initialCategoryValues];
+          for (let i = 0; i <= index; i++) {
+            animatedValues[i] = categoryValues[i];
+          }
+          Plotly.animate('whitepaper-categories-chart', {
+            data: [{ values: animatedValues }]
+          }, {
+            transition: { duration: 400, easing: 'cubic-in-out' },
+            frame: { duration: 400 }
+          });
+        }, index * 200);
+      });
+      
       const categoriesChart = document.getElementById('whitepaper-categories-chart');
       if (categoriesChart) {
         categoriesChart.style.cursor = 'pointer';

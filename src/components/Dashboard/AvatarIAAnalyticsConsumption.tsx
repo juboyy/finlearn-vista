@@ -84,9 +84,13 @@ export const AvatarIAAnalyticsConsumption = () => {
     }), { displayModeBar: false });
 
     // Avatares por Especialidade
+    const specialtyValues = [30, 25, 22, 13, 10];
+    const specialtyLabels = ['Análise', 'Compliance', 'Educação', 'Estratégia', 'Outros'];
+    const initialSpecialtyValues = new Array(specialtyValues.length).fill(0);
+    
     const specialtiesData = [{
-      values: [30, 25, 22, 13, 10],
-      labels: ['Análise', 'Compliance', 'Educação', 'Estratégia', 'Outros'],
+      values: initialSpecialtyValues,
+      labels: specialtyLabels,
       type: 'pie',
       hole: 0.4,
       marker: { colors: ['#F4C8D8', '#C5E8D4', '#D8BFD8', '#B8D4E8', '#F4E4A6'] },
@@ -100,12 +104,24 @@ export const AvatarIAAnalyticsConsumption = () => {
       showlegend: true,
       legend: { orientation: 'h', y: -0.1, font: { size: 11 } },
       paper_bgcolor: '#ffffff',
-      hovermode: 'closest',
-      transition: {
-        duration: 800,
-        easing: 'cubic-in-out'
-      }
+      hovermode: 'closest'
     }, { displayModeBar: false }).then(() => {
+      // Progressive animation for each slice
+      specialtyValues.forEach((value, index) => {
+        setTimeout(() => {
+          const animatedValues = [...initialSpecialtyValues];
+          for (let i = 0; i <= index; i++) {
+            animatedValues[i] = specialtyValues[i];
+          }
+          Plotly.animate('avatar-specialties-chart', {
+            data: [{ values: animatedValues }]
+          }, {
+            transition: { duration: 400, easing: 'cubic-in-out' },
+            frame: { duration: 400 }
+          });
+        }, index * 200);
+      });
+      
       const specialtiesChart = document.getElementById('avatar-specialties-chart');
       if (specialtiesChart) {
         specialtiesChart.style.cursor = 'pointer';

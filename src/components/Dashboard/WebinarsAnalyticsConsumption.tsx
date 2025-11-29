@@ -116,9 +116,13 @@ export const WebinarsAnalyticsConsumption = () => {
     }), { displayModeBar: false });
 
     // Webinars por Categoria
+    const categoryValues = [38, 25, 22, 15];
+    const categoryLabels = ['Mercado', 'Tecnologia', 'Regulação', 'ESG'];
+    const initialCategoryValues = new Array(categoryValues.length).fill(0);
+    
     const categoriesData = [{
-      values: [38, 25, 22, 15],
-      labels: ['Mercado', 'Tecnologia', 'Regulação', 'ESG'],
+      values: initialCategoryValues,
+      labels: categoryLabels,
       type: 'pie',
       hole: 0.4,
       marker: { colors: ['#F4C8D8', '#C5E8D4', '#D8BFD8', '#B8D4E8'] },
@@ -132,12 +136,24 @@ export const WebinarsAnalyticsConsumption = () => {
       showlegend: true,
       legend: { orientation: 'h', y: -0.1, font: { size: 11 } },
       paper_bgcolor: '#ffffff',
-      hovermode: 'closest',
-      transition: {
-        duration: 800,
-        easing: 'cubic-in-out'
-      }
+      hovermode: 'closest'
     }, { displayModeBar: false }).then(() => {
+      // Progressive animation for each slice
+      categoryValues.forEach((value, index) => {
+        setTimeout(() => {
+          const animatedValues = [...initialCategoryValues];
+          for (let i = 0; i <= index; i++) {
+            animatedValues[i] = categoryValues[i];
+          }
+          Plotly.animate('webinars-categories-chart', {
+            data: [{ values: animatedValues }]
+          }, {
+            transition: { duration: 400, easing: 'cubic-in-out' },
+            frame: { duration: 400 }
+          });
+        }, index * 200);
+      });
+      
       const categoriesChart = document.getElementById('webinars-categories-chart');
       if (categoriesChart) {
         categoriesChart.style.cursor = 'pointer';

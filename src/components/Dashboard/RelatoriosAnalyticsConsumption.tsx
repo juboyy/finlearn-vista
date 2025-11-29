@@ -73,9 +73,13 @@ export const RelatoriosAnalyticsConsumption = () => {
     }), { displayModeBar: false });
 
     // Relatórios por Categoria
+    const categoryValues = [35, 28, 22, 15];
+    const categoryLabels = ['Trimestral', 'Anual', 'Mensal', 'Especial'];
+    const initialCategoryValues = new Array(categoryValues.length).fill(0);
+    
     const categoriesData = [{
-      values: [35, 28, 22, 15],
-      labels: ['Trimestral', 'Anual', 'Mensal', 'Especial'],
+      values: initialCategoryValues,
+      labels: categoryLabels,
       type: 'pie',
       hole: 0.4,
       marker: { colors: ['#F4C8D8', '#C5E8D4', '#D8BFD8', '#B8D4E8'] },
@@ -89,12 +93,24 @@ export const RelatoriosAnalyticsConsumption = () => {
       showlegend: true,
       legend: { orientation: 'h', y: -0.1, font: { size: 11 } },
       paper_bgcolor: '#ffffff',
-      hovermode: 'closest',
-      transition: {
-        duration: 800,
-        easing: 'cubic-in-out'
-      }
+      hovermode: 'closest'
     }, { displayModeBar: false }).then(() => {
+      // Progressive animation for each slice
+      categoryValues.forEach((value, index) => {
+        setTimeout(() => {
+          const animatedValues = [...initialCategoryValues];
+          for (let i = 0; i <= index; i++) {
+            animatedValues[i] = categoryValues[i];
+          }
+          Plotly.animate('relatorios-categories-chart', {
+            data: [{ values: animatedValues }]
+          }, {
+            transition: { duration: 400, easing: 'cubic-in-out' },
+            frame: { duration: 400 }
+          });
+        }, index * 200);
+      });
+      
       const categoriesChart = document.getElementById('relatorios-categories-chart');
       if (categoriesChart) {
         categoriesChart.style.cursor = 'pointer';

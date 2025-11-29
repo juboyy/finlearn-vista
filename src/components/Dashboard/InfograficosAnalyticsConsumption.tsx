@@ -78,9 +78,13 @@ export const InfograficosAnalyticsConsumption = () => {
     }), { displayModeBar: false });
 
     // Infográficos por Tema
+    const topicValues = [32, 28, 20, 12, 8];
+    const topicLabels = ['Dados Mercado', 'Processos', 'Comparativos', 'Tendências', 'Outros'];
+    const initialTopicValues = new Array(topicValues.length).fill(0);
+    
     const topicsData = [{
-      values: [32, 28, 20, 12, 8],
-      labels: ['Dados Mercado', 'Processos', 'Comparativos', 'Tendências', 'Outros'],
+      values: initialTopicValues,
+      labels: topicLabels,
       type: 'pie',
       hole: 0.4,
       marker: { colors: ['#F4E4A6', '#C5E8D4', '#F4C8D8', '#D8BFD8', '#B8D4E8'] },
@@ -94,12 +98,24 @@ export const InfograficosAnalyticsConsumption = () => {
       showlegend: true,
       legend: { orientation: 'h', y: -0.1, font: { size: 11 } },
       paper_bgcolor: '#ffffff',
-      hovermode: 'closest',
-      transition: {
-        duration: 800,
-        easing: 'cubic-in-out'
-      }
+      hovermode: 'closest'
     }, { displayModeBar: false }).then(() => {
+      // Progressive animation for each slice
+      topicValues.forEach((value, index) => {
+        setTimeout(() => {
+          const animatedValues = [...initialTopicValues];
+          for (let i = 0; i <= index; i++) {
+            animatedValues[i] = topicValues[i];
+          }
+          Plotly.animate('infograficos-topics-chart', {
+            data: [{ values: animatedValues }]
+          }, {
+            transition: { duration: 400, easing: 'cubic-in-out' },
+            frame: { duration: 400 }
+          });
+        }, index * 200);
+      });
+      
       const topicsChart = document.getElementById('infograficos-topics-chart');
       if (topicsChart) {
         topicsChart.style.cursor = 'pointer';

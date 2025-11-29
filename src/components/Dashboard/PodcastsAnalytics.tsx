@@ -168,9 +168,13 @@ export const PodcastsAnalytics = () => {
     }, { displayModeBar: false });
 
     // Host Distribution Chart (Donut)
+    const hostValues = currentData.hostDistribution.values;
+    const hostLabels = currentData.hostDistribution.labels;
+    const initialHostValues = new Array(hostValues.length).fill(0);
+    
     Plotly.newPlot('podcast-hosts-chart', [{
-      labels: currentData.hostDistribution.labels,
-      values: currentData.hostDistribution.values,
+      labels: hostLabels,
+      values: initialHostValues,
       type: 'pie',
       hole: 0.4,
       marker: { colors: [pastelBlue, pastelGreen, pastelPurple, pastelPink, pastelOrange] },
@@ -182,12 +186,24 @@ export const PodcastsAnalytics = () => {
       showlegend: true,
       legend: { orientation: 'h', y: -0.1, font: { size: 11 } },
       paper_bgcolor: '#ffffff',
-      hovermode: 'closest',
-      transition: {
-        duration: 800,
-        easing: 'cubic-in-out'
-      }
-    }, { displayModeBar: false });
+      hovermode: 'closest'
+    }, { displayModeBar: false }).then(() => {
+      // Progressive animation for each slice
+      hostValues.forEach((value: any, index: number) => {
+        setTimeout(() => {
+          const animatedValues = [...initialHostValues];
+          for (let i = 0; i <= index; i++) {
+            animatedValues[i] = hostValues[i];
+          }
+          Plotly.animate('podcast-hosts-chart', {
+            data: [{ values: animatedValues }]
+          }, {
+            transition: { duration: 400, easing: 'cubic-in-out' },
+            frame: { duration: 400 }
+          });
+        }, index * 200);
+      });
+    });
 
     // Completion Rate Chart
     const completionRateData = [{

@@ -276,9 +276,13 @@ export const NewspaperAnalytics = () => {
     });
 
     // Content Types Chart (Donut Chart)
+    const contentTypesValues = [42, 28, 18, 12];
+    const contentTypesLabels = ['Notícias', 'Análises', 'Relatórios', 'Estudos'];
+    const initialValues = new Array(contentTypesValues.length).fill(0);
+    
     const contentTypesData = [{
-      values: [42, 28, 18, 12],
-      labels: ['Notícias', 'Análises', 'Relatórios', 'Estudos'],
+      values: initialValues,
+      labels: contentTypesLabels,
       type: 'pie',
       hole: 0.4,
       marker: {
@@ -293,15 +297,27 @@ export const NewspaperAnalytics = () => {
       showlegend: true,
       legend: { orientation: 'h', y: -0.1, font: { size: 11 } },
       paper_bgcolor: '#ffffff',
-      hovermode: 'closest',
-      transition: {
-        duration: 800,
-        easing: 'cubic-in-out'
-      }
+      hovermode: 'closest'
     };
     Plotly.newPlot('content-types-chart', contentTypesData, contentTypesLayout, {
       displayModeBar: false
     }).then(() => {
+      // Progressive animation for each slice
+      contentTypesValues.forEach((value, index) => {
+        setTimeout(() => {
+          const animatedValues = [...initialValues];
+          for (let i = 0; i <= index; i++) {
+            animatedValues[i] = contentTypesValues[i];
+          }
+          Plotly.animate('content-types-chart', {
+            data: [{ values: animatedValues }]
+          }, {
+            transition: { duration: 400, easing: 'cubic-in-out' },
+            frame: { duration: 400 }
+          });
+        }, index * 200);
+      });
+      
       const contentTypesChart = document.getElementById('content-types-chart');
       if (contentTypesChart) {
         contentTypesChart.style.cursor = 'pointer';
