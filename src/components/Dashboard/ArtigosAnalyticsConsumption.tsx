@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { PeriodComparisonToggle, getPeriodLabel } from "./PeriodComparisonToggle";
 
 export const ArtigosAnalyticsConsumption = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
@@ -9,9 +10,9 @@ export const ArtigosAnalyticsConsumption = () => {
     if (typeof window !== 'undefined' && (window as any).Plotly) {
       initializeCharts();
     }
-  }, [selectedPeriod]);
+  }, [selectedPeriod, comparisonMode, comparisonPeriod]);
 
-  const getDataByPeriod = () => {
+  const getDataByPeriod = (period: '7d' | '30d' | '90d' | '1y') => {
     const data = {
       '7d': {
         weekly: { x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], y: [8, 12, 9, 15, 11, 4, 2] },
@@ -20,48 +21,128 @@ export const ArtigosAnalyticsConsumption = () => {
         monthly: { x: ['Dia 1', 'Dia 2', 'Dia 3', 'Dia 4', 'Dia 5', 'Dia 6', 'Dia 7'], y: [8, 12, 9, 15, 11, 4, 2] }
       },
       '30d': {
-        weekly: { x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], y: [8, 12, 9, 15, 11, 4, 2] },
-        total: 284, growth: 32, avgDaily: 4.2, saved: 47,
-        timeData: { x: ['0-5 min', '5-10 min', '10-20 min', '20+ min'], y: [25, 42, 28, 15] },
-        monthly: { x: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4'], y: [52, 61, 58, 67] }
+        weekly: { x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], y: [32, 42, 36, 52, 44, 18, 12] },
+        total: 1142, growth: 128, avgDaily: 16.8, saved: 189,
+        timeData: { x: ['0-5 min', '5-10 min', '10-20 min', '20+ min'], y: [98, 168, 112, 62] },
+        monthly: { x: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4'], y: [248, 292, 278, 324] }
       },
       '90d': {
-        weekly: { x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], y: [9, 13, 10, 16, 12, 5, 3] },
-        total: 842, growth: 95, avgDaily: 4.5, saved: 128,
-        timeData: { x: ['0-5 min', '5-10 min', '10-20 min', '20+ min'], y: [28, 45, 32, 18] },
-        monthly: { x: ['Mês 1', 'Mês 2', 'Mês 3'], y: [245, 278, 319] }
+        weekly: { x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], y: [92, 113, 98, 142, 125, 56, 38] },
+        total: 3382, growth: 385, avgDaily: 18.2, saved: 512,
+        timeData: { x: ['0-5 min', '5-10 min', '10-20 min', '20+ min'], y: [282, 472, 338, 182] },
+        monthly: { x: ['Mês 1', 'Mês 2', 'Mês 3'], y: [982, 1112, 1288] }
       },
       '1y': {
-        weekly: { x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], y: [10, 14, 11, 17, 13, 6, 4] },
-        total: 3456, growth: 412, avgDaily: 4.8, saved: 542,
-        timeData: { x: ['0-5 min', '5-10 min', '10-20 min', '20+ min'], y: [32, 48, 35, 22] },
-        monthly: { x: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'], y: [245, 268, 289, 302, 315, 328, 342, 355, 368, 382, 395, 412] }
+        weekly: { x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], y: [382, 452, 412, 572, 492, 228, 162] },
+        total: 13826, growth: 1568, avgDaily: 19.2, saved: 2184,
+        timeData: { x: ['0-5 min', '5-10 min', '10-20 min', '20+ min'], y: [1124, 1892, 1348, 728] },
+        monthly: { x: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'], y: [982, 1076, 1158, 1212, 1268, 1312, 1372, 1428, 1472, 1532, 1588, 1652] }
       }
     };
-    return data[selectedPeriod];
+    return data[period];
   };
 
   const initializeCharts = () => {
-    const periodData = getDataByPeriod();
+    const currentData = getDataByPeriod(selectedPeriod);
+    const comparisonData = comparisonMode ? getDataByPeriod(comparisonPeriod) : null;
     const Plotly = (window as any).Plotly;
+    const pastelGreen = '#8EBC9F';
+    const pastelPurple = '#AC9CC9';
 
-    // Leitura Semanal
-    const weeklyData = [{
-      x: periodData.weekly.x,
-      y: periodData.weekly.y,
+    // Leitura Semanal - with comparison
+    const weeklyChartData = [{
+      x: currentData.weekly.x,
+      y: currentData.weekly.y,
       type: 'bar',
-      marker: { color: '#B8D4E8' }
+      name: comparisonMode ? getPeriodLabel(selectedPeriod) : 'Artigos Lidos',
+      marker: { color: pastelGreen }
     }];
 
-    Plotly.newPlot('artigos-weekly-chart', weeklyData, {
+    if (comparisonMode && comparisonData) {
+      weeklyChartData.push({
+        x: comparisonData.weekly.x,
+        y: comparisonData.weekly.y,
+        type: 'bar',
+        name: getPeriodLabel(comparisonPeriod),
+        marker: { color: pastelPurple }
+      } as any);
+    }
+
+    Plotly.newPlot('artigos-weekly-chart', weeklyChartData, {
       margin: { l: 40, r: 20, t: 20, b: 40 },
       xaxis: { gridcolor: '#f1f5f9' },
       yaxis: { gridcolor: '#f1f5f9', title: 'Artigos Lidos' },
       plot_bgcolor: '#ffffff',
-      paper_bgcolor: '#ffffff'
+      paper_bgcolor: '#ffffff',
+      barmode: comparisonMode ? 'group' : 'relative',
+      showlegend: comparisonMode,
+      legend: { orientation: 'h', y: 1.1 }
     }, { displayModeBar: false });
 
-    // Artigos por Tema
+    // Tempo de Leitura - with comparison
+    const timeChartData = [{
+      x: currentData.timeData.x,
+      y: currentData.timeData.y,
+      type: 'bar',
+      name: comparisonMode ? getPeriodLabel(selectedPeriod) : 'Artigos',
+      marker: { color: pastelGreen }
+    }];
+
+    if (comparisonMode && comparisonData) {
+      timeChartData.push({
+        x: comparisonData.timeData.x,
+        y: comparisonData.timeData.y,
+        type: 'bar',
+        name: getPeriodLabel(comparisonPeriod),
+        marker: { color: pastelPurple }
+      } as any);
+    }
+
+    Plotly.newPlot('artigos-time-chart', timeChartData, {
+      margin: { l: 40, r: 20, t: 20, b: 40 },
+      xaxis: { gridcolor: '#f1f5f9', title: 'Tempo de Leitura' },
+      yaxis: { gridcolor: '#f1f5f9', title: 'Artigos' },
+      plot_bgcolor: '#ffffff',
+      paper_bgcolor: '#ffffff',
+      barmode: comparisonMode ? 'group' : 'relative',
+      showlegend: comparisonMode,
+      legend: { orientation: 'h', y: 1.1 }
+    }, { displayModeBar: false });
+
+    // Engajamento Mensal - with comparison
+    const monthlyChartData = [{
+      x: currentData.monthly.x,
+      y: currentData.monthly.y,
+      type: 'scatter',
+      mode: 'lines+markers',
+      name: comparisonMode ? getPeriodLabel(selectedPeriod) : 'Artigos',
+      line: { color: pastelGreen, width: 3 },
+      marker: { size: 8, color: pastelGreen }
+    }];
+
+    if (comparisonMode && comparisonData) {
+      monthlyChartData.push({
+        x: comparisonData.monthly.x,
+        y: comparisonData.monthly.y,
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: getPeriodLabel(comparisonPeriod),
+        line: { color: pastelPurple, width: 3, dash: 'dash' },
+        marker: { size: 8, color: pastelPurple }
+      } as any);
+    }
+
+    Plotly.newPlot('artigos-monthly-chart', monthlyChartData, {
+      margin: { l: 40, r: 20, t: 20, b: 40 },
+      xaxis: { gridcolor: '#f1f5f9' },
+      yaxis: { gridcolor: '#f1f5f9', title: 'Artigos Lidos' },
+      plot_bgcolor: '#ffffff',
+      paper_bgcolor: '#ffffff',
+      showlegend: comparisonMode,
+      legend: { orientation: 'h', y: 1.1 }
+    }, { displayModeBar: false });
+
+    // Artigos por Tema (Pie Chart não precisa de comparação)
     const topicsData = [{
       values: [32, 25, 20, 13, 10],
       labels: ['Regulação', 'Inovação', 'Mercado', 'Tecnologia', 'ESG'],
@@ -75,40 +156,6 @@ export const ArtigosAnalyticsConsumption = () => {
       showlegend: false,
       paper_bgcolor: '#ffffff'
     }, { displayModeBar: false });
-
-    // Tempo de Leitura
-    const timeData = [{
-      x: periodData.timeData.x,
-      y: periodData.timeData.y,
-      type: 'bar',
-      marker: { color: ['#E8C5D8', '#E8E0C5', '#C5E8D4', '#B8D4E8'] }
-    }];
-
-    Plotly.newPlot('artigos-time-chart', timeData, {
-      margin: { l: 40, r: 20, t: 20, b: 40 },
-      xaxis: { gridcolor: '#f1f5f9', title: 'Tempo de Leitura' },
-      yaxis: { gridcolor: '#f1f5f9', title: 'Artigos' },
-      plot_bgcolor: '#ffffff',
-      paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
-
-    // Engajamento Mensal
-    const monthlyData = [{
-      x: periodData.monthly.x,
-      y: periodData.monthly.y,
-      type: 'scatter',
-      mode: 'lines+markers',
-      line: { color: '#B8D4E8', width: 3 },
-      marker: { size: 8, color: '#B8D4E8' }
-    }];
-
-    Plotly.newPlot('artigos-monthly-chart', monthlyData, {
-      margin: { l: 40, r: 20, t: 20, b: 40 },
-      xaxis: { gridcolor: '#f1f5f9' },
-      yaxis: { gridcolor: '#f1f5f9', title: 'Artigos Lidos' },
-      plot_bgcolor: '#ffffff',
-      paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
   };
 
   return (
@@ -118,49 +165,15 @@ export const ArtigosAnalyticsConsumption = () => {
         <p className="text-slate-600">Seu histórico de leitura e temas de interesse</p>
       </div>
 
-      {/* Filtros de Período */}
-      <div className="mb-6 flex gap-3">
-        <button
-          onClick={() => setSelectedPeriod('7d')}
-          className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
-            selectedPeriod === '7d'
-              ? 'bg-[hsl(142,35%,50%)] text-white'
-              : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
-          }`}
-        >
-          7 dias
-        </button>
-        <button
-          onClick={() => setSelectedPeriod('30d')}
-          className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
-            selectedPeriod === '30d'
-              ? 'bg-[hsl(142,35%,50%)] text-white'
-              : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
-          }`}
-        >
-          30 dias
-        </button>
-        <button
-          onClick={() => setSelectedPeriod('90d')}
-          className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
-            selectedPeriod === '90d'
-              ? 'bg-[hsl(142,35%,50%)] text-white'
-              : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
-          }`}
-        >
-          90 dias
-        </button>
-        <button
-          onClick={() => setSelectedPeriod('1y')}
-          className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
-            selectedPeriod === '1y'
-              ? 'bg-[hsl(142,35%,50%)] text-white'
-              : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
-          }`}
-        >
-          1 ano
-        </button>
-      </div>
+      {/* Period Comparison Toggle */}
+      <PeriodComparisonToggle
+        comparisonMode={comparisonMode}
+        setComparisonMode={setComparisonMode}
+        selectedPeriod={selectedPeriod}
+        setSelectedPeriod={setSelectedPeriod}
+        comparisonPeriod={comparisonPeriod}
+        setComparisonPeriod={setComparisonPeriod}
+      />
 
       {/* KPIs */}
       <div className="grid grid-cols-4 gap-6 mb-8">
@@ -169,10 +182,10 @@ export const ArtigosAnalyticsConsumption = () => {
             <span className="text-sm text-slate-500 font-medium">Total Lidos</span>
             <i className="fas fa-newspaper text-slate-400"></i>
           </div>
-          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod().total}</p>
+          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod(selectedPeriod).total}</p>
           <p className="text-xs text-emerald-600 font-medium mt-2">
             <i className="fas fa-arrow-up mr-1"></i>
-            +{getDataByPeriod().growth} no período
+            +{getDataByPeriod(selectedPeriod).growth} no período
           </p>
         </div>
 
@@ -193,7 +206,7 @@ export const ArtigosAnalyticsConsumption = () => {
             <span className="text-sm text-slate-500 font-medium">Média Diária</span>
             <i className="fas fa-chart-bar text-slate-400"></i>
           </div>
-          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod().avgDaily}</p>
+          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod(selectedPeriod).avgDaily}</p>
           <p className="text-xs text-slate-500 font-medium mt-2">
             Artigos por dia
           </p>
@@ -204,7 +217,7 @@ export const ArtigosAnalyticsConsumption = () => {
             <span className="text-sm text-slate-500 font-medium">Salvos</span>
             <i className="fas fa-bookmark text-slate-400"></i>
           </div>
-          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod().saved}</p>
+          <p className="text-3xl font-bold text-slate-800">{getDataByPeriod(selectedPeriod).saved}</p>
           <p className="text-xs text-slate-500 font-medium mt-2">
             Para ler depois
           </p>

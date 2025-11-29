@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { PeriodComparisonToggle, getPeriodLabel } from "./PeriodComparisonToggle";
 
 export const WebinarsAnalyticsConsumption = () => {
   const [insights, setInsights] = useState<string>("");
@@ -77,7 +78,7 @@ export const WebinarsAnalyticsConsumption = () => {
       initializeCharts();
     }
     generateInsights();
-  }, [selectedPeriod]);
+  }, [selectedPeriod, comparisonMode, comparisonPeriod]);
 
   const generateInsights = () => {
     setLoadingInsights(true);
