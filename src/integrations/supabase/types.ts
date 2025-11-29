@@ -438,6 +438,60 @@ export type Database = {
         }
         Relationships: []
       }
+      live_notification_preferences: {
+        Row: {
+          created_at: string
+          enabled: boolean
+          id: string
+          notify_minutes_before: number
+          notify_on_start: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          notify_minutes_before?: number
+          notify_on_start?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          notify_minutes_before?: number
+          notify_on_start?: boolean
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      live_notifications_sent: {
+        Row: {
+          id: string
+          live_id: string
+          notification_type: string
+          sent_at: string
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          live_id: string
+          notification_type: string
+          sent_at?: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          live_id?: string
+          notification_type?: string
+          sent_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       markdown_chapters: {
         Row: {
           content: string
@@ -816,6 +870,36 @@ export type Database = {
           podcast_image?: string
           podcast_title?: string
           podcast_topic?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_followed_lives: {
+        Row: {
+          created_at: string
+          id: string
+          live_id: string
+          live_scheduled_time: string
+          live_title: string
+          presenter_name: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          live_id: string
+          live_scheduled_time: string
+          live_title: string
+          presenter_name: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          live_id?: string
+          live_scheduled_time?: string
+          live_title?: string
+          presenter_name?: string
           user_id?: string
         }
         Relationships: []

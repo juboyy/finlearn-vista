@@ -1,4 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
+import { LiveNotificationSettings } from "@/components/Dashboard/LiveNotificationSettings";
 import { ArrowLeft, Check, Bell, Clock, Eye } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -434,6 +435,23 @@ export default function MinhasMetasNotificacoes() {
                   </div>
                 </div>
               </div>
+            </div>
+          </section>
+
+          {/* Notificações de Live */}
+          <section className="mb-8">
+            <div className="bg-white rounded-2xl border-2 border-slate-200 p-6">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 bg-pastel-purple rounded-lg flex items-center justify-center">
+                  <i className="fas fa-video text-slate-700"></i>
+                </div>
+                <div>
+                  <h2 className="text-lg font-semibold text-slate-800">Notificações de Live</h2>
+                  <p className="text-sm text-slate-500">Configure alertas sobre transmissões ao vivo</p>
+                </div>
+              </div>
+              
+              <LiveNotificationSettings />
             </div>
           </section>
 
