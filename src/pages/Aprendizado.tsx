@@ -582,7 +582,7 @@ const Aprendizado = () => {
                       <span className="text-slate-600">Meta Semanal</span>
                       <span className="font-medium text-slate-800">12h / 15h</span>
                     </div>
-                    <div className="w-full bg-pastel-orange rounded-full h-2">
+                    <div className="w-full bg-slate-200 rounded-full h-2">
                       <div className="bg-pastel-blue h-2 rounded-full" style={{
                         width: "80%"
                       }}></div>
@@ -594,7 +594,7 @@ const Aprendizado = () => {
                       <span className="text-slate-600">Cursos Concluídos</span>
                       <span className="font-medium text-slate-800">5</span>
                     </div>
-                    <div className="w-full bg-pastel-orange rounded-full h-2">
+                    <div className="w-full bg-slate-200 rounded-full h-2">
                       <div className="bg-pastel-purple h-2 rounded-full" style={{
                         width: "50%"
                       }}></div>
@@ -606,7 +606,7 @@ const Aprendizado = () => {
                       <span className="text-slate-600">Certificados</span>
                       <span className="font-medium text-slate-800">2</span>
                     </div>
-                    <div className="w-full bg-pastel-orange rounded-full h-2">
+                    <div className="w-full bg-slate-200 rounded-full h-2">
                       <div className="bg-pastel-green h-2 rounded-full" style={{
                         width: "30%"
                       }}></div>
@@ -2265,7 +2265,7 @@ const Aprendizado = () => {
                       <span className="text-4xl font-bold text-slate-800">2.450</span>
                       <span className="text-lg text-slate-500">/ 5.000</span>
                     </div>
-                    <div className="w-64 bg-pastel-orange rounded-full h-2 mt-3">
+                    <div className="w-64 bg-slate-200 rounded-full h-2 mt-3">
                       <div className="bg-pastel-yellow h-2 rounded-full" style={{
                       width: "49%"
                     }}></div>
@@ -2532,7 +2532,7 @@ const Aprendizado = () => {
                       <div className="h-56 overflow-hidden bg-pastel-purple">
                         <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/de72874cc5-bcb1610580017fd3cfe5.png" alt="Pastel drawing of stock market analysis book cover" />
                       </div>
-                      <div className="absolute bottom-0 left-0 right-0 bg-pastel-orange h-2.5">
+                      <div className="absolute bottom-0 left-0 right-0 bg-slate-100 h-2.5">
                         <div className="h-full bg-emerald-600 relative" style={{
                       width: '68%'
                     }}>
@@ -2556,7 +2556,7 @@ const Aprendizado = () => {
                       <div className="h-56 overflow-hidden bg-pastel-pink">
                         <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/de72874cc5-2efb8363a6121e6b0540.png" alt="Pastel drawing of fixed income investment book" />
                       </div>
-                      <div className="absolute bottom-0 left-0 right-0 bg-pastel-orange h-2.5">
+                      <div className="absolute bottom-0 left-0 right-0 bg-slate-100 h-2.5">
                         <div className="h-full bg-emerald-600 relative" style={{
                       width: '42%'
                     }}>
@@ -2580,7 +2580,7 @@ const Aprendizado = () => {
                       <div className="h-56 overflow-hidden bg-pastel-blue">
                         <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/de72874cc5-43745d045cd52ba18a30.png" alt="Pastel drawing of financial compliance book cover" />
                       </div>
-                      <div className="absolute bottom-0 left-0 right-0 bg-pastel-orange h-2.5">
+                      <div className="absolute bottom-0 left-0 right-0 bg-slate-100 h-2.5">
                         <div className="h-full bg-emerald-600 relative" style={{
                       width: '85%'
                     }}>
@@ -2604,7 +2604,7 @@ const Aprendizado = () => {
                       <div className="h-56 overflow-hidden bg-pastel-peach">
                         <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/e7b331f4e1-9ee7cde295eba8fd33f7.png" alt="Pastel drawing of derivatives book" />
                       </div>
-                      <div className="absolute bottom-0 left-0 right-0 bg-pastel-orange h-2.5">
+                      <div className="absolute bottom-0 left-0 right-0 bg-slate-100 h-2.5">
                         <div className="h-full bg-emerald-700 relative" style={{
                       width: '23%'
                     }}>
@@ -2628,7 +2628,7 @@ const Aprendizado = () => {
                       <div className="h-56 overflow-hidden bg-pastel-pink">
                         <img className="w-full h-full object-cover" src={ebookRiskManagementPink} alt="Pastel drawing of risk management book" />
                       </div>
-                      <div className="absolute bottom-0 left-0 right-0 bg-pastel-orange h-2.5">
+                      <div className="absolute bottom-0 left-0 right-0 bg-slate-100 h-2.5">
                         <div className="h-full bg-emerald-700 relative" style={{
                       width: '56%'
                     }}>
@@ -3466,7 +3466,7 @@ const Aprendizado = () => {
                       <div>
                         <label className="text-sm font-medium text-slate-700 mb-3 block">Número de Citações</label>
                         <div className="px-2">
-                          <input type="range" min="0" max="1000" value={citationValue} onChange={e => setCitationValue(parseInt(e.target.value))} className="w-full h-2 bg-pastel-orange rounded-lg appearance-none cursor-pointer accent-pastel-purple" />
+                          <input type="range" min="0" max="1000" value={citationValue} onChange={e => setCitationValue(parseInt(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-pastel-purple" />
                           <div className="flex justify-between text-xs text-slate-500 mt-2">
                             <span>0</span>
                             <span>{citationValue === 0 ? 'Todas' : `${citationValue}+`}</span>
@@ -3534,7 +3534,7 @@ const Aprendizado = () => {
                       <div>
                         <label className="text-sm font-medium text-slate-700 mb-3 block">Ano de Publicação</label>
                         <div className="px-2">
-                          <input type="range" min="2000" max="2024" value={yearValue} onChange={e => setYearValue(parseInt(e.target.value))} className="w-full h-2 bg-pastel-orange rounded-lg appearance-none cursor-pointer accent-pastel-purple" />
+                          <input type="range" min="2000" max="2024" value={yearValue} onChange={e => setYearValue(parseInt(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-pastel-purple" />
                           <div className="flex justify-between text-xs text-slate-500 mt-2">
                             <span>2000</span>
                             <span>{yearValue}</span>
