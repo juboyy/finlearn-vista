@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { PlayCircle, Eye, X, Bell, BellOff } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { LiveChatPanel } from "./LiveChatPanel";
+import { LiveReactionAnimation } from "./LiveReactionAnimation";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import liveRecording1 from "@/assets/live-recording-1.png";
@@ -491,6 +492,9 @@ export const LiveContent = () => {
       {/* Live Viewer Modal with Chat */}
       <Dialog open={!!selectedLive} onOpenChange={() => setSelectedLive(null)}>
         <DialogContent className="max-w-7xl h-[90vh] p-0">
+          {/* Reaction Animations Overlay */}
+          {selectedLive && <LiveReactionAnimation liveId={selectedLive} />}
+          
           <div className="flex h-full">
             {/* Video Player Area */}
             <div className="flex-1 flex flex-col bg-slate-900">

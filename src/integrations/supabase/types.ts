@@ -438,6 +438,36 @@ export type Database = {
         }
         Relationships: []
       }
+      live_chat_reactions: {
+        Row: {
+          created_at: string | null
+          id: string
+          live_id: string
+          reaction_type: string
+          user_avatar: string | null
+          user_id: string | null
+          user_name: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          live_id: string
+          reaction_type: string
+          user_avatar?: string | null
+          user_id?: string | null
+          user_name: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          live_id?: string
+          reaction_type?: string
+          user_avatar?: string | null
+          user_id?: string | null
+          user_name?: string
+        }
+        Relationships: []
+      }
       live_notification_preferences: {
         Row: {
           created_at: string
