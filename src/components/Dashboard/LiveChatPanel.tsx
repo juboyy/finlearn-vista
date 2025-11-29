@@ -3,8 +3,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Send, Smile } from "lucide-react";
+import { Send, Heart, ThumbsUp, Flame, Rocket, Star, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 interface LiveChatMessage {
   id: string;
@@ -20,10 +21,20 @@ interface LiveChatPanelProps {
   liveId: string;
 }
 
+const reactions = [
+  { type: "like", icon: ThumbsUp, color: "hsl(207, 35%, 55%)", label: "Curtir" },
+  { type: "love", icon: Heart, color: "hsl(350, 40%, 60%)", label: "Amar" },
+  { type: "clap", icon: Sparkles, color: "hsl(142, 35%, 60%)", label: "Aplaudir" },
+  { type: "fire", icon: Flame, color: "hsl(25, 45%, 60%)", label: "Incrível" },
+  { type: "rocket", icon: Rocket, color: "hsl(270, 35%, 60%)", label: "Top" },
+  { type: "star", icon: Star, color: "hsl(44, 40%, 65%)", label: "Favorito" },
+];
+
 export const LiveChatPanel = ({ liveId }: LiveChatPanelProps) => {
   const [messages, setMessages] = useState<LiveChatMessage[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
+  const [isReactionOpen, setIsReactionOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
@@ -113,6 +124,33 @@ export const LiveChatPanel = ({ liveId }: LiveChatPanelProps) => {
     }
   };
 
+  const sendReaction = async (reactionType: string) => {
+    try {
+      const { error } = await supabase.from("live_chat_reactions").insert({
+        live_id: liveId,
+        user_name: "Usuário",
+        user_avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b24014b83d-0b455d5abe744d3f9416.png",
+        reaction_type: reactionType,
+      });
+
+      if (error) throw error;
+
+      setIsReactionOpen(false);
+      
+      toast({
+        title: "Reação enviada",
+        description: "Sua reação foi compartilhada com todos.",
+      });
+    } catch (error) {
+      console.error("Error sending reaction:", error);
+      toast({
+        title: "Erro ao enviar reação",
+        description: "Tente novamente em alguns instantes.",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="flex flex-col h-full bg-white rounded-xl border border-border">
       {/* Header */}
@@ -160,14 +198,40 @@ export const LiveChatPanel = ({ liveId }: LiveChatPanelProps) => {
             disabled={isSending}
             className="flex-1"
           />
-          <Button
-            size="icon"
-            variant="ghost"
-            className="flex-shrink-0"
-            disabled
-          >
-            <Smile className="w-5 h-5" />
-          </Button>
+          <Popover open={isReactionOpen} onOpenChange={setIsReactionOpen}>
+            <PopoverTrigger asChild>
+              <Button
+                size="icon"
+                variant="ghost"
+                className="flex-shrink-0 hover:bg-accent/20"
+              >
+                <Heart className="w-5 h-5" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-2" align="end">
+              <div className="flex gap-2">
+                {reactions.map((reaction) => {
+                  const Icon = reaction.icon;
+                  return (
+                    <Button
+                      key={reaction.type}
+                      variant="ghost"
+                      size="icon"
+                      className="hover:scale-110 transition-transform"
+                      onClick={() => sendReaction(reaction.type)}
+                      title={reaction.label}
+                    >
+                      <Icon 
+                        className="w-6 h-6" 
+                        style={{ color: reaction.color }}
+                        fill={reaction.color}
+                      />
+                    </Button>
+                  );
+                })}
+              </div>
+            </PopoverContent>
+          </Popover>
           <Button
             size="icon"
             onClick={sendMessage}
