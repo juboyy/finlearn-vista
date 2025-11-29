@@ -664,7 +664,30 @@ export const PodcastsAnalytics = () => {
             <div className="h-4 bg-slate-100 rounded animate-pulse w-4/6"></div>
           </div>
         ) : (
-          <div className="text-sm text-slate-600 leading-relaxed whitespace-pre-line">{insights}</div>
+          <div className="text-sm text-slate-600 leading-relaxed prose prose-sm max-w-none prose-strong:text-slate-800 prose-strong:font-bold">
+            {insights.split('\n').map((line, index) => {
+              // Remove markdown symbols and render formatted content
+              const formattedLine = line
+                .replace(/^\s*•\s*/, '') // Remove bullet points
+                .split(/(\*\*.*?\*\*)/) // Split by bold markers
+                .map((part, i) => {
+                  if (part.startsWith('**') && part.endsWith('**')) {
+                    return <strong key={i} className="font-bold text-slate-800">{part.slice(2, -2)}</strong>;
+                  }
+                  return part;
+                });
+              
+              if (line.trim().startsWith('•')) {
+                return (
+                  <div key={index} className="mb-3 flex gap-2">
+                    <span className="text-slate-400 mt-0.5">•</span>
+                    <span>{formattedLine}</span>
+                  </div>
+                );
+              }
+              return line.trim() ? <div key={index} className="mb-2">{formattedLine}</div> : null;
+            })}
+          </div>
         )}
       </section>
 
