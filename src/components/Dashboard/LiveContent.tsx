@@ -3,6 +3,8 @@ import { PlayCircle, Eye, X, Bell, BellOff } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { LiveChatPanel } from "./LiveChatPanel";
 import { LiveReactionAnimation } from "./LiveReactionAnimation";
+import { LivePollPanel } from "./LivePollPanel";
+import { useLiveModeration } from "@/hooks/useLiveModeration";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import liveRecording1 from "@/assets/live-recording-1.png";
@@ -19,9 +21,21 @@ export const LiveContent = () => {
   const [selectedLive, setSelectedLive] = useState<string | null>(null);
   const [followedLives, setFollowedLives] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState(false);
+  const [showPolls, setShowPolls] = useState(false);
+  const [currentUserId, setCurrentUserId] = useState<string>("");
   const { toast } = useToast();
+  
+  const { isModerator } = useLiveModeration({
+    liveId: selectedLive || "",
+    userId: currentUserId,
+  });
 
   useEffect(() => {
+    const loadUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) setCurrentUserId(user.id);
+    };
+    loadUser();
     fetchFollowedLives();
   }, []);
 
@@ -570,9 +584,37 @@ export const LiveContent = () => {
               </div>
             </div>
 
-            {/* Chat Panel */}
-            <div className="w-96 border-l border-border">
-              <LiveChatPanel liveId={selectedLive || ""} />
+            {/* Chat and Polls Panel */}
+            <div className="w-96 border-l border-border flex flex-col">
+              <div className="flex gap-2 p-4 border-b border-border bg-white">
+                <button
+                  onClick={() => setShowPolls(false)}
+                  className={`flex-1 py-2 px-4 rounded-lg font-medium transition ${
+                    !showPolls
+                      ? "bg-pastel-purple text-slate-700"
+                      : "bg-white text-slate-600 hover:bg-pastel-blue/20"
+                  }`}
+                >
+                  Chat
+                </button>
+                <button
+                  onClick={() => setShowPolls(true)}
+                  className={`flex-1 py-2 px-4 rounded-lg font-medium transition ${
+                    showPolls
+                      ? "bg-pastel-purple text-slate-700"
+                      : "bg-white text-slate-600 hover:bg-pastel-blue/20"
+                  }`}
+                >
+                  Enquetes
+                </button>
+              </div>
+              <div className="flex-1 overflow-hidden">
+                {showPolls ? (
+                  <LivePollPanel liveId={selectedLive || ""} isModerator={isModerator} userId={currentUserId} />
+                ) : (
+                  <LiveChatPanel liveId={selectedLive || ""} />
+                )}
+              </div>
             </div>
           </div>
         </DialogContent>
