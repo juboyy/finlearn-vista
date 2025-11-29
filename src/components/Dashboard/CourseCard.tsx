@@ -29,7 +29,7 @@ export const CourseCard = ({
         <p className="text-sm text-muted-foreground mb-2">
           {completedLessons} de {totalLessons} aulas concluídas
         </p>
-        <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
+        <div className="w-full bg-pastel-orange rounded-full h-2 overflow-hidden">
           <div 
             className={cn("h-2 rounded-full transition-all duration-1000 ease-out", bgColor)} 
             style={{ width: `${progress}%` }}
