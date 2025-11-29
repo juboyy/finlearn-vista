@@ -427,7 +427,9 @@ export const PodcastsAnalytics = () => {
                 <Zap size={22} className="text-white" />
               </div>
               <div className="px-2 py-1 bg-white/30 rounded-full">
-                <p className="text-[10px] font-bold text-white">🔥</p>
+                <p className="text-[10px] font-bold text-white flex items-center gap-1">
+                  <TrendingUp size={10} />
+                </p>
               </div>
             </div>
             <p className="text-xs font-medium text-white/80 mb-1">Streak Atual</p>
@@ -511,7 +513,10 @@ export const PodcastsAnalytics = () => {
               <p className="text-sm text-muted-foreground">Acompanhe seu progresso e mantenha a consistência</p>
             </div>
             <div className="px-4 py-2 bg-pastel-green/[0.2] rounded-xl">
-              <p className="text-sm font-bold text-pastel-gray-dark">Streak de {data.streak} dias 🔥</p>
+              <p className="text-sm font-bold text-pastel-gray-dark flex items-center gap-1">
+                <Zap size={14} className="text-pastel-gray-dark" />
+                Streak de {data.streak} dias
+              </p>
             </div>
           </div>
           
@@ -573,13 +578,19 @@ export const PodcastsAnalytics = () => {
                   <div className="bg-muted/50 rounded-xl p-4">
                     <p className="text-xs text-muted-foreground mb-1">Dias Ativos</p>
                     <p className="text-2xl font-bold text-foreground">{data.streak}</p>
-                    <p className="text-xs text-emerald-600 mt-1 font-bold">🔥 Sequência ativa</p>
+                    <p className="text-xs text-emerald-600 mt-1 font-bold flex items-center gap-1">
+                      <Zap size={12} className="text-emerald-600" />
+                      Sequência ativa
+                    </p>
                   </div>
                 </div>
               </div>
 
               <div className="bg-gradient-to-r from-pastel-green/[0.2] to-pastel-blue/[0.2] rounded-xl p-4">
-                <p className="text-sm font-bold text-foreground mb-2">💪 Você está no caminho certo!</p>
+                <p className="text-sm font-bold text-foreground mb-2 flex items-center gap-2">
+                  <TrendingUp size={16} className="text-foreground" />
+                  Você está no caminho certo!
+                </p>
                 <p className="text-xs text-muted-foreground">Mantenha o ritmo atual para atingir sua meta em {Math.ceil(((selectedPeriod === '7d' ? 35 : selectedPeriod === '30d' ? 150 : selectedPeriod === '90d' ? 450 : 1900) - data.total) / (data.total / (selectedPeriod === '7d' ? 7 : selectedPeriod === '30d' ? 30 : selectedPeriod === '90d' ? 90 : 365)))} dias.</p>
               </div>
             </div>
@@ -629,7 +640,10 @@ export const PodcastsAnalytics = () => {
               <p className="text-sm font-semibold text-muted-foreground">Meta Diária</p>
             </div>
             <h4 className="text-4xl font-bold text-foreground mb-2">1.5h</h4>
-            <p className="text-sm text-emerald-600 font-bold">✓ {Math.round(data.streak * 0.85)} dias</p>
+            <p className="text-sm text-emerald-600 font-bold flex items-center gap-1">
+              <CheckCircle size={14} className="text-emerald-600" />
+              {Math.round(data.streak * 0.85)} dias
+            </p>
           </div>
         </div>
       </section>
