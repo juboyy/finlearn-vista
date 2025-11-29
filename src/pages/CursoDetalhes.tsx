@@ -114,7 +114,7 @@ const CursoDetalhes = () => {
                 </div>
 
                 {/* AI Insights Section */}
-                <div className="mt-6 bg-gradient-to-br from-pastel-purple to-pastel-blue rounded-xl border border-slate-200 p-6">
+                <div className="mt-6 bg-pastel-purple rounded-xl border border-slate-200 p-6">
                   <div className="flex items-start gap-4 mb-4">
                     <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center flex-shrink-0">
                       <i className="fas fa-brain text-slate-700 text-lg"></i>
