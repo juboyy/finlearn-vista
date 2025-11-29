@@ -43,6 +43,45 @@ export const ConsumptionAnalyticsCards = ({
       const achieved = goalProgress.map(prog => Math.round((prog / 100) * goalTotal));
       const differences = goalProgress.map((prog, i) => prog - goalTargets[i]);
       
+      // Área verde (acima da meta)
+      const aboveTargetTrace = {
+        x: months,
+        y: goalProgress.map(prog => Math.max(prog, 70)),
+        type: 'scatter',
+        mode: 'none',
+        fill: 'tonexty',
+        fillcolor: 'rgba(133, 187, 153, 0.3)',
+        showlegend: false,
+        hoverinfo: 'skip'
+      };
+
+      // Área vermelha (abaixo da meta)
+      const belowTargetTrace = {
+        x: months,
+        y: goalProgress.map(prog => Math.min(prog, 70)),
+        type: 'scatter',
+        mode: 'none',
+        fill: 'tonexty',
+        fillcolor: 'rgba(220, 85, 85, 0.3)',
+        showlegend: false,
+        hoverinfo: 'skip'
+      };
+
+      const targetLine = {
+        x: months,
+        y: Array(months.length).fill(70),
+        type: 'scatter',
+        mode: 'lines',
+        name: 'Meta (70%)',
+        line: {
+          color: 'hsl(207, 35%, 60%)',
+          width: 2,
+          dash: 'dash'
+        },
+        hovertemplate: '<b>Meta Estabelecida</b><br>70%<extra></extra>',
+        showlegend: false
+      };
+
       const progressTrace = {
         x: months,
         y: goalProgress,
@@ -62,8 +101,6 @@ export const ConsumptionAnalyticsCards = ({
             width: 2
           }
         },
-        fill: 'tozeroy',
-        fillcolor: 'rgba(133, 187, 153, 0.1)',
         customdata: goalProgress.map((prog, i) => ({
           achieved: achieved[i],
           target: Math.round((goalTargets[i] / 100) * goalTotal),
@@ -79,21 +116,7 @@ export const ConsumptionAnalyticsCards = ({
           '<extra></extra>'
       };
 
-      const targetLine = {
-        x: months,
-        y: Array(months.length).fill(70),
-        type: 'scatter',
-        mode: 'lines',
-        name: 'Meta (70%)',
-        line: {
-          color: 'hsl(207, 35%, 60%)',
-          width: 2,
-          dash: 'dash'
-        },
-        hovertemplate: '<b>Meta Estabelecida</b><br>70%<extra></extra>'
-      };
-
-      Plotly.newPlot('goal-evolution-chart', [progressTrace, targetLine], {
+      Plotly.newPlot('goal-evolution-chart', [targetLine, belowTargetTrace, aboveTargetTrace, progressTrace], {
         margin: { l: 30, r: 10, t: 10, b: 30 },
         paper_bgcolor: 'transparent',
         plot_bgcolor: 'transparent',
