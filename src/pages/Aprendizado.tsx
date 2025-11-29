@@ -672,7 +672,7 @@ const Aprendizado = () => {
                     </div>
                     <span className="text-sm text-slate-500">12h</span>
                   </div>
-                  <button className="w-full px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                  <button className="w-full px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
                     Inscrever-se
                   </button>
                 </div>
@@ -703,7 +703,7 @@ const Aprendizado = () => {
                     </div>
                     <span className="text-sm text-slate-500">18h</span>
                   </div>
-                  <button className="w-full px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                  <button className="w-full px-4 py-2 bg-pastel-pink text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
                     Inscrever-se
                   </button>
                 </div>
@@ -737,7 +737,7 @@ const Aprendizado = () => {
                     </div>
                     <span className="text-sm text-slate-500">15h</span>
                   </div>
-                  <button className="w-full px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                  <button className="w-full px-4 py-2 bg-pastel-green text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
                     Inscrever-se
                   </button>
                 </div>
@@ -785,7 +785,7 @@ const Aprendizado = () => {
                         <span>842 inscritos</span>
                       </div>
                     </div>
-                    <button className="px-6 py-2 bg-pastel-orange text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                    <button className="px-6 py-2 bg-pastel-yellow text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
                       Inscrever-se Agora
                     </button>
                   </div>
@@ -1481,7 +1481,7 @@ const Aprendizado = () => {
                         </div>
                       </div>
                       <div className="flex items-center gap-4">
-                        <button onClick={() => navigate('/curso-detalhes')} className="px-8 py-3 bg-pastel-orange text-slate-700 rounded-lg font-semibold hover:opacity-80 transition">
+                        <button onClick={() => navigate('/curso-detalhes')} className="px-8 py-3 bg-foreground text-background rounded-lg font-semibold hover:opacity-80 transition">
                           Inscrever-se Agora
                         </button>
                         <div className="flex flex-col">
@@ -3143,7 +3143,7 @@ const Aprendizado = () => {
                         <i className="fas fa-user-tie"></i>
                         <span>Dr. Roberto Lima</span>
                       </div>
-                      <button className="w-full px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                      <button className="w-full px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
                         Inscrever-se
                       </button>
                     </div>
@@ -3171,7 +3171,7 @@ const Aprendizado = () => {
                         <i className="fas fa-user-tie"></i>
                         <span>Prof. Ana Santos</span>
                       </div>
-                      <button className="w-full px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                      <button className="w-full px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
                         Inscrever-se
                       </button>
                     </div>
@@ -3199,7 +3199,7 @@ const Aprendizado = () => {
                         <i className="fas fa-user-tie"></i>
                         <span>Profa. Marina Costa</span>
                       </div>
-                      <button className="w-full px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                      <button className="w-full px-4 py-2 bg-pastel-pink text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
                         Inscrever-se
                       </button>
                     </div>
