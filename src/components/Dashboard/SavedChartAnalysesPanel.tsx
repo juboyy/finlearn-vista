@@ -1,12 +1,12 @@
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
-import { Trash2, Calendar, BarChart3, FileText, ChevronDown, ChevronUp, Copy, Download } from "lucide-react";
+import { Trash2, Calendar, BarChart3, FileText, ChevronDown, ChevronUp, Copy, Download, Star } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { useSavedChartAnalyses, SavedChartAnalysis } from "@/hooks/useSavedChartAnalyses";
 import ReactMarkdown from "react-markdown";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import jsPDF from "jspdf";
 
@@ -17,6 +17,15 @@ interface SavedChartAnalysesPanelProps {
 
 export const SavedChartAnalysesPanel = ({ open, onOpenChange }: SavedChartAnalysesPanelProps) => {
   const { analyses, isLoading, deleteAnalysis } = useSavedChartAnalyses();
+  const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
+  const [favorites, setFavorites] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    const savedFavorites = localStorage.getItem('favoriteAnalyses');
+    if (savedFavorites) {
+      setFavorites(new Set(JSON.parse(savedFavorites)));
+    }
+  }, []);
 
   const handleDelete = async (id: string) => {
     if (confirm("Tem certeza que deseja excluir esta análise?")) {
@@ -24,13 +33,39 @@ export const SavedChartAnalysesPanel = ({ open, onOpenChange }: SavedChartAnalys
     }
   };
 
+  const toggleFavorite = (id: string) => {
+    const newFavorites = new Set(favorites);
+    if (newFavorites.has(id)) {
+      newFavorites.delete(id);
+    } else {
+      newFavorites.add(id);
+    }
+    setFavorites(newFavorites);
+    localStorage.setItem('favoriteAnalyses', JSON.stringify([...newFavorites]));
+  };
+
+  const filteredAnalyses = showOnlyFavorites
+    ? analyses.filter(a => favorites.has(a.id))
+    : analyses;
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right" className="w-full sm:max-w-md">
+      <SheetContent side="right" className="w-full sm:max-w-xl">
         <SheetHeader>
-          <SheetTitle className="flex items-center gap-2">
-            <FileText className="h-5 w-5" />
-            Histórico de Análises
+          <SheetTitle className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <FileText className="h-5 w-5" />
+              Histórico de Análises
+            </div>
+            <Button
+              variant={showOnlyFavorites ? "default" : "outline"}
+              size="sm"
+              onClick={() => setShowOnlyFavorites(!showOnlyFavorites)}
+              className="gap-2"
+            >
+              <Star className={`h-4 w-4 ${showOnlyFavorites ? 'fill-current' : ''}`} />
+              Favoritos
+            </Button>
           </SheetTitle>
         </SheetHeader>
 
@@ -54,11 +89,13 @@ export const SavedChartAnalysesPanel = ({ open, onOpenChange }: SavedChartAnalys
             </div>
           ) : (
             <div className="space-y-3">
-              {analyses.map((analysis) => (
+              {filteredAnalyses.map((analysis) => (
                 <AnalysisCard
                   key={analysis.id}
                   analysis={analysis}
                   onDelete={handleDelete}
+                  isFavorite={favorites.has(analysis.id)}
+                  onToggleFavorite={toggleFavorite}
                 />
               ))}
             </div>
@@ -72,9 +109,11 @@ export const SavedChartAnalysesPanel = ({ open, onOpenChange }: SavedChartAnalys
 interface AnalysisCardProps {
   analysis: SavedChartAnalysis;
   onDelete: (id: string) => void;
+  isFavorite: boolean;
+  onToggleFavorite: (id: string) => void;
 }
 
-const AnalysisCard = ({ analysis, onDelete }: AnalysisCardProps) => {
+const AnalysisCard = ({ analysis, onDelete, isFavorite, onToggleFavorite }: AnalysisCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const { toast } = useToast();
 
@@ -200,21 +239,31 @@ const AnalysisCard = ({ analysis, onDelete }: AnalysisCardProps) => {
     <div className="bg-card border-2 border-slate-700 rounded-xl p-5 space-y-4 hover:border-slate-600 transition-colors">
       {/* Header */}
       <div className="flex items-start justify-between gap-2">
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-1">
-            <BarChart3 className="h-4 w-4 text-primary flex-shrink-0" />
-            <h3 className="font-semibold text-foreground text-sm truncate">{analysis.chart_title}</h3>
-          </div>
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <Calendar className="h-3 w-3 flex-shrink-0" />
-            <span className="truncate">
-              {format(new Date(analysis.created_at), "dd/MM/yy HH:mm", { locale: ptBR })}
-            </span>
-          </div>
-          <div className="mt-2">
-            <span className="inline-block px-2 py-0.5 rounded-full bg-primary/10 text-primary text-xs font-medium">
-              {analysis.metric_type}
-            </span>
+        <div className="flex items-center gap-2 flex-1 min-w-0">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => onToggleFavorite(analysis.id)}
+            className={`flex-shrink-0 ${isFavorite ? 'text-yellow-500 hover:text-yellow-600' : 'text-muted-foreground hover:text-yellow-500'}`}
+          >
+            <Star className={`h-5 w-5 ${isFavorite ? 'fill-current' : ''}`} />
+          </Button>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 mb-1">
+              <BarChart3 className="h-4 w-4 text-primary flex-shrink-0" />
+              <h3 className="font-semibold text-foreground text-sm truncate">{analysis.chart_title}</h3>
+            </div>
+            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+              <Calendar className="h-3 w-3 flex-shrink-0" />
+              <span className="truncate">
+                {format(new Date(analysis.created_at), "dd/MM/yy HH:mm", { locale: ptBR })}
+              </span>
+            </div>
+            <div className="mt-2">
+              <span className="inline-block px-2 py-0.5 rounded-full bg-primary/10 text-primary text-xs font-medium">
+                {analysis.metric_type}
+              </span>
+            </div>
           </div>
         </div>
         <div className="flex items-center gap-1 flex-shrink-0">
