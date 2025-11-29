@@ -2,6 +2,10 @@ import { useState } from "react";
 import { PlayCircle, Eye, X } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { LiveChatPanel } from "./LiveChatPanel";
+import liveRecording1 from "@/assets/live-recording-1.png";
+import liveRecording2 from "@/assets/live-recording-2.png";
+import liveRecording3 from "@/assets/live-recording-3.png";
+import liveRecording4 from "@/assets/live-recording-4.png";
 
 export const LiveContent = () => {
   const [selectedLive, setSelectedLive] = useState<string | null>(null);
@@ -302,38 +306,38 @@ export const LiveContent = () => {
           {[
             {
               id: 1,
-              title: "Análise Técnica: Setups de Trading",
-              date: "28 Nov 2024",
-              duration: "2:15:45",
-              views: "3.2k",
-              image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/195dbdee1c-92ffceb5d806533c0810.png",
+              title: "Mercado de Ações: Oportunidades em Setores",
+              date: "01 Dez 2024",
+              duration: "1:58:22",
+              views: "5.4k",
+              image: liveRecording1,
               bgColor: "bg-pastel-blue"
             },
             {
               id: 2,
-              title: "Estratégias de Diversificação 2025",
-              date: "26 Nov 2024",
-              duration: "1:32:18",
-              views: "2.8k",
-              image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/27ff2e3c2c-afb908f73c455f98a798.png",
+              title: "Workshop: Construindo Portfólios Sólidos",
+              date: "29 Nov 2024",
+              duration: "2:12:45",
+              views: "3.7k",
+              image: liveRecording2,
               bgColor: "bg-pastel-green"
             },
             {
               id: 3,
-              title: "Criptomoedas: Análise Fundamentalista",
-              date: "24 Nov 2024",
-              duration: "1:48:33",
-              views: "4.1k",
-              image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/d51e1f0edd-ac69efab786c3927349b.png",
+              title: "Bitcoin e Blockchain: Fundamentos",
+              date: "27 Nov 2024",
+              duration: "1:35:18",
+              views: "4.9k",
+              image: liveRecording3,
               bgColor: "bg-pastel-purple"
             },
             {
               id: 4,
-              title: "Open Finance: Novidades e Tendências",
-              date: "22 Nov 2024",
-              duration: "1:25:12",
-              views: "1.9k",
-              image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/5213464580-c5bc017767ff44227057.png",
+              title: "Transformação Digital no Setor Bancário",
+              date: "25 Nov 2024",
+              duration: "1:42:33",
+              views: "2.6k",
+              image: liveRecording4,
               bgColor: "bg-pastel-pink"
             }
           ].map((recording) => (
