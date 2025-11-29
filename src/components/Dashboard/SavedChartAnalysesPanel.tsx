@@ -1,12 +1,13 @@
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
-import { Trash2, Calendar, BarChart3, FileText, ChevronDown, ChevronUp } from "lucide-react";
+import { Trash2, Calendar, BarChart3, FileText, ChevronDown, ChevronUp, Copy } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { useSavedChartAnalyses, SavedChartAnalysis } from "@/hooks/useSavedChartAnalyses";
 import ReactMarkdown from "react-markdown";
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 interface SavedChartAnalysesPanelProps {
   open: boolean;
@@ -74,6 +75,18 @@ interface AnalysisCardProps {
 
 const AnalysisCard = ({ analysis, onDelete }: AnalysisCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const { toast } = useToast();
+
+  const handleCopy = () => {
+    const textToCopy = `${analysis.chart_title}\n\nTipo de Métrica: ${analysis.metric_type}\n\n${analysis.selection_area ? `Área Selecionada: ${analysis.selection_area}\n\n` : ''}${analysis.analysis_content}`;
+    
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      toast({
+        title: "Análise copiada",
+        description: "O conteúdo foi copiado para a área de transferência",
+      });
+    });
+  };
 
   return (
     <div className="bg-card border-2 border-slate-700 rounded-xl p-4 space-y-3 hover:border-slate-600 transition-colors">
@@ -96,14 +109,24 @@ const AnalysisCard = ({ analysis, onDelete }: AnalysisCardProps) => {
             </span>
           </div>
         </div>
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => onDelete(analysis.id)}
-          className="hover:bg-destructive/10 hover:text-destructive flex-shrink-0"
-        >
-          <Trash2 className="h-4 w-4" />
-        </Button>
+        <div className="flex items-center gap-1 flex-shrink-0">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={handleCopy}
+            className="hover:bg-primary/10 hover:text-primary"
+          >
+            <Copy className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => onDelete(analysis.id)}
+            className="hover:bg-destructive/10 hover:text-destructive"
+          >
+            <Trash2 className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
 
       {/* Selection Area - only when expanded */}
