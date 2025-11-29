@@ -1,6 +1,8 @@
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useEffect, useState } from "react";
 import { PeriodComparisonToggle, getPeriodLabel } from "./PeriodComparisonToggle";
 import { createComparisonLineChart, createComparisonBarChart, createComparisonLayout, generateMockDataByPeriod } from "./chartComparisonUtils";
+import { ConsumptionAnalyticsCards } from "./ConsumptionAnalyticsCards";
 
 export const EntrevistasAnalyticsConsumption = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
@@ -140,9 +142,9 @@ export const EntrevistasAnalyticsConsumption = () => {
         </button>
       </div>
 
-      {/* KPIs */}
-      <div className="grid grid-cols-4 gap-6 mb-8">
-        <div className="bg-white rounded-xl p-6 border border-slate-200">
+      {/* Main KPIs - 5 cards inline */}
+      <div className="flex gap-6 mb-8">
+        <div className="bg-white rounded-xl p-6 border border-slate-200 flex-1">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-slate-500 font-medium">Total Vistas</span>
             <i className="fas fa-microphone text-slate-400"></i>
@@ -154,7 +156,7 @@ export const EntrevistasAnalyticsConsumption = () => {
           </p>
         </div>
 
-        <div className="bg-white rounded-xl p-6 border border-slate-200">
+        <div className="bg-white rounded-xl p-6 border border-slate-200 flex-1">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-slate-500 font-medium">Tempo Total</span>
             <i className="fas fa-clock text-slate-400"></i>
@@ -166,7 +168,7 @@ export const EntrevistasAnalyticsConsumption = () => {
           </p>
         </div>
 
-        <div className="bg-white rounded-xl p-6 border border-slate-200">
+        <div className="bg-white rounded-xl p-6 border border-slate-200 flex-1">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-slate-500 font-medium">Média Semanal</span>
             <i className="fas fa-calendar-week text-slate-400"></i>
@@ -177,7 +179,7 @@ export const EntrevistasAnalyticsConsumption = () => {
           </p>
         </div>
 
-        <div className="bg-white rounded-xl p-6 border border-slate-200">
+        <div className="bg-white rounded-xl p-6 border border-slate-200 flex-1">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-slate-500 font-medium">Favoritas</span>
             <i className="fas fa-heart text-slate-400"></i>
@@ -187,55 +189,123 @@ export const EntrevistasAnalyticsConsumption = () => {
             Salvas para revisitar
           </p>
         </div>
-      </div>
 
-      {/* Entrevistados Mais Assistidos */}
-      <div className="bg-white rounded-xl p-6 border border-slate-200">
-        <div className="flex items-center justify-between mb-3">
-          <span className="text-sm text-slate-500 font-medium">Entrevistados Mais Vistos</span>
-          <i className="fas fa-users text-slate-400"></i>
-        </div>
-        <div className="space-y-2">
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-full bg-[hsl(206,35%,75%)] flex items-center justify-center text-xs font-bold text-slate-700">PM</div>
-            <div className="flex-1 min-w-0">
-              <p className="text-xs font-bold text-slate-800 truncate">Paulo Mendes</p>
-              <p className="text-[10px] text-slate-500">8 entrevistas</p>
-            </div>
+        <div className="bg-white rounded-xl p-6 border border-slate-200 flex-1">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Taxa de Conclusão</span>
+            <i className="fas fa-check-circle text-slate-400"></i>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-full bg-[hsl(142,35%,75%)] flex items-center justify-center text-xs font-bold text-slate-700">AL</div>
-            <div className="flex-1 min-w-0">
-              <p className="text-xs font-bold text-slate-800 truncate">Ana Lima</p>
-              <p className="text-[10px] text-slate-500">6 entrevistas</p>
-            </div>
-          </div>
+          <p className="text-3xl font-bold text-slate-800">84%</p>
+          <p className="text-xs text-slate-500 font-medium mt-2">
+            Completamente assistidas
+          </p>
         </div>
       </div>
 
-      {/* Progresso de Meta do Mês */}
-      <div className="bg-white rounded-xl p-6 border border-slate-200">
-        <div className="flex items-center justify-between mb-3">
-          <span className="text-sm text-slate-500 font-medium">Meta do Mês</span>
-          <i className="fas fa-target text-slate-400"></i>
-        </div>
-        <div className="space-y-2">
-          <div>
-            <div className="flex items-center justify-between mb-1.5">
-              <p className="text-xs font-bold text-slate-800">14 de 20 entrevistas</p>
-              <p className="text-[10px] font-bold text-slate-600">70%</p>
+      {/* Meta + Top Creators Row */}
+      <div className="grid grid-cols-3 gap-6 mb-8">
+        <div className="col-span-2 bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-sm text-slate-500 font-medium">Meta de Entrevistas do Mês</span>
+            <i className="fas fa-target text-slate-400"></i>
+          </div>
+          <div className="space-y-2">
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <p className="text-xs font-bold text-slate-800">14 de 20 entrevistas</p>
+                <p className="text-[10px] font-bold text-slate-600">70%</p>
+              </div>
+              <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                <div className="h-full bg-[hsl(280,35%,65%)] rounded-full" style={{ width: '70%' }}></div>
+              </div>
             </div>
-            <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
-              <div className="h-full bg-[hsl(280,35%,65%)] rounded-full" style={{ width: '70%' }}></div>
+            <p className="text-[10px] text-slate-500">Faltam 6 entrevistas</p>
+            <div className="flex items-center gap-1.5 pt-1">
+              <i className="fas fa-fire text-orange-500 text-xs"></i>
+              <p className="text-[10px] font-bold text-slate-700">Sequência de 15 dias!</p>
             </div>
           </div>
-          <p className="text-[10px] text-slate-500">Faltam 6 entrevistas</p>
-          <div className="flex items-center gap-1.5 pt-1">
-            <i className="fas fa-fire text-orange-500 text-xs"></i>
-            <p className="text-[10px] font-bold text-slate-700">Sequência de 15 dias!</p>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-sm text-slate-500 font-medium">Entrevistados Mais Vistos</span>
+            <i className="fas fa-users text-slate-400"></i>
+          </div>
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-full bg-[hsl(280,35%,75%)] flex items-center justify-center text-xs font-bold text-slate-700">PM</div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-bold text-slate-800 truncate">Paulo Mendes</p>
+                <p className="text-[10px] text-slate-500">8 entrevistas</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-full bg-[hsl(206,35%,75%)] flex items-center justify-center text-xs font-bold text-slate-700">AL</div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-bold text-slate-800 truncate">Ana Lima</p>
+                <p className="text-[10px] text-slate-500">6 entrevistas</p>
+              </div>
+            </div>
           </div>
         </div>
-       </div>
+      </div>
+
+      {/* 4 Additional Cards Grid */}
+      <div className="grid grid-cols-4 gap-6 mb-8">
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Notas Feitas</span>
+            <i className="fas fa-sticky-note text-slate-400"></i>
+          </div>
+          <p className="text-2xl font-bold text-slate-800">42</p>
+          <p className="text-xs text-slate-500 font-medium mt-2">Durante entrevistas</p>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Compartilhamentos</span>
+            <i className="fas fa-share text-slate-400"></i>
+          </div>
+          <p className="text-2xl font-bold text-slate-800">22</p>
+          <p className="text-xs text-slate-500 font-medium mt-2">Com colegas</p>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Downloads</span>
+            <i className="fas fa-download text-slate-400"></i>
+          </div>
+          <p className="text-2xl font-bold text-slate-800">16</p>
+          <p className="text-xs text-slate-500 font-medium mt-2">Transcrições</p>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Tempo Médio</span>
+            <i className="fas fa-hourglass-half text-slate-400"></i>
+          </div>
+          <p className="text-2xl font-bold text-slate-800">42min</p>
+          <p className="text-xs text-slate-500 font-medium mt-2">Por entrevista</p>
+        </div>
+      </div>
+
+      {/* AI Insights with Agent Avatar */}
+      <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 mb-8 border border-blue-100">
+        <div className="flex items-start gap-3">
+          <img 
+            src="/src/assets/auxiliar-do-dia-avatar.png" 
+            alt="AI Agent" 
+            className="w-10 h-10 rounded-full flex-shrink-0"
+          />
+          <div className="flex-1">
+            <h3 className="text-lg font-semibold text-slate-800 mb-2">Insights Personalizados por IA</h3>
+            <p className="text-slate-700 leading-relaxed">
+              Você demonstra grande interesse em entrevistas com líderes do setor. Recomendamos explorar mais entrevistas com reguladores para complementar sua visão do ecossistema financeiro.
+            </p>
+          </div>
+        </div>
+      </div>
 
       {/* Charts Grid */}
       <div className="grid grid-cols-2 gap-6 mb-8">

@@ -142,9 +142,9 @@ export const InfograficosAnalyticsConsumption = () => {
         </button>
       </div>
 
-      {/* KPIs */}
-      <div className="grid grid-cols-6 gap-6 mb-8">
-        <div className="bg-white rounded-xl p-6 border border-slate-200">
+      {/* Main KPIs - 5 cards inline */}
+      <div className="flex gap-6 mb-8">
+        <div className="bg-white rounded-xl p-6 border border-slate-200 flex-1">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-slate-500 font-medium">Total Vistos</span>
             <i className="fas fa-chart-bar text-slate-400"></i>
@@ -156,7 +156,7 @@ export const InfograficosAnalyticsConsumption = () => {
           </p>
         </div>
 
-        <div className="bg-white rounded-xl p-6 border border-slate-200">
+        <div className="bg-white rounded-xl p-6 border border-slate-200 flex-1">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-slate-500 font-medium">Tempo Total</span>
             <i className="fas fa-clock text-slate-400"></i>
@@ -168,7 +168,7 @@ export const InfograficosAnalyticsConsumption = () => {
           </p>
         </div>
 
-        <div className="bg-white rounded-xl p-6 border border-slate-200">
+        <div className="bg-white rounded-xl p-6 border border-slate-200 flex-1">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-slate-500 font-medium">Média Semanal</span>
             <i className="fas fa-calendar-week text-slate-400"></i>
@@ -179,7 +179,7 @@ export const InfograficosAnalyticsConsumption = () => {
           </p>
         </div>
 
-        <div className="bg-white rounded-xl p-6 border border-slate-200">
+        <div className="bg-white rounded-xl p-6 border border-slate-200 flex-1">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-slate-500 font-medium">Downloads</span>
             <i className="fas fa-download text-slate-400"></i>
@@ -190,19 +190,121 @@ export const InfograficosAnalyticsConsumption = () => {
           </p>
         </div>
 
-        <ConsumptionAnalyticsCards
-          creatorsTitle="Creators Mais Vistos"
-          creators={[
-            { initials: 'DI', name: 'Data Insights', count: '18 infográficos', bgColor: 'bg-pastel-yellow' },
-            { initials: 'BP', name: 'Banking Process', count: '15 infográficos', bgColor: 'bg-pastel-green' },
-            { initials: 'MC', name: 'Market Compare', count: '12 infográficos', bgColor: 'bg-pastel-pink' }
-          ]}
-          goalTitle="Meta de Infográficos do Mês"
-          goalCurrent={87}
-          goalTotal={100}
-          goalUnit="infográficos"
-          streak={10}
-        />
+        <div className="bg-white rounded-xl p-6 border border-slate-200 flex-1">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Compartilhamentos</span>
+            <i className="fas fa-share text-slate-400"></i>
+          </div>
+          <p className="text-3xl font-bold text-slate-800">21</p>
+          <p className="text-xs text-slate-500 font-medium mt-2">
+            Com a equipe
+          </p>
+        </div>
+      </div>
+
+      {/* Meta + Top Creators Row */}
+      <div className="grid grid-cols-3 gap-6 mb-8">
+        <div className="col-span-2 bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-sm text-slate-500 font-medium">Meta de Infográficos do Mês</span>
+            <i className="fas fa-target text-slate-400"></i>
+          </div>
+          <div className="space-y-2">
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <p className="text-xs font-bold text-slate-800">87 de 100 infográficos</p>
+                <p className="text-[10px] font-bold text-slate-600">87%</p>
+              </div>
+              <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                <div className="h-full bg-[hsl(44,40%,65%)] rounded-full" style={{ width: '87%' }}></div>
+              </div>
+            </div>
+            <p className="text-[10px] text-slate-500">Faltam 13 infográficos</p>
+            <div className="flex items-center gap-1.5 pt-1">
+              <i className="fas fa-fire text-orange-500 text-xs"></i>
+              <p className="text-[10px] font-bold text-slate-700">Sequência de 10 dias!</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-sm text-slate-500 font-medium">Creators Mais Vistos</span>
+            <i className="fas fa-users text-slate-400"></i>
+          </div>
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-full bg-[hsl(44,40%,75%)] flex items-center justify-center text-xs font-bold text-slate-700">DI</div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-bold text-slate-800 truncate">Data Insights</p>
+                <p className="text-[10px] text-slate-500">18 infográficos</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-full bg-[hsl(142,35%,75%)] flex items-center justify-center text-xs font-bold text-slate-700">BP</div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-bold text-slate-800 truncate">Banking Process</p>
+                <p className="text-[10px] text-slate-500">15 infográficos</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 4 Additional Cards Grid */}
+      <div className="grid grid-cols-4 gap-6 mb-8">
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Favoritos</span>
+            <i className="fas fa-star text-slate-400"></i>
+          </div>
+          <p className="text-2xl font-bold text-slate-800">24</p>
+          <p className="text-xs text-slate-500 font-medium mt-2">Salvos</p>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Impressões</span>
+            <i className="fas fa-print text-slate-400"></i>
+          </div>
+          <p className="text-2xl font-bold text-slate-800">12</p>
+          <p className="text-xs text-slate-500 font-medium mt-2">Impressos</p>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Comentários</span>
+            <i className="fas fa-comment text-slate-400"></i>
+          </div>
+          <p className="text-2xl font-bold text-slate-800">38</p>
+          <p className="text-xs text-slate-500 font-medium mt-2">Interações</p>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Tempo Médio</span>
+            <i className="fas fa-hourglass-half text-slate-400"></i>
+          </div>
+          <p className="text-2xl font-bold text-slate-800">19min</p>
+          <p className="text-xs text-slate-500 font-medium mt-2">Por visualização</p>
+        </div>
+      </div>
+
+      {/* AI Insights with Agent Avatar */}
+      <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 mb-8 border border-blue-100">
+        <div className="flex items-start gap-3">
+          <img 
+            src="/src/assets/auxiliar-do-dia-avatar.png" 
+            alt="AI Agent" 
+            className="w-10 h-10 rounded-full flex-shrink-0"
+          />
+          <div className="flex-1">
+            <h3 className="text-lg font-semibold text-slate-800 mb-2">Insights Personalizados por IA</h3>
+            <p className="text-slate-700 leading-relaxed">
+              Infográficos de dados de mercado são seus preferidos. Aproveite para explorar mais infográficos comparativos e de processos para uma visão mais completa do setor financeiro.
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Charts Grid */}
