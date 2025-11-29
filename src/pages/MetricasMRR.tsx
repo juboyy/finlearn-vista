@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
+import { SelectableChartWrapper } from "@/components/Dashboard/SelectableChartWrapper";
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Area, AreaChart } from "recharts";
 
 const MetricasMRR = () => {
@@ -19,6 +20,12 @@ const MetricasMRR = () => {
     to: new Date(2024, 5, 30),
   });
   const [showAgentChat, setShowAgentChat] = useState(false);
+  const [selectedChartData, setSelectedChartData] = useState<{ chartTitle?: string } | null>(null);
+
+  const handleAskAgent = (selectionData: any) => {
+    setSelectedChartData(selectionData);
+    setShowAgentChat(true);
+  };
 
   // Cores pastel escuro do sistema
   const colors = {
@@ -528,24 +535,26 @@ const MetricasMRR = () => {
                   <p className="text-xs text-muted-foreground">Visualização detalhada das mudanças no MRR</p>
                 </div>
               </div>
-              <ResponsiveContainer width="100%" height={260}>
-                <BarChart data={waterfallData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                  <XAxis dataKey="name" tick={{
-                  fontSize: 11
-                }} height={60} />
-                  <YAxis tick={{
-                  fontSize: 11
-                }} />
-                  <Tooltip contentStyle={{
-                  backgroundColor: 'hsl(var(--card))',
-                  border: '1px solid hsl(var(--border))'
-                }} formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`} />
-                  <Bar dataKey="value" fill={colors.blue}>
-                    {waterfallData.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.type === 'positive' ? colors.green : entry.type === 'negative' ? colors.red : colors.blue} />)}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
+              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="Movimentação de MRR (Waterfall)">
+                <ResponsiveContainer width="100%" height={260}>
+                  <BarChart data={waterfallData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis dataKey="name" tick={{
+                    fontSize: 11
+                  }} height={60} />
+                    <YAxis tick={{
+                    fontSize: 11
+                  }} />
+                    <Tooltip contentStyle={{
+                    backgroundColor: 'hsl(var(--card))',
+                    border: '1px solid hsl(var(--border))'
+                  }} formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`} />
+                    <Bar dataKey="value" fill={colors.blue}>
+                      {waterfallData.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.type === 'positive' ? colors.green : entry.type === 'negative' ? colors.red : colors.blue} />)}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </SelectableChartWrapper>
             </div>
 
             <div className="bg-card p-6 rounded-xl border border-border">
@@ -555,33 +564,35 @@ const MetricasMRR = () => {
                   <p className="text-xs text-muted-foreground">Por tipo de movimento</p>
                 </div>
               </div>
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie 
-                    data={compositionData} 
-                    cx="50%" 
-                    cy="38%" 
-                    innerRadius={65} 
-                    outerRadius={100} 
-                    paddingAngle={0} 
-                    dataKey="value"
-                  >
-                    {compositionData.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.color} />)}
-                  </Pie>
-                  <Tooltip 
-                    contentStyle={{
-                      backgroundColor: 'hsl(var(--card))',
-                      border: '1px solid hsl(var(--border))'
-                    }}
-                    formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`} 
-                  />
-                  <Legend 
-                    verticalAlign="bottom" 
-                    height={36}
-                    wrapperStyle={{ paddingTop: '0px' }}
-                  />
-                </PieChart>
-              </ResponsiveContainer>
+              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="Composição MRR">
+                <ResponsiveContainer width="100%" height={300}>
+                  <PieChart>
+                    <Pie 
+                      data={compositionData} 
+                      cx="50%" 
+                      cy="38%" 
+                      innerRadius={65} 
+                      outerRadius={100} 
+                      paddingAngle={0} 
+                      dataKey="value"
+                    >
+                      {compositionData.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.color} />)}
+                    </Pie>
+                    <Tooltip 
+                      contentStyle={{
+                        backgroundColor: 'hsl(var(--card))',
+                        border: '1px solid hsl(var(--border))'
+                      }}
+                      formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`} 
+                    />
+                    <Legend 
+                      verticalAlign="bottom" 
+                      height={36}
+                      wrapperStyle={{ paddingTop: '0px' }}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+              </SelectableChartWrapper>
             </div>
           </div>
 
@@ -594,28 +605,30 @@ const MetricasMRR = () => {
                   <p className="text-xs text-muted-foreground">Tendência histórica mensal</p>
                 </div>
               </div>
-              <ResponsiveContainer width="100%" height={240}>
-                <AreaChart data={evolutionData}>
-                  <defs>
-                    <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor={colors.blue} stopOpacity={0.3} />
-                      <stop offset="95%" stopColor={colors.blue} stopOpacity={0} />
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                  <XAxis dataKey="month" tick={{
-                  fontSize: 11
-                }} />
-                  <YAxis tick={{
-                  fontSize: 11
-                }} />
-                  <Tooltip contentStyle={{
-                  backgroundColor: 'hsl(var(--card))',
-                  border: '1px solid hsl(var(--border))'
-                }} formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`} />
-                  <Area type="monotone" dataKey="value" stroke={colors.blue} strokeWidth={3} fillOpacity={1} fill="url(#colorValue)" />
-                </AreaChart>
-              </ResponsiveContainer>
+              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="Evolução do MRR (12 meses)">
+                <ResponsiveContainer width="100%" height={240}>
+                  <AreaChart data={evolutionData}>
+                    <defs>
+                      <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor={colors.blue} stopOpacity={0.3} />
+                        <stop offset="95%" stopColor={colors.blue} stopOpacity={0} />
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis dataKey="month" tick={{
+                    fontSize: 11
+                  }} />
+                    <YAxis tick={{
+                    fontSize: 11
+                  }} />
+                    <Tooltip contentStyle={{
+                    backgroundColor: 'hsl(var(--card))',
+                    border: '1px solid hsl(var(--border))'
+                  }} formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`} />
+                    <Area type="monotone" dataKey="value" stroke={colors.blue} strokeWidth={3} fillOpacity={1} fill="url(#colorValue)" />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </SelectableChartWrapper>
             </div>
 
             <div className="bg-card p-4 rounded-xl border border-border">
@@ -625,22 +638,24 @@ const MetricasMRR = () => {
                   <p className="text-xs text-muted-foreground">Novo + Expansão - Contração - Churn</p>
                 </div>
               </div>
-              <ResponsiveContainer width="100%" height={260}>
-                <BarChart data={netNewMRRData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                  <XAxis dataKey="month" tick={{
-                  fontSize: 11
-                }} />
-                  <YAxis tick={{
-                  fontSize: 11
-                }} />
-                  <Tooltip contentStyle={{
-                  backgroundColor: 'hsl(var(--card))',
-                  border: '1px solid hsl(var(--border))'
-                }} formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`} />
-                  <Bar dataKey="value" fill={colors.green} radius={[4, 4, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
+              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="Net New MRR">
+                <ResponsiveContainer width="100%" height={260}>
+                  <BarChart data={netNewMRRData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis dataKey="month" tick={{
+                    fontSize: 11
+                  }} />
+                    <YAxis tick={{
+                    fontSize: 11
+                  }} />
+                    <Tooltip contentStyle={{
+                    backgroundColor: 'hsl(var(--card))',
+                    border: '1px solid hsl(var(--border))'
+                  }} formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`} />
+                    <Bar dataKey="value" fill={colors.green} radius={[4, 4, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </SelectableChartWrapper>
             </div>
           </div>
 
@@ -648,34 +663,38 @@ const MetricasMRR = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
             <div className="bg-card p-3 rounded-xl border border-border">
               <h4 className="text-xs font-bold text-muted-foreground uppercase mb-3">MRR por Plano</h4>
-              <ResponsiveContainer width="100%" height={150}>
-                <PieChart>
-                  <Pie data={planDistributionData} cx="50%" cy="50%" innerRadius={30} outerRadius={60} paddingAngle={2} dataKey="value">
-                    {planDistributionData.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.color} />)}
-                  </Pie>
-                  <Tooltip formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`} />
-                </PieChart>
-              </ResponsiveContainer>
+              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="MRR por Plano">
+                <ResponsiveContainer width="100%" height={150}>
+                  <PieChart>
+                    <Pie data={planDistributionData} cx="50%" cy="50%" innerRadius={30} outerRadius={60} paddingAngle={2} dataKey="value">
+                      {planDistributionData.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.color} />)}
+                    </Pie>
+                    <Tooltip formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`} />
+                  </PieChart>
+                </ResponsiveContainer>
+              </SelectableChartWrapper>
             </div>
 
             <div className="bg-card p-3 rounded-xl border border-border">
               <h4 className="text-xs font-bold text-muted-foreground uppercase mb-3">Contração MRR</h4>
-              <ResponsiveContainer width="100%" height={150}>
-                <AreaChart data={contractionData}>
-                  <defs>
-                    <linearGradient id="colorContraction" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor={colors.yellow} stopOpacity={0.3} />
-                      <stop offset="95%" stopColor={colors.yellow} stopOpacity={0} />
-                    </linearGradient>
-                  </defs>
-                  <XAxis dataKey="month" tick={{
-                  fontSize: 9
-                }} hide />
-                  <YAxis hide />
-                  <Tooltip formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`} />
-                  <Area type="monotone" dataKey="value" stroke={colors.yellow} strokeWidth={2} fill="url(#colorContraction)" />
-                </AreaChart>
-              </ResponsiveContainer>
+              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="Contração MRR">
+                <ResponsiveContainer width="100%" height={150}>
+                  <AreaChart data={contractionData}>
+                    <defs>
+                      <linearGradient id="colorContraction" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor={colors.yellow} stopOpacity={0.3} />
+                        <stop offset="95%" stopColor={colors.yellow} stopOpacity={0} />
+                      </linearGradient>
+                    </defs>
+                    <XAxis dataKey="month" tick={{
+                    fontSize: 9
+                  }} hide />
+                    <YAxis hide />
+                    <Tooltip formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`} />
+                    <Area type="monotone" dataKey="value" stroke={colors.yellow} strokeWidth={2} fill="url(#colorContraction)" />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </SelectableChartWrapper>
               <div className="mt-3 text-center">
                 <p className="text-xs text-muted-foreground">Downgrades</p>
                 <p className="text-lg font-bold text-foreground">R$ 8.2k</p>
@@ -684,22 +703,24 @@ const MetricasMRR = () => {
 
             <div className="bg-card p-3 rounded-xl border border-border">
               <h4 className="text-xs font-bold text-muted-foreground uppercase mb-3">Reativação MRR</h4>
-              <ResponsiveContainer width="100%" height={150}>
-                <AreaChart data={reactivationData}>
-                  <defs>
-                    <linearGradient id="colorReactivation" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor={colors.teal} stopOpacity={0.3} />
-                      <stop offset="95%" stopColor={colors.teal} stopOpacity={0} />
-                    </linearGradient>
-                  </defs>
-                  <XAxis dataKey="month" tick={{
-                  fontSize: 9
-                }} hide />
-                  <YAxis hide />
-                  <Tooltip formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`} />
-                  <Area type="monotone" dataKey="value" stroke={colors.teal} strokeWidth={2} fill="url(#colorReactivation)" />
-                </AreaChart>
-              </ResponsiveContainer>
+              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="Reativação MRR">
+                <ResponsiveContainer width="100%" height={150}>
+                  <AreaChart data={reactivationData}>
+                    <defs>
+                      <linearGradient id="colorReactivation" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor={colors.teal} stopOpacity={0.3} />
+                        <stop offset="95%" stopColor={colors.teal} stopOpacity={0} />
+                      </linearGradient>
+                    </defs>
+                    <XAxis dataKey="month" tick={{
+                    fontSize: 9
+                  }} hide />
+                    <YAxis hide />
+                    <Tooltip formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`} />
+                    <Area type="monotone" dataKey="value" stroke={colors.teal} strokeWidth={2} fill="url(#colorReactivation)" />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </SelectableChartWrapper>
               <div className="mt-3 text-center">
                 <p className="text-xs text-muted-foreground">Clientes retornados</p>
                 <p className="text-lg font-bold text-foreground">R$ 5.8k</p>
@@ -708,18 +729,20 @@ const MetricasMRR = () => {
 
             <div className="bg-card p-3 rounded-xl border border-border">
               <h4 className="text-xs font-bold text-muted-foreground uppercase mb-3">MRR Médio/Cliente</h4>
-              <ResponsiveContainer width="100%" height={150}>
-                <LineChart data={arpuData}>
-                  <XAxis dataKey="month" tick={{
-                  fontSize: 9
-                }} hide />
-                  <YAxis hide />
-                  <Tooltip formatter={(value: number) => `R$ ${value.toFixed(2)}`} />
-                  <Line type="monotone" dataKey="value" stroke={colors.purple} strokeWidth={2} dot={{
-                  r: 3
-                }} />
-                </LineChart>
-              </ResponsiveContainer>
+              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="MRR Médio/Cliente (ARPU)">
+                <ResponsiveContainer width="100%" height={150}>
+                  <LineChart data={arpuData}>
+                    <XAxis dataKey="month" tick={{
+                    fontSize: 9
+                  }} hide />
+                    <YAxis hide />
+                    <Tooltip formatter={(value: number) => `R$ ${value.toFixed(2)}`} />
+                    <Line type="monotone" dataKey="value" stroke={colors.purple} strokeWidth={2} dot={{
+                    r: 3
+                  }} />
+                  </LineChart>
+                </ResponsiveContainer>
+              </SelectableChartWrapper>
               <div className="mt-3 text-center">
                 <p className="text-xs text-muted-foreground">ARPU</p>
                 <p className="text-lg font-bold text-foreground">R$ 34.50</p>
@@ -736,22 +759,24 @@ const MetricasMRR = () => {
                   <p className="text-xs text-muted-foreground">(Novo + Expansão) / (Contração + Churn)</p>
                 </div>
               </div>
-              <ResponsiveContainer width="100%" height={200}>
-                <BarChart data={quickRatioData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                  <XAxis dataKey="month" tick={{
-                  fontSize: 11
-                }} />
-                  <YAxis tick={{
-                  fontSize: 11
-                }} />
-                  <Tooltip contentStyle={{
-                  backgroundColor: 'hsl(var(--card))',
-                  border: '1px solid hsl(var(--border))'
-                }} />
-                  <Bar dataKey="value" fill={colors.green} radius={[4, 4, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
+              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="Quick Ratio MRR">
+                <ResponsiveContainer width="100%" height={200}>
+                  <BarChart data={quickRatioData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis dataKey="month" tick={{
+                    fontSize: 11
+                  }} />
+                    <YAxis tick={{
+                    fontSize: 11
+                  }} />
+                    <Tooltip contentStyle={{
+                    backgroundColor: 'hsl(var(--card))',
+                    border: '1px solid hsl(var(--border))'
+                  }} />
+                    <Bar dataKey="value" fill={colors.green} radius={[4, 4, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </SelectableChartWrapper>
             </div>
 
             <div className="bg-card p-4 rounded-xl border border-border">
@@ -761,24 +786,26 @@ const MetricasMRR = () => {
                   <p className="text-xs text-muted-foreground">Taxa mensal de perda de MRR</p>
                 </div>
               </div>
-              <ResponsiveContainer width="100%" height={200}>
-                <LineChart data={churnRateData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                  <XAxis dataKey="month" tick={{
-                  fontSize: 11
-                }} />
-                  <YAxis tick={{
-                  fontSize: 11
-                }} />
-                  <Tooltip contentStyle={{
-                  backgroundColor: 'hsl(var(--card))',
-                  border: '1px solid hsl(var(--border))'
-                }} formatter={(value: number) => `${value.toFixed(1)}%`} />
-                  <Line type="monotone" dataKey="value" stroke={colors.red} strokeWidth={3} dot={{
-                  r: 5
-                }} />
-                </LineChart>
-              </ResponsiveContainer>
+              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="MRR Churn Rate">
+                <ResponsiveContainer width="100%" height={200}>
+                  <LineChart data={churnRateData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis dataKey="month" tick={{
+                    fontSize: 11
+                  }} />
+                    <YAxis tick={{
+                    fontSize: 11
+                  }} />
+                    <Tooltip contentStyle={{
+                    backgroundColor: 'hsl(var(--card))',
+                    border: '1px solid hsl(var(--border))'
+                  }} formatter={(value: number) => `${value.toFixed(1)}%`} />
+                    <Line type="monotone" dataKey="value" stroke={colors.red} strokeWidth={3} dot={{
+                    r: 5
+                  }} />
+                  </LineChart>
+                </ResponsiveContainer>
+              </SelectableChartWrapper>
             </div>
 
             <div className="bg-card p-4 rounded-xl border border-border">
@@ -788,24 +815,26 @@ const MetricasMRR = () => {
                   <p className="text-xs text-muted-foreground">Taxa de crescimento via expansão</p>
                 </div>
               </div>
-              <ResponsiveContainer width="100%" height={200}>
-                <LineChart data={expansionRateData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                  <XAxis dataKey="month" tick={{
-                  fontSize: 11
-                }} />
-                  <YAxis tick={{
-                  fontSize: 11
-                }} />
-                  <Tooltip contentStyle={{
-                  backgroundColor: 'hsl(var(--card))',
-                  border: '1px solid hsl(var(--border))'
-                }} formatter={(value: number) => `${value.toFixed(1)}%`} />
-                  <Line type="monotone" dataKey="value" stroke={colors.purple} strokeWidth={3} dot={{
-                  r: 5
-                }} />
-                </LineChart>
-              </ResponsiveContainer>
+              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="MRR Expansion Rate">
+                <ResponsiveContainer width="100%" height={200}>
+                  <LineChart data={expansionRateData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis dataKey="month" tick={{
+                    fontSize: 11
+                  }} />
+                    <YAxis tick={{
+                    fontSize: 11
+                  }} />
+                    <Tooltip contentStyle={{
+                    backgroundColor: 'hsl(var(--card))',
+                    border: '1px solid hsl(var(--border))'
+                  }} formatter={(value: number) => `${value.toFixed(1)}%`} />
+                    <Line type="monotone" dataKey="value" stroke={colors.purple} strokeWidth={3} dot={{
+                    r: 5
+                  }} />
+                  </LineChart>
+                </ResponsiveContainer>
+              </SelectableChartWrapper>
             </div>
           </div>
 
@@ -853,24 +882,26 @@ const MetricasMRR = () => {
                   <p className="text-xs text-muted-foreground">Breakdown por tipo de cliente</p>
                 </div>
               </div>
-              <ResponsiveContainer width="100%" height={280}>
-                <BarChart data={segmentDistributionData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                  <XAxis dataKey="name" tick={{
-                  fontSize: 11
-                }} />
-                  <YAxis tick={{
-                  fontSize: 11
-                }} />
-                  <Tooltip contentStyle={{
-                  backgroundColor: 'hsl(var(--card))',
-                  border: '1px solid hsl(var(--border))'
-                }} formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`} />
-                  <Bar dataKey="value" radius={[4, 4, 0, 0]}>
-                    {segmentDistributionData.map((entry, index) => <Cell key={`cell-${index}`} fill={[colors.blue, colors.purple, colors.slate, colors.slate][index]} />)}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
+              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="Distribuição MRR por Segmento">
+                <ResponsiveContainer width="100%" height={280}>
+                  <BarChart data={segmentDistributionData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis dataKey="name" tick={{
+                    fontSize: 11
+                  }} />
+                    <YAxis tick={{
+                    fontSize: 11
+                  }} />
+                    <Tooltip contentStyle={{
+                    backgroundColor: 'hsl(var(--card))',
+                    border: '1px solid hsl(var(--border))'
+                  }} formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`} />
+                    <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                      {segmentDistributionData.map((entry, index) => <Cell key={`cell-${index}`} fill={[colors.blue, colors.purple, colors.slate, colors.slate][index]} />)}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </SelectableChartWrapper>
             </div>
           </div>
 
@@ -896,30 +927,32 @@ const MetricasMRR = () => {
               }}>Otimista</span>
               </div>
             </div>
-            <ResponsiveContainer width="100%" height={280}>
-              <LineChart data={forecastData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                <XAxis dataKey="month" tick={{
-                fontSize: 11
-              }} />
-                <YAxis tick={{
-                fontSize: 11
-              }} />
-                <Tooltip contentStyle={{
-                backgroundColor: 'hsl(var(--card))',
-                border: '1px solid hsl(var(--border))'
-              }} formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`} />
-                <Legend />
-                <Line type="monotone" dataKey="actual" stroke={colors.blue} strokeWidth={3} name="MRR Real" dot={{
-                r: 5
-              }} />
-                <Line type="monotone" dataKey="realistic" stroke={colors.green} strokeWidth={3} strokeDasharray="5 5" name="Projeção Realista" dot={{
-                r: 4
-              }} />
-                <Line type="monotone" dataKey="conservative" stroke={colors.slate} strokeWidth={2} strokeDasharray="3 3" name="Conservador" dot={false} opacity={0.7} />
-                <Line type="monotone" dataKey="optimistic" stroke={colors.purple} strokeWidth={2} strokeDasharray="3 3" name="Otimista" dot={false} opacity={0.7} />
-              </LineChart>
-            </ResponsiveContainer>
+            <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="Projeção de MRR (6 meses)">
+              <ResponsiveContainer width="100%" height={280}>
+                <LineChart data={forecastData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                  <XAxis dataKey="month" tick={{
+                  fontSize: 11
+                }} />
+                  <YAxis tick={{
+                  fontSize: 11
+                }} />
+                  <Tooltip contentStyle={{
+                  backgroundColor: 'hsl(var(--card))',
+                  border: '1px solid hsl(var(--border))'
+                }} formatter={(value: number) => `R$ ${(value / 1000).toFixed(1)}k`} />
+                  <Legend />
+                  <Line type="monotone" dataKey="actual" stroke={colors.blue} strokeWidth={3} name="MRR Real" dot={{
+                  r: 5
+                }} />
+                  <Line type="monotone" dataKey="realistic" stroke={colors.green} strokeWidth={3} strokeDasharray="5 5" name="Projeção Realista" dot={{
+                  r: 4
+                }} />
+                  <Line type="monotone" dataKey="conservative" stroke={colors.slate} strokeWidth={2} strokeDasharray="3 3" name="Conservador" dot={false} opacity={0.7} />
+                  <Line type="monotone" dataKey="optimistic" stroke={colors.purple} strokeWidth={2} strokeDasharray="3 3" name="Otimista" dot={false} opacity={0.7} />
+                </LineChart>
+              </ResponsiveContainer>
+            </SelectableChartWrapper>
           </div>
         </main>
       </div>
