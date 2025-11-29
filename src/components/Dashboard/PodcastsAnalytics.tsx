@@ -376,10 +376,10 @@ export const PodcastsAnalytics = () => {
           {/* Card 1 - Total de Episódios */}
           <div className="bg-white rounded-2xl p-6 border border-border">
             <div className="flex items-center justify-between mb-3">
-              <div className="w-12 h-12 bg-pastel-blue rounded-xl flex items-center justify-center">
+              <div className="w-12 h-12 bg-pastel-blue/50 rounded-xl flex items-center justify-center">
                 <Headphones size={22} className="text-pastel-gray-dark" />
               </div>
-              <div className="px-2 py-1 bg-pastel-blue rounded-full">
+              <div className="px-2 py-1 bg-pastel-blue/50 rounded-full">
                 <p className="text-[10px] font-bold text-pastel-gray-dark flex items-center gap-1">
                   <TrendingUp size={10} /> +{data.growth}%
                 </p>
@@ -393,10 +393,10 @@ export const PodcastsAnalytics = () => {
           {/* Card 2 - Horas de Escuta */}
           <div className="bg-white rounded-2xl p-6 border border-border">
             <div className="flex items-center justify-between mb-3">
-              <div className="w-12 h-12 bg-pastel-blue rounded-xl flex items-center justify-center">
+              <div className="w-12 h-12 bg-pastel-blue/50 rounded-xl flex items-center justify-center">
                 <Clock size={22} className="text-pastel-gray-dark" />
               </div>
-              <div className="px-2 py-1 bg-pastel-blue rounded-full">
+              <div className="px-2 py-1 bg-pastel-blue/50 rounded-full">
                 <p className="text-[10px] font-bold text-pastel-gray-dark">Tempo</p>
               </div>
             </div>
@@ -408,10 +408,10 @@ export const PodcastsAnalytics = () => {
           {/* Card 3 - Taxa de Conclusão */}
           <div className="bg-white rounded-2xl p-6 border border-border">
             <div className="flex items-center justify-between mb-3">
-              <div className="w-12 h-12 bg-pastel-blue rounded-xl flex items-center justify-center">
+              <div className="w-12 h-12 bg-pastel-blue/50 rounded-xl flex items-center justify-center">
                 <CheckCircle size={22} className="text-pastel-gray-dark" />
               </div>
-              <div className="px-2 py-1 bg-pastel-blue rounded-full">
+              <div className="px-2 py-1 bg-pastel-blue/50 rounded-full">
                 <p className="text-[10px] font-bold text-pastel-gray-dark">Top 10%</p>
               </div>
             </div>
@@ -423,10 +423,10 @@ export const PodcastsAnalytics = () => {
           {/* Card 4 - Streak */}
           <div className="bg-white rounded-2xl p-6 border border-border">
             <div className="flex items-center justify-between mb-3">
-              <div className="w-12 h-12 bg-pastel-blue rounded-xl flex items-center justify-center">
+              <div className="w-12 h-12 bg-pastel-blue/50 rounded-xl flex items-center justify-center">
                 <Zap size={22} className="text-pastel-gray-dark" />
               </div>
-              <div className="px-2 py-1 bg-pastel-blue rounded-full">
+              <div className="px-2 py-1 bg-pastel-blue/50 rounded-full">
                 <p className="text-[10px] font-bold text-pastel-gray-dark flex items-center gap-1">
                   <TrendingUp size={10} />
                 </p>
@@ -440,10 +440,10 @@ export const PodcastsAnalytics = () => {
           {/* Card 5 - Engajamento */}
           <div className="bg-white rounded-2xl p-6 border border-border">
             <div className="flex items-center justify-between mb-3">
-              <div className="w-12 h-12 bg-pastel-blue rounded-xl flex items-center justify-center">
+              <div className="w-12 h-12 bg-pastel-blue/50 rounded-xl flex items-center justify-center">
                 <Target size={22} className="text-pastel-gray-dark" />
               </div>
-              <div className="px-2 py-1 bg-pastel-blue rounded-full">
+              <div className="px-2 py-1 bg-pastel-blue/50 rounded-full">
                 <p className="text-[10px] font-bold text-pastel-gray-dark">Top</p>
               </div>
             </div>
