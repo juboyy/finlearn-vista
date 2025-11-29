@@ -8,6 +8,30 @@ export const EbooksAnalyticsConsumption = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
   const [comparisonMode, setComparisonMode] = useState(false);
   const [comparisonPeriod, setComparisonPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('7d');
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [showDrillDown, setShowDrillDown] = useState(false);
+
+  const ebooksByCategory: Record<string, Array<{
+    title: string;
+    author: string;
+    progress: number;
+    pages: string;
+  }>> = {
+    'Mercado Financeiro': [
+      { title: 'Open Finance: Guia Completo', author: 'Dr. Carlos Mendes', progress: 88, pages: '245/280' },
+      { title: 'Análise Técnica Avançada', author: 'Prof. Ana Santos', progress: 65, pages: '182/295' }
+    ],
+    'Tecnologia': [
+      { title: 'Blockchain e Criptomoedas', author: 'Ana Paula Costa', progress: 72, pages: '215/298' },
+      { title: 'IA no Mercado Financeiro', author: 'Dr. João Silva', progress: 58, pages: '142/245' }
+    ],
+    'Compliance': [
+      { title: 'Compliance Bancário na Prática', author: 'Dra. Marina Costa', progress: 92, pages: '275/299' }
+    ],
+    'Gestão': [
+      { title: 'Gestão de Riscos Financeiros', author: 'Dr. Paulo Mendes', progress: 55, pages: '165/300' }
+    ]
+  };
   
   useEffect(() => {
     if (typeof window !== 'undefined' && (window as any).Plotly) {
@@ -51,7 +75,16 @@ export const EbooksAnalyticsConsumption = () => {
       margin: { l: 20, r: 20, t: 20, b: 20 },
       showlegend: false,
       paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
+    }, { displayModeBar: false }).then(() => {
+      const categoriesChart = document.getElementById('ebooks-categories-chart');
+      if (categoriesChart) {
+        (categoriesChart as any).on('plotly_click', (data: any) => {
+          const label = data.points[0].label;
+          setSelectedCategory(label);
+          setShowDrillDown(true);
+        });
+      }
+    });
 
     // Taxa de Conclusão
     const getCompletionData = generateMockDataByPeriod('completion');
@@ -362,6 +395,34 @@ export const EbooksAnalyticsConsumption = () => {
           ))}
         </div>
       </div>
+
+      {/* Modal de Drill-Down */}
+      {showDrillDown && selectedCategory && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={() => setShowDrillDown(false)}>
+          <div className="bg-white rounded-xl p-8 max-w-2xl w-full mx-4" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-2xl font-bold text-slate-800">E-books: {selectedCategory}</h3>
+              <button onClick={() => setShowDrillDown(false)} className="text-slate-400 hover:text-slate-600">
+                <i className="fas fa-times text-xl"></i>
+              </button>
+            </div>
+            <div className="space-y-4">
+              {ebooksByCategory[selectedCategory]?.map((ebook, idx) => (
+                <div key={idx} className="border border-slate-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-slate-800 mb-2">{ebook.title}</h4>
+                  <p className="text-sm text-slate-600 mb-3">{ebook.author} • {ebook.pages} páginas</p>
+                  <div className="flex items-center gap-2">
+                    <div className="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden">
+                      <div className="h-full bg-[hsl(142,35%,65%)]" style={{ width: `${ebook.progress}%` }}></div>
+                    </div>
+                    <span className="text-sm font-semibold text-slate-700">{ebook.progress}%</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
