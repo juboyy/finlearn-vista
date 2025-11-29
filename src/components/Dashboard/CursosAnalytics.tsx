@@ -176,7 +176,16 @@ export const CursosAnalytics = () => {
       showlegend: true,
       legend: { orientation: 'h', y: -0.1, font: { size: 11 } },
       paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
+    }, { displayModeBar: false }).then(() => {
+      const categoriesChart = document.getElementById('cursos-categories-chart');
+      if (categoriesChart) {
+        (categoriesChart as any).on('plotly_click', (data: any) => {
+          const label = data.points[0].label;
+          setSelectedCategory(label);
+          setShowDrillDown(true);
+        });
+      }
+    });
 
     // Completion Rate Chart
     const completionRateData = [{

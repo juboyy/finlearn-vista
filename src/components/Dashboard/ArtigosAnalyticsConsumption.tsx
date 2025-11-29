@@ -178,7 +178,16 @@ export const ArtigosAnalyticsConsumption = () => {
       showlegend: true,
       legend: { orientation: 'h', y: -0.1, font: { size: 11 } },
       paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
+    }, { displayModeBar: false }).then(() => {
+      const topicsChart = document.getElementById('artigos-topics-chart');
+      if (topicsChart) {
+        (topicsChart as any).on('plotly_click', (data: any) => {
+          const label = data.points[0].label;
+          setSelectedTopic(label);
+          setShowDrillDown(true);
+        });
+      }
+    });
 
     // Read Time Distribution Chart
     const readTimeData = [{
