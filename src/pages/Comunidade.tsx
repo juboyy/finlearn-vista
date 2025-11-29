@@ -219,7 +219,7 @@ export default function Comunidade() {
                         Pesquisas
                       </button>
                     </div>
-                    <button className="px-4 py-2 text-sm font-medium rounded-lg transition text-slate-800 bg-pastel-purple border border-pastel-purple hover:bg-pastel-pink flex items-center gap-2">
+                    <button className="px-4 py-2 text-sm font-medium rounded-lg transition text-slate-800 bg-pastel-orange border border-pastel-orange hover:bg-pastel-pink flex items-center gap-2">
                       <Calendar className="w-4 h-4" />
                       Agenda de Eventos
                     </button>
