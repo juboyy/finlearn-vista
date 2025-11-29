@@ -14,17 +14,20 @@ import { EventDetailsSheet } from "@/components/Dashboard/EventDetailsSheet";
 import { PodcastPanel } from "@/components/Dashboard/PodcastPanel";
 import { EbookPanel } from "@/components/Dashboard/EbookPanel";
 import { AgendaPanel } from "@/components/Dashboard/AgendaPanel";
+import { AnalyticsAlertsPanel } from "@/components/Dashboard/AnalyticsAlertsPanel";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { BookOpen, Award, Clock, Flame, TrendingUp, Coins, Scale, Bot, Mic, Video, BookMarked, Bell, Plus, Clock as ClockIcon, Headphones, Play, Lightbulb, HelpCircle, Calendar } from "lucide-react";
+import { BookOpen, Award, Clock, Flame, TrendingUp, Coins, Scale, Bot, Mic, Video, BookMarked, Bell, Plus, Clock as ClockIcon, Headphones, Play, Lightbulb, HelpCircle, Calendar, AlertTriangle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useUserAgents } from "@/hooks/useUserAgents";
+import { useAnalyticsAlerts } from "@/hooks/useAnalyticsAlerts";
 
 const Index = () => {
   const [podcastPanelOpen, setPodcastPanelOpen] = useState(false);
@@ -34,8 +37,10 @@ const Index = () => {
   const [chatOpen, setChatOpen] = useState(false);
   const [explainChartOpen, setExplainChartOpen] = useState(false);
   const [eventDetailsOpen, setEventDetailsOpen] = useState(false);
+  const [alertsPanelOpen, setAlertsPanelOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<any>(null);
   const { agents } = useUserAgents();
+  const { unreadCount } = useAnalyticsAlerts("user-mock-id");
 
   // Mock event data - in production, this would come from an API
   const events = [
@@ -167,6 +172,34 @@ const Index = () => {
                   <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                 </button>
               </Link>
+              
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button 
+                      onClick={() => setAlertsPanelOpen(true)}
+                      className="relative p-2 text-foreground hover:bg-muted rounded-lg transition-colors"
+                    >
+                      <AlertTriangle size={20} style={{ color: 'hsl(44, 35%, 65%)' }} />
+                      {unreadCount > 0 && (
+                        <Badge 
+                          className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs"
+                          style={{ 
+                            backgroundColor: 'hsl(0, 35%, 65%)',
+                            color: 'white',
+                          }}
+                        >
+                          {unreadCount}
+                        </Badge>
+                      )}
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Alertas Inteligentes</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+              
               <Button 
                 onClick={() => setInsightsOpen(true)}
                 className="bg-pastel-blue hover:bg-pastel-pink text-foreground"
@@ -479,6 +512,11 @@ const Index = () => {
       <AgendaPanel 
         open={agendaPanelOpen} 
         onOpenChange={setAgendaPanelOpen}
+      />
+      <AnalyticsAlertsPanel 
+        open={alertsPanelOpen} 
+        onOpenChange={setAlertsPanelOpen}
+        userId="user-mock-id"
       />
     </div>
   );

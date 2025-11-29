@@ -106,6 +106,60 @@ export type Database = {
           },
         ]
       }
+      analytics_alerts: {
+        Row: {
+          alert_type: string
+          change_percentage: number | null
+          content_type: string
+          created_at: string
+          current_value: number
+          id: string
+          is_read: boolean
+          message: string
+          metadata: Json | null
+          metric_name: string
+          previous_value: number | null
+          read_at: string | null
+          severity: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          alert_type: string
+          change_percentage?: number | null
+          content_type: string
+          created_at?: string
+          current_value: number
+          id?: string
+          is_read?: boolean
+          message: string
+          metadata?: Json | null
+          metric_name: string
+          previous_value?: number | null
+          read_at?: string | null
+          severity?: string
+          title: string
+          user_id?: string
+        }
+        Update: {
+          alert_type?: string
+          change_percentage?: number | null
+          content_type?: string
+          created_at?: string
+          current_value?: number
+          id?: string
+          is_read?: boolean
+          message?: string
+          metadata?: Json | null
+          metric_name?: string
+          previous_value?: number | null
+          read_at?: string | null
+          severity?: string
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       assistant_suggestions: {
         Row: {
           content: string
