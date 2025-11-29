@@ -299,19 +299,56 @@ export const LiveContent = () => {
           <a href="#" className="text-sm text-slate-600 hover:text-slate-800 font-medium">Ver todas</a>
         </div>
         <div className="grid grid-cols-4 gap-6">
-          {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
-              <div className="h-40 bg-pastel-blue overflow-hidden relative">
-                <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/195dbdee1c-92ffceb5d806533c0810.png" alt="Gravação" />
+          {[
+            {
+              id: 1,
+              title: "Análise Técnica: Setups de Trading",
+              date: "28 Nov 2024",
+              duration: "2:15:45",
+              views: "3.2k",
+              image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/195dbdee1c-92ffceb5d806533c0810.png",
+              bgColor: "bg-pastel-blue"
+            },
+            {
+              id: 2,
+              title: "Estratégias de Diversificação 2025",
+              date: "26 Nov 2024",
+              duration: "1:32:18",
+              views: "2.8k",
+              image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/27ff2e3c2c-afb908f73c455f98a798.png",
+              bgColor: "bg-pastel-green"
+            },
+            {
+              id: 3,
+              title: "Criptomoedas: Análise Fundamentalista",
+              date: "24 Nov 2024",
+              duration: "1:48:33",
+              views: "4.1k",
+              image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/d51e1f0edd-ac69efab786c3927349b.png",
+              bgColor: "bg-pastel-purple"
+            },
+            {
+              id: 4,
+              title: "Open Finance: Novidades e Tendências",
+              date: "22 Nov 2024",
+              duration: "1:25:12",
+              views: "1.9k",
+              image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/5213464580-c5bc017767ff44227057.png",
+              bgColor: "bg-pastel-pink"
+            }
+          ].map((recording) => (
+            <div key={recording.id} className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
+              <div className={`h-40 ${recording.bgColor} overflow-hidden relative`}>
+                <img className="w-full h-full object-cover" src={recording.image} alt={recording.title} />
                 <div className="absolute bottom-2 right-2 px-2 py-1 bg-slate-900/80 text-white text-xs rounded">
-                  1:45:30
+                  {recording.duration}
                 </div>
               </div>
               <div className="p-3">
-                <h3 className="font-semibold text-slate-800 text-sm mb-1 line-clamp-2">Análise Completa do Mercado</h3>
-                <p className="text-xs text-slate-500 mb-2">25 Nov 2024</p>
+                <h3 className="font-semibold text-slate-800 text-sm mb-1 line-clamp-2">{recording.title}</h3>
+                <p className="text-xs text-slate-500 mb-2">{recording.date}</p>
                 <div className="flex items-center justify-between text-xs text-slate-600">
-                  <span><i className="fas fa-eye mr-1"></i>2.8k views</span>
+                  <span><i className="fas fa-eye mr-1"></i>{recording.views} views</span>
                   <button className="text-pastel-purple hover:text-pastel-purple/80 font-medium">
                     Assistir
                   </button>
