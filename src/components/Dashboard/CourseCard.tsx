@@ -29,11 +29,14 @@ export const CourseCard = ({
         <p className="text-sm text-muted-foreground mb-2">
           {completedLessons} de {totalLessons} aulas concluídas
         </p>
-        <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+        <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden relative">
           <div 
             className={cn("h-2 rounded-full transition-all duration-1000 ease-out", bgColor)} 
             style={{ width: `${progress}%` }}
           />
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute inset-0 animate-shimmer bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+          </div>
         </div>
       </div>
       <Button className={cn("font-medium transition-all hover:bg-pastel-gray-dark hover:text-gray-100", bgColor)} variant="secondary">

@@ -1575,10 +1575,13 @@ const Aprendizado = () => {
                           <span className="text-sm font-medium text-foreground">4</span>
                         </div>
                       </div>
-                      <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                      <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden relative">
                         <div className="bg-pastel-blue h-2 rounded-full transition-all duration-1000 ease-out" style={{
                       width: '80%'
                     }}></div>
+                        <div className="absolute inset-0 overflow-hidden">
+                          <div className="absolute inset-0 animate-shimmer bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                        </div>
                       </div>
                     </div>
 
@@ -1598,10 +1601,13 @@ const Aprendizado = () => {
                           <span className="text-sm font-medium text-foreground">3</span>
                         </div>
                       </div>
-                      <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                      <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden relative">
                         <div className="bg-pastel-green h-2 rounded-full transition-all duration-1000 ease-out" style={{
                       width: '60%'
                     }}></div>
+                        <div className="absolute inset-0 overflow-hidden">
+                          <div className="absolute inset-0 animate-shimmer bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                        </div>
                       </div>
                     </div>
 
@@ -1621,10 +1627,13 @@ const Aprendizado = () => {
                           <span className="text-sm font-medium text-foreground">2</span>
                         </div>
                       </div>
-                      <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                      <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden relative">
                         <div className="bg-pastel-purple h-2 rounded-full transition-all duration-1000 ease-out" style={{
                       width: '40%'
                     }}></div>
+                        <div className="absolute inset-0 overflow-hidden">
+                          <div className="absolute inset-0 animate-shimmer bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                        </div>
                       </div>
                     </div>
 
@@ -1644,10 +1653,13 @@ const Aprendizado = () => {
                           <span className="text-sm font-medium text-foreground">2</span>
                         </div>
                       </div>
-                      <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                      <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden relative">
                         <div className="bg-pastel-pink h-2 rounded-full transition-all duration-1000 ease-out" style={{
                       width: '40%'
                     }}></div>
+                        <div className="absolute inset-0 overflow-hidden">
+                          <div className="absolute inset-0 animate-shimmer bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                        </div>
                       </div>
                     </div>
 
@@ -1667,10 +1679,13 @@ const Aprendizado = () => {
                           <span className="text-sm font-medium text-foreground">1</span>
                         </div>
                       </div>
-                      <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                      <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden relative">
                         <div className="bg-pastel-peach h-2 rounded-full transition-all duration-1000 ease-out" style={{
                       width: '20%'
                     }}></div>
+                        <div className="absolute inset-0 overflow-hidden">
+                          <div className="absolute inset-0 animate-shimmer bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                        </div>
                       </div>
                     </div>
                   </div>
