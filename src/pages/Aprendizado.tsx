@@ -6,7 +6,7 @@ import { InfograficosPendentes } from "@/components/Dashboard/InfograficosPenden
 import { WhitepapersPendentes } from "@/components/Dashboard/WhitepapersPendentes";
 import { ApresentacoesPendentes } from "@/components/Dashboard/ApresentacoesPendentes";
 import { NewspapersNaoLidas } from "@/components/Dashboard/NewspapersNaoLidas";
-import Live from "@/pages/Live";
+import { LiveContent } from "@/components/Dashboard/LiveContent";
 import { NewspaperAnalytics } from "@/components/Dashboard/NewspaperAnalytics";
 import { PodcastsAnalytics } from "@/components/Dashboard/PodcastsAnalytics";
 import { CursosAnalytics } from "@/components/Dashboard/CursosAnalytics";
@@ -3312,7 +3312,7 @@ const Aprendizado = () => {
               </section>
             </>}
 
-          {activeTab === 'live' && <Live />}
+          {activeTab === 'live' && <LiveContent />}
 
           {activeTab === 'artigos' && <div className="text-center py-16">
               <div className="w-20 h-20 bg-pastel-peach rounded-full flex items-center justify-center mx-auto mb-4">
