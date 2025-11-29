@@ -8,6 +8,40 @@ export const ApresentacoesAnalyticsConsumption = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
   const [comparisonMode, setComparisonMode] = useState(false);
   const [comparisonPeriod, setComparisonPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('7d');
+  const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
+  const [showDrillDown, setShowDrillDown] = useState(false);
+
+  const apresentacoesByTopic: Record<string, Array<{
+    title: string;
+    author: string;
+    slides: string;
+    date: string;
+  }>> = {
+    'Estratégia': [{
+      title: 'Estratégia Digital 2025',
+      author: 'Fintech Inovação',
+      slides: '32 slides',
+      date: 'Ontem'
+    }],
+    'Resultados': [{
+      title: 'Resultados Q2 2024 - Banco XYZ',
+      author: 'Banco XYZ',
+      slides: '45 slides',
+      date: 'Hoje'
+    }],
+    'Produtos': [{
+      title: 'Lançamento: Novo Produto de Crédito',
+      author: 'Crédito Fácil',
+      slides: '28 slides',
+      date: '2 dias atrás'
+    }],
+    'Mercado': [{
+      title: 'Análise de Mercado: Fintechs Brasil',
+      author: 'Market Research',
+      slides: '52 slides',
+      date: '4 dias atrás'
+    }]
+  };
   
   useEffect(() => {
     if (typeof window !== 'undefined' && (window as any).Plotly) {
@@ -44,14 +78,27 @@ export const ApresentacoesAnalyticsConsumption = () => {
       labels: ['Estratégia', 'Resultados', 'Produtos', 'Mercado'],
       type: 'pie',
       marker: { colors: ['#F4C8D8', '#C5E8D4', '#D8BFD8', '#B8D4E8'] },
-      textinfo: 'label+percent'
+      textinfo: 'label+percent',
+      hovertemplate: '<b>%{label}</b><br>%{value} apresentações (%{percent})<br><i>Clique para ver detalhes</i><extra></extra>',
+      hoverlabel: { bgcolor: '#334155', font: { color: 'white', size: 14 } }
     }];
 
     Plotly.newPlot('apresentacoes-topics-chart', topicsData, {
       margin: { l: 20, r: 20, t: 20, b: 20 },
       showlegend: false,
-      paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
+      paper_bgcolor: '#ffffff',
+      hovermode: 'closest'
+    }, { displayModeBar: false }).then(() => {
+      const topicsChart = document.getElementById('apresentacoes-topics-chart');
+      if (topicsChart) {
+        topicsChart.style.cursor = 'pointer';
+        (topicsChart as any).on('plotly_click', (data: any) => {
+          const label = data.points[0].label;
+          setSelectedTopic(label);
+          setShowDrillDown(true);
+        });
+      }
+    });
 
     // Tempo de Visualização
     const getTimeData = generateMockDataByPeriod('completion');
@@ -355,6 +402,35 @@ export const ApresentacoesAnalyticsConsumption = () => {
           ))}
         </div>
       </div>
+
+      {/* Drill Down Modal */}
+      {showDrillDown && selectedTopic && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setShowDrillDown(false)}>
+          <div className="bg-white rounded-2xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-2xl font-bold text-slate-800">Apresentações: {selectedTopic}</h3>
+              <button 
+                onClick={() => setShowDrillDown(false)}
+                className="text-slate-400 hover:text-slate-600 transition"
+              >
+                <i className="fas fa-times text-xl"></i>
+              </button>
+            </div>
+            <div className="space-y-4">
+              {apresentacoesByTopic[selectedTopic]?.map((apresentacao, idx) => (
+                <div key={idx} className="border border-slate-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-slate-800 mb-2">{apresentacao.title}</h4>
+                  <p className="text-sm text-slate-600 mb-2">Autor: {apresentacao.author}</p>
+                  <div className="flex items-center gap-4 text-xs text-slate-500">
+                    <span><i className="fas fa-display mr-1"></i>{apresentacao.slides}</span>
+                    <span><i className="fas fa-calendar mr-1"></i>{apresentacao.date}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

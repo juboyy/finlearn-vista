@@ -284,7 +284,9 @@ export const NewspaperAnalytics = () => {
         colors: ['#B8D4E8', '#C5E8D4', '#E8C5D8', '#E8E0C5']
       },
       textinfo: 'label+percent',
-      textposition: 'inside'
+      textposition: 'inside',
+      hovertemplate: '<b>%{label}</b><br>%{value} artigos (%{percent})<br><i>Clique para ver detalhes</i><extra></extra>',
+      hoverlabel: { bgcolor: '#334155', font: { color: 'white', size: 14 } }
     }];
     const contentTypesLayout = {
       margin: {
@@ -294,10 +296,21 @@ export const NewspaperAnalytics = () => {
         b: 20
       },
       showlegend: false,
-      paper_bgcolor: '#ffffff'
+      paper_bgcolor: '#ffffff',
+      hovermode: 'closest'
     };
     Plotly.newPlot('content-types-chart', contentTypesData, contentTypesLayout, {
       displayModeBar: false
+    }).then(() => {
+      const contentTypesChart = document.getElementById('content-types-chart');
+      if (contentTypesChart) {
+        contentTypesChart.style.cursor = 'pointer';
+        (contentTypesChart as any).on('plotly_click', (data: any) => {
+          const label = data.points[0].label;
+          setSelectedTopic(label);
+          setShowDrillDown(true);
+        });
+      }
     });
 
     // Completion Rate Chart

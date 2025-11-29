@@ -8,6 +8,40 @@ export const RelatoriosAnalyticsConsumption = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
   const [comparisonMode, setComparisonMode] = useState(false);
   const [comparisonPeriod, setComparisonPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('7d');
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [showDrillDown, setShowDrillDown] = useState(false);
+
+  const relatoriosByCategory: Record<string, Array<{
+    title: string;
+    author: string;
+    pages: number;
+    date: string;
+  }>> = {
+    'Trimestral': [{
+      title: 'Relatório Trimestral - Q2 2024 do Mercado',
+      author: 'Financial Insights',
+      pages: 45,
+      date: 'Hoje'
+    }],
+    'Anual': [{
+      title: 'Análise Anual: Setor Bancário 2024',
+      author: 'Banking Research',
+      pages: 128,
+      date: 'Ontem'
+    }],
+    'Mensal': [{
+      title: 'Relatório Mensal de Crédito - Junho',
+      author: 'Credit Analytics',
+      pages: 32,
+      date: '3 dias atrás'
+    }],
+    'Especial': [{
+      title: 'Estudo Especial: Open Finance no Brasil',
+      author: 'Bacen Research',
+      pages: 68,
+      date: '5 dias atrás'
+    }]
+  };
   
   useEffect(() => {
     if (typeof window !== 'undefined' && (window as any).Plotly) {
@@ -44,14 +78,27 @@ export const RelatoriosAnalyticsConsumption = () => {
       labels: ['Trimestral', 'Anual', 'Mensal', 'Especial'],
       type: 'pie',
       marker: { colors: ['#F4C8D8', '#C5E8D4', '#D8BFD8', '#B8D4E8'] },
-      textinfo: 'label+percent'
+      textinfo: 'label+percent',
+      hovertemplate: '<b>%{label}</b><br>%{value} relatórios (%{percent})<br><i>Clique para ver detalhes</i><extra></extra>',
+      hoverlabel: { bgcolor: '#334155', font: { color: 'white', size: 14 } }
     }];
 
     Plotly.newPlot('relatorios-categories-chart', categoriesData, {
       margin: { l: 20, r: 20, t: 20, b: 20 },
       showlegend: false,
-      paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
+      paper_bgcolor: '#ffffff',
+      hovermode: 'closest'
+    }, { displayModeBar: false }).then(() => {
+      const categoriesChart = document.getElementById('relatorios-categories-chart');
+      if (categoriesChart) {
+        categoriesChart.style.cursor = 'pointer';
+        (categoriesChart as any).on('plotly_click', (data: any) => {
+          const label = data.points[0].label;
+          setSelectedCategory(label);
+          setShowDrillDown(true);
+        });
+      }
+    });
 
     // Tempo de Leitura
     const getTimeData = generateMockDataByPeriod('completion');
@@ -355,6 +402,35 @@ export const RelatoriosAnalyticsConsumption = () => {
           ))}
         </div>
       </div>
+
+      {/* Drill Down Modal */}
+      {showDrillDown && selectedCategory && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setShowDrillDown(false)}>
+          <div className="bg-white rounded-2xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-2xl font-bold text-slate-800">Relatórios: {selectedCategory}</h3>
+              <button 
+                onClick={() => setShowDrillDown(false)}
+                className="text-slate-400 hover:text-slate-600 transition"
+              >
+                <i className="fas fa-times text-xl"></i>
+              </button>
+            </div>
+            <div className="space-y-4">
+              {relatoriosByCategory[selectedCategory]?.map((relatorio, idx) => (
+                <div key={idx} className="border border-slate-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-slate-800 mb-2">{relatorio.title}</h4>
+                  <p className="text-sm text-slate-600 mb-2">Autor: {relatorio.author}</p>
+                  <div className="flex items-center gap-4 text-xs text-slate-500">
+                    <span><i className="fas fa-file-alt mr-1"></i>{relatorio.pages} páginas</span>
+                    <span><i className="fas fa-calendar mr-1"></i>{relatorio.date}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

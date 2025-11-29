@@ -8,6 +8,45 @@ export const InfograficosAnalyticsConsumption = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
   const [comparisonMode, setComparisonMode] = useState(false);
   const [comparisonPeriod, setComparisonPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('7d');
+  const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
+  const [showDrillDown, setShowDrillDown] = useState(false);
+
+  const infograficosByTopic: Record<string, Array<{
+    title: string;
+    author: string;
+    tema: string;
+    date: string;
+  }>> = {
+    'Dados Mercado': [{
+      title: 'Evolução dos Pagamentos Digitais no Brasil',
+      author: 'Data Insights',
+      tema: 'Dados Mercado',
+      date: 'Hoje'
+    }, {
+      title: 'PIX: 5 Anos de Evolução',
+      author: 'Bacen Visual',
+      tema: 'Dados Mercado',
+      date: '5 dias atrás'
+    }],
+    'Processos': [{
+      title: 'Fluxo de Aprovação de Crédito',
+      author: 'Banking Process',
+      tema: 'Processos',
+      date: 'Ontem'
+    }],
+    'Comparativos': [{
+      title: 'Comparativo: Taxas Bancárias 2024',
+      author: 'Market Compare',
+      tema: 'Comparativos',
+      date: '2 dias atrás'
+    }],
+    'Tendências': [{
+      title: 'Tendências em Open Finance',
+      author: 'Tech Trends',
+      tema: 'Tendências',
+      date: '3 dias atrás'
+    }]
+  };
   
   useEffect(() => {
     if (typeof window !== 'undefined' && (window as any).Plotly) {
@@ -44,14 +83,27 @@ export const InfograficosAnalyticsConsumption = () => {
       labels: ['Dados Mercado', 'Processos', 'Comparativos', 'Tendências', 'Outros'],
       type: 'pie',
       marker: { colors: ['#F4E4A6', '#C5E8D4', '#F4C8D8', '#D8BFD8', '#B8D4E8'] },
-      textinfo: 'label+percent'
+      textinfo: 'label+percent',
+      hovertemplate: '<b>%{label}</b><br>%{value} infográficos (%{percent})<br><i>Clique para ver detalhes</i><extra></extra>',
+      hoverlabel: { bgcolor: '#334155', font: { color: 'white', size: 14 } }
     }];
 
     Plotly.newPlot('infograficos-topics-chart', topicsData, {
       margin: { l: 20, r: 20, t: 20, b: 20 },
       showlegend: false,
-      paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
+      paper_bgcolor: '#ffffff',
+      hovermode: 'closest'
+    }, { displayModeBar: false }).then(() => {
+      const topicsChart = document.getElementById('infograficos-topics-chart');
+      if (topicsChart) {
+        topicsChart.style.cursor = 'pointer';
+        (topicsChart as any).on('plotly_click', (data: any) => {
+          const label = data.points[0].label;
+          setSelectedTopic(label);
+          setShowDrillDown(true);
+        });
+      }
+    });
 
     // Tempo de Visualização
     const getTimeData = generateMockDataByPeriod('completion');
@@ -355,6 +407,35 @@ export const InfograficosAnalyticsConsumption = () => {
           ))}
         </div>
       </div>
+
+      {/* Drill Down Modal */}
+      {showDrillDown && selectedTopic && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setShowDrillDown(false)}>
+          <div className="bg-white rounded-2xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-2xl font-bold text-slate-800">Infográficos: {selectedTopic}</h3>
+              <button 
+                onClick={() => setShowDrillDown(false)}
+                className="text-slate-400 hover:text-slate-600 transition"
+              >
+                <i className="fas fa-times text-xl"></i>
+              </button>
+            </div>
+            <div className="space-y-4">
+              {infograficosByTopic[selectedTopic]?.map((info, idx) => (
+                <div key={idx} className="border border-slate-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-slate-800 mb-2">{info.title}</h4>
+                  <p className="text-sm text-slate-600 mb-2">Autor: {info.author}</p>
+                  <div className="flex items-center gap-4 text-xs text-slate-500">
+                    <span><i className="fas fa-chart-bar mr-1"></i>{info.tema}</span>
+                    <span><i className="fas fa-calendar mr-1"></i>{info.date}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -121,16 +121,21 @@ export const WebinarsAnalyticsConsumption = () => {
       labels: ['Mercado', 'Tecnologia', 'Regulação', 'ESG'],
       type: 'pie',
       marker: { colors: ['#F4C8D8', '#C5E8D4', '#D8BFD8', '#B8D4E8'] },
-      textinfo: 'label+percent'
+      textinfo: 'label+percent',
+      hovertemplate: '<b>%{label}</b><br>%{value} webinars (%{percent})<br><i>Clique para ver detalhes</i><extra></extra>',
+      hoverlabel: { bgcolor: '#334155', font: { color: 'white', size: 14 } }
     }];
 
     Plotly.newPlot('webinars-categories-chart', categoriesData, {
       margin: { l: 20, r: 20, t: 20, b: 20 },
       showlegend: false,
-      paper_bgcolor: '#ffffff'
+      paper_bgcolor: '#ffffff',
+      hovermode: 'closest',
+      hoverlabel: { bgcolor: '#334155', font: { color: 'white' } }
     }, { displayModeBar: false }).then(() => {
       const categoriesChart = document.getElementById('webinars-categories-chart');
       if (categoriesChart) {
+        categoriesChart.style.cursor = 'pointer';
         (categoriesChart as any).on('plotly_click', (data: any) => {
           const label = data.points[0].label;
           setSelectedTopic(label);

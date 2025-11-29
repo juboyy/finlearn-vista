@@ -8,6 +8,50 @@ export const WhitepaperAnalyticsConsumption = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
   const [comparisonMode, setComparisonMode] = useState(false);
   const [comparisonPeriod, setComparisonPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('7d');
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [showDrillDown, setShowDrillDown] = useState(false);
+
+  const whitepapersByCategory: Record<string, Array<{
+    title: string;
+    author: string;
+    category: string;
+    date: string;
+  }>> = {
+    'Tecnologia': [{
+      title: 'Open Finance Architecture Standards',
+      author: 'Bacen Tech',
+      category: 'Tecnologia',
+      date: '3 dias atrás'
+    }, {
+      title: 'AI in Financial Services',
+      author: 'Innovation Labs',
+      category: 'Inovação',
+      date: '1 semana atrás'
+    }],
+    'Regulação': [{
+      title: 'Regulatory Framework for Digital Assets',
+      author: 'Global Regulation',
+      category: 'Regulação',
+      date: '5 dias atrás'
+    }],
+    'Blockchain': [{
+      title: 'Bitcoin: A Peer-to-Peer Electronic Cash System',
+      author: 'Satoshi Nakamoto',
+      category: 'Blockchain',
+      date: 'Hoje'
+    }, {
+      title: 'Ethereum 2.0: Technical Specifications',
+      author: 'Ethereum Foundation',
+      category: 'Blockchain',
+      date: '2 semanas atrás'
+    }],
+    'Inovação': [{
+      title: 'AI in Financial Services',
+      author: 'Innovation Labs',
+      category: 'Inovação',
+      date: '1 semana atrás'
+    }]
+  };
   
   useEffect(() => {
     if (typeof window !== 'undefined' && (window as any).Plotly) {
@@ -44,14 +88,27 @@ export const WhitepaperAnalyticsConsumption = () => {
       labels: ['Tecnologia', 'Regulação', 'Blockchain', 'Inovação'],
       type: 'pie',
       marker: { colors: ['#B8D4E8', '#C5E8D4', '#F4C8D8', '#D8BFD8'] },
-      textinfo: 'label+percent'
+      textinfo: 'label+percent',
+      hovertemplate: '<b>%{label}</b><br>%{value} whitepapers (%{percent})<br><i>Clique para ver detalhes</i><extra></extra>',
+      hoverlabel: { bgcolor: '#334155', font: { color: 'white', size: 14 } }
     }];
 
     Plotly.newPlot('whitepaper-categories-chart', categoriesData, {
       margin: { l: 20, r: 20, t: 20, b: 20 },
       showlegend: false,
-      paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
+      paper_bgcolor: '#ffffff',
+      hovermode: 'closest'
+    }, { displayModeBar: false }).then(() => {
+      const categoriesChart = document.getElementById('whitepaper-categories-chart');
+      if (categoriesChart) {
+        categoriesChart.style.cursor = 'pointer';
+        (categoriesChart as any).on('plotly_click', (data: any) => {
+          const label = data.points[0].label;
+          setSelectedCategory(label);
+          setShowDrillDown(true);
+        });
+      }
+    });
 
     // Tempo de Leitura
     const getTimeData = generateMockDataByPeriod('completion');
@@ -355,6 +412,35 @@ export const WhitepaperAnalyticsConsumption = () => {
           ))}
         </div>
       </div>
+
+      {/* Drill Down Modal */}
+      {showDrillDown && selectedCategory && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setShowDrillDown(false)}>
+          <div className="bg-white rounded-2xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-2xl font-bold text-slate-800">Whitepapers: {selectedCategory}</h3>
+              <button 
+                onClick={() => setShowDrillDown(false)}
+                className="text-slate-400 hover:text-slate-600 transition"
+              >
+                <i className="fas fa-times text-xl"></i>
+              </button>
+            </div>
+            <div className="space-y-4">
+              {whitepapersByCategory[selectedCategory]?.map((whitepaper, idx) => (
+                <div key={idx} className="border border-slate-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-slate-800 mb-2">{whitepaper.title}</h4>
+                  <p className="text-sm text-slate-600 mb-2">Autor: {whitepaper.author}</p>
+                  <div className="flex items-center gap-4 text-xs text-slate-500">
+                    <span><i className="fas fa-file-lines mr-1"></i>{whitepaper.category}</span>
+                    <span><i className="fas fa-calendar mr-1"></i>{whitepaper.date}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

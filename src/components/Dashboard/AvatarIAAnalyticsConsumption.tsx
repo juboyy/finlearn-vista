@@ -8,6 +8,51 @@ export const AvatarIAAnalyticsConsumption = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
   const [comparisonMode, setComparisonMode] = useState(false);
   const [comparisonPeriod, setComparisonPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('7d');
+  const [selectedSpecialty, setSelectedSpecialty] = useState<string | null>(null);
+  const [showDrillDown, setShowDrillDown] = useState(false);
+
+  const avatarsBySpecialty: Record<string, Array<{
+    avatar: string;
+    specialty: string;
+    duration: string;
+    interactions: number;
+    date: string;
+  }>> = {
+    'Análise': [{
+      avatar: 'Agente de Análise',
+      specialty: 'Análise de Dados',
+      duration: '42 min',
+      interactions: 18,
+      date: 'Hoje'
+    }, {
+      avatar: 'Agente de Análise',
+      specialty: 'Análise de Dados',
+      duration: '38 min',
+      interactions: 16,
+      date: '4 dias atrás'
+    }],
+    'Compliance': [{
+      avatar: 'Agente Compliance',
+      specialty: 'Compliance',
+      duration: '35 min',
+      interactions: 12,
+      date: 'Ontem'
+    }],
+    'Educação': [{
+      avatar: 'Agente Educacional',
+      specialty: 'Educação',
+      duration: '28 min',
+      interactions: 15,
+      date: '2 dias atrás'
+    }],
+    'Estratégia': [{
+      avatar: 'Agente Estratégia',
+      specialty: 'Estratégia',
+      duration: '51 min',
+      interactions: 22,
+      date: '3 dias atrás'
+    }]
+  };
   
   useEffect(() => {
     if (typeof window !== 'undefined' && (window as any).Plotly) {
@@ -44,14 +89,27 @@ export const AvatarIAAnalyticsConsumption = () => {
       labels: ['Análise', 'Compliance', 'Educação', 'Estratégia', 'Outros'],
       type: 'pie',
       marker: { colors: ['#F4C8D8', '#C5E8D4', '#D8BFD8', '#B8D4E8', '#F4E4A6'] },
-      textinfo: 'label+percent'
+      textinfo: 'label+percent',
+      hovertemplate: '<b>%{label}</b><br>%{value} sessões (%{percent})<br><i>Clique para ver detalhes</i><extra></extra>',
+      hoverlabel: { bgcolor: '#334155', font: { color: 'white', size: 14 } }
     }];
 
     Plotly.newPlot('avatar-specialties-chart', specialtiesData, {
       margin: { l: 20, r: 20, t: 20, b: 20 },
       showlegend: false,
-      paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
+      paper_bgcolor: '#ffffff',
+      hovermode: 'closest'
+    }, { displayModeBar: false }).then(() => {
+      const specialtiesChart = document.getElementById('avatar-specialties-chart');
+      if (specialtiesChart) {
+        specialtiesChart.style.cursor = 'pointer';
+        (specialtiesChart as any).on('plotly_click', (data: any) => {
+          const label = data.points[0].label;
+          setSelectedSpecialty(label);
+          setShowDrillDown(true);
+        });
+      }
+    });
 
     // Tempo de Sessão
     const getTimeData = generateMockDataByPeriod('completion');
@@ -355,6 +413,36 @@ export const AvatarIAAnalyticsConsumption = () => {
           ))}
         </div>
       </div>
+
+      {/* Drill Down Modal */}
+      {showDrillDown && selectedSpecialty && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setShowDrillDown(false)}>
+          <div className="bg-white rounded-2xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-2xl font-bold text-slate-800">Avatar IA: {selectedSpecialty}</h3>
+              <button 
+                onClick={() => setShowDrillDown(false)}
+                className="text-slate-400 hover:text-slate-600 transition"
+              >
+                <i className="fas fa-times text-xl"></i>
+              </button>
+            </div>
+            <div className="space-y-4">
+              {avatarsBySpecialty[selectedSpecialty]?.map((sessao, idx) => (
+                <div key={idx} className="border border-slate-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-slate-800 mb-2">{sessao.avatar}</h4>
+                  <p className="text-sm text-slate-600 mb-2">Especialidade: {sessao.specialty}</p>
+                  <div className="flex items-center gap-4 text-xs text-slate-500">
+                    <span><i className="fas fa-clock mr-1"></i>{sessao.duration}</span>
+                    <span><i className="fas fa-comments mr-1"></i>{sessao.interactions} interações</span>
+                    <span><i className="fas fa-calendar mr-1"></i>{sessao.date}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
