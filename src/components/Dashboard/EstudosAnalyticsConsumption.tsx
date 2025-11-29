@@ -78,9 +78,13 @@ export const EstudosAnalyticsConsumption = () => {
     }), { displayModeBar: false });
 
     // Estudos por Área
+    const areaValues = [30, 25, 20, 15, 10];
+    const areaLabels = ['Finanças', 'Economia', 'Tecnologia', 'Regulação', 'Outros'];
+    const initialAreaValues = new Array(areaValues.length).fill(0);
+    
     const areasData = [{
-      values: [30, 25, 20, 15, 10],
-      labels: ['Finanças', 'Economia', 'Tecnologia', 'Regulação', 'Outros'],
+      values: initialAreaValues,
+      labels: areaLabels,
       type: 'pie',
       hole: 0.4,
       marker: { colors: ['#D8BFD8', '#C5E8D4', '#F4C8D8', '#B8D4E8', '#F4E4A6'] },
@@ -94,12 +98,24 @@ export const EstudosAnalyticsConsumption = () => {
       showlegend: true,
       legend: { orientation: 'h', y: -0.1, font: { size: 11 } },
       paper_bgcolor: '#ffffff',
-      hovermode: 'closest',
-      transition: {
-        duration: 800,
-        easing: 'cubic-in-out'
-      }
+      hovermode: 'closest'
     }, { displayModeBar: false }).then(() => {
+      // Progressive animation for each slice
+      areaValues.forEach((value, index) => {
+        setTimeout(() => {
+          const animatedValues = [...initialAreaValues];
+          for (let i = 0; i <= index; i++) {
+            animatedValues[i] = areaValues[i];
+          }
+          Plotly.animate('estudos-areas-chart', {
+            data: [{ values: animatedValues }]
+          }, {
+            transition: { duration: 400, easing: 'cubic-in-out' },
+            frame: { duration: 400 }
+          });
+        }, index * 200);
+      });
+      
       const areasChart = document.getElementById('estudos-areas-chart');
       if (areasChart) {
         areasChart.style.cursor = 'pointer';

@@ -166,9 +166,13 @@ export const ArtigosAnalyticsConsumption = () => {
     }, { displayModeBar: false });
 
     // Topic Distribution Chart
+    const topicValues = currentData.topicDistribution.values;
+    const topicLabels = currentData.topicDistribution.labels;
+    const initialTopicValues = new Array(topicValues.length).fill(0);
+    
     Plotly.newPlot('artigos-topics-chart', [{
-      labels: currentData.topicDistribution.labels,
-      values: currentData.topicDistribution.values,
+      labels: topicLabels,
+      values: initialTopicValues,
       type: 'pie',
       hole: 0.4,
       marker: { colors: [pastelBlue, pastelGreen, pastelPink, pastelOrange, pastelYellow] },
@@ -180,12 +184,24 @@ export const ArtigosAnalyticsConsumption = () => {
       showlegend: true,
       legend: { orientation: 'h', y: -0.1, font: { size: 11 } },
       paper_bgcolor: '#ffffff',
-      hovermode: 'closest',
-      transition: {
-        duration: 800,
-        easing: 'cubic-in-out'
-      }
+      hovermode: 'closest'
     }, { displayModeBar: false }).then(() => {
+      // Progressive animation for each slice
+      topicValues.forEach((value: any, index: number) => {
+        setTimeout(() => {
+          const animatedValues = [...initialTopicValues];
+          for (let i = 0; i <= index; i++) {
+            animatedValues[i] = topicValues[i];
+          }
+          Plotly.animate('artigos-topics-chart', {
+            data: [{ values: animatedValues }]
+          }, {
+            transition: { duration: 400, easing: 'cubic-in-out' },
+            frame: { duration: 400 }
+          });
+        }, index * 200);
+      });
+      
       const topicsChart = document.getElementById('artigos-topics-chart');
       if (topicsChart) {
         topicsChart.style.cursor = 'pointer';

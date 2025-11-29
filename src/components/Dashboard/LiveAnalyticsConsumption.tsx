@@ -78,9 +78,13 @@ export const LiveAnalyticsConsumption = () => {
     }), { displayModeBar: false });
 
     // Lives por Tema
+    const topicValues = [35, 30, 20, 15];
+    const topicLabels = ['Mercado', 'Educação', 'Produtos', 'Q&A'];
+    const initialTopicValues = new Array(topicValues.length).fill(0);
+    
     const topicsData = [{
-      values: [35, 30, 20, 15],
-      labels: ['Mercado', 'Educação', 'Produtos', 'Q&A'],
+      values: initialTopicValues,
+      labels: topicLabels,
       type: 'pie',
       hole: 0.4,
       marker: { colors: ['#C5E8D4', '#F4C8D8', '#D8BFD8', '#B8D4E8'] },
@@ -94,12 +98,24 @@ export const LiveAnalyticsConsumption = () => {
       showlegend: true,
       legend: { orientation: 'h', y: -0.1, font: { size: 11 } },
       paper_bgcolor: '#ffffff',
-      hovermode: 'closest',
-      transition: {
-        duration: 800,
-        easing: 'cubic-in-out'
-      }
+      hovermode: 'closest'
     }, { displayModeBar: false }).then(() => {
+      // Progressive animation for each slice
+      topicValues.forEach((value, index) => {
+        setTimeout(() => {
+          const animatedValues = [...initialTopicValues];
+          for (let i = 0; i <= index; i++) {
+            animatedValues[i] = topicValues[i];
+          }
+          Plotly.animate('live-topics-chart', {
+            data: [{ values: animatedValues }]
+          }, {
+            transition: { duration: 400, easing: 'cubic-in-out' },
+            frame: { duration: 400 }
+          });
+        }, index * 200);
+      });
+      
       const topicsChart = document.getElementById('live-topics-chart');
       if (topicsChart) {
         topicsChart.style.cursor = 'pointer';

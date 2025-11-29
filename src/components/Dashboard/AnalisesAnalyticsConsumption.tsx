@@ -78,9 +78,13 @@ export const AnalisesAnalyticsConsumption = () => {
     }), { displayModeBar: false });
 
     // Análises por Tipo
+    const typeValues = [38, 28, 20, 14];
+    const typeLabels = ['Técnica', 'Fundamentalista', 'Macroeconômica', 'Setorial'];
+    const initialTypeValues = new Array(typeValues.length).fill(0);
+    
     const typesData = [{
-      values: [38, 28, 20, 14],
-      labels: ['Técnica', 'Fundamentalista', 'Macroeconômica', 'Setorial'],
+      values: initialTypeValues,
+      labels: typeLabels,
       type: 'pie',
       hole: 0.4,
       marker: { colors: ['#C5E8D4', '#B8D4E8', '#F4C8D8', '#D8BFD8'] },
@@ -94,12 +98,24 @@ export const AnalisesAnalyticsConsumption = () => {
       showlegend: true,
       legend: { orientation: 'h', y: -0.1, font: { size: 11 } },
       paper_bgcolor: '#ffffff',
-      hovermode: 'closest',
-      transition: {
-        duration: 800,
-        easing: 'cubic-in-out'
-      }
+      hovermode: 'closest'
     }, { displayModeBar: false }).then(() => {
+      // Progressive animation for each slice
+      typeValues.forEach((value, index) => {
+        setTimeout(() => {
+          const animatedValues = [...initialTypeValues];
+          for (let i = 0; i <= index; i++) {
+            animatedValues[i] = typeValues[i];
+          }
+          Plotly.animate('analises-types-chart', {
+            data: [{ values: animatedValues }]
+          }, {
+            transition: { duration: 400, easing: 'cubic-in-out' },
+            frame: { duration: 400 }
+          });
+        }, index * 200);
+      });
+      
       const typesChart = document.getElementById('analises-types-chart');
       if (typesChart) {
         typesChart.style.cursor = 'pointer';
