@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { PeriodComparisonToggle, getPeriodLabel } from "./PeriodComparisonToggle";
+import { createComparisonLineChart, createComparisonBarChart, createComparisonLayout, generateMockDataByPeriod } from "./chartComparisonUtils";
 
 export const EstudosAnalyticsConsumption = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
@@ -14,22 +15,26 @@ export const EstudosAnalyticsConsumption = () => {
 
   const initializeCharts = () => {
     const Plotly = (window as any).Plotly;
+    const getData = generateMockDataByPeriod('weekly');
 
     // Estudos Semanais
-    const weeklyData = [{
-      x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
-      y: [1, 2, 2, 3, 2, 1, 1],
-      type: 'bar',
-      marker: { color: '#D8BFD8' }
-    }];
+    const currentData = getData(selectedPeriod);
+    const comparisonData = comparisonMode ? getData(comparisonPeriod) : null;
+    
+    const weeklyTraces = createComparisonBarChart({
+      currentData,
+      comparisonData,
+      currentPeriod: selectedPeriod,
+      comparisonPeriod,
+      comparisonMode,
+      chartType: 'bar'
+    });
 
-    Plotly.newPlot('estudos-weekly-chart', weeklyData, {
+    Plotly.newPlot('estudos-weekly-chart', weeklyTraces, createComparisonLayout(comparisonMode, {
       margin: { l: 40, r: 20, t: 20, b: 40 },
-      xaxis: { gridcolor: '#f1f5f9' },
-      yaxis: { gridcolor: '#f1f5f9', title: 'Estudos Lidos' },
-      plot_bgcolor: '#ffffff',
-      paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
+      xaxis: { gridcolor: '#f1f5f9', tickangle: 0 },
+      yaxis: { gridcolor: '#f1f5f9', title: 'Estudos Lidos' }
+    }), { displayModeBar: false });
 
     // Estudos por Área
     const areasData = [{
@@ -47,38 +52,41 @@ export const EstudosAnalyticsConsumption = () => {
     }, { displayModeBar: false });
 
     // Tempo de Leitura
-    const timeData = [{
-      x: ['0-1h', '1-2h', '2-4h', '4h+'],
-      y: [5, 12, 18, 8],
-      type: 'bar',
-      marker: { color: ['#E8C5D8', '#E8E0C5', '#C5E8D4', '#D8BFD8'] }
-    }];
+    const getTimeData = generateMockDataByPeriod('completion');
+    const currentTimeData = getTimeData(selectedPeriod);
+    const comparisonTimeData = comparisonMode ? getTimeData(comparisonPeriod) : null;
+    
+    const timeTraces = createComparisonBarChart({
+      currentData: currentTimeData,
+      comparisonData: comparisonTimeData,
+      currentPeriod: selectedPeriod,
+      comparisonPeriod,
+      comparisonMode,
+      chartType: 'bar'
+    });
 
-    Plotly.newPlot('estudos-time-chart', timeData, {
+    Plotly.newPlot('estudos-time-chart', timeTraces, createComparisonLayout(comparisonMode, {
       margin: { l: 40, r: 20, t: 20, b: 40 },
-      xaxis: { gridcolor: '#f1f5f9', title: 'Tempo de Leitura' },
-      yaxis: { gridcolor: '#f1f5f9', title: 'Estudos' },
-      plot_bgcolor: '#ffffff',
-      paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
+      xaxis: { gridcolor: '#f1f5f9', title: 'Tempo de Leitura', tickangle: 0 },
+      yaxis: { gridcolor: '#f1f5f9', title: 'Estudos' }
+    }), { displayModeBar: false });
 
     // Engajamento Mensal
-    const monthlyData = [{
-      x: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
-      y: [8, 10, 12, 11, 14, 16],
-      type: 'scatter',
-      mode: 'lines+markers',
-      line: { color: '#D8BFD8', width: 3 },
-      marker: { size: 8, color: '#D8BFD8' }
-    }];
+    const monthlyTraces = createComparisonLineChart({
+      currentData,
+      comparisonData,
+      currentPeriod: selectedPeriod,
+      comparisonPeriod,
+      comparisonMode,
+      chartType: 'line',
+      title: 'Estudos Lidos'
+    });
 
-    Plotly.newPlot('estudos-monthly-chart', monthlyData, {
+    Plotly.newPlot('estudos-monthly-chart', monthlyTraces, createComparisonLayout(comparisonMode, {
       margin: { l: 40, r: 20, t: 20, b: 40 },
-      xaxis: { gridcolor: '#f1f5f9' },
-      yaxis: { gridcolor: '#f1f5f9', title: 'Estudos Lidos' },
-      plot_bgcolor: '#ffffff',
-      paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
+      xaxis: { gridcolor: '#f1f5f9', tickangle: 0 },
+      yaxis: { gridcolor: '#f1f5f9', title: 'Estudos Lidos' }
+    }), { displayModeBar: false });
   };
 
   return (

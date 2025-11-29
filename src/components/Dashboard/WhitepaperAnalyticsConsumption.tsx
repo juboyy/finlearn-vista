@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { PeriodComparisonToggle, getPeriodLabel } from "./PeriodComparisonToggle";
+import { createComparisonLineChart, createComparisonBarChart, createComparisonLayout, generateMockDataByPeriod } from "./chartComparisonUtils";
 
 export const WhitepaperAnalyticsConsumption = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
@@ -14,22 +15,26 @@ export const WhitepaperAnalyticsConsumption = () => {
 
   const initializeCharts = () => {
     const Plotly = (window as any).Plotly;
+    const getData = generateMockDataByPeriod('weekly');
 
     // Leitura Semanal
-    const weeklyData = [{
-      x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
-      y: [1, 2, 2, 3, 2, 1, 0],
-      type: 'bar',
-      marker: { color: '#B8D4E8' }
-    }];
+    const currentData = getData(selectedPeriod);
+    const comparisonData = comparisonMode ? getData(comparisonPeriod) : null;
+    
+    const weeklyTraces = createComparisonBarChart({
+      currentData,
+      comparisonData,
+      currentPeriod: selectedPeriod,
+      comparisonPeriod,
+      comparisonMode,
+      chartType: 'bar'
+    });
 
-    Plotly.newPlot('whitepaper-weekly-chart', weeklyData, {
+    Plotly.newPlot('whitepaper-weekly-chart', weeklyTraces, createComparisonLayout(comparisonMode, {
       margin: { l: 40, r: 20, t: 20, b: 40 },
-      xaxis: { gridcolor: '#f1f5f9' },
-      yaxis: { gridcolor: '#f1f5f9', title: 'Whitepapers Lidos' },
-      plot_bgcolor: '#ffffff',
-      paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
+      xaxis: { gridcolor: '#f1f5f9', tickangle: 0 },
+      yaxis: { gridcolor: '#f1f5f9', title: 'Whitepapers Lidos' }
+    }), { displayModeBar: false });
 
     // Whitepapers por Categoria
     const categoriesData = [{
@@ -47,38 +52,41 @@ export const WhitepaperAnalyticsConsumption = () => {
     }, { displayModeBar: false });
 
     // Tempo de Leitura
-    const timeData = [{
-      x: ['0-1h', '1-2h', '2-3h', '3h+'],
-      y: [6, 15, 12, 8],
-      type: 'bar',
-      marker: { color: ['#E8C5D8', '#E8E0C5', '#C5E8D4', '#B8D4E8'] }
-    }];
+    const getTimeData = generateMockDataByPeriod('completion');
+    const currentTimeData = getTimeData(selectedPeriod);
+    const comparisonTimeData = comparisonMode ? getTimeData(comparisonPeriod) : null;
+    
+    const timeTraces = createComparisonBarChart({
+      currentData: currentTimeData,
+      comparisonData: comparisonTimeData,
+      currentPeriod: selectedPeriod,
+      comparisonPeriod,
+      comparisonMode,
+      chartType: 'bar'
+    });
 
-    Plotly.newPlot('whitepaper-time-chart', timeData, {
+    Plotly.newPlot('whitepaper-time-chart', timeTraces, createComparisonLayout(comparisonMode, {
       margin: { l: 40, r: 20, t: 20, b: 40 },
-      xaxis: { gridcolor: '#f1f5f9', title: 'Tempo de Leitura' },
-      yaxis: { gridcolor: '#f1f5f9', title: 'Whitepapers' },
-      plot_bgcolor: '#ffffff',
-      paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
+      xaxis: { gridcolor: '#f1f5f9', title: 'Tempo de Leitura', tickangle: 0 },
+      yaxis: { gridcolor: '#f1f5f9', title: 'Whitepapers' }
+    }), { displayModeBar: false });
 
     // Engajamento Mensal
-    const monthlyData = [{
-      x: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
-      y: [6, 8, 9, 11, 10, 13],
-      type: 'scatter',
-      mode: 'lines+markers',
-      line: { color: '#B8D4E8', width: 3 },
-      marker: { size: 8, color: '#B8D4E8' }
-    }];
+    const monthlyTraces = createComparisonLineChart({
+      currentData,
+      comparisonData,
+      currentPeriod: selectedPeriod,
+      comparisonPeriod,
+      comparisonMode,
+      chartType: 'line',
+      title: 'Whitepapers Lidos'
+    });
 
-    Plotly.newPlot('whitepaper-monthly-chart', monthlyData, {
+    Plotly.newPlot('whitepaper-monthly-chart', monthlyTraces, createComparisonLayout(comparisonMode, {
       margin: { l: 40, r: 20, t: 20, b: 40 },
-      xaxis: { gridcolor: '#f1f5f9' },
-      yaxis: { gridcolor: '#f1f5f9', title: 'Whitepapers Lidos' },
-      plot_bgcolor: '#ffffff',
-      paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
+      xaxis: { gridcolor: '#f1f5f9', tickangle: 0 },
+      yaxis: { gridcolor: '#f1f5f9', title: 'Whitepapers Lidos' }
+    }), { displayModeBar: false });
   };
 
   return (

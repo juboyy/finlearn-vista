@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { PeriodComparisonToggle, getPeriodLabel } from "./PeriodComparisonToggle";
+import { createComparisonLineChart, createComparisonBarChart, createComparisonLayout, generateMockDataByPeriod } from "./chartComparisonUtils";
 
 export const WebinarsAnalyticsConsumption = () => {
   const [insights, setInsights] = useState<string>("");
@@ -93,22 +94,26 @@ export const WebinarsAnalyticsConsumption = () => {
   const initializeCharts = () => {
     const periodData = getDataByPeriod();
     const Plotly = (window as any).Plotly;
+    const getData = generateMockDataByPeriod('weekly');
 
     // Participação Semanal
-    const participationData = [{
-      x: periodData.weekly.x,
-      y: periodData.weekly.y,
-      type: 'bar',
-      marker: { color: '#F4C8D8' }
-    }];
+    const currentData = getData(selectedPeriod);
+    const comparisonData = comparisonMode ? getData(comparisonPeriod) : null;
+    
+    const weeklyTraces = createComparisonBarChart({
+      currentData,
+      comparisonData,
+      currentPeriod: selectedPeriod,
+      comparisonPeriod,
+      comparisonMode,
+      chartType: 'bar'
+    });
 
-    Plotly.newPlot('webinars-participation-chart', participationData, {
+    Plotly.newPlot('webinars-participation-chart', weeklyTraces, createComparisonLayout(comparisonMode, {
       margin: { l: 40, r: 20, t: 20, b: 40 },
-      xaxis: { gridcolor: '#f1f5f9' },
-      yaxis: { gridcolor: '#f1f5f9', title: 'Webinars Assistidos' },
-      plot_bgcolor: '#ffffff',
-      paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
+      xaxis: { gridcolor: '#f1f5f9', tickangle: 0 },
+      yaxis: { gridcolor: '#f1f5f9', title: 'Webinars Assistidos' }
+    }), { displayModeBar: false });
 
     // Webinars por Categoria
     const categoriesData = [{
@@ -135,60 +140,61 @@ export const WebinarsAnalyticsConsumption = () => {
     });
 
     // Tempo de Participação
-    const timeData = [{
-      x: ['0-25%', '26-50%', '51-75%', '76-100%'],
-      y: [5, 12, 18, 32],
-      type: 'bar',
-      marker: { color: ['#E8C5D8', '#E8E0C5', '#C5E8D4', '#F4C8D8'] }
-    }];
+    const getTimeData = generateMockDataByPeriod('completion');
+    const currentTimeData = getTimeData(selectedPeriod);
+    const comparisonTimeData = comparisonMode ? getTimeData(comparisonPeriod) : null;
+    
+    const timeTraces = createComparisonBarChart({
+      currentData: currentTimeData,
+      comparisonData: comparisonTimeData,
+      currentPeriod: selectedPeriod,
+      comparisonPeriod,
+      comparisonMode,
+      chartType: 'bar'
+    });
 
-    Plotly.newPlot('webinars-time-chart', timeData, {
+    Plotly.newPlot('webinars-time-chart', timeTraces, createComparisonLayout(comparisonMode, {
       margin: { l: 40, r: 20, t: 20, b: 40 },
-      xaxis: { gridcolor: '#f1f5f9', title: 'Tempo Assistido' },
-      yaxis: { gridcolor: '#f1f5f9', title: 'Webinars' },
-      plot_bgcolor: '#ffffff',
-      paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
+      xaxis: { gridcolor: '#f1f5f9', title: 'Tempo Assistido', tickangle: 0 },
+      yaxis: { gridcolor: '#f1f5f9', title: 'Webinars' }
+    }), { displayModeBar: false });
 
     // Engajamento Mensal
-    const monthlyData = [{
-      x: selectedPeriod === '7d' ? ['Dia 1', 'Dia 2', 'Dia 3', 'Dia 4', 'Dia 5', 'Dia 6', 'Dia 7'] :
-         selectedPeriod === '30d' ? ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4'] :
-         selectedPeriod === '90d' ? ['Mês 1', 'Mês 2', 'Mês 3'] :
-         ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-      y: selectedPeriod === '7d' ? [2, 3, 2, 4, 3, 1, 0] :
-         selectedPeriod === '30d' ? [12, 15, 14, 18] :
-         selectedPeriod === '90d' ? [42, 52, 56] :
-         [52, 58, 62, 68, 72, 75, 78, 82, 85, 88, 92, 96],
-      type: 'scatter',
-      mode: 'lines+markers',
-      line: { color: '#F4C8D8', width: 3 },
-      marker: { size: 8, color: '#F4C8D8' }
-    }];
+    const monthlyTraces = createComparisonLineChart({
+      currentData,
+      comparisonData,
+      currentPeriod: selectedPeriod,
+      comparisonPeriod,
+      comparisonMode,
+      chartType: 'line',
+      title: 'Webinars Participados'
+    });
 
-    Plotly.newPlot('webinars-monthly-chart', monthlyData, {
+    Plotly.newPlot('webinars-monthly-chart', monthlyTraces, createComparisonLayout(comparisonMode, {
       margin: { l: 40, r: 20, t: 20, b: 40 },
-      xaxis: { gridcolor: '#f1f5f9' },
-      yaxis: { gridcolor: '#f1f5f9', title: 'Webinars Participados' },
-      plot_bgcolor: '#ffffff',
-      paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
+      xaxis: { gridcolor: '#f1f5f9', tickangle: 0 },
+      yaxis: { gridcolor: '#f1f5f9', title: 'Webinars Participados' }
+    }), { displayModeBar: false });
 
     // Taxa de Conclusão
-    const completionData = [{
-      x: ['0-25%', '26-50%', '51-75%', '76-100%'],
-      y: [8, 15, 22, 55],
-      type: 'bar',
-      marker: { color: '#C5E8D4' }
-    }];
+    const getCompletionData = generateMockDataByPeriod('completion');
+    const currentCompletionData = getCompletionData(selectedPeriod);
+    const comparisonCompletionData = comparisonMode ? getCompletionData(comparisonPeriod) : null;
+    
+    const completionTraces = createComparisonBarChart({
+      currentData: currentCompletionData,
+      comparisonData: comparisonCompletionData,
+      currentPeriod: selectedPeriod,
+      comparisonPeriod,
+      comparisonMode,
+      chartType: 'bar'
+    });
 
-    Plotly.newPlot('webinars-completion-chart', completionData, {
+    Plotly.newPlot('webinars-completion-chart', completionTraces, createComparisonLayout(comparisonMode, {
       margin: { l: 40, r: 20, t: 20, b: 40 },
-      xaxis: { gridcolor: '#f1f5f9', title: 'Taxa de Conclusão' },
-      yaxis: { gridcolor: '#f1f5f9', title: 'Quantidade' },
-      plot_bgcolor: '#ffffff',
-      paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
+      xaxis: { gridcolor: '#f1f5f9', title: 'Taxa de Conclusão', tickangle: 0 },
+      yaxis: { gridcolor: '#f1f5f9', title: 'Quantidade' }
+    }), { displayModeBar: false });
 
     // Interação por Horário
     const hourlyData = [{

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { PeriodComparisonToggle, getPeriodLabel } from "./PeriodComparisonToggle";
+import { createComparisonLineChart, createComparisonBarChart, createComparisonLayout, generateMockDataByPeriod } from "./chartComparisonUtils";
 
 export const LiveAnalyticsConsumption = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
@@ -14,22 +15,26 @@ export const LiveAnalyticsConsumption = () => {
 
   const initializeCharts = () => {
     const Plotly = (window as any).Plotly;
+    const getData = generateMockDataByPeriod('weekly');
 
     // Participação Semanal
-    const weeklyData = [{
-      x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
-      y: [1, 2, 1, 3, 2, 0, 0],
-      type: 'bar',
-      marker: { color: '#C5E8D4' }
-    }];
+    const currentData = getData(selectedPeriod);
+    const comparisonData = comparisonMode ? getData(comparisonPeriod) : null;
+    
+    const weeklyTraces = createComparisonBarChart({
+      currentData,
+      comparisonData,
+      currentPeriod: selectedPeriod,
+      comparisonPeriod,
+      comparisonMode,
+      chartType: 'bar'
+    });
 
-    Plotly.newPlot('live-weekly-chart', weeklyData, {
+    Plotly.newPlot('live-weekly-chart', weeklyTraces, createComparisonLayout(comparisonMode, {
       margin: { l: 40, r: 20, t: 20, b: 40 },
-      xaxis: { gridcolor: '#f1f5f9' },
-      yaxis: { gridcolor: '#f1f5f9', title: 'Lives Assistidas' },
-      plot_bgcolor: '#ffffff',
-      paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
+      xaxis: { gridcolor: '#f1f5f9', tickangle: 0 },
+      yaxis: { gridcolor: '#f1f5f9', title: 'Lives Assistidas' }
+    }), { displayModeBar: false });
 
     // Lives por Tema
     const topicsData = [{
@@ -47,38 +52,41 @@ export const LiveAnalyticsConsumption = () => {
     }, { displayModeBar: false });
 
     // Tempo de Participação
-    const timeData = [{
-      x: ['0-25%', '26-50%', '51-75%', '76-100%'],
-      y: [3, 8, 12, 18],
-      type: 'bar',
-      marker: { color: ['#E8C5D8', '#E8E0C5', '#C5E8D4', '#B8D4E8'] }
-    }];
+    const getTimeData = generateMockDataByPeriod('completion');
+    const currentTimeData = getTimeData(selectedPeriod);
+    const comparisonTimeData = comparisonMode ? getTimeData(comparisonPeriod) : null;
+    
+    const timeTraces = createComparisonBarChart({
+      currentData: currentTimeData,
+      comparisonData: comparisonTimeData,
+      currentPeriod: selectedPeriod,
+      comparisonPeriod,
+      comparisonMode,
+      chartType: 'bar'
+    });
 
-    Plotly.newPlot('live-time-chart', timeData, {
+    Plotly.newPlot('live-time-chart', timeTraces, createComparisonLayout(comparisonMode, {
       margin: { l: 40, r: 20, t: 20, b: 40 },
-      xaxis: { gridcolor: '#f1f5f9', title: 'Tempo Assistido' },
-      yaxis: { gridcolor: '#f1f5f9', title: 'Lives' },
-      plot_bgcolor: '#ffffff',
-      paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
+      xaxis: { gridcolor: '#f1f5f9', title: 'Tempo Assistido', tickangle: 0 },
+      yaxis: { gridcolor: '#f1f5f9', title: 'Lives' }
+    }), { displayModeBar: false });
 
     // Engajamento Mensal
-    const monthlyData = [{
-      x: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
-      y: [6, 8, 10, 9, 12, 14],
-      type: 'scatter',
-      mode: 'lines+markers',
-      line: { color: '#C5E8D4', width: 3 },
-      marker: { size: 8, color: '#C5E8D4' }
-    }];
+    const monthlyTraces = createComparisonLineChart({
+      currentData,
+      comparisonData,
+      currentPeriod: selectedPeriod,
+      comparisonPeriod,
+      comparisonMode,
+      chartType: 'line',
+      title: 'Lives Participadas'
+    });
 
-    Plotly.newPlot('live-monthly-chart', monthlyData, {
+    Plotly.newPlot('live-monthly-chart', monthlyTraces, createComparisonLayout(comparisonMode, {
       margin: { l: 40, r: 20, t: 20, b: 40 },
-      xaxis: { gridcolor: '#f1f5f9' },
-      yaxis: { gridcolor: '#f1f5f9', title: 'Lives Participadas' },
-      plot_bgcolor: '#ffffff',
-      paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
+      xaxis: { gridcolor: '#f1f5f9', tickangle: 0 },
+      yaxis: { gridcolor: '#f1f5f9', title: 'Lives Participadas' }
+    }), { displayModeBar: false });
   };
 
   return (
