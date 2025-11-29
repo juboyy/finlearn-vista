@@ -1,5 +1,12 @@
+import { useState } from "react";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { Bell, Filter, Ticket, Calendar, MapPin, Users, Mic, Clock, Tag, Star, ArrowUp, ArrowRight, ChevronLeft, ChevronRight, CalendarCheck, Presentation, GraduationCap, Handshake, Award, Wine } from "lucide-react";
+import { Bell, Filter, Ticket, Calendar, MapPin, Users, Mic, Clock, Tag, Star, ArrowUp, ArrowRight, ChevronLeft, ChevronRight, CalendarCheck, Presentation, GraduationCap, Handshake, Award, Wine, X } from "lucide-react";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Slider } from "@/components/ui/slider";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import eventoConferenciaFintech from "@/assets/evento-conferencia-fintech.png";
 import eventoWorkshopPagamentos from "@/assets/evento-workshop-pagamentos.png";
 import eventoNetworkingPremium from "@/assets/evento-networking-premium.png";
@@ -8,6 +15,43 @@ import eventoCertificacaoBacen from "@/assets/evento-certificacao-bacen.png";
 import eventoMesaRedondaRegulacao from "@/assets/evento-mesa-redonda-regulacao.png";
 
 export default function EventosPresenciais() {
+  const [filterOpen, setFilterOpen] = useState(false);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
+  const [selectedSpeakers, setSelectedSpeakers] = useState<string[]>([]);
+  const [priceRange, setPriceRange] = useState([0, 2000]);
+  const [dateRange, setDateRange] = useState({ start: "", end: "" });
+
+  const categories = ["Workshop", "Conferência", "Networking", "Certificação", "Treinamento", "Mesa Redonda"];
+  const locations = ["São Paulo - SP", "Rio de Janeiro - RJ", "Brasília - DF", "Belo Horizonte - MG", "Curitiba - PR", "Porto Alegre - RS"];
+  const speakers = ["Dr. Ricardo Almeida", "Ana Paula Santos", "Carlos Eduardo Mendes", "Dra. Fernanda Lima", "Prof. João Silva", "Marina Costa"];
+
+  const handleCategoryToggle = (category: string) => {
+    setSelectedCategories(prev => 
+      prev.includes(category) ? prev.filter(c => c !== category) : [...prev, category]
+    );
+  };
+
+  const handleLocationToggle = (location: string) => {
+    setSelectedLocations(prev => 
+      prev.includes(location) ? prev.filter(l => l !== location) : [...prev, location]
+    );
+  };
+
+  const handleSpeakerToggle = (speaker: string) => {
+    setSelectedSpeakers(prev => 
+      prev.includes(speaker) ? prev.filter(s => s !== speaker) : [...prev, speaker]
+    );
+  };
+
+  const clearFilters = () => {
+    setSelectedCategories([]);
+    setSelectedLocations([]);
+    setSelectedSpeakers([]);
+    setPriceRange([0, 2000]);
+    setDateRange({ start: "", end: "" });
+  };
+
   return (
     <div className="flex h-screen overflow-hidden">
       <SidebarFix />
@@ -21,7 +65,10 @@ export default function EventosPresenciais() {
                 <p className="text-slate-600">Conecte-se pessoalmente com profissionais do mercado financeiro</p>
               </div>
               <div className="flex items-center gap-3">
-                <button className="px-4 py-2 bg-white border border-slate-200 text-slate-700 rounded-lg font-medium hover:bg-slate-50 transition flex items-center gap-2">
+                <button 
+                  onClick={() => setFilterOpen(true)}
+                  className="px-4 py-2 bg-white border border-slate-200 text-slate-700 rounded-lg font-medium hover:bg-slate-50 transition flex items-center gap-2"
+                >
                   <Filter className="w-4 h-4" />
                   Filtros
                 </button>
@@ -552,6 +599,146 @@ export default function EventosPresenciais() {
           </section>
         </div>
       </main>
+
+      <Sheet open={filterOpen} onOpenChange={setFilterOpen}>
+        <SheetContent className="w-[400px] sm:w-[540px] overflow-y-auto">
+          <SheetHeader>
+            <SheetTitle className="text-slate-800">Filtros de Eventos</SheetTitle>
+            <SheetDescription className="text-slate-600">
+              Personalize sua busca por eventos presenciais
+            </SheetDescription>
+          </SheetHeader>
+
+          <div className="space-y-6 mt-6">
+            {/* Categoria */}
+            <div>
+              <Label className="text-sm font-semibold text-slate-800 mb-3 block">Categoria</Label>
+              <div className="space-y-2">
+                {categories.map((category) => (
+                  <div key={category} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`category-${category}`}
+                      checked={selectedCategories.includes(category)}
+                      onCheckedChange={() => handleCategoryToggle(category)}
+                    />
+                    <label
+                      htmlFor={`category-${category}`}
+                      className="text-sm text-slate-700 cursor-pointer"
+                    >
+                      {category}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Local */}
+            <div>
+              <Label className="text-sm font-semibold text-slate-800 mb-3 block">Local</Label>
+              <div className="space-y-2">
+                {locations.map((location) => (
+                  <div key={location} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`location-${location}`}
+                      checked={selectedLocations.includes(location)}
+                      onCheckedChange={() => handleLocationToggle(location)}
+                    />
+                    <label
+                      htmlFor={`location-${location}`}
+                      className="text-sm text-slate-700 cursor-pointer"
+                    >
+                      {location}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Faixa de Preço */}
+            <div>
+              <Label className="text-sm font-semibold text-slate-800 mb-3 block">
+                Faixa de Preço: R$ {priceRange[0]} - R$ {priceRange[1]}
+              </Label>
+              <Slider
+                value={priceRange}
+                onValueChange={setPriceRange}
+                max={2000}
+                min={0}
+                step={50}
+                className="mt-2"
+              />
+              <div className="flex justify-between mt-2">
+                <span className="text-xs text-slate-500">R$ 0</span>
+                <span className="text-xs text-slate-500">R$ 2.000</span>
+              </div>
+            </div>
+
+            {/* Data */}
+            <div>
+              <Label className="text-sm font-semibold text-slate-800 mb-3 block">Período</Label>
+              <div className="space-y-3">
+                <div>
+                  <Label className="text-xs text-slate-600 mb-1 block">Data Inicial</Label>
+                  <Input
+                    type="date"
+                    value={dateRange.start}
+                    onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
+                    className="bg-white border-slate-200"
+                  />
+                </div>
+                <div>
+                  <Label className="text-xs text-slate-600 mb-1 block">Data Final</Label>
+                  <Input
+                    type="date"
+                    value={dateRange.end}
+                    onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
+                    className="bg-white border-slate-200"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Palestrantes */}
+            <div>
+              <Label className="text-sm font-semibold text-slate-800 mb-3 block">Palestrantes</Label>
+              <div className="space-y-2">
+                {speakers.map((speaker) => (
+                  <div key={speaker} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`speaker-${speaker}`}
+                      checked={selectedSpeakers.includes(speaker)}
+                      onCheckedChange={() => handleSpeakerToggle(speaker)}
+                    />
+                    <label
+                      htmlFor={`speaker-${speaker}`}
+                      className="text-sm text-slate-700 cursor-pointer"
+                    >
+                      {speaker}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Botões de Ação */}
+            <div className="flex gap-3 pt-4 border-t border-slate-200">
+              <Button
+                variant="outline"
+                onClick={clearFilters}
+                className="flex-1 border-slate-200 text-slate-700 hover:bg-slate-50"
+              >
+                Limpar Filtros
+              </Button>
+              <Button
+                onClick={() => setFilterOpen(false)}
+                className="flex-1 bg-pastel-blue text-slate-800 hover:bg-pastel-blue/80"
+              >
+                Aplicar Filtros
+              </Button>
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }
