@@ -13,9 +13,9 @@ export const ProgressBar = ({ label, progress, barColor }: ProgressBarProps) => 
         <p className="text-sm font-medium text-foreground">{label}</p>
         <p className="text-sm font-medium text-muted-foreground">{progress}%</p>
       </div>
-      <div className="w-full bg-slate-100 rounded-full h-2">
+      <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
         <div 
-          className={cn("h-2 rounded-full", barColor)} 
+          className={cn("h-2 rounded-full transition-all duration-1000 ease-out", barColor)} 
           style={{ width: `${progress}%` }}
         />
       </div>
