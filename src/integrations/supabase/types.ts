@@ -1147,6 +1147,42 @@ export type Database = {
         }
         Relationships: []
       }
+      saved_chart_analyses: {
+        Row: {
+          analysis_content: string
+          chart_data: Json
+          chart_title: string
+          created_at: string
+          id: string
+          metric_type: string
+          selection_area: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          analysis_content: string
+          chart_data: Json
+          chart_title: string
+          created_at?: string
+          id?: string
+          metric_type: string
+          selection_area?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          analysis_content?: string
+          chart_data?: Json
+          chart_title?: string
+          created_at?: string
+          id?: string
+          metric_type?: string
+          selection_area?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       saved_charts: {
         Row: {
           chart_data: Json
