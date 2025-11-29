@@ -189,6 +189,54 @@ export const LiveAnalyticsConsumption = () => {
         </div>
       </div>
 
+      {/* Creators Mais Assistidos */}
+      <div className="bg-white rounded-xl p-6 border border-slate-200">
+        <div className="flex items-center justify-between mb-3">
+          <span className="text-sm text-slate-500 font-medium">Hosts Mais Assistidos</span>
+          <i className="fas fa-users text-slate-400"></i>
+        </div>
+        <div className="space-y-2">
+          <div className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-full bg-[hsl(206,35%,75%)] flex items-center justify-center text-xs font-bold text-slate-700">CM</div>
+            <div className="flex-1 min-w-0">
+              <p className="text-xs font-bold text-slate-800 truncate">Dr. Carlos Mendes</p>
+              <p className="text-[10px] text-slate-500">12 lives</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-full bg-[hsl(142,35%,75%)] flex items-center justify-center text-xs font-bold text-slate-700">FB</div>
+            <div className="flex-1 min-w-0">
+              <p className="text-xs font-bold text-slate-800 truncate">Fintech Brasil</p>
+              <p className="text-[10px] text-slate-500">10 lives</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Progresso de Meta do Mês */}
+      <div className="bg-white rounded-xl p-6 border border-slate-200">
+        <div className="flex items-center justify-between mb-3">
+          <span className="text-sm text-slate-500 font-medium">Meta do Mês</span>
+          <i className="fas fa-target text-slate-400"></i>
+        </div>
+        <div className="space-y-2">
+          <div>
+            <div className="flex items-center justify-between mb-1.5">
+              <p className="text-xs font-bold text-slate-800">8 de 10 lives</p>
+              <p className="text-[10px] font-bold text-slate-600">80%</p>
+            </div>
+            <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+              <div className="h-full bg-[hsl(142,35%,65%)] rounded-full" style={{ width: '80%' }}></div>
+            </div>
+          </div>
+          <p className="text-[10px] text-slate-500">Faltam 2 lives</p>
+          <div className="flex items-center gap-1.5 pt-1">
+            <i className="fas fa-fire text-orange-500 text-xs"></i>
+            <p className="text-[10px] font-bold text-slate-700">Sequência de 18 dias!</p>
+          </div>
+        </div>
+       </div>
+
       {/* Charts Grid */}
       <div className="grid grid-cols-2 gap-6 mb-8">
         <div className="bg-white rounded-xl p-6 border border-slate-200">
