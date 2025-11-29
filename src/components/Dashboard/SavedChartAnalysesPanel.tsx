@@ -197,7 +197,7 @@ const AnalysisCard = ({ analysis, onDelete }: AnalysisCardProps) => {
   };
 
   return (
-    <div className="bg-card border-2 border-slate-700 rounded-xl p-4 space-y-3 hover:border-slate-600 transition-colors">
+    <div className="bg-card border-2 border-slate-700 rounded-xl p-5 space-y-4 hover:border-slate-600 transition-colors">
       {/* Header */}
       <div className="flex items-start justify-between gap-2">
         <div className="flex-1 min-w-0">
