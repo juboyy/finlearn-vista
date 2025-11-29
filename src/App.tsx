@@ -127,6 +127,7 @@ import Live from "./pages/Live";
 import Entrevistas from "./pages/Entrevistas";
 import WebinarDetalhes from "./pages/WebinarDetalhes";
 import EventosPresenciais from "./pages/EventosPresenciais";
+import MeusIngressos from "./pages/MeusIngressos";
 
 import NotFound from "./pages/NotFound";
 
@@ -270,6 +271,7 @@ const App = () => {
           <Route path="/entrevistas" element={<Entrevistas />} />
           <Route path="/webinar-detalhes" element={<WebinarDetalhes />} />
           <Route path="/eventos-presenciais" element={<EventosPresenciais />} />
+          <Route path="/meus-ingressos" element={<MeusIngressos />} />
            
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

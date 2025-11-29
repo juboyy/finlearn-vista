@@ -75,7 +75,10 @@ export default function EventosPresenciais() {
                   <Filter className="w-4 h-4" />
                   Filtros
                 </button>
-                <button className="px-4 py-2 bg-pastel-yellow text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2">
+                <button 
+                  onClick={() => window.location.href = '/meus-ingressos'}
+                  className="px-4 py-2 bg-pastel-yellow text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2"
+                >
                   <Ticket className="w-4 h-4" />
                   Meus Ingressos
                 </button>
