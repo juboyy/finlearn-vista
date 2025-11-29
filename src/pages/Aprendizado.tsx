@@ -3241,6 +3241,10 @@ const Aprendizado = () => {
                     <div className="p-4">
                       <span className="px-2 py-1 bg-pastel-blue text-slate-700 text-xs rounded-full">Análise Técnica</span>
                       <h3 className="font-medium text-slate-800 mt-3 mb-2 line-clamp-2">Padrões Gráficos Avançados</h3>
+                      <p className="text-xs text-slate-600 mb-2 flex items-center gap-1">
+                        <i className="fas fa-user-circle"></i>
+                        <span>Dr. Ricardo Martins</span>
+                      </p>
                       <div className="flex items-center gap-2 text-xs text-slate-500 mb-3">
                         <i className="fas fa-clock"></i>
                         <span>1h 45min</span>
@@ -3265,6 +3269,10 @@ const Aprendizado = () => {
                     <div className="p-4">
                       <span className="px-2 py-1 bg-pastel-purple text-slate-700 text-xs rounded-full">DeFi</span>
                       <h3 className="font-medium text-slate-800 mt-3 mb-2 line-clamp-2">Finanças Descentralizadas</h3>
+                      <p className="text-xs text-slate-600 mb-2 flex items-center gap-1">
+                        <i className="fas fa-user-circle"></i>
+                        <span>Profa. Ana Carolina Souza</span>
+                      </p>
                       <div className="flex items-center gap-2 text-xs text-slate-500 mb-3">
                         <i className="fas fa-clock"></i>
                         <span>2h 15min</span>
@@ -3289,6 +3297,10 @@ const Aprendizado = () => {
                     <div className="p-4">
                       <span className="px-2 py-1 bg-pastel-pink text-slate-700 text-xs rounded-full">Gestão de Risco</span>
                       <h3 className="font-medium text-slate-800 mt-3 mb-2 line-clamp-2">Proteção de Carteiras</h3>
+                      <p className="text-xs text-slate-600 mb-2 flex items-center gap-1">
+                        <i className="fas fa-user-circle"></i>
+                        <span>Carlos Eduardo Lima</span>
+                      </p>
                       <div className="flex items-center gap-2 text-xs text-slate-500 mb-3">
                         <i className="fas fa-clock"></i>
                         <span>1h 30min</span>
@@ -3313,6 +3325,10 @@ const Aprendizado = () => {
                     <div className="p-4">
                       <span className="px-2 py-1 bg-pastel-green text-slate-700 text-xs rounded-full">Value Investing</span>
                       <h3 className="font-medium text-slate-800 mt-3 mb-2 line-clamp-2">Análise Fundamentalista</h3>
+                      <p className="text-xs text-slate-600 mb-2 flex items-center gap-1">
+                        <i className="fas fa-user-circle"></i>
+                        <span>Dr. Fernando Oliveira</span>
+                      </p>
                       <div className="flex items-center gap-2 text-xs text-slate-500 mb-3">
                         <i className="fas fa-clock"></i>
                         <span>2h 00min</span>
