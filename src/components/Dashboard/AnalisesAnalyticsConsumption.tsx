@@ -142,9 +142,9 @@ export const AnalisesAnalyticsConsumption = () => {
         </button>
       </div>
 
-      {/* KPIs */}
-      <div className="grid grid-cols-6 gap-6 mb-8">
-        <div className="bg-white rounded-xl p-6 border border-slate-200">
+      {/* Main KPIs - 5 cards inline */}
+      <div className="flex gap-6 mb-8">
+        <div className="bg-white rounded-xl p-6 border border-slate-200 flex-1">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-slate-500 font-medium">Total Lidas</span>
             <i className="fas fa-chart-line text-slate-400"></i>
@@ -156,7 +156,7 @@ export const AnalisesAnalyticsConsumption = () => {
           </p>
         </div>
 
-        <div className="bg-white rounded-xl p-6 border border-slate-200">
+        <div className="bg-white rounded-xl p-6 border border-slate-200 flex-1">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-slate-500 font-medium">Tempo Total</span>
             <i className="fas fa-clock text-slate-400"></i>
@@ -168,7 +168,7 @@ export const AnalisesAnalyticsConsumption = () => {
           </p>
         </div>
 
-        <div className="bg-white rounded-xl p-6 border border-slate-200">
+        <div className="bg-white rounded-xl p-6 border border-slate-200 flex-1">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-slate-500 font-medium">Média Semanal</span>
             <i className="fas fa-calendar-week text-slate-400"></i>
@@ -179,7 +179,7 @@ export const AnalisesAnalyticsConsumption = () => {
           </p>
         </div>
 
-        <div className="bg-white rounded-xl p-6 border border-slate-200">
+        <div className="bg-white rounded-xl p-6 border border-slate-200 flex-1">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-slate-500 font-medium">Ativos Analisados</span>
             <i className="fas fa-coins text-slate-400"></i>
@@ -190,19 +190,121 @@ export const AnalisesAnalyticsConsumption = () => {
           </p>
         </div>
 
-        <ConsumptionAnalyticsCards
-          creatorsTitle="Analistas Mais Lidos"
-          creators={[
-            { initials: 'TP', name: 'Trading Pro', count: '28 análises', bgColor: 'bg-pastel-green' },
-            { initials: 'FU', name: 'Fundamentus', count: '22 análises', bgColor: 'bg-pastel-blue' },
-            { initials: 'MI', name: 'Macro Insights', count: '18 análises', bgColor: 'bg-pastel-pink' }
-          ]}
-          goalTitle="Meta de Análises do Mês"
-          goalCurrent={93}
-          goalTotal={100}
-          goalUnit="análises"
-          streak={12}
-        />
+        <div className="bg-white rounded-xl p-6 border border-slate-200 flex-1">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Taxa de Retenção</span>
+            <i className="fas fa-check-circle text-slate-400"></i>
+          </div>
+          <p className="text-3xl font-bold text-slate-800">78%</p>
+          <p className="text-xs text-slate-500 font-medium mt-2">
+            Leitores recorrentes
+          </p>
+        </div>
+      </div>
+
+      {/* Meta + Top Creators Row */}
+      <div className="grid grid-cols-3 gap-6 mb-8">
+        <div className="col-span-2 bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-sm text-slate-500 font-medium">Meta de Análises do Mês</span>
+            <i className="fas fa-target text-slate-400"></i>
+          </div>
+          <div className="space-y-2">
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <p className="text-xs font-bold text-slate-800">93 de 100 análises</p>
+                <p className="text-[10px] font-bold text-slate-600">93%</p>
+              </div>
+              <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                <div className="h-full bg-[hsl(142,35%,65%)] rounded-full" style={{ width: '93%' }}></div>
+              </div>
+            </div>
+            <p className="text-[10px] text-slate-500">Faltam 7 análises</p>
+            <div className="flex items-center gap-1.5 pt-1">
+              <i className="fas fa-fire text-orange-500 text-xs"></i>
+              <p className="text-[10px] font-bold text-slate-700">Sequência de 12 dias!</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-sm text-slate-500 font-medium">Analistas Mais Lidos</span>
+            <i className="fas fa-users text-slate-400"></i>
+          </div>
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-full bg-[hsl(142,35%,75%)] flex items-center justify-center text-xs font-bold text-slate-700">TP</div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-bold text-slate-800 truncate">Trading Pro</p>
+                <p className="text-[10px] text-slate-500">28 análises</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-full bg-[hsl(206,35%,75%)] flex items-center justify-center text-xs font-bold text-slate-700">FU</div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-bold text-slate-800 truncate">Fundamentus</p>
+                <p className="text-[10px] text-slate-500">22 análises</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 4 Additional Cards Grid */}
+      <div className="grid grid-cols-4 gap-6 mb-8">
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Destaques Feitos</span>
+            <i className="fas fa-highlighter text-slate-400"></i>
+          </div>
+          <p className="text-2xl font-bold text-slate-800">142</p>
+          <p className="text-xs text-slate-500 font-medium mt-2">Em análises</p>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Notas Adicionadas</span>
+            <i className="fas fa-sticky-note text-slate-400"></i>
+          </div>
+          <p className="text-2xl font-bold text-slate-800">87</p>
+          <p className="text-xs text-slate-500 font-medium mt-2">Anotações pessoais</p>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Downloads</span>
+            <i className="fas fa-download text-slate-400"></i>
+          </div>
+          <p className="text-2xl font-bold text-slate-800">34</p>
+          <p className="text-xs text-slate-500 font-medium mt-2">Salvos localmente</p>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Compartilhamentos</span>
+            <i className="fas fa-share text-slate-400"></i>
+          </div>
+          <p className="text-2xl font-bold text-slate-800">18</p>
+          <p className="text-xs text-slate-500 font-medium mt-2">Com sua rede</p>
+        </div>
+      </div>
+
+      {/* AI Insights with Agent Avatar */}
+      <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 mb-8 border border-blue-100">
+        <div className="flex items-start gap-3">
+          <img 
+            src="/src/assets/auxiliar-do-dia-avatar.png" 
+            alt="AI Agent" 
+            className="w-10 h-10 rounded-full flex-shrink-0"
+          />
+          <div className="flex-1">
+            <h3 className="text-lg font-semibold text-slate-800 mb-2">Insights Personalizados por IA</h3>
+            <p className="text-slate-700 leading-relaxed">
+              Sua análise de consumo mostra alto engajamento com análises técnicas. Continue focando em análises de qualidade e diversifique entre análises fundamentalistas e macroeconômicas para uma visão mais completa do mercado.
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Charts Grid */}

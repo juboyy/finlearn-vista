@@ -1,6 +1,8 @@
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useEffect, useState } from "react";
 import { PeriodComparisonToggle, getPeriodLabel } from "./PeriodComparisonToggle";
 import { createComparisonLineChart, createComparisonBarChart, createComparisonLayout, generateMockDataByPeriod } from "./chartComparisonUtils";
+import { ConsumptionAnalyticsCards } from "./ConsumptionAnalyticsCards";
 
 export const LiveAnalyticsConsumption = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
@@ -140,9 +142,9 @@ export const LiveAnalyticsConsumption = () => {
         </button>
       </div>
 
-      {/* KPIs */}
-      <div className="grid grid-cols-4 gap-6 mb-8">
-        <div className="bg-white rounded-xl p-6 border border-slate-200">
+      {/* Main KPIs - 5 cards inline */}
+      <div className="flex gap-6 mb-8">
+        <div className="bg-white rounded-xl p-6 border border-slate-200 flex-1">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-slate-500 font-medium">Total Assistidas</span>
             <i className="fas fa-circle-dot text-slate-400"></i>
@@ -154,7 +156,7 @@ export const LiveAnalyticsConsumption = () => {
           </p>
         </div>
 
-        <div className="bg-white rounded-xl p-6 border border-slate-200">
+        <div className="bg-white rounded-xl p-6 border border-slate-200 flex-1">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-slate-500 font-medium">Horas Totais</span>
             <i className="fas fa-clock text-slate-400"></i>
@@ -166,7 +168,7 @@ export const LiveAnalyticsConsumption = () => {
           </p>
         </div>
 
-        <div className="bg-white rounded-xl p-6 border border-slate-200">
+        <div className="bg-white rounded-xl p-6 border border-slate-200 flex-1">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-slate-500 font-medium">Taxa de Participação</span>
             <i className="fas fa-users text-slate-400"></i>
@@ -177,7 +179,7 @@ export const LiveAnalyticsConsumption = () => {
           </p>
         </div>
 
-        <div className="bg-white rounded-xl p-6 border border-slate-200">
+        <div className="bg-white rounded-xl p-6 border border-slate-200 flex-1">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-slate-500 font-medium">Perguntas Feitas</span>
             <i className="fas fa-comment text-slate-400"></i>
@@ -187,55 +189,123 @@ export const LiveAnalyticsConsumption = () => {
             Em transmissões ao vivo
           </p>
         </div>
-      </div>
 
-      {/* Creators Mais Assistidos */}
-      <div className="bg-white rounded-xl p-6 border border-slate-200">
-        <div className="flex items-center justify-between mb-3">
-          <span className="text-sm text-slate-500 font-medium">Hosts Mais Assistidos</span>
-          <i className="fas fa-users text-slate-400"></i>
-        </div>
-        <div className="space-y-2">
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-full bg-[hsl(206,35%,75%)] flex items-center justify-center text-xs font-bold text-slate-700">CM</div>
-            <div className="flex-1 min-w-0">
-              <p className="text-xs font-bold text-slate-800 truncate">Dr. Carlos Mendes</p>
-              <p className="text-[10px] text-slate-500">12 lives</p>
-            </div>
+        <div className="bg-white rounded-xl p-6 border border-slate-200 flex-1">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Reações Enviadas</span>
+            <i className="fas fa-heart text-slate-400"></i>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-full bg-[hsl(142,35%,75%)] flex items-center justify-center text-xs font-bold text-slate-700">FB</div>
-            <div className="flex-1 min-w-0">
-              <p className="text-xs font-bold text-slate-800 truncate">Fintech Brasil</p>
-              <p className="text-[10px] text-slate-500">10 lives</p>
-            </div>
-          </div>
+          <p className="text-3xl font-bold text-slate-800">184</p>
+          <p className="text-xs text-slate-500 font-medium mt-2">
+            Durante lives
+          </p>
         </div>
       </div>
 
-      {/* Progresso de Meta do Mês */}
-      <div className="bg-white rounded-xl p-6 border border-slate-200">
-        <div className="flex items-center justify-between mb-3">
-          <span className="text-sm text-slate-500 font-medium">Meta do Mês</span>
-          <i className="fas fa-target text-slate-400"></i>
-        </div>
-        <div className="space-y-2">
-          <div>
-            <div className="flex items-center justify-between mb-1.5">
-              <p className="text-xs font-bold text-slate-800">8 de 10 lives</p>
-              <p className="text-[10px] font-bold text-slate-600">80%</p>
+      {/* Meta + Top Creators Row */}
+      <div className="grid grid-cols-3 gap-6 mb-8">
+        <div className="col-span-2 bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-sm text-slate-500 font-medium">Meta de Lives do Mês</span>
+            <i className="fas fa-target text-slate-400"></i>
+          </div>
+          <div className="space-y-2">
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <p className="text-xs font-bold text-slate-800">8 de 10 lives</p>
+                <p className="text-[10px] font-bold text-slate-600">80%</p>
+              </div>
+              <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                <div className="h-full bg-[hsl(142,35%,65%)] rounded-full" style={{ width: '80%' }}></div>
+              </div>
             </div>
-            <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
-              <div className="h-full bg-[hsl(142,35%,65%)] rounded-full" style={{ width: '80%' }}></div>
+            <p className="text-[10px] text-slate-500">Faltam 2 lives</p>
+            <div className="flex items-center gap-1.5 pt-1">
+              <i className="fas fa-fire text-orange-500 text-xs"></i>
+              <p className="text-[10px] font-bold text-slate-700">Sequência de 18 dias!</p>
             </div>
           </div>
-          <p className="text-[10px] text-slate-500">Faltam 2 lives</p>
-          <div className="flex items-center gap-1.5 pt-1">
-            <i className="fas fa-fire text-orange-500 text-xs"></i>
-            <p className="text-[10px] font-bold text-slate-700">Sequência de 18 dias!</p>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-sm text-slate-500 font-medium">Hosts Mais Assistidos</span>
+            <i className="fas fa-users text-slate-400"></i>
+          </div>
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-full bg-[hsl(142,35%,75%)] flex items-center justify-center text-xs font-bold text-slate-700">CM</div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-bold text-slate-800 truncate">Dr. Carlos Mendes</p>
+                <p className="text-[10px] text-slate-500">12 lives</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-full bg-[hsl(206,35%,75%)] flex items-center justify-center text-xs font-bold text-slate-700">FB</div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-bold text-slate-800 truncate">Fintech Brasil</p>
+                <p className="text-[10px] text-slate-500">10 lives</p>
+              </div>
+            </div>
           </div>
         </div>
-       </div>
+      </div>
+
+      {/* 4 Additional Cards Grid */}
+      <div className="grid grid-cols-4 gap-6 mb-8">
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Lives Salvas</span>
+            <i className="fas fa-bookmark text-slate-400"></i>
+          </div>
+          <p className="text-2xl font-bold text-slate-800">12</p>
+          <p className="text-xs text-slate-500 font-medium mt-2">Para assistir depois</p>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Notificações Ativas</span>
+            <i className="fas fa-bell text-slate-400"></i>
+          </div>
+          <p className="text-2xl font-bold text-slate-800">8</p>
+          <p className="text-xs text-slate-500 font-medium mt-2">Lives seguidas</p>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Compartilhamentos</span>
+            <i className="fas fa-share text-slate-400"></i>
+          </div>
+          <p className="text-2xl font-bold text-slate-800">16</p>
+          <p className="text-xs text-slate-500 font-medium mt-2">Com colegas</p>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 border border-slate-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-500 font-medium">Tempo Médio</span>
+            <i className="fas fa-hourglass-half text-slate-400"></i>
+          </div>
+          <p className="text-2xl font-bold text-slate-800">1h 39min</p>
+          <p className="text-xs text-slate-500 font-medium mt-2">Por live</p>
+        </div>
+      </div>
+
+      {/* AI Insights with Agent Avatar */}
+      <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 mb-8 border border-blue-100">
+        <div className="flex items-start gap-3">
+          <img 
+            src="/src/assets/auxiliar-do-dia-avatar.png" 
+            alt="AI Agent" 
+            className="w-10 h-10 rounded-full flex-shrink-0"
+          />
+          <div className="flex-1">
+            <h3 className="text-lg font-semibold text-slate-800 mb-2">Insights Personalizados por IA</h3>
+            <p className="text-slate-700 leading-relaxed">
+              Excelente engajamento em lives de mercado! Sua taxa de participação de 82% está acima da média. Continue participando ativamente com perguntas e reações para maximizar seu aprendizado.
+            </p>
+          </div>
+        </div>
+      </div>
 
       {/* Charts Grid */}
       <div className="grid grid-cols-2 gap-6 mb-8">
