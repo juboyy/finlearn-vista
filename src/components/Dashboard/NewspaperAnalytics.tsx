@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
+import { PeriodComparisonToggle } from "./PeriodComparisonToggle";
+import { Clock, FileText, CheckCircle, TrendingUp, Star, MessageSquare, Share2, Bookmark, Target } from "lucide-react";
 export const NewspaperAnalytics = () => {
   const [insights, setInsights] = useState<string>("");
   const [loadingInsights, setLoadingInsights] = useState(true);
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
   const [showDrillDown, setShowDrillDown] = useState(false);
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
+  const [comparisonMode, setComparisonMode] = useState(false);
+  const [comparisonPeriod, setComparisonPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('7d');
 
   // Mock data for articles by topic with completion rates
   const articlesByTopic: Record<string, Array<{
@@ -460,49 +464,15 @@ export const NewspaperAnalytics = () => {
           <p className="text-slate-600">Seu histórico de leitura de notícias e artigos</p>
         </div>
 
-        {/* Filtros de Período */}
-        <div className="mb-6 flex gap-3">
-          <button
-            onClick={() => setSelectedPeriod('7d')}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
-              selectedPeriod === '7d'
-                ? 'bg-[hsl(142,35%,50%)] text-white'
-                : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            7 dias
-          </button>
-          <button
-            onClick={() => setSelectedPeriod('30d')}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
-              selectedPeriod === '30d'
-                ? 'bg-[hsl(142,35%,50%)] text-white'
-                : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            30 dias
-          </button>
-          <button
-            onClick={() => setSelectedPeriod('90d')}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
-              selectedPeriod === '90d'
-                ? 'bg-[hsl(142,35%,50%)] text-white'
-                : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            90 dias
-          </button>
-          <button
-            onClick={() => setSelectedPeriod('1y')}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
-              selectedPeriod === '1y'
-                ? 'bg-[hsl(142,35%,50%)] text-white'
-                : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            1 ano
-          </button>
-        </div>
+      {/* Period Comparison Toggle */}
+        <PeriodComparisonToggle
+          comparisonMode={comparisonMode}
+          setComparisonMode={setComparisonMode}
+          selectedPeriod={selectedPeriod}
+          setSelectedPeriod={setSelectedPeriod}
+          comparisonPeriod={comparisonPeriod}
+          setComparisonPeriod={setComparisonPeriod}
+        />
 
         {/* KPIs Overview */}
         <section className="grid grid-cols-6 gap-6 mb-8">
