@@ -1614,7 +1614,7 @@ const Aprendizado = () => {
                     <div>
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-pastel-purple rounded-lg flex items-center justify-center">
+                          <div className="w-10 h-10 bg-pastel-orange rounded-lg flex items-center justify-center">
                             <Bitcoin className="text-foreground" size={20} />
                           </div>
                           <div>
@@ -1623,12 +1623,12 @@ const Aprendizado = () => {
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
-                          <Award className="text-pastel-purple" size={16} />
+                          <Award className="text-pastel-orange" size={16} />
                           <span className="text-sm font-medium text-foreground">2</span>
                         </div>
                       </div>
                       <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden relative">
-                        <div className="bg-pastel-purple h-2 rounded-full transition-all duration-1000 ease-out" style={{
+                        <div className="bg-pastel-orange h-2 rounded-full transition-all duration-1000 ease-out" style={{
                       width: '40%'
                     }}></div>
                         <div className="absolute inset-0 overflow-hidden">
