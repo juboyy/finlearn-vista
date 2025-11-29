@@ -3158,7 +3158,10 @@ const Aprendizado = () => {
                         <i className="fas fa-user-tie"></i>
                         <span>Dr. Roberto Lima</span>
                       </div>
-                      <button className="w-full px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                      <button 
+                        onClick={() => navigate('/webinar-detalhes')}
+                        className="w-full px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
+                      >
                         Inscrever-se
                       </button>
                     </div>
