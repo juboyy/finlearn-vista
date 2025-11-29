@@ -1,9 +1,11 @@
 import { useState, useRef, useEffect } from "react";
-import { X, Send, Loader2, Trash2, MessageSquare } from "lucide-react";
+import { X, Send, Loader2, Trash2, MessageSquare, Bookmark } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAgentChat } from "@/hooks/useAgentChat";
+import { useSavedChartAnalyses } from "@/hooks/useSavedChartAnalyses";
+import ReactMarkdown from "react-markdown";
 
 interface MetricsAgentChatProps {
   metricType: 'MRR' | 'Churn' | 'Retention' | 'Others';
@@ -67,8 +69,10 @@ export const MetricsAgentChat = ({ metricType, onClose, initialContext }: Metric
   const [isClosing, setIsClosing] = useState(false);
   const agent = agentConfig[metricType];
   const { messages, sendMessage, isLoading, clearMessages } = useAgentChat(agent.name);
+  const { saveAnalysis } = useSavedChartAnalyses();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [contextSent, setContextSent] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -114,6 +118,29 @@ Por favor, forneça:
     }
   };
 
+  const handleSaveAnalysis = async () => {
+    if (!initialContext || messages.length === 0) return;
+    
+    // Find the last assistant message (the analysis)
+    const lastAssistantMessage = [...messages].reverse().find(m => m.role === "assistant");
+    if (!lastAssistantMessage) return;
+
+    setIsSaving(true);
+    try {
+      await saveAnalysis(
+        initialContext.chartTitle || "Gráfico sem título",
+        initialContext.chartData,
+        initialContext.selectionArea || null,
+        metricType,
+        lastAssistantMessage.content
+      );
+    } catch (error) {
+      console.error("Error saving analysis:", error);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   return (
     <div className={`fixed inset-0 z-50 bg-background/90 backdrop-blur-md flex items-center justify-center p-4 ${isClosing ? 'animate-fade-out' : 'animate-fade-in'}`}>
       <div className={`bg-gradient-to-br from-card via-card to-card/95 border-2 border-slate-700 rounded-2xl shadow-2xl w-full max-w-4xl h-[85vh] flex flex-col overflow-hidden ${isClosing ? 'animate-scale-out' : 'animate-scale-in'}`}>
@@ -130,6 +157,18 @@ Por favor, forneça:
             <p className="text-sm text-muted-foreground mt-1">{agent.description}</p>
           </div>
           <div className="flex gap-2">
+            {initialContext && messages.some(m => m.role === "assistant") && (
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                onClick={handleSaveAnalysis}
+                disabled={isSaving}
+                title="Salvar análise"
+                className="hover:bg-primary/10 hover:text-primary transition-colors"
+              >
+                {isSaving ? <Loader2 className="animate-spin" size={20} /> : <Bookmark size={20} />}
+              </Button>
+            )}
             <Button 
               variant="ghost" 
               size="icon" 
@@ -180,7 +219,13 @@ Por favor, forneça:
                       : "bg-muted/80 text-foreground border-slate-600"
                   }`}
                 >
-                  <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</p>
+                  {msg.role === "assistant" ? (
+                    <div className="text-sm leading-relaxed prose prose-sm max-w-none">
+                      <ReactMarkdown>{msg.content}</ReactMarkdown>
+                    </div>
+                  ) : (
+                    <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</p>
+                  )}
                 </div>
               </div>
             ))}

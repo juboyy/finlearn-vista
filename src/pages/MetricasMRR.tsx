@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { ArrowLeft, DollarSign, TrendingUp, TrendingDown, Percent, BarChart3, Layers, ArrowUpRight, Users, UserX, UserCheck, MoreHorizontal, Calendar as CalendarIcon, Bot } from "lucide-react";
+import { ArrowLeft, DollarSign, TrendingUp, TrendingDown, Percent, BarChart3, Layers, ArrowUpRight, Users, UserX, UserCheck, MoreHorizontal, Calendar as CalendarIcon, Bot, History } from "lucide-react";
 import { MetricsAgentChat } from "@/components/MetricsAgentChat";
+import { SavedChartAnalysesPanel } from "@/components/Dashboard/SavedChartAnalysesPanel";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -20,6 +21,7 @@ const MetricasMRR = () => {
     to: new Date(2024, 5, 30),
   });
   const [showAgentChat, setShowAgentChat] = useState(false);
+  const [showHistoryPanel, setShowHistoryPanel] = useState(false);
   const [selectedChartData, setSelectedChartData] = useState<any>(null);
 
   const handleAskAgent = (selectionData: any) => {
@@ -425,10 +427,21 @@ const MetricasMRR = () => {
               </Popover>
             </div>
             
-            <Button className="h-9 gap-2" onClick={() => setShowAgentChat(true)}>
-              <Bot className="h-4 w-4" />
-              Agente de IA
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button 
+                variant="outline"
+                className="h-9 gap-2" 
+                onClick={() => setShowHistoryPanel(true)}
+              >
+                <History className="h-4 w-4" />
+                Histórico de Análises
+              </Button>
+              
+              <Button className="h-9 gap-2" onClick={() => setShowAgentChat(true)}>
+                <Bot className="h-4 w-4" />
+                Agente de IA
+              </Button>
+            </div>
           </div>
         </div>
 
@@ -970,6 +983,13 @@ const MetricasMRR = () => {
             setSelectedChartData(null);
           }}
           initialContext={selectedChartData}
+        />
+      )}
+
+      {showHistoryPanel && (
+        <SavedChartAnalysesPanel 
+          open={showHistoryPanel}
+          onOpenChange={setShowHistoryPanel}
         />
       )}
     </div>;
