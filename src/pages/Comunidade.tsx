@@ -697,6 +697,46 @@ export default function Comunidade() {
                     </div>
                     <span className="w-2 h-2 bg-yellow-500 rounded-full"></span>
                   </div>
+                  <div className="flex items-center gap-3">
+                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" alt="User" className="w-10 h-10 rounded-full object-cover" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-slate-800 truncate">Rafael Costa</p>
+                      <p className="text-xs text-slate-500">254 pontos</p>
+                    </div>
+                    <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-7.jpg" alt="User" className="w-10 h-10 rounded-full object-cover" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-slate-800 truncate">Juliana Alves</p>
+                      <p className="text-xs text-slate-500">231 pontos</p>
+                    </div>
+                    <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" alt="User" className="w-10 h-10 rounded-full object-cover" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-slate-800 truncate">Pedro Mendes</p>
+                      <p className="text-xs text-slate-500">218 pontos</p>
+                    </div>
+                    <span className="w-2 h-2 bg-yellow-500 rounded-full"></span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg" alt="User" className="w-10 h-10 rounded-full object-cover" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-slate-800 truncate">Carla Rodrigues</p>
+                      <p className="text-xs text-slate-500">195 pontos</p>
+                    </div>
+                    <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg" alt="User" className="w-10 h-10 rounded-full object-cover" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-slate-800 truncate">Bruno Ferreira</p>
+                      <p className="text-xs text-slate-500">187 pontos</p>
+                    </div>
+                    <span className="w-2 h-2 bg-yellow-500 rounded-full"></span>
+                  </div>
                 </div>
               </div>
 
