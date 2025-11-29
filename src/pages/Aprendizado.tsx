@@ -1575,8 +1575,8 @@ const Aprendizado = () => {
                           <span className="text-sm font-medium text-foreground">4</span>
                         </div>
                       </div>
-                      <div className="w-full bg-slate-100 rounded-full h-2">
-                        <div className="bg-pastel-blue h-2 rounded-full" style={{
+                      <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                        <div className="bg-pastel-blue h-2 rounded-full transition-all duration-1000 ease-out" style={{
                       width: '80%'
                     }}></div>
                       </div>
@@ -1598,8 +1598,8 @@ const Aprendizado = () => {
                           <span className="text-sm font-medium text-foreground">3</span>
                         </div>
                       </div>
-                      <div className="w-full bg-slate-100 rounded-full h-2">
-                        <div className="bg-pastel-green h-2 rounded-full" style={{
+                      <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                        <div className="bg-pastel-green h-2 rounded-full transition-all duration-1000 ease-out" style={{
                       width: '60%'
                     }}></div>
                       </div>
@@ -1621,8 +1621,8 @@ const Aprendizado = () => {
                           <span className="text-sm font-medium text-foreground">2</span>
                         </div>
                       </div>
-                      <div className="w-full bg-slate-100 rounded-full h-2">
-                        <div className="bg-pastel-purple h-2 rounded-full" style={{
+                      <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                        <div className="bg-pastel-purple h-2 rounded-full transition-all duration-1000 ease-out" style={{
                       width: '40%'
                     }}></div>
                       </div>
@@ -1644,8 +1644,8 @@ const Aprendizado = () => {
                           <span className="text-sm font-medium text-foreground">2</span>
                         </div>
                       </div>
-                      <div className="w-full bg-slate-100 rounded-full h-2">
-                        <div className="bg-pastel-pink h-2 rounded-full" style={{
+                      <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                        <div className="bg-pastel-pink h-2 rounded-full transition-all duration-1000 ease-out" style={{
                       width: '40%'
                     }}></div>
                       </div>
@@ -1667,8 +1667,8 @@ const Aprendizado = () => {
                           <span className="text-sm font-medium text-foreground">1</span>
                         </div>
                       </div>
-                      <div className="w-full bg-slate-100 rounded-full h-2">
-                        <div className="bg-pastel-peach h-2 rounded-full" style={{
+                      <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                        <div className="bg-pastel-peach h-2 rounded-full transition-all duration-1000 ease-out" style={{
                       width: '20%'
                     }}></div>
                       </div>
