@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { Video, Headphones, FileText, User, Building2, Bot, Play, Eye, Clock } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import entrevistaPagamentosDigitais from "@/assets/entrevista-pagamentos-digitais.png";
+import entrevistaBankingDigital from "@/assets/entrevista-banking-digital.png";
+import entrevistaPixBrasil from "@/assets/entrevista-pix-brasil.png";
+import entrevistaOpenBanking from "@/assets/entrevista-open-banking.png";
+import entrevistaSegurancaBancaria from "@/assets/entrevista-seguranca-bancaria.png";
+import entrevistaPagamentosContactless from "@/assets/entrevista-pagamentos-contactless.png";
 
 type MediaType = 'todos' | 'video' | 'audio' | 'escrita';
 
@@ -11,141 +17,141 @@ export const EntrevistasContent = () => {
   const interviews = [
     {
       id: "1",
-      title: "O Futuro do Open Banking no Brasil",
+      title: "Revolução dos Pagamentos Digitais no Varejo",
       mediaType: "video" as const,
       interviewer: {
-        name: "Ana Paula Silva",
+        name: "Ana Paula Martins",
         type: "pessoa" as const,
         avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b24014b83d-0b455d5abe744d3f9416.png",
         role: "Jornalista Especializada"
       },
       interviewee: {
-        name: "Roberto Campos",
+        name: "Roberto Alves",
         type: "pessoa" as const,
         avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-2bbdc31a97c8479658e1.png",
-        role: "CTO - Fintech XYZ"
+        role: "CEO - PayTech Solutions"
       },
-      subject: "Open Banking e Inovação",
-      sessions: 4,
-      duration: "1h 25min",
-      views: 12500,
-      date: "15/01/2025",
-      thumbnail: "https://storage.googleapis.com/uxpilot-auth.appspot.com/195dbdee1c-92ffceb5d806533c0810.png"
+      subject: "Meios de Pagamento",
+      sessions: 5,
+      duration: "1h 15min",
+      views: 14200,
+      date: "18/01/2025",
+      thumbnail: entrevistaPagamentosDigitais
     },
     {
       id: "2",
-      title: "Estratégias de Compliance em Pagamentos Digitais",
-      mediaType: "audio" as const,
+      title: "Transformação Digital no Setor Bancário",
+      mediaType: "video" as const,
       interviewer: {
-        name: "Podcast FinTech Brasil",
-        type: "empresa" as const,
-        avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-db60e1b43d477718b599.png",
-        role: "Produtora de Conteúdo"
+        name: "Carlos Eduardo Silva",
+        type: "pessoa" as const,
+        avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b24014b83d-0b455d5abe744d3f9416.png",
+        role: "Analista Financeiro"
       },
       interviewee: {
-        name: "Dra. Mariana Costa",
+        name: "Patricia Costa",
         type: "pessoa" as const,
         avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-2bbdc31a97c8479658e1.png",
-        role: "Head de Compliance"
+        role: "CTO - Banco Digital+"
       },
-      subject: "Compliance e Regulação",
-      sessions: 3,
+      subject: "Banking Digital",
+      sessions: 4,
       duration: "58min",
-      views: 8700,
-      date: "12/01/2025",
-      thumbnail: "https://storage.googleapis.com/uxpilot-auth.appspot.com/27ff2e3c2c-afb908f73c455f98a798.png"
+      views: 11800,
+      date: "16/01/2025",
+      thumbnail: entrevistaBankingDigital
     },
     {
       id: "3",
-      title: "Análise Semanal: Mercado de Criptomoedas",
-      mediaType: "escrita" as const,
+      title: "PIX: Impacto e Futuro dos Pagamentos Instantâneos",
+      mediaType: "audio" as const,
       interviewer: {
-        name: "Assistente IA Financeiro",
-        type: "bot" as const,
-        avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/5213464580-c5bc017767ff44227057.png",
-        role: "Agente de IA Especializado"
+        name: "Podcast Fintech Brasil",
+        type: "empresa" as const,
+        avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-db60e1b43d477718b599.png",
+        role: "Mídia Especializada"
       },
       interviewee: {
-        name: "Pedro Almeida",
+        name: "Juliana Ferreira",
         type: "pessoa" as const,
-        avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b24014b83d-0b455d5abe744d3f9416.png",
-        role: "Analista de Criptoativos"
+        avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-2bbdc31a97c8479658e1.png",
+        role: "Especialista em Pagamentos - BACEN"
       },
-      subject: "Criptomoedas e Blockchain",
-      sessions: 5,
-      duration: "15min leitura",
-      views: 15200,
-      date: "10/01/2025",
-      thumbnail: "https://storage.googleapis.com/uxpilot-auth.appspot.com/5213464580-c5bc017767ff44227057.png"
+      subject: "PIX e Pagamentos Instantâneos",
+      sessions: 3,
+      duration: "45min",
+      views: 18500,
+      date: "14/01/2025",
+      thumbnail: entrevistaPixBrasil
     },
     {
       id: "4",
-      title: "ESG no Setor Financeiro: Desafios e Oportunidades",
-      mediaType: "video" as const,
+      title: "Open Banking: Oportunidades e Desafios para Fintechs",
+      mediaType: "escrita" as const,
       interviewer: {
-        name: "Banco Sustentável",
+        name: "Tech Finance Magazine",
         type: "empresa" as const,
         avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-db60e1b43d477718b599.png",
-        role: "Instituição Financeira"
+        role: "Publicação Especializada"
       },
       interviewee: {
-        name: "Carla Mendes",
+        name: "Marcos Oliveira",
         type: "pessoa" as const,
-        avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-2bbdc31a97c8479658e1.png",
-        role: "Diretora de Sustentabilidade"
+        avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b24014b83d-0b455d5abe744d3f9416.png",
+        role: "Head de APIs - StartBank"
       },
-      subject: "ESG e Finanças Sustentáveis",
+      subject: "Open Banking",
       sessions: 6,
-      duration: "1h 48min",
-      views: 9800,
-      date: "08/01/2025",
-      thumbnail: "https://storage.googleapis.com/uxpilot-auth.appspot.com/195dbdee1c-92ffceb5d806533c0810.png"
+      duration: "20min leitura",
+      views: 9200,
+      date: "12/01/2025",
+      thumbnail: entrevistaOpenBanking
     },
     {
       id: "5",
-      title: "Machine Learning em Detecção de Fraudes",
-      mediaType: "audio" as const,
+      title: "Cibersegurança e Prevenção de Fraudes Bancárias",
+      mediaType: "video" as const,
       interviewer: {
-        name: "IA Entrevistador",
+        name: "Assistente IA Security",
         type: "bot" as const,
         avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/5213464580-c5bc017767ff44227057.png",
-        role: "Bot de Entrevistas"
+        role: "Bot Especializado em Segurança"
       },
       interviewee: {
-        name: "Tech Security Solutions",
+        name: "SecureBank Corp",
         type: "empresa" as const,
         avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-db60e1b43d477718b599.png",
-        role: "Empresa de Segurança"
+        role: "Empresa de Segurança Bancária"
       },
-      subject: "Segurança e Tecnologia",
-      sessions: 3,
-      duration: "42min",
-      views: 11400,
-      date: "05/01/2025",
-      thumbnail: "https://storage.googleapis.com/uxpilot-auth.appspot.com/27ff2e3c2c-afb908f73c455f98a798.png"
+      subject: "Segurança Bancária",
+      sessions: 4,
+      duration: "1h 05min",
+      views: 13600,
+      date: "10/01/2025",
+      thumbnail: entrevistaSegurancaBancaria
     },
     {
       id: "6",
-      title: "Tendências do Mercado de Pagamentos em 2025",
-      mediaType: "escrita" as const,
+      title: "Pagamentos Contactless: Tecnologia NFC no Brasil",
+      mediaType: "audio" as const,
       interviewer: {
-        name: "Lucas Santos",
+        name: "Ricardo Santos",
         type: "pessoa" as const,
         avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b24014b83d-0b455d5abe744d3f9416.png",
-        role: "Editor Chefe"
+        role: "Host - Tech Payments Podcast"
       },
       interviewee: {
-        name: "Associação Brasileira de Pagamentos",
-        type: "empresa" as const,
-        avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-db60e1b43d477718b599.png",
-        role: "Organização Setorial"
+        name: "Fernanda Lima",
+        type: "pessoa" as const,
+        avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-2bbdc31a97c8479658e1.png",
+        role: "Diretora de Inovação - CardTech"
       },
-      subject: "Pagamentos e Inovação",
-      sessions: 8,
-      duration: "22min leitura",
-      views: 18900,
-      date: "03/01/2025",
-      thumbnail: "https://storage.googleapis.com/uxpilot-auth.appspot.com/5213464580-c5bc017767ff44227057.png"
+      subject: "Pagamentos Contactless",
+      sessions: 3,
+      duration: "38min",
+      views: 10400,
+      date: "08/01/2025",
+      thumbnail: entrevistaPagamentosContactless
     }
   ];
 
