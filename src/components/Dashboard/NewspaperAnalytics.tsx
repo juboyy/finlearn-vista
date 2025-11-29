@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { PeriodComparisonToggle } from "./PeriodComparisonToggle";
+import { PeriodComparisonToggle, getPeriodLabel } from "./PeriodComparisonToggle";
 import { Clock, FileText, CheckCircle, TrendingUp, Star, MessageSquare, Share2, Bookmark, Target } from "lucide-react";
 export const NewspaperAnalytics = () => {
   const [insights, setInsights] = useState<string>("");
@@ -152,7 +152,7 @@ export const NewspaperAnalytics = () => {
 
     // Generate AI insights
     generateInsights();
-  }, []);
+  }, [comparisonMode, selectedPeriod, comparisonPeriod]);
   const generateInsights = async () => {
     try {
       setLoadingInsights(true);
@@ -211,38 +211,65 @@ export const NewspaperAnalytics = () => {
   };
   const initializeCharts = () => {
     const Plotly = (window as any).Plotly;
+    const pastelGreen = '#8EBC9F';
+    const pastelPurple = '#AC9CC9';
+
+    const getDataByPeriod = (period: '7d' | '30d' | '90d' | '1y') => {
+      const datasets = {
+        '7d': {
+          weekly: [4, 3, 5, 4, 3, 2, 1],
+          completion: [2, 4, 6, 20]
+        },
+        '30d': {
+          weekly: [32, 28, 35, 30, 27, 18, 14],
+          completion: [45, 89, 156, 498]
+        },
+        '90d': {
+          weekly: [92, 85, 98, 88, 82, 56, 42],
+          completion: [128, 245, 428, 1342]
+        },
+        '1y': {
+          weekly: [385, 342, 412, 368, 328, 224, 168],
+          completion: [542, 1024, 1789, 5628]
+        }
+      };
+      return datasets[period];
+    };
+
+    const currentData = getDataByPeriod(selectedPeriod);
+    const comparisonData = comparisonMode ? getDataByPeriod(comparisonPeriod) : null;
 
     // Reading Performance Chart
     const readingPerformanceData = [{
       x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
-      y: [32, 28, 35, 30, 27, 18, 14],
+      y: currentData.weekly,
       type: 'scatter',
       mode: 'lines+markers',
-      name: 'Artigos Lidos',
-      line: {
-        color: '#B8D4E8',
-        width: 3
-      },
-      marker: {
-        size: 8,
-        color: '#B8D4E8'
-      }
+      name: comparisonMode ? getPeriodLabel(selectedPeriod) : 'Artigos Lidos',
+      line: { color: pastelGreen, width: 3 },
+      marker: { size: 8, color: pastelGreen }
     }];
+
+    if (comparisonMode && comparisonData) {
+      readingPerformanceData.push({
+        x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+        y: comparisonData.weekly,
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: getPeriodLabel(comparisonPeriod),
+        line: { color: pastelPurple, width: 3, dash: 'dash' },
+        marker: { size: 8, color: pastelPurple }
+      } as any);
+    }
+
     const readingPerformanceLayout = {
-      margin: {
-        l: 40,
-        r: 20,
-        t: 20,
-        b: 40
-      },
-      xaxis: {
-        gridcolor: '#f1f5f9'
-      },
-      yaxis: {
-        gridcolor: '#f1f5f9'
-      },
+      margin: { l: 40, r: 20, t: 20, b: 40 },
+      xaxis: { gridcolor: '#f1f5f9' },
+      yaxis: { gridcolor: '#f1f5f9', title: 'Artigos' },
       plot_bgcolor: '#ffffff',
-      paper_bgcolor: '#ffffff'
+      paper_bgcolor: '#ffffff',
+      showlegend: comparisonMode,
+      legend: { orientation: 'h', y: 1.1 }
     };
     Plotly.newPlot('reading-performance-chart', readingPerformanceData, readingPerformanceLayout, {
       displayModeBar: false
@@ -276,29 +303,31 @@ export const NewspaperAnalytics = () => {
     // Completion Rate Chart
     const completionRateData = [{
       x: ['0-25%', '26-50%', '51-75%', '76-100%'],
-      y: [45, 89, 156, 498],
+      y: currentData.completion,
       type: 'bar',
-      marker: {
-        color: ['#E8C5D8', '#E8E0C5', '#C5E8D4', '#B8D4E8']
-      }
+      name: comparisonMode ? getPeriodLabel(selectedPeriod) : 'Artigos',
+      marker: { color: pastelGreen }
     }];
+
+    if (comparisonMode && comparisonData) {
+      completionRateData.push({
+        x: ['0-25%', '26-50%', '51-75%', '76-100%'],
+        y: comparisonData.completion,
+        type: 'bar',
+        name: getPeriodLabel(comparisonPeriod),
+        marker: { color: pastelPurple }
+      } as any);
+    }
+
     const completionRateLayout = {
-      margin: {
-        l: 40,
-        r: 20,
-        t: 20,
-        b: 40
-      },
-      xaxis: {
-        gridcolor: '#f1f5f9',
-        title: 'Taxa de Conclusão'
-      },
-      yaxis: {
-        gridcolor: '#f1f5f9',
-        title: 'Artigos'
-      },
+      margin: { l: 40, r: 20, t: 20, b: 40 },
+      xaxis: { gridcolor: '#f1f5f9', title: 'Taxa de Conclusão' },
+      yaxis: { gridcolor: '#f1f5f9', title: 'Artigos' },
       plot_bgcolor: '#ffffff',
-      paper_bgcolor: '#ffffff'
+      paper_bgcolor: '#ffffff',
+      barmode: comparisonMode ? 'group' : 'relative',
+      showlegend: comparisonMode,
+      legend: { orientation: 'h', y: 1.1 }
     };
     Plotly.newPlot('completion-rate-chart', completionRateData, completionRateLayout, {
       displayModeBar: false
