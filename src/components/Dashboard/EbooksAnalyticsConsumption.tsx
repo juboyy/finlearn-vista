@@ -306,132 +306,87 @@ export const EbooksAnalyticsConsumption = () => {
 
       {/* KPIs Overview - 9 Cards */}
       <section className="grid grid-cols-3 gap-6 mb-8">
-        {/* E-books Lidos */}
-        <div className="bg-gradient-to-br from-pastel-blue to-pastel-blue/80 rounded-2xl p-6 border border-slate-200/50 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 group">
-          <div className="flex items-start justify-between mb-4">
-            <div className="w-14 h-14 bg-white/40 backdrop-blur rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-              <Book size={28} className="text-slate-700" />
-            </div>
+        <div className="bg-white border border-slate-200 rounded-xl p-6">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-sm font-semibold text-slate-500">E-books Lidos</p>
+            <Book size={20} className="text-slate-400" />
           </div>
-          <h3 className="text-4xl font-bold text-slate-800 mb-2">{data.total}</h3>
-          <p className="text-sm font-semibold text-slate-700 mb-3">E-books Lidos</p>
-          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white/50 backdrop-blur rounded-lg w-fit">
-            <TrendingUp size={14} className="text-emerald-700" />
-            <span className="text-xs font-bold text-emerald-700">{data.growth}% no período</span>
-          </div>
+          <h3 className="text-2xl font-bold text-slate-800 mt-1">{data.total}</h3>
+          <p className="text-xs text-emerald-600 font-bold mt-1 flex items-center gap-1">
+            <TrendingUp size={12} /> {data.growth}% no período
+          </p>
         </div>
 
-        {/* Páginas Lidas */}
-        <div className="bg-gradient-to-br from-pastel-green to-pastel-green/80 rounded-2xl p-6 border border-slate-200/50 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 group">
-          <div className="flex items-start justify-between mb-4">
-            <div className="w-14 h-14 bg-white/40 backdrop-blur rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-              <BarChart3 size={28} className="text-slate-700" />
-            </div>
+        <div className="bg-white border border-slate-200 rounded-xl p-6">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-sm font-semibold text-slate-500">Páginas Lidas</p>
+            <BarChart3 size={20} className="text-slate-400" />
           </div>
-          <h3 className="text-4xl font-bold text-slate-800 mb-2">{data.pages.toLocaleString()}</h3>
-          <p className="text-sm font-semibold text-slate-700 mb-3">Páginas Lidas</p>
-          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white/50 backdrop-blur rounded-lg w-fit">
-            <span className="text-xs font-bold text-slate-700">Total de páginas</span>
-          </div>
+          <h3 className="text-2xl font-bold text-slate-800 mt-1">{data.pages.toLocaleString()}</h3>
+          <p className="text-xs text-slate-500 font-bold mt-1">Total de páginas</p>
         </div>
 
-        {/* Taxa de Conclusão */}
-        <div className="bg-gradient-to-br from-pastel-purple to-pastel-purple/80 rounded-2xl p-6 border border-slate-200/50 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 group">
-          <div className="flex items-start justify-between mb-4">
-            <div className="w-14 h-14 bg-white/40 backdrop-blur rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-              <CheckCircle size={28} className="text-slate-700" />
-            </div>
+        <div className="bg-white border border-slate-200 rounded-xl p-6">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-sm font-semibold text-slate-500">Taxa de Conclusão</p>
+            <CheckCircle size={20} className="text-slate-400" />
           </div>
-          <h3 className="text-4xl font-bold text-slate-800 mb-2">{data.completion}%</h3>
-          <p className="text-sm font-semibold text-slate-700 mb-3">Taxa de Conclusão</p>
-          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white/50 backdrop-blur rounded-lg w-fit">
-            <span className="text-xs font-bold text-slate-700">Média: 45%</span>
-          </div>
+          <h3 className="text-2xl font-bold text-slate-800 mt-1">{data.completion}%</h3>
+          <p className="text-xs text-slate-500 font-bold mt-1">Média da plataforma: 45%</p>
         </div>
 
-        {/* Streak de Leitura */}
-        <div className="bg-gradient-to-br from-pastel-pink to-pastel-pink/80 rounded-2xl p-6 border border-slate-200/50 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 group">
-          <div className="flex items-start justify-between mb-4">
-            <div className="w-14 h-14 bg-white/40 backdrop-blur rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-              <Award size={28} className="text-slate-700" />
-            </div>
+        <div className="bg-white border border-slate-200 rounded-xl p-6">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-sm font-semibold text-slate-500">Streak de Leitura</p>
+            <Award size={20} className="text-slate-400" />
           </div>
-          <h3 className="text-4xl font-bold text-slate-800 mb-2">{data.streak}</h3>
-          <p className="text-sm font-semibold text-slate-700 mb-3">Streak de Leitura</p>
-          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white/50 backdrop-blur rounded-lg w-fit">
-            <span className="text-xs font-bold text-slate-700">dias consecutivos</span>
-          </div>
+          <h3 className="text-2xl font-bold text-slate-800 mt-1">{data.streak} dias</h3>
+          <p className="text-xs text-slate-500 font-bold mt-1">Consecutivos</p>
         </div>
 
-        {/* Média Diária */}
-        <div className="bg-gradient-to-br from-pastel-yellow to-pastel-yellow/80 rounded-2xl p-6 border border-slate-200/50 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 group">
-          <div className="flex items-start justify-between mb-4">
-            <div className="w-14 h-14 bg-white/40 backdrop-blur rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-              <Target size={28} className="text-slate-700" />
-            </div>
+        <div className="bg-white border border-slate-200 rounded-xl p-6">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-sm font-semibold text-slate-500">Média Diária</p>
+            <Target size={20} className="text-slate-400" />
           </div>
-          <h3 className="text-4xl font-bold text-slate-800 mb-2">{data.avgPages}</h3>
-          <p className="text-sm font-semibold text-slate-700 mb-3">Média Diária</p>
-          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white/50 backdrop-blur rounded-lg w-fit">
-            <span className="text-xs font-bold text-slate-700">páginas por dia</span>
-          </div>
+          <h3 className="text-2xl font-bold text-slate-800 mt-1">{data.avgPages} pág</h3>
+          <p className="text-xs text-slate-500 font-bold mt-1">Por dia de leitura</p>
         </div>
 
-        {/* Destaques */}
-        <div className="bg-gradient-to-br from-pastel-peach to-pastel-peach/80 rounded-2xl p-6 border border-slate-200/50 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 group">
-          <div className="flex items-start justify-between mb-4">
-            <div className="w-14 h-14 bg-white/40 backdrop-blur rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-              <Highlighter size={28} className="text-slate-700" />
-            </div>
+        <div className="bg-white border border-slate-200 rounded-xl p-6">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-sm font-semibold text-slate-500">Destaques</p>
+            <Highlighter size={20} className="text-slate-400" />
           </div>
-          <h3 className="text-4xl font-bold text-slate-800 mb-2">{data.highlights}</h3>
-          <p className="text-sm font-semibold text-slate-700 mb-3">Destaques</p>
-          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white/50 backdrop-blur rounded-lg w-fit">
-            <span className="text-xs font-bold text-slate-700">passagens marcadas</span>
-          </div>
+          <h3 className="text-2xl font-bold text-slate-800 mt-1">{data.highlights}</h3>
+          <p className="text-xs text-slate-500 font-bold mt-1">Passagens destacadas</p>
         </div>
 
-        {/* Marcadores */}
-        <div className="bg-gradient-to-br from-pastel-blue to-pastel-blue/80 rounded-2xl p-6 border border-slate-200/50 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 group">
-          <div className="flex items-start justify-between mb-4">
-            <div className="w-14 h-14 bg-white/40 backdrop-blur rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-              <Bookmark size={28} className="text-slate-700" />
-            </div>
+        <div className="bg-white border border-slate-200 rounded-xl p-6">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-sm font-semibold text-slate-500">Marcadores</p>
+            <Bookmark size={20} className="text-slate-400" />
           </div>
-          <h3 className="text-4xl font-bold text-slate-800 mb-2">{data.bookmarks}</h3>
-          <p className="text-sm font-semibold text-slate-700 mb-3">Marcadores</p>
-          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white/50 backdrop-blur rounded-lg w-fit">
-            <span className="text-xs font-bold text-slate-700">páginas marcadas</span>
-          </div>
+          <h3 className="text-2xl font-bold text-slate-800 mt-1">{data.bookmarks}</h3>
+          <p className="text-xs text-slate-500 font-bold mt-1">Páginas marcadas</p>
         </div>
 
-        {/* Anotações */}
-        <div className="bg-gradient-to-br from-pastel-green to-pastel-green/80 rounded-2xl p-6 border border-slate-200/50 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 group">
-          <div className="flex items-start justify-between mb-4">
-            <div className="w-14 h-14 bg-white/40 backdrop-blur rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-              <Clock size={28} className="text-slate-700" />
-            </div>
+        <div className="bg-white border border-slate-200 rounded-xl p-6">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-sm font-semibold text-slate-500">Anotações</p>
+            <Clock size={20} className="text-slate-400" />
           </div>
-          <h3 className="text-4xl font-bold text-slate-800 mb-2">{data.notes}</h3>
-          <p className="text-sm font-semibold text-slate-700 mb-3">Anotações</p>
-          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white/50 backdrop-blur rounded-lg w-fit">
-            <span className="text-xs font-bold text-slate-700">notas criadas</span>
-          </div>
+          <h3 className="text-2xl font-bold text-slate-800 mt-1">{data.notes}</h3>
+          <p className="text-xs text-slate-500 font-bold mt-1">Notas criadas</p>
         </div>
 
-        {/* Meta Semanal */}
-        <div className="bg-gradient-to-br from-pastel-purple to-pastel-purple/80 rounded-2xl p-6 border border-slate-200/50 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 group">
-          <div className="flex items-start justify-between mb-4">
-            <div className="w-14 h-14 bg-white/40 backdrop-blur rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-              <TrendingUp size={28} className="text-slate-700" />
-            </div>
+        <div className="bg-white border border-slate-200 rounded-xl p-6">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-sm font-semibold text-slate-500">Meta Semanal</p>
+            <TrendingUp size={20} className="text-slate-400" />
           </div>
-          <h3 className="text-4xl font-bold text-slate-800 mb-2">200</h3>
-          <p className="text-sm font-semibold text-slate-700 mb-3">Meta Semanal</p>
-          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white/50 backdrop-blur rounded-lg w-fit">
-            <CheckCircle size={12} className="text-emerald-700" />
-            <span className="text-xs font-bold text-emerald-700">Cumprida {Math.round(data.streak * 0.75)}x</span>
-          </div>
+          <h3 className="text-2xl font-bold text-slate-800 mt-1">200 pág</h3>
+          <p className="text-xs text-emerald-600 font-bold mt-1">✓ Cumprida {Math.round(data.streak * 0.75)} vezes</p>
         </div>
       </section>
 
