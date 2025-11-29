@@ -1,5 +1,11 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Bell, Filter, Ticket, Calendar, MapPin, Users, Mic, Clock, Tag, Star, ArrowUp, ArrowRight, ChevronLeft, ChevronRight, CalendarCheck, Presentation, GraduationCap, Handshake, Award, Wine } from "lucide-react";
+import eventoConferenciaFintech from "@/assets/evento-conferencia-fintech.png";
+import eventoWorkshopPagamentos from "@/assets/evento-workshop-pagamentos.png";
+import eventoNetworkingPremium from "@/assets/evento-networking-premium.png";
+import eventoTreinamentoRisco from "@/assets/evento-treinamento-risco.png";
+import eventoCertificacaoBacen from "@/assets/evento-certificacao-bacen.png";
+import eventoMesaRedondaRegulacao from "@/assets/evento-mesa-redonda-regulacao.png";
 
 export default function EventosPresenciais() {
   return (
@@ -103,7 +109,7 @@ export default function EventosPresenciais() {
                 </div>
                 <div className="flex items-center justify-center">
                   <div className="h-96 w-full overflow-hidden rounded-xl bg-pastel-blue/20">
-                    <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/0a3b8c7f9d-e2f4a6b8c0d2e4f6a8b0.png" alt="Conference illustration" />
+                    <img className="w-full h-full object-cover" src={eventoConferenciaFintech} alt="Conference illustration" />
                   </div>
                 </div>
               </div>
@@ -205,7 +211,7 @@ export default function EventosPresenciais() {
             <div className="grid grid-cols-3 gap-6">
               <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-xl transition">
                 <div className="h-48 bg-pastel-blue overflow-hidden relative">
-                  <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/1f2e3d4c5b-6a7b8c9d0e1f2a3b4c5d.png" alt="Workshop" />
+                  <img className="w-full h-full object-cover" src={eventoTreinamentoRisco} alt="Workshop" />
                   <div className="absolute top-4 right-4">
                     <span className="px-3 py-1.5 bg-white/90 backdrop-blur text-slate-700 text-xs font-medium rounded-full">
                       5 Dez
@@ -251,7 +257,7 @@ export default function EventosPresenciais() {
 
               <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-xl transition">
                 <div className="h-48 bg-pastel-purple overflow-hidden relative">
-                  <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/2a3b4c5d6e-7f8a9b0c1d2e3f4a5b6c.png" alt="Conference" />
+                  <img className="w-full h-full object-cover" src={eventoMesaRedondaRegulacao} alt="Conference" />
                   <div className="absolute top-4 right-4">
                     <span className="px-3 py-1.5 bg-white/90 backdrop-blur text-slate-700 text-xs font-medium rounded-full">
                       12 Dez
@@ -301,7 +307,7 @@ export default function EventosPresenciais() {
 
               <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-xl transition">
                 <div className="h-48 bg-pastel-green overflow-hidden relative">
-                  <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/3b4c5d6e7f-8a9b0c1d2e3f4a5b6c7d.png" alt="Networking" />
+                  <img className="w-full h-full object-cover" src={eventoNetworkingPremium} alt="Networking" />
                   <div className="absolute top-4 right-4">
                     <span className="px-3 py-1.5 bg-white/90 backdrop-blur text-slate-700 text-xs font-medium rounded-full">
                       18 Dez
@@ -412,7 +418,7 @@ export default function EventosPresenciais() {
             <div className="grid grid-cols-4 gap-4">
               <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
                 <div className="h-32 bg-pastel-pink overflow-hidden relative">
-                  <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/4c5d6e7f8a-9b0c1d2e3f4a5b6c7d8e.png" alt="Past event" />
+                  <img className="w-full h-full object-cover" src={eventoCertificacaoBacen} alt="Past event" />
                 </div>
                 <div className="p-4">
                   <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-full">Nov 2024</span>
@@ -426,7 +432,7 @@ export default function EventosPresenciais() {
 
               <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
                 <div className="h-32 bg-pastel-peach overflow-hidden relative">
-                  <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5d6e7f8a9b-0c1d2e3f4a5b6c7d8e9f.png" alt="Past event" />
+                  <img className="w-full h-full object-cover" src={eventoWorkshopPagamentos} alt="Past event" />
                 </div>
                 <div className="p-4">
                   <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-full">Nov 2024</span>
@@ -440,7 +446,7 @@ export default function EventosPresenciais() {
 
               <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
                 <div className="h-32 bg-pastel-blue overflow-hidden relative">
-                  <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/6e7f8a9b0c-1d2e3f4a5b6c7d8e9f0a.png" alt="Past event" />
+                  <img className="w-full h-full object-cover" src={eventoConferenciaFintech} alt="Past event" />
                 </div>
                 <div className="p-4">
                   <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-full">Out 2024</span>
@@ -454,7 +460,7 @@ export default function EventosPresenciais() {
 
               <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
                 <div className="h-32 bg-pastel-purple overflow-hidden relative">
-                  <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/7f8a9b0c1d-2e3f4a5b6c7d8e9f0a1b.png" alt="Past event" />
+                  <img className="w-full h-full object-cover" src={eventoTreinamentoRisco} alt="Past event" />
                 </div>
                 <div className="p-4">
                   <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-full">Out 2024</span>
