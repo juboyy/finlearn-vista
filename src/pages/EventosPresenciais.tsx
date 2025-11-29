@@ -101,7 +101,7 @@ export default function EventosPresenciais() {
           </section>
 
           <section className="mb-8">
-            <div className="bg-gradient-to-r from-pastel-blue to-pastel-purple rounded-2xl overflow-hidden">
+            <div className="bg-pastel-blue rounded-2xl overflow-hidden">
               <div className="grid grid-cols-2 gap-8 p-8">
                 <div className="flex flex-col justify-center">
                   <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/90 backdrop-blur text-slate-700 text-sm font-medium rounded-full w-fit mb-4">
@@ -110,10 +110,10 @@ export default function EventosPresenciais() {
                   </span>
                   <h2 className="text-3xl font-bold text-slate-800 mb-4">Summit Mercado de Capitais 2025</h2>
                   <p className="text-slate-700 mb-6 leading-relaxed">O maior encontro de profissionais do mercado financeiro do Brasil. Três dias de conteúdo premium, networking de alto nível e insights exclusivos com os principais executivos do setor.</p>
-                  <div className="grid grid-cols-2 gap-4 mb-6">
+                    <div className="grid grid-cols-2 gap-4 mb-6">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center">
-                        <Calendar className="text-slate-700 w-5 h-5" />
+                        <Calendar className="text-slate-600 w-5 h-5" />
                       </div>
                       <div>
                         <p className="text-xs text-slate-600">Data</p>
@@ -122,7 +122,7 @@ export default function EventosPresenciais() {
                     </div>
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center">
-                        <MapPin className="text-slate-700 w-5 h-5" />
+                        <MapPin className="text-slate-600 w-5 h-5" />
                       </div>
                       <div>
                         <p className="text-xs text-slate-600">Local</p>
@@ -131,7 +131,7 @@ export default function EventosPresenciais() {
                     </div>
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center">
-                        <Users className="text-slate-700 w-5 h-5" />
+                        <Users className="text-slate-600 w-5 h-5" />
                       </div>
                       <div>
                         <p className="text-xs text-slate-600">Participantes</p>
@@ -140,7 +140,7 @@ export default function EventosPresenciais() {
                     </div>
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center">
-                        <Mic className="text-slate-700 w-5 h-5" />
+                        <Mic className="text-slate-600 w-5 h-5" />
                       </div>
                       <div>
                         <p className="text-xs text-slate-600">Palestrantes</p>
@@ -412,7 +412,7 @@ export default function EventosPresenciais() {
             <div className="grid grid-cols-4 gap-4">
               <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition cursor-pointer">
                 <div className="w-12 h-12 bg-pastel-blue rounded-lg flex items-center justify-center mb-4">
-                  <Presentation className="text-slate-700 w-6 h-6" />
+                  <Presentation className="text-slate-600 w-6 h-6" />
                 </div>
                 <h3 className="font-semibold text-slate-800 mb-2">Conferências</h3>
                 <p className="text-sm text-slate-600 mb-3">Grandes eventos com múltiplos palestrantes</p>
@@ -424,7 +424,7 @@ export default function EventosPresenciais() {
 
               <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition cursor-pointer">
                 <div className="w-12 h-12 bg-pastel-purple rounded-lg flex items-center justify-center mb-4">
-                  <GraduationCap className="text-slate-700 w-6 h-6" />
+                  <GraduationCap className="text-slate-600 w-6 h-6" />
                 </div>
                 <h3 className="font-semibold text-slate-800 mb-2">Workshops</h3>
                 <p className="text-sm text-slate-600 mb-3">Treinamentos práticos e interativos</p>
@@ -436,7 +436,7 @@ export default function EventosPresenciais() {
 
               <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition cursor-pointer">
                 <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center mb-4">
-                  <Handshake className="text-slate-700 w-6 h-6" />
+                  <Handshake className="text-slate-600 w-6 h-6" />
                 </div>
                 <h3 className="font-semibold text-slate-800 mb-2">Networking</h3>
                 <p className="text-sm text-slate-600 mb-3">Eventos para conexão profissional</p>
@@ -448,7 +448,7 @@ export default function EventosPresenciais() {
 
               <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition cursor-pointer">
                 <div className="w-12 h-12 bg-pastel-yellow rounded-lg flex items-center justify-center mb-4">
-                  <Award className="text-slate-700 w-6 h-6" />
+                  <Award className="text-slate-600 w-6 h-6" />
                 </div>
                 <h3 className="font-semibold text-slate-800 mb-2">Certificações</h3>
                 <p className="text-sm text-slate-600 mb-3">Cursos com certificado oficial</p>
@@ -529,7 +529,7 @@ export default function EventosPresenciais() {
               <div className="bg-white rounded-xl border border-slate-200 p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div className="w-12 h-12 bg-pastel-blue rounded-lg flex items-center justify-center">
-                    <CalendarCheck className="text-slate-700 w-6 h-6" />
+                    <CalendarCheck className="text-slate-600 w-6 h-6" />
                   </div>
                   <span className="text-xs text-green-600 font-medium flex items-center gap-1">
                     <ArrowUp className="w-3 h-3" />
@@ -543,7 +543,7 @@ export default function EventosPresenciais() {
               <div className="bg-white rounded-xl border border-slate-200 p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div className="w-12 h-12 bg-pastel-purple rounded-lg flex items-center justify-center">
-                    <Users className="text-slate-700 w-6 h-6" />
+                    <Users className="text-slate-600 w-6 h-6" />
                   </div>
                   <span className="text-xs text-green-600 font-medium flex items-center gap-1">
                     <ArrowUp className="w-3 h-3" />
@@ -557,7 +557,7 @@ export default function EventosPresenciais() {
               <div className="bg-white rounded-xl border border-slate-200 p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div className="w-12 h-12 bg-pastel-green rounded-lg flex items-center justify-center">
-                    <MapPin className="text-slate-700 w-6 h-6" />
+                    <MapPin className="text-slate-600 w-6 h-6" />
                   </div>
                   <span className="text-xs text-green-600 font-medium flex items-center gap-1">
                     <ArrowUp className="w-3 h-3" />
@@ -571,7 +571,7 @@ export default function EventosPresenciais() {
               <div className="bg-white rounded-xl border border-slate-200 p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div className="w-12 h-12 bg-pastel-yellow rounded-lg flex items-center justify-center">
-                    <Star className="text-slate-700 w-6 h-6" />
+                    <Star className="text-slate-600 w-6 h-6" />
                   </div>
                   <span className="text-xs text-green-600 font-medium flex items-center gap-1">
                     <ArrowUp className="w-3 h-3" />
@@ -604,11 +604,11 @@ export default function EventosPresenciais() {
       </main>
 
       <Sheet open={filterOpen} onOpenChange={setFilterOpen}>
-        <SheetContent className="w-[400px] sm:w-[540px] overflow-y-auto bg-gradient-to-br from-slate-50 to-white">
+        <SheetContent className="w-[400px] sm:w-[540px] overflow-y-auto bg-slate-50">
           <SheetHeader className="space-y-3 pb-6 border-b border-slate-200">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-pastel-blue to-pastel-purple flex items-center justify-center">
-                <Filter className="w-6 h-6 text-slate-700" />
+              <div className="w-12 h-12 rounded-xl bg-pastel-blue flex items-center justify-center">
+                <Filter className="w-6 h-6 text-slate-600" />
               </div>
               <div>
                 <SheetTitle className="text-2xl font-bold text-slate-800">Filtros de Eventos</SheetTitle>
@@ -841,7 +841,7 @@ export default function EventosPresenciais() {
               </Button>
               <Button
                 onClick={() => setFilterOpen(false)}
-                className="flex-1 bg-gradient-to-r from-pastel-blue to-pastel-purple text-slate-800 hover:from-pastel-blue/80 hover:to-pastel-purple/80 font-semibold shadow-lg transition-all hover:scale-105 hover:shadow-xl"
+                className="flex-1 bg-pastel-blue text-slate-800 hover:bg-pastel-blue/80 font-semibold shadow-lg transition-all hover:scale-105 hover:shadow-xl"
               >
                 <Filter className="w-4 h-4 mr-2" />
                 Aplicar Filtros
