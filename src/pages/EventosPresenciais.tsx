@@ -730,7 +730,7 @@ export default function EventosPresenciais() {
                 <Calendar className="w-5 h-5 text-pastel-pink" />
                 <Label className="text-base font-semibold text-slate-800">Período</Label>
               </div>
-              <div className="space-y-3">
+              <div className="grid grid-cols-2 gap-3">
                 <div className="relative">
                   <Label className="text-xs text-slate-600 mb-1.5 block font-medium">Data Inicial</Label>
                   <div className="relative">
