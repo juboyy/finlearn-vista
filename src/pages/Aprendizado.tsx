@@ -2547,7 +2547,7 @@ const Aprendizado = () => {
                       <div className="h-56 overflow-hidden bg-pastel-purple">
                         <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/de72874cc5-bcb1610580017fd3cfe5.png" alt="Pastel drawing of stock market analysis book cover" />
                       </div>
-                      <div className="absolute bottom-0 left-0 right-0 bg-pastel-orange h-2.5">
+                      <div className="absolute bottom-0 left-0 right-0 bg-slate-100 h-2.5">
                         <div className="h-full bg-emerald-600 relative" style={{
                       width: '68%'
                     }}>
