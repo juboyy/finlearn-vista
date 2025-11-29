@@ -421,9 +421,14 @@ export const PodcastsAnalytics = () => {
           </div>
 
           {/* Card 4 - Streak */}
-          <div className="bg-pastel-blue rounded-2xl p-6 text-center">
-            <div className="w-12 h-12 bg-white/30 rounded-xl flex items-center justify-center mx-auto mb-3">
-              <Zap size={22} className="text-white" />
+          <div className="bg-pastel-blue rounded-2xl p-6">
+            <div className="flex items-center justify-between mb-3">
+              <div className="w-12 h-12 bg-white/30 rounded-xl flex items-center justify-center">
+                <Zap size={22} className="text-white" />
+              </div>
+              <div className="px-2 py-1 bg-white/30 rounded-full">
+                <p className="text-[10px] font-bold text-white">🔥</p>
+              </div>
             </div>
             <p className="text-xs font-medium text-white/80 mb-1">Streak Atual</p>
             <h3 className="text-3xl font-bold text-white mb-1">{data.streak}</h3>
@@ -431,9 +436,14 @@ export const PodcastsAnalytics = () => {
           </div>
 
           {/* Card 5 - Engajamento */}
-          <div className="bg-pastel-blue rounded-2xl p-6 text-center">
-            <div className="w-12 h-12 bg-white/30 rounded-xl flex items-center justify-center mx-auto mb-3">
-              <Target size={22} className="text-white" />
+          <div className="bg-pastel-blue rounded-2xl p-6">
+            <div className="flex items-center justify-between mb-3">
+              <div className="w-12 h-12 bg-white/30 rounded-xl flex items-center justify-center">
+                <Target size={22} className="text-white" />
+              </div>
+              <div className="px-2 py-1 bg-white/30 rounded-full">
+                <p className="text-[10px] font-bold text-white">Top</p>
+              </div>
             </div>
             <p className="text-xs font-medium text-white/80 mb-1">Engajamento</p>
             <h3 className="text-3xl font-bold text-white mb-1">{data.engagement}%</h3>
