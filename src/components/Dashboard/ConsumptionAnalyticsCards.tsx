@@ -37,6 +37,11 @@ export const ConsumptionAnalyticsCards = ({
       // Dados de evolução mensal (últimos 6 meses)
       const months = ['Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
       const goalProgress = [72, 85, 78, 90, 88, percentage];
+      const goalTargets = [70, 70, 70, 70, 70, 70]; // Meta estabelecida (sempre 70%)
+      
+      // Calcular valores alcançados baseado na meta total
+      const achieved = goalProgress.map(prog => Math.round((prog / 100) * goalTotal));
+      const differences = goalProgress.map((prog, i) => prog - goalTargets[i]);
       
       const trace = {
         x: months,
@@ -58,7 +63,19 @@ export const ConsumptionAnalyticsCards = ({
         },
         fill: 'tozeroy',
         fillcolor: 'rgba(133, 187, 153, 0.1)',
-        hovertemplate: '<b>%{x}</b><br>Progresso: %{y}%<extra></extra>'
+        customdata: goalProgress.map((prog, i) => ({
+          achieved: achieved[i],
+          target: Math.round((goalTargets[i] / 100) * goalTotal),
+          difference: differences[i],
+          percentage: prog
+        })),
+        hovertemplate: 
+          '<b>%{x}</b><br>' +
+          '<b style="color: hsl(142, 35%, 50%)">Progresso: %{customdata.percentage}%</b><br>' +
+          'Alcançado: %{customdata.achieved} ' + goalUnit + '<br>' +
+          'Meta: %{customdata.target} ' + goalUnit + '<br>' +
+          'Diferença: <b style="color: %{customdata.difference|0 ? hsl(142, 35%, 50%) : hsl(0, 70%, 60%)}">%{customdata.difference:+.0f}%</b>' +
+          '<extra></extra>'
       };
 
       Plotly.newPlot('goal-evolution-chart', [trace], {
@@ -77,13 +94,13 @@ export const ConsumptionAnalyticsCards = ({
           ticksuffix: '%'
         },
         showlegend: false,
-        hovermode: 'x unified'
+        hovermode: 'closest'
       }, { 
         displayModeBar: false,
         responsive: true
       });
     }
-  }, [percentage]);
+  }, [percentage, goalTotal, goalUnit]);
 
 
   return (
