@@ -172,6 +172,9 @@ export const SelectableChartWrapper = ({
             transform: 'translateX(-50%)',
             pointerEvents: 'auto'
           }}
+          onMouseDown={(e) => e.stopPropagation()}
+          onMouseUp={(e) => e.stopPropagation()}
+          onMouseMove={(e) => e.stopPropagation()}
         >
           <Button
             size="sm"
