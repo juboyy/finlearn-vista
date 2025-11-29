@@ -400,7 +400,7 @@ const Aprendizado = () => {
               <div className="h-80 bg-pastel-blue overflow-hidden relative">
                 <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/deacdd849a-af7a052b4fb4b857dbcf.png" alt="illustration of a financial professional studying market analysis on multiple screens, modern office environment, pastel colors, outlined style" className="w-full h-full object-cover" />
                 <div className="absolute top-4 left-4">
-                  <span className="px-3 py-1 bg-white text-slate-800 text-sm font-medium rounded-full">
+                  <span className="px-3 py-1 bg-pastel-orange text-slate-800 text-sm font-medium rounded-full">
                     Destaque
                   </span>
                 </div>
@@ -626,7 +626,7 @@ const Aprendizado = () => {
                     <div className="w-12 h-12 bg-pastel-pink rounded-lg flex items-center justify-center">
                       <i className="fas fa-fire text-slate-600 text-xl"></i>
                     </div>
-                    <button className="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center text-slate-500 hover:bg-slate-200 transition">
+                    <button className="w-12 h-12 bg-pastel-orange rounded-lg flex items-center justify-center text-slate-700 hover:bg-opacity-80 transition">
                       <i className="fas fa-plus text-xl"></i>
                     </button>
                   </div>
@@ -647,7 +647,7 @@ const Aprendizado = () => {
               <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
                 <div className="h-48 bg-pastel-purple overflow-hidden relative">
                   <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/f689e1e456-5ddba08158dda1d273b0.png" alt="illustration of cryptocurrency trading charts and digital assets, like bitcoin and ethereum coins, pastel colors, outlined style" className="w-full h-full object-cover" />
-                  <div className="absolute top-3 right-3 px-2 py-1 bg-white rounded-full text-xs font-medium text-slate-700">
+                  <div className="absolute top-3 right-3 px-2 py-1 bg-pastel-orange rounded-full text-xs font-medium text-slate-700">
                     Novo
                   </div>
                 </div>
@@ -712,7 +712,7 @@ const Aprendizado = () => {
               <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
                 <div className="h-48 bg-pastel-green overflow-hidden relative">
                   <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/43ade140cc-54e09b01d95bfda73dc2.png" alt="illustration of a financial risk management dashboard with charts and a shield icon, pastel colors, outlined style" className="w-full h-full object-cover" />
-                  <div className="absolute top-3 right-3 px-2 py-1 bg-white rounded-full text-xs font-medium text-slate-700">
+                  <div className="absolute top-3 right-3 px-2 py-1 bg-pastel-orange rounded-full text-xs font-medium text-slate-700">
                     Popular
                   </div>
                 </div>
@@ -1027,13 +1027,13 @@ const Aprendizado = () => {
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-2 mb-6">
-                    <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">
+                    <span className="px-2 py-1 bg-pastel-orange text-slate-700 text-xs rounded-md">
                       Ações
                     </span>
-                    <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">
+                    <span className="px-2 py-1 bg-pastel-orange text-slate-700 text-xs rounded-md">
                       Análise Técnica
                     </span>
-                    <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">
+                    <span className="px-2 py-1 bg-pastel-orange text-slate-700 text-xs rounded-md">
                       Indicadores
                     </span>
                   </div>
@@ -1070,13 +1070,13 @@ const Aprendizado = () => {
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-2 mb-6">
-                    <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">
+                    <span className="px-2 py-1 bg-pastel-orange text-slate-700 text-xs rounded-md">
                       Bitcoin
                     </span>
-                    <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">
+                    <span className="px-2 py-1 bg-pastel-orange text-slate-700 text-xs rounded-md">
                       DeFi
                     </span>
-                    <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">
+                    <span className="px-2 py-1 bg-pastel-orange text-slate-700 text-xs rounded-md">
                       NFTs
                     </span>
                   </div>
@@ -1110,13 +1110,13 @@ const Aprendizado = () => {
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-2 mb-6">
-                    <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">
+                    <span className="px-2 py-1 bg-pastel-orange text-slate-700 text-xs rounded-md">
                       Regulação
                     </span>
-                    <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">
+                    <span className="px-2 py-1 bg-pastel-orange text-slate-700 text-xs rounded-md">
                       AML
                     </span>
-                    <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">
+                    <span className="px-2 py-1 bg-pastel-orange text-slate-700 text-xs rounded-md">
                       Ética
                     </span>
                   </div>
@@ -2387,8 +2387,8 @@ const Aprendizado = () => {
                             {agent.status === "online" ? <Badge className="bg-green-100 text-green-700 border-0 font-medium">
                                 <Circle className="text-green-500 fill-green-500 mr-1" size={6} />
                                 Online
-                              </Badge> : <Badge className="bg-slate-100 text-slate-700 border-0 font-medium">
-                                <Circle className="text-slate-400 fill-slate-400 mr-1" size={6} />
+                              </Badge> : <Badge className="bg-pastel-orange text-slate-700 border-0 font-medium">
+                                <Circle className="text-slate-600 fill-slate-600 mr-1" size={6} />
                                 Ausente
                               </Badge>}
                           </TableCell>
@@ -2532,7 +2532,7 @@ const Aprendizado = () => {
                       <div className="h-56 overflow-hidden bg-pastel-purple">
                         <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/de72874cc5-bcb1610580017fd3cfe5.png" alt="Pastel drawing of stock market analysis book cover" />
                       </div>
-                      <div className="absolute bottom-0 left-0 right-0 bg-slate-100 h-2.5">
+                      <div className="absolute bottom-0 left-0 right-0 bg-pastel-orange h-2.5">
                         <div className="h-full bg-emerald-600 relative" style={{
                       width: '68%'
                     }}>
@@ -2556,7 +2556,7 @@ const Aprendizado = () => {
                       <div className="h-56 overflow-hidden bg-pastel-pink">
                         <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/de72874cc5-2efb8363a6121e6b0540.png" alt="Pastel drawing of fixed income investment book" />
                       </div>
-                      <div className="absolute bottom-0 left-0 right-0 bg-slate-100 h-2.5">
+                      <div className="absolute bottom-0 left-0 right-0 bg-pastel-orange h-2.5">
                         <div className="h-full bg-emerald-600 relative" style={{
                       width: '42%'
                     }}>
@@ -2580,7 +2580,7 @@ const Aprendizado = () => {
                       <div className="h-56 overflow-hidden bg-pastel-blue">
                         <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/de72874cc5-43745d045cd52ba18a30.png" alt="Pastel drawing of financial compliance book cover" />
                       </div>
-                      <div className="absolute bottom-0 left-0 right-0 bg-slate-100 h-2.5">
+                      <div className="absolute bottom-0 left-0 right-0 bg-pastel-orange h-2.5">
                         <div className="h-full bg-emerald-600 relative" style={{
                       width: '85%'
                     }}>
@@ -2604,7 +2604,7 @@ const Aprendizado = () => {
                       <div className="h-56 overflow-hidden bg-pastel-peach">
                         <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/e7b331f4e1-9ee7cde295eba8fd33f7.png" alt="Pastel drawing of derivatives book" />
                       </div>
-                      <div className="absolute bottom-0 left-0 right-0 bg-slate-100 h-2.5">
+                      <div className="absolute bottom-0 left-0 right-0 bg-pastel-orange h-2.5">
                         <div className="h-full bg-emerald-700 relative" style={{
                       width: '23%'
                     }}>
@@ -2628,7 +2628,7 @@ const Aprendizado = () => {
                       <div className="h-56 overflow-hidden bg-pastel-pink">
                         <img className="w-full h-full object-cover" src={ebookRiskManagementPink} alt="Pastel drawing of risk management book" />
                       </div>
-                      <div className="absolute bottom-0 left-0 right-0 bg-slate-100 h-2.5">
+                      <div className="absolute bottom-0 left-0 right-0 bg-pastel-orange h-2.5">
                         <div className="h-full bg-emerald-700 relative" style={{
                       width: '56%'
                     }}>
@@ -3638,18 +3638,18 @@ const Aprendizado = () => {
                         <span><i className="fas fa-book mr-1"></i>Journal of Financial Markets</span>
                       </div>
                       <div className="flex flex-wrap gap-2 mb-4">
-                        <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">Machine Learning</span>
-                        <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">HFT</span>
-                        <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">Algorithmic Trading</span>
+                        <span className="px-2 py-1 bg-pastel-orange text-slate-700 text-xs rounded-md">Machine Learning</span>
+                        <span className="px-2 py-1 bg-pastel-orange text-slate-700 text-xs rounded-md">HFT</span>
+                        <span className="px-2 py-1 bg-pastel-orange text-slate-700 text-xs rounded-md">Algorithmic Trading</span>
                       </div>
                       <div className="flex items-center gap-3">
                         <button className="px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
                           <Download size={16} className="inline mr-2" />Download PDF
                         </button>
-                        <button className="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-200 transition">
+                        <button className="px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
                           Ver Detalhes
                         </button>
-                        <button className="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-200 transition">
+                        <button className="px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
                           <Share2 size={16} />
                         </button>
                       </div>
@@ -3673,18 +3673,18 @@ const Aprendizado = () => {
                         <span><i className="fas fa-book mr-1"></i>Emerging Markets Review</span>
                       </div>
                       <div className="flex flex-wrap gap-2 mb-4">
-                        <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">ESG</span>
-                        <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">Portfolio Management</span>
-                        <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">Emerging Markets</span>
+                        <span className="px-2 py-1 bg-pastel-orange text-slate-700 text-xs rounded-md">ESG</span>
+                        <span className="px-2 py-1 bg-pastel-orange text-slate-700 text-xs rounded-md">Portfolio Management</span>
+                        <span className="px-2 py-1 bg-pastel-orange text-slate-700 text-xs rounded-md">Emerging Markets</span>
                       </div>
                       <div className="flex items-center gap-3">
                         <button className="px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
                           <Download size={16} className="inline mr-2" />Download PDF
                         </button>
-                        <button className="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-200 transition">
+                        <button className="px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
                           Ver Detalhes
                         </button>
-                        <button className="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-200 transition">
+                        <button className="px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
                           <Share2 size={16} />
                         </button>
                       </div>
@@ -3709,18 +3709,18 @@ const Aprendizado = () => {
                         <span><i className="fas fa-building mr-1"></i>IMF Working Papers</span>
                       </div>
                       <div className="flex flex-wrap gap-2 mb-4">
-                        <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">CBDC</span>
-                        <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">Monetary Policy</span>
-                        <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">Financial Stability</span>
+                        <span className="px-2 py-1 bg-pastel-orange text-slate-700 text-xs rounded-md">CBDC</span>
+                        <span className="px-2 py-1 bg-pastel-orange text-slate-700 text-xs rounded-md">Monetary Policy</span>
+                        <span className="px-2 py-1 bg-pastel-orange text-slate-700 text-xs rounded-md">Financial Stability</span>
                       </div>
                       <div className="flex items-center gap-3">
                         <button className="px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
                           <Download size={16} className="inline mr-2" />Download PDF
                         </button>
-                        <button className="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-200 transition">
+                        <button className="px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
                           Ver Detalhes
                         </button>
-                        <button className="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-200 transition">
+                        <button className="px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
                           <Share2 size={16} />
                         </button>
                       </div>
@@ -3745,18 +3745,18 @@ const Aprendizado = () => {
                         <span><i className="fas fa-book mr-1"></i>Journal of Financial Economics</span>
                       </div>
                       <div className="flex flex-wrap gap-2 mb-4">
-                        <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">DeFi</span>
-                        <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">Risk Analysis</span>
-                        <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">Blockchain</span>
+                        <span className="px-2 py-1 bg-pastel-orange text-slate-700 text-xs rounded-md">DeFi</span>
+                        <span className="px-2 py-1 bg-pastel-orange text-slate-700 text-xs rounded-md">Risk Analysis</span>
+                        <span className="px-2 py-1 bg-pastel-orange text-slate-700 text-xs rounded-md">Blockchain</span>
                       </div>
                       <div className="flex items-center gap-3">
                         <button className="px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
                           <Download size={16} className="inline mr-2" />Download PDF
                         </button>
-                        <button className="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-200 transition">
+                        <button className="px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
                           Ver Detalhes
                         </button>
-                        <button className="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-200 transition">
+                        <button className="px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
                           <Share2 size={16} />
                         </button>
                       </div>
