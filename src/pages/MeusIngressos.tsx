@@ -1,0 +1,391 @@
+import { SidebarFix } from "@/components/Dashboard/SidebarFix";
+import { ArrowLeft, Download, Plus, Share2, MapPin, Users, Ticket, QrCode, Headphones, ArrowRight, RefreshCw, Award, History } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+
+export default function MeusIngressos() {
+  const [activeTab, setActiveTab] = useState<"proximos" | "historico" | "cancelados">("proximos");
+
+  return (
+    <div className="flex h-screen overflow-hidden">
+      <SidebarFix />
+      
+      <main className="flex-1 overflow-y-auto">
+        <div className="p-8 max-w-7xl mx-auto">
+          
+          {/* Header Section */}
+          <header className="mb-8">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <a href="/eventos-presenciais" className="text-slate-400 hover:text-slate-600 text-sm flex items-center gap-1">
+                    <ArrowLeft className="w-4 h-4" /> Voltar para Eventos
+                  </a>
+                </div>
+                <h1 className="text-3xl font-bold text-slate-800">Meus Ingressos</h1>
+                <p className="text-slate-600 mt-1">Gerencie seus ingressos para eventos presenciais e online.</p>
+              </div>
+              <div className="flex gap-3">
+                <Button variant="outline" className="flex items-center gap-2">
+                  <Download className="w-4 h-4" /> Exportar Calendário
+                </Button>
+                <Button className="bg-slate-800 hover:bg-slate-700 flex items-center gap-2">
+                  <Plus className="w-4 h-4" /> Explorar Novos Eventos
+                </Button>
+              </div>
+            </div>
+
+            {/* Tabs */}
+            <div className="border-b border-slate-200 mb-6">
+              <div className="flex gap-8">
+                <button
+                  onClick={() => setActiveTab("proximos")}
+                  className={`pb-4 border-b-2 font-medium px-2 transition ${
+                    activeTab === "proximos"
+                      ? "border-slate-800 text-slate-800"
+                      : "border-transparent text-slate-500 hover:text-slate-700"
+                  }`}
+                >
+                  Próximos (2)
+                </button>
+                <button
+                  onClick={() => setActiveTab("historico")}
+                  className={`pb-4 border-b-2 font-medium px-2 transition ${
+                    activeTab === "historico"
+                      ? "border-slate-800 text-slate-800"
+                      : "border-transparent text-slate-500 hover:text-slate-700"
+                  }`}
+                >
+                  Histórico (5)
+                </button>
+                <button
+                  onClick={() => setActiveTab("cancelados")}
+                  className={`pb-4 border-b-2 font-medium px-2 transition ${
+                    activeTab === "cancelados"
+                      ? "border-slate-800 text-slate-800"
+                      : "border-transparent text-slate-500 hover:text-slate-700"
+                  }`}
+                >
+                  Cancelados (0)
+                </button>
+              </div>
+            </div>
+          </header>
+
+          {/* Active Tickets Section */}
+          <section className="space-y-6 mb-12">
+            
+            {/* Ticket Card 1: Featured/Upcoming */}
+            <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col md:flex-row">
+              {/* Left: Image & Date */}
+              <div className="w-full md:w-72 bg-pastel-purple/20 relative flex-shrink-0 border-r border-slate-100">
+                <div className="absolute top-4 left-4 z-10">
+                  <span className="px-3 py-1 bg-white/90 backdrop-blur text-slate-700 text-xs font-bold rounded-full uppercase tracking-wide border border-slate-100">
+                    Confirmado
+                  </span>
+                </div>
+                <div className="h-full flex flex-col items-center justify-center p-6 text-center">
+                  <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mb-4 shadow-sm">
+                    <span className="text-3xl font-bold text-slate-700">12</span>
+                  </div>
+                  <span className="text-xl font-medium text-slate-800">Dezembro</span>
+                  <span className="text-slate-500">Quinta-feira • 08:00</span>
+                </div>
+                {/* Decorative background image overlay */}
+                <div className="absolute inset-0 opacity-20 pointer-events-none">
+                  <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/2a3b4c5d6e-7f8a9b0c1d2e3f4a5b6c.png" className="w-full h-full object-cover" alt="background pattern" />
+                </div>
+              </div>
+
+              {/* Middle: Event Details */}
+              <div className="flex-1 p-6 md:p-8 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="px-2.5 py-0.5 bg-pastel-purple text-slate-700 text-xs font-semibold rounded-md">Conferência</span>
+                        <span className="text-xs text-slate-400">Pedido #849302</span>
+                      </div>
+                      <h2 className="text-2xl font-bold text-slate-800 mb-2">Open Finance Brasil 2024</h2>
+                      <p className="text-slate-600 mb-4 line-clamp-2">O maior encontro sobre o ecossistema financeiro aberto. Palestras exclusivas sobre regulação, APIs e novos modelos de negócios.</p>
+                    </div>
+                    <button className="text-slate-400 hover:text-slate-600">
+                      <Share2 className="w-5 h-5" />
+                    </button>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 mb-6">
+                    <div className="flex items-start gap-3">
+                      <div className="mt-1 w-8 h-8 rounded-lg bg-slate-50 flex items-center justify-center flex-shrink-0 text-slate-500">
+                        <MapPin className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-slate-800">Centro de Convenções</p>
+                        <p className="text-xs text-slate-500">Av. das Américas, 3500 - RJ</p>
+                        <a href="#" className="text-xs text-indigo-600 hover:underline mt-0.5 block">Ver no mapa</a>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="mt-1 w-8 h-8 rounded-lg bg-slate-50 flex items-center justify-center flex-shrink-0 text-slate-500">
+                        <Users className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-slate-800">Ingresso VIP</p>
+                        <p className="text-xs text-slate-500">Acesso área VIP + Almoço</p>
+                        <p className="text-xs text-slate-500">Titular: João Silva</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4 pt-6 border-t border-slate-100 mt-auto">
+                  <button className="flex-1 bg-slate-800 text-white px-4 py-2.5 rounded-lg font-medium hover:bg-slate-700 transition flex items-center justify-center gap-2 shadow-sm">
+                    <QrCode className="w-4 h-4" />
+                    Ver QR Code
+                  </button>
+                  <Button variant="outline">Gerenciar</Button>
+                </div>
+              </div>
+
+              {/* Right: Illustration */}
+              <div className="hidden xl:flex xl:w-64 bg-slate-50 p-6 items-center justify-center border-l border-slate-100">
+                <div className="w-full h-48 relative">
+                  <img className="w-full h-full object-contain" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/bb2273ce7e-6ad09df2e05230043d98.png" alt="illustration of a simple ticket icon with a qr code, pastel purple tones, outlined style, 2d flat design, thick strokes, white background" />
+                </div>
+              </div>
+            </div>
+
+            {/* Ticket Card 2 */}
+            <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col md:flex-row">
+              {/* Left: Image & Date */}
+              <div className="w-full md:w-72 bg-pastel-blue/20 relative flex-shrink-0 border-r border-slate-100">
+                <div className="absolute top-4 left-4 z-10">
+                  <span className="px-3 py-1 bg-white/90 backdrop-blur text-slate-700 text-xs font-bold rounded-full uppercase tracking-wide border border-slate-100">
+                    Confirmado
+                  </span>
+                </div>
+                <div className="h-full flex flex-col items-center justify-center p-6 text-center">
+                  <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mb-4 shadow-sm">
+                    <span className="text-3xl font-bold text-slate-700">05</span>
+                  </div>
+                  <span className="text-xl font-medium text-slate-800">Dezembro</span>
+                  <span className="text-slate-500">Quinta-feira • 09:00</span>
+                </div>
+                {/* Decorative background image overlay */}
+                <div className="absolute inset-0 opacity-20 pointer-events-none">
+                  <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/1f2e3d4c5b-6a7b8c9d0e1f2a3b4c5d.png" className="w-full h-full object-cover" alt="background pattern" />
+                </div>
+              </div>
+
+              {/* Middle: Event Details */}
+              <div className="flex-1 p-6 md:p-8 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="px-2.5 py-0.5 bg-pastel-blue text-slate-700 text-xs font-semibold rounded-md">Workshop</span>
+                        <span className="text-xs text-slate-400">Pedido #849155</span>
+                      </div>
+                      <h2 className="text-2xl font-bold text-slate-800 mb-2">Estratégias em Renda Fixa</h2>
+                      <p className="text-slate-600 mb-4 line-clamp-2">Aprenda a construir carteiras resilientes com especialistas do mercado. Foco em títulos públicos e crédito privado.</p>
+                    </div>
+                    <button className="text-slate-400 hover:text-slate-600">
+                      <Share2 className="w-5 h-5" />
+                    </button>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 mb-6">
+                    <div className="flex items-start gap-3">
+                      <div className="mt-1 w-8 h-8 rounded-lg bg-slate-50 flex items-center justify-center flex-shrink-0 text-slate-500">
+                        <MapPin className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-slate-800">Auditório Paulista</p>
+                        <p className="text-xs text-slate-500">Av. Paulista, 1000 - SP</p>
+                        <a href="#" className="text-xs text-indigo-600 hover:underline mt-0.5 block">Ver no mapa</a>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="mt-1 w-8 h-8 rounded-lg bg-slate-50 flex items-center justify-center flex-shrink-0 text-slate-500">
+                        <Ticket className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-slate-800">Entrada Padrão</p>
+                        <p className="text-xs text-slate-500">Material didático incluso</p>
+                        <p className="text-xs text-slate-500">Titular: João Silva</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4 pt-6 border-t border-slate-100 mt-auto">
+                  <button className="flex-1 bg-slate-800 text-white px-4 py-2.5 rounded-lg font-medium hover:bg-slate-700 transition flex items-center justify-center gap-2 shadow-sm">
+                    <QrCode className="w-4 h-4" />
+                    Ver QR Code
+                  </button>
+                  <Button variant="outline">Gerenciar</Button>
+                </div>
+              </div>
+              
+              {/* Right: Illustration */}
+              <div className="hidden xl:flex xl:w-64 bg-slate-50 p-6 items-center justify-center border-l border-slate-100">
+                <div className="w-full h-48 relative">
+                  <img className="w-full h-full object-contain" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/0e87cd540b-173888eb2f5ce4868119.png" alt="illustration of a workshop badge icon, pastel blue tones, outlined style, 2d flat design, thick strokes, white background" />
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Information Grid */}
+          <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            {/* Need Help */}
+            <div className="bg-pastel-yellow/30 rounded-xl p-6 border border-pastel-yellow relative overflow-hidden group">
+              <div className="relative z-10">
+                <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-4 shadow-sm text-slate-700">
+                  <Headphones className="w-5 h-5" />
+                </div>
+                <h3 className="text-lg font-semibold text-slate-800 mb-2">Precisa de ajuda?</h3>
+                <p className="text-sm text-slate-600 mb-4">Problemas com seu ingresso ou dúvidas sobre o evento? Nosso suporte está disponível.</p>
+                <a href="#" className="text-sm font-medium text-slate-800 hover:text-slate-600 flex items-center gap-2">
+                  Falar com Suporte <ArrowRight className="w-3 h-3" />
+                </a>
+              </div>
+              <div className="absolute -right-4 -bottom-4 opacity-10 rotate-12 transform group-hover:scale-110 transition duration-500">
+                <Headphones className="w-36 h-36" />
+              </div>
+            </div>
+
+            {/* Transfer Ticket */}
+            <div className="bg-pastel-green/30 rounded-xl p-6 border border-pastel-green relative overflow-hidden group">
+              <div className="relative z-10">
+                <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-4 shadow-sm">
+                  <RefreshCw className="w-5 h-5 text-slate-700" />
+                </div>
+                <h3 className="text-lg font-semibold text-slate-800 mb-2">Transferir Ingresso</h3>
+                <p className="text-sm text-slate-600 mb-4">Não poderá comparecer? Você pode transferir seu ingresso para outra pessoa até 24h antes.</p>
+                <a href="#" className="text-sm font-medium text-slate-800 hover:text-slate-600 flex items-center gap-2">
+                  Iniciar Transferência <ArrowRight className="w-3 h-3" />
+                </a>
+              </div>
+              <div className="absolute -right-4 -bottom-4 opacity-10 rotate-12 transform group-hover:scale-110 transition duration-500">
+                <Ticket className="w-36 h-36" />
+              </div>
+            </div>
+
+            {/* Certificate Info */}
+            <div className="bg-pastel-blue/30 rounded-xl p-6 border border-pastel-blue relative overflow-hidden group">
+              <div className="relative z-10">
+                <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-4 shadow-sm">
+                  <Award className="w-5 h-5 text-slate-700" />
+                </div>
+                <h3 className="text-lg font-semibold text-slate-800 mb-2">Certificados</h3>
+                <p className="text-sm text-slate-600 mb-4">Seus certificados de participação estarão disponíveis aqui 48h após o término do evento.</p>
+                <a href="#" className="text-sm font-medium text-slate-800 hover:text-slate-600 flex items-center gap-2">
+                  Ver Meus Certificados <ArrowRight className="w-3 h-3" />
+                </a>
+              </div>
+              <div className="absolute -right-4 -bottom-4 opacity-10 rotate-12 transform group-hover:scale-110 transition duration-500">
+                <Award className="w-36 h-36" />
+              </div>
+            </div>
+          </section>
+
+          {/* Past Events History */}
+          <section>
+            <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+              <History className="w-5 h-5 text-slate-400" /> Histórico Recente
+            </h2>
+            <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
+              <table className="w-full text-left">
+                <thead>
+                  <tr className="bg-slate-50 border-b border-slate-200 text-xs uppercase text-slate-500 font-semibold">
+                    <th className="px-6 py-4">Evento</th>
+                    <th className="px-6 py-4">Data</th>
+                    <th className="px-6 py-4">Local</th>
+                    <th className="px-6 py-4">Status</th>
+                    <th className="px-6 py-4 text-right">Ação</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  <tr className="hover:bg-slate-50 transition">
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded bg-pastel-pink flex-shrink-0 overflow-hidden">
+                          <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/4c5d6e7f8a-9b0c1d2e3f4a5b6c7d8e.png" className="w-full h-full object-cover grayscale opacity-80" alt="event thumb" />
+                        </div>
+                        <div>
+                          <p className="font-medium text-slate-800 text-sm">Regulação do Mercado</p>
+                          <p className="text-xs text-slate-500">Seminário</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-sm text-slate-600">15 Nov 2024</td>
+                    <td className="px-6 py-4 text-sm text-slate-600">São Paulo, SP</td>
+                    <td className="px-6 py-4">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
+                        Concluído
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <button className="text-indigo-600 hover:text-indigo-800 text-sm font-medium">Ver Certificado</button>
+                    </td>
+                  </tr>
+                  <tr className="hover:bg-slate-50 transition">
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded bg-pastel-peach flex-shrink-0 overflow-hidden">
+                          <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5d6e7f8a9b-0c1d2e3f4a5b6c7d8e9f.png" className="w-full h-full object-cover grayscale opacity-80" alt="event thumb" />
+                        </div>
+                        <div>
+                          <p className="font-medium text-slate-800 text-sm">Workshop Derivativos</p>
+                          <p className="text-xs text-slate-500">Workshop</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-sm text-slate-600">02 Nov 2024</td>
+                    <td className="px-6 py-4 text-sm text-slate-600">Online</td>
+                    <td className="px-6 py-4">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
+                        Concluído
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <button className="text-indigo-600 hover:text-indigo-800 text-sm font-medium">Ver Certificado</button>
+                    </td>
+                  </tr>
+                  <tr className="hover:bg-slate-50 transition">
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded bg-pastel-blue flex-shrink-0 overflow-hidden">
+                          <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/6e7f8a9b0c-1d2e3f4a5b6c7d8e9f0a.png" className="w-full h-full object-cover grayscale opacity-80" alt="event thumb" />
+                        </div>
+                        <div>
+                          <p className="font-medium text-slate-800 text-sm">Fórum Meios de Pagamento</p>
+                          <p className="text-xs text-slate-500">Fórum</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-sm text-slate-600">20 Out 2024</td>
+                    <td className="px-6 py-4 text-sm text-slate-600">Rio de Janeiro, RJ</td>
+                    <td className="px-6 py-4">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
+                        Concluído
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <button className="text-indigo-600 hover:text-indigo-800 text-sm font-medium">Ver Certificado</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div className="px-6 py-4 border-t border-slate-200 bg-slate-50 text-center">
+                <button className="text-sm text-slate-500 hover:text-slate-700 font-medium">Carregar mais eventos</button>
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </main>
+    </div>
+  );
+}
