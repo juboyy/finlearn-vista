@@ -1,6 +1,8 @@
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useEffect, useState } from "react";
 import { PeriodComparisonToggle, getPeriodLabel } from "./PeriodComparisonToggle";
 import { createComparisonLineChart, createComparisonBarChart, createComparisonLayout, generateMockDataByPeriod } from "./chartComparisonUtils";
+import { ConsumptionAnalyticsCards } from "./ConsumptionAnalyticsCards";
 
 export const EstudosAnalyticsConsumption = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
@@ -141,7 +143,7 @@ export const EstudosAnalyticsConsumption = () => {
       </div>
 
       {/* KPIs */}
-      <div className="grid grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-6 gap-6 mb-8">
         <div className="bg-white rounded-xl p-6 border border-slate-200">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-slate-500 font-medium">Total Lidos</span>
@@ -187,6 +189,20 @@ export const EstudosAnalyticsConsumption = () => {
             Referências marcadas
           </p>
         </div>
+
+        <ConsumptionAnalyticsCards
+          creatorsTitle="Pesquisadores Mais Lidos"
+          creators={[
+            { initials: 'JF', name: 'Journal of Finance', count: '12 estudos', bgColor: 'bg-pastel-purple' },
+            { initials: 'MR', name: 'MIT Research', count: '9 estudos', bgColor: 'bg-pastel-green' },
+            { initials: 'ER', name: 'Economic Review', count: '8 estudos', bgColor: 'bg-pastel-blue' }
+          ]}
+          goalTitle="Meta de Estudos do Mês"
+          goalCurrent={43}
+          goalTotal={50}
+          goalUnit="estudos"
+          streak={15}
+        />
       </div>
 
       {/* Charts Grid */}

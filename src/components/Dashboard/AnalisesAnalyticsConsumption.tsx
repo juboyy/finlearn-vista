@@ -1,6 +1,8 @@
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useEffect, useState } from "react";
 import { PeriodComparisonToggle, getPeriodLabel } from "./PeriodComparisonToggle";
 import { createComparisonLineChart, createComparisonBarChart, createComparisonLayout, generateMockDataByPeriod } from "./chartComparisonUtils";
+import { ConsumptionAnalyticsCards } from "./ConsumptionAnalyticsCards";
 
 export const AnalisesAnalyticsConsumption = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
@@ -141,7 +143,7 @@ export const AnalisesAnalyticsConsumption = () => {
       </div>
 
       {/* KPIs */}
-      <div className="grid grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-6 gap-6 mb-8">
         <div className="bg-white rounded-xl p-6 border border-slate-200">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-slate-500 font-medium">Total Lidas</span>
@@ -187,6 +189,20 @@ export const AnalisesAnalyticsConsumption = () => {
             Diferentes ativos
           </p>
         </div>
+
+        <ConsumptionAnalyticsCards
+          creatorsTitle="Analistas Mais Lidos"
+          creators={[
+            { initials: 'TP', name: 'Trading Pro', count: '28 análises', bgColor: 'bg-pastel-green' },
+            { initials: 'FU', name: 'Fundamentus', count: '22 análises', bgColor: 'bg-pastel-blue' },
+            { initials: 'MI', name: 'Macro Insights', count: '18 análises', bgColor: 'bg-pastel-pink' }
+          ]}
+          goalTitle="Meta de Análises do Mês"
+          goalCurrent={93}
+          goalTotal={100}
+          goalUnit="análises"
+          streak={12}
+        />
       </div>
 
       {/* Charts Grid */}

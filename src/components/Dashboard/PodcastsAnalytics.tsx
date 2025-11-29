@@ -1,7 +1,9 @@
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useEffect, useState } from "react";
 import Plotly from 'plotly.js-dist';
 import { TrendingUp, Clock, CheckCircle, Headphones, BarChart3, Zap, PlayCircle, Award, Target } from "lucide-react";
 import { PeriodComparisonToggle, getPeriodLabel } from "./PeriodComparisonToggle";
+import { ConsumptionAnalyticsCards } from "./ConsumptionAnalyticsCards";
 
 export const PodcastsAnalytics = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
@@ -367,8 +369,8 @@ export const PodcastsAnalytics = () => {
         </button>
       </div>
 
-      {/* KPIs Overview - 9 Cards */}
-      <section className="grid grid-cols-3 gap-6 mb-8">
+      {/* KPIs Overview - 9 Cards + 2 New Cards */}
+      <section className="grid grid-cols-11 gap-6 mb-8">
         <div className="bg-white border border-slate-200 rounded-xl p-6">
           <div className="flex items-center justify-between mb-2">
             <p className="text-sm font-semibold text-slate-500">Total de Episódios</p>
@@ -451,6 +453,20 @@ export const PodcastsAnalytics = () => {
           <h3 className="text-2xl font-bold text-slate-800 mt-1">1.5h</h3>
           <p className="text-xs text-emerald-600 font-bold mt-1">✓ Cumprida em {Math.round(data.streak * 0.85)} dias</p>
         </div>
+
+        <ConsumptionAnalyticsCards
+          creatorsTitle="Hosts Mais Ouvidos"
+          creators={[
+            { initials: 'FB', name: 'Fintech Brasil', count: '35 episódios', bgColor: 'bg-pastel-blue' },
+            { initials: 'PE', name: 'Payments Evolution', count: '28 episódios', bgColor: 'bg-pastel-green' },
+            { initials: 'MF', name: 'Mercado em Foco', count: '22 episódios', bgColor: 'bg-pastel-purple' }
+          ]}
+          goalTitle="Meta de Escuta do Mês"
+          goalCurrent={data.total}
+          goalTotal={selectedPeriod === '7d' ? 35 : selectedPeriod === '30d' ? 150 : selectedPeriod === '90d' ? 450 : 1900}
+          goalUnit="episódios"
+          streak={data.streak}
+        />
       </section>
 
       {/* AI Insights */}

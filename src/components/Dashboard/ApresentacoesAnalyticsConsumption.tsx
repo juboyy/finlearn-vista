@@ -1,6 +1,8 @@
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useEffect, useState } from "react";
 import { PeriodComparisonToggle, getPeriodLabel } from "./PeriodComparisonToggle";
 import { createComparisonLineChart, createComparisonBarChart, createComparisonLayout, generateMockDataByPeriod } from "./chartComparisonUtils";
+import { ConsumptionAnalyticsCards } from "./ConsumptionAnalyticsCards";
 
 export const ApresentacoesAnalyticsConsumption = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
@@ -141,7 +143,7 @@ export const ApresentacoesAnalyticsConsumption = () => {
       </div>
 
       {/* KPIs */}
-      <div className="grid grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-6 gap-6 mb-8">
         <div className="bg-white rounded-xl p-6 border border-slate-200">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-slate-500 font-medium">Total Vistas</span>
@@ -187,6 +189,20 @@ export const ApresentacoesAnalyticsConsumption = () => {
             Salvos localmente
           </p>
         </div>
+
+        <ConsumptionAnalyticsCards
+          creatorsTitle="Creators Mais Vistos"
+          creators={[
+            { initials: 'BX', name: 'Banco XYZ', count: '12 apresentações', bgColor: 'bg-pastel-pink' },
+            { initials: 'FI', name: 'Fintech Inovação', count: '10 apresentações', bgColor: 'bg-pastel-green' },
+            { initials: 'MR', name: 'Market Research', count: '8 apresentações', bgColor: 'bg-pastel-blue' }
+          ]}
+          goalTitle="Meta de Apresentações do Mês"
+          goalCurrent={75}
+          goalTotal={80}
+          goalUnit="apresentações"
+          streak={9}
+        />
       </div>
 
       {/* Charts Grid */}
