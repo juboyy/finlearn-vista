@@ -99,7 +99,11 @@ export const WhitepaperAnalyticsConsumption = () => {
       showlegend: true,
       legend: { orientation: 'h', y: -0.1, font: { size: 11 } },
       paper_bgcolor: '#ffffff',
-      hovermode: 'closest'
+      hovermode: 'closest',
+      transition: {
+        duration: 800,
+        easing: 'cubic-in-out'
+      }
     }, { displayModeBar: false }).then(() => {
       const categoriesChart = document.getElementById('whitepaper-categories-chart');
       if (categoriesChart) {
