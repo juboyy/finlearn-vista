@@ -6,6 +6,9 @@ import liveRecording1 from "@/assets/live-recording-1.png";
 import liveRecording2 from "@/assets/live-recording-2.png";
 import liveRecording3 from "@/assets/live-recording-3.png";
 import liveRecording4 from "@/assets/live-recording-4.png";
+import liveUpcoming1 from "@/assets/live-upcoming-1.png";
+import liveUpcoming2 from "@/assets/live-upcoming-2.png";
+import liveUpcoming3 from "@/assets/live-upcoming-3.png";
 
 export const LiveContent = () => {
   const [selectedLive, setSelectedLive] = useState<string | null>(null);
@@ -195,7 +198,7 @@ export const LiveContent = () => {
           {/* Upcoming 1 */}
           <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
             <div className="h-48 bg-pastel-blue overflow-hidden relative">
-              <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5213464580-c5bc017767ff44227057.png" alt="Live" />
+              <img className="w-full h-full object-cover" src={liveUpcoming1} alt="Live" />
               <div className="absolute bottom-4 right-4">
                 <span className="px-2 py-1 bg-white/90 backdrop-blur text-slate-700 text-xs font-medium rounded-full">
                   <i className="fas fa-bell mr-1"></i>
@@ -229,7 +232,7 @@ export const LiveContent = () => {
           {/* Upcoming 2 */}
           <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
             <div className="h-48 bg-pastel-purple overflow-hidden relative">
-              <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/d51e1f0edd-ac69efab786c3927349b.png" alt="Live" />
+              <img className="w-full h-full object-cover" src={liveUpcoming2} alt="Live" />
               <div className="absolute bottom-4 right-4">
                 <span className="px-2 py-1 bg-white/90 backdrop-blur text-slate-700 text-xs font-medium rounded-full">
                   <i className="fas fa-bell mr-1"></i>
@@ -263,7 +266,7 @@ export const LiveContent = () => {
           {/* Upcoming 3 */}
           <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition">
             <div className="h-48 bg-pastel-pink overflow-hidden relative">
-              <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/0da9896c42-46e32d6de31b8ba9ed03.png" alt="Live" />
+              <img className="w-full h-full object-cover" src={liveUpcoming3} alt="Live" />
               <div className="absolute bottom-4 right-4">
                 <span className="px-2 py-1 bg-white/90 backdrop-blur text-slate-700 text-xs font-medium rounded-full">
                   <i className="fas fa-bell mr-1"></i>
