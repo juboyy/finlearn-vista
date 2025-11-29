@@ -8,6 +8,45 @@ export const AnalisesAnalyticsConsumption = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
   const [comparisonMode, setComparisonMode] = useState(false);
   const [comparisonPeriod, setComparisonPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('7d');
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [showDrillDown, setShowDrillDown] = useState(false);
+
+  const analisesByCategory: Record<string, Array<{
+    title: string;
+    analyst: string;
+    completionRate: number;
+    duration: string;
+    date: string;
+  }>> = {
+    'Técnica': [{
+      title: 'Análise Técnica: PETR4 - Suporte em R$ 38,50',
+      analyst: 'Trading Pro',
+      completionRate: 95,
+      duration: '8min',
+      date: 'Hoje'
+    }],
+    'Fundamentalista': [{
+      title: 'Vale3: Perspectivas para 2025',
+      analyst: 'Fundamentus',
+      completionRate: 100,
+      duration: '12min',
+      date: 'Ontem'
+    }],
+    'Macroeconômica': [{
+      title: 'Cenário Macro: SELIC e Impactos no Mercado',
+      analyst: 'Macro Insights',
+      completionRate: 88,
+      duration: '15min',
+      date: '2 dias atrás'
+    }],
+    'Setorial': [{
+      title: 'Setor Bancário: Análise Comparativa',
+      analyst: 'Financial Research',
+      completionRate: 85,
+      duration: '10min',
+      date: '3 dias atrás'
+    }]
+  };
   
   useEffect(() => {
     if (typeof window !== 'undefined' && (window as any).Plotly) {
@@ -44,14 +83,28 @@ export const AnalisesAnalyticsConsumption = () => {
       labels: ['Técnica', 'Fundamentalista', 'Macroeconômica', 'Setorial'],
       type: 'pie',
       marker: { colors: ['#C5E8D4', '#B8D4E8', '#F4C8D8', '#D8BFD8'] },
-      textinfo: 'label+percent'
+      textinfo: 'label+percent',
+      hovertemplate: '<b>%{label}</b><br>%{value} análises (%{percent})<br><i>Clique para ver detalhes</i><extra></extra>',
+      hoverlabel: { bgcolor: '#334155', font: { color: 'white', size: 14 } }
     }];
 
     Plotly.newPlot('analises-types-chart', typesData, {
       margin: { l: 20, r: 20, t: 20, b: 20 },
       showlegend: false,
-      paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
+      paper_bgcolor: '#ffffff',
+      hovermode: 'closest',
+      hoverlabel: { bgcolor: '#334155', font: { color: 'white' } }
+    }, { displayModeBar: false }).then(() => {
+      const typesChart = document.getElementById('analises-types-chart');
+      if (typesChart) {
+        typesChart.style.cursor = 'pointer';
+        (typesChart as any).on('plotly_click', (data: any) => {
+          const label = data.points[0].label;
+          setSelectedCategory(label);
+          setShowDrillDown(true);
+        });
+      }
+    });
 
     // Tempo de Análise
     const getTimeData = generateMockDataByPeriod('completion');
@@ -355,6 +408,39 @@ export const AnalisesAnalyticsConsumption = () => {
           ))}
         </div>
       </div>
+
+      {/* Drill Down Modal */}
+      {showDrillDown && selectedCategory && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setShowDrillDown(false)}>
+          <div className="bg-white rounded-2xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-2xl font-bold text-slate-800">Análises: {selectedCategory}</h3>
+              <button 
+                onClick={() => setShowDrillDown(false)}
+                className="text-slate-400 hover:text-slate-600 transition"
+              >
+                <i className="fas fa-times text-xl"></i>
+              </button>
+            </div>
+            <div className="space-y-4">
+              {analisesByCategory[selectedCategory]?.map((analise, idx) => (
+                <div key={idx} className="border border-slate-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-slate-800 mb-2">{analise.title}</h4>
+                  <p className="text-sm text-slate-600 mb-2">Analista: {analise.analyst}</p>
+                  <div className="flex items-center gap-4 text-xs text-slate-500">
+                    <span><i className="fas fa-clock mr-1"></i>{analise.duration}</span>
+                    <span><i className="fas fa-calendar mr-1"></i>{analise.date}</span>
+                    <span className="flex items-center gap-1">
+                      <i className="fas fa-check-circle mr-1"></i>
+                      {analise.completionRate}% concluído
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

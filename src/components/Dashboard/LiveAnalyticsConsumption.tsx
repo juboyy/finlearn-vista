@@ -8,6 +8,45 @@ export const LiveAnalyticsConsumption = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
   const [comparisonMode, setComparisonMode] = useState(false);
   const [comparisonPeriod, setComparisonPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('7d');
+  const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
+  const [showDrillDown, setShowDrillDown] = useState(false);
+
+  const livesByTopic: Record<string, Array<{
+    title: string;
+    host: string;
+    duration: string;
+    participation: number;
+    date: string;
+  }>> = {
+    'Mercado': [{
+      title: 'Análise do Mercado em Tempo Real',
+      host: 'Dr. Carlos Mendes',
+      duration: '2h',
+      participation: 95,
+      date: 'Hoje'
+    }],
+    'Educação': [{
+      title: 'Estratégias de Trading para Iniciantes',
+      host: 'Prof. Ana Santos',
+      duration: '1.5h',
+      participation: 88,
+      date: 'Ontem'
+    }],
+    'Produtos': [{
+      title: 'Lançamento: Novo Produto Open Finance',
+      host: 'Fintech XYZ',
+      duration: '1h',
+      participation: 100,
+      date: '3 dias atrás'
+    }],
+    'Q&A': [{
+      title: 'Q&A: Tire suas dúvidas sobre investimentos',
+      host: 'Prof. Roberto Lima',
+      duration: '2h',
+      participation: 75,
+      date: '5 dias atrás'
+    }]
+  };
   
   useEffect(() => {
     if (typeof window !== 'undefined' && (window as any).Plotly) {
@@ -44,14 +83,27 @@ export const LiveAnalyticsConsumption = () => {
       labels: ['Mercado', 'Educação', 'Produtos', 'Q&A'],
       type: 'pie',
       marker: { colors: ['#C5E8D4', '#F4C8D8', '#D8BFD8', '#B8D4E8'] },
-      textinfo: 'label+percent'
+      textinfo: 'label+percent',
+      hovertemplate: '<b>%{label}</b><br>%{value} lives (%{percent})<br><i>Clique para ver detalhes</i><extra></extra>',
+      hoverlabel: { bgcolor: '#334155', font: { color: 'white', size: 14 } }
     }];
 
     Plotly.newPlot('live-topics-chart', topicsData, {
       margin: { l: 20, r: 20, t: 20, b: 20 },
       showlegend: false,
-      paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
+      paper_bgcolor: '#ffffff',
+      hovermode: 'closest'
+    }, { displayModeBar: false }).then(() => {
+      const topicsChart = document.getElementById('live-topics-chart');
+      if (topicsChart) {
+        topicsChart.style.cursor = 'pointer';
+        (topicsChart as any).on('plotly_click', (data: any) => {
+          const label = data.points[0].label;
+          setSelectedTopic(label);
+          setShowDrillDown(true);
+        });
+      }
+    });
 
     // Tempo de Participação
     const getTimeData = generateMockDataByPeriod('completion');
@@ -361,6 +413,39 @@ export const LiveAnalyticsConsumption = () => {
           ))}
         </div>
       </div>
+
+      {/* Drill Down Modal */}
+      {showDrillDown && selectedTopic && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setShowDrillDown(false)}>
+          <div className="bg-white rounded-2xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-2xl font-bold text-slate-800">Lives: {selectedTopic}</h3>
+              <button 
+                onClick={() => setShowDrillDown(false)}
+                className="text-slate-400 hover:text-slate-600 transition"
+              >
+                <i className="fas fa-times text-xl"></i>
+              </button>
+            </div>
+            <div className="space-y-4">
+              {livesByTopic[selectedTopic]?.map((live, idx) => (
+                <div key={idx} className="border border-slate-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-slate-800 mb-2">{live.title}</h4>
+                  <p className="text-sm text-slate-600 mb-2">Host: {live.host}</p>
+                  <div className="flex items-center gap-4 text-xs text-slate-500">
+                    <span><i className="fas fa-clock mr-1"></i>{live.duration}</span>
+                    <span><i className="fas fa-calendar mr-1"></i>{live.date}</span>
+                    <span className="flex items-center gap-1">
+                      <i className="fas fa-chart-line mr-1"></i>
+                      {live.participation}% assistido
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

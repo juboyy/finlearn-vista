@@ -170,15 +170,19 @@ export const CursosAnalytics = () => {
       type: 'pie',
       marker: { colors: [pastelYellow, pastelBlue, pastelPurple, pastelPink, pastelOrange] },
       textinfo: 'none',
-      hoverinfo: 'label+percent+value'
+      hoverinfo: 'label+percent+value',
+      hovertemplate: '<b>%{label}</b><br>%{value} cursos (%{percent})<br><i>Clique para ver detalhes</i><extra></extra>',
+      hoverlabel: { bgcolor: '#334155', font: { color: 'white', size: 14 } }
     }], {
       margin: { l: 20, r: 20, t: 0, b: 60 },
       showlegend: true,
       legend: { orientation: 'h', y: -0.1, font: { size: 11 } },
-      paper_bgcolor: '#ffffff'
+      paper_bgcolor: '#ffffff',
+      hovermode: 'closest'
     }, { displayModeBar: false }).then(() => {
       const categoriesChart = document.getElementById('cursos-categories-chart');
       if (categoriesChart) {
+        categoriesChart.style.cursor = 'pointer';
         (categoriesChart as any).on('plotly_click', (data: any) => {
           const label = data.points[0].label;
           setSelectedCategory(label);

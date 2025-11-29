@@ -8,6 +8,45 @@ export const EstudosAnalyticsConsumption = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
   const [comparisonMode, setComparisonMode] = useState(false);
   const [comparisonPeriod, setComparisonPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('7d');
+  const [selectedArea, setSelectedArea] = useState<string | null>(null);
+  const [showDrillDown, setShowDrillDown] = useState(false);
+
+  const estudosByArea: Record<string, Array<{
+    title: string;
+    author: string;
+    area: string;
+    date: string;
+  }>> = {
+    'Finanças': [{
+      title: 'Machine Learning in Financial Risk Assessment',
+      author: 'Journal of Finance',
+      area: 'Finanças',
+      date: 'Hoje'
+    }, {
+      title: 'AI-Driven Portfolio Management',
+      author: 'Financial Analytics',
+      area: 'Finanças',
+      date: '1 semana atrás'
+    }],
+    'Economia': [{
+      title: 'Economic Impact of Digital Currencies',
+      author: 'Economic Review',
+      area: 'Economia',
+      date: '4 dias atrás'
+    }],
+    'Tecnologia': [{
+      title: 'Blockchain Technology and Banking Sector',
+      author: 'MIT Research',
+      area: 'Tecnologia',
+      date: '2 dias atrás'
+    }],
+    'Regulação': [{
+      title: 'Regulatory Frameworks for Fintech',
+      author: 'Regulation Studies',
+      area: 'Regulação',
+      date: '1 semana atrás'
+    }]
+  };
   
   useEffect(() => {
     if (typeof window !== 'undefined' && (window as any).Plotly) {
@@ -44,14 +83,27 @@ export const EstudosAnalyticsConsumption = () => {
       labels: ['Finanças', 'Economia', 'Tecnologia', 'Regulação', 'Outros'],
       type: 'pie',
       marker: { colors: ['#D8BFD8', '#C5E8D4', '#F4C8D8', '#B8D4E8', '#F4E4A6'] },
-      textinfo: 'label+percent'
+      textinfo: 'label+percent',
+      hovertemplate: '<b>%{label}</b><br>%{value} estudos (%{percent})<br><i>Clique para ver detalhes</i><extra></extra>',
+      hoverlabel: { bgcolor: '#334155', font: { color: 'white', size: 14 } }
     }];
 
     Plotly.newPlot('estudos-areas-chart', areasData, {
       margin: { l: 20, r: 20, t: 20, b: 20 },
       showlegend: false,
-      paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
+      paper_bgcolor: '#ffffff',
+      hovermode: 'closest'
+    }, { displayModeBar: false }).then(() => {
+      const areasChart = document.getElementById('estudos-areas-chart');
+      if (areasChart) {
+        areasChart.style.cursor = 'pointer';
+        (areasChart as any).on('plotly_click', (data: any) => {
+          const label = data.points[0].label;
+          setSelectedArea(label);
+          setShowDrillDown(true);
+        });
+      }
+    });
 
     // Tempo de Leitura
     const getTimeData = generateMockDataByPeriod('completion');
@@ -355,6 +407,35 @@ export const EstudosAnalyticsConsumption = () => {
           ))}
         </div>
       </div>
+
+      {/* Drill Down Modal */}
+      {showDrillDown && selectedArea && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setShowDrillDown(false)}>
+          <div className="bg-white rounded-2xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-2xl font-bold text-slate-800">Estudos: {selectedArea}</h3>
+              <button 
+                onClick={() => setShowDrillDown(false)}
+                className="text-slate-400 hover:text-slate-600 transition"
+              >
+                <i className="fas fa-times text-xl"></i>
+              </button>
+            </div>
+            <div className="space-y-4">
+              {estudosByArea[selectedArea]?.map((estudo, idx) => (
+                <div key={idx} className="border border-slate-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-slate-800 mb-2">{estudo.title}</h4>
+                  <p className="text-sm text-slate-600 mb-2">Autor: {estudo.author}</p>
+                  <div className="flex items-center gap-4 text-xs text-slate-500">
+                    <span><i className="fas fa-graduation-cap mr-1"></i>{estudo.area}</span>
+                    <span><i className="fas fa-calendar mr-1"></i>{estudo.date}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

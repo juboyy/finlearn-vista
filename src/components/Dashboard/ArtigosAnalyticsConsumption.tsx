@@ -172,15 +172,19 @@ export const ArtigosAnalyticsConsumption = () => {
       type: 'pie',
       marker: { colors: [pastelBlue, pastelGreen, pastelPink, pastelOrange, pastelYellow] },
       textinfo: 'none',
-      hoverinfo: 'label+percent+value'
+      hoverinfo: 'label+percent+value',
+      hovertemplate: '<b>%{label}</b><br>%{value} artigos (%{percent})<br><i>Clique para ver detalhes</i><extra></extra>',
+      hoverlabel: { bgcolor: '#334155', font: { color: 'white', size: 14 } }
     }], {
       margin: { l: 20, r: 20, t: 0, b: 60 },
       showlegend: true,
       legend: { orientation: 'h', y: -0.1, font: { size: 11 } },
-      paper_bgcolor: '#ffffff'
+      paper_bgcolor: '#ffffff',
+      hovermode: 'closest'
     }, { displayModeBar: false }).then(() => {
       const topicsChart = document.getElementById('artigos-topics-chart');
       if (topicsChart) {
+        topicsChart.style.cursor = 'pointer';
         (topicsChart as any).on('plotly_click', (data: any) => {
           const label = data.points[0].label;
           setSelectedTopic(label);
