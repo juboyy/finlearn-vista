@@ -123,6 +123,8 @@ import ArtigosAnalytics from "./pages/ArtigosAnalytics";
 import AnalisesAnalytics from "./pages/AnalisesAnalytics";
 import RelatoriosAnalytics from "./pages/RelatoriosAnalytics";
 import NewspaperAnalytics from "./pages/NewspaperAnalytics";
+import Live from "./pages/Live";
+import Entrevistas from "./pages/Entrevistas";
 
 import NotFound from "./pages/NotFound";
 
@@ -262,6 +264,8 @@ const App = () => {
           <Route path="/analises-analytics" element={<AnalisesAnalytics />} />
           <Route path="/relatorios-analytics" element={<RelatoriosAnalytics />} />
           <Route path="/newspaper-analytics" element={<NewspaperAnalytics />} />
+          <Route path="/live" element={<Live />} />
+          <Route path="/entrevistas" element={<Entrevistas />} />
            
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
