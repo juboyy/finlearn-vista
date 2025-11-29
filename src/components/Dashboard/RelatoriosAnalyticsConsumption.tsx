@@ -1,6 +1,8 @@
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useEffect, useState } from "react";
 import { PeriodComparisonToggle, getPeriodLabel } from "./PeriodComparisonToggle";
 import { createComparisonLineChart, createComparisonBarChart, createComparisonLayout, generateMockDataByPeriod } from "./chartComparisonUtils";
+import { ConsumptionAnalyticsCards } from "./ConsumptionAnalyticsCards";
 
 export const RelatoriosAnalyticsConsumption = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
@@ -141,7 +143,7 @@ export const RelatoriosAnalyticsConsumption = () => {
       </div>
 
       {/* KPIs */}
-      <div className="grid grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-6 gap-6 mb-8">
         <div className="bg-white rounded-xl p-6 border border-slate-200">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-slate-500 font-medium">Total Lidos</span>
@@ -187,6 +189,20 @@ export const RelatoriosAnalyticsConsumption = () => {
             Salvos localmente
           </p>
         </div>
+
+        <ConsumptionAnalyticsCards
+          creatorsTitle="Autores Mais Lidos"
+          creators={[
+            { initials: 'FI', name: 'Financial Insights', count: '15 relatórios', bgColor: 'bg-pastel-pink' },
+            { initials: 'BR', name: 'Banking Research', count: '12 relatórios', bgColor: 'bg-pastel-green' },
+            { initials: 'CA', name: 'Credit Analytics', count: '10 relatórios', bgColor: 'bg-pastel-blue' }
+          ]}
+          goalTitle="Meta de Relatórios do Mês"
+          goalCurrent={57}
+          goalTotal={70}
+          goalUnit="relatórios"
+          streak={8}
+        />
       </div>
 
       {/* Charts Grid */}

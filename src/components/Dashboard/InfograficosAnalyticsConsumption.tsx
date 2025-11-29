@@ -1,6 +1,8 @@
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useEffect, useState } from "react";
 import { PeriodComparisonToggle, getPeriodLabel } from "./PeriodComparisonToggle";
 import { createComparisonLineChart, createComparisonBarChart, createComparisonLayout, generateMockDataByPeriod } from "./chartComparisonUtils";
+import { ConsumptionAnalyticsCards } from "./ConsumptionAnalyticsCards";
 
 export const InfograficosAnalyticsConsumption = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
@@ -141,7 +143,7 @@ export const InfograficosAnalyticsConsumption = () => {
       </div>
 
       {/* KPIs */}
-      <div className="grid grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-6 gap-6 mb-8">
         <div className="bg-white rounded-xl p-6 border border-slate-200">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-slate-500 font-medium">Total Vistos</span>
@@ -187,6 +189,20 @@ export const InfograficosAnalyticsConsumption = () => {
             Salvos localmente
           </p>
         </div>
+
+        <ConsumptionAnalyticsCards
+          creatorsTitle="Creators Mais Vistos"
+          creators={[
+            { initials: 'DI', name: 'Data Insights', count: '18 infográficos', bgColor: 'bg-pastel-yellow' },
+            { initials: 'BP', name: 'Banking Process', count: '15 infográficos', bgColor: 'bg-pastel-green' },
+            { initials: 'MC', name: 'Market Compare', count: '12 infográficos', bgColor: 'bg-pastel-pink' }
+          ]}
+          goalTitle="Meta de Infográficos do Mês"
+          goalCurrent={87}
+          goalTotal={100}
+          goalUnit="infográficos"
+          streak={10}
+        />
       </div>
 
       {/* Charts Grid */}

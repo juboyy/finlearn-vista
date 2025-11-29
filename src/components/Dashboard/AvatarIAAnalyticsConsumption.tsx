@@ -1,6 +1,8 @@
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useEffect, useState } from "react";
 import { PeriodComparisonToggle, getPeriodLabel } from "./PeriodComparisonToggle";
 import { createComparisonLineChart, createComparisonBarChart, createComparisonLayout, generateMockDataByPeriod } from "./chartComparisonUtils";
+import { ConsumptionAnalyticsCards } from "./ConsumptionAnalyticsCards";
 
 export const AvatarIAAnalyticsConsumption = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
@@ -141,7 +143,7 @@ export const AvatarIAAnalyticsConsumption = () => {
       </div>
 
       {/* KPIs */}
-      <div className="grid grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-6 gap-6 mb-8">
         <div className="bg-white rounded-xl p-6 border border-slate-200">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-slate-500 font-medium">Total de Sessões</span>
@@ -187,6 +189,20 @@ export const AvatarIAAnalyticsConsumption = () => {
             Total de interações
           </p>
         </div>
+
+        <ConsumptionAnalyticsCards
+          creatorsTitle="Agentes Mais Acessados"
+          creators={[
+            { initials: 'AA', name: 'Agente de Análise', count: '42 sessões', bgColor: 'bg-pastel-pink' },
+            { initials: 'AC', name: 'Agente Compliance', count: '35 sessões', bgColor: 'bg-pastel-green' },
+            { initials: 'AE', name: 'Agente Educacional', count: '28 sessões', bgColor: 'bg-pastel-blue' }
+          ]}
+          goalTitle="Meta de Sessões do Mês"
+          goalCurrent={136}
+          goalTotal={150}
+          goalUnit="sessões"
+          streak={18}
+        />
       </div>
 
       {/* Charts Grid */}
