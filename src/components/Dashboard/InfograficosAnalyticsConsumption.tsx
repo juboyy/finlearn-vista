@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { PeriodComparisonToggle, getPeriodLabel } from "./PeriodComparisonToggle";
+import { createComparisonLineChart, createComparisonBarChart, createComparisonLayout, generateMockDataByPeriod } from "./chartComparisonUtils";
 
 export const InfograficosAnalyticsConsumption = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
@@ -14,22 +15,26 @@ export const InfograficosAnalyticsConsumption = () => {
 
   const initializeCharts = () => {
     const Plotly = (window as any).Plotly;
+    const getData = generateMockDataByPeriod('weekly');
 
     // Visualizações Semanais
-    const weeklyData = [{
-      x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
-      y: [5, 8, 6, 10, 7, 3, 2],
-      type: 'bar',
-      marker: { color: '#F4E4A6' }
-    }];
+    const currentData = getData(selectedPeriod);
+    const comparisonData = comparisonMode ? getData(comparisonPeriod) : null;
+    
+    const weeklyTraces = createComparisonBarChart({
+      currentData,
+      comparisonData,
+      currentPeriod: selectedPeriod,
+      comparisonPeriod,
+      comparisonMode,
+      chartType: 'bar'
+    });
 
-    Plotly.newPlot('infograficos-weekly-chart', weeklyData, {
+    Plotly.newPlot('infograficos-weekly-chart', weeklyTraces, createComparisonLayout(comparisonMode, {
       margin: { l: 40, r: 20, t: 20, b: 40 },
-      xaxis: { gridcolor: '#f1f5f9' },
-      yaxis: { gridcolor: '#f1f5f9', title: 'Infográficos Vistos' },
-      plot_bgcolor: '#ffffff',
-      paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
+      xaxis: { gridcolor: '#f1f5f9', tickangle: 0 },
+      yaxis: { gridcolor: '#f1f5f9', title: 'Infográficos Vistos' }
+    }), { displayModeBar: false });
 
     // Infográficos por Tema
     const topicsData = [{
@@ -47,38 +52,41 @@ export const InfograficosAnalyticsConsumption = () => {
     }, { displayModeBar: false });
 
     // Tempo de Visualização
-    const timeData = [{
-      x: ['0-2 min', '2-5 min', '5-10 min', '10+ min'],
-      y: [18, 32, 25, 12],
-      type: 'bar',
-      marker: { color: ['#E8C5D8', '#E8E0C5', '#C5E8D4', '#F4E4A6'] }
-    }];
+    const getTimeData = generateMockDataByPeriod('completion');
+    const currentTimeData = getTimeData(selectedPeriod);
+    const comparisonTimeData = comparisonMode ? getTimeData(comparisonPeriod) : null;
+    
+    const timeTraces = createComparisonBarChart({
+      currentData: currentTimeData,
+      comparisonData: comparisonTimeData,
+      currentPeriod: selectedPeriod,
+      comparisonPeriod,
+      comparisonMode,
+      chartType: 'bar'
+    });
 
-    Plotly.newPlot('infograficos-time-chart', timeData, {
+    Plotly.newPlot('infograficos-time-chart', timeTraces, createComparisonLayout(comparisonMode, {
       margin: { l: 40, r: 20, t: 20, b: 40 },
-      xaxis: { gridcolor: '#f1f5f9', title: 'Tempo de Visualização' },
-      yaxis: { gridcolor: '#f1f5f9', title: 'Infográficos' },
-      plot_bgcolor: '#ffffff',
-      paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
+      xaxis: { gridcolor: '#f1f5f9', title: 'Tempo de Visualização', tickangle: 0 },
+      yaxis: { gridcolor: '#f1f5f9', title: 'Infográficos' }
+    }), { displayModeBar: false });
 
     // Engajamento Mensal
-    const monthlyData = [{
-      x: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
-      y: [32, 38, 35, 42, 45, 51],
-      type: 'scatter',
-      mode: 'lines+markers',
-      line: { color: '#F4E4A6', width: 3 },
-      marker: { size: 8, color: '#F4E4A6' }
-    }];
+    const monthlyTraces = createComparisonLineChart({
+      currentData,
+      comparisonData,
+      currentPeriod: selectedPeriod,
+      comparisonPeriod,
+      comparisonMode,
+      chartType: 'line',
+      title: 'Infográficos Vistos'
+    });
 
-    Plotly.newPlot('infograficos-monthly-chart', monthlyData, {
+    Plotly.newPlot('infograficos-monthly-chart', monthlyTraces, createComparisonLayout(comparisonMode, {
       margin: { l: 40, r: 20, t: 20, b: 40 },
-      xaxis: { gridcolor: '#f1f5f9' },
-      yaxis: { gridcolor: '#f1f5f9', title: 'Infográficos Vistos' },
-      plot_bgcolor: '#ffffff',
-      paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
+      xaxis: { gridcolor: '#f1f5f9', tickangle: 0 },
+      yaxis: { gridcolor: '#f1f5f9', title: 'Infográficos Vistos' }
+    }), { displayModeBar: false });
   };
 
   return (

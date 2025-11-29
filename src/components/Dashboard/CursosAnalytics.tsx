@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { PeriodComparisonToggle, getPeriodLabel } from "./PeriodComparisonToggle";
+import { createComparisonLineChart, createComparisonBarChart, createComparisonLayout, generateMockDataByPeriod } from "./chartComparisonUtils";
 
 export const CursosAnalytics = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
@@ -37,22 +38,26 @@ export const CursosAnalytics = () => {
   const initializeCharts = () => {
     const periodData = getDataByPeriod();
     const Plotly = (window as any).Plotly;
+    const getTimeData = generateMockDataByPeriod('time');
 
     // Progresso Semanal
-    const progressData = [{
-      x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
-      y: [3.2, 2.8, 4.5, 3.8, 2.5, 1.2, 0.8],
-      type: 'bar',
-      marker: { color: '#F4E4A6' }
-    }];
+    const currentData = getTimeData(selectedPeriod);
+    const comparisonData = comparisonMode ? getTimeData(comparisonPeriod) : null;
+    
+    const progressTraces = createComparisonBarChart({
+      currentData,
+      comparisonData,
+      currentPeriod: selectedPeriod,
+      comparisonPeriod,
+      comparisonMode,
+      chartType: 'bar'
+    });
 
-    Plotly.newPlot('cursos-progress-chart', progressData, {
+    Plotly.newPlot('cursos-progress-chart', progressTraces, createComparisonLayout(comparisonMode, {
       margin: { l: 40, r: 20, t: 20, b: 40 },
-      xaxis: { gridcolor: '#f1f5f9' },
-      yaxis: { gridcolor: '#f1f5f9', title: 'Horas de Estudo' },
-      plot_bgcolor: '#ffffff',
-      paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
+      xaxis: { gridcolor: '#f1f5f9', tickangle: 0 },
+      yaxis: { gridcolor: '#f1f5f9', title: 'Horas de Estudo' }
+    }), { displayModeBar: false });
 
     // Cursos por Categoria
     const categoriesData = [{
@@ -70,20 +75,24 @@ export const CursosAnalytics = () => {
     }, { displayModeBar: false });
 
     // Taxa de Conclusão de Módulos
-    const modulesCompletionData = [{
-      x: ['0-25%', '26-50%', '51-75%', '76-100%'],
-      y: [8, 15, 22, 35],
-      type: 'bar',
-      marker: { color: ['#E8C5D8', '#E8E0C5', '#C5E8D4', '#F4E4A6'] }
-    }];
+    const getCompletionData = generateMockDataByPeriod('completion');
+    const currentCompletionData = getCompletionData(selectedPeriod);
+    const comparisonCompletionData = comparisonMode ? getCompletionData(comparisonPeriod) : null;
+    
+    const modulesTraces = createComparisonBarChart({
+      currentData: currentCompletionData,
+      comparisonData: comparisonCompletionData,
+      currentPeriod: selectedPeriod,
+      comparisonPeriod,
+      comparisonMode,
+      chartType: 'bar'
+    });
 
-    Plotly.newPlot('cursos-modules-chart', modulesCompletionData, {
+    Plotly.newPlot('cursos-modules-chart', modulesTraces, createComparisonLayout(comparisonMode, {
       margin: { l: 40, r: 20, t: 20, b: 40 },
-      xaxis: { gridcolor: '#f1f5f9', title: 'Progresso' },
-      yaxis: { gridcolor: '#f1f5f9', title: 'Módulos' },
-      plot_bgcolor: '#ffffff',
-      paper_bgcolor: '#ffffff'
-    }, { displayModeBar: false });
+      xaxis: { gridcolor: '#f1f5f9', title: 'Progresso', tickangle: 0 },
+      yaxis: { gridcolor: '#f1f5f9', title: 'Módulos' }
+    }), { displayModeBar: false });
 
     // Certificados por Mês
     const certificatesData = [{
