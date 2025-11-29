@@ -352,7 +352,7 @@ const Aprendizado = () => {
                   <Bell size={20} />
                   <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                 </button>
-                <button onClick={() => navigate('/meus-conteudos')} className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                <button onClick={() => navigate('/meus-conteudos')} className="px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
                   <Plus className="w-4 h-4 inline mr-2" />
                   Criar Conteúdo
                 </button>
@@ -672,7 +672,7 @@ const Aprendizado = () => {
                     </div>
                     <span className="text-sm text-slate-500">12h</span>
                   </div>
-                  <button className="w-full px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                  <button className="w-full px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
                     Inscrever-se
                   </button>
                 </div>
@@ -878,7 +878,7 @@ const Aprendizado = () => {
                 <div className="p-4">
                   <h3 className="font-medium text-slate-800 mb-2 line-clamp-2">FinTech Brasil</h3>
                   <p className="text-xs text-slate-500 mb-3">Episódio #67 • 38 min</p>
-                  <button className="w-full px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition flex items-center justify-center gap-2">
+                  <button className="w-full px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition flex items-center justify-center gap-2">
                     <i className="fas fa-play"></i>
                     Reproduzir
                   </button>
@@ -982,7 +982,7 @@ const Aprendizado = () => {
                   </div>
                   <span className="text-xs text-slate-500">9 aulas disponíveis</span>
                 </div>
-                <button className="w-full px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                <button className="w-full px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
                   Iniciar Aula
                 </button>
               </div>
@@ -1121,7 +1121,7 @@ const Aprendizado = () => {
                     </span>
                   </div>
                 </div>
-                <button className="w-full px-4 py-3 bg-pastel-purple text-slate-800 rounded-lg font-medium hover:bg-opacity-80 transition">
+                <button className="w-full px-4 py-3 bg-pastel-orange text-slate-800 rounded-lg font-medium hover:bg-opacity-80 transition">
                   Iniciar Trilha
                 </button>
               </div>
@@ -1313,7 +1313,7 @@ const Aprendizado = () => {
                         </div>
                         <span className="text-sm text-slate-500">29 episódios</span>
                       </div>
-                      <button className="w-full px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                      <button className="w-full px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
                         Seguir
                       </button>
                     </div>
@@ -1879,7 +1879,7 @@ const Aprendizado = () => {
                           <span className="text-xs text-muted-foreground line-through">R$ 797,00</span>
                           <span className="text-xl font-bold text-foreground">R$ 497,00</span>
                         </div>
-                        <button className="px-4 py-2 bg-pastel-purple text-foreground rounded-lg font-medium hover:opacity-80 transition text-sm">
+                        <button className="px-4 py-2 bg-pastel-orange text-foreground rounded-lg font-medium hover:opacity-80 transition text-sm">
                           Ver Curso
                         </button>
                       </div>
@@ -2157,7 +2157,7 @@ const Aprendizado = () => {
                         <span>15.2k</span>
                       </div>
                     </div>
-                    <button className="w-full px-4 py-2 bg-pastel-purple text-foreground rounded-lg text-sm font-medium hover:opacity-80 transition">
+                    <button className="w-full px-4 py-2 bg-pastel-orange text-foreground rounded-lg text-sm font-medium hover:opacity-80 transition">
                       Ver Perfil
                     </button>
                   </div>
@@ -2394,7 +2394,7 @@ const Aprendizado = () => {
                           </TableCell>
                           <TableCell>
                             <div className="flex items-center gap-2">
-                              <button onClick={() => handleVideoCall(agent.name, agent.avatar)} className="p-2 bg-pastel-purple hover:bg-opacity-80 text-slate-700 rounded-lg transition" title="Conversar por Vídeo">
+                              <button onClick={() => handleVideoCall(agent.name, agent.avatar)} className="p-2 bg-pastel-orange hover:bg-opacity-80 text-slate-700 rounded-lg transition" title="Conversar por Vídeo">
                                 <Video size={16} />
                               </button>
                               <button className="p-2 bg-pastel-blue hover:bg-opacity-80 text-slate-700 rounded-lg transition" title="Conversar por Voz">
@@ -3068,7 +3068,7 @@ const Aprendizado = () => {
                           <p className="text-xs text-slate-500">Analista Sênior de Mercado</p>
                         </div>
                       </div>
-                      <button className="w-full px-6 py-3 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center justify-center gap-2 mt-auto">
+                      <button className="w-full px-6 py-3 bg-pastel-orange text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center justify-center gap-2 mt-auto">
                         <i className="fas fa-play"></i>
                         Assistir Agora
                       </button>
@@ -3105,7 +3105,7 @@ const Aprendizado = () => {
                           <p className="text-xs text-slate-500">Especialista em Blockchain</p>
                         </div>
                       </div>
-                      <button className="w-full px-6 py-3 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center justify-center gap-2 mt-auto">
+                      <button className="w-full px-6 py-3 bg-pastel-orange text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center justify-center gap-2 mt-auto">
                         <i className="fas fa-play"></i>
                         Assistir Agora
                       </button>
@@ -3171,7 +3171,7 @@ const Aprendizado = () => {
                         <i className="fas fa-user-tie"></i>
                         <span>Prof. Ana Santos</span>
                       </div>
-                      <button className="w-full px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                      <button className="w-full px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
                         Inscrever-se
                       </button>
                     </div>
@@ -3256,7 +3256,7 @@ const Aprendizado = () => {
                         <span>•</span>
                         <span>1.8k views</span>
                       </div>
-                      <button className="w-full px-3 py-2 bg-pastel-purple text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
+                      <button className="w-full px-3 py-2 bg-pastel-orange text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
                         Assistir
                       </button>
                     </div>
@@ -3577,7 +3577,7 @@ const Aprendizado = () => {
                         <button className="flex-1 px-4 py-2 bg-slate-100 text-slate-600 rounded-lg text-sm font-medium hover:bg-slate-200 transition">
                           Limpar Filtros
                         </button>
-                        <button className="flex-1 px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                        <button className="flex-1 px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
                           Aplicar Filtros
                         </button>
                       </div>
@@ -3611,7 +3611,7 @@ const Aprendizado = () => {
                         <option>Mais Citado</option>
                         <option>Maior Impacto</option>
                       </select>
-                      <button onClick={() => navigate('/criar-paper')} className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2">
+                      <button onClick={() => navigate('/criar-paper')} className="px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2">
                         <i className="fas fa-pen-fancy"></i>
                         <span>Criar Paper</span>
                       </button>
@@ -3643,7 +3643,7 @@ const Aprendizado = () => {
                         <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">Algorithmic Trading</span>
                       </div>
                       <div className="flex items-center gap-3">
-                        <button className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
+                        <button className="px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
                           <Download size={16} className="inline mr-2" />Download PDF
                         </button>
                         <button className="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-200 transition">
@@ -3678,7 +3678,7 @@ const Aprendizado = () => {
                         <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">Emerging Markets</span>
                       </div>
                       <div className="flex items-center gap-3">
-                        <button className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
+                        <button className="px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
                           <Download size={16} className="inline mr-2" />Download PDF
                         </button>
                         <button className="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-200 transition">
@@ -3714,7 +3714,7 @@ const Aprendizado = () => {
                         <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">Financial Stability</span>
                       </div>
                       <div className="flex items-center gap-3">
-                        <button className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
+                        <button className="px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
                           <Download size={16} className="inline mr-2" />Download PDF
                         </button>
                         <button className="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-200 transition">
@@ -3750,7 +3750,7 @@ const Aprendizado = () => {
                         <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">Blockchain</span>
                       </div>
                       <div className="flex items-center gap-3">
-                        <button className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
+                        <button className="px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
                           <Download size={16} className="inline mr-2" />Download PDF
                         </button>
                         <button className="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-200 transition">
@@ -3786,7 +3786,7 @@ const Aprendizado = () => {
                         <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">Brazilian Market</span>
                       </div>
                       <div className="flex items-center gap-3">
-                        <button className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
+                        <button className="px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg text-sm font-medium hover:bg-opacity-80 transition">
                           <Download size={16} className="inline mr-2" />Download PDF
                         </button>
                         <button className="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-200 transition">
@@ -3831,7 +3831,7 @@ const Aprendizado = () => {
                       <span><i className="fas fa-file-alt mr-1"></i>63 artigos</span>
                       <span><i className="fas fa-users mr-1"></i>2.8k seguidores</span>
                     </div>
-                    <button className="w-full px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                    <button className="w-full px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
                       Explorar Coleção
                     </button>
                   </div>
@@ -4131,7 +4131,7 @@ const Aprendizado = () => {
                         <div className="flex items-center gap-2"><Bot size={16} /><span>Agente IA: Ações</span></div>
                         <span>há 1 dia</span>
                       </div>
-                      <button className="w-full px-4 py-2 bg-pastel-purple/80 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">Ver Análise Completa</button>
+                      <button className="w-full px-4 py-2 bg-pastel-orange/80 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">Ver Análise Completa</button>
                     </div>
                   </div>
                 </div>
@@ -4524,7 +4524,7 @@ const Aprendizado = () => {
                       </div>
                       <div className="flex items-center gap-4">
                         <span className="text-sm text-slate-500">42 páginas</span>
-                        <button className="px-4 py-2 bg-pastel-purple/80 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition text-sm">
+                        <button className="px-4 py-2 bg-pastel-orange/80 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition text-sm">
                           <Download size={16} className="inline mr-2" />Baixar
                         </button>
                       </div>
