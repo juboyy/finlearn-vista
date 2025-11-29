@@ -69,7 +69,9 @@ export const SelectableChartWrapper = ({
     }
   };
 
-  const handleAskAgent = () => {
+  const handleAskAgent = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
     console.log('Ask Agent button clicked');
     if (onAskAgent) {
       const selectionData: SelectionData = {
@@ -86,7 +88,9 @@ export const SelectableChartWrapper = ({
     setShowButton(false);
   };
 
-  const handleClearSelection = () => {
+  const handleClearSelection = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
     setShowButton(false);
   };
 
