@@ -6,6 +6,8 @@ export const WebinarsAnalyticsConsumption = () => {
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
   const [showDrillDown, setShowDrillDown] = useState(false);
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
+  const [comparisonMode, setComparisonMode] = useState(false);
+  const [comparisonPeriod, setComparisonPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('7d');
 
   const webinarsByTopic: Record<string, Array<{
     title: string;

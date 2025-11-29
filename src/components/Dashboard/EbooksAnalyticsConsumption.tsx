@@ -4,6 +4,8 @@ import { TrendingUp, Clock, CheckCircle, Book, BarChart3, Highlighter, Bookmark,
 
 export const EbooksAnalyticsConsumption = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
+  const [comparisonMode, setComparisonMode] = useState(false);
+  const [comparisonPeriod, setComparisonPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('7d');
   const [insights, setInsights] = useState<string>("");
   const [loadingInsights, setLoadingInsights] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);

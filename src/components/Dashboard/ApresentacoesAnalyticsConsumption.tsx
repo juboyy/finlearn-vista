@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 
 export const ApresentacoesAnalyticsConsumption = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
+  const [comparisonMode, setComparisonMode] = useState(false);
+  const [comparisonPeriod, setComparisonPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('7d');
   
   useEffect(() => {
     if (typeof window !== 'undefined' && (window as any).Plotly) {

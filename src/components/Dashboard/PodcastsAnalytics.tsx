@@ -4,6 +4,8 @@ import { TrendingUp, Clock, CheckCircle, Headphones, BarChart3, Zap, PlayCircle,
 
 export const PodcastsAnalytics = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
+  const [comparisonMode, setComparisonMode] = useState(false);
+  const [comparisonPeriod, setComparisonPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('7d');
   const [insights, setInsights] = useState<string>("");
   const [loadingInsights, setLoadingInsights] = useState(true);
   const [selectedHost, setSelectedHost] = useState<string | null>(null);
