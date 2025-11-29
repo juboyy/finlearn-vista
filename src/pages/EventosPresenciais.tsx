@@ -5,8 +5,11 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 import eventoConferenciaFintech from "@/assets/evento-conferencia-fintech.png";
 import eventoWorkshopPagamentos from "@/assets/evento-workshop-pagamentos.png";
 import eventoNetworkingPremium from "@/assets/evento-networking-premium.png";
@@ -20,7 +23,7 @@ export default function EventosPresenciais() {
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
   const [selectedSpeakers, setSelectedSpeakers] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState([0, 2000]);
-  const [dateRange, setDateRange] = useState({ start: "", end: "" });
+  const [dateRange, setDateRange] = useState<{ start: Date | undefined; end: Date | undefined }>({ start: undefined, end: undefined });
 
   const categories = ["Workshop", "Conferência", "Networking", "Certificação", "Treinamento", "Mesa Redonda"];
   const locations = ["São Paulo - SP", "Rio de Janeiro - RJ", "Brasília - DF", "Belo Horizonte - MG", "Curitiba - PR", "Porto Alegre - RS"];
@@ -49,7 +52,7 @@ export default function EventosPresenciais() {
     setSelectedLocations([]);
     setSelectedSpeakers([]);
     setPriceRange([0, 2000]);
-    setDateRange({ start: "", end: "" });
+    setDateRange({ start: undefined, end: undefined });
   };
 
   return (
@@ -731,29 +734,61 @@ export default function EventosPresenciais() {
                 <Label className="text-base font-semibold text-slate-800">Período</Label>
               </div>
               <div className="grid grid-cols-2 gap-3">
-                <div className="relative">
+                <div>
                   <Label className="text-xs text-slate-600 mb-1.5 block font-medium">Data Inicial</Label>
-                  <div className="relative">
-                    <Input
-                      type="date"
-                      value={dateRange.start}
-                      onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
-                      className="bg-pastel-pink/10 border-pastel-pink/30 pr-10 hover:bg-pastel-pink/20 transition-colors"
-                    />
-                    <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
-                  </div>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          "w-full justify-between bg-pastel-pink/10 border-pastel-pink/30 hover:bg-pastel-pink/20 transition-colors text-left font-normal",
+                          !dateRange.start && "text-slate-400"
+                        )}
+                      >
+                        <span className="truncate">
+                          {dateRange.start ? format(dateRange.start, "dd/MM/yyyy") : "Selecione"}
+                        </span>
+                        <Calendar className="w-4 h-4 text-slate-400 ml-2 flex-shrink-0" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <CalendarComponent
+                        mode="single"
+                        selected={dateRange.start}
+                        onSelect={(date) => setDateRange({ ...dateRange, start: date })}
+                        initialFocus
+                        className="p-3 pointer-events-auto"
+                      />
+                    </PopoverContent>
+                  </Popover>
                 </div>
-                <div className="relative">
+                <div>
                   <Label className="text-xs text-slate-600 mb-1.5 block font-medium">Data Final</Label>
-                  <div className="relative">
-                    <Input
-                      type="date"
-                      value={dateRange.end}
-                      onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
-                      className="bg-pastel-pink/10 border-pastel-pink/30 pr-10 hover:bg-pastel-pink/20 transition-colors"
-                    />
-                    <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
-                  </div>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          "w-full justify-between bg-pastel-pink/10 border-pastel-pink/30 hover:bg-pastel-pink/20 transition-colors text-left font-normal",
+                          !dateRange.end && "text-slate-400"
+                        )}
+                      >
+                        <span className="truncate">
+                          {dateRange.end ? format(dateRange.end, "dd/MM/yyyy") : "Selecione"}
+                        </span>
+                        <Calendar className="w-4 h-4 text-slate-400 ml-2 flex-shrink-0" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <CalendarComponent
+                        mode="single"
+                        selected={dateRange.end}
+                        onSelect={(date) => setDateRange({ ...dateRange, end: date })}
+                        initialFocus
+                        className="p-3 pointer-events-auto"
+                      />
+                    </PopoverContent>
+                  </Popover>
                 </div>
               </div>
             </div>
