@@ -22,10 +22,20 @@ export const useSavedChartAnalyses = () => {
   const fetchAnalyses = async () => {
     setIsLoading(true);
     try {
-      const { data, error } = await supabase
+      // Try to filter by user if authenticated, otherwise show all (for demo purposes)
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      let query = supabase
         .from("saved_chart_analyses")
         .select("*")
         .order("created_at", { ascending: false });
+
+      // Only filter by user if authenticated
+      if (user) {
+        query = query.eq("user_id", user.id);
+      }
+
+      const { data, error } = await query;
 
       if (error) throw error;
       setAnalyses(data || []);
@@ -49,24 +59,37 @@ export const useSavedChartAnalyses = () => {
     analysisContent: string
   ) => {
     try {
+      console.log("Saving analysis with data:", { chartTitle, selectionArea, metricType });
+      
+      // Try to get the authenticated user, but don't require it for this demo
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("User not authenticated");
+      
+      // Generate a temporary user ID if not authenticated
+      const userId = user?.id || 'temp-user-' + Math.random().toString(36).substring(7);
+
+      const insertData = {
+        user_id: userId,
+        chart_title: chartTitle,
+        chart_data: chartData,
+        selection_area: selectionArea,
+        metric_type: metricType,
+        analysis_content: analysisContent,
+      };
+
+      console.log("Inserting data:", insertData);
 
       const { data, error } = await supabase
         .from("saved_chart_analyses")
-        .insert({
-          user_id: user.id,
-          chart_title: chartTitle,
-          chart_data: chartData,
-          selection_area: selectionArea,
-          metric_type: metricType,
-          analysis_content: analysisContent,
-        })
+        .insert(insertData)
         .select()
         .single();
 
-      if (error) throw error;
+      if (error) {
+        console.error("Supabase error:", error);
+        throw error;
+      }
 
+      console.log("Analysis saved successfully:", data);
       setAnalyses((prev) => [data, ...prev]);
       
       toast({
@@ -75,11 +98,11 @@ export const useSavedChartAnalyses = () => {
       });
 
       return data;
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error saving analysis:", error);
       toast({
         title: "Erro ao salvar análise",
-        description: "Não foi possível salvar a análise.",
+        description: error?.message || "Não foi possível salvar a análise.",
         variant: "destructive",
       });
       throw error;
