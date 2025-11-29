@@ -374,82 +374,82 @@ export const PodcastsAnalytics = () => {
         {/* 5 Cards Principais na Mesma Linha */}
         <div className="grid grid-cols-5 gap-4">
           {/* Card 1 - Total de Episódios */}
-          <div className="bg-pastel-blue rounded-2xl p-6">
+          <div className="bg-white rounded-2xl p-6 border border-border">
             <div className="flex items-center justify-between mb-3">
-              <div className="w-12 h-12 bg-white/30 rounded-xl flex items-center justify-center">
-                <Headphones size={22} className="text-white" />
+              <div className="w-12 h-12 bg-pastel-blue rounded-xl flex items-center justify-center">
+                <Headphones size={22} className="text-pastel-gray-dark" />
               </div>
-              <div className="px-2 py-1 bg-white/30 rounded-full">
-                <p className="text-[10px] font-bold text-white flex items-center gap-1">
+              <div className="px-2 py-1 bg-pastel-blue rounded-full">
+                <p className="text-[10px] font-bold text-pastel-gray-dark flex items-center gap-1">
                   <TrendingUp size={10} /> +{data.growth}%
                 </p>
               </div>
             </div>
-            <p className="text-xs font-medium text-white/80 mb-1">Total de Episódios</p>
-            <h2 className="text-3xl font-bold text-white mb-1">{data.total}</h2>
-            <p className="text-[10px] text-white/70">episódios ouvidos</p>
+            <p className="text-xs font-medium text-pastel-gray-dark/80 mb-1">Total de Episódios</p>
+            <h2 className="text-3xl font-bold text-pastel-gray-dark mb-1">{data.total}</h2>
+            <p className="text-[10px] text-pastel-gray-dark/70">episódios ouvidos</p>
           </div>
 
           {/* Card 2 - Horas de Escuta */}
-          <div className="bg-pastel-blue rounded-2xl p-6">
+          <div className="bg-white rounded-2xl p-6 border border-border">
             <div className="flex items-center justify-between mb-3">
-              <div className="w-12 h-12 bg-white/30 rounded-xl flex items-center justify-center">
-                <Clock size={22} className="text-white" />
+              <div className="w-12 h-12 bg-pastel-blue rounded-xl flex items-center justify-center">
+                <Clock size={22} className="text-pastel-gray-dark" />
               </div>
-              <div className="px-2 py-1 bg-white/30 rounded-full">
-                <p className="text-[10px] font-bold text-white">Tempo</p>
+              <div className="px-2 py-1 bg-pastel-blue rounded-full">
+                <p className="text-[10px] font-bold text-pastel-gray-dark">Tempo</p>
               </div>
             </div>
-            <p className="text-xs font-medium text-white/80 mb-1">Horas de Escuta</p>
-            <h2 className="text-3xl font-bold text-white mb-1">{data.hours.toFixed(1)}h</h2>
-            <p className="text-[10px] text-white/70">de conteúdo</p>
+            <p className="text-xs font-medium text-pastel-gray-dark/80 mb-1">Horas de Escuta</p>
+            <h2 className="text-3xl font-bold text-pastel-gray-dark mb-1">{data.hours.toFixed(1)}h</h2>
+            <p className="text-[10px] text-pastel-gray-dark/70">de conteúdo</p>
           </div>
 
           {/* Card 3 - Taxa de Conclusão */}
-          <div className="bg-pastel-blue rounded-2xl p-6">
+          <div className="bg-white rounded-2xl p-6 border border-border">
             <div className="flex items-center justify-between mb-3">
-              <div className="w-12 h-12 bg-white/30 rounded-xl flex items-center justify-center">
-                <CheckCircle size={22} className="text-white" />
+              <div className="w-12 h-12 bg-pastel-blue rounded-xl flex items-center justify-center">
+                <CheckCircle size={22} className="text-pastel-gray-dark" />
               </div>
-              <div className="px-2 py-1 bg-emerald-500/30 rounded-full">
-                <p className="text-[10px] font-bold text-white">Top 10%</p>
+              <div className="px-2 py-1 bg-pastel-blue rounded-full">
+                <p className="text-[10px] font-bold text-pastel-gray-dark">Top 10%</p>
               </div>
             </div>
-            <p className="text-xs font-medium text-white/80 mb-1">Taxa de Conclusão</p>
-            <h2 className="text-3xl font-bold text-white mb-1">{data.completion}%</h2>
-            <p className="text-[10px] text-white/70">média: 60%</p>
+            <p className="text-xs font-medium text-pastel-gray-dark/80 mb-1">Taxa de Conclusão</p>
+            <h2 className="text-3xl font-bold text-pastel-gray-dark mb-1">{data.completion}%</h2>
+            <p className="text-[10px] text-pastel-gray-dark/70">média: 60%</p>
           </div>
 
           {/* Card 4 - Streak */}
-          <div className="bg-pastel-blue rounded-2xl p-6">
+          <div className="bg-white rounded-2xl p-6 border border-border">
             <div className="flex items-center justify-between mb-3">
-              <div className="w-12 h-12 bg-white/30 rounded-xl flex items-center justify-center">
-                <Zap size={22} className="text-white" />
+              <div className="w-12 h-12 bg-pastel-blue rounded-xl flex items-center justify-center">
+                <Zap size={22} className="text-pastel-gray-dark" />
               </div>
-              <div className="px-2 py-1 bg-white/30 rounded-full">
-                <p className="text-[10px] font-bold text-white flex items-center gap-1">
+              <div className="px-2 py-1 bg-pastel-blue rounded-full">
+                <p className="text-[10px] font-bold text-pastel-gray-dark flex items-center gap-1">
                   <TrendingUp size={10} />
                 </p>
               </div>
             </div>
-            <p className="text-xs font-medium text-white/80 mb-1">Streak Atual</p>
-            <h3 className="text-3xl font-bold text-white mb-1">{data.streak}</h3>
-            <p className="text-[10px] text-white/70">dias consecutivos</p>
+            <p className="text-xs font-medium text-pastel-gray-dark/80 mb-1">Streak Atual</p>
+            <h3 className="text-3xl font-bold text-pastel-gray-dark mb-1">{data.streak}</h3>
+            <p className="text-[10px] text-pastel-gray-dark/70">dias consecutivos</p>
           </div>
 
           {/* Card 5 - Engajamento */}
-          <div className="bg-pastel-blue rounded-2xl p-6">
+          <div className="bg-white rounded-2xl p-6 border border-border">
             <div className="flex items-center justify-between mb-3">
-              <div className="w-12 h-12 bg-white/30 rounded-xl flex items-center justify-center">
-                <Target size={22} className="text-white" />
+              <div className="w-12 h-12 bg-pastel-blue rounded-xl flex items-center justify-center">
+                <Target size={22} className="text-pastel-gray-dark" />
               </div>
-              <div className="px-2 py-1 bg-white/30 rounded-full">
-                <p className="text-[10px] font-bold text-white">Top</p>
+              <div className="px-2 py-1 bg-pastel-blue rounded-full">
+                <p className="text-[10px] font-bold text-pastel-gray-dark">Top</p>
               </div>
             </div>
-            <p className="text-xs font-medium text-white/80 mb-1">Engajamento</p>
-            <h3 className="text-3xl font-bold text-white mb-1">{data.engagement}%</h3>
-            <p className="text-[10px] text-white/70">acima da média</p>
+            <p className="text-xs font-medium text-pastel-gray-dark/80 mb-1">Engajamento</p>
+            <h3 className="text-3xl font-bold text-pastel-gray-dark mb-1">{data.engagement}%</h3>
+            <p className="text-[10px] text-pastel-gray-dark/70">acima da média</p>
           </div>
         </div>
 
