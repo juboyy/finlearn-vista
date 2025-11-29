@@ -13,13 +13,13 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
 import { useAlertPreferences, CreateAlertPreference } from '@/hooks/useAlertPreferences';
 import { Settings, Plus, Trash2, TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import { toast } from 'sonner';
@@ -153,130 +153,132 @@ export function AlertPreferencesSettings({ userId }: AlertPreferencesSettingsPro
               Criar Padrões
             </Button>
           )}
-          <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
-            <DialogTrigger asChild>
+          <Sheet open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
+            <SheetTrigger asChild>
               <Button size="sm" className="bg-pastel-blue hover:bg-pastel-blue/80">
                 <Plus className="h-4 w-4 mr-1" />
                 Novo Alerta
               </Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-md">
-              <DialogHeader>
-                <DialogTitle>Criar Nova Preferência de Alerta</DialogTitle>
-                <DialogDescription>
+            </SheetTrigger>
+            <SheetContent className="w-full sm:max-w-lg bg-background border-l border-border">
+              <SheetHeader className="space-y-2 pb-4 border-b border-border">
+                <SheetTitle>Criar Nova Preferência de Alerta</SheetTitle>
+                <SheetDescription>
                   Configure uma nova métrica para monitorar
-                </DialogDescription>
-              </DialogHeader>
+                </SheetDescription>
+              </SheetHeader>
 
-              <div className="space-y-4 mt-4">
-                <div className="space-y-2">
-                  <Label>Tipo de Conteúdo</Label>
-                  <Select
-                    value={newPreference.content_type}
-                    onValueChange={(value) =>
-                      setNewPreference({ ...newPreference, content_type: value })
-                    }
+              <ScrollArea className="h-[calc(100vh-180px)] pr-4">
+                <div className="space-y-6 mt-6">
+                  <div className="space-y-2">
+                    <Label>Tipo de Conteúdo</Label>
+                    <Select
+                      value={newPreference.content_type}
+                      onValueChange={(value) =>
+                        setNewPreference({ ...newPreference, content_type: value })
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {contentTypes.map((type) => (
+                          <SelectItem key={type.value} value={type.value}>
+                            {type.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Métrica</Label>
+                    <Select
+                      value={newPreference.metric_name}
+                      onValueChange={(value) =>
+                        setNewPreference({ ...newPreference, metric_name: value })
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {metricOptions.map((metric) => (
+                          <SelectItem key={metric.value} value={metric.value}>
+                            {metric.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Limite (%)</Label>
+                    <Input
+                      type="number"
+                      value={newPreference.threshold_value}
+                      onChange={(e) =>
+                        setNewPreference({
+                          ...newPreference,
+                          threshold_value: Number(e.target.value),
+                        })
+                      }
+                      min={1}
+                      max={100}
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      Alertar quando a mudança ultrapassar este valor
+                    </p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Direção da Mudança</Label>
+                    <Select
+                      value={newPreference.threshold_direction}
+                      onValueChange={(value) =>
+                        setNewPreference({ ...newPreference, threshold_direction: value })
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="increase">Apenas Aumentos</SelectItem>
+                        <SelectItem value="decrease">Apenas Reduções</SelectItem>
+                        <SelectItem value="both">Ambas as Direções</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Frequência de Alertas</Label>
+                    <Select
+                      value={newPreference.alert_frequency}
+                      onValueChange={(value) =>
+                        setNewPreference({ ...newPreference, alert_frequency: value })
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="immediate">Imediato</SelectItem>
+                        <SelectItem value="daily">Resumo Diário</SelectItem>
+                        <SelectItem value="weekly">Resumo Semanal</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <Button
+                    onClick={handleCreatePreference}
+                    className="w-full bg-pastel-blue hover:bg-pastel-blue/80"
                   >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {contentTypes.map((type) => (
-                        <SelectItem key={type.value} value={type.value}>
-                          {type.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                    Criar Preferência
+                  </Button>
                 </div>
-
-                <div className="space-y-2">
-                  <Label>Métrica</Label>
-                  <Select
-                    value={newPreference.metric_name}
-                    onValueChange={(value) =>
-                      setNewPreference({ ...newPreference, metric_name: value })
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {metricOptions.map((metric) => (
-                        <SelectItem key={metric.value} value={metric.value}>
-                          {metric.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Limite (%)</Label>
-                  <Input
-                    type="number"
-                    value={newPreference.threshold_value}
-                    onChange={(e) =>
-                      setNewPreference({
-                        ...newPreference,
-                        threshold_value: Number(e.target.value),
-                      })
-                    }
-                    min={1}
-                    max={100}
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    Alertar quando a mudança ultrapassar este valor
-                  </p>
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Direção da Mudança</Label>
-                  <Select
-                    value={newPreference.threshold_direction}
-                    onValueChange={(value) =>
-                      setNewPreference({ ...newPreference, threshold_direction: value })
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="increase">Apenas Aumentos</SelectItem>
-                      <SelectItem value="decrease">Apenas Reduções</SelectItem>
-                      <SelectItem value="both">Ambas as Direções</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Frequência de Alertas</Label>
-                  <Select
-                    value={newPreference.alert_frequency}
-                    onValueChange={(value) =>
-                      setNewPreference({ ...newPreference, alert_frequency: value })
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="immediate">Imediato</SelectItem>
-                      <SelectItem value="daily">Resumo Diário</SelectItem>
-                      <SelectItem value="weekly">Resumo Semanal</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <Button
-                  onClick={handleCreatePreference}
-                  className="w-full bg-pastel-blue hover:bg-pastel-blue/80"
-                >
-                  Criar Preferência
-                </Button>
-              </div>
-            </DialogContent>
-          </Dialog>
+              </ScrollArea>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
 
