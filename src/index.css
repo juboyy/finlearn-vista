@@ -51,7 +51,7 @@ All colors MUST be HSL.
     --radius: 0.75rem;
 
     /* Pastel Colors - Dark Pastels (Soft) */
-    --pastel-blue: 206 50% 72%;
+    --pastel-blue: 206 50% 60%;
     --pastel-blue-btn: 206 55% 75%;
     --pastel-blue-text: 206 49% 35%;
     --pastel-indigo: 239 10% 97%;
@@ -130,7 +130,7 @@ All colors MUST be HSL.
     --input: 220 15% 25%;
     --ring: 206 49% 70%;
 
-    --pastel-blue: 206 48% 62%;
+    --pastel-blue: 206 48% 50%;
     --pastel-blue-btn: 206 50% 65%;
     --pastel-blue-text: 206 45% 35%;
     --pastel-indigo: 239 10% 95%;
