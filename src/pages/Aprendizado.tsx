@@ -2571,7 +2571,7 @@ const Aprendizado = () => {
                       <div className="h-56 overflow-hidden bg-pastel-pink">
                         <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/de72874cc5-2efb8363a6121e6b0540.png" alt="Pastel drawing of fixed income investment book" />
                       </div>
-                      <div className="absolute bottom-0 left-0 right-0 bg-pastel-orange h-2.5">
+                      <div className="absolute bottom-0 left-0 right-0 bg-slate-100 h-2.5">
                         <div className="h-full bg-emerald-600 relative" style={{
                       width: '42%'
                     }}>
@@ -2595,7 +2595,7 @@ const Aprendizado = () => {
                       <div className="h-56 overflow-hidden bg-pastel-blue">
                         <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/de72874cc5-43745d045cd52ba18a30.png" alt="Pastel drawing of financial compliance book cover" />
                       </div>
-                      <div className="absolute bottom-0 left-0 right-0 bg-pastel-orange h-2.5">
+                      <div className="absolute bottom-0 left-0 right-0 bg-slate-100 h-2.5">
                         <div className="h-full bg-emerald-600 relative" style={{
                       width: '85%'
                     }}>
@@ -2619,7 +2619,7 @@ const Aprendizado = () => {
                       <div className="h-56 overflow-hidden bg-pastel-peach">
                         <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/e7b331f4e1-9ee7cde295eba8fd33f7.png" alt="Pastel drawing of derivatives book" />
                       </div>
-                      <div className="absolute bottom-0 left-0 right-0 bg-pastel-orange h-2.5">
+                      <div className="absolute bottom-0 left-0 right-0 bg-slate-100 h-2.5">
                         <div className="h-full bg-emerald-700 relative" style={{
                       width: '23%'
                     }}>
@@ -2643,7 +2643,7 @@ const Aprendizado = () => {
                       <div className="h-56 overflow-hidden bg-pastel-pink">
                         <img className="w-full h-full object-cover" src={ebookRiskManagementPink} alt="Pastel drawing of risk management book" />
                       </div>
-                      <div className="absolute bottom-0 left-0 right-0 bg-pastel-orange h-2.5">
+                      <div className="absolute bottom-0 left-0 right-0 bg-slate-100 h-2.5">
                         <div className="h-full bg-emerald-700 relative" style={{
                       width: '56%'
                     }}>
