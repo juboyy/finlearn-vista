@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { MessageCircle, Users, Trophy, Star, TrendingUp, DollarSign, Scale, Briefcase, ChartLine, Bell, Plus, Pen, Flame, Clock, Eye, Heart, MessageSquare, Bookmark, Crown } from "lucide-react";
+import { MessageCircle, Users, Trophy, Star, TrendingUp, DollarSign, Scale, Briefcase, ChartLine, Bell, Plus, Pen, Flame, Clock, Eye, Heart, MessageSquare, Bookmark, Crown, Calendar } from "lucide-react";
 import creditoRuralImage from "@/assets/credito-rural-2025.png";
 import { CommunityResumosChat } from "@/components/Dashboard/CommunityResumosChat";
 
@@ -184,38 +184,44 @@ export default function Comunidade() {
 
               <div className="bg-white rounded-xl border border-slate-200">
                 <div className="border-b border-slate-200">
-                  <div className="flex items-center gap-2 px-6 pt-6 pb-4">
-                    <button 
-                      onClick={() => setResumosChatOpen(true)}
-                      className="px-4 py-2 text-sm font-medium rounded-lg transition text-slate-800 bg-pastel-blue border border-pastel-blue hover:bg-pastel-pink"
-                    >
-                      Resumos
-                    </button>
-                    <button 
-                      onClick={() => setActiveTab("discussoes")}
-                      className={`px-4 py-2 text-sm font-medium rounded-lg transition ${
-                        activeTab === "discussoes" 
-                          ? "text-slate-800 bg-pastel-blue border border-pastel-blue" 
-                          : "text-slate-600 hover:bg-slate-100 border border-transparent"
-                      }`}
-                    >
-                      Discussões
-                    </button>
-                    <button 
-                      onClick={() => setActiveTab("artigos")}
-                      className={`px-4 py-2 text-sm font-medium rounded-lg transition ${
-                        activeTab === "artigos" 
-                          ? "text-slate-800 bg-pastel-green border border-pastel-green" 
-                          : "text-slate-600 hover:bg-slate-100 border border-transparent"
-                      }`}
-                    >
-                      Artigos
-                    </button>
-                    <button className="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 border border-transparent rounded-lg transition">
-                      Análises
-                    </button>
-                    <button className="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 border border-transparent rounded-lg transition">
-                      Pesquisas
+                  <div className="flex items-center justify-between px-6 pt-6 pb-4">
+                    <div className="flex items-center gap-2">
+                      <button 
+                        onClick={() => setResumosChatOpen(true)}
+                        className="px-4 py-2 text-sm font-medium rounded-lg transition text-slate-800 bg-pastel-blue border border-pastel-blue hover:bg-pastel-pink"
+                      >
+                        Resumos
+                      </button>
+                      <button 
+                        onClick={() => setActiveTab("discussoes")}
+                        className={`px-4 py-2 text-sm font-medium rounded-lg transition ${
+                          activeTab === "discussoes" 
+                            ? "text-slate-800 bg-pastel-blue border border-pastel-blue" 
+                            : "text-slate-600 hover:bg-slate-100 border border-transparent"
+                        }`}
+                      >
+                        Discussões
+                      </button>
+                      <button 
+                        onClick={() => setActiveTab("artigos")}
+                        className={`px-4 py-2 text-sm font-medium rounded-lg transition ${
+                          activeTab === "artigos" 
+                            ? "text-slate-800 bg-pastel-green border border-pastel-green" 
+                            : "text-slate-600 hover:bg-slate-100 border border-transparent"
+                        }`}
+                      >
+                        Artigos
+                      </button>
+                      <button className="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 border border-transparent rounded-lg transition">
+                        Análises
+                      </button>
+                      <button className="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 border border-transparent rounded-lg transition">
+                        Pesquisas
+                      </button>
+                    </div>
+                    <button className="px-4 py-2 text-sm font-medium rounded-lg transition text-slate-800 bg-pastel-purple border border-pastel-purple hover:bg-pastel-pink flex items-center gap-2">
+                      <Calendar className="w-4 h-4" />
+                      Agenda de Eventos
                     </button>
                   </div>
                 </div>
