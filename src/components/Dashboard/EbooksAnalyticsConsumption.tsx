@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Plotly from 'plotly.js-dist';
 import { TrendingUp, Clock, CheckCircle, Book, BarChart3, Highlighter, Bookmark, Target, Award } from "lucide-react";
+import { PeriodComparisonToggle, getPeriodLabel } from "./PeriodComparisonToggle";
 
 export const EbooksAnalyticsConsumption = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
@@ -39,7 +40,7 @@ export const EbooksAnalyticsConsumption = () => {
   useEffect(() => {
     initializeCharts();
     generateInsights();
-  }, [selectedPeriod]);
+  }, [selectedPeriod, comparisonMode, comparisonPeriod]);
 
   const generateInsights = async () => {
     try {

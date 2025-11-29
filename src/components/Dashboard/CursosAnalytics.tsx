@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { PeriodComparisonToggle, getPeriodLabel } from "./PeriodComparisonToggle";
 
 export const CursosAnalytics = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
@@ -9,7 +10,7 @@ export const CursosAnalytics = () => {
     if (typeof window !== 'undefined' && (window as any).Plotly) {
       initializeCharts();
     }
-  }, [selectedPeriod]);
+  }, [selectedPeriod, comparisonMode, comparisonPeriod]);
 
   const getDataByPeriod = () => {
     const data = {

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { PeriodComparisonToggle, getPeriodLabel } from "./PeriodComparisonToggle";
 
 export const EstudosAnalyticsConsumption = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
@@ -9,7 +10,7 @@ export const EstudosAnalyticsConsumption = () => {
     if (typeof window !== 'undefined' && (window as any).Plotly) {
       initializeCharts();
     }
-  }, []);
+  }, [selectedPeriod, comparisonMode, comparisonPeriod]);
 
   const initializeCharts = () => {
     const Plotly = (window as any).Plotly;
