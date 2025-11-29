@@ -6,6 +6,7 @@ interface SelectableChartWrapperProps {
   children: ReactNode;
   onAskAgent?: (selectionData: SelectionData) => void;
   chartTitle?: string;
+  chartData?: any[];
 }
 
 interface SelectionData {
@@ -14,12 +15,14 @@ interface SelectionData {
   startY: number;
   endY: number;
   chartTitle?: string;
+  chartData?: any[];
 }
 
 export const SelectableChartWrapper = ({ 
   children, 
   onAskAgent,
-  chartTitle 
+  chartTitle,
+  chartData 
 }: SelectableChartWrapperProps) => {
   const [isSelecting, setIsSelecting] = useState(false);
   const [selectionStart, setSelectionStart] = useState({ x: 0, y: 0 });
@@ -71,7 +74,8 @@ export const SelectableChartWrapper = ({
         endX: Math.max(selectionStart.x, selectionEnd.x),
         startY: Math.min(selectionStart.y, selectionEnd.y),
         endY: Math.max(selectionStart.y, selectionEnd.y),
-        chartTitle
+        chartTitle,
+        chartData
       };
       onAskAgent(selectionData);
     }

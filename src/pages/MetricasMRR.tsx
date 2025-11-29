@@ -20,10 +20,15 @@ const MetricasMRR = () => {
     to: new Date(2024, 5, 30),
   });
   const [showAgentChat, setShowAgentChat] = useState(false);
-  const [selectedChartData, setSelectedChartData] = useState<{ chartTitle?: string } | null>(null);
+  const [selectedChartData, setSelectedChartData] = useState<any>(null);
 
   const handleAskAgent = (selectionData: any) => {
-    setSelectedChartData(selectionData);
+    console.log('Chart selection data:', selectionData);
+    setSelectedChartData({
+      chartTitle: selectionData.chartTitle,
+      chartData: selectionData.chartData,
+      selectionArea: `X: ${selectionData.startX.toFixed(0)}-${selectionData.endX.toFixed(0)}, Y: ${selectionData.startY.toFixed(0)}-${selectionData.endY.toFixed(0)}`
+    });
     setShowAgentChat(true);
   };
 
@@ -535,7 +540,7 @@ const MetricasMRR = () => {
                   <p className="text-xs text-muted-foreground">Visualização detalhada das mudanças no MRR</p>
                 </div>
               </div>
-              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="Movimentação de MRR (Waterfall)">
+              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="Movimentação de MRR (Waterfall)" chartData={waterfallData}>
                 <ResponsiveContainer width="100%" height={260}>
                   <BarChart data={waterfallData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
@@ -564,7 +569,7 @@ const MetricasMRR = () => {
                   <p className="text-xs text-muted-foreground">Por tipo de movimento</p>
                 </div>
               </div>
-              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="Composição MRR">
+              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="Composição MRR" chartData={compositionData}>
                 <ResponsiveContainer width="100%" height={300}>
                   <PieChart>
                     <Pie 
@@ -605,7 +610,7 @@ const MetricasMRR = () => {
                   <p className="text-xs text-muted-foreground">Tendência histórica mensal</p>
                 </div>
               </div>
-              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="Evolução do MRR (12 meses)">
+              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="Evolução do MRR (12 meses)" chartData={evolutionData}>
                 <ResponsiveContainer width="100%" height={240}>
                   <AreaChart data={evolutionData}>
                     <defs>
@@ -638,7 +643,7 @@ const MetricasMRR = () => {
                   <p className="text-xs text-muted-foreground">Novo + Expansão - Contração - Churn</p>
                 </div>
               </div>
-              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="Net New MRR">
+              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="Net New MRR" chartData={netNewMRRData}>
                 <ResponsiveContainer width="100%" height={260}>
                   <BarChart data={netNewMRRData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
@@ -663,7 +668,7 @@ const MetricasMRR = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
             <div className="bg-card p-3 rounded-xl border border-border">
               <h4 className="text-xs font-bold text-muted-foreground uppercase mb-3">MRR por Plano</h4>
-              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="MRR por Plano">
+              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="MRR por Plano" chartData={planDistributionData}>
                 <ResponsiveContainer width="100%" height={150}>
                   <PieChart>
                     <Pie data={planDistributionData} cx="50%" cy="50%" innerRadius={30} outerRadius={60} paddingAngle={2} dataKey="value">
@@ -677,7 +682,7 @@ const MetricasMRR = () => {
 
             <div className="bg-card p-3 rounded-xl border border-border">
               <h4 className="text-xs font-bold text-muted-foreground uppercase mb-3">Contração MRR</h4>
-              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="Contração MRR">
+              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="Contração MRR" chartData={contractionData}>
                 <ResponsiveContainer width="100%" height={150}>
                   <AreaChart data={contractionData}>
                     <defs>
@@ -703,7 +708,7 @@ const MetricasMRR = () => {
 
             <div className="bg-card p-3 rounded-xl border border-border">
               <h4 className="text-xs font-bold text-muted-foreground uppercase mb-3">Reativação MRR</h4>
-              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="Reativação MRR">
+              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="Reativação MRR" chartData={reactivationData}>
                 <ResponsiveContainer width="100%" height={150}>
                   <AreaChart data={reactivationData}>
                     <defs>
@@ -729,7 +734,7 @@ const MetricasMRR = () => {
 
             <div className="bg-card p-3 rounded-xl border border-border">
               <h4 className="text-xs font-bold text-muted-foreground uppercase mb-3">MRR Médio/Cliente</h4>
-              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="MRR Médio/Cliente (ARPU)">
+              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="MRR Médio/Cliente (ARPU)" chartData={arpuData}>
                 <ResponsiveContainer width="100%" height={150}>
                   <LineChart data={arpuData}>
                     <XAxis dataKey="month" tick={{
@@ -759,7 +764,7 @@ const MetricasMRR = () => {
                   <p className="text-xs text-muted-foreground">(Novo + Expansão) / (Contração + Churn)</p>
                 </div>
               </div>
-              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="Quick Ratio MRR">
+              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="Quick Ratio MRR" chartData={quickRatioData}>
                 <ResponsiveContainer width="100%" height={200}>
                   <BarChart data={quickRatioData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
@@ -786,7 +791,7 @@ const MetricasMRR = () => {
                   <p className="text-xs text-muted-foreground">Taxa mensal de perda de MRR</p>
                 </div>
               </div>
-              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="MRR Churn Rate">
+              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="MRR Churn Rate" chartData={churnRateData}>
                 <ResponsiveContainer width="100%" height={200}>
                   <LineChart data={churnRateData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
@@ -815,7 +820,7 @@ const MetricasMRR = () => {
                   <p className="text-xs text-muted-foreground">Taxa de crescimento via expansão</p>
                 </div>
               </div>
-              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="MRR Expansion Rate">
+              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="MRR Expansion Rate" chartData={expansionRateData}>
                 <ResponsiveContainer width="100%" height={200}>
                   <LineChart data={expansionRateData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
@@ -882,7 +887,7 @@ const MetricasMRR = () => {
                   <p className="text-xs text-muted-foreground">Breakdown por tipo de cliente</p>
                 </div>
               </div>
-              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="Distribuição MRR por Segmento">
+              <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="Distribuição MRR por Segmento" chartData={segmentDistributionData}>
                 <ResponsiveContainer width="100%" height={280}>
                   <BarChart data={segmentDistributionData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
@@ -927,7 +932,7 @@ const MetricasMRR = () => {
               }}>Otimista</span>
               </div>
             </div>
-            <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="Projeção de MRR (6 meses)">
+            <SelectableChartWrapper onAskAgent={handleAskAgent} chartTitle="Projeção de MRR (6 meses)" chartData={forecastData}>
               <ResponsiveContainer width="100%" height={280}>
                 <LineChart data={forecastData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
@@ -960,7 +965,11 @@ const MetricasMRR = () => {
       {showAgentChat && (
         <MetricsAgentChat 
           metricType="MRR" 
-          onClose={() => setShowAgentChat(false)} 
+          onClose={() => {
+            setShowAgentChat(false);
+            setSelectedChartData(null);
+          }}
+          initialContext={selectedChartData}
         />
       )}
     </div>;

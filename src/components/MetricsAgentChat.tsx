@@ -8,6 +8,11 @@ import { useAgentChat } from "@/hooks/useAgentChat";
 interface MetricsAgentChatProps {
   metricType: 'MRR' | 'Churn' | 'Retention' | 'Others';
   onClose: () => void;
+  initialContext?: {
+    chartTitle?: string;
+    chartData?: any[];
+    selectionArea?: string;
+  };
 }
 
 const agentConfig = {
@@ -57,18 +62,36 @@ const agentConfig = {
   }
 };
 
-export const MetricsAgentChat = ({ metricType, onClose }: MetricsAgentChatProps) => {
+export const MetricsAgentChat = ({ metricType, onClose, initialContext }: MetricsAgentChatProps) => {
   const [input, setInput] = useState("");
   const [isClosing, setIsClosing] = useState(false);
   const agent = agentConfig[metricType];
   const { messages, sendMessage, isLoading, clearMessages } = useAgentChat(agent.name);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [contextSent, setContextSent] = useState(false);
 
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages]);
+
+  useEffect(() => {
+    if (initialContext && !contextSent && !isLoading) {
+      setContextSent(true);
+      const contextPrompt = `Analise os seguintes dados do gráfico "${initialContext.chartTitle || 'selecionado'}":
+
+Dados: ${JSON.stringify(initialContext.chartData, null, 2)}
+
+Por favor, forneça:
+1. Resumo dos padrões identificados na área selecionada
+2. Principais insights e tendências
+3. Pontos de atenção ou anomalias
+4. Recomendações baseadas nos dados`;
+
+      sendMessage("Análise automática dos dados selecionados", contextPrompt);
+    }
+  }, [initialContext, contextSent, isLoading, sendMessage]);
 
   const handleClose = () => {
     setIsClosing(true);
