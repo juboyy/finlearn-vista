@@ -734,25 +734,25 @@ export default function EventosPresenciais() {
                 <div className="relative">
                   <Label className="text-xs text-slate-600 mb-1.5 block font-medium">Data Inicial</Label>
                   <div className="relative">
-                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                     <Input
                       type="date"
                       value={dateRange.start}
                       onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
-                      className="bg-pastel-pink/10 border-pastel-pink/30 pl-10 hover:bg-pastel-pink/20 transition-colors"
+                      className="bg-pastel-pink/10 border-pastel-pink/30 pr-10 hover:bg-pastel-pink/20 transition-colors"
                     />
+                    <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                   </div>
                 </div>
                 <div className="relative">
                   <Label className="text-xs text-slate-600 mb-1.5 block font-medium">Data Final</Label>
                   <div className="relative">
-                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                     <Input
                       type="date"
                       value={dateRange.end}
                       onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
-                      className="bg-pastel-pink/10 border-pastel-pink/30 pl-10 hover:bg-pastel-pink/20 transition-colors"
+                      className="bg-pastel-pink/10 border-pastel-pink/30 pr-10 hover:bg-pastel-pink/20 transition-colors"
                     />
+                    <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                   </div>
                 </div>
               </div>
