@@ -408,6 +408,111 @@ export type Database = {
           },
         ]
       }
+      live_banned_users: {
+        Row: {
+          ban_expires_at: string | null
+          ban_reason: string | null
+          ban_type: string | null
+          banned_at: string | null
+          banned_by: string
+          id: string
+          live_id: string
+          user_id: string
+          user_name: string
+        }
+        Insert: {
+          ban_expires_at?: string | null
+          ban_reason?: string | null
+          ban_type?: string | null
+          banned_at?: string | null
+          banned_by: string
+          id?: string
+          live_id: string
+          user_id: string
+          user_name: string
+        }
+        Update: {
+          ban_expires_at?: string | null
+          ban_reason?: string | null
+          ban_type?: string | null
+          banned_at?: string | null
+          banned_by?: string
+          id?: string
+          live_id?: string
+          user_id?: string
+          user_name?: string
+        }
+        Relationships: []
+      }
+      live_chat_deleted_messages: {
+        Row: {
+          deleted_at: string | null
+          deleted_by: string
+          deletion_reason: string | null
+          id: string
+          live_id: string
+          message_content: string
+          message_id: string
+          user_id: string | null
+          user_name: string
+        }
+        Insert: {
+          deleted_at?: string | null
+          deleted_by: string
+          deletion_reason?: string | null
+          id?: string
+          live_id: string
+          message_content: string
+          message_id: string
+          user_id?: string | null
+          user_name: string
+        }
+        Update: {
+          deleted_at?: string | null
+          deleted_by?: string
+          deletion_reason?: string | null
+          id?: string
+          live_id?: string
+          message_content?: string
+          message_id?: string
+          user_id?: string | null
+          user_name?: string
+        }
+        Relationships: []
+      }
+      live_chat_filters: {
+        Row: {
+          action: string | null
+          created_at: string | null
+          created_by: string | null
+          filter_type: string
+          filter_value: string
+          id: string
+          is_global: boolean | null
+          live_id: string | null
+        }
+        Insert: {
+          action?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          filter_type: string
+          filter_value: string
+          id?: string
+          is_global?: boolean | null
+          live_id?: string | null
+        }
+        Update: {
+          action?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          filter_type?: string
+          filter_value?: string
+          id?: string
+          is_global?: boolean | null
+          live_id?: string | null
+        }
+        Relationships: []
+      }
       live_chat_messages: {
         Row: {
           created_at: string
@@ -464,6 +569,39 @@ export type Database = {
           reaction_type?: string
           user_avatar?: string | null
           user_id?: string | null
+          user_name?: string
+        }
+        Relationships: []
+      }
+      live_moderators: {
+        Row: {
+          assigned_at: string | null
+          assigned_by: string
+          id: string
+          live_id: string
+          permissions: Json | null
+          user_avatar: string | null
+          user_id: string
+          user_name: string
+        }
+        Insert: {
+          assigned_at?: string | null
+          assigned_by: string
+          id?: string
+          live_id: string
+          permissions?: Json | null
+          user_avatar?: string | null
+          user_id: string
+          user_name: string
+        }
+        Update: {
+          assigned_at?: string | null
+          assigned_by?: string
+          id?: string
+          live_id?: string
+          permissions?: Json | null
+          user_avatar?: string | null
+          user_id?: string
           user_name?: string
         }
         Relationships: []
