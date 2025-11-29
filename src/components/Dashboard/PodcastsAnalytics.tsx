@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Plotly from 'plotly.js-dist';
 import { TrendingUp, Clock, CheckCircle, Headphones, BarChart3, Zap, PlayCircle, Award, Target } from "lucide-react";
+import { PeriodComparisonToggle, getPeriodLabel } from "./PeriodComparisonToggle";
 
 export const PodcastsAnalytics = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
@@ -39,7 +40,7 @@ export const PodcastsAnalytics = () => {
   useEffect(() => {
     initializeCharts();
     generateInsights();
-  }, [selectedPeriod]);
+  }, [selectedPeriod, comparisonMode, comparisonPeriod]);
 
   const generateInsights = async () => {
     try {
@@ -90,7 +91,7 @@ export const PodcastsAnalytics = () => {
     const pastelOrange = '#C9AF89';
     const pastelYellow = '#E6D595';
 
-    const getDataByPeriod = () => {
+    const getDataByPeriod = (period: '7d' | '30d' | '90d' | '1y') => {
       const datasets = {
         '7d': {
           weeklyListening: { x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], y: [4, 3, 5, 4, 3, 2, 1] },
@@ -98,8 +99,7 @@ export const PodcastsAnalytics = () => {
           completionRate: { x: ['0-25%', '26-50%', '51-75%', '76-100%'], y: [2, 4, 6, 20] },
           listeningTime: { x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], y: [2.8, 2.1, 3.5, 2.8, 2.1, 1.4, 0.7] },
           topicEngagement: { x: ['Open Finance', 'Payments', 'Regulamentação', 'Banking', 'Mercado de Capitais'], y: [12, 8, 6, 5, 4], completion: [88, 82, 90, 85, 78] },
-          hourlyDistribution: { x: ['00h', '04h', '08h', '12h', '16h', '20h'], y: [0, 1, 12, 8, 6, 5] },
-          kpis: { total: 32, growth: 18, hours: 14.8, completion: 84, streak: 7, avgDuration: 28, favorites: 8, speed: 1.5, engagement: 92 }
+          hourlyDistribution: { x: ['00h', '04h', '08h', '12h', '16h', '20h'], y: [0, 1, 12, 8, 6, 5] }
         },
         '30d': {
           weeklyListening: { x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], y: [18, 15, 20, 17, 14, 8, 5] },
@@ -107,8 +107,7 @@ export const PodcastsAnalytics = () => {
           completionRate: { x: ['0-25%', '26-50%', '51-75%', '76-100%'], y: [8, 15, 28, 94] },
           listeningTime: { x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], y: [12.6, 10.5, 14.0, 11.9, 9.8, 5.6, 3.5] },
           topicEngagement: { x: ['Open Finance', 'Payments', 'Regulamentação', 'Banking', 'Mercado de Capitais'], y: [52, 38, 28, 24, 20], completion: [86, 80, 88, 83, 75] },
-          hourlyDistribution: { x: ['00h', '04h', '08h', '12h', '16h', '20h'], y: [2, 4, 48, 32, 24, 20] },
-          kpis: { total: 142, growth: 24, hours: 68.5, completion: 84, streak: 23, avgDuration: 29, favorites: 35, speed: 1.5, engagement: 88 }
+          hourlyDistribution: { x: ['00h', '04h', '08h', '12h', '16h', '20h'], y: [2, 4, 48, 32, 24, 20] }
         },
         '90d': {
           weeklyListening: { x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], y: [52, 48, 58, 50, 42, 28, 18] },
@@ -116,8 +115,7 @@ export const PodcastsAnalytics = () => {
           completionRate: { x: ['0-25%', '26-50%', '51-75%', '76-100%'], y: [28, 42, 78, 278] },
           listeningTime: { x: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], y: [36.4, 33.6, 40.6, 35.0, 29.4, 19.6, 12.6] },
           topicEngagement: { x: ['Open Finance', 'Payments', 'Regulamentação', 'Banking', 'Mercado de Capitais'], y: [148, 112, 84, 68, 58], completion: [85, 79, 87, 82, 74] },
-          hourlyDistribution: { x: ['00h', '04h', '08h', '12h', '16h', '20h'], y: [8, 12, 142, 98, 72, 58] },
-          kpis: { total: 426, growth: 28, hours: 207.2, completion: 82, streak: 68, avgDuration: 29, favorites: 98, speed: 1.5, engagement: 85 }
+          hourlyDistribution: { x: ['00h', '04h', '08h', '12h', '16h', '20h'], y: [8, 12, 142, 98, 72, 58] }
         },
         '1y': {
           weeklyListening: { x: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'], y: [62, 71, 84, 79, 92, 88, 81, 89, 86, 95, 92, 98] },
@@ -125,35 +123,52 @@ export const PodcastsAnalytics = () => {
           completionRate: { x: ['0-25%', '26-50%', '51-75%', '76-100%'], y: [112, 168, 298, 1089] },
           listeningTime: { x: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'], y: [43.4, 49.7, 58.8, 55.3, 64.4, 61.6, 56.7, 62.3, 60.2, 66.5, 64.4, 68.6] },
           topicEngagement: { x: ['Open Finance', 'Payments', 'Regulamentação', 'Banking', 'Mercado de Capitais'], y: [584, 442, 332, 268, 228], completion: [84, 78, 86, 81, 73] },
-          hourlyDistribution: { x: ['00h', '04h', '08h', '12h', '16h', '20h'], y: [32, 48, 562, 388, 284, 228] },
-          kpis: { total: 1817, growth: 32, hours: 730.3, completion: 81, streak: 289, avgDuration: 29, favorites: 428, speed: 1.5, engagement: 83 }
+          hourlyDistribution: { x: ['00h', '04h', '08h', '12h', '16h', '20h'], y: [32, 48, 562, 388, 284, 228] }
         }
       };
-      return datasets[selectedPeriod];
+      return datasets[period];
     };
 
-    const data = getDataByPeriod();
+    const currentData = getDataByPeriod(selectedPeriod);
+    const comparisonData = comparisonMode ? getDataByPeriod(comparisonPeriod) : null;
 
     // Weekly Listening Chart
-    Plotly.newPlot('podcast-weekly-chart', [{
-      x: data.weeklyListening.x,
-      y: data.weeklyListening.y,
+    const weeklyListeningData = [{
+      x: currentData.weeklyListening.x,
+      y: currentData.weeklyListening.y,
       type: 'scatter',
       mode: 'lines+markers',
-      line: { color: pastelPurple, width: 3, shape: 'spline' },
-      marker: { size: 8, color: pastelPurple }
-    }], {
+      name: comparisonMode ? getPeriodLabel(selectedPeriod) : 'Episódios',
+      line: { color: pastelGreen, width: 3, shape: 'spline' },
+      marker: { size: 8, color: pastelGreen }
+    }];
+
+    if (comparisonMode && comparisonData) {
+      weeklyListeningData.push({
+        x: comparisonData.weeklyListening.x,
+        y: comparisonData.weeklyListening.y,
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: getPeriodLabel(comparisonPeriod),
+        line: { color: pastelPurple, width: 3, shape: 'spline', dash: 'dash' },
+        marker: { size: 8, color: pastelPurple }
+      } as any);
+    }
+
+    Plotly.newPlot('podcast-weekly-chart', weeklyListeningData, {
       margin: { l: 40, r: 20, t: 20, b: 40 },
       xaxis: { gridcolor: '#f1f5f9', tickangle: 0 },
       yaxis: { gridcolor: '#f1f5f9', title: 'Episódios Ouvidos' },
       plot_bgcolor: '#ffffff',
-      paper_bgcolor: '#ffffff'
+      paper_bgcolor: '#ffffff',
+      showlegend: comparisonMode,
+      legend: { orientation: 'h', y: 1.1 }
     }, { displayModeBar: false });
 
     // Host Distribution Chart
     Plotly.newPlot('podcast-hosts-chart', [{
-      labels: data.hostDistribution.labels,
-      values: data.hostDistribution.values,
+      labels: currentData.hostDistribution.labels,
+      values: currentData.hostDistribution.values,
       type: 'pie',
       marker: { colors: [pastelBlue, pastelGreen, pastelPurple, pastelPink, pastelOrange] },
       textinfo: 'none',
@@ -166,44 +181,76 @@ export const PodcastsAnalytics = () => {
     }, { displayModeBar: false });
 
     // Completion Rate Chart
-    Plotly.newPlot('podcast-completion-chart', [{
-      x: data.completionRate.x,
-      y: data.completionRate.y,
+    const completionRateData = [{
+      x: currentData.completionRate.x,
+      y: currentData.completionRate.y,
       type: 'bar',
-      marker: { color: [pastelPink, pastelYellow, pastelGreen, pastelBlue] }
-    }], {
+      name: comparisonMode ? getPeriodLabel(selectedPeriod) : 'Episódios',
+      marker: { color: pastelGreen }
+    }];
+
+    if (comparisonMode && comparisonData) {
+      completionRateData.push({
+        x: comparisonData.completionRate.x,
+        y: comparisonData.completionRate.y,
+        type: 'bar',
+        name: getPeriodLabel(comparisonPeriod),
+        marker: { color: pastelPurple }
+      } as any);
+    }
+
+    Plotly.newPlot('podcast-completion-chart', completionRateData, {
       margin: { l: 40, r: 20, t: 20, b: 60 },
       xaxis: { gridcolor: '#f1f5f9', tickangle: 0 },
       yaxis: { gridcolor: '#f1f5f9', title: 'Episódios' },
       plot_bgcolor: '#ffffff',
-      paper_bgcolor: '#ffffff'
+      paper_bgcolor: '#ffffff',
+      barmode: comparisonMode ? 'group' : 'relative',
+      showlegend: comparisonMode,
+      legend: { orientation: 'h', y: 1.1 }
     }, { displayModeBar: false });
 
     // Listening Time Chart
-    Plotly.newPlot('podcast-time-chart', [{
-      x: data.listeningTime.x,
-      y: data.listeningTime.y,
+    const listeningTimeData = [{
+      x: currentData.listeningTime.x,
+      y: currentData.listeningTime.y,
       type: 'bar',
-      marker: { color: pastelGreen }
-    }], {
+      name: comparisonMode ? getPeriodLabel(selectedPeriod) : 'Horas',
+      marker: { color: pastelBlue }
+    }];
+
+    if (comparisonMode && comparisonData) {
+      listeningTimeData.push({
+        x: comparisonData.listeningTime.x,
+        y: comparisonData.listeningTime.y,
+        type: 'bar',
+        name: getPeriodLabel(comparisonPeriod),
+        marker: { color: pastelPurple }
+      } as any);
+    }
+
+    Plotly.newPlot('podcast-time-chart', listeningTimeData, {
       margin: { l: 40, r: 20, t: 20, b: 40 },
       xaxis: { gridcolor: '#f1f5f9', tickangle: 0 },
       yaxis: { gridcolor: '#f1f5f9', title: 'Horas' },
       plot_bgcolor: '#ffffff',
-      paper_bgcolor: '#ffffff'
+      paper_bgcolor: '#ffffff',
+      barmode: comparisonMode ? 'group' : 'relative',
+      showlegend: comparisonMode,
+      legend: { orientation: 'h', y: 1.1 }
     }, { displayModeBar: false });
 
     // Topic Engagement Correlation Chart
     Plotly.newPlot('podcast-topic-chart', [{
-      x: data.topicEngagement.x,
-      y: data.topicEngagement.y,
-      name: 'Episódios Ouvidos',
+      x: currentData.topicEngagement.x,
+      y: currentData.topicEngagement.y,
+      name: comparisonMode ? `Episódios (${getPeriodLabel(selectedPeriod)})` : 'Episódios Ouvidos',
       type: 'bar',
       marker: { color: pastelBlue },
       yaxis: 'y'
     }, {
-      x: data.topicEngagement.x,
-      y: data.topicEngagement.completion,
+      x: currentData.topicEngagement.x,
+      y: currentData.topicEngagement.completion,
       name: 'Taxa Conclusão (%)',
       type: 'scatter',
       mode: 'lines+markers',
@@ -222,19 +269,36 @@ export const PodcastsAnalytics = () => {
     }, { displayModeBar: false });
 
     // Hourly Distribution Chart
-    Plotly.newPlot('podcast-hourly-chart', [{
-      x: data.hourlyDistribution.x,
-      y: data.hourlyDistribution.y,
+    const hourlyDistData = [{
+      x: currentData.hourlyDistribution.x,
+      y: currentData.hourlyDistribution.y,
       type: 'scatter',
       fill: 'tozeroy',
-      fillcolor: 'rgba(172, 156, 201, 0.3)',
-      line: { color: pastelPurple, width: 2 }
-    }], {
+      name: comparisonMode ? getPeriodLabel(selectedPeriod) : '% de Escuta',
+      fillcolor: 'rgba(142, 188, 159, 0.3)',
+      line: { color: pastelGreen, width: 2 }
+    }];
+
+    if (comparisonMode && comparisonData) {
+      hourlyDistData.push({
+        x: comparisonData.hourlyDistribution.x,
+        y: comparisonData.hourlyDistribution.y,
+        type: 'scatter',
+        fill: 'tozeroy',
+        name: getPeriodLabel(comparisonPeriod),
+        fillcolor: 'rgba(172, 156, 201, 0.3)',
+        line: { color: pastelPurple, width: 2, dash: 'dash' }
+      } as any);
+    }
+
+    Plotly.newPlot('podcast-hourly-chart', hourlyDistData, {
       margin: { l: 40, r: 20, t: 20, b: 30 },
       xaxis: { gridcolor: '#f1f5f9' },
       yaxis: { gridcolor: '#f1f5f9', title: '% de Escuta' },
       plot_bgcolor: '#ffffff',
-      paper_bgcolor: '#ffffff'
+      paper_bgcolor: '#ffffff',
+      showlegend: comparisonMode,
+      legend: { orientation: 'h', y: 1.1 }
     }, { displayModeBar: false });
 
     // Add click event to topic chart
