@@ -170,9 +170,9 @@ export const ArtigosAnalyticsConsumption = () => {
       labels: currentData.topicDistribution.labels,
       values: currentData.topicDistribution.values,
       type: 'pie',
+      hole: 0.4,
       marker: { colors: [pastelBlue, pastelGreen, pastelPink, pastelOrange, pastelYellow] },
       textinfo: 'none',
-      hoverinfo: 'label+percent+value',
       hovertemplate: '<b>%{label}</b><br>%{value} artigos (%{percent})<br><i>Clique para ver detalhes</i><extra></extra>',
       hoverlabel: { bgcolor: '#334155', font: { color: 'white', size: 14 } }
     }], {

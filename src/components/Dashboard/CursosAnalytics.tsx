@@ -168,9 +168,9 @@ export const CursosAnalytics = () => {
       labels: currentData.categoryDistribution.labels,
       values: currentData.categoryDistribution.values,
       type: 'pie',
+      hole: 0.4,
       marker: { colors: [pastelYellow, pastelBlue, pastelPurple, pastelPink, pastelOrange] },
       textinfo: 'none',
-      hoverinfo: 'label+percent+value',
       hovertemplate: '<b>%{label}</b><br>%{value} cursos (%{percent})<br><i>Clique para ver detalhes</i><extra></extra>',
       hoverlabel: { bgcolor: '#334155', font: { color: 'white', size: 14 } }
     }], {

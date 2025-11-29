@@ -82,18 +82,19 @@ export const AnalisesAnalyticsConsumption = () => {
       values: [38, 28, 20, 14],
       labels: ['Técnica', 'Fundamentalista', 'Macroeconômica', 'Setorial'],
       type: 'pie',
+      hole: 0.4,
       marker: { colors: ['#C5E8D4', '#B8D4E8', '#F4C8D8', '#D8BFD8'] },
-      textinfo: 'label+percent',
+      textinfo: 'none',
       hovertemplate: '<b>%{label}</b><br>%{value} análises (%{percent})<br><i>Clique para ver detalhes</i><extra></extra>',
       hoverlabel: { bgcolor: '#334155', font: { color: 'white', size: 14 } }
     }];
 
     Plotly.newPlot('analises-types-chart', typesData, {
-      margin: { l: 20, r: 20, t: 20, b: 20 },
-      showlegend: false,
+      margin: { l: 20, r: 20, t: 0, b: 60 },
+      showlegend: true,
+      legend: { orientation: 'h', y: -0.1, font: { size: 11 } },
       paper_bgcolor: '#ffffff',
-      hovermode: 'closest',
-      hoverlabel: { bgcolor: '#334155', font: { color: 'white' } }
+      hovermode: 'closest'
     }, { displayModeBar: false }).then(() => {
       const typesChart = document.getElementById('analises-types-chart');
       if (typesChart) {

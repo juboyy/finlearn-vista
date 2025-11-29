@@ -167,19 +167,22 @@ export const PodcastsAnalytics = () => {
       legend: { orientation: 'h', y: 1.1 }
     }, { displayModeBar: false });
 
-    // Host Distribution Chart
+    // Host Distribution Chart (Donut)
     Plotly.newPlot('podcast-hosts-chart', [{
       labels: currentData.hostDistribution.labels,
       values: currentData.hostDistribution.values,
       type: 'pie',
+      hole: 0.4,
       marker: { colors: [pastelBlue, pastelGreen, pastelPurple, pastelPink, pastelOrange] },
       textinfo: 'none',
-      hoverinfo: 'label+percent+value'
+      hovertemplate: '<b>%{label}</b><br>%{value} episódios (%{percent})<br><i>Clique para ver detalhes</i><extra></extra>',
+      hoverlabel: { bgcolor: '#334155', font: { color: 'white', size: 14 } }
     }], {
       margin: { l: 20, r: 20, t: 0, b: 60 },
       showlegend: true,
       legend: { orientation: 'h', y: -0.1, font: { size: 11 } },
-      paper_bgcolor: '#ffffff'
+      paper_bgcolor: '#ffffff',
+      hovermode: 'closest'
     }, { displayModeBar: false });
 
     // Completion Rate Chart
