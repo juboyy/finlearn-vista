@@ -9,6 +9,8 @@ import liveRecording4 from "@/assets/live-recording-4.png";
 import liveUpcoming1 from "@/assets/live-upcoming-1.png";
 import liveUpcoming2 from "@/assets/live-upcoming-2.png";
 import liveUpcoming3 from "@/assets/live-upcoming-3.png";
+import liveNow1 from "@/assets/live-now-1.png";
+import liveNow2 from "@/assets/live-now-2.png";
 
 export const LiveContent = () => {
   const [selectedLive, setSelectedLive] = useState<string | null>(null);
@@ -29,7 +31,7 @@ export const LiveContent = () => {
         <div className="grid grid-cols-2 gap-6">
           <div className="bg-white rounded-xl border-2 border-pastel-purple overflow-hidden hover:shadow-xl transition flex flex-col">
             <div className="h-64 bg-pastel-yellow overflow-hidden relative">
-              <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/195dbdee1c-92ffceb5d806533c0810.png" alt="Live ao vivo" />
+              <img className="w-full h-full object-cover" src={liveNow1} alt="Live ao vivo" />
               <div className="absolute top-4 left-4">
                 <span className="px-3 py-1.5 bg-pastel-purple text-slate-700 text-sm font-medium rounded-full flex items-center gap-2">
                   <i className="fas fa-circle text-[6px] animate-pulse"></i>
@@ -45,26 +47,26 @@ export const LiveContent = () => {
             </div>
             <div className="p-6 flex flex-col flex-1">
               <div className="flex items-center gap-2 mb-3">
-                <span className="px-3 py-1 bg-pastel-yellow text-slate-700 text-xs rounded-full">Mercado em Tempo Real</span>
+                <span className="px-3 py-1 bg-pastel-yellow text-slate-700 text-xs rounded-full">Pregão em Tempo Real</span>
                 <span className="text-xs text-slate-500">• Começou há 8 min</span>
               </div>
-              <h3 className="text-xl font-semibold text-slate-800 mb-3">Análise do Mercado em Tempo Real</h3>
-              <p className="text-sm text-slate-600 mb-4">Acompanhe os principais movimentos do pregão com análise técnica e fundamentalista ao vivo. Participe com perguntas e comentários.</p>
+              <h3 className="text-xl font-semibold text-slate-800 mb-3">LIVE: Pregão ao Vivo - Ibovespa Hoje</h3>
+              <p className="text-sm text-slate-600 mb-4">Entre no chat agora e acompanhe o pregão em tempo real! Análise instantânea das principais ações, alertas de oportunidades e resposta imediata às suas perguntas.</p>
               <div className="flex items-center gap-4 mb-4 pb-4 border-b border-slate-200">
                 <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/b24014b83d-0b455d5abe744d3f9416.png" alt="Apresentador" className="w-12 h-12 rounded-full object-cover" />
                 <div>
-                  <p className="font-medium text-slate-800">Dr. Carlos Mendes</p>
-                  <p className="text-xs text-slate-500">Analista Sênior de Mercado</p>
+                  <p className="font-medium text-slate-800">Marcelo Trader</p>
+                  <p className="text-xs text-slate-500">Day Trader profissional</p>
                 </div>
               </div>
               <div className="flex items-center gap-3 mb-4 text-xs text-slate-600">
                 <div className="flex items-center gap-1">
                   <i className="fas fa-comment"></i>
-                  <span>348 comentários</span>
+                  <span>892 mensagens</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <i className="fas fa-heart"></i>
-                  <span>1.8k curtidas</span>
+                  <span>3.2k curtidas</span>
                 </div>
               </div>
               <button 
@@ -72,14 +74,14 @@ export const LiveContent = () => {
                 className="w-full px-6 py-3 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center justify-center gap-2 mt-auto"
               >
                 <i className="fas fa-play"></i>
-                Assistir Agora
+                Entrar na Live
               </button>
             </div>
           </div>
 
           <div className="bg-white rounded-xl border-2 border-pastel-purple overflow-hidden hover:shadow-xl transition flex flex-col">
             <div className="h-64 bg-pastel-green overflow-hidden relative">
-              <img className="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/27ff2e3c2c-afb908f73c455f98a798.png" alt="Live ao vivo" />
+              <img className="w-full h-full object-cover" src={liveNow2} alt="Live ao vivo" />
               <div className="absolute top-4 left-4">
                 <span className="px-3 py-1.5 bg-pastel-purple text-slate-700 text-sm font-medium rounded-full flex items-center gap-2">
                   <i className="fas fa-circle text-[6px] animate-pulse"></i>
@@ -95,26 +97,26 @@ export const LiveContent = () => {
             </div>
             <div className="p-6 flex flex-col flex-1">
               <div className="flex items-center gap-2 mb-3">
-                <span className="px-3 py-1 bg-pastel-green text-slate-700 text-xs rounded-full">Q&A Interativo</span>
+                <span className="px-3 py-1 bg-pastel-green text-slate-700 text-xs rounded-full">Bate-papo ao Vivo</span>
                 <span className="text-xs text-slate-500">• Começou há 22 min</span>
               </div>
-              <h3 className="text-xl font-semibold text-slate-800 mb-3">Perguntas e Respostas: Investimentos 2025</h3>
-              <p className="text-sm text-slate-600 mb-4">Sessão interativa de perguntas sobre estratégias de investimento, diversificação e tendências para 2025. Tire suas dúvidas ao vivo.</p>
+              <h3 className="text-xl font-semibold text-slate-800 mb-3">LIVE: Pergunte Tudo Sobre Cripto</h3>
+              <p className="text-sm text-slate-600 mb-4">Chat aberto! Mande sua dúvida agora e receba resposta na hora. Estamos discutindo Bitcoin, altcoins e as melhores estratégias para 2025.</p>
               <div className="flex items-center gap-4 mb-4 pb-4 border-b border-slate-200">
                 <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/b2da92c95d-2bbdc31a97c8479658e1.png" alt="Apresentador" className="w-12 h-12 rounded-full object-cover" />
                 <div>
-                  <p className="font-medium text-slate-800">Prof. Roberto Lima</p>
-                  <p className="text-xs text-slate-500">Especialista em Investimentos</p>
+                  <p className="font-medium text-slate-800">Júlia Crypto</p>
+                  <p className="text-xs text-slate-500">Analista de Criptomoedas</p>
                 </div>
               </div>
               <div className="flex items-center gap-3 mb-4 text-xs text-slate-600">
                 <div className="flex items-center gap-1">
                   <i className="fas fa-comment"></i>
-                  <span>287 comentários</span>
+                  <span>645 mensagens</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <i className="fas fa-heart"></i>
-                  <span>1.3k curtidas</span>
+                  <span>2.1k curtidas</span>
                 </div>
               </div>
               <button 
@@ -122,7 +124,7 @@ export const LiveContent = () => {
                 className="w-full px-6 py-3 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center justify-center gap-2 mt-auto"
               >
                 <i className="fas fa-play"></i>
-                Assistir Agora
+                Entrar na Live
               </button>
             </div>
           </div>
@@ -404,9 +406,9 @@ export const LiveContent = () => {
               <div className="p-4 border-t border-slate-700">
                 <h3 className="text-xl font-semibold text-white mb-2">
                   {selectedLive === "live-1" 
-                    ? "Análise do Mercado em Tempo Real"
+                    ? "LIVE: Pregão ao Vivo - Ibovespa Hoje"
                     : selectedLive === "live-2"
-                    ? "Perguntas e Respostas: Investimentos 2025"
+                    ? "LIVE: Pergunte Tudo Sobre Cripto"
                     : "Lançamento: Nova Plataforma Open Finance"
                   }
                 </h3>
@@ -424,9 +426,9 @@ export const LiveContent = () => {
                     />
                     <span>
                       {selectedLive === "live-1" 
-                        ? "Dr. Carlos Mendes" 
+                        ? "Marcelo Trader" 
                         : selectedLive === "live-2"
-                        ? "Prof. Roberto Lima"
+                        ? "Júlia Crypto"
                         : "Fintech XYZ"
                       }
                     </span>
@@ -434,9 +436,9 @@ export const LiveContent = () => {
                   <span>•</span>
                   <span>
                     {selectedLive === "live-1" 
-                      ? "Mercado em Tempo Real" 
+                      ? "Pregão em Tempo Real" 
                       : selectedLive === "live-2"
-                      ? "Q&A Interativo"
+                      ? "Bate-papo ao Vivo"
                       : "Lançamento de Produto"
                     }
                   </span>
