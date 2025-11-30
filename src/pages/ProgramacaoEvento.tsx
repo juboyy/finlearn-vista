@@ -2,11 +2,41 @@ import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { ArrowLeft, Download, CalendarPlus, MapPin, Users, Globe, MessageCircle, Star, Laptop, UtensilsCrossed, GlassWater, Music, Handshake, Briefcase, Camera, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { toast } from "sonner";
 
 export default function ProgramacaoEvento() {
   const navigate = useNavigate();
   const [activeDay, setActiveDay] = useState(1);
+  const [favorites, setFavorites] = useState<string[]>([]);
+
+  // Load favorites from localStorage on mount
+  useEffect(() => {
+    const storedFavorites = localStorage.getItem('event-favorites');
+    if (storedFavorites) {
+      setFavorites(JSON.parse(storedFavorites));
+    }
+  }, []);
+
+  // Save favorites to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem('event-favorites', JSON.stringify(favorites));
+  }, [favorites]);
+
+  const toggleFavorite = (sessionId: string, sessionTitle: string) => {
+    setFavorites(prev => {
+      const isFavorited = prev.includes(sessionId);
+      if (isFavorited) {
+        toast.success(`${sessionTitle} removida dos favoritos`);
+        return prev.filter(id => id !== sessionId);
+      } else {
+        toast.success(`${sessionTitle} adicionada aos favoritos`);
+        return [...prev, sessionId];
+      }
+    });
+  };
+
+  const isFavorited = (sessionId: string) => favorites.includes(sessionId);
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -98,8 +128,15 @@ export default function ProgramacaoEvento() {
                       <span className="flex items-center gap-1"><Users className="w-4 h-4" /> Todos os participantes</span>
                     </div>
                   </div>
-                  <button className="ml-4 w-10 h-10 rounded-lg border border-slate-200 hover:bg-slate-100 transition flex items-center justify-center text-slate-400">
-                    <Star className="w-5 h-5" />
+                  <button 
+                    onClick={() => toggleFavorite('day1-credenciamento', 'Credenciamento e Welcome Coffee')}
+                    className={`ml-4 w-10 h-10 rounded-lg border transition flex items-center justify-center ${
+                      isFavorited('day1-credenciamento') 
+                        ? 'bg-yellow-50 border-yellow-300 text-yellow-600 hover:bg-yellow-100' 
+                        : 'border-slate-200 text-slate-400 hover:bg-slate-100'
+                    }`}
+                  >
+                    <Star className={`w-5 h-5 ${isFavorited('day1-credenciamento') ? 'fill-current' : ''}`} />
                   </button>
                 </div>
               </div>
@@ -136,8 +173,15 @@ export default function ProgramacaoEvento() {
                       <span className="flex items-center gap-1"><Globe className="w-4 h-4" /> Português/Inglês</span>
                     </div>
                   </div>
-                  <button className="ml-4 w-10 h-10 rounded-lg border border-slate-200 hover:bg-slate-100 transition flex items-center justify-center text-slate-400">
-                    <Star className="w-5 h-5" />
+                  <button 
+                    onClick={() => toggleFavorite('day1-keynote', 'Abertura: O Cenário Econômico Global')}
+                    className={`ml-4 w-10 h-10 rounded-lg border transition flex items-center justify-center ${
+                      isFavorited('day1-keynote') 
+                        ? 'bg-yellow-50 border-yellow-300 text-yellow-600 hover:bg-yellow-100' 
+                        : 'border-slate-200 text-slate-400 hover:bg-slate-100'
+                    }`}
+                  >
+                    <Star className={`w-5 h-5 ${isFavorited('day1-keynote') ? 'fill-current' : ''}`} />
                   </button>
                 </div>
               </div>
@@ -210,8 +254,15 @@ export default function ProgramacaoEvento() {
                       <span className="flex items-center gap-1"><MessageCircle className="w-4 h-4" /> Q&A ao vivo</span>
                     </div>
                   </div>
-                  <button className="ml-4 w-10 h-10 rounded-lg border border-slate-200 hover:bg-slate-100 transition flex items-center justify-center text-slate-400">
-                    <Star className="w-5 h-5" />
+                  <button 
+                    onClick={() => toggleFavorite('day1-painel-renda-fixa', 'Renda Fixa em Transformação')}
+                    className={`ml-4 w-10 h-10 rounded-lg border transition flex items-center justify-center ${
+                      isFavorited('day1-painel-renda-fixa') 
+                        ? 'bg-yellow-50 border-yellow-300 text-yellow-600 hover:bg-yellow-100' 
+                        : 'border-slate-200 text-slate-400 hover:bg-slate-100'
+                    }`}
+                  >
+                    <Star className={`w-5 h-5 ${isFavorited('day1-painel-renda-fixa') ? 'fill-current' : ''}`} />
                   </button>
                 </div>
               </div>
@@ -341,8 +392,15 @@ export default function ProgramacaoEvento() {
                       <span className="flex items-center gap-1"><Laptop className="w-4 h-4" /> Material incluso</span>
                     </div>
                   </div>
-                  <button className="ml-4 w-10 h-10 rounded-lg border border-slate-200 hover:bg-slate-100 transition flex items-center justify-center text-slate-400">
-                    <Star className="w-5 h-5" />
+                  <button 
+                    onClick={() => toggleFavorite('day1-workshop-analise-tecnica', 'Análise Técnica Aplicada')}
+                    className={`ml-4 w-10 h-10 rounded-lg border transition flex items-center justify-center ${
+                      isFavorited('day1-workshop-analise-tecnica') 
+                        ? 'bg-yellow-50 border-yellow-300 text-yellow-600 hover:bg-yellow-100' 
+                        : 'border-slate-200 text-slate-400 hover:bg-slate-100'
+                    }`}
+                  >
+                    <Star className={`w-5 h-5 ${isFavorited('day1-workshop-analise-tecnica') ? 'fill-current' : ''}`} />
                   </button>
                 </div>
               </div>
@@ -443,13 +501,18 @@ export default function ProgramacaoEvento() {
                       <span className="flex items-center gap-1"><Users className="w-4 h-4" /> Todos os participantes</span>
                     </div>
                   </div>
-                  <button className="ml-4 w-10 h-10 rounded-lg border border-slate-200 hover:bg-slate-100 transition flex items-center justify-center text-slate-400">
-                    <Star className="w-5 h-5" />
+                  <button 
+                    onClick={() => toggleFavorite('day2-checkin', 'Check-in e Café da Manhã')}
+                    className={`ml-4 w-10 h-10 rounded-lg border transition flex items-center justify-center ${
+                      isFavorited('day2-checkin') 
+                        ? 'bg-yellow-50 border-yellow-300 text-yellow-600 hover:bg-yellow-100' 
+                        : 'border-slate-200 text-slate-400 hover:bg-slate-100'
+                    }`}
+                  >
+                    <Star className={`w-5 h-5 ${isFavorited('day2-checkin') ? 'fill-current' : ''}`} />
                   </button>
                 </div>
               </div>
-
-              {/* Sessão 2 - Keynote */}
               <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
@@ -480,13 +543,18 @@ export default function ProgramacaoEvento() {
                       <span className="flex items-center gap-1"><Globe className="w-4 h-4" /> Português</span>
                     </div>
                   </div>
-                  <button className="ml-4 w-10 h-10 rounded-lg border border-slate-200 hover:bg-slate-100 transition flex items-center justify-center text-slate-400">
-                    <Star className="w-5 h-5" />
+                  <button 
+                    onClick={() => toggleFavorite('day2-keynote-tecnologia', 'Tecnologia e Inovação no Mercado Financeiro')}
+                    className={`ml-4 w-10 h-10 rounded-lg border transition flex items-center justify-center ${
+                      isFavorited('day2-keynote-tecnologia') 
+                        ? 'bg-yellow-50 border-yellow-300 text-yellow-600 hover:bg-yellow-100' 
+                        : 'border-slate-200 text-slate-400 hover:bg-slate-100'
+                    }`}
+                  >
+                    <Star className={`w-5 h-5 ${isFavorited('day2-keynote-tecnologia') ? 'fill-current' : ''}`} />
                   </button>
                 </div>
               </div>
-
-              {/* Sessão 3 - Coffee Break */}
               <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
@@ -554,13 +622,18 @@ export default function ProgramacaoEvento() {
                       <span className="flex items-center gap-1"><MessageCircle className="w-4 h-4" /> Q&A ao vivo</span>
                     </div>
                   </div>
-                  <button className="ml-4 w-10 h-10 rounded-lg border border-slate-200 hover:bg-slate-100 transition flex items-center justify-center text-slate-400">
-                    <Star className="w-5 h-5" />
+                  <button 
+                    onClick={() => toggleFavorite('day2-painel-esg', 'ESG e Finanças Sustentáveis')}
+                    className={`ml-4 w-10 h-10 rounded-lg border transition flex items-center justify-center ${
+                      isFavorited('day2-painel-esg') 
+                        ? 'bg-yellow-50 border-yellow-300 text-yellow-600 hover:bg-yellow-100' 
+                        : 'border-slate-200 text-slate-400 hover:bg-slate-100'
+                    }`}
+                  >
+                    <Star className={`w-5 h-5 ${isFavorited('day2-painel-esg') ? 'fill-current' : ''}`} />
                   </button>
                 </div>
               </div>
-
-              {/* Sessão 5 - Almoço */}
               <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
@@ -691,13 +764,18 @@ export default function ProgramacaoEvento() {
                       <span className="flex items-center gap-1"><Users className="w-4 h-4" /> Capacidade: 500</span>
                     </div>
                   </div>
-                  <button className="ml-4 w-10 h-10 rounded-lg border border-slate-200 hover:bg-slate-100 transition flex items-center justify-center text-slate-400">
-                    <Star className="w-5 h-5" />
+                  <button 
+                    onClick={() => toggleFavorite('day2-mesa-ia', 'Inteligência Artificial no Mercado Financeiro')}
+                    className={`ml-4 w-10 h-10 rounded-lg border transition flex items-center justify-center ${
+                      isFavorited('day2-mesa-ia') 
+                        ? 'bg-yellow-50 border-yellow-300 text-yellow-600 hover:bg-yellow-100' 
+                        : 'border-slate-200 text-slate-400 hover:bg-slate-100'
+                    }`}
+                  >
+                    <Star className={`w-5 h-5 ${isFavorited('day2-mesa-ia') ? 'fill-current' : ''}`} />
                   </button>
                 </div>
               </div>
-
-              {/* Sessão 9 - Jantar VIP */}
               <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
@@ -769,13 +847,18 @@ export default function ProgramacaoEvento() {
                       <span className="flex items-center gap-1"><Globe className="w-4 h-4" /> Português</span>
                     </div>
                   </div>
-                  <button className="ml-4 w-10 h-10 rounded-lg border border-slate-200 hover:bg-slate-100 transition flex items-center justify-center text-slate-400">
-                    <Star className="w-5 h-5" />
+                  <button 
+                    onClick={() => toggleFavorite('day3-keynote-macro', 'Perspectivas Macroeconômicas para 2025-2026')}
+                    className={`ml-4 w-10 h-10 rounded-lg border transition flex items-center justify-center ${
+                      isFavorited('day3-keynote-macro') 
+                        ? 'bg-yellow-50 border-yellow-300 text-yellow-600 hover:bg-yellow-100' 
+                        : 'border-slate-200 text-slate-400 hover:bg-slate-100'
+                    }`}
+                  >
+                    <Star className={`w-5 h-5 ${isFavorited('day3-keynote-macro') ? 'fill-current' : ''}`} />
                   </button>
                 </div>
               </div>
-
-              {/* Sessão 3 - Coffee Break */}
               <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
@@ -840,13 +923,18 @@ export default function ProgramacaoEvento() {
                       <span className="flex items-center gap-1"><MessageCircle className="w-4 h-4" /> Q&A ao vivo</span>
                     </div>
                   </div>
-                  <button className="ml-4 w-10 h-10 rounded-lg border border-slate-200 hover:bg-slate-100 transition flex items-center justify-center text-slate-400">
-                    <Star className="w-5 h-5" />
+                  <button 
+                    onClick={() => toggleFavorite('day3-painel-futuro', 'O Futuro do Mercado de Capitais Brasileiro')}
+                    className={`ml-4 w-10 h-10 rounded-lg border transition flex items-center justify-center ${
+                      isFavorited('day3-painel-futuro') 
+                        ? 'bg-yellow-50 border-yellow-300 text-yellow-600 hover:bg-yellow-100' 
+                        : 'border-slate-200 text-slate-400 hover:bg-slate-100'
+                    }`}
+                  >
+                    <Star className={`w-5 h-5 ${isFavorited('day3-painel-futuro') ? 'fill-current' : ''}`} />
                   </button>
                 </div>
               </div>
-
-              {/* Sessão 5 - Almoço de Encerramento */}
               <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
@@ -892,13 +980,18 @@ export default function ProgramacaoEvento() {
                       <span className="flex items-center gap-1"><Laptop className="w-4 h-4" /> Material digital</span>
                     </div>
                   </div>
-                  <button className="ml-4 w-10 h-10 rounded-lg border border-slate-200 hover:bg-slate-100 transition flex items-center justify-center text-slate-400">
-                    <Star className="w-5 h-5" />
+                  <button 
+                    onClick={() => toggleFavorite('day3-workshop-portfolio', 'Estratégias de Portfolio para 2025')}
+                    className={`ml-4 w-10 h-10 rounded-lg border transition flex items-center justify-center ${
+                      isFavorited('day3-workshop-portfolio') 
+                        ? 'bg-yellow-50 border-yellow-300 text-yellow-600 hover:bg-yellow-100' 
+                        : 'border-slate-200 text-slate-400 hover:bg-slate-100'
+                    }`}
+                  >
+                    <Star className={`w-5 h-5 ${isFavorited('day3-workshop-portfolio') ? 'fill-current' : ''}`} />
                   </button>
                 </div>
               </div>
-
-              {/* Sessão 7 - Cerimônia de Encerramento */}
               <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
