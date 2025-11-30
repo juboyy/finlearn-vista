@@ -4,6 +4,9 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useTicketsCache } from "@/hooks/useTicketsCache";
 import { Skeleton } from "@/components/ui/skeleton";
+import ticketBackgroundPattern from "@/assets/ticket-background-pattern.png";
+import ticketIllustration from "@/assets/ticket-illustration.png";
+import eventThumbnail from "@/assets/event-thumbnail.png";
 
 // Mock function para simular fetch de dados
 const fetchTicketsData = async () => {
@@ -164,7 +167,7 @@ export default function MeusIngressos() {
                 {/* Decorative background image overlay */}
                 <div className="absolute inset-0 opacity-20 pointer-events-none">
                   <img 
-                    src="https://storage.googleapis.com/uxpilot-auth.appspot.com/2a3b4c5d6e-7f8a9b0c1d2e3f4a5b6c.png" 
+                    src={ticketBackgroundPattern} 
                     className="w-full h-full object-cover" 
                     alt="background pattern"
                     loading="lazy"
@@ -227,7 +230,7 @@ export default function MeusIngressos() {
                 <div className="w-full h-48 relative">
                   <img 
                     className="w-full h-full object-contain" 
-                    src="https://storage.googleapis.com/uxpilot-auth.appspot.com/bb2273ce7e-6ad09df2e05230043d98.png" 
+                    src={ticketIllustration} 
                     alt="illustration of a simple ticket icon with a qr code, pastel purple tones, outlined style, 2d flat design, thick strokes, white background"
                     loading="lazy"
                   />
@@ -334,7 +337,7 @@ export default function MeusIngressos() {
                        <div className="flex items-center gap-3">
                          <div className="w-10 h-10 rounded bg-pastel-pink flex-shrink-0 overflow-hidden">
                            <img 
-                             src="https://storage.googleapis.com/uxpilot-auth.appspot.com/4c5d6e7f8a-9b0c1d2e3f4a5b6c7d8e.png" 
+                             src={eventThumbnail} 
                              className="w-full h-full object-cover grayscale opacity-80" 
                              alt="event thumb"
                              loading="lazy"
@@ -362,7 +365,7 @@ export default function MeusIngressos() {
                        <div className="flex items-center gap-3">
                          <div className="w-10 h-10 rounded bg-pastel-peach flex-shrink-0 overflow-hidden">
                            <img 
-                             src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5d6e7f8a9b-0c1d2e3f4a5b6c7d8e9f.png" 
+                             src={eventThumbnail} 
                              className="w-full h-full object-cover grayscale opacity-80" 
                              alt="event thumb"
                              loading="lazy"
@@ -390,7 +393,7 @@ export default function MeusIngressos() {
                        <div className="flex items-center gap-3">
                          <div className="w-10 h-10 rounded bg-pastel-blue flex-shrink-0 overflow-hidden">
                            <img 
-                             src="https://storage.googleapis.com/uxpilot-auth.appspot.com/6e7f8a9b0c-1d2e3f4a5b6c7d8e9f0a.png" 
+                             src={eventThumbnail} 
                              className="w-full h-full object-cover grayscale opacity-80" 
                              alt="event thumb"
                              loading="lazy"
