@@ -13,6 +13,21 @@ export default function CheckoutIngresso() {
       
       <main className="flex-1 overflow-y-auto bg-slate-50 relative">
         
+        {/* Standard Header */}
+        <header className="sticky top-0 z-50 bg-white border-b border-slate-200">
+          <div className="max-w-7xl mx-auto px-8 py-4 flex items-center gap-4">
+            <button 
+              onClick={() => navigate(-1)}
+              className="flex items-center gap-2 text-slate-600 hover:text-slate-900 transition-colors"
+            >
+              <ArrowLeft size={20} />
+              <span className="font-medium">Voltar</span>
+            </button>
+            <div className="h-6 w-px bg-slate-200"></div>
+            <h1 className="text-lg font-semibold text-slate-800">Checkout - Ingresso do Evento</h1>
+          </div>
+        </header>
+
         {/* Hero Header for Event */}
         <div className="relative h-[400px] w-full bg-slate-900 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 to-slate-900/40 z-10"></div>
