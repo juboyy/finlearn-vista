@@ -727,7 +727,7 @@ export function Biblioteca() {
               )}
 
               {/* Pagination */}
-              <section className="flex items-center justify-center pt-6">
+              <section className="flex items-center justify-start pt-6">
                 <div className="flex items-center gap-2">
                   <button className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
                     <ChevronLeft className="h-4 w-4 inline mr-2" />
