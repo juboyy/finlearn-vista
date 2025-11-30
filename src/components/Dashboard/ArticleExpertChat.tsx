@@ -27,8 +27,17 @@ export function ArticleExpertChat({ isOpen, onClose, articleTitle, articleContex
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showQuickActions, setShowQuickActions] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+
+  const quickQuestions = [
+    "Quais são as principais modalidades de crédito imobiliário?",
+    "Como funciona o Sistema de Amortização Price (SAC)?",
+    "Quais documentos são necessários para solicitar financiamento?",
+    "Qual a diferença entre taxa fixa e taxa variável?",
+    "Como funciona o uso do FGTS no financiamento imobiliário?"
+  ];
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -36,12 +45,14 @@ export function ArticleExpertChat({ isOpen, onClose, articleTitle, articleContex
     }
   }, [messages]);
 
-  const sendMessage = async () => {
-    if (!input.trim() || isLoading) return;
+  const sendMessage = async (messageText?: string) => {
+    const textToSend = messageText || input.trim();
+    if (!textToSend || isLoading) return;
 
-    const userMessage: Message = { role: "user", content: input };
+    const userMessage: Message = { role: "user", content: textToSend };
     setMessages(prev => [...prev, userMessage]);
     setInput("");
+    setShowQuickActions(false);
     setIsLoading(true);
 
     try {
@@ -97,6 +108,10 @@ export function ArticleExpertChat({ isOpen, onClose, articleTitle, articleContex
     }
   };
 
+  const handleQuickQuestion = (question: string) => {
+    sendMessage(question);
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -136,6 +151,23 @@ export function ArticleExpertChat({ isOpen, onClose, articleTitle, articleContex
               </div>
             </div>
           ))}
+          
+          {/* Quick Action Buttons */}
+          {showQuickActions && messages.length === 1 && !isLoading && (
+            <div className="space-y-2 mt-4">
+              <p className="text-xs text-muted-foreground font-medium mb-3">Perguntas sugeridas:</p>
+              {quickQuestions.map((question, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleQuickQuestion(question)}
+                  className="w-full text-left p-3 text-sm bg-card border border-border rounded-lg hover:bg-muted transition-colors text-foreground"
+                >
+                  {question}
+                </button>
+              ))}
+            </div>
+          )}
+
           {isLoading && (
             <div className="flex justify-start">
               <div className="bg-muted rounded-lg p-3">
@@ -158,7 +190,7 @@ export function ArticleExpertChat({ isOpen, onClose, articleTitle, articleContex
             className="flex-1"
           />
           <Button
-            onClick={sendMessage}
+            onClick={() => sendMessage()}
             disabled={isLoading || !input.trim()}
             size="icon"
           >
