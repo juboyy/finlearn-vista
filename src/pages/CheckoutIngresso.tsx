@@ -228,8 +228,9 @@ export default function CheckoutIngresso() {
                   </div>
                 </div>
               </div>
-              <button className="w-full mt-6 py-2 text-slate-600 font-medium text-sm border border-slate-200 rounded-lg hover:bg-slate-50 transition">
-                Ver programação completa
+              <button className="w-full mt-6 py-2 text-slate-600 font-medium text-sm border border-slate-200 rounded-lg hover:bg-slate-50 transition flex items-center justify-center gap-2">
+                <Info className="w-4 h-4" />
+                Ver detalhes
               </button>
             </section>
             
