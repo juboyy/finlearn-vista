@@ -32,7 +32,7 @@ export function ArticleExpertChat({ isOpen, onClose, articleTitle, articleContex
   const scrollRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
-  const agentAvatar = "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-9.jpg";
+  const agentAvatar = "https://storage.googleapis.com/uxpilot-auth.appspot.com/4450be57c6-3f9f4c9c029e3c4d7519.png";
 
   const quickQuestions = [
     "Quais são as principais modalidades de crédito imobiliário?",
