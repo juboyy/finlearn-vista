@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Bell, Filter, Ticket, Calendar, MapPin, Users, Mic, Clock, Tag, Star, ArrowUp, ArrowRight, ChevronLeft, ChevronRight, CalendarCheck, Presentation, GraduationCap, Handshake, Award, Wine, X, ArrowLeft } from "lucide-react";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
@@ -18,6 +19,7 @@ import eventoCertificacaoBacen from "@/assets/evento-certificacao-bacen.png";
 import eventoMesaRedondaRegulacao from "@/assets/evento-mesa-redonda-regulacao.png";
 
 export default function EventosPresenciais() {
+  const navigate = useNavigate();
   const [filterOpen, setFilterOpen] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
@@ -162,7 +164,10 @@ export default function EventosPresenciais() {
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <button className="px-6 py-3 bg-slate-800 text-white rounded-lg font-medium hover:bg-slate-700 transition">
+                    <button 
+                      onClick={() => navigate('/checkout-ingresso')}
+                      className="px-6 py-3 bg-slate-800 text-white rounded-lg font-medium hover:bg-slate-700 transition"
+                    >
                       Garantir Ingresso
                     </button>
                     <button className="px-6 py-3 bg-white text-slate-700 rounded-lg font-medium hover:bg-slate-50 transition">
@@ -312,7 +317,10 @@ export default function EventosPresenciais() {
                       <p className="text-xs text-slate-500">CFA, Gestor de Fundos</p>
                     </div>
                   </div>
-                  <button className="w-full px-4 py-2.5 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                  <button 
+                    onClick={() => navigate('/checkout-ingresso')}
+                    className="w-full px-4 py-2.5 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
+                  >
                     Inscrever-se
                   </button>
                 </div>
@@ -362,7 +370,10 @@ export default function EventosPresenciais() {
                       <p className="text-xs text-slate-500">Executivos e especialistas</p>
                     </div>
                   </div>
-                  <button className="w-full px-4 py-2.5 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                  <button 
+                    onClick={() => navigate('/checkout-ingresso')}
+                    className="w-full px-4 py-2.5 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
+                  >
                     Inscrever-se
                   </button>
                 </div>
@@ -410,7 +421,10 @@ export default function EventosPresenciais() {
                       <p className="text-xs text-slate-500">Dress code: Business</p>
                     </div>
                   </div>
-                  <button className="w-full px-4 py-2.5 bg-pastel-green text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                  <button 
+                    onClick={() => navigate('/checkout-ingresso')}
+                    className="w-full px-4 py-2.5 bg-pastel-green text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
+                  >
                     Inscrever-se
                   </button>
                 </div>
