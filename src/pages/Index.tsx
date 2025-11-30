@@ -46,7 +46,7 @@ const Index = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setChatOpen(true);
-    }, 500);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, []);
