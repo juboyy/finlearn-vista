@@ -52,11 +52,16 @@ const fetchTicketsData = async () => {
 
 export default function MeusIngressos() {
   const [activeTab, setActiveTab] = useState<"proximos" | "historico" | "cancelados">("proximos");
+  const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
   
   const { data: ticketsData, loading } = useTicketsCache(fetchTicketsData, {
     cacheKey: 'user-tickets-data',
     ttl: 5 * 60 * 1000, // 5 minutos
   });
+
+  const handleImageLoad = (imageId: string) => {
+    setLoadedImages(prev => new Set(prev).add(imageId));
+  };
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -168,9 +173,12 @@ export default function MeusIngressos() {
                 <div className="absolute inset-0 opacity-20 pointer-events-none">
                   <img 
                     src={ticketBackgroundPattern} 
-                    className="w-full h-full object-cover" 
+                    className={`w-full h-full object-cover transition-all duration-700 ${
+                      loadedImages.has(`bg-${ticket.id}`) ? 'blur-0 scale-100' : 'blur-md scale-105'
+                    }`}
                     alt="background pattern"
                     loading="lazy"
+                    onLoad={() => handleImageLoad(`bg-${ticket.id}`)}
                   />
                 </div>
               </div>
@@ -229,10 +237,13 @@ export default function MeusIngressos() {
               <div className="hidden xl:flex xl:w-64 bg-slate-50 p-6 items-center justify-center border-l border-slate-100">
                 <div className="w-full h-48 relative">
                   <img 
-                    className="w-full h-full object-contain" 
+                    className={`w-full h-full object-contain transition-all duration-700 ${
+                      loadedImages.has(`illustration-${ticket.id}`) ? 'blur-0 scale-100' : 'blur-lg scale-95'
+                    }`}
                     src={ticketIllustration} 
                     alt="illustration of a simple ticket icon with a qr code, pastel purple tones, outlined style, 2d flat design, thick strokes, white background"
                     loading="lazy"
+                    onLoad={() => handleImageLoad(`illustration-${ticket.id}`)}
                   />
                 </div>
               </div>
@@ -338,9 +349,12 @@ export default function MeusIngressos() {
                          <div className="w-10 h-10 rounded bg-pastel-pink flex-shrink-0 overflow-hidden">
                            <img 
                              src={eventThumbnail} 
-                             className="w-full h-full object-cover grayscale opacity-80" 
+                             className={`w-full h-full object-cover grayscale opacity-80 transition-all duration-700 ${
+                               loadedImages.has('event-1') ? 'blur-0 scale-100' : 'blur-md scale-110'
+                             }`}
                              alt="event thumb"
                              loading="lazy"
+                             onLoad={() => handleImageLoad('event-1')}
                            />
                          </div>
                         <div>
@@ -366,9 +380,12 @@ export default function MeusIngressos() {
                          <div className="w-10 h-10 rounded bg-pastel-peach flex-shrink-0 overflow-hidden">
                            <img 
                              src={eventThumbnail} 
-                             className="w-full h-full object-cover grayscale opacity-80" 
+                             className={`w-full h-full object-cover grayscale opacity-80 transition-all duration-700 ${
+                               loadedImages.has('event-2') ? 'blur-0 scale-100' : 'blur-md scale-110'
+                             }`}
                              alt="event thumb"
                              loading="lazy"
+                             onLoad={() => handleImageLoad('event-2')}
                            />
                          </div>
                         <div>
@@ -394,9 +411,12 @@ export default function MeusIngressos() {
                          <div className="w-10 h-10 rounded bg-pastel-blue flex-shrink-0 overflow-hidden">
                            <img 
                              src={eventThumbnail} 
-                             className="w-full h-full object-cover grayscale opacity-80" 
+                             className={`w-full h-full object-cover grayscale opacity-80 transition-all duration-700 ${
+                               loadedImages.has('event-3') ? 'blur-0 scale-100' : 'blur-md scale-110'
+                             }`}
                              alt="event thumb"
                              loading="lazy"
+                             onLoad={() => handleImageLoad('event-3')}
                            />
                          </div>
                         <div>
