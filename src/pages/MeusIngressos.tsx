@@ -2,9 +2,58 @@ import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { ArrowLeft, Download, Plus, Share2, MapPin, Users, Ticket, QrCode, Headphones, ArrowRight, RefreshCw, Award, History } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { useTicketsCache } from "@/hooks/useTicketsCache";
+import { Skeleton } from "@/components/ui/skeleton";
+
+// Mock function para simular fetch de dados
+const fetchTicketsData = async () => {
+  // Simula delay de API
+  await new Promise(resolve => setTimeout(resolve, 100));
+  
+  return {
+    proximos: [
+      {
+        id: 1,
+        title: "Open Finance Brasil 2024",
+        date: "12 Dezembro",
+        time: "Quinta-feira • 08:00",
+        location: "Centro de Convenções",
+        address: "Av. das Américas, 3500 - RJ",
+        type: "Conferência",
+        ticketType: "Ingresso VIP",
+        status: "confirmado",
+        orderId: "#849302",
+      },
+      {
+        id: 2,
+        title: "Estratégias em Renda Fixa",
+        date: "05 Dezembro",
+        time: "Quinta-feira • 09:00",
+        location: "Auditório Paulista",
+        address: "Av. Paulista, 1000 - SP",
+        type: "Workshop",
+        ticketType: "Entrada Padrão",
+        status: "confirmado",
+        orderId: "#849155",
+      },
+    ],
+    historico: Array.from({ length: 5 }, (_, i) => ({
+      id: i + 3,
+      title: `Evento Passado ${i + 1}`,
+      date: `${10 + i} Nov 2024`,
+      location: "Online",
+      type: "Webinar",
+    })),
+  };
+};
 
 export default function MeusIngressos() {
   const [activeTab, setActiveTab] = useState<"proximos" | "historico" | "cancelados">("proximos");
+  
+  const { data: ticketsData, loading } = useTicketsCache(fetchTicketsData, {
+    cacheKey: 'user-tickets-data',
+    ttl: 5 * 60 * 1000, // 5 minutos
+  });
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -74,11 +123,32 @@ export default function MeusIngressos() {
           {/* Active Tickets Section - Renderizado condicionalmente */}
           {activeTab === "proximos" && (
             <section className="space-y-6 mb-12">
-            
-            {/* Ticket Card 1: Featured/Upcoming */}
-            <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col md:flex-row">
+            {loading ? (
+              // Loading skeletons
+              <>
+                {[1, 2].map((i) => (
+                  <div key={i} className="bg-white rounded-2xl border border-slate-200 overflow-hidden p-8">
+                    <div className="flex gap-6">
+                      <Skeleton className="w-72 h-48 flex-shrink-0" />
+                      <div className="flex-1 space-y-4">
+                        <Skeleton className="h-8 w-3/4" />
+                        <Skeleton className="h-4 w-1/2" />
+                        <Skeleton className="h-4 w-2/3" />
+                        <Skeleton className="h-4 w-1/2" />
+                        <div className="flex gap-4 mt-6">
+                          <Skeleton className="h-10 flex-1" />
+                          <Skeleton className="h-10 w-32" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </>
+            ) : (
+              ticketsData?.proximos.map((ticket, idx) => (
+            <div key={ticket.id} className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col md:flex-row">
               {/* Left: Image & Date */}
-              <div className="w-full md:w-72 bg-pastel-purple/20 relative flex-shrink-0 border-r border-slate-100">
+              <div className={`w-full md:w-72 ${idx === 0 ? 'bg-pastel-purple/20' : 'bg-pastel-blue/20'} relative flex-shrink-0 border-r border-slate-100`}>
                 <div className="absolute top-4 left-4 z-10">
                   <span className="px-3 py-1 bg-white/90 backdrop-blur text-slate-700 text-xs font-bold rounded-full uppercase tracking-wide border border-slate-100">
                     Confirmado
@@ -86,10 +156,10 @@ export default function MeusIngressos() {
                 </div>
                 <div className="h-full flex flex-col items-center justify-center p-6 text-center">
                   <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mb-4 shadow-sm">
-                    <span className="text-3xl font-bold text-slate-700">12</span>
+                    <span className="text-3xl font-bold text-slate-700">{ticket.date.split(' ')[0]}</span>
                   </div>
-                  <span className="text-xl font-medium text-slate-800">Dezembro</span>
-                  <span className="text-slate-500">Quinta-feira • 08:00</span>
+                  <span className="text-xl font-medium text-slate-800">{ticket.date.split(' ')[1]}</span>
+                  <span className="text-slate-500">{ticket.time}</span>
                 </div>
                 {/* Decorative background image overlay */}
                 <div className="absolute inset-0 opacity-20 pointer-events-none">
@@ -108,10 +178,10 @@ export default function MeusIngressos() {
                   <div className="flex items-start justify-between mb-4">
                     <div>
                       <div className="flex items-center gap-2 mb-2">
-                        <span className="px-2.5 py-0.5 bg-pastel-purple text-slate-700 text-xs font-semibold rounded-md">Conferência</span>
-                        <span className="text-xs text-slate-400">Pedido #849302</span>
+                        <span className={`px-2.5 py-0.5 ${idx === 0 ? 'bg-pastel-purple' : 'bg-pastel-blue'} text-slate-700 text-xs font-semibold rounded-md`}>{ticket.type}</span>
+                        <span className="text-xs text-slate-400">Pedido {ticket.orderId}</span>
                       </div>
-                      <h2 className="text-2xl font-bold text-slate-800 mb-2">Open Finance Brasil 2024</h2>
+                      <h2 className="text-2xl font-bold text-slate-800 mb-2">{ticket.title}</h2>
                       <p className="text-slate-600 mb-4 line-clamp-2">O maior encontro sobre o ecossistema financeiro aberto. Palestras exclusivas sobre regulação, APIs e novos modelos de negócios.</p>
                     </div>
                     <button className="text-slate-400 hover:text-slate-600">
@@ -125,8 +195,8 @@ export default function MeusIngressos() {
                         <MapPin className="w-4 h-4" />
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-slate-800">Centro de Convenções</p>
-                        <p className="text-xs text-slate-500">Av. das Américas, 3500 - RJ</p>
+                        <p className="text-sm font-medium text-slate-800">{ticket.location}</p>
+                        <p className="text-xs text-slate-500">{ticket.address}</p>
                         <a href="#" className="text-xs text-indigo-600 hover:underline mt-0.5 block">Ver no mapa</a>
                       </div>
                     </div>
@@ -135,7 +205,7 @@ export default function MeusIngressos() {
                         <Users className="w-4 h-4" />
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-slate-800">Ingresso VIP</p>
+                        <p className="text-sm font-medium text-slate-800">{ticket.ticketType}</p>
                         <p className="text-xs text-slate-500">Acesso área VIP + Almoço</p>
                         <p className="text-xs text-slate-500">Titular: João Silva</p>
                       </div>
@@ -164,96 +234,8 @@ export default function MeusIngressos() {
                 </div>
               </div>
             </div>
-
-            {/* Ticket Card 2 */}
-            <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col md:flex-row">
-              {/* Left: Image & Date */}
-              <div className="w-full md:w-72 bg-pastel-blue/20 relative flex-shrink-0 border-r border-slate-100">
-                <div className="absolute top-4 left-4 z-10">
-                  <span className="px-3 py-1 bg-white/90 backdrop-blur text-slate-700 text-xs font-bold rounded-full uppercase tracking-wide border border-slate-100">
-                    Confirmado
-                  </span>
-                </div>
-                <div className="h-full flex flex-col items-center justify-center p-6 text-center">
-                  <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mb-4 shadow-sm">
-                    <span className="text-3xl font-bold text-slate-700">05</span>
-                  </div>
-                  <span className="text-xl font-medium text-slate-800">Dezembro</span>
-                  <span className="text-slate-500">Quinta-feira • 09:00</span>
-                </div>
-                {/* Decorative background image overlay */}
-                <div className="absolute inset-0 opacity-20 pointer-events-none">
-                  <img 
-                    src="https://storage.googleapis.com/uxpilot-auth.appspot.com/1f2e3d4c5b-6a7b8c9d0e1f2a3b4c5d.png" 
-                    className="w-full h-full object-cover" 
-                    alt="background pattern"
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-
-              {/* Middle: Event Details */}
-              <div className="flex-1 p-6 md:p-8 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="px-2.5 py-0.5 bg-pastel-blue text-slate-700 text-xs font-semibold rounded-md">Workshop</span>
-                        <span className="text-xs text-slate-400">Pedido #849155</span>
-                      </div>
-                      <h2 className="text-2xl font-bold text-slate-800 mb-2">Estratégias em Renda Fixa</h2>
-                      <p className="text-slate-600 mb-4 line-clamp-2">Aprenda a construir carteiras resilientes com especialistas do mercado. Foco em títulos públicos e crédito privado.</p>
-                    </div>
-                    <button className="text-slate-400 hover:text-slate-600">
-                      <Share2 className="w-5 h-5" />
-                    </button>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4 mb-6">
-                    <div className="flex items-start gap-3">
-                      <div className="mt-1 w-8 h-8 rounded-lg bg-slate-50 flex items-center justify-center flex-shrink-0 text-slate-500">
-                        <MapPin className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-slate-800">Auditório Paulista</p>
-                        <p className="text-xs text-slate-500">Av. Paulista, 1000 - SP</p>
-                        <a href="#" className="text-xs text-indigo-600 hover:underline mt-0.5 block">Ver no mapa</a>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <div className="mt-1 w-8 h-8 rounded-lg bg-slate-50 flex items-center justify-center flex-shrink-0 text-slate-500">
-                        <Ticket className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-slate-800">Entrada Padrão</p>
-                        <p className="text-xs text-slate-500">Material didático incluso</p>
-                        <p className="text-xs text-slate-500">Titular: João Silva</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-4 pt-6 border-t border-slate-100 mt-auto">
-                  <button className="flex-1 bg-slate-800 text-white px-4 py-2.5 rounded-lg font-medium hover:bg-slate-700 transition flex items-center justify-center gap-2 shadow-sm">
-                    <QrCode className="w-4 h-4" />
-                    Ver QR Code
-                  </button>
-                  <Button variant="outline">Gerenciar</Button>
-                </div>
-              </div>
-              
-               {/* Right: Illustration */}
-               <div className="hidden xl:flex xl:w-64 bg-slate-50 p-6 items-center justify-center border-l border-slate-100">
-                 <div className="w-full h-48 relative">
-                   <img 
-                     className="w-full h-full object-contain" 
-                     src="https://storage.googleapis.com/uxpilot-auth.appspot.com/0e87cd540b-173888eb2f5ce4868119.png" 
-                     alt="illustration of a workshop badge icon, pastel blue tones, outlined style, 2d flat design, thick strokes, white background"
-                     loading="lazy"
-                   />
-                 </div>
-               </div>
-            </div>
+              ))
+            )}
           </section>
           )}
 
@@ -319,6 +301,22 @@ export default function MeusIngressos() {
             <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
               <History className="w-5 h-5 text-slate-400" /> Histórico Recente
             </h2>
+            {loading ? (
+              <div className="bg-white border border-slate-200 rounded-xl overflow-hidden p-6">
+                <div className="space-y-4">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <div key={i} className="flex items-start gap-4 p-4 border-b">
+                      <Skeleton className="h-20 w-32 flex-shrink-0" />
+                      <div className="flex-1 space-y-2">
+                        <Skeleton className="h-6 w-3/4" />
+                        <Skeleton className="h-4 w-1/2" />
+                        <Skeleton className="h-4 w-1/3" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : (
             <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
               <table className="w-full text-left">
                 <thead>
@@ -420,8 +418,9 @@ export default function MeusIngressos() {
               <div className="px-6 py-4 border-t border-slate-200 bg-slate-50 text-center">
                 <button className="text-sm text-slate-500 hover:text-slate-700 font-medium">Carregar mais eventos</button>
               </div>
-             </div>
-           </section>
+            </div>
+            )}
+          </section>
           )}
 
           {/* Cancelled Events - Renderizado condicionalmente */}
