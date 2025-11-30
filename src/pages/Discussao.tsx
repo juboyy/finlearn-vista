@@ -1,535 +1,674 @@
-import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Bookmark, Share2, MoreVertical, ThumbsUp, Heart, MessageCircle, Eye, Bold, Italic, List, Link2, Image, Code, UserPlus, Crown } from "lucide-react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ChevronLeft, Search, Plus, Bell, UserPlus, Check, ThumbsUp, Share2, Bookmark, MoreHorizontal, Reply, MessageCircle, Eye, Clock, Users, Calendar, Mail } from "lucide-react";
+import { SidebarFix } from "@/components/Dashboard/SidebarFix";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-export default function Discussao() {
+const Discussao = () => {
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isNewTopicModalOpen, setIsNewTopicModalOpen] = useState(false);
+  const [sortBy, setSort] = useState("relevantes");
+
+  const topics = [
+    {
+      id: 1,
+      title: "Pix Automático: Impactos no Mercado",
+      author: "Carlos Mendes",
+      avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg",
+      category: "Tendências",
+      categoryColor: "bg-[hsl(142,35%,75%)]",
+      excerpt: "Como vocês estão se preparando para a implementação do Pix Automático? Quais os principais desafios técnicos?",
+      replies: 24,
+      views: 312,
+      time: "há 15 min",
+      active: true
+    },
+    {
+      id: 2,
+      title: "Open Finance: Casos de Uso Reais",
+      author: "Marina Silva",
+      avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg",
+      category: "Discussão",
+      categoryColor: "bg-[hsl(44,40%,75%)]",
+      excerpt: "Gostaria de conhecer cases práticos de implementação de Open Finance que geraram valor real para os clientes.",
+      replies: 18,
+      views: 198,
+      time: "há 42 min",
+      active: false
+    },
+    {
+      id: 3,
+      title: "Drex: Cronograma e Expectativas",
+      author: "Pedro Santos",
+      avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg",
+      category: "Novidade",
+      categoryColor: "bg-[hsl(338,35%,75%)]",
+      excerpt: "Alguém tem informações atualizadas sobre o roadmap do Drex? Como as instituições estão se posicionando?",
+      replies: 31,
+      views: 445,
+      time: "há 1h",
+      active: false
+    },
+    {
+      id: 4,
+      title: "Segurança em Transações Instantâneas",
+      author: "Juliana Costa",
+      avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-7.jpg",
+      category: "Técnico",
+      categoryColor: "bg-[hsl(22,35%,75%)]",
+      excerpt: "Quais protocolos de segurança vocês implementam para prevenir fraudes em pagamentos instantâneos?",
+      replies: 12,
+      views: 156,
+      time: "há 2h",
+      active: false
+    },
+    {
+      id: 5,
+      title: "Integração com Fintechs",
+      author: "Roberto Lima",
+      avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg",
+      category: "Parceria",
+      categoryColor: "bg-[hsl(270,35%,75%)]",
+      excerpt: "Experiências e desafios na integração de sistemas legados com soluções de fintechs parceiras.",
+      replies: 9,
+      views: 134,
+      time: "há 3h",
+      active: false
+    },
+    {
+      id: 6,
+      title: "Regulação de Pagamentos 2024",
+      author: "Amanda Oliveira",
+      avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-9.jpg",
+      category: "Regulatório",
+      categoryColor: "bg-[hsl(207,35%,75%)]",
+      excerpt: "Discussão sobre as novas diretrizes do Bacen para o setor de pagamentos previstas para 2024.",
+      replies: 27,
+      views: 367,
+      time: "há 4h",
+      active: false
+    }
+  ];
+
+  const replies = [
+    {
+      id: 1,
+      author: "Ricardo Almeida",
+      avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg",
+      badge: "Especialista",
+      badgeColor: "bg-[hsl(270,35%,75%)]",
+      time: "há 8 minutos",
+      content: [
+        "Excelente tópico, Carlos! Aqui no banco estamos trabalhando em três frentes principais: infraestrutura técnica, gestão de riscos e experiência do usuário. O maior desafio tem sido garantir a escalabilidade do sistema para suportar o volume esperado de transações.",
+        "Implementamos uma arquitetura de microserviços que nos permite processar as autorizações de forma distribuída. Também estamos investindo pesado em machine learning para detecção de fraudes em tempo real."
+      ],
+      likes: 18,
+      hasReplies: false
+    },
+    {
+      id: 2,
+      author: "Ana Paula Santos",
+      avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg",
+      badge: null,
+      time: "há 12 minutos",
+      content: [
+        "Do ponto de vista de compliance, estamos revisando todos os nossos procedimentos de KYC e monitoramento de transações. O Pix Automático traz novos desafios regulatórios que precisam ser mapeados com cuidado.",
+        "Uma preocupação importante é garantir que os clientes tenham controle total sobre as autorizações e possam cancelar facilmente quando necessário. A transparência será fundamental para ganhar a confiança dos usuários."
+      ],
+      likes: 25,
+      hasReplies: true,
+      nestedReply: {
+        author: "Carlos Mendes",
+        avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg",
+        badge: "Autor",
+        badgeColor: "bg-[hsl(207,35%,75%)]",
+        time: "há 5 minutos",
+        content: "Concordo totalmente, Ana Paula! A experiência de gerenciamento das autorizações será crucial. Estamos desenvolvendo um painel intuitivo onde o cliente pode visualizar todas as autorizações ativas e gerenciá-las facilmente.",
+        likes: 12
+      }
+    },
+    {
+      id: 3,
+      author: "Fernando Costa",
+      avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg",
+      badge: null,
+      time: "há 18 minutos",
+      content: [
+        "Pessoal, alguém já pensou nos casos de uso além dos pagamentos recorrentes tradicionais? Vejo potencial enorme para integração com IoT, por exemplo. Imaginem um carro que paga automaticamente o estacionamento ou pedágio.",
+        "Também há oportunidades interessantes no B2B, especialmente para pagamentos de fornecedores e folha de pagamento. As possibilidades são infinitas!"
+      ],
+      likes: 31,
+      hasReplies: false
+    },
+    {
+      id: 4,
+      author: "Juliana Rodrigues",
+      avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-7.jpg",
+      badge: null,
+      time: "há 22 minutos",
+      content: [
+        "Uma questão importante que não vi mencionada ainda: como vocês estão lidando com a educação financeira dos clientes? Muita gente ainda não entende completamente como funciona o Pix tradicional, imagina adicionar a camada de automação.",
+        "Estamos desenvolvendo uma campanha de comunicação bem didática, com vídeos explicativos e simulações práticas no app. A adoção vai depender muito de quão bem conseguirmos explicar os benefícios e riscos."
+      ],
+      likes: 15,
+      hasReplies: false
+    }
+  ];
 
   return (
-    <div className="flex h-screen overflow-hidden bg-slate-50">
+    <div className="flex h-screen w-full bg-slate-50 overflow-hidden">
       <SidebarFix />
       
-      <main className="flex-1 overflow-y-auto">
-        <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
-          <div className="px-8 py-4 flex items-center justify-between">
+      <main className="flex-1 flex flex-col overflow-hidden">
+        {/* Header */}
+        <header className="bg-background border-b border-border flex-shrink-0">
+          <div className="px-6 py-4 flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <button 
-                onClick={() => navigate('/comunidade')}
-                className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition"
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => navigate("/todas-comunidades")}
+                className="text-muted-foreground hover:text-foreground"
               >
-                <ArrowLeft size={20} />
-              </button>
-              <div>
-                <h1 className="text-2xl font-semibold text-slate-800">Discussão</h1>
-                <p className="text-sm text-slate-500 mt-1">Análise de Mercado</p>
+                <ChevronLeft className="h-5 w-5" />
+              </Button>
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-lg bg-[hsl(207,35%,75%)] overflow-hidden flex-shrink-0">
+                  <img 
+                    className="w-full h-full object-cover" 
+                    src="https://storage.googleapis.com/uxpilot-auth.appspot.com/c7751f850a-69a10e658ef483c7546c.png" 
+                    alt="community icon" 
+                  />
+                </div>
+                <div>
+                  <h1 className="text-xl font-semibold text-foreground">Inovação em Pagamentos</h1>
+                  <p className="text-sm text-muted-foreground">12.5k membros • 150 online</p>
+                </div>
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <button className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
-                <Bookmark size={20} />
-              </button>
-              <button className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
-                <Share2 size={20} />
-              </button>
-              <button className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
-                <MoreVertical size={20} />
-              </button>
+              <Button variant="ghost" size="icon" className="relative">
+                <Bell className="h-5 w-5" />
+                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+              </Button>
+              <Button variant="outline" className="gap-2">
+                <UserPlus className="h-4 w-4" />
+                Convidar
+              </Button>
+              <Button className="gap-2 bg-[hsl(142,35%,75%)] bg-opacity-30 text-foreground hover:bg-opacity-100">
+                <Check className="h-4 w-4" />
+                Seguindo
+              </Button>
             </div>
+          </div>
+          
+          <div className="px-6 py-3 bg-muted/30 border-b border-border flex items-center gap-6 overflow-x-auto">
+            <button className="text-sm font-medium text-foreground border-b-2 border-[hsl(207,50%,60%)] pb-3 -mb-3.5 whitespace-nowrap">Discussões</button>
+            <button className="text-sm font-medium text-muted-foreground hover:text-foreground pb-3 -mb-3.5 transition whitespace-nowrap">Sobre</button>
+            <button className="text-sm font-medium text-muted-foreground hover:text-foreground pb-3 -mb-3.5 transition whitespace-nowrap">Membros</button>
+            <button className="text-sm font-medium text-muted-foreground hover:text-foreground pb-3 -mb-3.5 transition whitespace-nowrap">Eventos</button>
+            <button className="text-sm font-medium text-muted-foreground hover:text-foreground pb-3 -mb-3.5 transition whitespace-nowrap">Recursos</button>
           </div>
         </header>
 
-        <div className="p-8">
-          <div className="grid grid-cols-3 gap-6">
-            <div className="col-span-2 space-y-6">
-              <article className="bg-white rounded-xl p-8 border border-slate-200">
-                <div className="flex items-start gap-4 mb-6">
+        <div className="flex-1 flex overflow-hidden">
+          {/* Topics Sidebar */}
+          <div className="w-80 bg-background border-r border-border flex flex-col flex-shrink-0">
+            <div className="p-4 border-b border-border">
+              <div className="relative">
+                <Input
+                  type="text"
+                  placeholder="Buscar tópicos..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10"
+                />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              </div>
+            </div>
+
+            <div className="p-4 border-b border-border">
+              <Button 
+                onClick={() => setIsNewTopicModalOpen(true)}
+                className="w-full bg-[hsl(270,35%,75%)] text-foreground hover:bg-opacity-80"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Novo Tópico
+              </Button>
+            </div>
+
+            <div className="px-4 py-3 border-b border-border flex items-center justify-between">
+              <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Tópicos Recentes</span>
+              <Select value={sortBy} onValueChange={setSort}>
+                <SelectTrigger className="w-[120px] h-7 text-xs">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="relevantes">Todos</SelectItem>
+                  <SelectItem value="sem-resposta">Sem resposta</SelectItem>
+                  <SelectItem value="resolvidos">Resolvidos</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="flex-1 overflow-y-auto">
+              {topics.map((topic) => (
+                <div
+                  key={topic.id}
+                  className={`p-4 border-b border-border hover:bg-muted/30 cursor-pointer transition ${
+                    topic.active ? 'bg-[hsl(207,35%,75%)] bg-opacity-20' : ''
+                  }`}
+                >
+                  <div className="flex items-start gap-3">
+                    <img 
+                      src={topic.avatar} 
+                      alt={topic.author} 
+                      className="w-10 h-10 rounded-full object-cover flex-shrink-0"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="text-sm font-semibold text-foreground line-clamp-1">{topic.title}</h3>
+                        <span className={`${topic.categoryColor} text-foreground text-xs px-2 py-0.5 rounded font-medium flex-shrink-0`}>
+                          {topic.category}
+                        </span>
+                      </div>
+                      <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{topic.excerpt}</p>
+                      <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                        <span className="flex items-center gap-1">
+                          <MessageCircle className="h-3 w-3" />
+                          {topic.replies} respostas
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Eye className="h-3 w-3" />
+                          {topic.views}
+                        </span>
+                        <span className="flex-1 text-right">{topic.time}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Main Discussion Content */}
+          <main className="flex-1 flex flex-col overflow-hidden">
+            <div className="flex-1 overflow-y-auto p-6">
+              {/* Topic Header */}
+              <div className="bg-background rounded-xl border border-border p-6 mb-6">
+                <div className="flex items-start gap-4">
                   <img 
                     src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" 
                     alt="User" 
                     className="w-14 h-14 rounded-full object-cover flex-shrink-0"
                   />
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between gap-4 mb-2">
-                      <div>
-                        <h3 className="font-semibold text-lg text-slate-800">Carlos Mendes</h3>
-                        <div className="flex items-center gap-3 text-sm text-slate-500 mt-1">
-                          <span>Analista Sênior</span>
-                          <span>•</span>
-                          <span>há 2 horas</span>
-                        </div>
-                      </div>
-                      <span className="px-3 py-1 bg-pastel-blue text-slate-700 rounded-full text-xs font-medium">Análise de Mercado</span>
+                    <div className="flex items-center gap-3 mb-2">
+                      <h2 className="text-2xl font-bold text-foreground">Pix Automático: Impactos no Mercado</h2>
+                      <span className="bg-[hsl(142,35%,75%)] text-foreground text-xs px-3 py-1 rounded-full font-medium">Tendências</span>
+                    </div>
+                    <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
+                      <span className="font-medium text-foreground">Carlos Mendes</span>
+                      <span className="flex items-center gap-1">
+                        <Clock className="h-3 w-3" />
+                        há 15 minutos
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Eye className="h-3 w-3" />
+                        312 visualizações
+                      </span>
+                    </div>
+                    <p className="text-muted-foreground leading-relaxed mb-4">
+                      Olá pessoal! Com a aproximação do lançamento do Pix Automático, gostaria de abrir uma discussão sobre como vocês estão se preparando nas suas instituições. Quais são os principais desafios técnicos que vocês identificaram? Como estão estruturando as equipes e os processos internos?
+                    </p>
+                    <p className="text-muted-foreground leading-relaxed mb-4">
+                      Do ponto de vista de negócio, vejo uma oportunidade enorme para simplificar pagamentos recorrentes e melhorar a experiência do cliente. Mas também há questões importantes de segurança e compliance que precisam ser endereçadas.
+                    </p>
+                    <p className="text-muted-foreground leading-relaxed">
+                      Compartilhem suas experiências e insights!
+                    </p>
+                    <div className="flex items-center gap-4 mt-6 pt-4 border-t border-border">
+                      <Button variant="ghost" size="sm" className="gap-2">
+                        <ThumbsUp className="h-4 w-4" />
+                        <span>42</span>
+                      </Button>
+                      <Button variant="ghost" size="sm" className="gap-2">
+                        <Share2 className="h-4 w-4" />
+                        Compartilhar
+                      </Button>
+                      <Button variant="ghost" size="sm" className="gap-2">
+                        <Bookmark className="h-4 w-4" />
+                        Salvar
+                      </Button>
+                      <Button variant="ghost" size="icon" className="ml-auto">
+                        <MoreHorizontal className="h-4 w-4" />
+                      </Button>
                     </div>
                   </div>
                 </div>
-
-                <h1 className="text-2xl font-bold text-slate-800 mb-4">Como interpretar indicadores macroeconômicos em cenário de alta volatilidade?</h1>
-
-                <div className="prose prose-slate max-w-none text-slate-600 mb-6">
-                  <p className="mb-4">Caros colegas, tenho observado divergências significativas entre os principais indicadores econômicos nos últimos trimestres, especialmente em relação aos índices de inflação, taxa de juros e crescimento do PIB.</p>
-                  
-                  <p className="mb-4">O cenário atual apresenta desafios únicos para análise fundamentalista, com múltiplos fatores contribuindo para a volatilidade:</p>
-                  
-                  <ul className="list-disc pl-6 mb-4 space-y-2">
-                    <li>Políticas monetárias divergentes entre economias desenvolvidas e emergentes</li>
-                    <li>Tensões geopolíticas afetando cadeias de suprimento globais</li>
-                    <li>Transição energética impactando setores tradicionais</li>
-                    <li>Adoção acelerada de tecnologias disruptivas em diversos setores</li>
-                  </ul>
-
-                  <p className="mb-4">Minha principal dúvida é: <strong>qual metodologia vocês têm utilizado para ponderar esses indicadores e construir cenários consistentes para tomada de decisão de investimento?</strong></p>
-
-                  <p className="mb-4">Atualmente, estou utilizando uma abordagem que combina:</p>
-
-                  <ol className="list-decimal pl-6 mb-4 space-y-2">
-                    <li>Análise de correlação histórica entre indicadores</li>
-                    <li>Modelagem de cenários com diferentes pesos para variáveis macroeconômicas</li>
-                    <li>Backtesting de estratégias em períodos de volatilidade similar</li>
-                  </ol>
-
-                  <p className="mb-4">No entanto, sinto que essa metodologia pode estar deixando de capturar nuances importantes do momento atual. Gostaria de ouvir experiências de outros profissionais que estejam lidando com desafios similares.</p>
-
-                  <p>Agradeço antecipadamente pelas contribuições!</p>
-                </div>
-
-                <div className="flex flex-wrap gap-2 mb-6">
-                  <span className="px-3 py-1.5 bg-slate-100 text-slate-700 rounded-full text-xs font-medium">#análise-macro</span>
-                  <span className="px-3 py-1.5 bg-slate-100 text-slate-700 rounded-full text-xs font-medium">#volatilidade</span>
-                  <span className="px-3 py-1.5 bg-slate-100 text-slate-700 rounded-full text-xs font-medium">#metodologia</span>
-                  <span className="px-3 py-1.5 bg-slate-100 text-slate-700 rounded-full text-xs font-medium">#indicadores</span>
-                </div>
-
-                <div className="flex items-center justify-between pt-6 border-t border-slate-200">
-                  <div className="flex items-center gap-6">
-                    <button className="flex items-center gap-2 text-slate-600 hover:text-pastel-blue transition">
-                      <ThumbsUp size={18} />
-                      <span className="text-sm font-medium">18</span>
-                    </button>
-                    <button className="flex items-center gap-2 text-slate-600 hover:text-pastel-pink transition">
-                      <Heart size={18} />
-                      <span className="text-sm font-medium">12</span>
-                    </button>
-                    <div className="flex items-center gap-2 text-slate-500">
-                      <MessageCircle size={18} />
-                      <span className="text-sm font-medium">24 respostas</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-slate-500">
-                      <Eye size={18} />
-                      <span className="text-sm font-medium">312 visualizações</span>
-                    </div>
-                  </div>
-                  <button className="px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
-                    <i className="fas fa-reply mr-2"></i>
-                    Responder
-                  </button>
-                </div>
-              </article>
-
-              <div className="bg-white rounded-xl p-6 border border-slate-200">
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-lg font-semibold text-slate-800">24 Respostas</h2>
-                  <div className="flex gap-2">
-                    <button className="px-3 py-1.5 bg-pastel-blue text-slate-700 rounded-lg text-sm font-medium">Mais Relevantes</button>
-                    <button className="px-3 py-1.5 text-slate-600 hover:bg-slate-100 rounded-lg text-sm font-medium transition">Mais Recentes</button>
-                  </div>
-                </div>
-
-                <div className="space-y-6">
-                  <div className="flex items-start gap-4">
-                    <img 
-                      src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" 
-                      alt="User" 
-                      className="w-10 h-10 rounded-full object-cover flex-shrink-0"
-                    />
-                    <div className="flex-1">
-                      <div className="bg-sky-50/60 rounded-lg rounded-tl-none p-4">
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="flex items-center gap-2">
-                            <h4 className="font-semibold text-slate-800">Maria Santos</h4>
-                            <span className="text-xs text-slate-500">há 1 hora</span>
-                          </div>
-                          <button className="text-slate-400 hover:text-slate-600">
-                            <MoreVertical size={16} />
-                          </button>
-                        </div>
-                        <div className="text-slate-600 space-y-3 text-sm">
-                          <p>Excelente questão, Carlos! Tenho enfrentado desafios similares na gestão de portfólios multi-ativos. Uma abordagem que tem funcionado bem para mim é a utilização de <strong>análise de regime de mercado</strong>. Posso compartilhar um paper que publiquei recentemente sobre o tema se houver interesse.</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-4 mt-2 pl-1">
-                        <button className="flex items-center gap-1.5 text-slate-500 hover:text-pastel-blue transition">
-                          <ThumbsUp size={14} />
-                          <span className="text-sm font-medium">24</span>
-                        </button>
-                        <button className="flex items-center gap-1.5 text-slate-500 hover:text-pastel-blue transition">
-                          <span className="text-sm font-medium">Responder</span>
-                        </button>
-                      </div>
-
-                      <div className="mt-4 flex items-start gap-4">
-                        <img 
-                          src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" 
-                          alt="User" 
-                          className="w-10 h-10 rounded-full object-cover flex-shrink-0"
-                        />
-                        <div className="flex-1">
-                          <div className="bg-sky-50/60 rounded-lg rounded-tl-none p-4">
-                            <div className="flex items-center justify-between mb-2">
-                              <div className="flex items-center gap-2">
-                                <h4 className="font-semibold text-slate-800">Carlos Mendes</h4>
-                                <span className="px-2 py-0.5 bg-slate-200 text-slate-600 rounded text-xs font-medium">Autor</span>
-                                <span className="text-xs text-slate-500">há 45 min</span>
-                              </div>
-                              <button className="text-slate-400 hover:text-slate-600">
-                                <MoreVertical size={16} />
-                              </button>
-                            </div>
-                            <p className="text-sm text-slate-600">Maria, muito obrigado pela contribuição! A abordagem de regime de mercado faz muito sentido. Tenho muito interesse no paper, seria possível compartilhar? A questão dos indicadores leading alternativos é especialmente relevante no momento atual.</p>
-                          </div>
-                          <div className="flex items-center gap-4 mt-2 pl-1">
-                            <button className="flex items-center gap-1.5 text-slate-500 hover:text-pastel-blue transition">
-                              <ThumbsUp size={14} />
-                              <span className="text-sm font-medium">8</span>
-                            </button>
-                            <button className="flex items-center gap-1.5 text-slate-500 hover:text-pastel-blue transition">
-                              <span className="text-sm font-medium">Responder</span>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-4">
-                    <img 
-                      src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg" 
-                      alt="User" 
-                      className="w-10 h-10 rounded-full object-cover flex-shrink-0"
-                    />
-                    <div className="flex-1">
-                      <div className="bg-sky-50/60 rounded-lg rounded-tl-none p-4">
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="flex items-center gap-2">
-                            <h4 className="font-semibold text-slate-800">Pedro Almeida</h4>
-                            <span className="text-xs text-slate-500">há 1 hora</span>
-                          </div>
-                          <button className="text-slate-400 hover:text-slate-600">
-                            <MoreVertical size={16} />
-                          </button>
-                        </div>
-                        <div className="text-slate-600 space-y-3 text-sm">
-                          <p className="text-sm text-slate-500">Analista Quantitativo | PhD em Economia</p>
-                          <p>Complementando a resposta da Maria, vale considerar também o uso de <strong>machine learning para detecção de padrões não-lineares</strong> entre indicadores.</p>
-                          <p>Temos utilizado modelos de Random Forest e Gradient Boosting para identificar interações complexas que métodos tradicionais não capturam. Os resultados têm sido promissores, especialmente para previsão de turning points.</p>
-                          <p>Um ponto importante: sempre validar com out-of-sample testing rigoroso para evitar overfitting.</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-4 mt-2 pl-1">
-                        <button className="flex items-center gap-1.5 text-slate-500 hover:text-pastel-blue transition">
-                          <ThumbsUp size={14} />
-                          <span className="text-sm font-medium">16</span>
-                        </button>
-                        <button className="flex items-center gap-1.5 text-slate-500 hover:text-pastel-blue transition">
-                          <span className="text-sm font-medium">Responder</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-4">
-                    <img 
-                      src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg" 
-                      alt="User" 
-                      className="w-10 h-10 rounded-full object-cover flex-shrink-0"
-                    />
-                    <div className="flex-1">
-                      <div className="bg-sky-50/60 rounded-lg rounded-tl-none p-4">
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="flex items-center gap-2">
-                            <h4 className="font-semibold text-slate-800">Ana Rodrigues</h4>
-                            <span className="text-xs text-slate-500">há 2 horas</span>
-                          </div>
-                          <button className="text-slate-400 hover:text-slate-600">
-                            <MoreVertical size={16} />
-                          </button>
-                        </div>
-                        <div className="text-slate-600 space-y-3 text-sm">
-                          <p className="text-sm text-slate-500">Chief Economist | Especialista em Mercados Emergentes</p>
-                          <p>Perspectiva interessante! Na minha experiência com mercados emergentes, adiciono uma camada de <strong>análise de risco político e institucional</strong> que frequentemente é subestimada.</p>
-                          <p>Indicadores como qualidade institucional, estabilidade política e capacidade de implementação de reformas têm poder preditivo significativo, especialmente em períodos de transição.</p>
-                          <p>Recomendo o framework desenvolvido pelo BIS para análise integrada de riscos macro-financeiros.</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-4 mt-2 pl-1">
-                        <button className="flex items-center gap-1.5 text-slate-500 hover:text-pastel-blue transition">
-                          <ThumbsUp size={14} />
-                          <span className="text-sm font-medium">19</span>
-                        </button>
-                        <button className="flex items-center gap-1.5 text-slate-500 hover:text-pastel-blue transition">
-                          <span className="text-sm font-medium">Responder</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-4">
-                    <img 
-                      src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-9.jpg" 
-                      alt="User" 
-                      className="w-10 h-10 rounded-full object-cover flex-shrink-0"
-                    />
-                    <div className="flex-1">
-                      <div className="bg-sky-50/60 rounded-lg rounded-tl-none p-4">
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="flex items-center gap-2">
-                            <h4 className="font-semibold text-slate-800">Lucas Oliveira</h4>
-                            <span className="text-xs text-slate-500">há 3 horas</span>
-                          </div>
-                          <button className="text-slate-400 hover:text-slate-600">
-                            <MoreVertical size={16} />
-                          </button>
-                        </div>
-                        <div className="text-slate-600 space-y-3 text-sm">
-                          <p className="text-sm text-slate-500">Trader Institucional | Derivativos</p>
-                          <p>Do ponto de vista prático de trading, tenho usado <strong>volatilidade implícita</strong> como proxy para expectativas de mercado sobre incerteza futura.</p>
-                          <p>A estrutura a termo de volatilidade frequentemente antecipa mudanças de regime antes dos indicadores tradicionais. Vale monitorar também skew e kurtosis das distribuições.</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-4 mt-2 pl-1">
-                        <button className="flex items-center gap-1.5 text-slate-500 hover:text-pastel-blue transition">
-                          <ThumbsUp size={14} />
-                          <span className="text-sm font-medium">14</span>
-                        </button>
-                        <button className="flex items-center gap-1.5 text-slate-500 hover:text-pastel-blue transition">
-                          <span className="text-sm font-medium">Responder</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-4">
-                    <img 
-                      src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg" 
-                      alt="User" 
-                      className="w-10 h-10 rounded-full object-cover flex-shrink-0"
-                    />
-                    <div className="flex-1">
-                      <div className="bg-sky-50/60 rounded-lg rounded-tl-none p-4">
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="flex items-center gap-2">
-                            <h4 className="font-semibold text-slate-800">Roberto Santos</h4>
-                            <span className="text-xs text-slate-500">há 4 horas</span>
-                          </div>
-                          <button className="text-slate-400 hover:text-slate-600">
-                            <MoreVertical size={16} />
-                          </button>
-                        </div>
-                        <div className="text-slate-600 space-y-3 text-sm">
-                          <p className="text-sm text-slate-500">Risk Manager | FRM</p>
-                          <p>Importante lembrar de <strong>stress testing</strong> e análise de cenários extremos. Em períodos de alta volatilidade, as caudas da distribuição ganham relevância desproporcional.</p>
-                          <p>Sugiro incorporar cenários de crise históricos (2008, 2020) e simulações de Monte Carlo com choques correlacionados entre múltiplos indicadores.</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-4 mt-2 pl-1">
-                        <button className="flex items-center gap-1.5 text-slate-500 hover:text-pastel-blue transition">
-                          <ThumbsUp size={14} />
-                          <span className="text-sm font-medium">11</span>
-                        </button>
-                        <button className="flex items-center gap-1.5 text-slate-500 hover:text-pastel-blue transition">
-                          <span className="text-sm font-medium">Responder</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <button className="w-full mt-6 px-4 py-3 border-2 border-dashed border-slate-300 text-slate-600 rounded-lg hover:border-pastel-blue hover:text-slate-800 hover:bg-slate-50 transition font-medium">
-                  <i className="fas fa-plus mr-2"></i>
-                  Carregar mais respostas (19 restantes)
-                </button>
               </div>
 
-              <div className="bg-white rounded-xl p-6 border border-slate-200">
-                <h3 className="font-semibold text-slate-800 mb-4">Adicionar Resposta</h3>
+              {/* Replies Header */}
+              <div className="mb-4 flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-foreground">24 Respostas</h3>
+                <Select defaultValue="relevantes">
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="relevantes">Mais Relevantes</SelectItem>
+                    <SelectItem value="recentes">Mais Recentes</SelectItem>
+                    <SelectItem value="antigas">Mais Antigas</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Replies List */}
+              <div className="space-y-4">
+                {replies.map((reply) => (
+                  <div key={reply.id} className="bg-background rounded-xl border border-border p-6">
+                    <div className="flex items-start gap-4">
+                      <img 
+                        src={reply.avatar} 
+                        alt={reply.author} 
+                        className="w-12 h-12 rounded-full object-cover flex-shrink-0"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-3 mb-2">
+                          <span className="font-semibold text-foreground">{reply.author}</span>
+                          <span className="text-xs text-muted-foreground">{reply.time}</span>
+                          {reply.badge && (
+                            <span className={`${reply.badgeColor} text-foreground text-xs px-2 py-0.5 rounded font-medium`}>
+                              {reply.badge}
+                            </span>
+                          )}
+                        </div>
+                        {reply.content.map((paragraph, idx) => (
+                          <p key={idx} className="text-muted-foreground leading-relaxed mb-3">
+                            {paragraph}
+                          </p>
+                        ))}
+                        <div className="flex items-center gap-4 mt-4">
+                          <button className="flex items-center gap-2 text-sm text-muted-foreground hover:text-[hsl(207,50%,60%)] transition">
+                            <ThumbsUp className="h-4 w-4" />
+                            <span>{reply.likes}</span>
+                          </button>
+                          <button className="flex items-center gap-2 text-sm text-muted-foreground hover:text-[hsl(207,50%,60%)] transition">
+                            <Reply className="h-4 w-4" />
+                            Responder
+                          </button>
+                          <button className="ml-auto text-sm text-muted-foreground hover:text-foreground transition">
+                            <MoreHorizontal className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Nested Reply */}
+                    {reply.hasReplies && reply.nestedReply && (
+                      <div className="ml-16 mt-4 pl-6 border-l-2 border-border">
+                        <div className="flex items-start gap-4">
+                          <img 
+                            src={reply.nestedReply.avatar} 
+                            alt={reply.nestedReply.author} 
+                            className="w-10 h-10 rounded-full object-cover flex-shrink-0"
+                          />
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-3 mb-2">
+                              <span className="font-semibold text-foreground">{reply.nestedReply.author}</span>
+                              <span className="text-xs text-muted-foreground">{reply.nestedReply.time}</span>
+                              {reply.nestedReply.badge && (
+                                <span className={`${reply.nestedReply.badgeColor} text-foreground text-xs px-2 py-0.5 rounded font-medium`}>
+                                  {reply.nestedReply.badge}
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-muted-foreground leading-relaxed">
+                              {reply.nestedReply.content}
+                            </p>
+                            <div className="flex items-center gap-4 mt-3">
+                              <button className="flex items-center gap-2 text-sm text-muted-foreground hover:text-[hsl(207,50%,60%)] transition">
+                                <ThumbsUp className="h-4 w-4" />
+                                <span>{reply.nestedReply.likes}</span>
+                              </button>
+                              <button className="flex items-center gap-2 text-sm text-muted-foreground hover:text-[hsl(207,50%,60%)] transition">
+                                <Reply className="h-4 w-4" />
+                                Responder
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {/* Reply Input */}
+              <div className="mt-6 bg-background rounded-xl border border-border p-6">
                 <div className="flex items-start gap-4">
                   <img 
                     src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" 
                     alt="User" 
-                    className="w-10 h-10 rounded-full object-cover flex-shrink-0"
+                    className="w-12 h-12 rounded-full object-cover flex-shrink-0"
                   />
                   <div className="flex-1">
-                    <Textarea 
-                      className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pastel-blue resize-none" 
-                      rows={6}
-                      placeholder="Compartilhe sua experiência e insights..."
+                    <Textarea
+                      placeholder="Adicione sua resposta..."
+                      className="min-h-[100px] resize-none"
                     />
-                    <div className="flex items-center justify-between mt-4">
-                      <div className="flex items-center gap-2">
-                        <button className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
-                          <Bold size={18} />
-                        </button>
-                        <button className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
-                          <Italic size={18} />
-                        </button>
-                        <button className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
-                          <List size={18} />
-                        </button>
-                        <button className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
-                          <Link2 size={18} />
-                        </button>
-                        <button className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
-                          <Image size={18} />
-                        </button>
-                        <button className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
-                          <Code size={18} />
-                        </button>
-                      </div>
-                      <button className="px-6 py-2.5 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
-                        Publicar Resposta
-                      </button>
+                    <div className="flex items-center justify-end gap-3 mt-4">
+                      <Button className="bg-[hsl(270,35%,75%)] text-foreground hover:bg-opacity-80">
+                        Responder
+                      </Button>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+          </main>
 
-            <aside className="col-span-1 space-y-6">
-              <div className="bg-white rounded-xl p-6 border border-slate-200">
-                <div className="flex items-center gap-3 mb-4">
+          {/* Community Info Sidebar */}
+          <aside className="w-80 bg-background border-l border-border flex-shrink-0 overflow-y-auto">
+            <div className="p-6 border-b border-border">
+              <h3 className="font-semibold text-foreground mb-4">Sobre a Comunidade</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                Discussões sobre o futuro dos meios de pagamento, Pix Automático, Drex e Open Finance no Brasil. Compartilhe experiências e aprenda com especialistas do mercado.
+              </p>
+              <div className="space-y-3">
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="w-8 h-8 bg-[hsl(207,35%,75%)] bg-opacity-30 rounded-lg flex items-center justify-center">
+                    <Users className="h-4 w-4 text-foreground" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-foreground">12.5k</p>
+                    <p className="text-xs text-muted-foreground">Membros</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="w-8 h-8 bg-[hsl(142,35%,75%)] bg-opacity-30 rounded-lg flex items-center justify-center">
+                    <MessageCircle className="h-4 w-4 text-foreground" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-foreground">1.2k</p>
+                    <p className="text-xs text-muted-foreground">Tópicos</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="w-8 h-8 bg-[hsl(270,35%,75%)] bg-opacity-30 rounded-lg flex items-center justify-center">
+                    <Calendar className="h-4 w-4 text-foreground" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-foreground">Criada em</p>
+                    <p className="text-xs text-muted-foreground">Janeiro 2023</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-6 border-b border-border">
+              <h3 className="font-semibold text-foreground mb-4">Moderadores</h3>
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
                   <img 
-                    src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" 
-                    alt="User" 
-                    className="w-16 h-16 rounded-full object-cover"
+                    src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg" 
+                    alt="Moderator" 
+                    className="w-10 h-10 rounded-full object-cover"
                   />
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-slate-800">Carlos Mendes</h3>
-                    <p className="text-sm text-slate-500">Analista Sênior</p>
+                    <p className="text-sm font-medium text-foreground truncate">Ricardo Almeida</p>
+                    <p className="text-xs text-muted-foreground">Especialista</p>
                   </div>
+                  <Button variant="ghost" size="icon">
+                    <Mail className="h-4 w-4" />
+                  </Button>
                 </div>
-                <p className="text-sm text-slate-600 mb-4">Especialista em análise macroeconômica e estratégias de investimento em renda variável. 12 anos de experiência no mercado financeiro.</p>
-                <div className="grid grid-cols-3 gap-3 mb-4 pb-4 border-b border-slate-200">
-                  <div className="text-center">
-                    <p className="text-lg font-semibold text-slate-800">127</p>
-                    <p className="text-xs text-slate-500">Posts</p>
+                <div className="flex items-center gap-3">
+                  <img 
+                    src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" 
+                    alt="Moderator" 
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-foreground truncate">Ana Paula Santos</p>
+                    <p className="text-xs text-muted-foreground">Moderadora</p>
                   </div>
-                  <div className="text-center">
-                    <p className="text-lg font-semibold text-slate-800">1.2k</p>
-                    <p className="text-xs text-slate-500">Seguidores</p>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-lg font-semibold text-slate-800">342</p>
-                    <p className="text-xs text-slate-500">Pontos</p>
-                  </div>
-                </div>
-                <button className="w-full px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
-                  <UserPlus size={16} className="inline mr-2" />
-                  Seguir
-                </button>
-              </div>
-
-              <div className="bg-white rounded-xl p-6 border border-slate-200">
-                <h3 className="font-semibold text-slate-800 mb-4">Engajamento</h3>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-slate-600">
-                      <ThumbsUp size={18} />
-                      <span className="text-sm">Curtidas</span>
-                    </div>
-                    <span className="font-semibold text-slate-800">18</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-slate-600">
-                      <Heart size={18} />
-                      <span className="text-sm">Favoritos</span>
-                    </div>
-                    <span className="font-semibold text-slate-800">12</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-slate-600">
-                      <MessageCircle size={18} />
-                      <span className="text-sm">Respostas</span>
-                    </div>
-                    <span className="font-semibold text-slate-800">24</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-slate-600">
-                      <Eye size={18} />
-                      <span className="text-sm">Visualizações</span>
-                    </div>
-                    <span className="font-semibold text-slate-800">312</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-slate-600">
-                      <Share2 size={18} />
-                      <span className="text-sm">Compartilhamentos</span>
-                    </div>
-                    <span className="font-semibold text-slate-800">7</span>
-                  </div>
+                  <Button variant="ghost" size="icon">
+                    <Mail className="h-4 w-4" />
+                  </Button>
                 </div>
               </div>
+            </div>
 
-              <div className="bg-white rounded-xl p-6 border border-slate-200">
-                <h3 className="font-semibold text-slate-800 mb-4">Discussões Relacionadas</h3>
-                <div className="space-y-4">
-                  <a href="#" className="block group">
-                    <h4 className="text-sm font-medium text-slate-800 mb-1 group-hover:text-pastel-blue transition line-clamp-2">Impacto da política monetária do Fed nos mercados emergentes</h4>
-                    <p className="text-xs text-slate-500">42 respostas • 587 visualizações</p>
-                  </a>
-                  <a href="#" className="block group">
-                    <h4 className="text-sm font-medium text-slate-800 mb-1 group-hover:text-pastel-blue transition line-clamp-2">Análise técnica vs fundamentalista em cenários de crise</h4>
-                    <p className="text-xs text-slate-500">38 respostas • 521 visualizações</p>
-                  </a>
-                  <a href="#" className="block group">
-                    <h4 className="text-sm font-medium text-slate-800 mb-1 group-hover:text-pastel-blue transition line-clamp-2">Modelagem quantitativa para previsão de recessão</h4>
-                    <p className="text-xs text-slate-500">29 respostas • 394 visualizações</p>
-                  </a>
-                </div>
+            <div className="p-6 border-b border-border">
+              <h3 className="font-semibold text-foreground mb-4">Regras da Comunidade</h3>
+              <div className="space-y-3">
+                {[
+                  "Seja respeitoso e profissional",
+                  "Compartilhe conhecimento relevante",
+                  "Evite spam e autopromoção excessiva",
+                  "Mantenha discussões construtivas"
+                ].map((rule, idx) => (
+                  <div key={idx} className="flex items-start gap-3">
+                    <div className="w-6 h-6 bg-[hsl(142,35%,75%)] bg-opacity-30 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Check className="h-3 w-3 text-foreground" />
+                    </div>
+                    <p className="text-sm text-muted-foreground">{rule}</p>
+                  </div>
+                ))}
               </div>
+            </div>
 
-              <div className="bg-white rounded-xl p-6 border border-slate-200">
-                <h3 className="font-semibold text-slate-800 mb-4">Top Contributors</h3>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3">
+            <div className="p-6 border-b border-border">
+              <h3 className="font-semibold text-foreground mb-4">Tags Populares</h3>
+              <div className="flex flex-wrap gap-2">
+                {[
+                  { name: "Pix", color: "bg-[hsl(207,35%,75%)]" },
+                  { name: "Open Finance", color: "bg-[hsl(142,35%,75%)]" },
+                  { name: "Drex", color: "bg-[hsl(270,35%,75%)]" },
+                  { name: "Regulação", color: "bg-[hsl(44,40%,75%)]" },
+                  { name: "Segurança", color: "bg-[hsl(338,35%,75%)]" },
+                  { name: "API", color: "bg-[hsl(22,35%,75%)]" }
+                ].map((tag) => (
+                  <span 
+                    key={tag.name}
+                    className={`px-3 py-1 ${tag.color} bg-opacity-30 text-foreground text-xs rounded-full font-medium`}
+                  >
+                    {tag.name}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="p-6">
+              <h3 className="font-semibold text-foreground mb-4">Membros Ativos</h3>
+              <div className="space-y-3">
+                {[
+                  { name: "Carlos Mendes", posts: 124, avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" },
+                  { name: "Ana Paula Santos", posts: 98, avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" },
+                  { name: "Ricardo Almeida", posts: 87, avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg" },
+                  { name: "Fernando Costa", posts: 76, avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg" }
+                ].map((member) => (
+                  <div key={member.name} className="flex items-center gap-3">
                     <img 
-                      src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" 
-                      alt="User" 
+                      src={member.avatar} 
+                      alt={member.name} 
                       className="w-8 h-8 rounded-full object-cover"
                     />
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-slate-800 truncate">Maria Santos</p>
-                      <p className="text-xs text-slate-500">24 respostas úteis</p>
-                    </div>
-                    <span className="px-2 py-0.5 bg-pastel-green text-slate-700 rounded text-xs font-medium">Top</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <img 
-                      src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg" 
-                      alt="User" 
-                      className="w-8 h-8 rounded-full object-cover"
-                    />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-slate-800 truncate">Pedro Almeida</p>
-                      <p className="text-xs text-slate-500">16 respostas úteis</p>
+                      <p className="text-sm font-medium text-foreground truncate">{member.name}</p>
+                      <p className="text-xs text-muted-foreground">{member.posts} posts</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <img 
-                      src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg" 
-                      alt="User" 
-                      className="w-8 h-8 rounded-full object-cover"
-                    />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-slate-800 truncate">Ana Rodrigues</p>
-                      <p className="text-xs text-slate-500">19 respostas úteis</p>
-                    </div>
-                  </div>
-                </div>
+                ))}
               </div>
-            </aside>
-          </div>
+            </div>
+          </aside>
         </div>
       </main>
+
+      {/* New Topic Modal */}
+      <Dialog open={isNewTopicModalOpen} onOpenChange={setIsNewTopicModalOpen}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Criar Novo Tópico</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-5">
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-2">Título do Tópico</label>
+              <Input type="text" placeholder="Ex: Dúvida sobre integração com API do Bacen" />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-2">Categoria</label>
+              <Select>
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione uma categoria..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="tendencias">Tendências</SelectItem>
+                  <SelectItem value="discussao">Discussão</SelectItem>
+                  <SelectItem value="novidade">Novidade</SelectItem>
+                  <SelectItem value="tecnico">Técnico</SelectItem>
+                  <SelectItem value="regulatorio">Regulatório</SelectItem>
+                  <SelectItem value="duvida">Dúvida</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-2">Descrição</label>
+              <Textarea 
+                rows={6} 
+                placeholder="Descreva sua dúvida ou compartilhe suas ideias..." 
+                className="resize-none"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-2">Tags</label>
+              <Input type="text" placeholder="Ex: pix, open-finance, api" />
+              <p className="text-xs text-muted-foreground mt-1">Separe as tags com vírgulas</p>
+            </div>
+
+            <div className="flex gap-3 pt-4 border-t border-border">
+              <Button className="flex-1 bg-[hsl(270,35%,75%)] text-foreground hover:bg-opacity-80">
+                Publicar Tópico
+              </Button>
+              <Button variant="outline" className="flex-1" onClick={() => setIsNewTopicModalOpen(false)}>
+                Cancelar
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
-}
+};
+
+export default Discussao;
