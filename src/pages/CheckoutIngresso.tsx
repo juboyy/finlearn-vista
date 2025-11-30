@@ -384,53 +384,53 @@ export default function CheckoutIngresso() {
               </div>
 
               {/* Event Stats Card */}
-              <div className="bg-white rounded-xl border border-slate-200 p-6">
-                <h4 className="font-bold text-slate-800 mb-4 flex items-center gap-2">
-                  <BarChart className="text-slate-600" size={16} />
+              <div className="bg-slate-800 rounded-xl border border-slate-700 p-6">
+                <h4 className="font-bold text-slate-100 mb-4 flex items-center gap-2">
+                  <BarChart className="text-slate-300" size={16} />
                   Informações do Evento
                 </h4>
                 
                 {/* Capacity Progress */}
                 <div className="mb-5">
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm text-slate-600">Vagas Confirmadas</span>
-                    <span className="text-sm font-bold text-slate-800">1.847 / 2.500</span>
+                    <span className="text-sm text-slate-300">Vagas Confirmadas</span>
+                    <span className="text-sm font-bold text-slate-100">1.847 / 2.500</span>
                   </div>
-                  <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
-                    <div className="bg-pastel-purple h-full rounded-full" style={{ width: "73.88%" }}></div>
+                  <div className="w-full bg-slate-700 rounded-full h-2 overflow-hidden">
+                    <div className="bg-[hsl(206,50%,75%)] h-full rounded-full" style={{ width: "73.88%" }}></div>
                   </div>
-                  <p className="text-xs text-slate-500 mt-1">73% da capacidade preenchida</p>
+                  <p className="text-xs text-slate-400 mt-1">73% da capacidade preenchida</p>
                 </div>
 
                 {/* Payment Methods */}
-                <div className="mb-5 pb-5 border-b border-slate-100">
-                  <p className="text-sm font-medium text-slate-700 mb-3">Formas de Pagamento</p>
+                <div className="mb-5 pb-5 border-b border-slate-700">
+                  <p className="text-sm font-medium text-slate-200 mb-3">Formas de Pagamento</p>
                   <div className="grid grid-cols-2 gap-2">
-                    <div className="flex items-center gap-2 text-xs text-slate-600 bg-slate-50 p-2 rounded">
+                    <div className="flex items-center gap-2 text-xs text-slate-300 bg-slate-700 p-2 rounded">
                       <CreditCard className="text-slate-400" size={14} />
                       <span>Cartão de Crédito</span>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-slate-600 bg-slate-50 p-2 rounded">
+                    <div className="flex items-center gap-2 text-xs text-slate-300 bg-slate-700 p-2 rounded">
                       <QrCode className="text-slate-400" size={14} />
                       <span>PIX</span>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-slate-600 bg-slate-50 p-2 rounded">
+                    <div className="flex items-center gap-2 text-xs text-slate-300 bg-slate-700 p-2 rounded">
                       <Barcode className="text-slate-400" size={14} />
                       <span>Boleto</span>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-slate-600 bg-slate-50 p-2 rounded">
+                    <div className="flex items-center gap-2 text-xs text-slate-300 bg-slate-700 p-2 rounded">
                       <Building className="text-slate-400" size={14} />
                       <span>Corporativo</span>
                     </div>
                   </div>
-                  <p className="text-xs text-slate-500 mt-2">
-                    <Shield className="text-green-500 inline mr-1" size={12} />
+                  <p className="text-xs text-slate-400 mt-2">
+                    <Shield className="text-green-400 inline mr-1" size={12} />
                     Parcelamento em até 12x sem juros
                   </p>
                 </div>
 
                 {/* Attendees Button */}
-                <button className="w-full py-2.5 border-2 border-slate-200 text-slate-700 rounded-lg font-medium text-sm hover:bg-slate-50 hover:border-slate-300 transition flex items-center justify-center gap-2">
+                <button className="w-full py-2.5 border-2 border-slate-600 text-slate-200 rounded-lg font-medium text-sm hover:bg-slate-700 hover:border-slate-500 transition flex items-center justify-center gap-2">
                   <Users size={16} />
                   <span>Ver Participantes Confirmados</span>
                 </button>
