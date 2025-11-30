@@ -118,7 +118,10 @@ const TodasComunidades = () => {
                           <span>+150 hoje</span>
                         </div>
                       </div>
-                      <Button className="w-full mt-4 py-2 bg-slate-50 text-slate-600 hover:bg-pastel-blue hover:text-slate-800 rounded-lg text-sm font-medium border border-slate-200 hover:border-pastel-blue">
+                      <Button 
+                        onClick={() => navigate("/discussao")}
+                        className="w-full mt-4 py-2 bg-slate-50 text-slate-600 hover:bg-pastel-blue hover:text-slate-800 rounded-lg text-sm font-medium border border-slate-200 hover:border-pastel-blue"
+                      >
                         Participar
                       </Button>
                     </div>
@@ -152,7 +155,10 @@ const TodasComunidades = () => {
                           <span>+84 hoje</span>
                         </div>
                       </div>
-                      <Button className="w-full mt-4 py-2 bg-slate-50 text-slate-600 hover:bg-pastel-purple hover:text-slate-800 rounded-lg text-sm font-medium border border-slate-200 hover:border-pastel-purple">
+                      <Button 
+                        onClick={() => navigate("/discussao")}
+                        className="w-full mt-4 py-2 bg-slate-50 text-slate-600 hover:bg-pastel-purple hover:text-slate-800 rounded-lg text-sm font-medium border border-slate-200 hover:border-pastel-purple"
+                      >
                         Participar
                       </Button>
                     </div>
@@ -186,7 +192,10 @@ const TodasComunidades = () => {
                           <span>+210 hoje</span>
                         </div>
                       </div>
-                      <Button className="w-full mt-4 py-2 bg-slate-50 text-slate-600 hover:bg-pastel-peach hover:text-slate-800 rounded-lg text-sm font-medium border border-slate-200 hover:border-pastel-peach">
+                      <Button 
+                        onClick={() => navigate("/discussao")}
+                        className="w-full mt-4 py-2 bg-slate-50 text-slate-600 hover:bg-pastel-peach hover:text-slate-800 rounded-lg text-sm font-medium border border-slate-200 hover:border-pastel-peach"
+                      >
                         Participar
                       </Button>
                     </div>
