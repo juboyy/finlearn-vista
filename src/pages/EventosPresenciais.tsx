@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { Bell, Filter, Ticket, Calendar, MapPin, Users, Mic, Clock, Tag, Star, ArrowUp, ArrowRight, ChevronLeft, ChevronRight, CalendarCheck, Presentation, GraduationCap, Handshake, Award, Wine, X } from "lucide-react";
+import { Bell, Filter, Ticket, Calendar, MapPin, Users, Mic, Clock, Tag, Star, ArrowUp, ArrowRight, ChevronLeft, ChevronRight, CalendarCheck, Presentation, GraduationCap, Handshake, Award, Wine, X, ArrowLeft } from "lucide-react";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -60,30 +60,40 @@ export default function EventosPresenciais() {
       <SidebarFix />
       
       <main className="flex-1 overflow-y-auto">
-        <div className="p-8">
-          <section className="mb-8">
-            <div className="flex items-start justify-between mb-6">
+        {/* Header fixo no topo - padrão do sistema */}
+        <header className="bg-card border-b border-border sticky top-0 z-10">
+          <div className="px-8 py-4 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <a href="/comunidade" className="text-foreground hover:text-foreground/80">
+                <ArrowLeft className="w-5 h-5" />
+              </a>
               <div>
-                <h1 className="text-3xl font-semibold text-slate-800 mb-2">Eventos Presenciais</h1>
-                <p className="text-slate-600">Conecte-se pessoalmente com profissionais do mercado financeiro</p>
-              </div>
-              <div className="flex items-center gap-3">
-                <button 
-                  onClick={() => setFilterOpen(true)}
-                  className="px-4 py-2 bg-white border border-slate-200 text-slate-700 rounded-lg font-medium hover:bg-slate-50 transition flex items-center gap-2"
-                >
-                  <Filter className="w-4 h-4" />
-                  Filtros
-                </button>
-                <button 
-                  onClick={() => window.location.href = '/meus-ingressos'}
-                  className="px-4 py-2 bg-pastel-yellow text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2"
-                >
-                  <Ticket className="w-4 h-4" />
-                  Meus Ingressos
-                </button>
+                <h1 className="text-2xl font-semibold text-foreground">Eventos Presenciais</h1>
+                <p className="text-sm text-muted-foreground mt-1">Conecte-se pessoalmente com profissionais do mercado financeiro</p>
               </div>
             </div>
+            <div className="flex items-center gap-3">
+              <Button 
+                onClick={() => setFilterOpen(true)}
+                variant="outline"
+                className="flex items-center gap-2"
+              >
+                <Filter className="w-4 h-4" />
+                Filtros
+              </Button>
+              <Button 
+                onClick={() => window.location.href = '/meus-ingressos'}
+                className="bg-pastel-yellow hover:bg-pastel-yellow/80 text-slate-700 flex items-center gap-2"
+              >
+                <Ticket className="w-4 h-4" />
+                Meus Ingressos
+              </Button>
+            </div>
+          </div>
+        </header>
+
+        <div className="p-8">
+          <section className="mb-8">
             <div className="flex items-center gap-3 overflow-x-auto pb-2">
               <button className="px-4 py-2 bg-pastel-yellow text-slate-800 rounded-lg font-medium whitespace-nowrap">
                 Todos os Eventos
