@@ -88,7 +88,7 @@ export default function ProgramacaoEvento() {
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-3">
-                      <span className="px-3 py-1 bg-pastel-blue/20 text-slate-700 text-xs font-bold rounded-full uppercase">Credenciamento</span>
+                      <span className="px-3 py-1 bg-pastel-blue/60 text-slate-700 text-xs font-bold rounded-full uppercase border border-pastel-blue/70">Credenciamento</span>
                       <span className="text-sm font-medium text-slate-500">08:00 - 09:00</span>
                     </div>
                     <h3 className="text-xl font-bold text-slate-800 mb-3">Credenciamento e Welcome Coffee</h3>
@@ -109,7 +109,7 @@ export default function ProgramacaoEvento() {
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-3">
-                      <span className="px-3 py-1 bg-pastel-purple/20 text-slate-700 text-xs font-bold rounded-full uppercase">Keynote</span>
+                      <span className="px-3 py-1 bg-pastel-purple/60 text-slate-700 text-xs font-bold rounded-full uppercase border border-pastel-purple/70">Keynote</span>
                       <span className="text-sm font-medium text-slate-500">09:00 - 10:30</span>
                       <span className="px-2 py-0.5 bg-red-100 text-red-600 text-xs font-medium rounded">Ao Vivo</span>
                     </div>
@@ -147,7 +147,7 @@ export default function ProgramacaoEvento() {
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-3">
-                      <span className="px-3 py-1 bg-pastel-green/20 text-slate-700 text-xs font-bold rounded-full uppercase">Coffee Break</span>
+                      <span className="px-3 py-1 bg-pastel-green/60 text-slate-700 text-xs font-bold rounded-full uppercase border border-pastel-green/70">Coffee Break</span>
                       <span className="text-sm font-medium text-slate-500">10:30 - 11:00</span>
                     </div>
                     <h3 className="text-xl font-bold text-slate-800 mb-3">Intervalo para Networking</h3>
@@ -164,7 +164,7 @@ export default function ProgramacaoEvento() {
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-3">
-                      <span className="px-3 py-1 bg-pastel-pink/20 text-slate-700 text-xs font-bold rounded-full uppercase">Painel</span>
+                      <span className="px-3 py-1 bg-pastel-pink/60 text-slate-700 text-xs font-bold rounded-full uppercase border border-pastel-pink/70">Painel</span>
                       <span className="text-sm font-medium text-slate-500">11:00 - 12:30</span>
                     </div>
                     <h3 className="text-xl font-bold text-slate-800 mb-3">Renda Fixa em Transformação: Novas Oportunidades e Desafios</h3>
@@ -221,7 +221,7 @@ export default function ProgramacaoEvento() {
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-3">
-                      <span className="px-3 py-1 bg-pastel-yellow/20 text-slate-700 text-xs font-bold rounded-full uppercase">Almoço</span>
+                      <span className="px-3 py-1 bg-pastel-yellow/60 text-slate-700 text-xs font-bold rounded-full uppercase border border-pastel-yellow/70">Almoço</span>
                       <span className="text-sm font-medium text-slate-500">12:30 - 14:00</span>
                       <span className="px-2 py-0.5 bg-amber-100 text-amber-700 text-xs font-medium rounded">VIP Exclusivo</span>
                     </div>
@@ -240,7 +240,7 @@ export default function ProgramacaoEvento() {
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-3">
-                      <span className="px-3 py-1 bg-pastel-blue/20 text-slate-700 text-xs font-bold rounded-full uppercase">Trilhas Paralelas</span>
+                      <span className="px-3 py-1 bg-pastel-blue/60 text-slate-700 text-xs font-bold rounded-full uppercase border border-pastel-blue/70">Trilhas Paralelas</span>
                       <span className="text-sm font-medium text-slate-500">14:00 - 15:30</span>
                     </div>
                     <h3 className="text-xl font-bold text-slate-800 mb-4">Sessões Simultâneas - Escolha sua Trilha</h3>
@@ -303,7 +303,7 @@ export default function ProgramacaoEvento() {
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-3">
-                      <span className="px-3 py-1 bg-pastel-green/20 text-slate-700 text-xs font-bold rounded-full uppercase">Coffee Break</span>
+                      <span className="px-3 py-1 bg-pastel-green/60 text-slate-700 text-xs font-bold rounded-full uppercase border border-pastel-green/70">Coffee Break</span>
                       <span className="text-sm font-medium text-slate-500">15:30 - 16:00</span>
                     </div>
                     <h3 className="text-xl font-bold text-slate-800 mb-3">Intervalo Energizante</h3>
@@ -317,7 +317,7 @@ export default function ProgramacaoEvento() {
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-3">
-                      <span className="px-3 py-1 bg-pastel-peach/20 text-slate-700 text-xs font-bold rounded-full uppercase">Workshop</span>
+                      <span className="px-3 py-1 bg-pastel-peach/60 text-slate-700 text-xs font-bold rounded-full uppercase border border-pastel-peach/70">Workshop</span>
                       <span className="text-sm font-medium text-slate-500">16:00 - 17:30</span>
                       <span className="px-2 py-0.5 bg-blue-100 text-blue-600 text-xs font-medium rounded">Vagas Limitadas</span>
                     </div>
@@ -352,7 +352,7 @@ export default function ProgramacaoEvento() {
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-3">
-                      <span className="px-3 py-1 bg-pastel-pink/20 text-slate-700 text-xs font-bold rounded-full uppercase">Networking</span>
+                      <span className="px-3 py-1 bg-pastel-pink/60 text-slate-700 text-xs font-bold rounded-full uppercase border border-pastel-pink/70">Networking</span>
                       <span className="text-sm font-medium text-slate-500">17:30 - 19:00</span>
                     </div>
                     <h3 className="text-xl font-bold text-slate-800 mb-3">Happy Hour de Encerramento - Dia 1</h3>
