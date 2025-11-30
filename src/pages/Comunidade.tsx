@@ -93,9 +93,12 @@ export default function Comunidade() {
             <section className="col-span-2">
               <div className="bg-white rounded-xl p-6 border border-slate-200 mb-6">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-lg font-semibold text-slate-800">Categorias</h2>
+                  <h2 className="text-lg font-semibold text-slate-800">Comunidades</h2>
                   <div className="flex gap-2">
-                    <button className="px-4 py-2 bg-pastel-blue border border-pastel-blue text-slate-700 rounded-lg text-sm font-medium">Todas</button>
+                    <button className="px-4 py-2 bg-pastel-orange border border-pastel-orange text-slate-700 rounded-lg text-sm font-medium flex items-center gap-2">
+                      <Eye className="w-4 h-4" />
+                      Ver todas
+                    </button>
                     <button className="px-4 py-2 text-slate-600 hover:bg-slate-100 border border-transparent rounded-lg text-sm font-medium transition">Seguindo</button>
                   </div>
                 </div>
