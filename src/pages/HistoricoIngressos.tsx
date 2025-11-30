@@ -2,6 +2,14 @@ import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { ArrowLeft, Filter, Download, CalendarCheck, Award, Clock, Wallet, Search, MapPin, User, CheckCircle, Utensils, Video, FileText, Play, Images, Network, Gift, Star, ChevronDown, Ticket } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import ebookCompliance from "@/assets/ebook-compliance.png";
+import ebookDerivatives from "@/assets/ebook-derivatives.png";
+import eventoWorkshopPagamentos from "@/assets/evento-workshop-pagamentos.png";
+import ebookMercadoCapitais from "@/assets/ebook-mercado-capitais.png";
+import ebookGestaoRiscos from "@/assets/ebook-gestao-riscos.png";
+import eventoConferenciaFintech from "@/assets/evento-conferencia-fintech.png";
+import ebookOpenFinance from "@/assets/ebook-open-finance.png";
+import eventoTreinamentoRisco from "@/assets/evento-treinamento-risco.png";
 
 export default function HistoricoIngressos() {
   const navigate = useNavigate();
@@ -11,29 +19,34 @@ export default function HistoricoIngressos() {
       <SidebarFix />
       
       <main className="flex-1 overflow-y-auto">
-        <div className="p-8 max-w-7xl mx-auto">
-          
-          <header className="mb-8">
-            <div className="flex items-center gap-4 mb-6">
+        {/* Header fixo no topo - padrão do sistema */}
+        <header className="bg-card border-b border-border sticky top-0 z-10">
+          <div className="px-8 py-4 flex items-center justify-between">
+            <div className="flex items-center gap-4">
               <button 
                 onClick={() => navigate('/meus-ingressos')}
-                className="flex items-center justify-center w-10 h-10 rounded-lg border border-slate-200 hover:bg-slate-50 transition-colors"
+                className="text-foreground hover:text-foreground/80 transition-colors"
               >
-                <ArrowLeft className="w-5 h-5 text-slate-600" />
+                <ArrowLeft className="w-5 h-5" />
               </button>
-              <div className="flex-1">
-                <h1 className="text-3xl font-bold text-slate-800">Histórico de Ingressos</h1>
-                <p className="text-slate-600 mt-1">Visualize todos os eventos que você participou e seus certificados.</p>
-              </div>
-              <div className="flex gap-3">
-                <Button variant="outline" className="flex items-center gap-2">
-                  <Filter className="w-4 h-4" /> Filtrar
-                </Button>
-                <Button variant="outline" className="flex items-center gap-2">
-                  <Download className="w-4 h-4" /> Exportar PDF
-                </Button>
+              <div>
+                <h1 className="text-2xl font-semibold text-foreground">Histórico de Ingressos</h1>
+                <p className="text-sm text-muted-foreground mt-1">Visualize todos os eventos que você participou e seus certificados</p>
               </div>
             </div>
+            <div className="flex items-center gap-3">
+              <Button variant="outline" className="flex items-center gap-2">
+                <Filter className="w-4 h-4" /> Filtrar
+              </Button>
+              <Button variant="outline" className="flex items-center gap-2">
+                <Download className="w-4 h-4" /> Exportar PDF
+              </Button>
+            </div>
+          </div>
+        </header>
+
+        <div className="p-8 max-w-7xl mx-auto">
+          <div className="mb-8">
 
             <div className="grid grid-cols-4 gap-4 mb-6">
               <div className="bg-white rounded-xl p-4 border border-slate-200">
@@ -93,7 +106,7 @@ export default function HistoricoIngressos() {
                 <option>Fórum</option>
               </select>
             </div>
-          </header>
+          </div>
 
           <section className="space-y-6">
             <div className="flex items-center gap-3 mb-6">
@@ -575,32 +588,108 @@ export default function HistoricoIngressos() {
 
             <div className="grid grid-cols-4 gap-4">
               <div className="group cursor-pointer">
-                <div className="bg-slate-50 rounded-lg p-4 border border-slate-200 hover:border-slate-300 transition mb-3 aspect-[3/4] flex flex-col items-center justify-center">
-                  <Award className="w-16 h-16 text-slate-300 mb-2 group-hover:text-slate-400 transition" />
-                  <span className="text-xs text-slate-500 text-center">Regulação do Mercado</span>
+                <div className="bg-slate-50 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition mb-3 aspect-[3/4] relative">
+                  <img 
+                    src={ebookCompliance} 
+                    alt="Certificado Regulação do Mercado" 
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-3">
+                    <span className="text-xs text-white font-medium">Regulação do Mercado Financeiro</span>
+                  </div>
                 </div>
                 <p className="text-xs text-slate-600 text-center font-medium">15 Nov 2024</p>
               </div>
               <div className="group cursor-pointer">
-                <div className="bg-slate-50 rounded-lg p-4 border border-slate-200 hover:border-slate-300 transition mb-3 aspect-[3/4] flex flex-col items-center justify-center">
-                  <Award className="w-16 h-16 text-slate-300 mb-2 group-hover:text-slate-400 transition" />
-                  <span className="text-xs text-slate-500 text-center">Derivativos Financeiros</span>
+                <div className="bg-slate-50 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition mb-3 aspect-[3/4] relative">
+                  <img 
+                    src={ebookDerivatives} 
+                    alt="Certificado Derivativos Financeiros" 
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-3">
+                    <span className="text-xs text-white font-medium">Workshop Derivativos</span>
+                  </div>
                 </div>
                 <p className="text-xs text-slate-600 text-center font-medium">02 Nov 2024</p>
               </div>
               <div className="group cursor-pointer">
-                <div className="bg-slate-50 rounded-lg p-4 border border-slate-200 hover:border-slate-300 transition mb-3 aspect-[3/4] flex flex-col items-center justify-center">
-                  <Award className="w-16 h-16 text-slate-300 mb-2 group-hover:text-slate-400 transition" />
-                  <span className="text-xs text-slate-500 text-center">Meios de Pagamento</span>
+                <div className="bg-slate-50 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition mb-3 aspect-[3/4] relative">
+                  <img 
+                    src={eventoWorkshopPagamentos} 
+                    alt="Certificado Fórum de Pagamentos" 
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-3">
+                    <span className="text-xs text-white font-medium">Fórum de Meios de Pagamento</span>
+                  </div>
                 </div>
                 <p className="text-xs text-slate-600 text-center font-medium">20 Out 2024</p>
               </div>
               <div className="group cursor-pointer">
-                <div className="bg-slate-50 rounded-lg p-4 border border-slate-200 hover:border-slate-300 transition mb-3 aspect-[3/4] flex flex-col items-center justify-center">
-                  <Award className="w-16 h-16 text-slate-300 mb-2 group-hover:text-slate-400 transition" />
-                  <span className="text-xs text-slate-500 text-center">Investimentos 2023</span>
+                <div className="bg-slate-50 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition mb-3 aspect-[3/4] relative">
+                  <img 
+                    src={ebookMercadoCapitais} 
+                    alt="Certificado Summit de Investimentos" 
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-3">
+                    <span className="text-xs text-white font-medium">Summit de Investimentos</span>
+                  </div>
                 </div>
                 <p className="text-xs text-slate-600 text-center font-medium">08 Dez 2023</p>
+              </div>
+              <div className="group cursor-pointer">
+                <div className="bg-slate-50 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition mb-3 aspect-[3/4] relative">
+                  <img 
+                    src={ebookGestaoRiscos} 
+                    alt="Certificado Compliance" 
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-3">
+                    <span className="text-xs text-white font-medium">Compliance e Gestão de Riscos</span>
+                  </div>
+                </div>
+                <p className="text-xs text-slate-600 text-center font-medium">22 Set 2023</p>
+              </div>
+              <div className="group cursor-pointer">
+                <div className="bg-slate-50 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition mb-3 aspect-[3/4] relative">
+                  <img 
+                    src={eventoConferenciaFintech} 
+                    alt="Certificado Fintech Conference" 
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-3">
+                    <span className="text-xs text-white font-medium">Fintech Brasil Conference</span>
+                  </div>
+                </div>
+                <p className="text-xs text-slate-600 text-center font-medium">15 Jun 2023</p>
+              </div>
+              <div className="group cursor-pointer">
+                <div className="bg-slate-50 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition mb-3 aspect-[3/4] relative">
+                  <img 
+                    src={ebookOpenFinance} 
+                    alt="Certificado Open Finance" 
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-3">
+                    <span className="text-xs text-white font-medium">Open Finance Brasil</span>
+                  </div>
+                </div>
+                <p className="text-xs text-slate-600 text-center font-medium">03 Mai 2023</p>
+              </div>
+              <div className="group cursor-pointer">
+                <div className="bg-slate-50 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition mb-3 aspect-[3/4] relative">
+                  <img 
+                    src={eventoTreinamentoRisco} 
+                    alt="Certificado Gestão de Risco" 
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-3">
+                    <span className="text-xs text-white font-medium">Gestão de Risco Operacional</span>
+                  </div>
+                </div>
+                <p className="text-xs text-slate-600 text-center font-medium">18 Mar 2023</p>
               </div>
             </div>
           </section>
