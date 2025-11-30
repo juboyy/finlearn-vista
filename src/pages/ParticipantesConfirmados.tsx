@@ -1,413 +1,497 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ChevronLeft, Search, Bell, UserPlus, Check, Users, Circle, UserCheck, UserMinus, Mail } from "lucide-react";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Search, Filter, ArrowUpDown, Star, MapPin, Users, UserPlus, MessageCircle, MoreHorizontal, BadgeCheck, Mic, Gavel, TrendingUp, UserCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-export default function ParticipantesConfirmados() {
+const ParticipantesConfirmados = () => {
   const navigate = useNavigate();
-  const [activeFilter, setActiveFilter] = useState("todos");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterType, setFilterType] = useState("todos");
+  const [sortBy, setSortBy] = useState("ordenar");
+  const [activeTab, setActiveTab] = useState("seguindo");
 
-  const featuredAttendees = [
+  const members = [
     {
       id: 1,
-      name: "Carlos Mendes",
-      role: "CEO na FutureBank",
-      location: "São Paulo, SP",
-      avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg",
-      followers: "2.4k",
-      mutualFriends: "432",
-      tags: ["Palestrante", "Inovação"],
-      icon: Mic,
-      iconBg: "bg-pastel-blue/60",
-      borderColor: "border-pastel-purple/70",
-      isFollowing: true,
-    },
-    {
-      id: 2,
-      name: "Ana Paula Souza",
-      role: "Diretora na CVM",
-      location: "Rio de Janeiro, RJ",
-      avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg",
-      followers: "5.1k",
-      mutualFriends: "89",
-      tags: ["Palestrante", "Regulação"],
-      icon: Gavel,
-      iconBg: "bg-pastel-purple/60",
-      borderColor: "border-pastel-blue/70",
-      isFollowing: false,
-    },
-    {
-      id: 3,
-      name: "Roberto Chang",
-      role: "Head de Renda Fixa",
-      location: "São Paulo, SP",
-      avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg",
-      followers: "3.8k",
-      mutualFriends: "201",
-      tags: ["Palestrante", "Mercados"],
-      icon: TrendingUp,
-      iconBg: "bg-pastel-yellow/60",
-      borderColor: "border-pastel-green/70",
-      isFollowing: false,
-    },
-  ];
-
-  const allAttendees = [
-    {
-      id: 1,
-      name: "Mariana Costa",
-      role: "Economista Chefe na Macro Insights",
-      location: "São Paulo, SP",
-      avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg",
-      followers: "1.2k",
-      mutualFriends: "45",
-      verified: true,
-      isFollowing: false,
-    },
-    {
-      id: 2,
-      name: "Fernando Ribeiro",
-      role: "Diretor de Investimentos na Capital Assets",
-      location: "Rio de Janeiro, RJ",
+      name: "Ricardo Almeida",
       avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg",
-      followers: "890",
-      mutualFriends: "12",
-      verified: false,
-      isFollowing: true,
+      bio: "15 anos de experiência em meios de pagamento",
+      role: "Especialista em Pagamentos",
+      badges: [
+        { label: "Moderador", color: "bg-[hsl(270,35%,75%)]" },
+        { label: "Especialista", color: "bg-[hsl(44,40%,75%)]" }
+      ],
+      posts: 124,
+      followers: "2.3k",
+      online: true,
+      relationship: "Mútuo",
+      isFollowing: true
+    },
+    {
+      id: 2,
+      name: "Ana Paula Santos",
+      avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg",
+      bio: "Especialista em regulação financeira e compliance",
+      role: "Analista de Compliance",
+      badges: [
+        { label: "Moderadora", color: "bg-[hsl(270,35%,75%)]" }
+      ],
+      posts: 98,
+      followers: "1.8k",
+      online: true,
+      relationship: "Mútuo",
+      isFollowing: true
     },
     {
       id: 3,
-      name: "Juliana Santos",
-      role: "Gerente de Compliance na Banco XYZ",
-      location: "Brasília, DF",
-      avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg",
-      followers: "654",
-      mutualFriends: "8",
-      verified: true,
-      isFollowing: false,
+      name: "Carlos Mendes",
+      avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg",
+      bio: "Product Manager focado em pagamento instantâneo",
+      role: "Gerente de Produtos",
+      badges: [
+        { label: "Ativo", color: "bg-[hsl(142,35%,75%)]" }
+      ],
+      posts: 87,
+      followers: "1.5k",
+      online: true,
+      relationship: "Não segue você",
+      isFollowing: true
     },
     {
       id: 4,
-      name: "Pedro Almeida",
-      role: "Analista Sênior de Mercado de Capitais",
-      location: "São Paulo, SP",
-      avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-9.jpg",
-      followers: "432",
-      mutualFriends: "23",
-      verified: false,
-      isFollowing: true,
+      name: "Fernando Costa",
+      avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg",
+      bio: "Desenvolvedor especializado em APIs financeiras",
+      role: "Desenvolvedor Sênior",
+      badges: [
+        { label: "Tech Lead", color: "bg-[hsl(22,35%,75%)]" }
+      ],
+      posts: 76,
+      followers: "892",
+      online: false,
+      relationship: "Segue você",
+      isFollowing: false
     },
     {
       id: 5,
-      name: "Camila Ferreira",
-      role: "CFO na TechFin Solutions",
-      location: "Curitiba, PR",
+      name: "Juliana Rodrigues",
       avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-7.jpg",
-      followers: "2.1k",
-      mutualFriends: "67",
-      verified: true,
-      isFollowing: false,
+      bio: "Designer focada em experiência do usuário",
+      role: "UX Designer",
+      badges: [
+        { label: "Design", color: "bg-[hsl(338,35%,75%)]" }
+      ],
+      posts: 65,
+      followers: "1.1k",
+      online: true,
+      relationship: "Mútuo",
+      isFollowing: true
     },
     {
       id: 6,
-      name: "Ricardo Moura",
-      role: "Gestor de Portfólio na Investimentos BR",
-      location: "Porto Alegre, RS",
-      avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg",
-      followers: "1.5k",
-      mutualFriends: "34",
-      verified: false,
-      isFollowing: false,
+      name: "Pedro Oliveira",
+      avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-9.jpg",
+      bio: "Analista focado em estratégia e inovação",
+      role: "Analista de Negócios",
+      badges: [
+        { label: "Estratégia", color: "bg-[hsl(207,35%,75%)]" }
+      ],
+      posts: 54,
+      followers: "678",
+      online: false,
+      relationship: "Não segue você",
+      isFollowing: false
     },
     {
       id: 7,
-      name: "Beatriz Lima",
-      role: "Head de Risco Operacional na FinCorp",
-      location: "Belo Horizonte, MG",
-      avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg",
-      followers: "987",
-      mutualFriends: "19",
-      verified: true,
-      isFollowing: true,
+      name: "Mariana Silva",
+      avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg",
+      bio: "Especialista em gestão de riscos e prevenção à fraude",
+      role: "Gerente de Riscos",
+      badges: [
+        { label: "Compliance", color: "bg-[hsl(44,40%,75%)]" }
+      ],
+      posts: 48,
+      followers: "945",
+      online: true,
+      relationship: "Não segue você",
+      isFollowing: true
     },
     {
       id: 8,
-      name: "Gustavo Oliveira",
-      role: "Especialista em Derivativos na Trading Plus",
-      location: "São Paulo, SP",
-      avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg",
-      followers: "723",
-      mutualFriends: "5",
-      verified: false,
-      isFollowing: false,
+      name: "Roberto Ferreira",
+      avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg",
+      bio: "Arquiteto especializado em soluções de pagamento",
+      role: "Arquiteto de Soluções",
+      badges: [
+        { label: "Tecnologia", color: "bg-[hsl(22,35%,75%)]" }
+      ],
+      posts: 42,
+      followers: "567",
+      online: false,
+      relationship: "Segue você",
+      isFollowing: false
     },
-  ];
-
-  const filters = [
-    { id: "todos", label: "Todos", count: "1.847" },
-    { id: "seguindo", label: "Seguindo", count: "143" },
-    { id: "palestrantes", label: "Palestrantes", count: "45" },
-    { id: "gestores", label: "Gestores", count: "287" },
-    { id: "analistas", label: "Analistas", count: "512" },
-    { id: "reguladores", label: "Reguladores", count: "34" },
+    {
+      id: 9,
+      name: "Beatriz Martins",
+      avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg",
+      bio: "Consultora especializada em transformação digital",
+      role: "Consultora Financeira",
+      badges: [
+        { label: "Consultoria", color: "bg-[hsl(142,35%,75%)]" }
+      ],
+      posts: 38,
+      followers: "823",
+      online: true,
+      relationship: "Não segue você",
+      isFollowing: false
+    },
+    {
+      id: 10,
+      name: "Lucas Andrade",
+      avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-9.jpg",
+      bio: "Cientista de dados focado em análise preditiva",
+      role: "Data Scientist",
+      badges: [
+        { label: "Dados", color: "bg-[hsl(270,35%,75%)]" }
+      ],
+      posts: 35,
+      followers: "712",
+      online: true,
+      relationship: "Mútuo",
+      isFollowing: true
+    },
+    {
+      id: 11,
+      name: "Gabriel Souza",
+      avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg",
+      bio: "Engenheiro especializado em desenvolvimento de APIs",
+      role: "Engenheiro de Software",
+      badges: [
+        { label: "Backend", color: "bg-[hsl(22,35%,75%)]" }
+      ],
+      posts: 31,
+      followers: "534",
+      online: false,
+      relationship: "Não segue você",
+      isFollowing: false
+    },
+    {
+      id: 12,
+      name: "Camila Torres",
+      avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg",
+      bio: "Especialista em marketing digital para fintechs",
+      role: "Gerente de Marketing",
+      badges: [
+        { label: "Marketing", color: "bg-[hsl(338,35%,75%)]" }
+      ],
+      posts: 28,
+      followers: "1.4k",
+      online: true,
+      relationship: "Segue você",
+      isFollowing: false
+    }
   ];
 
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="flex h-screen w-full bg-slate-50 overflow-hidden">
       <SidebarFix />
       
-      <main className="flex-1 overflow-y-auto bg-slate-50">
-        {/* Header padrão do sistema */}
-        <header className="bg-card border-b border-border sticky top-0 z-10">
-          <div className="max-w-7xl mx-auto px-8 py-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-4">
-                <button 
-                  onClick={() => navigate('/checkout-ingresso')}
-                  className="w-10 h-10 rounded-lg border border-border flex items-center justify-center text-foreground hover:bg-accent transition"
-                >
-                  <ArrowLeft className="w-5 h-5" />
-                </button>
-                <div>
-                  <h1 className="text-2xl font-bold text-foreground">Participantes Confirmados</h1>
-                  <p className="text-sm text-muted-foreground mt-1">Summit Mercado de Capitais 2025</p>
-                </div>
-              </div>
+      <main className="flex-1 flex flex-col overflow-hidden">
+        {/* Header */}
+        <header className="bg-background border-b border-border flex-shrink-0">
+          <div className="px-6 py-4 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => navigate("/discussao")}
+                className="text-muted-foreground hover:text-foreground"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </Button>
               <div className="flex items-center gap-3">
-                <div className="bg-pastel-purple/60 border border-pastel-purple/70 px-4 py-2 rounded-lg">
-                  <span className="text-sm font-bold text-slate-700">1.847</span>
-                  <span className="text-xs text-slate-700 ml-1">confirmados</span>
+                <div className="w-12 h-12 rounded-lg bg-[hsl(207,35%,75%)] overflow-hidden flex-shrink-0">
+                  <img 
+                    className="w-full h-full object-cover" 
+                    src="https://storage.googleapis.com/uxpilot-auth.appspot.com/c7751f850a-69a10e658ef483c7546c.png" 
+                    alt="community icon" 
+                  />
+                </div>
+                <div>
+                  <h1 className="text-xl font-semibold text-foreground">Inovação em Pagamentos</h1>
+                  <p className="text-sm text-muted-foreground">12.5k membros • 150 online</p>
                 </div>
               </div>
             </div>
-
-            {/* Search and Filters */}
-            <div className="flex flex-wrap items-center gap-3 mb-4">
-              <div className="flex-1 min-w-[300px] max-w-md relative">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground w-4 h-4" />
-                <Input 
-                  type="text"
-                  placeholder="Buscar por nome, empresa ou cargo..."
-                  className="pl-11 border-border"
-                />
-              </div>
-              
-              <div className="flex gap-2">
-                <Button variant="outline" className="flex items-center gap-2">
-                  <Filter className="w-4 h-4" />
-                  <span>Filtros</span>
-                </Button>
-                <Button variant="outline" className="flex items-center gap-2">
-                  <ArrowUpDown className="w-4 h-4" />
-                  <span>Ordenar</span>
-                </Button>
-              </div>
+            <div className="flex items-center gap-3">
+              <Button variant="ghost" size="icon" className="relative">
+                <Bell className="h-5 w-5" />
+                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+              </Button>
+              <Button variant="outline" className="gap-2">
+                <UserPlus className="h-4 w-4" />
+                Convidar
+              </Button>
+              <Button className="gap-2 bg-[hsl(142,35%,75%)] bg-opacity-30 text-foreground hover:bg-opacity-100">
+                <Check className="h-4 w-4" />
+                Seguindo
+              </Button>
             </div>
-
-            {/* Filter Tabs */}
-            <div className="flex gap-2 overflow-x-auto pb-2">
-              {filters.map((filter) => (
-                <button
-                  key={filter.id}
-                  onClick={() => setActiveFilter(filter.id)}
-                  className={`px-4 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition ${
-                    activeFilter === filter.id
-                      ? 'bg-slate-800 text-white'
-                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                  }`}
-                >
-                  {filter.label} ({filter.count})
-                </button>
-              ))}
-            </div>
+          </div>
+          
+          <div className="px-6 py-3 bg-muted/30 border-b border-border flex items-center gap-6 overflow-x-auto">
+            <button 
+              onClick={() => navigate("/discussao")}
+              className="text-sm font-medium text-muted-foreground hover:text-foreground pb-3 -mb-3.5 transition whitespace-nowrap"
+            >
+              Discussões
+            </button>
+            <button className="text-sm font-medium text-muted-foreground hover:text-foreground pb-3 -mb-3.5 transition whitespace-nowrap">Sobre</button>
+            <button className="text-sm font-medium text-foreground border-b-2 border-[hsl(207,50%,60%)] pb-3 -mb-3.5 whitespace-nowrap">Membros</button>
+            <button className="text-sm font-medium text-muted-foreground hover:text-foreground pb-3 -mb-3.5 transition whitespace-nowrap">Eventos</button>
+            <button className="text-sm font-medium text-muted-foreground hover:text-foreground pb-3 -mb-3.5 transition whitespace-nowrap">Recursos</button>
           </div>
         </header>
 
-        <div className="max-w-7xl mx-auto px-8 py-8">
-          {/* Featured Attendees */}
-          <div className="mb-8">
+        <div className="flex-1 overflow-y-auto p-6">
+          {/* Members Header */}
+          <div className="mb-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-bold text-slate-800 flex items-center gap-2">
-                <Star className="text-pastel-yellow w-5 h-5" />
-                Participantes em Destaque
-              </h2>
+              <div>
+                <h2 className="text-2xl font-bold text-foreground mb-1">Membros da Comunidade</h2>
+                <p className="text-sm text-muted-foreground">Conecte-se com profissionais do mercado financeiro</p>
+              </div>
+              <div className="flex items-center gap-3">
+                <Button
+                  onClick={() => setActiveTab("seguindo")}
+                  className={`px-5 py-2.5 rounded-lg font-medium transition ${
+                    activeTab === "seguindo"
+                      ? "bg-[hsl(270,35%,75%)] text-foreground hover:bg-opacity-80"
+                      : "bg-[hsl(142,35%,75%)] text-foreground hover:bg-opacity-80"
+                  }`}
+                >
+                  Seguindo
+                </Button>
+                <Button
+                  onClick={() => setActiveTab("seguidores")}
+                  className={`px-5 py-2.5 rounded-lg font-medium transition ${
+                    activeTab === "seguidores"
+                      ? "bg-[hsl(270,35%,75%)] text-foreground hover:bg-opacity-80"
+                      : "bg-[hsl(142,35%,75%)] text-foreground hover:bg-opacity-80"
+                  }`}
+                >
+                  Seguidores
+                </Button>
+              </div>
             </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {featuredAttendees.map((attendee) => {
-                const IconComponent = attendee.icon;
-                return (
-                  <div key={attendee.id} className="bg-white border border-border rounded-xl p-6 hover:shadow-lg transition">
-                    <div className="flex items-start gap-4 mb-4">
-                      <div className="relative">
-                        <img 
-                          src={attendee.avatar} 
-                          alt={attendee.name}
-                          className={`w-16 h-16 rounded-full object-cover border-2 ${attendee.borderColor}`}
-                        />
-                        <div className={`absolute -bottom-1 -right-1 w-6 h-6 ${attendee.iconBg} border border-pastel-purple/70 rounded-full border-2 border-white flex items-center justify-center`}>
-                          <IconComponent className="text-slate-700 w-3 h-3" />
-                        </div>
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h3 className="font-bold text-slate-800 truncate">{attendee.name}</h3>
-                        <p className="text-sm text-slate-600 truncate">{attendee.role}</p>
-                        <div className="flex items-center gap-1 mt-1">
-                          <MapPin className="text-slate-400 w-3 h-3" />
-                          <span className="text-xs text-slate-500">{attendee.location}</span>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="flex flex-wrap gap-1.5 mb-4">
-                      {attendee.tags.map((tag, index) => (
-                        <Badge 
-                          key={index}
-                          className={`${
-                            tag === "Palestrante" 
-                              ? "bg-pastel-purple/60 border-pastel-purple/70" 
-                              : tag === "Inovação"
-                              ? "bg-pastel-blue/60 border-pastel-blue/70"
-                              : tag === "Regulação"
-                              ? "bg-pastel-green/60 border-pastel-green/70"
-                              : "bg-pastel-peach/60 border-pastel-peach/70"
-                          } text-slate-700`}
-                        >
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
 
-                    <div className="flex items-center gap-2 text-xs text-slate-500 mb-4 pb-4 border-b border-slate-100">
-                      <div className="flex items-center gap-1">
-                        <Users className="w-3 h-3" />
-                        <span>{attendee.followers} seguidores</span>
-                      </div>
-                      <span className="text-slate-300">•</span>
-                      <div className="flex items-center gap-1">
-                        <Users className="w-3 h-3" />
-                        <span>{attendee.mutualFriends} mútuos</span>
-                      </div>
-                    </div>
-
-                    <div className="flex gap-2">
-                      <Button 
-                        className={`flex-1 ${
-                          attendee.isFollowing 
-                            ? 'bg-slate-800 hover:bg-slate-700 text-white' 
-                            : 'bg-slate-800 hover:bg-slate-700 text-white'
-                        }`}
-                      >
-                        {attendee.isFollowing ? (
-                          <>
-                            <UserCheck className="w-4 h-4 mr-2" />
-                            Seguindo
-                          </>
-                        ) : (
-                          <>
-                            <UserPlus className="w-4 h-4 mr-2" />
-                            Seguir
-                          </>
-                        )}
-                      </Button>
-                      <Button 
-                        variant="outline" 
-                        size="icon"
-                        className="w-10 h-10"
-                      >
-                        <MessageCircle className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </div>
-                );
-              })}
+            <div className="flex items-center gap-4">
+              <div className="flex-1 relative">
+                <Input
+                  type="text"
+                  placeholder="Buscar membros..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10"
+                />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              </div>
+              <Select value={filterType} onValueChange={setFilterType}>
+                <SelectTrigger className="w-[200px]">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="todos">Todos os membros</SelectItem>
+                  <SelectItem value="moderadores">Moderadores</SelectItem>
+                  <SelectItem value="especialistas">Especialistas</SelectItem>
+                  <SelectItem value="novos">Novos membros</SelectItem>
+                  <SelectItem value="ativos">Mais ativos</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select value={sortBy} onValueChange={setSortBy}>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="ordenar">Ordenar por</SelectItem>
+                  <SelectItem value="nome">Nome A-Z</SelectItem>
+                  <SelectItem value="recentes">Mais recentes</SelectItem>
+                  <SelectItem value="posts">Mais posts</SelectItem>
+                  <SelectItem value="seguidores">Mais seguidores</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
-          {/* All Attendees */}
-          <div className="bg-white rounded-xl border border-border overflow-hidden">
-            <div className="p-6 border-b border-border">
-              <h2 className="text-lg font-bold text-slate-800">Todos os Participantes</h2>
-            </div>
-
-            <div className="divide-y divide-slate-100">
-              {allAttendees.map((attendee) => (
-                <div key={attendee.id} className="p-6 hover:bg-slate-50 transition">
-                  <div className="flex items-center gap-4">
-                    <img 
-                      src={attendee.avatar}
-                      alt={attendee.name}
-                      className="w-14 h-14 rounded-full object-cover border-2 border-slate-100"
-                    />
-                    
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h3 className="font-bold text-slate-800">{attendee.name}</h3>
-                        {attendee.verified && (
-                          <BadgeCheck className="text-pastel-blue w-4 h-4" />
-                        )}
-                      </div>
-                      <p className="text-sm text-slate-600 mb-1">{attendee.role}</p>
-                      <div className="flex items-center gap-3 text-xs text-slate-500">
-                        <span className="flex items-center gap-1">
-                          <MapPin className="w-3 h-3" />
-                          {attendee.location}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Users className="w-3 h-3" />
-                          {attendee.followers} seguidores
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Users className="w-3 h-3" />
-                          {attendee.mutualFriends} mútuos
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <Button 
-                        className={
-                          attendee.isFollowing
-                            ? 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                            : 'bg-slate-800 text-white hover:bg-slate-700'
-                        }
-                      >
-                        {attendee.isFollowing ? (
-                          <>
-                            <UserCheck className="w-4 h-4 mr-2" />
-                            Seguindo
-                          </>
-                        ) : (
-                          <>
-                            <UserPlus className="w-4 h-4 mr-2" />
-                            Seguir
-                          </>
-                        )}
-                      </Button>
-                      <Button 
-                        variant="outline"
-                        size="icon"
-                        className="w-10 h-10"
-                      >
-                        <MoreHorizontal className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </div>
+          {/* Stats Cards */}
+          <div className="grid grid-cols-4 gap-4 mb-6">
+            <div className="bg-background border border-border rounded-xl p-5">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 bg-[hsl(207,35%,75%)] bg-opacity-30 rounded-lg flex items-center justify-center">
+                  <Users className="h-5 w-5 text-slate-600" />
                 </div>
-              ))}
+                <div>
+                  <p className="text-2xl font-bold text-foreground">12.5k</p>
+                  <p className="text-xs text-muted-foreground">Total de Membros</p>
+                </div>
+              </div>
             </div>
+            <div className="bg-background border border-border rounded-xl p-5">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 bg-[hsl(142,35%,75%)] bg-opacity-30 rounded-lg flex items-center justify-center">
+                  <Circle className="h-3 w-3 text-slate-600 fill-current" />
+                </div>
+                <div>
+                  <p className="text-2xl font-bold text-foreground">150</p>
+                  <p className="text-xs text-muted-foreground">Online Agora</p>
+                </div>
+              </div>
+            </div>
+            <div className="bg-background border border-border rounded-xl p-5">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 bg-[hsl(270,35%,75%)] bg-opacity-30 rounded-lg flex items-center justify-center">
+                  <UserCheck className="h-5 w-5 text-slate-600" />
+                </div>
+                <div>
+                  <p className="text-2xl font-bold text-foreground">847</p>
+                  <p className="text-xs text-muted-foreground">Você Segue</p>
+                </div>
+              </div>
+            </div>
+            <div className="bg-background border border-border rounded-xl p-5">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 bg-[hsl(338,35%,75%)] bg-opacity-30 rounded-lg flex items-center justify-center">
+                  <UserMinus className="h-5 w-5 text-slate-600" />
+                </div>
+                <div>
+                  <p className="text-2xl font-bold text-foreground">1.2k</p>
+                  <p className="text-xs text-muted-foreground">Seus Seguidores</p>
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <div className="p-6 border-t border-border flex items-center justify-center">
-              <Button variant="outline">
-                Carregar mais participantes
-              </Button>
+          {/* Members Table */}
+          <div className="bg-background border border-border rounded-xl overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-muted/30 border-b border-border">
+                  <tr>
+                    <th className="text-left py-4 px-6 text-sm font-semibold text-foreground">Membro</th>
+                    <th className="text-left py-4 px-6 text-sm font-semibold text-foreground">Cargo</th>
+                    <th className="text-left py-4 px-6 text-sm font-semibold text-foreground">Categoria</th>
+                    <th className="text-center py-4 px-6 text-sm font-semibold text-foreground">Posts</th>
+                    <th className="text-center py-4 px-6 text-sm font-semibold text-foreground">Seguidores</th>
+                    <th className="text-center py-4 px-6 text-sm font-semibold text-foreground">Status</th>
+                    <th className="text-center py-4 px-6 text-sm font-semibold text-foreground">Relacionamento</th>
+                    <th className="text-right py-4 px-6 text-sm font-semibold text-foreground">Ações</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {members.map((member) => (
+                    <tr key={member.id} className="hover:bg-muted/30 transition">
+                      <td className="py-4 px-6">
+                        <div className="flex items-center gap-3">
+                          <div className="relative flex-shrink-0">
+                            <img 
+                              src={member.avatar} 
+                              alt={member.name} 
+                              className="w-10 h-10 rounded-full object-cover"
+                            />
+                            <span className={`absolute bottom-0 right-0 w-3 h-3 ${member.online ? 'bg-green-500' : 'bg-slate-300'} border-2 border-white rounded-full`}></span>
+                          </div>
+                          <div className="min-w-0">
+                            <p className="text-sm font-semibold text-foreground truncate">{member.name}</p>
+                            <p className="text-xs text-muted-foreground truncate">{member.bio}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-4 px-6">
+                        <p className="text-sm text-foreground">{member.role}</p>
+                      </td>
+                      <td className="py-4 px-6">
+                        <div className="flex flex-wrap gap-1">
+                          {member.badges.map((badge, idx) => (
+                            <span 
+                              key={idx}
+                              className={`${badge.color} text-foreground text-xs px-2 py-1 rounded font-medium`}
+                            >
+                              {badge.label}
+                            </span>
+                          ))}
+                        </div>
+                      </td>
+                      <td className="py-4 px-6 text-center">
+                        <span className="text-sm text-foreground font-medium">{member.posts}</span>
+                      </td>
+                      <td className="py-4 px-6 text-center">
+                        <span className="text-sm text-foreground font-medium">{member.followers}</span>
+                      </td>
+                      <td className="py-4 px-6 text-center">
+                        <span className={`inline-flex items-center gap-1 text-xs font-medium ${member.online ? 'text-green-600' : 'text-slate-400'}`}>
+                          <Circle className="h-1.5 w-1.5 fill-current" />
+                          {member.online ? 'Online' : 'Offline'}
+                        </span>
+                      </td>
+                      <td className="py-4 px-6">
+                        <div className="flex items-center justify-center gap-1">
+                          {member.relationship === "Mútuo" ? (
+                            <span className="bg-[hsl(142,35%,75%)] bg-opacity-30 text-foreground text-xs px-2 py-1 rounded font-medium">
+                              Mútuo
+                            </span>
+                          ) : (
+                            <span className="text-xs text-muted-foreground">{member.relationship}</span>
+                          )}
+                        </div>
+                      </td>
+                      <td className="py-4 px-6">
+                        <div className="flex items-center justify-end gap-2">
+                          {member.isFollowing ? (
+                            <Button 
+                              size="sm"
+                              className="bg-[hsl(207,35%,75%)] bg-opacity-30 text-foreground hover:bg-opacity-100 gap-1"
+                            >
+                              <UserCheck className="h-3 w-3" />
+                              Seguindo
+                            </Button>
+                          ) : (
+                            <Button 
+                              size="sm"
+                              variant="outline"
+                              className="gap-1"
+                            >
+                              <UserPlus className="h-3 w-3" />
+                              Seguir
+                            </Button>
+                          )}
+                          <Button size="icon" variant="outline" className="h-8 w-8">
+                            <Mail className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
+          </div>
+
+          {/* Load More Button */}
+          <div className="mt-8 flex items-center justify-center">
+            <Button variant="outline" className="gap-2">
+              <span>Carregar mais membros</span>
+              <ChevronLeft className="h-4 w-4 rotate-[-90deg]" />
+            </Button>
           </div>
         </div>
       </main>
     </div>
   );
-}
+};
+
+export default ParticipantesConfirmados;
