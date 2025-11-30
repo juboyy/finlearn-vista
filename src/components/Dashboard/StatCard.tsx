@@ -70,12 +70,6 @@ export const StatCard = ({
           )}
           
           <div className="space-y-4">
-            {explanation && (
-              <div>
-                <p className="text-sm text-muted-foreground leading-relaxed">{explanation}</p>
-              </div>
-            )}
-            
             {insight && (
               <div className="bg-pastel-blue/20 rounded-lg p-3">
                 <h4 className="text-sm font-semibold text-foreground mb-2">Insight</h4>
