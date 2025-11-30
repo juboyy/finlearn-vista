@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { X, Send, Loader2, Bot } from "lucide-react";
+import { X, Send, Loader2, Bot, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -20,12 +20,12 @@ interface ArticleExpertChatProps {
 }
 
 export function ArticleExpertChat({ isOpen, onClose, articleTitle, articleContext }: ArticleExpertChatProps) {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: "assistant",
-      content: `Olá! Sou Sócrates, especialista em ${articleTitle}. Li o artigo completo e estou aqui para esclarecer qualquer dúvida que você tenha sobre o texto. Há algo específico que você gostaria de entender melhor?`
-    }
-  ]);
+  const initialMessage: Message = {
+    role: "assistant",
+    content: `Olá! Sou Sócrates, especialista em ${articleTitle}. Li o artigo completo e estou aqui para esclarecer qualquer dúvida que você tenha sobre o texto. Há algo específico que você gostaria de entender melhor?`
+  };
+  
+  const [messages, setMessages] = useState<Message[]>([initialMessage]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showQuickActions, setShowQuickActions] = useState(true);
@@ -41,6 +41,16 @@ export function ArticleExpertChat({ isOpen, onClose, articleTitle, articleContex
     "Qual a diferença entre taxa fixa e taxa variável?",
     "Como funciona o uso do FGTS no financiamento imobiliário?"
   ];
+
+  // Reset conversation when chat opens
+  useEffect(() => {
+    if (isOpen) {
+      setMessages([initialMessage]);
+      setInput("");
+      setShowQuickActions(true);
+      setIsLoading(false);
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -115,6 +125,17 @@ export function ArticleExpertChat({ isOpen, onClose, articleTitle, articleContex
     sendMessage(question);
   };
 
+  const handleClearConversation = () => {
+    setMessages([initialMessage]);
+    setInput("");
+    setShowQuickActions(true);
+    setIsLoading(false);
+    toast({
+      title: "Conversa limpa",
+      description: "A conversa foi reiniciada com sucesso."
+    });
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -138,14 +159,25 @@ export function ArticleExpertChat({ isOpen, onClose, articleTitle, articleContex
             <p className="text-xs text-muted-foreground">{articleTitle}</p>
           </div>
         </div>
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={onClose}
-          className="hover:bg-muted"
-        >
-          <X className="w-5 h-5" />
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={handleClearConversation}
+            className="hover:bg-muted"
+            title="Limpar conversa"
+          >
+            <Trash2 className="w-5 h-5" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={onClose}
+            className="hover:bg-muted"
+          >
+            <X className="w-5 h-5" />
+          </Button>
+        </div>
       </div>
 
       {/* Messages */}
