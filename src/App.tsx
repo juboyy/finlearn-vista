@@ -129,6 +129,7 @@ import WebinarDetalhes from "./pages/WebinarDetalhes";
 import EventosPresenciais from "./pages/EventosPresenciais";
 import MeusIngressos from "./pages/MeusIngressos";
 import CheckoutIngresso from "./pages/CheckoutIngresso";
+import HistoricoIngressos from "./pages/HistoricoIngressos";
 
 import NotFound from "./pages/NotFound";
 
@@ -274,6 +275,7 @@ const App = () => {
           <Route path="/eventos-presenciais" element={<EventosPresenciais />} />
           <Route path="/meus-ingressos" element={<MeusIngressos />} />
           <Route path="/checkout-ingresso" element={<CheckoutIngresso />} />
+          <Route path="/historico-ingressos" element={<HistoricoIngressos />} />
            
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
