@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, MapPin, Users, Clock, Info, Mic, CalendarDays, Map, Car, Train, Hotel, Navigation, CheckCircle, Check, X, ArrowRight, Headphones, BarChart, CreditCard, QrCode, Barcode, Building, Shield, ChevronLeft } from "lucide-react";
+import { ChevronLeft, MapPin, Users, Clock, Info, Mic, CalendarDays, Map, Car, Train, Hotel, Navigation, CheckCircle, Check, X, ArrowRight, Headphones, BarChart, CreditCard, QrCode, Barcode, Building, Shield } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export default function CheckoutIngresso() {
