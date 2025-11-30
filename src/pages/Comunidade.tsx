@@ -95,7 +95,10 @@ export default function Comunidade() {
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="text-lg font-semibold text-slate-800">Comunidades</h2>
                   <div className="flex gap-2">
-                    <button className="px-4 py-2 bg-pastel-orange border border-pastel-orange text-slate-700 rounded-lg text-sm font-medium flex items-center gap-2">
+                    <button 
+                      onClick={() => navigate("/todas-comunidades")}
+                      className="px-4 py-2 bg-pastel-orange border border-pastel-orange text-slate-700 rounded-lg text-sm font-medium flex items-center gap-2 hover:bg-pastel-orange/80 transition"
+                    >
                       <Users className="w-4 h-4" />
                       Ver todas
                     </button>
