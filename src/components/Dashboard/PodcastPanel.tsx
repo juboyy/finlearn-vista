@@ -1,6 +1,11 @@
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Play, Share2, Heart, History, Pause } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
+import { HistoricoPodcastsPanel } from "./HistoricoPodcastsPanel";
 import {
   Carousel,
   CarouselContent,
@@ -14,10 +19,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 // Import podcast images
 import ep142Image from "@/assets/podcast-ep142-volatilidade.png";
@@ -302,6 +303,7 @@ export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
   const [favoriteIds, setFavoriteIds] = useState<Set<string>>(new Set());
   const [currentlyPlaying, setCurrentlyPlaying] = useState<string | null>(null);
   const [audioRef] = useState(new Audio());
+  const [historyOpen, setHistoryOpen] = useState(false);
 
   useEffect(() => {
     if (open) {
@@ -423,7 +425,7 @@ export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => navigate("/historico-podcasts")}
+              onClick={() => setHistoryOpen(true)}
               className="border-2 border-pastel-blue/40 hover:bg-gradient-to-r hover:from-pastel-blue/10 hover:to-pastel-purple/10 hover:border-pastel-blue hover:scale-105 transition-all duration-300 shadow-sm hover:shadow-md"
             >
               <History className="h-4 w-4 mr-2" />
@@ -558,6 +560,9 @@ export function PodcastPanel({ open, onOpenChange }: PodcastPanelProps) {
           </div>
         </div>
       </SheetContent>
+      
+      {/* History Panel */}
+      <HistoricoPodcastsPanel open={historyOpen} onOpenChange={setHistoryOpen} />
     </Sheet>
   );
 }
