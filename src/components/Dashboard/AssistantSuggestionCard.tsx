@@ -74,7 +74,9 @@ export const AssistantSuggestionCard = ({ suggestion, onMarkAsRead, onTogglePin,
       onClick={handleClick}
       className={`bg-white rounded-xl border-2 ${
         isPinned ? "border-pastel-yellow" : suggestion.is_read ? "border-slate-200" : config.borderColor
-      } hover:shadow-md transition cursor-pointer relative`}
+      } hover:shadow-md transition cursor-pointer relative ${
+        suggestion.is_read && !isPinned ? "opacity-50" : "opacity-100"
+      }`}
     >
       {isPinned && (
         <div className="absolute top-2 right-2">
