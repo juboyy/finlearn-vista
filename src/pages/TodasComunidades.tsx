@@ -16,10 +16,10 @@ const TodasComunidades = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
-    <div className="flex min-h-screen w-full bg-slate-50">
+    <div className="flex h-screen w-full bg-slate-50 overflow-hidden">
       <SidebarFix />
       
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
         <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
           <div className="px-8 py-4 flex items-center justify-between">
@@ -79,7 +79,7 @@ const TodasComunidades = () => {
           </div>
         </header>
 
-        <div className="p-8">
+        <div className="p-8 overflow-y-auto flex-1">
           <div className="flex gap-8">
             {/* Main Content */}
             <div className="flex-1">
