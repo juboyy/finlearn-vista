@@ -425,16 +425,518 @@ export default function ProgramacaoEvento() {
             </div>
           )}
 
-          {/* Programação dos outros dias */}
+          {/* Programação do Dia 2 */}
           {activeDay === 2 && (
-            <div className="bg-white rounded-xl border border-slate-200 p-8 text-center">
-              <p className="text-slate-600">Programação do Dia 16 em breve...</p>
+            <div className="space-y-6">
+              {/* Sessão 1 - Credenciamento */}
+              <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="px-3 py-1 bg-pastel-blue/60 text-slate-700 text-xs font-bold rounded-full uppercase border border-pastel-blue/70">Credenciamento</span>
+                      <span className="text-sm font-medium text-slate-500">08:00 - 09:00</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-800 mb-3">Check-in e Café da Manhã</h3>
+                    <p className="text-slate-600 mb-4">Recepção com café da manhã executivo para participantes do segundo dia. Momento para atualizar agendas e conectar com outros participantes.</p>
+                    <div className="flex items-center gap-4 text-sm text-slate-500">
+                      <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> Hall Principal</span>
+                      <span className="flex items-center gap-1"><Users className="w-4 h-4" /> Todos os participantes</span>
+                    </div>
+                  </div>
+                  <button className="ml-4 w-10 h-10 rounded-lg border border-slate-200 hover:bg-slate-100 transition flex items-center justify-center text-slate-400">
+                    <Star className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Sessão 2 - Keynote */}
+              <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="px-3 py-1 bg-pastel-purple/60 text-slate-700 text-xs font-bold rounded-full uppercase border border-pastel-purple/70">Keynote</span>
+                      <span className="text-sm font-medium text-slate-500">09:00 - 10:30</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-800 mb-3">Tecnologia e Inovação no Mercado Financeiro</h3>
+                    <p className="text-slate-600 mb-4">Exploração das principais tecnologias disruptivas transformando o setor financeiro: blockchain, inteligência artificial, open banking e tokenização de ativos. Como as instituições tradicionais estão se adaptando à era digital.</p>
+                    
+                    <div className="bg-slate-50 rounded-lg p-4 mb-4">
+                      <p className="text-xs font-bold text-slate-700 mb-3">PALESTRANTE PRINCIPAL</p>
+                      <div className="flex items-center gap-3">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-7.jpg" className="w-12 h-12 rounded-full object-cover" alt="Palestrante" />
+                        <div>
+                          <p className="font-semibold text-slate-800">Dr. Eduardo Ferreira</p>
+                          <p className="text-sm text-slate-600">CTO, Nubank</p>
+                          <div className="flex gap-2 mt-1">
+                            <span className="text-xs text-slate-500">280k seguidores</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-4 text-sm text-slate-500">
+                      <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> Auditório Principal</span>
+                      <span className="flex items-center gap-1"><Users className="w-4 h-4" /> Capacidade: 2.000</span>
+                      <span className="flex items-center gap-1"><Globe className="w-4 h-4" /> Português</span>
+                    </div>
+                  </div>
+                  <button className="ml-4 w-10 h-10 rounded-lg border border-slate-200 hover:bg-slate-100 transition flex items-center justify-center text-slate-400">
+                    <Star className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Sessão 3 - Coffee Break */}
+              <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="px-3 py-1 bg-pastel-green/60 text-slate-700 text-xs font-bold rounded-full uppercase border border-pastel-green/70">Coffee Break</span>
+                      <span className="text-sm font-medium text-slate-500">10:30 - 11:00</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-800 mb-3">Pausa para Networking</h3>
+                    <p className="text-slate-600 mb-4">Intervalo com coffee break e visita aos estandes dos parceiros tecnológicos.</p>
+                    <div className="flex items-center gap-4 text-sm text-slate-500">
+                      <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> Área de Exposição</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Sessão 4 - Painel */}
+              <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="px-3 py-1 bg-pastel-pink/60 text-slate-700 text-xs font-bold rounded-full uppercase border border-pastel-pink/70">Painel</span>
+                      <span className="text-sm font-medium text-slate-500">11:00 - 12:30</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-800 mb-3">ESG e Investimentos Sustentáveis: O Futuro do Mercado</h3>
+                    <p className="text-slate-600 mb-4">Discussão sobre a integração de critérios ESG nas decisões de investimento, green bonds, créditos de carbono e o papel das instituições financeiras na transição para economia sustentável.</p>
+                    
+                    <div className="bg-slate-50 rounded-lg p-4 mb-4">
+                      <p className="text-xs font-bold text-slate-700 mb-3">PAINELISTAS</p>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="flex items-center gap-2">
+                          <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" className="w-10 h-10 rounded-full object-cover" alt="" />
+                          <div>
+                            <p className="font-semibold text-slate-800 text-sm">Marina Silva</p>
+                            <p className="text-xs text-slate-600">Diretora ESG, Itaú Unibanco</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" className="w-10 h-10 rounded-full object-cover" alt="" />
+                          <div>
+                            <p className="font-semibold text-slate-800 text-sm">Rafael Oliveira</p>
+                            <p className="text-xs text-slate-600">CEO, ANBIMA</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" className="w-10 h-10 rounded-full object-cover" alt="" />
+                          <div>
+                            <p className="font-semibold text-slate-800 text-sm">Carolina Mendes</p>
+                            <p className="text-xs text-slate-600">Head Sustentabilidade, B3</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-9.jpg" className="w-10 h-10 rounded-full object-cover" alt="" />
+                          <div>
+                            <p className="font-semibold text-slate-800 text-sm">Thiago Lima</p>
+                            <p className="text-xs text-slate-600">Moderador (Bloomberg)</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-4 text-sm text-slate-500">
+                      <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> Auditório Principal</span>
+                      <span className="flex items-center gap-1"><Users className="w-4 h-4" /> Capacidade: 2.000</span>
+                      <span className="flex items-center gap-1"><MessageCircle className="w-4 h-4" /> Q&A ao vivo</span>
+                    </div>
+                  </div>
+                  <button className="ml-4 w-10 h-10 rounded-lg border border-slate-200 hover:bg-slate-100 transition flex items-center justify-center text-slate-400">
+                    <Star className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Sessão 5 - Almoço */}
+              <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="px-3 py-1 bg-pastel-yellow/60 text-slate-700 text-xs font-bold rounded-full uppercase border border-pastel-yellow/70">Almoço</span>
+                      <span className="text-sm font-medium text-slate-500">12:30 - 14:00</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-800 mb-3">Almoço Livre e Networking</h3>
+                    <p className="text-slate-600 mb-4">Praça de alimentação com opções variadas. Aproveite para networking informal e visita aos estandes.</p>
+                    <div className="flex items-center gap-4 text-sm text-slate-500">
+                      <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> Praça de Alimentação</span>
+                      <span className="flex items-center gap-1"><UtensilsCrossed className="w-4 h-4" /> Buffet Completo</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Sessão 6 - Trilhas Paralelas */}
+              <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="px-3 py-1 bg-pastel-blue/60 text-slate-700 text-xs font-bold rounded-full uppercase border border-pastel-blue/70">Trilhas Paralelas</span>
+                      <span className="text-sm font-medium text-slate-500">14:00 - 15:30</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-800 mb-4">Sessões Simultâneas - Escolha sua Trilha</h3>
+                    
+                    <div className="grid md:grid-cols-3 gap-4">
+                      <div className="bg-slate-50 rounded-lg p-4 border-2 border-pastel-blue hover:border-pastel-blue/60 transition cursor-pointer">
+                        <div className="flex items-center gap-2 mb-2">
+                          <div className="w-8 h-8 rounded bg-pastel-blue/20 flex items-center justify-center">
+                            <span className="text-pastel-blue font-bold text-sm">A</span>
+                          </div>
+                          <span className="text-xs font-bold text-slate-700">TRILHA A</span>
+                        </div>
+                        <h4 className="font-bold text-slate-800 mb-2">Criptoativos e DeFi</h4>
+                        <p className="text-sm text-slate-600 mb-3">Mercado de criptomoedas, finanças descentralizadas e regulação no Brasil.</p>
+                        <div className="flex items-center gap-2 text-xs text-slate-500">
+                          <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg" className="w-6 h-6 rounded-full" alt="" />
+                          <span>Gustavo Almeida</span>
+                        </div>
+                        <p className="text-xs text-slate-500 mt-2 flex items-center gap-1"><MapPin className="w-3 h-3" /> Sala 101</p>
+                      </div>
+
+                      <div className="bg-slate-50 rounded-lg p-4 border-2 border-pastel-purple hover:border-pastel-purple/60 transition cursor-pointer">
+                        <div className="flex items-center gap-2 mb-2">
+                          <div className="w-8 h-8 rounded bg-pastel-purple/20 flex items-center justify-center">
+                            <span className="text-pastel-purple font-bold text-sm">B</span>
+                          </div>
+                          <span className="text-xs font-bold text-slate-700">TRILHA B</span>
+                        </div>
+                        <h4 className="font-bold text-slate-800 mb-2">Gestão de Patrimônio</h4>
+                        <p className="text-sm text-slate-600 mb-3">Estratégias para High Net Worth Individuals e Family Offices.</p>
+                        <div className="flex items-center gap-2 text-xs text-slate-500">
+                          <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg" className="w-6 h-6 rounded-full" alt="" />
+                          <span>Patricia Rocha</span>
+                        </div>
+                        <p className="text-xs text-slate-500 mt-2 flex items-center gap-1"><MapPin className="w-3 h-3" /> Sala 102</p>
+                      </div>
+
+                      <div className="bg-slate-50 rounded-lg p-4 border-2 border-pastel-green hover:border-pastel-green/60 transition cursor-pointer">
+                        <div className="flex items-center gap-2 mb-2">
+                          <div className="w-8 h-8 rounded bg-pastel-green/20 flex items-center justify-center">
+                            <span className="text-pastel-green font-bold text-sm">C</span>
+                          </div>
+                          <span className="text-xs font-bold text-slate-700">TRILHA C</span>
+                        </div>
+                        <h4 className="font-bold text-slate-800 mb-2">Crédito Privado</h4>
+                        <p className="text-sm text-slate-600 mb-3">Oportunidades em FIDCs, debêntures incentivadas e crédito estruturado.</p>
+                        <div className="flex items-center gap-2 text-xs text-slate-500">
+                          <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg" className="w-6 h-6 rounded-full" alt="" />
+                          <span>Fernando Costa</span>
+                        </div>
+                        <p className="text-xs text-slate-500 mt-2 flex items-center gap-1"><MapPin className="w-3 h-3" /> Sala 103</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Sessão 7 - Coffee Break */}
+              <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="px-3 py-1 bg-pastel-green/60 text-slate-700 text-xs font-bold rounded-full uppercase border border-pastel-green/70">Coffee Break</span>
+                      <span className="text-sm font-medium text-slate-500">15:30 - 16:00</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-800 mb-3">Intervalo Temático</h3>
+                    <p className="text-slate-600 mb-4">Coffee especial com demonstrações de tecnologia financeira pelos parceiros.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Sessão 8 - Mesa Redonda */}
+              <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="px-3 py-1 bg-pastel-purple/60 text-slate-700 text-xs font-bold rounded-full uppercase border border-pastel-purple/70">Mesa Redonda</span>
+                      <span className="text-sm font-medium text-slate-500">16:00 - 17:30</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-800 mb-3">Inteligência Artificial no Mercado Financeiro</h3>
+                    <p className="text-slate-600 mb-4">Aplicações práticas de IA e Machine Learning em análise de risco, trading algorítmico, detecção de fraudes e personalização de serviços financeiros.</p>
+                    
+                    <div className="bg-slate-50 rounded-lg p-4 mb-4">
+                      <p className="text-xs font-bold text-slate-700 mb-3">PARTICIPANTES</p>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="flex items-center gap-2">
+                          <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg" className="w-10 h-10 rounded-full object-cover" alt="" />
+                          <div>
+                            <p className="font-semibold text-slate-800 text-sm">Beatriz Santos</p>
+                            <p className="text-xs text-slate-600">Head IA, Santander Brasil</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-7.jpg" className="w-10 h-10 rounded-full object-cover" alt="" />
+                          <div>
+                            <p className="font-semibold text-slate-800 text-sm">Lucas Martins</p>
+                            <p className="text-xs text-slate-600">CTO, Stone Co.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-4 text-sm text-slate-500">
+                      <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> Auditório Secundário</span>
+                      <span className="flex items-center gap-1"><Users className="w-4 h-4" /> Capacidade: 500</span>
+                    </div>
+                  </div>
+                  <button className="ml-4 w-10 h-10 rounded-lg border border-slate-200 hover:bg-slate-100 transition flex items-center justify-center text-slate-400">
+                    <Star className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Sessão 9 - Jantar VIP */}
+              <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="px-3 py-1 bg-pastel-pink/60 text-slate-700 text-xs font-bold rounded-full uppercase border border-pastel-pink/70">Jantar</span>
+                      <span className="text-sm font-medium text-slate-500">19:30 - 22:00</span>
+                      <span className="px-2 py-0.5 bg-amber-100 text-amber-700 text-xs font-medium rounded">VIP Exclusivo</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-800 mb-3">Jantar de Gala com CEOs</h3>
+                    <p className="text-slate-600 mb-4">Jantar executivo exclusivo com líderes do mercado financeiro. Ambiente reservado para conexões estratégicas de alto nível.</p>
+                    <div className="flex items-center gap-4 text-sm text-slate-500">
+                      <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> Salão Nobre</span>
+                      <span className="flex items-center gap-1"><UtensilsCrossed className="w-4 h-4" /> Menu Degustação</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           )}
 
+          {/* Programação do Dia 3 */}
           {activeDay === 3 && (
-            <div className="bg-white rounded-xl border border-slate-200 p-8 text-center">
-              <p className="text-slate-600">Programação do Dia 17 em breve...</p>
+            <div className="space-y-6">
+              {/* Sessão 1 - Credenciamento */}
+              <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="px-3 py-1 bg-pastel-blue/60 text-slate-700 text-xs font-bold rounded-full uppercase border border-pastel-blue/70">Credenciamento</span>
+                      <span className="text-sm font-medium text-slate-500">08:30 - 09:30</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-800 mb-3">Último Check-in e Café</h3>
+                    <p className="text-slate-600 mb-4">Recepção final com café reforçado para o último dia do evento.</p>
+                    <div className="flex items-center gap-4 text-sm text-slate-500">
+                      <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> Hall Principal</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Sessão 2 - Keynote */}
+              <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="px-3 py-1 bg-pastel-purple/60 text-slate-700 text-xs font-bold rounded-full uppercase border border-pastel-purple/70">Keynote</span>
+                      <span className="text-sm font-medium text-slate-500">09:30 - 11:00</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-800 mb-3">Perspectivas Macroeconômicas para 2025-2026</h3>
+                    <p className="text-slate-600 mb-4">Análise das principais tendências macroeconômicas globais e brasileiras para os próximos 18 meses. Impactos de eleições, política monetária e reformas estruturais no mercado de capitais.</p>
+                    
+                    <div className="bg-slate-50 rounded-lg p-4 mb-4">
+                      <p className="text-xs font-bold text-slate-700 mb-3">PALESTRANTE PRINCIPAL</p>
+                      <div className="flex items-center gap-3">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg" className="w-12 h-12 rounded-full object-cover" alt="Palestrante" />
+                        <div>
+                          <p className="font-semibold text-slate-800">Dr. Henrique Meirelles</p>
+                          <p className="text-sm text-slate-600">Ex-Presidente Banco Central, Economista</p>
+                          <div className="flex gap-2 mt-1">
+                            <span className="text-xs text-slate-500">500k seguidores</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-4 text-sm text-slate-500">
+                      <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> Auditório Principal</span>
+                      <span className="flex items-center gap-1"><Users className="w-4 h-4" /> Capacidade: 2.000</span>
+                      <span className="flex items-center gap-1"><Globe className="w-4 h-4" /> Português</span>
+                    </div>
+                  </div>
+                  <button className="ml-4 w-10 h-10 rounded-lg border border-slate-200 hover:bg-slate-100 transition flex items-center justify-center text-slate-400">
+                    <Star className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Sessão 3 - Coffee Break */}
+              <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="px-3 py-1 bg-pastel-green/60 text-slate-700 text-xs font-bold rounded-full uppercase border border-pastel-green/70">Coffee Break</span>
+                      <span className="text-sm font-medium text-slate-500">11:00 - 11:30</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-800 mb-3">Intervalo Final</h3>
+                    <p className="text-slate-600 mb-4">Última pausa para networking e troca de contatos antes do encerramento.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Sessão 4 - Painel de Encerramento */}
+              <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="px-3 py-1 bg-pastel-pink/60 text-slate-700 text-xs font-bold rounded-full uppercase border border-pastel-pink/70">Painel</span>
+                      <span className="text-sm font-medium text-slate-500">11:30 - 13:00</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-800 mb-3">O Futuro do Mercado de Capitais Brasileiro</h3>
+                    <p className="text-slate-600 mb-4">Painel de encerramento com líderes do mercado debatendo as principais tendências, desafios e oportunidades para o desenvolvimento do mercado de capitais no Brasil.</p>
+                    
+                    <div className="bg-slate-50 rounded-lg p-4 mb-4">
+                      <p className="text-xs font-bold text-slate-700 mb-3">PAINELISTAS</p>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="flex items-center gap-2">
+                          <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" className="w-10 h-10 rounded-full object-cover" alt="" />
+                          <div>
+                            <p className="font-semibold text-slate-800 text-sm">Gilberto Mifano</p>
+                            <p className="text-xs text-slate-600">Presidente, B3</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" className="w-10 h-10 rounded-full object-cover" alt="" />
+                          <div>
+                            <p className="font-semibold text-slate-800 text-sm">Daniela Brettas</p>
+                            <p className="text-xs text-slate-600">Presidente, CVM</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" className="w-10 h-10 rounded-full object-cover" alt="" />
+                          <div>
+                            <p className="font-semibold text-slate-800 text-sm">André Esteves</p>
+                            <p className="text-xs text-slate-600">Senior Partner, BTG Pactual</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg" className="w-10 h-10 rounded-full object-cover" alt="" />
+                          <div>
+                            <p className="font-semibold text-slate-800 text-sm">Rodolfo Amstalden</p>
+                            <p className="text-xs text-slate-600">Moderador (InfoMoney)</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-4 text-sm text-slate-500">
+                      <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> Auditório Principal</span>
+                      <span className="flex items-center gap-1"><Users className="w-4 h-4" /> Capacidade: 2.000</span>
+                      <span className="flex items-center gap-1"><MessageCircle className="w-4 h-4" /> Q&A ao vivo</span>
+                    </div>
+                  </div>
+                  <button className="ml-4 w-10 h-10 rounded-lg border border-slate-200 hover:bg-slate-100 transition flex items-center justify-center text-slate-400">
+                    <Star className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Sessão 5 - Almoço de Encerramento */}
+              <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="px-3 py-1 bg-pastel-yellow/60 text-slate-700 text-xs font-bold rounded-full uppercase border border-pastel-yellow/70">Almoço</span>
+                      <span className="text-sm font-medium text-slate-500">13:00 - 14:30</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-800 mb-3">Almoço de Confraternização</h3>
+                    <p className="text-slate-600 mb-4">Almoço especial de encerramento do Summit com todos os participantes. Momento de celebração e despedida.</p>
+                    <div className="flex items-center gap-4 text-sm text-slate-500">
+                      <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> Salão Principal</span>
+                      <span className="flex items-center gap-1"><UtensilsCrossed className="w-4 h-4" /> Buffet Premium</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Sessão 6 - Workshop de Encerramento */}
+              <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="px-3 py-1 bg-pastel-peach/60 text-slate-700 text-xs font-bold rounded-full uppercase border border-pastel-peach/70">Workshop</span>
+                      <span className="text-sm font-medium text-slate-500">14:30 - 16:00</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-800 mb-3">Estratégias de Portfolio para 2025</h3>
+                    <p className="text-slate-600 mb-4">Workshop prático sobre montagem de carteiras eficientes considerando o cenário macro discutido no evento. Exercícios de alocação e rebalanceamento.</p>
+                    
+                    <div className="bg-slate-50 rounded-lg p-4 mb-4">
+                      <p className="text-xs font-bold text-slate-700 mb-3">INSTRUTOR</p>
+                      <div className="flex items-center gap-3">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-9.jpg" className="w-12 h-12 rounded-full object-cover" alt="" />
+                        <div>
+                          <p className="font-semibold text-slate-800">Ricardo Pereira, CFA</p>
+                          <p className="text-sm text-slate-600">Head Alocação, Bradesco Asset</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-4 text-sm text-slate-500">
+                      <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> Sala 201</span>
+                      <span className="flex items-center gap-1"><Users className="w-4 h-4" /> 100 vagas</span>
+                      <span className="flex items-center gap-1"><Laptop className="w-4 h-4" /> Material digital</span>
+                    </div>
+                  </div>
+                  <button className="ml-4 w-10 h-10 rounded-lg border border-slate-200 hover:bg-slate-100 transition flex items-center justify-center text-slate-400">
+                    <Star className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Sessão 7 - Cerimônia de Encerramento */}
+              <div className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition">
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="px-3 py-1 bg-pastel-purple/60 text-slate-700 text-xs font-bold rounded-full uppercase border border-pastel-purple/70">Encerramento</span>
+                      <span className="text-sm font-medium text-slate-500">16:00 - 17:00</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-800 mb-3">Cerimônia de Encerramento e Entrega de Certificados</h3>
+                    <p className="text-slate-600 mb-4">Discurso de encerramento dos organizadores, agradecimentos aos palestrantes e patrocinadores, e entrega dos certificados de participação. Foto oficial de todos os participantes.</p>
+                    <div className="flex items-center gap-4 text-sm text-slate-500">
+                      <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> Auditório Principal</span>
+                      <span className="flex items-center gap-1"><Users className="w-4 h-4" /> Todos os participantes</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Resumo do Evento */}
+              <section className="bg-white rounded-xl border border-slate-200 p-8">
+                <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-3">
+                  <Star className="text-pastel-yellow w-5 h-5" />
+                  Resumo do Summit 2025
+                </h2>
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div className="text-center">
+                    <div className="text-4xl font-bold text-slate-800 mb-2">45+</div>
+                    <p className="text-slate-600">Sessões e Palestras</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-4xl font-bold text-slate-800 mb-2">80+</div>
+                    <p className="text-slate-600">Palestrantes Especialistas</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-4xl font-bold text-slate-800 mb-2">2000+</div>
+                    <p className="text-slate-600">Participantes Esperados</p>
+                  </div>
+                </div>
+              </section>
             </div>
           )}
         </div>
