@@ -71,8 +71,9 @@ export default function MeusIngressos() {
             </div>
           </div>
 
-          {/* Active Tickets Section */}
-          <section className="space-y-6 mb-12">
+          {/* Active Tickets Section - Renderizado condicionalmente */}
+          {activeTab === "proximos" && (
+            <section className="space-y-6 mb-12">
             
             {/* Ticket Card 1: Featured/Upcoming */}
             <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col md:flex-row">
@@ -92,7 +93,12 @@ export default function MeusIngressos() {
                 </div>
                 {/* Decorative background image overlay */}
                 <div className="absolute inset-0 opacity-20 pointer-events-none">
-                  <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/2a3b4c5d6e-7f8a9b0c1d2e3f4a5b6c.png" className="w-full h-full object-cover" alt="background pattern" />
+                  <img 
+                    src="https://storage.googleapis.com/uxpilot-auth.appspot.com/2a3b4c5d6e-7f8a9b0c1d2e3f4a5b6c.png" 
+                    className="w-full h-full object-cover" 
+                    alt="background pattern"
+                    loading="lazy"
+                  />
                 </div>
               </div>
 
@@ -149,7 +155,12 @@ export default function MeusIngressos() {
               {/* Right: Illustration */}
               <div className="hidden xl:flex xl:w-64 bg-slate-50 p-6 items-center justify-center border-l border-slate-100">
                 <div className="w-full h-48 relative">
-                  <img className="w-full h-full object-contain" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/bb2273ce7e-6ad09df2e05230043d98.png" alt="illustration of a simple ticket icon with a qr code, pastel purple tones, outlined style, 2d flat design, thick strokes, white background" />
+                  <img 
+                    className="w-full h-full object-contain" 
+                    src="https://storage.googleapis.com/uxpilot-auth.appspot.com/bb2273ce7e-6ad09df2e05230043d98.png" 
+                    alt="illustration of a simple ticket icon with a qr code, pastel purple tones, outlined style, 2d flat design, thick strokes, white background"
+                    loading="lazy"
+                  />
                 </div>
               </div>
             </div>
@@ -172,7 +183,12 @@ export default function MeusIngressos() {
                 </div>
                 {/* Decorative background image overlay */}
                 <div className="absolute inset-0 opacity-20 pointer-events-none">
-                  <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/1f2e3d4c5b-6a7b8c9d0e1f2a3b4c5d.png" className="w-full h-full object-cover" alt="background pattern" />
+                  <img 
+                    src="https://storage.googleapis.com/uxpilot-auth.appspot.com/1f2e3d4c5b-6a7b8c9d0e1f2a3b4c5d.png" 
+                    className="w-full h-full object-cover" 
+                    alt="background pattern"
+                    loading="lazy"
+                  />
                 </div>
               </div>
 
@@ -226,17 +242,24 @@ export default function MeusIngressos() {
                 </div>
               </div>
               
-              {/* Right: Illustration */}
-              <div className="hidden xl:flex xl:w-64 bg-slate-50 p-6 items-center justify-center border-l border-slate-100">
-                <div className="w-full h-48 relative">
-                  <img className="w-full h-full object-contain" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/0e87cd540b-173888eb2f5ce4868119.png" alt="illustration of a workshop badge icon, pastel blue tones, outlined style, 2d flat design, thick strokes, white background" />
-                </div>
-              </div>
+               {/* Right: Illustration */}
+               <div className="hidden xl:flex xl:w-64 bg-slate-50 p-6 items-center justify-center border-l border-slate-100">
+                 <div className="w-full h-48 relative">
+                   <img 
+                     className="w-full h-full object-contain" 
+                     src="https://storage.googleapis.com/uxpilot-auth.appspot.com/0e87cd540b-173888eb2f5ce4868119.png" 
+                     alt="illustration of a workshop badge icon, pastel blue tones, outlined style, 2d flat design, thick strokes, white background"
+                     loading="lazy"
+                   />
+                 </div>
+               </div>
             </div>
           </section>
+          )}
 
-          {/* Information Grid */}
-          <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          {/* Information Grid - Renderizado condicionalmente */}
+          {activeTab === "proximos" && (
+            <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             {/* Need Help */}
             <div className="bg-pastel-yellow/30 rounded-xl p-6 border border-pastel-yellow relative overflow-hidden group">
               <div className="relative z-10">
@@ -288,9 +311,11 @@ export default function MeusIngressos() {
               </div>
             </div>
           </section>
+          )}
 
-          {/* Past Events History */}
-          <section>
+          {/* Past Events History - Renderizado condicionalmente */}
+          {activeTab === "historico" && (
+            <section>
             <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
               <History className="w-5 h-5 text-slate-400" /> Histórico Recente
             </h2>
@@ -308,10 +333,15 @@ export default function MeusIngressos() {
                 <tbody className="divide-y divide-slate-100">
                   <tr className="hover:bg-slate-50 transition">
                     <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded bg-pastel-pink flex-shrink-0 overflow-hidden">
-                          <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/4c5d6e7f8a-9b0c1d2e3f4a5b6c7d8e.png" className="w-full h-full object-cover grayscale opacity-80" alt="event thumb" />
-                        </div>
+                       <div className="flex items-center gap-3">
+                         <div className="w-10 h-10 rounded bg-pastel-pink flex-shrink-0 overflow-hidden">
+                           <img 
+                             src="https://storage.googleapis.com/uxpilot-auth.appspot.com/4c5d6e7f8a-9b0c1d2e3f4a5b6c7d8e.png" 
+                             className="w-full h-full object-cover grayscale opacity-80" 
+                             alt="event thumb"
+                             loading="lazy"
+                           />
+                         </div>
                         <div>
                           <p className="font-medium text-slate-800 text-sm">Regulação do Mercado</p>
                           <p className="text-xs text-slate-500">Seminário</p>
@@ -331,10 +361,15 @@ export default function MeusIngressos() {
                   </tr>
                   <tr className="hover:bg-slate-50 transition">
                     <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded bg-pastel-peach flex-shrink-0 overflow-hidden">
-                          <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5d6e7f8a9b-0c1d2e3f4a5b6c7d8e9f.png" className="w-full h-full object-cover grayscale opacity-80" alt="event thumb" />
-                        </div>
+                       <div className="flex items-center gap-3">
+                         <div className="w-10 h-10 rounded bg-pastel-peach flex-shrink-0 overflow-hidden">
+                           <img 
+                             src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5d6e7f8a9b-0c1d2e3f4a5b6c7d8e9f.png" 
+                             className="w-full h-full object-cover grayscale opacity-80" 
+                             alt="event thumb"
+                             loading="lazy"
+                           />
+                         </div>
                         <div>
                           <p className="font-medium text-slate-800 text-sm">Workshop Derivativos</p>
                           <p className="text-xs text-slate-500">Workshop</p>
@@ -354,10 +389,15 @@ export default function MeusIngressos() {
                   </tr>
                   <tr className="hover:bg-slate-50 transition">
                     <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded bg-pastel-blue flex-shrink-0 overflow-hidden">
-                          <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/6e7f8a9b0c-1d2e3f4a5b6c7d8e9f0a.png" className="w-full h-full object-cover grayscale opacity-80" alt="event thumb" />
-                        </div>
+                       <div className="flex items-center gap-3">
+                         <div className="w-10 h-10 rounded bg-pastel-blue flex-shrink-0 overflow-hidden">
+                           <img 
+                             src="https://storage.googleapis.com/uxpilot-auth.appspot.com/6e7f8a9b0c-1d2e3f4a5b6c7d8e9f0a.png" 
+                             className="w-full h-full object-cover grayscale opacity-80" 
+                             alt="event thumb"
+                             loading="lazy"
+                           />
+                         </div>
                         <div>
                           <p className="font-medium text-slate-800 text-sm">Fórum Meios de Pagamento</p>
                           <p className="text-xs text-slate-500">Fórum</p>
@@ -380,9 +420,20 @@ export default function MeusIngressos() {
               <div className="px-6 py-4 border-t border-slate-200 bg-slate-50 text-center">
                 <button className="text-sm text-slate-500 hover:text-slate-700 font-medium">Carregar mais eventos</button>
               </div>
-            </div>
-          </section>
+             </div>
+           </section>
+          )}
 
+          {/* Cancelled Events - Renderizado condicionalmente */}
+          {activeTab === "cancelados" && (
+            <div className="text-center py-16">
+              <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Ticket className="w-8 h-8 text-slate-400" />
+              </div>
+              <h3 className="text-xl font-semibold text-slate-800 mb-2">Nenhum ingresso cancelado</h3>
+              <p className="text-slate-600">Você não possui ingressos cancelados no momento</p>
+            </div>
+          )}
         </div>
       </main>
     </div>
