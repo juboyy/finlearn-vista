@@ -228,7 +228,10 @@ export default function CheckoutIngresso() {
                   </div>
                 </div>
               </div>
-              <button className="w-full mt-6 py-2 text-slate-600 font-medium text-sm border border-slate-200 rounded-lg hover:bg-slate-50 transition">
+              <button 
+                onClick={() => navigate('/programacao-evento')}
+                className="w-full mt-6 py-2 text-slate-600 font-medium text-sm border border-slate-200 rounded-lg hover:bg-slate-50 transition"
+              >
                 Ver programação completa
               </button>
             </section>
