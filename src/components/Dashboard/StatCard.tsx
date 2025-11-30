@@ -72,7 +72,6 @@ export const StatCard = ({
           <div className="space-y-4">
             {explanation && (
               <div>
-                <h4 className="text-sm font-semibold text-foreground mb-2">O que significa</h4>
                 <p className="text-sm text-muted-foreground leading-relaxed">{explanation}</p>
               </div>
             )}
