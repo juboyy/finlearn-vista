@@ -52,6 +52,7 @@ const LerEbook = () => {
   const [showReadingAgent, setShowReadingAgent] = useState(false);
   const [markdownPages, setMarkdownPages] = useState<any[]>([]);
   const [showExitDialog, setShowExitDialog] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -991,8 +992,125 @@ const LerEbook = () => {
       </div>
 
       {/* Right Sidebar - Bookmarks & Annotations */}
-      <div className="w-80 bg-card border-l border-border flex flex-col">
-        <div className="border-b border-border">
+      <div className={`bg-card border-l border-border flex flex-col transition-all duration-300 ${
+        sidebarCollapsed ? 'w-12' : 'w-80'
+      }`}>
+        {/* Toggle Button */}
+        <div className="border-b border-border p-2 flex justify-end">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+                  className="h-8 w-8"
+                >
+                  {sidebarCollapsed ? (
+                    <ChevronLeft size={16} />
+                  ) : (
+                    <ChevronRight size={16} />
+                  )}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="left">
+                <p>{sidebarCollapsed ? 'Expandir' : 'Recolher'}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+
+        {sidebarCollapsed ? (
+          <div className="flex flex-col items-center py-4 gap-3">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setSidebarCollapsed(false)}
+                    className="h-10 w-10 relative"
+                  >
+                    <Bookmark size={18} />
+                    {sortedBookmarks.length > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full w-4 h-4 flex items-center justify-center text-[10px]">
+                        {sortedBookmarks.length}
+                      </span>
+                    )}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="left">
+                  <p>Marcadores ({sortedBookmarks.length})</p>
+                </TooltipContent>
+              </Tooltip>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setSidebarCollapsed(false)}
+                    className="h-10 w-10 relative"
+                  >
+                    <Highlighter size={18} />
+                    {sortedHighlights.length > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full w-4 h-4 flex items-center justify-center text-[10px]">
+                        {sortedHighlights.length}
+                      </span>
+                    )}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="left">
+                  <p>Destaques ({sortedHighlights.length})</p>
+                </TooltipContent>
+              </Tooltip>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setSidebarCollapsed(false)}
+                    className="h-10 w-10 relative"
+                  >
+                    <MessageSquare size={18} />
+                    {sortedNotes.length > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full w-4 h-4 flex items-center justify-center text-[10px]">
+                        {sortedNotes.length}
+                      </span>
+                    )}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="left">
+                  <p>Anotações ({sortedNotes.length})</p>
+                </TooltipContent>
+              </Tooltip>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setSidebarCollapsed(false)}
+                    className="h-10 w-10 relative"
+                  >
+                    <FileEdit size={18} />
+                    {markdownPages.length > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full w-4 h-4 flex items-center justify-center text-[10px]">
+                        {markdownPages.length}
+                      </span>
+                    )}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="left">
+                  <p>Páginas Criadas ({markdownPages.length})</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        ) : (
+          <>
+            <div className="border-b border-border">
           {/* Tab Buttons */}
           <TooltipProvider>
             <div className="flex items-center justify-around p-4 gap-2">
@@ -1373,6 +1491,8 @@ const LerEbook = () => {
             )}
           </div>
         </ScrollArea>
+          </>
+        )}
       </div>
 
       {/* Selection Menu */}
