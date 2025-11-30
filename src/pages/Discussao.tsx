@@ -210,7 +210,12 @@ const Discussao = () => {
           <div className="px-6 py-3 bg-muted/30 border-b border-border flex items-center gap-6 overflow-x-auto">
             <button className="text-sm font-medium text-foreground border-b-2 border-[hsl(207,50%,60%)] pb-3 -mb-3.5 whitespace-nowrap">Discussões</button>
             <button className="text-sm font-medium text-muted-foreground hover:text-foreground pb-3 -mb-3.5 transition whitespace-nowrap">Sobre</button>
-            <button className="text-sm font-medium text-muted-foreground hover:text-foreground pb-3 -mb-3.5 transition whitespace-nowrap">Membros</button>
+            <button 
+              onClick={() => navigate("/participantes-confirmados")}
+              className="text-sm font-medium text-muted-foreground hover:text-foreground pb-3 -mb-3.5 transition whitespace-nowrap"
+            >
+              Membros
+            </button>
             <button className="text-sm font-medium text-muted-foreground hover:text-foreground pb-3 -mb-3.5 transition whitespace-nowrap">Eventos</button>
             <button className="text-sm font-medium text-muted-foreground hover:text-foreground pb-3 -mb-3.5 transition whitespace-nowrap">Recursos</button>
           </div>
