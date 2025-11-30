@@ -239,7 +239,7 @@ const Artigo = () => {
                     </div>
                   </button>
                   <button className="flex items-center gap-3 p-4 bg-card rounded-lg border border-border hover:border-pastel-purple hover:bg-pastel-purple/10 transition">
-                    <div className="w-10 h-10 bg-pastel-purple/30 rounded-lg flex items-center justify-center">
+                    <div className="w-10 h-10 bg-pastel-green/50 rounded-lg flex items-center justify-center">
                       <Video size={18} className="text-foreground" />
                     </div>
                     <div className="text-left">
