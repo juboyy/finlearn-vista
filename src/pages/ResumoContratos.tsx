@@ -22,7 +22,7 @@ const specializedAgents = [
     name: "Ana - Analista Técnica",
     description: "Especialista em análise técnica, padrões gráficos e estratégias de trading",
     icon: ChartLine,
-    bgColor: "hsl(142,35%,75%)",
+    bgColor: "hsl(142,35%,87%)",
     image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/f28f1efee6-bb8cd63f0a8ea0129291.png",
     category: "Análise",
     rating: "4.9"
@@ -32,7 +32,7 @@ const specializedAgents = [
     name: "Ricardo - Especialista em Renda Fixa",
     description: "Expert em títulos públicos, CDBs, LCIs e estratégias conservadoras",
     icon: Landmark,
-    bgColor: "hsl(142,35%,75%)",
+    bgColor: "hsl(142,35%,87%)",
     image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4f08e86bcd-772ce53ecbb47d504bde.png",
     category: "Renda Fixa",
     rating: "4.8"
@@ -42,7 +42,7 @@ const specializedAgents = [
     name: "Marina - Crypto & DeFi",
     description: "Especialista em criptomoedas, DeFi e tecnologia blockchain",
     icon: Bitcoin,
-    bgColor: "hsl(142,35%,75%)",
+    bgColor: "hsl(142,35%,87%)",
     image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/521bb99722-72b06772970c6fd465e6.png",
     category: "Crypto",
     rating: "4.7"
@@ -52,7 +52,7 @@ const specializedAgents = [
     name: "Professor João - Educador",
     description: "Educador financeiro com foco em fundamentos e teoria econômica",
     icon: GraduationCap,
-    bgColor: "hsl(142,35%,75%)",
+    bgColor: "hsl(142,35%,87%)",
     image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4450be57c6-3f9f4c9c029e3c4d7519.png",
     category: "Educação",
     rating: "4.9"
@@ -62,7 +62,7 @@ const specializedAgents = [
     name: "Especialista em Mercado Financeiro",
     description: "Expert em análise de mercados, ações e tendências econômicas",
     icon: TrendingUp,
-    bgColor: "hsl(142,35%,75%)",
+    bgColor: "hsl(142,35%,87%)",
     image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-74fa07dc19664888168d.png",
     category: "Mercados",
     rating: "4.8"
@@ -72,7 +72,7 @@ const specializedAgents = [
     name: "Especialista em Pagamentos",
     description: "Conhecimento em sistemas de pagamento, fintechs e transações digitais",
     icon: CreditCard,
-    bgColor: "hsl(142,35%,75%)",
+    bgColor: "hsl(142,35%,87%)",
     image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-13cb55de72175bb27fe6.png",
     category: "Fintechs",
     rating: "4.6"
@@ -82,7 +82,7 @@ const specializedAgents = [
     name: "Especialista em Mercado de Capitais",
     description: "Especialista em IPOs, ofertas públicas e estruturação de operações",
     icon: Database,
-    bgColor: "hsl(142,35%,75%)",
+    bgColor: "hsl(142,35%,87%)",
     image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-d3b919a60e4b8021bd1b.png",
     category: "Capitais",
     rating: "4.7"
@@ -92,7 +92,7 @@ const specializedAgents = [
     name: "Julia - ESG & Investimentos Sustentáveis",
     description: "Especialista em investimentos ESG e sustentabilidade corporativa",
     icon: TrendingUp,
-    bgColor: "hsl(142,35%,75%)",
+    bgColor: "hsl(142,35%,87%)",
     image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-22a909d28eba94674e80.png",
     category: "ESG",
     rating: "4.5"
@@ -102,7 +102,7 @@ const specializedAgents = [
     name: "Fernanda - Compliance & Regulação",
     description: "Expert em compliance, regulamentação CVM e aspectos legais do mercado",
     icon: Settings,
-    bgColor: "hsl(142,35%,75%)",
+    bgColor: "hsl(142,35%,87%)",
     image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-d3b919a60e4b8021bd1b.png",
     category: "Compliance",
     rating: "4.8"
@@ -112,7 +112,7 @@ const specializedAgents = [
     name: "Pedro - Valuation & M&A",
     description: "Especialista em avaliação de empresas, fusões e aquisições",
     icon: Landmark,
-    bgColor: "hsl(142,35%,75%)",
+    bgColor: "hsl(142,35%,87%)",
     image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a93432ae23-74fa07dc19664888168d.png",
     category: "Valuation",
     rating: "4.6"
