@@ -453,7 +453,10 @@ export default function CheckoutIngresso() {
                 </div>
 
                 {/* Attendees Button */}
-                <button className="w-full py-2.5 border-2 border-slate-600 text-slate-200 rounded-lg font-medium text-sm hover:bg-slate-700 hover:border-slate-500 transition flex items-center justify-center gap-2">
+                <button 
+                  onClick={() => navigate('/participantes-confirmados')}
+                  className="w-full py-2.5 border-2 border-slate-600 text-slate-200 rounded-lg font-medium text-sm hover:bg-slate-700 hover:border-slate-500 transition flex items-center justify-center gap-2"
+                >
                   <Users size={16} />
                   <span>Ver Participantes Confirmados</span>
                 </button>
