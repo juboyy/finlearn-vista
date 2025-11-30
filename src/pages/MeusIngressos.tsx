@@ -11,43 +11,43 @@ export default function MeusIngressos() {
       <SidebarFix />
       
       <main className="flex-1 overflow-y-auto">
-        <div className="p-8 max-w-7xl mx-auto">
-          
-          {/* Header Section */}
-          <header className="mb-8">
-            <div className="flex items-center justify-between mb-6">
+        {/* Header fixo no topo - padrão do sistema */}
+        <header className="bg-card border-b border-border sticky top-0 z-10">
+          <div className="px-8 py-4 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <a href="/eventos-presenciais" className="text-foreground hover:text-foreground/80">
+                <ArrowLeft className="w-5 h-5" />
+              </a>
               <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <a href="/eventos-presenciais" className="text-slate-400 hover:text-slate-600 text-sm flex items-center gap-1">
-                    <ArrowLeft className="w-4 h-4" /> Voltar para Eventos
-                  </a>
-                </div>
-                <h1 className="text-3xl font-bold text-slate-800">Meus Ingressos</h1>
-                <p className="text-slate-600 mt-1">Gerencie seus ingressos para eventos presenciais e online.</p>
-              </div>
-              <div className="flex gap-3">
-                <Button variant="outline" className="flex items-center gap-2">
-                  <Download className="w-4 h-4" /> Exportar Calendário
-                </Button>
-                <Button className="bg-pastel-yellow hover:bg-pastel-yellow/80 text-slate-700 flex items-center gap-2">
-                  <Plus className="w-4 h-4" /> Explorar Novos Eventos
-                </Button>
+                <h1 className="text-2xl font-semibold text-foreground">Meus Ingressos</h1>
+                <p className="text-sm text-muted-foreground mt-1">Gerencie seus ingressos para eventos presenciais e online</p>
               </div>
             </div>
+            <div className="flex items-center gap-3">
+              <Button variant="outline" className="flex items-center gap-2">
+                <Download className="w-4 h-4" /> Exportar Calendário
+              </Button>
+              <Button className="bg-pastel-yellow hover:bg-pastel-yellow/80 text-slate-700 flex items-center gap-2">
+                <Plus className="w-4 h-4" /> Explorar Novos Eventos
+              </Button>
+            </div>
+          </div>
+        </header>
 
-            {/* Tabs */}
-            <div className="border-b border-slate-200 mb-6">
-              <div className="flex gap-8">
-                <button
-                  onClick={() => setActiveTab("proximos")}
-                  className={`pb-4 border-b-2 font-medium px-2 transition ${
-                    activeTab === "proximos"
-                      ? "border-slate-800 text-slate-800"
-                      : "border-transparent text-slate-500 hover:text-slate-700"
-                  }`}
-                >
-                  Próximos (2)
-                </button>
+        <div className="p-8 max-w-7xl mx-auto">
+          {/* Tabs */}
+          <div className="border-b border-slate-200 mb-8">
+            <div className="flex gap-8">
+              <button
+                onClick={() => setActiveTab("proximos")}
+                className={`pb-4 border-b-2 font-medium px-2 transition ${
+                  activeTab === "proximos"
+                    ? "border-slate-800 text-slate-800"
+                    : "border-transparent text-slate-500 hover:text-slate-700"
+                }`}
+              >
+                Próximos (2)
+              </button>
                 <button
                   onClick={() => setActiveTab("historico")}
                   className={`pb-4 border-b-2 font-medium px-2 transition ${
@@ -67,10 +67,9 @@ export default function MeusIngressos() {
                   }`}
                 >
                   Cancelados (0)
-                </button>
-              </div>
+              </button>
             </div>
-          </header>
+          </div>
 
           {/* Active Tickets Section */}
           <section className="space-y-6 mb-12">
