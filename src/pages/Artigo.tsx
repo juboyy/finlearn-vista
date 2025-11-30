@@ -7,11 +7,13 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
+import { ArticleExpertChat } from "@/components/Dashboard/ArticleExpertChat";
 
 const Artigo = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState(12);
   const [activeSection, setActiveSection] = useState("");
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   // Refs para animação de fade-in
   const headerRef = useFadeInOnScroll<HTMLDivElement>();
@@ -622,7 +624,10 @@ const Artigo = () => {
               <p className="text-sm text-foreground mb-4">
                 Tem dúvidas sobre crédito imobiliário? Converse com nosso assistente especializado.
               </p>
-              <Button className="w-full bg-card text-foreground hover:bg-muted">
+              <Button 
+                onClick={() => setIsChatOpen(true)}
+                className="w-full bg-card text-foreground hover:bg-muted"
+              >
                 <MessageCircle size={16} className="mr-2" />
                 Iniciar Chat
               </Button>
@@ -678,6 +683,14 @@ const Artigo = () => {
           </aside>
         </div>
       </main>
+
+      {/* Chat lateral com especialista */}
+      <ArticleExpertChat
+        isOpen={isChatOpen}
+        onClose={() => setIsChatOpen(false)}
+        articleTitle="Crédito Imobiliário"
+        articleContext="Artigo completo sobre crédito imobiliário, abordando conceitos fundamentais, modalidades de financiamento, taxas de juros, requisitos para aprovação, diferenças entre sistemas de amortização, e tendências do mercado imobiliário brasileiro para 2025."
+      />
     </div>
   );
 };
