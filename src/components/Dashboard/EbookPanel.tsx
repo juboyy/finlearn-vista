@@ -465,8 +465,8 @@ export const EbookPanel = ({
                       <EbookCard ebook={ebook} />
                     </CarouselItem>)}
                 </CarouselContent>
-                <CarouselPrevious className="left-[-12px] top-[140px]" />
-                <CarouselNext className="right-[-12px] top-[140px]" />
+                <CarouselPrevious className="left-[-8px] top-[140px]" />
+                <CarouselNext className="right-[-8px] top-[140px]" />
               </Carousel>
             </div>
 
@@ -494,8 +494,8 @@ export const EbookPanel = ({
                       <EbookCard ebook={ebook} showProgress={true} />
                     </CarouselItem>)}
                 </CarouselContent>
-                <CarouselPrevious className="left-[-12px] top-[140px]" />
-                <CarouselNext className="right-[-12px] top-[140px]" />
+                <CarouselPrevious className="left-[-8px] top-[140px]" />
+                <CarouselNext className="right-[-8px] top-[140px]" />
               </Carousel>
             </div>
 
@@ -526,8 +526,8 @@ export const EbookPanel = ({
                       <EbookCard ebook={ebook} />
                     </CarouselItem>)}
                 </CarouselContent>
-                <CarouselPrevious className="left-[-12px] top-[140px]" />
-                <CarouselNext className="right-[-12px] top-[140px]" />
+                <CarouselPrevious className="left-[-8px] top-[140px]" />
+                <CarouselNext className="right-[-8px] top-[140px]" />
               </Carousel>
             </div>
           </div>
