@@ -42,9 +42,13 @@ const Index = () => {
   const { agents } = useUserAgents();
   const { unreadCount } = useAnalyticsAlerts("user-mock-id");
 
-  // Automatically open chat when entering dashboard
+  // Automatically open chat when entering dashboard with delay
   useEffect(() => {
-    setChatOpen(true);
+    const timer = setTimeout(() => {
+      setChatOpen(true);
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   // Mock event data - in production, this would come from an API
