@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Download, Plus, Share2, MapPin, Users, Ticket, QrCode, Headphones, ArrowRight, RefreshCw, Award, History } from "lucide-react";
+import { ArrowLeft, Info, Plus, Share2, MapPin, Users, Ticket, QrCode, Headphones, ArrowRight, RefreshCw, Award, History } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useTicketsCache } from "@/hooks/useTicketsCache";
@@ -82,7 +82,7 @@ export default function MeusIngressos() {
             </div>
             <div className="flex items-center gap-3">
               <Button variant="outline" className="flex items-center gap-2">
-                <Download className="w-4 h-4" /> Exportar Calendário
+                <Info className="w-4 h-4" /> Ver detalhes
               </Button>
               <Button className="bg-pastel-yellow hover:bg-pastel-yellow/80 text-slate-700 flex items-center gap-2">
                 <Plus className="w-4 h-4" /> Explorar Novos Eventos
