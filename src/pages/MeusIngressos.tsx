@@ -2,6 +2,7 @@ import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { ArrowLeft, Info, Plus, Share2, MapPin, Users, Ticket, QrCode, Headphones, ArrowRight, RefreshCw, Award, History } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useTicketsCache } from "@/hooks/useTicketsCache";
 import { Skeleton } from "@/components/ui/skeleton";
 import ticketBackgroundPattern from "@/assets/ticket-background-pattern.png";
@@ -51,6 +52,7 @@ const fetchTicketsData = async () => {
 };
 
 export default function MeusIngressos() {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<"proximos" | "historico" | "cancelados">("proximos");
   const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
   
@@ -81,7 +83,11 @@ export default function MeusIngressos() {
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <Button variant="outline" className="flex items-center gap-2">
+              <Button 
+                onClick={() => navigate('/historico-ingressos')}
+                variant="outline" 
+                className="flex items-center gap-2"
+              >
                 <Info className="w-4 h-4" /> Ver detalhes
               </Button>
               <Button className="bg-pastel-yellow hover:bg-pastel-yellow/80 text-slate-700 flex items-center gap-2">
