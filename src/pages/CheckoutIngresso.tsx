@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, MapPin, Users, Clock, Info, Mic, CalendarDays, Map, Car, Train, Hotel, Navigation, CheckCircle, Check, X, ArrowRight, Headphones, BarChart, CreditCard, QrCode, Barcode, Building, Shield } from "lucide-react";
+import { ArrowLeft, MapPin, Users, Clock, Info, Mic, CalendarDays, Map, Car, Train, Hotel, Navigation, CheckCircle, Check, X, ArrowRight, Headphones, BarChart, CreditCard, QrCode, Barcode, Building, Shield, ChevronLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export default function CheckoutIngresso() {
@@ -13,18 +13,23 @@ export default function CheckoutIngresso() {
       
       <main className="flex-1 overflow-y-auto bg-slate-50 relative">
         
-        {/* Standard Header */}
-        <header className="sticky top-0 z-50 bg-white border-b border-slate-200">
-          <div className="max-w-7xl mx-auto px-8 py-4 flex items-center gap-4">
-            <button 
-              onClick={() => navigate(-1)}
-              className="flex items-center gap-2 text-slate-600 hover:text-slate-900 transition-colors"
-            >
-              <ArrowLeft size={20} />
-              <span className="font-medium">Voltar</span>
-            </button>
-            <div className="h-6 w-px bg-slate-200"></div>
-            <h1 className="text-lg font-semibold text-slate-800">Checkout - Ingresso do Evento</h1>
+        {/* Header */}
+        <header className="bg-card border-b border-border sticky top-0 z-10">
+          <div className="px-8 py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <button 
+                  onClick={() => navigate(-1)}
+                  className="p-2 text-muted-foreground hover:bg-accent/10 rounded-lg transition-colors"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <div>
+                  <h1 className="text-2xl font-semibold text-foreground">Checkout - Ingresso do Evento</h1>
+                  <p className="text-sm text-muted-foreground mt-1">Finalize sua compra de ingresso</p>
+                </div>
+              </div>
+            </div>
           </div>
         </header>
 
