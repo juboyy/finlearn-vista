@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from "react";
-import { X, Send, Loader2 } from "lucide-react";
+import { X, Send, Loader2, Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
@@ -22,7 +23,7 @@ export function ArticleExpertChat({ isOpen, onClose, articleTitle, articleContex
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: `Olá! Sou um especialista em ${articleTitle}. Como posso ajudá-lo a entender melhor esse tema?`
+      content: `Olá! Sou Sócrates, especialista em ${articleTitle}. Li o artigo completo e estou aqui para esclarecer qualquer dúvida que você tenha sobre o texto. Há algo específico que você gostaria de entender melhor?`
     }
   ]);
   const [input, setInput] = useState("");
@@ -30,6 +31,8 @@ export function ArticleExpertChat({ isOpen, onClose, articleTitle, articleContex
   const [showQuickActions, setShowQuickActions] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+
+  const agentAvatar = "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-9.jpg";
 
   const quickQuestions = [
     "Quais são as principais modalidades de crédito imobiliário?",
@@ -118,9 +121,22 @@ export function ArticleExpertChat({ isOpen, onClose, articleTitle, articleContex
     <div className="fixed right-0 top-0 h-screen w-full md:w-96 bg-card border-l border-border shadow-2xl z-50 flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-border">
-        <div>
-          <h3 className="font-semibold text-foreground">Especialista</h3>
-          <p className="text-xs text-muted-foreground">{articleTitle}</p>
+        <div className="flex items-center gap-3">
+          <Avatar className="w-10 h-10 border-2 border-pastel-blue/70">
+            <AvatarImage src={agentAvatar} alt="Sócrates" />
+            <AvatarFallback className="bg-pastel-blue/60">
+              <Bot className="w-5 h-5 text-slate-700" />
+            </AvatarFallback>
+          </Avatar>
+          <div>
+            <h3 className="font-semibold text-foreground flex items-center gap-2">
+              Sócrates
+              <span className="px-2 py-0.5 bg-pastel-blue/60 border border-pastel-blue/70 text-slate-700 text-xs rounded-full">
+                Especialista
+              </span>
+            </h3>
+            <p className="text-xs text-muted-foreground">{articleTitle}</p>
+          </div>
         </div>
         <Button
           variant="ghost"
@@ -138,8 +154,16 @@ export function ArticleExpertChat({ isOpen, onClose, articleTitle, articleContex
           {messages.map((message, index) => (
             <div
               key={index}
-              className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
+              className={`flex gap-3 ${message.role === "user" ? "justify-end" : "justify-start"}`}
             >
+              {message.role === "assistant" && (
+                <Avatar className="w-8 h-8 border-2 border-pastel-blue/70 flex-shrink-0">
+                  <AvatarImage src={agentAvatar} alt="Sócrates" />
+                  <AvatarFallback className="bg-pastel-blue/60">
+                    <Bot className="w-4 h-4 text-slate-700" />
+                  </AvatarFallback>
+                </Avatar>
+              )}
               <div
                 className={`max-w-[80%] rounded-lg p-3 ${
                   message.role === "user"
@@ -155,7 +179,7 @@ export function ArticleExpertChat({ isOpen, onClose, articleTitle, articleContex
           {/* Quick Action Buttons */}
           {showQuickActions && messages.length === 1 && !isLoading && (
             <div className="space-y-2 mt-4">
-              <p className="text-xs text-muted-foreground font-medium mb-3">Perguntas sugeridas:</p>
+              <p className="text-xs text-muted-foreground font-medium mb-3">Perguntas sugeridas sobre o artigo:</p>
               {quickQuestions.map((question, index) => (
                 <button
                   key={index}
@@ -169,7 +193,13 @@ export function ArticleExpertChat({ isOpen, onClose, articleTitle, articleContex
           )}
 
           {isLoading && (
-            <div className="flex justify-start">
+            <div className="flex gap-3 justify-start">
+              <Avatar className="w-8 h-8 border-2 border-pastel-blue/70 flex-shrink-0">
+                <AvatarImage src={agentAvatar} alt="Sócrates" />
+                <AvatarFallback className="bg-pastel-blue/60">
+                  <Bot className="w-4 h-4 text-slate-700" />
+                </AvatarFallback>
+              </Avatar>
               <div className="bg-muted rounded-lg p-3">
                 <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
               </div>
