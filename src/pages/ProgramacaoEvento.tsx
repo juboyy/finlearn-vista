@@ -5,10 +5,205 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 
+// Session data structure for ICS export
+interface SessionData {
+  id: string;
+  title: string;
+  description: string;
+  location: string;
+  startDate: Date;
+  endDate: Date;
+}
+
 export default function ProgramacaoEvento() {
   const navigate = useNavigate();
   const [activeDay, setActiveDay] = useState(1);
   const [favorites, setFavorites] = useState<string[]>([]);
+
+  // Complete session data for all days
+  const allSessions: SessionData[] = [
+    // Day 1 - March 15, 2025
+    {
+      id: 'day1-credenciamento',
+      title: 'Credenciamento e Welcome Coffee',
+      description: 'Recepção dos participantes com coffee break especial e entrega de kits. Momento de networking e integração antes do início oficial do evento.',
+      location: 'Hall Principal',
+      startDate: new Date('2025-03-15T08:00:00'),
+      endDate: new Date('2025-03-15T09:00:00')
+    },
+    {
+      id: 'day1-keynote',
+      title: 'Abertura: O Cenário Econômico Global e Impactos no Brasil',
+      description: 'Análise profunda sobre as dinâmicas macroeconômicas globais, políticas monetárias dos principais bancos centrais e seus reflexos diretos no mercado de capitais brasileiro. Palestrante: Dra. Mariana Costa, Economista-Chefe, Goldman Sachs Brasil.',
+      location: 'Auditório Principal',
+      startDate: new Date('2025-03-15T09:00:00'),
+      endDate: new Date('2025-03-15T10:30:00')
+    },
+    {
+      id: 'day1-painel-renda-fixa',
+      title: 'Renda Fixa em Transformação: Novas Oportunidades e Desafios',
+      description: 'Debate sobre a evolução do mercado de renda fixa no Brasil, incluindo debêntures, CRIs, CRAs e títulos públicos. Painelistas: Roberto Chang (XP), Ana Paula Souza (CVM), Felipe Andrade (BTG), Juliana Rocha (moderadora).',
+      location: 'Auditório Principal',
+      startDate: new Date('2025-03-15T11:00:00'),
+      endDate: new Date('2025-03-15T12:30:00')
+    },
+    {
+      id: 'day1-trilha-esg',
+      title: 'Trilha ESG: Investimentos Sustentáveis e Títulos Verdes',
+      description: 'Análise do crescimento de investimentos ESG no Brasil, green bonds, social bonds e sustainability-linked bonds. Estratégias para incorporar critérios ESG em portfólios.',
+      location: 'Sala Conferências A',
+      startDate: new Date('2025-03-15T14:00:00'),
+      endDate: new Date('2025-03-15T15:30:00')
+    },
+    {
+      id: 'day1-trilha-tech',
+      title: 'Trilha Tech: Blockchain e Tokenização de Ativos',
+      description: 'Como blockchain e DLT estão revolucionando o mercado de capitais. Casos de uso de tokenização, smart contracts e infraestrutura de mercado digital.',
+      location: 'Sala Conferências B',
+      startDate: new Date('2025-03-15T14:00:00'),
+      endDate: new Date('2025-03-15T15:30:00')
+    },
+    {
+      id: 'day1-trilha-regulacao',
+      title: 'Trilha Regulação: Sandbox Regulatório e Inovação Financeira',
+      description: 'Discussão sobre sandbox da CVM, LIFT-FGV, ambiente regulatório para fintechs e startups. Como equilibrar inovação e proteção ao investidor.',
+      location: 'Sala Conferências C',
+      startDate: new Date('2025-03-15T14:00:00'),
+      endDate: new Date('2025-03-15T15:30:00')
+    },
+    {
+      id: 'day1-workshop-valuations',
+      title: 'Workshop: Técnicas Avançadas de Valuation',
+      description: 'Workshop prático sobre métodos de valuation: DCF, múltiplos comparáveis, EVA. Casos reais do mercado brasileiro com exercícios práticos.',
+      location: 'Sala Workshop 1',
+      startDate: new Date('2025-03-15T16:00:00'),
+      endDate: new Date('2025-03-15T17:30:00')
+    },
+    {
+      id: 'day1-networking-vip',
+      title: 'Networking VIP com Open Bar',
+      description: 'Evento exclusivo para participantes VIP com open bar premium, música ao vivo e networking em ambiente descontraído.',
+      location: 'Terraço VIP - 5º Andar',
+      startDate: new Date('2025-03-15T18:00:00'),
+      endDate: new Date('2025-03-15T20:00:00')
+    },
+
+    // Day 2 - March 16, 2025
+    {
+      id: 'day2-keynote',
+      title: 'Inteligência Artificial no Mercado Financeiro',
+      description: 'Aplicações práticas de IA e Machine Learning em análise de risco, detecção de fraude, trading algorítmico e gestão de portfólio. Palestrante: Dr. Carlos Nakamura, CTO BlackRock Brasil.',
+      location: 'Auditório Principal',
+      startDate: new Date('2025-03-16T09:00:00'),
+      endDate: new Date('2025-03-16T10:30:00')
+    },
+    {
+      id: 'day2-painel-mercado-acoes',
+      title: 'Mercado de Ações: IPOs, Follow-ons e Captações 2025',
+      description: 'Perspectivas para o mercado primário brasileiro. Discussão sobre pipeline de IPOs, valuation de empresas, apetite de investidores e estratégias de precificação.',
+      location: 'Auditório Principal',
+      startDate: new Date('2025-03-16T11:00:00'),
+      endDate: new Date('2025-03-16T12:30:00')
+    },
+    {
+      id: 'day2-trilha-derivatives',
+      title: 'Trilha Derivativos: Estratégias de Hedge e Arbitragem',
+      description: 'Operações estruturadas com opções, futuros e swaps. Gestão de risco, estratégias de hedge cambial e proteção de carteiras.',
+      location: 'Sala Conferências A',
+      startDate: new Date('2025-03-16T14:00:00'),
+      endDate: new Date('2025-03-16T15:30:00')
+    },
+    {
+      id: 'day2-trilha-private-equity',
+      title: 'Trilha Private Equity: Investimentos em Empresas Fechadas',
+      description: 'Due diligence, estruturação de deals, governança corporativa e estratégias de exit. Casos de sucesso no mercado brasileiro.',
+      location: 'Sala Conferências B',
+      startDate: new Date('2025-03-16T14:00:00'),
+      endDate: new Date('2025-03-16T15:30:00')
+    },
+    {
+      id: 'day2-trilha-compliance',
+      title: 'Trilha Compliance: LGPD, PLD-FT e Ética nos Negócios',
+      description: 'Compliance em instituições financeiras, prevenção à lavagem de dinheiro, governança de dados e adequação à LGPD.',
+      location: 'Sala Conferências C',
+      startDate: new Date('2025-03-16T14:00:00'),
+      endDate: new Date('2025-03-16T15:30:00')
+    },
+    {
+      id: 'day2-workshop-python',
+      title: 'Workshop: Python para Análise Financeira',
+      description: 'Workshop hands-on com bibliotecas pandas, numpy e matplotlib para análise de dados financeiros. Traga seu laptop!',
+      location: 'Sala Workshop 2',
+      startDate: new Date('2025-03-16T16:00:00'),
+      endDate: new Date('2025-03-16T17:30:00')
+    },
+    {
+      id: 'day2-jantar-gala',
+      title: 'Jantar de Gala e Premiação',
+      description: 'Jantar premium com show especial e cerimônia de premiação. Reconhecimento das melhores instituições e profissionais do mercado.',
+      location: 'Salão Nobre',
+      startDate: new Date('2025-03-16T19:30:00'),
+      endDate: new Date('2025-03-16T23:00:00')
+    },
+
+    // Day 3 - March 17, 2025
+    {
+      id: 'day3-keynote',
+      title: 'Encerramento: Tendências e Desafios para 2025',
+      description: 'Visão estratégica sobre o futuro do mercado de capitais brasileiro. Palestrante: Dr. Eduardo Santos, Presidente da B3.',
+      location: 'Auditório Principal',
+      startDate: new Date('2025-03-17T09:00:00'),
+      endDate: new Date('2025-03-17T10:30:00')
+    },
+    {
+      id: 'day3-painel-venture-capital',
+      title: 'Venture Capital e Startups Fintech',
+      description: 'Ecossistema de inovação financeira no Brasil. Como VCs avaliam startups, métricas de sucesso e cases de unicórnios brasileiros.',
+      location: 'Auditório Principal',
+      startDate: new Date('2025-03-17T11:00:00'),
+      endDate: new Date('2025-03-17T12:30:00')
+    },
+    {
+      id: 'day3-trilha-wealth',
+      title: 'Trilha Wealth Management: Gestão Patrimonial de Alto Valor',
+      description: 'Estratégias para gestão de grandes fortunas, family offices, planejamento sucessório e proteção patrimonial.',
+      location: 'Sala Conferências A',
+      startDate: new Date('2025-03-17T14:00:00'),
+      endDate: new Date('2025-03-17T15:30:00')
+    },
+    {
+      id: 'day3-trilha-real-estate',
+      title: 'Trilha Real Estate: Fundos Imobiliários e Investimentos',
+      description: 'Análise do mercado de FIIs, desenvolvimento de empreendimentos, financiamento imobiliário e oportunidades no setor.',
+      location: 'Sala Conferências B',
+      startDate: new Date('2025-03-17T14:00:00'),
+      endDate: new Date('2025-03-17T15:30:00')
+    },
+    {
+      id: 'day3-trilha-analytics',
+      title: 'Trilha Data Analytics: Big Data e Business Intelligence',
+      description: 'Como usar big data para decisões estratégicas. Ferramentas de BI, dashboards executivos e cultura data-driven.',
+      location: 'Sala Conferências C',
+      startDate: new Date('2025-03-17T14:00:00'),
+      endDate: new Date('2025-03-17T15:30:00')
+    },
+    {
+      id: 'day3-workshop-risk',
+      title: 'Workshop: Gestão de Riscos em Carteiras de Investimento',
+      description: 'Técnicas de mensuração e gestão de riscos: VaR, stress testing, backtesting e otimização de portfólios.',
+      location: 'Sala Workshop 3',
+      startDate: new Date('2025-03-17T16:00:00'),
+      endDate: new Date('2025-03-17T17:30:00')
+    },
+    {
+      id: 'day3-encerramento',
+      title: 'Coquetel de Encerramento',
+      description: 'Última oportunidade de networking do evento com coquetel, entrega de certificados e sorteios de prêmios.',
+      location: 'Hall Principal',
+      startDate: new Date('2025-03-17T18:00:00'),
+      endDate: new Date('2025-03-17T19:30:00')
+    }
+  ];
 
   // Load favorites from localStorage on mount
   useEffect(() => {
@@ -38,6 +233,67 @@ export default function ProgramacaoEvento() {
 
   const isFavorited = (sessionId: string) => favorites.includes(sessionId);
 
+  // Format date to ICS format (YYYYMMDDTHHMMSSZ)
+  const formatICSDate = (date: Date): string => {
+    const pad = (n: number) => n.toString().padStart(2, '0');
+    return `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(date.getDate())}T${pad(date.getHours())}${pad(date.getMinutes())}${pad(date.getSeconds())}`;
+  };
+
+  // Generate ICS file content
+  const generateICS = (): string => {
+    const favoriteSessions = allSessions.filter(session => favorites.includes(session.id));
+    
+    if (favoriteSessions.length === 0) {
+      return '';
+    }
+
+    let icsContent = 'BEGIN:VCALENDAR\r\n';
+    icsContent += 'VERSION:2.0\r\n';
+    icsContent += 'PRODID:-//Summit Mercado de Capitais//Event Schedule//PT\r\n';
+    icsContent += 'CALSCALE:GREGORIAN\r\n';
+    icsContent += 'METHOD:PUBLISH\r\n';
+    icsContent += 'X-WR-CALNAME:Summit Mercado de Capitais 2025\r\n';
+    icsContent += 'X-WR-TIMEZONE:America/Sao_Paulo\r\n';
+
+    favoriteSessions.forEach(session => {
+      icsContent += 'BEGIN:VEVENT\r\n';
+      icsContent += `UID:${session.id}@summit-mercado-capitais.com\r\n`;
+      icsContent += `DTSTAMP:${formatICSDate(new Date())}\r\n`;
+      icsContent += `DTSTART:${formatICSDate(session.startDate)}\r\n`;
+      icsContent += `DTEND:${formatICSDate(session.endDate)}\r\n`;
+      icsContent += `SUMMARY:${session.title}\r\n`;
+      icsContent += `DESCRIPTION:${session.description.replace(/\n/g, '\\n')}\r\n`;
+      icsContent += `LOCATION:${session.location}\r\n`;
+      icsContent += 'STATUS:CONFIRMED\r\n';
+      icsContent += 'SEQUENCE:0\r\n';
+      icsContent += 'END:VEVENT\r\n';
+    });
+
+    icsContent += 'END:VCALENDAR\r\n';
+    return icsContent;
+  };
+
+  // Export favorites to ICS file
+  const exportToICS = () => {
+    if (favorites.length === 0) {
+      toast.error('Nenhuma sessão favorita para exportar');
+      return;
+    }
+
+    const icsContent = generateICS();
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'summit-favoritas.ics';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+
+    toast.success(`${favorites.length} sessão(ões) exportada(s) para calendário`);
+  };
+
   return (
     <div className="flex h-screen overflow-hidden">
       <SidebarFix />
@@ -63,9 +319,13 @@ export default function ProgramacaoEvento() {
                 <Download className="w-4 h-4" />
                 Baixar PDF
               </Button>
-              <Button className="bg-slate-800 hover:bg-slate-700 text-white flex items-center gap-2">
+              <Button 
+                onClick={exportToICS}
+                disabled={favorites.length === 0}
+                className="bg-slate-800 hover:bg-slate-700 text-white flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
                 <CalendarPlus className="w-4 h-4" />
-                Adicionar ao Calendário
+                Exportar Favoritas ({favorites.length})
               </Button>
             </div>
           </div>
