@@ -29,7 +29,7 @@ export default function MeusIngressos() {
                 <Button variant="outline" className="flex items-center gap-2">
                   <Download className="w-4 h-4" /> Exportar Calendário
                 </Button>
-                <Button className="bg-slate-800 hover:bg-slate-700 flex items-center gap-2">
+                <Button className="bg-pastel-yellow hover:bg-pastel-yellow/80 text-slate-700 flex items-center gap-2">
                   <Plus className="w-4 h-4" /> Explorar Novos Eventos
                 </Button>
               </div>
