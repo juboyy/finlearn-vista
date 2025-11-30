@@ -48,7 +48,7 @@ export default function CheckoutIngresso() {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto p-8 grid grid-cols-1 lg:grid-cols-3 gap-8 mt-16 relative z-30">
+        <div className="max-w-7xl mx-auto p-8 grid grid-cols-1 lg:grid-cols-3 gap-8 mt-10 relative z-30">
           
           {/* Left Column: Details, Schedule, Speakers */}
           <div className="lg:col-span-2 space-y-8">
