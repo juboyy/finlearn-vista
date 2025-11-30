@@ -132,6 +132,7 @@ import CheckoutIngresso from "./pages/CheckoutIngresso";
 import HistoricoIngressos from "./pages/HistoricoIngressos";
 import ProgramacaoEvento from "./pages/ProgramacaoEvento";
 import ParticipantesConfirmados from "./pages/ParticipantesConfirmados";
+import TodasComunidades from "./pages/TodasComunidades";
 
 import NotFound from "./pages/NotFound";
 
@@ -167,6 +168,7 @@ const App = () => {
           <Route path="/aprendizado" element={<Aprendizado />} />
           <Route path="/curso-detalhes" element={<CursoDetalhes />} />
           <Route path="/comunidade" element={<Comunidade />} />
+          <Route path="/todas-comunidades" element={<TodasComunidades />} />
           <Route path="/rankings" element={<Rankings />} />
           <Route path="/discussao/:id" element={<Discussao />} />
           <Route path="/artigo/credito-rural" element={<ArtigoCreditoRural />} />
