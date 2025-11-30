@@ -156,7 +156,7 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="w-[900px] sm:max-w-[900px] p-0 overflow-hidden animate-fade-in">
+      <SheetContent className="w-[900px] sm:max-w-[900px] p-0 overflow-hidden animate-slide-in-right animate-fade-in">
         <div className="flex h-full">
           {/* Sidebar Lateral */}
           <div className="w-64 border-r border-border bg-muted/30 p-6 flex flex-col overflow-hidden">
