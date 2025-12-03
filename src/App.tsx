@@ -5,7 +5,9 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "@/hooks/useAuth";
 import Index from "./pages/Index";
+import Auth from "./pages/Auth";
 import Conteudo from "./pages/Conteudo";
 import Artigo from "./pages/Artigo";
 import ArtigoCompliance from "./pages/ArtigoCompliance";
@@ -148,147 +150,150 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/conteudo" element={<Conteudo />} />
-            <Route path="/artigo/:id" element={<Artigo />} />
-            <Route path="/artigo/compliance" element={<ArtigoCompliance />} />
-            <Route path="/agentes" element={<Agentes />} />
-            <Route path="/meus-agentes" element={<MeusAgentes />} />
-            <Route path="/criar-agente" element={<CriarAgente />} />
-          <Route path="/criar-agente/personalidade" element={<CriarAgentePersonalidade />} />
-          <Route path="/criar-agente/resumo" element={<CriarAgenteResumo />} />
-          <Route path="/conteudo/filtros" element={<ConteudoFiltros />} />
-          <Route path="/biblioteca" element={<Biblioteca />} />
-          <Route path="/marketplace" element={<Marketplace />} />
-          <Route path="/aprendizado" element={<Aprendizado />} />
-          <Route path="/curso-detalhes" element={<CursoDetalhes />} />
-          <Route path="/comunidade" element={<Comunidade />} />
-          <Route path="/todas-comunidades" element={<TodasComunidades />} />
-          <Route path="/rankings" element={<Rankings />} />
-          <Route path="/discussao/:id" element={<Discussao />} />
-          <Route path="/discussao" element={<Discussao />} />
-          <Route path="/artigo/credito-rural" element={<ArtigoCreditoRural />} />
-          <Route path="/autores" element={<Autores />} />
-          <Route path="/mentores" element={<Mentores />} />
-          <Route path="/perfil-mentor" element={<PerfilMentor />} />
-          <Route path="/estatisticas" element={<Estatisticas />} />
-          <Route path="/perfil-autor/:id" element={<PerfilAutor />} />
-          <Route path="/seguidores" element={<Seguidores />} />
-          <Route path="/descobrir-novos" element={<DescobrirNovos />} />
-          <Route path="/empresas" element={<Empresas />} />
-          <Route path="/perfil-empresa/:id" element={<PerfilEmpresa />} />
-          <Route path="/perfil-empresa/:id/materiais" element={<PerfilEmpresaMateriais />} />
-          <Route path="/perfil-empresa/:id/estatisticas" element={<PerfilEmpresaEstatisticas />} />
-          <Route path="/perfil-empresa/:id/artigos" element={<PerfilEmpresaArtigos />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/checkout/payment" element={<CheckoutPayment />} />
-          <Route path="/podcasts" element={<Podcasts />} />
-          <Route path="/webinars" element={<Webinars />} />
-          <Route path="/ebook/:id" element={<EbookDetalhes />} />
-          <Route path="/ler-ebook/:id" element={<LerEbook />} />
-          <Route path="/minha-conta" element={<MinhaConta />} />
-          <Route path="/assinaturas" element={<Assinaturas />} />
-          <Route path="/configuracoes" element={<Configuracoes />} />
-          <Route path="/notificacoes" element={<Notificacoes />} />
-          <Route path="/nova-notificacao" element={<NovaNotificacao />} />
-          <Route path="/minhas-metas" element={<MinhasMetas />} />
-          <Route path="/minhas-metas/configuracao" element={<MinhasMetasConfiguracao />} />
-          <Route path="/minhas-metas/areas" element={<MinhasMetasAreas />} />
-          <Route path="/minhas-metas/notificacoes" element={<MinhasMetasNotificacoes />} />
-          <Route path="/minha-agenda/dia" element={<MinhaAgendaDia />} />
-          <Route path="/minha-agenda/atividades-realizadas" element={<AtividadesRealizadas />} />
-          <Route path="/estudos-academicos" element={<EstudosAcademicos />} />
-          <Route path="/criar-paper" element={<CriarPaper />} />
-           <Route path="/analises" element={<Analises />} />
-            <Route path="/meus-conteudos" element={<MeusConteudos />} />
-            <Route path="/criar-conteudo" element={<CriarConteudo />} />
-            <Route path="/novo-documento" element={<NovoDocumento />} />
-            <Route path="/evolucao-cartao-credito" element={<EvolucaoCartaoCredito />} />
-            <Route path="/ler-depois" element={<LerDepois />} />
-            <Route path="/newsletter" element={<Newsletter />} />
-          <Route path="/newsletter/:id" element={<NewsletterDetalhes />} />
-          <Route path="/minha-assinatura" element={<MinhaAssinatura />} />
+      <AuthProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/" element={<Index />} />
+              <Route path="/conteudo" element={<Conteudo />} />
+              <Route path="/artigo/:id" element={<Artigo />} />
+              <Route path="/artigo/compliance" element={<ArtigoCompliance />} />
+              <Route path="/agentes" element={<Agentes />} />
+              <Route path="/meus-agentes" element={<MeusAgentes />} />
+              <Route path="/criar-agente" element={<CriarAgente />} />
+            <Route path="/criar-agente/personalidade" element={<CriarAgentePersonalidade />} />
+            <Route path="/criar-agente/resumo" element={<CriarAgenteResumo />} />
+            <Route path="/conteudo/filtros" element={<ConteudoFiltros />} />
+            <Route path="/biblioteca" element={<Biblioteca />} />
+            <Route path="/marketplace" element={<Marketplace />} />
+            <Route path="/aprendizado" element={<Aprendizado />} />
+            <Route path="/curso-detalhes" element={<CursoDetalhes />} />
+            <Route path="/comunidade" element={<Comunidade />} />
+            <Route path="/todas-comunidades" element={<TodasComunidades />} />
+            <Route path="/rankings" element={<Rankings />} />
+            <Route path="/discussao/:id" element={<Discussao />} />
+            <Route path="/discussao" element={<Discussao />} />
+            <Route path="/artigo/credito-rural" element={<ArtigoCreditoRural />} />
+            <Route path="/autores" element={<Autores />} />
+            <Route path="/mentores" element={<Mentores />} />
+            <Route path="/perfil-mentor" element={<PerfilMentor />} />
+            <Route path="/estatisticas" element={<Estatisticas />} />
+            <Route path="/perfil-autor/:id" element={<PerfilAutor />} />
+            <Route path="/seguidores" element={<Seguidores />} />
+            <Route path="/descobrir-novos" element={<DescobrirNovos />} />
+            <Route path="/empresas" element={<Empresas />} />
+            <Route path="/perfil-empresa/:id" element={<PerfilEmpresa />} />
+            <Route path="/perfil-empresa/:id/materiais" element={<PerfilEmpresaMateriais />} />
+            <Route path="/perfil-empresa/:id/estatisticas" element={<PerfilEmpresaEstatisticas />} />
+            <Route path="/perfil-empresa/:id/artigos" element={<PerfilEmpresaArtigos />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/checkout/payment" element={<CheckoutPayment />} />
+            <Route path="/podcasts" element={<Podcasts />} />
+            <Route path="/webinars" element={<Webinars />} />
+            <Route path="/ebook/:id" element={<EbookDetalhes />} />
+            <Route path="/ler-ebook/:id" element={<LerEbook />} />
+            <Route path="/minha-conta" element={<MinhaConta />} />
+            <Route path="/assinaturas" element={<Assinaturas />} />
+            <Route path="/configuracoes" element={<Configuracoes />} />
+            <Route path="/notificacoes" element={<Notificacoes />} />
+            <Route path="/nova-notificacao" element={<NovaNotificacao />} />
+            <Route path="/minhas-metas" element={<MinhasMetas />} />
+            <Route path="/minhas-metas/configuracao" element={<MinhasMetasConfiguracao />} />
+            <Route path="/minhas-metas/areas" element={<MinhasMetasAreas />} />
+            <Route path="/minhas-metas/notificacoes" element={<MinhasMetasNotificacoes />} />
+            <Route path="/minha-agenda/dia" element={<MinhaAgendaDia />} />
+            <Route path="/minha-agenda/atividades-realizadas" element={<AtividadesRealizadas />} />
+            <Route path="/estudos-academicos" element={<EstudosAcademicos />} />
+            <Route path="/criar-paper" element={<CriarPaper />} />
+             <Route path="/analises" element={<Analises />} />
+              <Route path="/meus-conteudos" element={<MeusConteudos />} />
+              <Route path="/criar-conteudo" element={<CriarConteudo />} />
+              <Route path="/novo-documento" element={<NovoDocumento />} />
+              <Route path="/evolucao-cartao-credito" element={<EvolucaoCartaoCredito />} />
+              <Route path="/ler-depois" element={<LerDepois />} />
+              <Route path="/newsletter" element={<Newsletter />} />
+            <Route path="/newsletter/:id" element={<NewsletterDetalhes />} />
+            <Route path="/minha-assinatura" element={<MinhaAssinatura />} />
+              <Route path="/newsletter-analytics" element={<NewsletterAnalytics />} />
+              <Route path="/newsletter-settings" element={<NewsletterSettings />} />
+              <Route path="/criar-newsletter" element={<CriarNewsletter />} />
+              <Route path="/nova-newsletter" element={<NovaNewsletter />} />
+              <Route path="/agendar-publicacao" element={<AgendarPublicacao />} />
+              <Route path="/agendar-publicacao-revisao" element={<AgendarPublicacaoRevisao />} />
+              <Route path="/recursos-adicionais" element={<RecursosAdicionais />} />
+              <Route path="/analytics" element={<Analytics />} />
+              <Route path="/perfil-analytics" element={<PerfilAnalytics />} />
+              <Route path="/user-preferences-analytics" element={<UserPreferencesAnalytics />} />
+              <Route path="/consumo-analytics" element={<ConsumoAnalytics />} />
+            <Route path="/performance-seo" element={<PerformanceSEO />} />
+            <Route path="/agentes-analytics" element={<AgentesAnalytics />} />
+            <Route path="/comprar-creditos" element={<ComprarCreditos />} />
+            <Route path="/minhas-assinaturas" element={<MinhasAssinaturas />} />
+            <Route path="/financeiro" element={<Financeiro />} />
+            <Route path="/metricas-mrr" element={<MetricasMRR />} />
+            <Route path="/churn" element={<Churn />} />
+            <Route path="/retention" element={<Retention />} />
+            <Route path="/others" element={<Others />} />
+            <Route path="/nova-assinatura" element={<NovaAssinatura />} />
+            <Route path="/newsletter-revisao" element={<NewsletterRevisao />} />
+            <Route path="/newsletter-preview" element={<NewsletterPreview />} />
+            <Route path="/criar-infografico" element={<CriarInfografico />} />
+            <Route path="/infografico-revisao" element={<InfograficoRevisao />} />
+            <Route path="/editar-infografico" element={<EditarInfografico />} />
+            <Route path="/novo-artigo" element={<NovoArtigo />} />
+            <Route path="/meus-certificados" element={<MeusCertificados />} />
+            <Route path="/conta-empresarial" element={<ContaEmpresarial />} />
+            <Route path="/podcast/:id" element={<PodcastDetalhes />} />
+            <Route path="/infograficos" element={<Infograficos />} />
+            <Route path="/editor-slides" element={<EditorSlides />} />
+            <Route path="/ferramentas" element={<Ferramentas />} />
+            <Route path="/resumo-contratos" element={<ResumoContratos />} />
+            <Route path="/historico-resumos" element={<HistoricoResumos />} />
+            <Route path="/transformar-tabelas" element={<TransformarTabelas />} />
+            <Route path="/novo-ebook" element={<NovoEbook />} />
+            <Route path="/novo-ebook/etapa-2" element={<NovoEbookEtapa2 />} />
+            <Route path="/novo-ebook/etapa-3" element={<NovoEbookEtapa3 />} />
+             <Route path="/resumo-ebook" element={<ResumoEbook />} />
+             <Route path="/historico-podcasts" element={<HistoricoPodcasts />} />
+             <Route path="/editor-markdown" element={<EditorMarkdown />} />
+             <Route path="/artigo-analytics" element={<ArtigoAnalytics />} />
+             <Route path="/conteudo-analytics" element={<ConteudoAnalytics />} />
+            <Route path="/apresentacoes-analytics" element={<ApresentacoesAnalytics />} />
+            <Route path="/live-analytics" element={<LiveAnalytics />} />
+            <Route path="/estudos-academicos-analytics" element={<EstudosAcademicosAnalytics />} />
             <Route path="/newsletter-analytics" element={<NewsletterAnalytics />} />
-            <Route path="/newsletter-settings" element={<NewsletterSettings />} />
-            <Route path="/criar-newsletter" element={<CriarNewsletter />} />
-            <Route path="/nova-newsletter" element={<NovaNewsletter />} />
-            <Route path="/agendar-publicacao" element={<AgendarPublicacao />} />
-            <Route path="/agendar-publicacao-revisao" element={<AgendarPublicacaoRevisao />} />
-            <Route path="/recursos-adicionais" element={<RecursosAdicionais />} />
-            <Route path="/analytics" element={<Analytics />} />
-            <Route path="/perfil-analytics" element={<PerfilAnalytics />} />
-            <Route path="/user-preferences-analytics" element={<UserPreferencesAnalytics />} />
-            <Route path="/consumo-analytics" element={<ConsumoAnalytics />} />
-          <Route path="/performance-seo" element={<PerformanceSEO />} />
-          <Route path="/agentes-analytics" element={<AgentesAnalytics />} />
-          <Route path="/comprar-creditos" element={<ComprarCreditos />} />
-          <Route path="/minhas-assinaturas" element={<MinhasAssinaturas />} />
-          <Route path="/financeiro" element={<Financeiro />} />
-          <Route path="/metricas-mrr" element={<MetricasMRR />} />
-          <Route path="/churn" element={<Churn />} />
-          <Route path="/retention" element={<Retention />} />
-          <Route path="/others" element={<Others />} />
-          <Route path="/nova-assinatura" element={<NovaAssinatura />} />
-          <Route path="/newsletter-revisao" element={<NewsletterRevisao />} />
-          <Route path="/newsletter-preview" element={<NewsletterPreview />} />
-          <Route path="/criar-infografico" element={<CriarInfografico />} />
-          <Route path="/infografico-revisao" element={<InfograficoRevisao />} />
-          <Route path="/editar-infografico" element={<EditarInfografico />} />
-          <Route path="/novo-artigo" element={<NovoArtigo />} />
-          <Route path="/meus-certificados" element={<MeusCertificados />} />
-          <Route path="/conta-empresarial" element={<ContaEmpresarial />} />
-          <Route path="/podcast/:id" element={<PodcastDetalhes />} />
-          <Route path="/infograficos" element={<Infograficos />} />
-          <Route path="/editor-slides" element={<EditorSlides />} />
-          <Route path="/ferramentas" element={<Ferramentas />} />
-          <Route path="/resumo-contratos" element={<ResumoContratos />} />
-          <Route path="/historico-resumos" element={<HistoricoResumos />} />
-          <Route path="/transformar-tabelas" element={<TransformarTabelas />} />
-          <Route path="/novo-ebook" element={<NovoEbook />} />
-          <Route path="/novo-ebook/etapa-2" element={<NovoEbookEtapa2 />} />
-          <Route path="/novo-ebook/etapa-3" element={<NovoEbookEtapa3 />} />
-           <Route path="/resumo-ebook" element={<ResumoEbook />} />
-           <Route path="/historico-podcasts" element={<HistoricoPodcasts />} />
-           <Route path="/editor-markdown" element={<EditorMarkdown />} />
-           <Route path="/artigo-analytics" element={<ArtigoAnalytics />} />
-           <Route path="/conteudo-analytics" element={<ConteudoAnalytics />} />
-          <Route path="/apresentacoes-analytics" element={<ApresentacoesAnalytics />} />
-          <Route path="/live-analytics" element={<LiveAnalytics />} />
-          <Route path="/estudos-academicos-analytics" element={<EstudosAcademicosAnalytics />} />
-          <Route path="/newsletter-analytics" element={<NewsletterAnalytics />} />
-          <Route path="/infografico-analytics" element={<InfograficoAnalytics />} />
-          <Route path="/entrevistas-analytics" element={<EntrevistasAnalytics />} />
-          <Route path="/planilhas-analytics" element={<PlanilhasAnalytics />} />
-          <Route path="/whitepaper-analytics" element={<WhitepaperAnalytics />} />
-          <Route path="/podcast-analytics" element={<PodcastAnalytics />} />
-          <Route path="/cursos-analytics" element={<CursosAnalytics />} />
-          <Route path="/avatar-ia-analytics" element={<AvatarIAAnalytics />} />
-          <Route path="/ebooks-analytics" element={<EbooksAnalytics />} />
-          <Route path="/webinars-analytics" element={<WebinarsAnalytics />} />
-          <Route path="/artigos-analytics" element={<ArtigosAnalytics />} />
-          <Route path="/analises-analytics" element={<AnalisesAnalytics />} />
-          <Route path="/relatorios-analytics" element={<RelatoriosAnalytics />} />
-          <Route path="/newspaper-analytics" element={<NewspaperAnalytics />} />
-          <Route path="/live" element={<Live />} />
-          <Route path="/entrevistas" element={<Entrevistas />} />
-          <Route path="/webinar-detalhes" element={<WebinarDetalhes />} />
-          <Route path="/eventos-presenciais" element={<EventosPresenciais />} />
-          <Route path="/meus-ingressos" element={<MeusIngressos />} />
-          <Route path="/checkout-ingresso" element={<CheckoutIngresso />} />
-          <Route path="/historico-ingressos" element={<HistoricoIngressos />} />
-          <Route path="/programacao-evento" element={<ProgramacaoEvento />} />
-          <Route path="/participantes-confirmados" element={<ParticipantesConfirmados />} />
-           
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
+            <Route path="/infografico-analytics" element={<InfograficoAnalytics />} />
+            <Route path="/entrevistas-analytics" element={<EntrevistasAnalytics />} />
+            <Route path="/planilhas-analytics" element={<PlanilhasAnalytics />} />
+            <Route path="/whitepaper-analytics" element={<WhitepaperAnalytics />} />
+            <Route path="/podcast-analytics" element={<PodcastAnalytics />} />
+            <Route path="/cursos-analytics" element={<CursosAnalytics />} />
+            <Route path="/avatar-ia-analytics" element={<AvatarIAAnalytics />} />
+            <Route path="/ebooks-analytics" element={<EbooksAnalytics />} />
+            <Route path="/webinars-analytics" element={<WebinarsAnalytics />} />
+            <Route path="/artigos-analytics" element={<ArtigosAnalytics />} />
+            <Route path="/analises-analytics" element={<AnalisesAnalytics />} />
+            <Route path="/relatorios-analytics" element={<RelatoriosAnalytics />} />
+            <Route path="/newspaper-analytics" element={<NewspaperAnalytics />} />
+            <Route path="/live" element={<Live />} />
+            <Route path="/entrevistas" element={<Entrevistas />} />
+            <Route path="/webinar-detalhes" element={<WebinarDetalhes />} />
+            <Route path="/eventos-presenciais" element={<EventosPresenciais />} />
+            <Route path="/meus-ingressos" element={<MeusIngressos />} />
+            <Route path="/checkout-ingresso" element={<CheckoutIngresso />} />
+            <Route path="/historico-ingressos" element={<HistoricoIngressos />} />
+            <Route path="/programacao-evento" element={<ProgramacaoEvento />} />
+            <Route path="/participantes-confirmados" element={<ParticipantesConfirmados />} />
+             
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 };
