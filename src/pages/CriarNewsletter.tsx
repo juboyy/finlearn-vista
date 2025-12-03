@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Plus, Search, Filter, Mail, Calendar, Eye, CheckCircle, XCircle, Percent, Users, TrendingUp, Send, Edit, Trash2, MoreVertical, FileText, Clock, Wallet } from "lucide-react";
+import { ArrowLeft, Plus, Search, Filter, Mail, Calendar, Eye, CheckCircle, XCircle, Percent, Users, TrendingUp, Send, Edit, Trash2, MoreVertical, FileText, Clock, Wallet, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -8,12 +8,21 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useNewsletters, Newsletter } from "@/hooks/useNewsletters";
 
 export default function CriarNewsletter() {
   const navigate = useNavigate();
-  const [selectedNewsletter, setSelectedNewsletter] = useState<number | null>(1);
+  const { newsletters: dbNewsletters, isLoading, createNewsletter } = useNewsletters();
+  const [selectedNewsletter, setSelectedNewsletter] = useState<string | number | null>(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const [showHistoryFor, setShowHistoryFor] = useState<number | null>(null);
+  const [showHistoryFor, setShowHistoryFor] = useState<string | number | null>(null);
+  
+  // Form state for creating newsletter
+  const [newTitle, setNewTitle] = useState("");
+  const [newDescription, setNewDescription] = useState("");
+  const [newFrequency, setNewFrequency] = useState("weekly");
+  const [newColor, setNewColor] = useState("#B8D4E8");
+  const [isCreating, setIsCreating] = useState(false);
 
   const calculateTimeWithoutOpening = (lastOpened: string | null) => {
     if (!lastOpened) return { value: '—', color: 'text-slate-400' };
@@ -40,44 +49,48 @@ export default function CriarNewsletter() {
     }
   };
 
-  const newsletters = [
+  // Combine database newsletters with mock data for display
+  const mockNewsletters = [
     {
-      id: 1,
+      id: "mock-1",
       title: "Insights Financeiros Semanais",
       description: "Análises profundas do mercado financeiro",
-      subscribers: 2847,
-      openRate: 68,
-      lastSent: "2024-01-15",
+      subscribers_count: 2847,
+      open_rate: 68,
+      last_sent_at: "2024-01-15",
       status: "active",
       color: "#B8D4E8",
-      discountPercentage: 32,
-      sentCount: 24
+      discount_percentage: 32,
+      sent_count: 24
     },
     {
-      id: 2,
+      id: "mock-2",
       title: "Compliance em Dia",
       description: "Atualizações regulatórias e conformidade",
-      subscribers: 1523,
-      openRate: 72,
-      lastSent: "2024-01-14",
+      subscribers_count: 1523,
+      open_rate: 72,
+      last_sent_at: "2024-01-14",
       status: "active",
       color: "#C5E8D4",
-      discountPercentage: 28,
-      sentCount: 18
+      discount_percentage: 28,
+      sent_count: 18
     },
     {
-      id: 3,
+      id: "mock-3",
       title: "Payments Innovation",
       description: "Novidades em meios de pagamento",
-      subscribers: 3201,
-      openRate: 65,
-      lastSent: "2024-01-13",
+      subscribers_count: 3201,
+      open_rate: 65,
+      last_sent_at: "2024-01-13",
       status: "draft",
       color: "#D4C5E8",
-      discountPercentage: 41,
-      sentCount: 31
+      discount_percentage: 41,
+      sent_count: 31
     }
   ];
+
+  // Merge real newsletters from DB with mock data
+  const newsletters = [...dbNewsletters, ...mockNewsletters];
 
   const subscribers = [
     {
@@ -169,7 +182,7 @@ export default function CriarNewsletter() {
   const contentHistory = [
     {
       id: 1,
-      newsletterId: 1,
+      newsletterId: "mock-1",
       title: "Análise: Novo Marco Regulatório do Mercado de Capitais",
       subject: "Entenda as mudanças da CVM para 2024",
       sentDate: "2024-01-15",
@@ -181,7 +194,7 @@ export default function CriarNewsletter() {
     },
     {
       id: 2,
-      newsletterId: 1,
+      newsletterId: "mock-1",
       title: "Top 10 Ações para Investir em Janeiro",
       subject: "Nossa seleção mensal de oportunidades",
       sentDate: "2024-01-08",
@@ -193,7 +206,7 @@ export default function CriarNewsletter() {
     },
     {
       id: 3,
-      newsletterId: 1,
+      newsletterId: "mock-1",
       title: "Tendências Macroeconômicas para 2024",
       subject: "O que esperar do cenário econômico",
       sentDate: "2024-01-01",
@@ -205,7 +218,7 @@ export default function CriarNewsletter() {
     },
     {
       id: 4,
-      newsletterId: 2,
+      newsletterId: "mock-2",
       title: "Atualizações da LGPD: Novas Diretrizes",
       subject: "Conformidade com as mudanças de 2024",
       sentDate: "2024-01-14",
@@ -217,7 +230,7 @@ export default function CriarNewsletter() {
     },
     {
       id: 5,
-      newsletterId: 2,
+      newsletterId: "mock-2",
       title: "Compliance em Contratos Digitais",
       subject: "Boas práticas para validação de contratos",
       sentDate: "2024-01-07",
@@ -229,7 +242,7 @@ export default function CriarNewsletter() {
     },
     {
       id: 6,
-      newsletterId: 3,
+      newsletterId: "mock-3",
       title: "PIX: Novas Funcionalidades e Limites",
       subject: "Confira as atualizações do Banco Central",
       sentDate: "2024-01-13",
@@ -241,7 +254,7 @@ export default function CriarNewsletter() {
     },
     {
       id: 7,
-      newsletterId: 3,
+      newsletterId: "mock-3",
       title: "Open Finance: Oportunidades para Fintechs",
       subject: "Como aproveitar o ecossistema aberto",
       sentDate: "2024-01-06",
@@ -287,7 +300,7 @@ export default function CriarNewsletter() {
                   Financeiro
                 </button>
                 <button
-                  onClick={() => navigate('/nova-newsletter')}
+                  onClick={() => setShowCreateModal(true)}
                   className="px-4 py-2 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
                   style={{ backgroundColor: '#D4C5E8' }}
                 >
@@ -358,11 +371,11 @@ export default function CriarNewsletter() {
                         <div className="flex items-center gap-3 text-xs text-slate-500">
                           <span className="flex items-center gap-1">
                             <Users size={12} />
-                            {newsletter.subscribers}
+                            {newsletter.subscribers_count}
                           </span>
                           <span className="flex items-center gap-1">
                             <TrendingUp size={12} />
-                            {newsletter.openRate}%
+                            {newsletter.open_rate}%
                           </span>
                         </div>
                       </button>
@@ -505,7 +518,7 @@ export default function CriarNewsletter() {
                           <Users className="text-slate-700" size={18} />
                         </div>
                       </div>
-                      <h3 className="text-2xl font-bold text-slate-800 mb-1">{selectedNewsletterData?.subscribers}</h3>
+                      <h3 className="text-2xl font-bold text-slate-800 mb-1">{selectedNewsletterData?.subscribers_count}</h3>
                       <p className="text-sm text-slate-500">Total Assinantes</p>
                     </div>
 
@@ -515,7 +528,7 @@ export default function CriarNewsletter() {
                           <Eye className="text-slate-700" size={18} />
                         </div>
                       </div>
-                      <h3 className="text-2xl font-bold text-slate-800 mb-1">{selectedNewsletterData?.openRate}%</h3>
+                      <h3 className="text-2xl font-bold text-slate-800 mb-1">{selectedNewsletterData?.open_rate}%</h3>
                       <p className="text-sm text-slate-500">Taxa de Abertura</p>
                     </div>
 
@@ -525,7 +538,7 @@ export default function CriarNewsletter() {
                           <Percent className="text-slate-700" size={18} />
                         </div>
                       </div>
-                      <h3 className="text-2xl font-bold text-slate-800 mb-1">{selectedNewsletterData?.discountPercentage}%</h3>
+                      <h3 className="text-2xl font-bold text-slate-800 mb-1">{selectedNewsletterData?.discount_percentage}%</h3>
                       <p className="text-sm text-slate-500">Com Desconto</p>
                     </div>
 
@@ -535,7 +548,7 @@ export default function CriarNewsletter() {
                           <Send className="text-slate-700" size={18} />
                         </div>
                       </div>
-                      <h3 className="text-2xl font-bold text-slate-800 mb-1">{selectedNewsletterData?.sentCount}</h3>
+                      <h3 className="text-2xl font-bold text-slate-800 mb-1">{selectedNewsletterData?.sent_count}</h3>
                       <p className="text-sm text-slate-500">Enviadas</p>
                     </div>
                   </div>
@@ -740,6 +753,8 @@ export default function CriarNewsletter() {
                 <input
                   type="text"
                   placeholder="Ex: Insights Financeiros"
+                  value={newTitle}
+                  onChange={(e) => setNewTitle(e.target.value)}
                   className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B8D4E8]"
                 />
               </div>
@@ -749,6 +764,8 @@ export default function CriarNewsletter() {
                 <textarea
                   placeholder="Descreva o conteúdo da newsletter..."
                   rows={3}
+                  value={newDescription}
+                  onChange={(e) => setNewDescription(e.target.value)}
                   className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B8D4E8]"
                 />
               </div>
@@ -756,37 +773,83 @@ export default function CriarNewsletter() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-2">Frequência</label>
-                  <select className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B8D4E8]">
-                    <option>Semanal</option>
-                    <option>Quinzenal</option>
-                    <option>Mensal</option>
+                  <select 
+                    value={newFrequency}
+                    onChange={(e) => setNewFrequency(e.target.value)}
+                    className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B8D4E8]"
+                  >
+                    <option value="weekly">Semanal</option>
+                    <option value="biweekly">Quinzenal</option>
+                    <option value="monthly">Mensal</option>
                   </select>
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-2">Cor</label>
                   <div className="flex gap-2">
-                    <button className="w-10 h-10 rounded-lg border-2 border-slate-300" style={{ backgroundColor: '#B8D4E8' }}></button>
-                    <button className="w-10 h-10 rounded-lg border-2 border-transparent" style={{ backgroundColor: '#C5E8D4' }}></button>
-                    <button className="w-10 h-10 rounded-lg border-2 border-transparent" style={{ backgroundColor: '#D4C5E8' }}></button>
-                    <button className="w-10 h-10 rounded-lg border-2 border-transparent" style={{ backgroundColor: '#E8E0C5' }}></button>
+                    <button 
+                      type="button"
+                      onClick={() => setNewColor('#B8D4E8')}
+                      className={`w-10 h-10 rounded-lg border-2 ${newColor === '#B8D4E8' ? 'border-slate-500' : 'border-transparent'}`} 
+                      style={{ backgroundColor: '#B8D4E8' }}
+                    />
+                    <button 
+                      type="button"
+                      onClick={() => setNewColor('#C5E8D4')}
+                      className={`w-10 h-10 rounded-lg border-2 ${newColor === '#C5E8D4' ? 'border-slate-500' : 'border-transparent'}`} 
+                      style={{ backgroundColor: '#C5E8D4' }}
+                    />
+                    <button 
+                      type="button"
+                      onClick={() => setNewColor('#D4C5E8')}
+                      className={`w-10 h-10 rounded-lg border-2 ${newColor === '#D4C5E8' ? 'border-slate-500' : 'border-transparent'}`} 
+                      style={{ backgroundColor: '#D4C5E8' }}
+                    />
+                    <button 
+                      type="button"
+                      onClick={() => setNewColor('#E8E0C5')}
+                      className={`w-10 h-10 rounded-lg border-2 ${newColor === '#E8E0C5' ? 'border-slate-500' : 'border-transparent'}`} 
+                      style={{ backgroundColor: '#E8E0C5' }}
+                    />
                   </div>
                 </div>
               </div>
 
               <div className="flex items-center justify-end gap-3 pt-4">
                 <button
-                  onClick={() => setShowCreateModal(false)}
+                  onClick={() => {
+                    setShowCreateModal(false);
+                    setNewTitle("");
+                    setNewDescription("");
+                    setNewFrequency("weekly");
+                    setNewColor("#B8D4E8");
+                  }}
                   className="px-4 py-2 border border-slate-200 text-slate-700 rounded-lg hover:bg-slate-50 transition"
+                  disabled={isCreating}
                 >
                   Cancelar
                 </button>
                 <button
-                  onClick={() => setShowCreateModal(false)}
-                  className="px-4 py-2 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
+                  onClick={async () => {
+                    if (!newTitle.trim()) return;
+                    setIsCreating(true);
+                    try {
+                      await createNewsletter(newTitle, newDescription, newFrequency, newColor);
+                      setShowCreateModal(false);
+                      setNewTitle("");
+                      setNewDescription("");
+                      setNewFrequency("weekly");
+                      setNewColor("#B8D4E8");
+                    } finally {
+                      setIsCreating(false);
+                    }
+                  }}
+                  disabled={isCreating || !newTitle.trim()}
+                  className="px-4 py-2 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition disabled:opacity-50 flex items-center gap-2"
                   style={{ backgroundColor: '#D4C5E8' }}
                 >
-                  Criar Newsletter
+                  {isCreating && <Loader2 className="h-4 w-4 animate-spin" />}
+                  {isCreating ? "Criando..." : "Criar Newsletter"}
                 </button>
               </div>
             </div>
