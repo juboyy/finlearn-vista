@@ -177,13 +177,14 @@ export default function Auth() {
                       <FormLabel className="text-foreground">Nome completo</FormLabel>
                       <div className="relative">
                         <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
-                        <FormControl>
-                          <Input
-                            placeholder="Seu nome"
-                            className="pl-10"
-                            {...field}
-                          />
-                        </FormControl>
+                        <Input
+                          placeholder="Seu nome"
+                          className="pl-10"
+                          value={field.value}
+                          onChange={field.onChange}
+                          onBlur={field.onBlur}
+                          name={field.name}
+                        />
                       </div>
                       <FormMessage />
                     </FormItem>
@@ -197,14 +198,15 @@ export default function Auth() {
                       <FormLabel className="text-foreground">Email</FormLabel>
                       <div className="relative">
                         <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
-                        <FormControl>
-                          <Input
-                            placeholder="seu@email.com"
-                            className="pl-10"
-                            type="email"
-                            {...field}
-                          />
-                        </FormControl>
+                        <Input
+                          placeholder="seu@email.com"
+                          className="pl-10"
+                          type="email"
+                          value={field.value}
+                          onChange={field.onChange}
+                          onBlur={field.onBlur}
+                          name={field.name}
+                        />
                       </div>
                       <FormMessage />
                     </FormItem>
@@ -218,14 +220,15 @@ export default function Auth() {
                       <FormLabel className="text-foreground">Senha</FormLabel>
                       <div className="relative">
                         <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
-                        <FormControl>
-                          <Input
-                            type="password"
-                            placeholder="******"
-                            className="pl-10"
-                            {...field}
-                          />
-                        </FormControl>
+                        <Input
+                          type="password"
+                          placeholder="******"
+                          className="pl-10"
+                          value={field.value}
+                          onChange={field.onChange}
+                          onBlur={field.onBlur}
+                          name={field.name}
+                        />
                       </div>
                       <FormMessage />
                     </FormItem>
@@ -239,14 +242,15 @@ export default function Auth() {
                       <FormLabel className="text-foreground">Confirmar senha</FormLabel>
                       <div className="relative">
                         <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
-                        <FormControl>
-                          <Input
-                            type="password"
-                            placeholder="******"
-                            className="pl-10"
-                            {...field}
-                          />
-                        </FormControl>
+                        <Input
+                          type="password"
+                          placeholder="******"
+                          className="pl-10"
+                          value={field.value}
+                          onChange={field.onChange}
+                          onBlur={field.onBlur}
+                          name={field.name}
+                        />
                       </div>
                       <FormMessage />
                     </FormItem>
