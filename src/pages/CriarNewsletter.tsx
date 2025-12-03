@@ -121,6 +121,7 @@ export default function CriarNewsletter() {
   const subscribers = [
     {
       id: 1,
+      newsletterId: "mock-1",
       name: "Carlos Silva",
       email: "carlos.silva@empresa.com",
       subscriptionDate: "2023-08-15",
@@ -135,6 +136,7 @@ export default function CriarNewsletter() {
     },
     {
       id: 2,
+      newsletterId: "mock-1",
       name: "Ana Rodrigues",
       email: "ana.rodrigues@banco.com",
       subscriptionDate: "2023-09-22",
@@ -149,6 +151,7 @@ export default function CriarNewsletter() {
     },
     {
       id: 3,
+      newsletterId: "mock-2",
       name: "Pedro Santos",
       email: "pedro.santos@invest.com",
       subscriptionDate: "2023-07-10",
@@ -163,6 +166,7 @@ export default function CriarNewsletter() {
     },
     {
       id: 4,
+      newsletterId: "mock-2",
       name: "Marina Costa",
       email: "marina.costa@tech.com",
       subscriptionDate: "2023-10-05",
@@ -177,6 +181,7 @@ export default function CriarNewsletter() {
     },
     {
       id: 5,
+      newsletterId: "mock-3",
       name: "Roberto Lima",
       email: "roberto.lima@consultoria.com",
       subscriptionDate: "2023-06-18",
@@ -191,6 +196,7 @@ export default function CriarNewsletter() {
     },
     {
       id: 6,
+      newsletterId: "mock-3",
       name: "Julia Mendes",
       email: "julia.mendes@startup.com",
       subscriptionDate: "2023-11-12",
@@ -204,6 +210,11 @@ export default function CriarNewsletter() {
       company: "Startup Inovação"
     }
   ];
+
+  // Filter subscribers based on selected newsletter
+  const filteredSubscribers = selectedNewsletter 
+    ? subscribers.filter(sub => sub.newsletterId === selectedNewsletter)
+    : subscribers;
 
   const contentHistory = [
     {
@@ -638,142 +649,149 @@ export default function CriarNewsletter() {
 
                     {/* Table Rows */}
                     <div className="divide-y divide-slate-100">
-                      {subscribers.map((subscriber) => (
-                        <div
-                          key={subscriber.id}
-                          className="grid grid-cols-12 gap-4 px-6 py-4 items-center hover:bg-slate-50 transition"
-                        >
-                          <div className="col-span-3">
-                            <div className="flex items-center gap-3">
-                              <div
-                                className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold text-slate-700"
-                                style={{ backgroundColor: '#B8D4E8' }}
-                              >
-                                {subscriber.name.charAt(0)}
-                              </div>
-                              <div className="flex-1">
-                                <div className="flex items-center gap-2">
-                                  <p className="font-semibold text-sm text-slate-800">{subscriber.name}</p>
-                                  <span
-                                    className={`w-2 h-2 rounded-full ${
-                                      subscriber.status === 'active' ? 'bg-green-500' : 'bg-slate-300'
-                                    }`}
-                                  ></span>
+                      {filteredSubscribers.length === 0 ? (
+                        <div className="px-6 py-12 text-center">
+                          <Users size={48} className="mx-auto text-slate-300 mb-4" />
+                          <p className="text-slate-500">Nenhum assinante para esta newsletter</p>
+                        </div>
+                      ) : (
+                        filteredSubscribers.map((subscriber) => (
+                          <div
+                            key={subscriber.id}
+                            className="grid grid-cols-12 gap-4 px-6 py-4 items-center hover:bg-slate-50 transition"
+                          >
+                            <div className="col-span-3">
+                              <div className="flex items-center gap-3">
+                                <div
+                                  className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold text-slate-700"
+                                  style={{ backgroundColor: '#B8D4E8' }}
+                                >
+                                  {subscriber.name.charAt(0)}
                                 </div>
-                                <p className="text-xs text-slate-500">{subscriber.email}</p>
-                                <p className="text-xs text-slate-400">{subscriber.company}</p>
+                                <div className="flex-1">
+                                  <div className="flex items-center gap-2">
+                                    <p className="font-semibold text-sm text-slate-800">{subscriber.name}</p>
+                                    <span
+                                      className={`w-2 h-2 rounded-full ${
+                                        subscriber.status === 'active' ? 'bg-green-500' : 'bg-slate-300'
+                                      }`}
+                                    ></span>
+                                  </div>
+                                  <p className="text-xs text-slate-500">{subscriber.email}</p>
+                                  <p className="text-xs text-slate-400">{subscriber.company}</p>
+                                </div>
                               </div>
                             </div>
-                          </div>
 
-                          <div className="col-span-2">
-                            <div className="flex items-center gap-2">
-                              <Calendar size={14} className="text-slate-400" />
-                              <span className="text-sm text-slate-700">
-                                {new Date(subscriber.subscriptionDate).toLocaleDateString('pt-BR')}
-                              </span>
-                            </div>
-                          </div>
-
-                          <div className="col-span-1 text-center -ml-3">
-                            {subscriber.hasDiscount ? (
-                              <span
-                                className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium text-slate-700"
-                                style={{ backgroundColor: '#C5E8D4' }}
-                              >
-                                <CheckCircle size={12} />
-                                {subscriber.discountValue}%
-                              </span>
-                            ) : (
-                              <span className="inline-flex items-center gap-1 px-2 py-1 bg-slate-100 text-slate-500 rounded-full text-xs font-medium">
-                                <XCircle size={12} />
-                                Não
-                              </span>
-                            )}
-                          </div>
-
-                          <div className="col-span-1">
-                            {subscriber.lastOpened ? (
+                            <div className="col-span-2">
                               <div className="flex items-center gap-2">
-                                <Eye size={14} className="text-slate-400" />
+                                <Calendar size={14} className="text-slate-400" />
                                 <span className="text-sm text-slate-700">
-                                  {new Date(subscriber.lastOpened).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })}
+                                  {new Date(subscriber.subscriptionDate).toLocaleDateString('pt-BR')}
                                 </span>
                               </div>
-                            ) : (
-                              <span className="text-sm text-slate-400">Nunca</span>
-                            )}
-                          </div>
+                            </div>
 
-                          <div className="col-span-1">
-                            {(() => {
-                              const timeInfo = calculateTimeWithoutOpening(subscriber.lastOpened);
-                              return (
+                            <div className="col-span-1 text-center -ml-3">
+                              {subscriber.hasDiscount ? (
+                                <span
+                                  className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium text-slate-700"
+                                  style={{ backgroundColor: '#C5E8D4' }}
+                                >
+                                  <CheckCircle size={12} />
+                                  {subscriber.discountValue}%
+                                </span>
+                              ) : (
+                                <span className="inline-flex items-center gap-1 px-2 py-1 bg-slate-100 text-slate-500 rounded-full text-xs font-medium">
+                                  <XCircle size={12} />
+                                  Não
+                                </span>
+                              )}
+                            </div>
+
+                            <div className="col-span-1">
+                              {subscriber.lastOpened ? (
                                 <div className="flex items-center gap-2">
-                                  <Clock size={14} className="text-slate-400" />
-                                  <span className={`text-sm font-medium ${timeInfo.color}`}>
-                                    {timeInfo.value}
+                                  <Eye size={14} className="text-slate-400" />
+                                  <span className="text-sm text-slate-700">
+                                    {new Date(subscriber.lastOpened).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })}
                                   </span>
                                 </div>
-                              );
-                            })()}
-                          </div>
+                              ) : (
+                                <span className="text-sm text-slate-400">Nunca</span>
+                              )}
+                            </div>
 
-                          <div className="col-span-1 text-center">
-                            <span
-                              className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${
-                                subscriber.openRate >= 80
-                                  ? 'text-slate-700'
-                                  : subscriber.openRate >= 50
-                                  ? 'bg-yellow-100 text-yellow-700'
-                                  : 'bg-red-100 text-red-700'
-                              }`}
-                              style={subscriber.openRate >= 80 ? { backgroundColor: '#C5E8D4' } : {}}
-                            >
-                              {subscriber.openRate}%
-                            </span>
-                          </div>
+                            <div className="col-span-1">
+                              {(() => {
+                                const timeInfo = calculateTimeWithoutOpening(subscriber.lastOpened);
+                                return (
+                                  <div className="flex items-center gap-2">
+                                    <Clock size={14} className="text-slate-400" />
+                                    <span className={`text-sm font-medium ${timeInfo.color}`}>
+                                      {timeInfo.value}
+                                    </span>
+                                  </div>
+                                );
+                              })()}
+                            </div>
 
-                          <div className="col-span-2">
-                            <div className="flex items-center gap-2">
-                              <Mail size={14} className="text-slate-400" />
-                              <span className="text-sm text-slate-700">
-                                {subscriber.channel}
-                                {subscriber.additionalChannels > 0 && (
-                                  <span className="text-slate-500"> + {subscriber.additionalChannels}</span>
-                                )}
+                            <div className="col-span-1 text-center">
+                              <span
+                                className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${
+                                  subscriber.openRate >= 80
+                                    ? 'text-slate-700'
+                                    : subscriber.openRate >= 50
+                                    ? 'bg-yellow-100 text-yellow-700'
+                                    : 'bg-red-100 text-red-700'
+                                }`}
+                                style={subscriber.openRate >= 80 ? { backgroundColor: '#C5E8D4' } : {}}
+                              >
+                                {subscriber.openRate}%
                               </span>
                             </div>
-                          </div>
 
-                          <div className="col-span-1 flex items-center justify-end gap-2">
-                            <button className="p-2 text-slate-400 hover:text-slate-600 transition">
-                              <Edit size={16} />
-                            </button>
-                            <button className="p-2 text-slate-400 hover:text-red-600 transition">
-                              <Trash2 size={16} />
-                            </button>
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <button className="p-2 text-slate-400 hover:text-slate-600 transition">
-                                  <MoreVertical size={16} />
-                                </button>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent align="end" className="w-48">
-                                <DropdownMenuItem 
-                                  className="cursor-pointer"
-                                  onClick={() => {
-                                    console.log('Ver detalhes do assinante:', subscriber.name);
-                                  }}
-                                >
-                                  <Eye size={16} className="mr-2" />
-                                  Ver detalhes
-                                </DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
+                            <div className="col-span-2">
+                              <div className="flex items-center gap-2">
+                                <Mail size={14} className="text-slate-400" />
+                                <span className="text-sm text-slate-700">
+                                  {subscriber.channel}
+                                  {subscriber.additionalChannels > 0 && (
+                                    <span className="text-slate-500"> + {subscriber.additionalChannels}</span>
+                                  )}
+                                </span>
+                              </div>
+                            </div>
+
+                            <div className="col-span-1 flex items-center justify-end gap-2">
+                              <button className="p-2 text-slate-400 hover:text-slate-600 transition">
+                                <Edit size={16} />
+                              </button>
+                              <button className="p-2 text-slate-400 hover:text-red-600 transition">
+                                <Trash2 size={16} />
+                              </button>
+                              <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                  <button className="p-2 text-slate-400 hover:text-slate-600 transition">
+                                    <MoreVertical size={16} />
+                                  </button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end" className="w-48">
+                                  <DropdownMenuItem 
+                                    className="cursor-pointer"
+                                    onClick={() => {
+                                      console.log('Ver detalhes do assinante:', subscriber.name);
+                                    }}
+                                  >
+                                    <Eye size={16} className="mr-2" />
+                                    Ver detalhes
+                                  </DropdownMenuItem>
+                                </DropdownMenuContent>
+                              </DropdownMenu>
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))
+                      )}
                     </div>
                   </div>
                 </>
