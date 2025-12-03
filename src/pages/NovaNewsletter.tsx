@@ -967,10 +967,10 @@ export default function NovaNewsletter() {
                     <div className="relative text-center space-y-3 px-8">
                       <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium text-slate-700 bg-white/90 backdrop-blur-sm">
                         <Newspaper className="w-3.5 h-3.5" />
-                        Fintechs & Inovação
+                        {selectedProducts.map(id => productTypes.find(p => p.id === id)?.name).filter(Boolean).join(', ') || 'Sem tipo selecionado'}
                       </div>
-                      <h2 className="text-3xl font-bold text-[hsl(var(--pastel-gray-dark))]">Revolução dos Pagamentos</h2>
-                      <p className="text-sm text-slate-600 max-w-2xl">Análise profunda sobre as transformações no mercado de pagamentos digitais e seu impacto no ecossistema financeiro.</p>
+                      <h2 className="text-3xl font-bold text-[hsl(var(--pastel-gray-dark))]">{title || 'Título não definido'}</h2>
+                      <p className="text-sm text-slate-600 max-w-2xl">{description || 'Descrição não definida'}</p>
                     </div>
                   </div>
                   
@@ -1032,14 +1032,14 @@ export default function NovaNewsletter() {
                           <Newspaper className="w-4 h-4 text-slate-400" />
                           <span className="text-sm font-medium text-slate-600">Título</span>
                         </div>
-                        <span className="text-sm font-semibold text-[hsl(var(--pastel-gray-dark))]">Revolução dos Pagamentos</span>
+                        <span className="text-sm font-semibold text-[hsl(var(--pastel-gray-dark))]">{title || 'Não definido'}</span>
                       </div>
                       <div className="flex items-center justify-between py-2 border-b border-slate-100">
                         <div className="flex items-center gap-3">
                           <Hash className="w-4 h-4 text-slate-400" />
                           <span className="text-sm font-medium text-slate-600">Categoria</span>
                         </div>
-                        <span className="text-sm font-semibold text-[hsl(var(--pastel-gray-dark))]">Fintechs & Inovação</span>
+                        <span className="text-sm font-semibold text-[hsl(var(--pastel-gray-dark))]">{selectedProducts.map(id => productTypes.find(p => p.id === id)?.name).filter(Boolean).join(', ') || 'Não definido'}</span>
                       </div>
                       <div className="flex items-center justify-between py-2 border-b border-slate-100">
                         <div className="flex items-center gap-3">
