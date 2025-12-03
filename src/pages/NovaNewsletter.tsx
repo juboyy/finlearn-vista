@@ -1177,7 +1177,14 @@ export default function NovaNewsletter() {
             {/* Navigation Buttons */}
             <div className="flex items-center justify-between pt-6 border-t border-slate-200">
               <button 
-                onClick={() => currentStep > 1 ? setCurrentStep(currentStep - 1) : navigate('/criar-newsletter')}
+                onClick={() => {
+                  if (currentStep > 1) {
+                    setCurrentStep(currentStep - 1);
+                    window.scrollTo(0, 0);
+                  } else {
+                    navigate('/criar-newsletter');
+                  }
+                }}
                 className="px-6 py-3 rounded-lg border border-slate-300 text-slate-600 font-medium hover:bg-slate-50 transition flex items-center gap-2"
               >
                 <ArrowLeft className="w-4 h-4" />
@@ -1227,7 +1234,12 @@ export default function NovaNewsletter() {
                 </button>
               ) : (
                 <button 
-                  onClick={() => currentStep < 5 && setCurrentStep(currentStep + 1)}
+                  onClick={() => {
+                    if (currentStep < 5) {
+                      setCurrentStep(currentStep + 1);
+                      window.scrollTo(0, 0);
+                    }
+                  }}
                   className="px-8 py-3 rounded-lg text-slate-700 font-bold hover:opacity-90 transition shadow-sm hover:shadow flex items-center gap-2"
                   style={{ backgroundColor: '#D4C5E8' }}
                 >
