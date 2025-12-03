@@ -38,6 +38,7 @@ export default function CriarNewsletter() {
   const [editTitle, setEditTitle] = useState("");
   const [editDescription, setEditDescription] = useState("");
   const [editColor, setEditColor] = useState("#B8D4E8");
+  const [editStatus, setEditStatus] = useState("draft");
   const [isUpdating, setIsUpdating] = useState(false);
   
   // Delete confirmation state
@@ -49,6 +50,7 @@ export default function CriarNewsletter() {
     setEditTitle(newsletter.title);
     setEditDescription(newsletter.description || "");
     setEditColor(newsletter.color);
+    setEditStatus(newsletter.status);
   };
 
   const handleEditSave = async () => {
@@ -59,6 +61,7 @@ export default function CriarNewsletter() {
         title: editTitle,
         description: editDescription,
         color: editColor,
+        status: editStatus,
       });
       setEditingNewsletter(null);
     } catch (error) {
@@ -864,6 +867,33 @@ export default function CriarNewsletter() {
                     title={color.name}
                   />
                 ))}
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Status</label>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setEditStatus("active")}
+                  className={`flex-1 px-4 py-2 rounded-lg border-2 transition flex items-center justify-center gap-2 ${
+                    editStatus === "active" 
+                      ? 'border-emerald-500 bg-emerald-50 text-emerald-700' 
+                      : 'border-slate-200 text-slate-600 hover:border-slate-300'
+                  }`}
+                >
+                  <CheckCircle size={16} />
+                  Ativo
+                </button>
+                <button
+                  onClick={() => setEditStatus("draft")}
+                  className={`flex-1 px-4 py-2 rounded-lg border-2 transition flex items-center justify-center gap-2 ${
+                    editStatus === "draft" 
+                      ? 'border-amber-500 bg-amber-50 text-amber-700' 
+                      : 'border-slate-200 text-slate-600 hover:border-slate-300'
+                  }`}
+                >
+                  <FileText size={16} />
+                  Rascunho
+                </button>
               </div>
             </div>
           </div>
