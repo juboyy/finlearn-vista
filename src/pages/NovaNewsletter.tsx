@@ -7,16 +7,23 @@ import {
   Italic, Underline, List, Link, Image, Calendar, Users, DollarSign,
   ChartPie, MessageCircle, Eye, ArrowRight, ArrowLeft, Info, Mail, 
   MessageSquare, Smartphone, Hash, Send, CreditCard, Receipt, CheckCircle,
-  Palette, Clock
+  Palette, Clock, Loader2
 } from "lucide-react";
+import { useNewsletters } from "@/hooks/useNewsletters";
+import { useToast } from "@/hooks/use-toast";
 
 export default function NovaNewsletter() {
   const navigate = useNavigate();
+  const { createNewsletter } = useNewsletters();
+  const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedProducts, setSelectedProducts] = useState<string[]>(["newspaper"]);
   const [selectedFrequency, setSelectedFrequency] = useState("");
   const [selectedColor, setSelectedColor] = useState("#B8D4E8");
   const [selectedChannels, setSelectedChannels] = useState<string[]>(["email"]);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [isPublishing, setIsPublishing] = useState(false);
 
   const toggleProduct = (productId: string) => {
     setSelectedProducts(prev => 
@@ -217,7 +224,9 @@ export default function NovaNewsletter() {
                       <div className="col-span-2">
                         <label className="block text-sm font-medium text-slate-700 mb-2">Título da Newsletter</label>
                         <input 
-                          type="text" 
+                          type="text"
+                          value={title}
+                          onChange={(e) => setTitle(e.target.value)}
                           className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-purple-200 focus:border-purple-400 outline-none transition" 
                           placeholder="Ex: Revolução dos Pagamentos"
                         />
@@ -275,11 +284,13 @@ export default function NovaNewsletter() {
                       <div className="col-span-2">
                         <label className="block text-sm font-medium text-slate-700 mb-2">Descrição Curta (Subtítulo)</label>
                         <textarea 
-                          rows={3} 
+                          rows={3}
+                          value={description}
+                          onChange={(e) => setDescription(e.target.value.slice(0, 160))}
                           className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-purple-200 focus:border-purple-400 outline-none transition resize-none" 
                           placeholder="Uma breve descrição que aparecerá nos cards e na página de detalhes..."
                         />
-                        <div className="flex justify-end mt-1 text-xs text-slate-400">0/160 caracteres</div>
+                        <div className="flex justify-end mt-1 text-xs text-slate-400">{description.length}/160 caracteres</div>
                       </div>
 
                       <div className="col-span-2">
@@ -1123,11 +1134,31 @@ export default function NovaNewsletter() {
               </button>
               {currentStep === 5 ? (
                 <button 
-                  className="px-8 py-3 rounded-lg font-bold transition shadow-md hover:shadow-lg flex items-center gap-2 text-white"
-                  style={{ backgroundColor: 'hsl(var(--pastel-purple-btn))' }}
+                  onClick={async () => {
+                    if (!title.trim()) {
+                      toast({
+                        title: "Título obrigatório",
+                        description: "Preencha o título da newsletter antes de publicar.",
+                        variant: "destructive",
+                      });
+                      return;
+                    }
+                    setIsPublishing(true);
+                    try {
+                      await createNewsletter(title, description, selectedFrequency || "weekly", selectedColor);
+                      navigate('/criar-newsletter');
+                    } catch (error) {
+                      console.error(error);
+                    } finally {
+                      setIsPublishing(false);
+                    }
+                  }}
+                  disabled={isPublishing}
+                  className="px-8 py-3 rounded-lg font-bold transition shadow-md hover:shadow-lg flex items-center gap-2 text-white disabled:opacity-50"
+                  style={{ backgroundColor: 'hsl(210, 50%, 35%)' }}
                 >
-                  <Send className="w-4 h-4" />
-                  Publicar Newsletter
+                  {isPublishing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+                  {isPublishing ? "Publicando..." : "Publicar Newsletter"}
                 </button>
               ) : (
                 <button 
