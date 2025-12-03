@@ -110,8 +110,8 @@ export default function Auth() {
         </CardHeader>
         <CardContent>
           {isLogin ? (
-            <Form {...loginForm}>
-              <form onSubmit={loginForm.handleSubmit(handleLogin)} className="space-y-4">
+            <Form {...loginForm} key="login-form">
+              <form onSubmit={loginForm.handleSubmit(handleLogin)} className="space-y-4" autoComplete="on">
                 <FormField
                   control={loginForm.control}
                   name="email"
@@ -125,6 +125,7 @@ export default function Auth() {
                             placeholder="seu@email.com"
                             className="pl-10"
                             type="email"
+                            autoComplete="email"
                             {...field}
                           />
                         </FormControl>
@@ -146,6 +147,7 @@ export default function Auth() {
                             type="password"
                             placeholder="******"
                             className="pl-10"
+                            autoComplete="current-password"
                             {...field}
                           />
                         </FormControl>
@@ -167,24 +169,19 @@ export default function Auth() {
               </form>
             </Form>
           ) : (
-            <Form {...signupForm}>
-              <form onSubmit={signupForm.handleSubmit(handleSignup)} className="space-y-4">
+            <Form {...signupForm} key="signup-form">
+              <form onSubmit={signupForm.handleSubmit(handleSignup)} className="space-y-4" autoComplete="off">
                 <FormField
                   control={signupForm.control}
                   name="fullName"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-foreground">Nome completo</FormLabel>
-                      <div className="relative">
-                        <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
-                        <FormControl>
-                          <Input
-                            placeholder="Seu nome"
-                            className="pl-10"
-                            {...field}
-                          />
-                        </FormControl>
-                      </div>
+                      <Input
+                        placeholder="Seu nome"
+                        autoComplete="name"
+                        {...field}
+                      />
                       <FormMessage />
                     </FormItem>
                   )}
@@ -195,17 +192,12 @@ export default function Auth() {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-foreground">Email</FormLabel>
-                      <div className="relative">
-                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
-                        <FormControl>
-                          <Input
-                            placeholder="seu@email.com"
-                            className="pl-10"
-                            type="email"
-                            {...field}
-                          />
-                        </FormControl>
-                      </div>
+                      <Input
+                        placeholder="seu@email.com"
+                        type="email"
+                        autoComplete="email"
+                        {...field}
+                      />
                       <FormMessage />
                     </FormItem>
                   )}
@@ -216,17 +208,12 @@ export default function Auth() {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-foreground">Senha</FormLabel>
-                      <div className="relative">
-                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
-                        <FormControl>
-                          <Input
-                            type="password"
-                            placeholder="******"
-                            className="pl-10"
-                            {...field}
-                          />
-                        </FormControl>
-                      </div>
+                      <Input
+                        type="password"
+                        placeholder="******"
+                        autoComplete="new-password"
+                        {...field}
+                      />
                       <FormMessage />
                     </FormItem>
                   )}
@@ -237,17 +224,12 @@ export default function Auth() {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-foreground">Confirmar senha</FormLabel>
-                      <div className="relative">
-                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
-                        <FormControl>
-                          <Input
-                            type="password"
-                            placeholder="******"
-                            className="pl-10"
-                            {...field}
-                          />
-                        </FormControl>
-                      </div>
+                      <Input
+                        type="password"
+                        placeholder="******"
+                        autoComplete="new-password"
+                        {...field}
+                      />
                       <FormMessage />
                     </FormItem>
                   )}
