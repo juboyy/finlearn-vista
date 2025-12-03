@@ -1,6 +1,6 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { 
   Newspaper, Podcast, GraduationCap, Bot, Book, Video, FileText, BarChart3, 
   FileCheck, FlaskConical, Upload, Plus, ChevronRight, Check, Bold, 
@@ -14,7 +14,9 @@ import { useToast } from "@/hooks/use-toast";
 
 export default function NovaNewsletter() {
   const navigate = useNavigate();
-  const { createNewsletter } = useNewsletters();
+  const [searchParams] = useSearchParams();
+  const editId = searchParams.get('edit');
+  const { newsletters, createNewsletter, updateNewsletter } = useNewsletters();
   const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedProducts, setSelectedProducts] = useState<string[]>(["newspaper"]);
@@ -23,7 +25,24 @@ export default function NovaNewsletter() {
   const [selectedChannels, setSelectedChannels] = useState<string[]>(["email"]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [status, setStatus] = useState("draft");
   const [isPublishing, setIsPublishing] = useState(false);
+  
+  const isEditMode = !!editId;
+
+  // Load existing newsletter data for edit mode
+  useEffect(() => {
+    if (editId && newsletters.length > 0) {
+      const newsletter = newsletters.find(n => n.id === editId);
+      if (newsletter) {
+        setTitle(newsletter.title);
+        setDescription(newsletter.description || "");
+        setSelectedColor(newsletter.color);
+        setSelectedFrequency(newsletter.frequency || "weekly");
+        setStatus(newsletter.status);
+      }
+    }
+  }, [editId, newsletters]);
 
   const toggleProduct = (productId: string) => {
     setSelectedProducts(prev => 
@@ -73,9 +92,9 @@ export default function NovaNewsletter() {
               <div className="flex items-center gap-2 text-sm text-slate-500 mb-1">
                 <a href="#" className="hover:text-slate-700">Studio de Criação</a>
                 <ChevronRight className="w-3 h-3" />
-                <span className="text-slate-800 font-medium">Nova Publicação</span>
+                <span className="text-slate-800 font-medium">{isEditMode ? 'Editar Newsletter' : 'Nova Publicação'}</span>
               </div>
-              <h1 className="text-2xl font-semibold text-slate-800">Criar Newsletter & Conteúdo</h1>
+              <h1 className="text-2xl font-semibold text-slate-800">{isEditMode ? 'Editar Newsletter' : 'Criar Newsletter & Conteúdo'}</h1>
             </div>
             <div className="flex items-center gap-3">
               <button className="px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-lg font-medium transition">
@@ -317,6 +336,38 @@ export default function NovaNewsletter() {
                           <input type="text" className="flex-1 outline-none min-w-[100px] text-sm py-1" placeholder="Digite e pressione Enter..." />
                         </div>
                       </div>
+
+                      {isEditMode && (
+                        <div className="col-span-2">
+                          <label className="block text-sm font-medium text-slate-700 mb-2">Status</label>
+                          <div className="flex gap-3">
+                            <button
+                              type="button"
+                              onClick={() => setStatus("active")}
+                              className={`flex-1 px-4 py-3 rounded-lg border-2 transition flex items-center justify-center gap-2 ${
+                                status === "active" 
+                                  ? 'border-emerald-500 bg-emerald-50 text-emerald-700' 
+                                  : 'border-slate-200 text-slate-600 hover:border-slate-300'
+                              }`}
+                            >
+                              <Check className="w-4 h-4" />
+                              Ativo
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setStatus("draft")}
+                              className={`flex-1 px-4 py-3 rounded-lg border-2 transition flex items-center justify-center gap-2 ${
+                                status === "draft" 
+                                  ? 'border-amber-500 bg-amber-50 text-amber-700' 
+                                  : 'border-slate-200 text-slate-600 hover:border-slate-300'
+                              }`}
+                            >
+                              <FileText className="w-4 h-4" />
+                              Rascunho
+                            </button>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -1145,7 +1196,21 @@ export default function NovaNewsletter() {
                     }
                     setIsPublishing(true);
                     try {
-                      await createNewsletter(title, description, selectedFrequency || "weekly", selectedColor);
+                      if (isEditMode && editId) {
+                        await updateNewsletter(editId, {
+                          title,
+                          description,
+                          frequency: selectedFrequency || "weekly",
+                          color: selectedColor,
+                          status,
+                        });
+                        toast({
+                          title: "Newsletter atualizada",
+                          description: "As alterações foram salvas com sucesso.",
+                        });
+                      } else {
+                        await createNewsletter(title, description, selectedFrequency || "weekly", selectedColor);
+                      }
                       navigate('/criar-newsletter');
                     } catch (error) {
                       console.error(error);
@@ -1158,7 +1223,7 @@ export default function NovaNewsletter() {
                   style={{ backgroundColor: 'hsl(210, 50%, 35%)' }}
                 >
                   {isPublishing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
-                  {isPublishing ? "Publicando..." : "Publicar Newsletter"}
+                  {isPublishing ? "Salvando..." : isEditMode ? "Salvar Alterações" : "Publicar Newsletter"}
                 </button>
               ) : (
                 <button 
