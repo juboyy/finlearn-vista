@@ -27,6 +27,8 @@ export default function NovaNewsletter() {
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("draft");
   const [isPublishing, setIsPublishing] = useState(false);
+  const [tags, setTags] = useState<string[]>([]);
+  const [tagInput, setTagInput] = useState("");
   
   const isEditMode = !!editId;
 
@@ -40,9 +42,25 @@ export default function NovaNewsletter() {
         setSelectedColor(newsletter.color);
         setSelectedFrequency(newsletter.frequency || "weekly");
         setStatus(newsletter.status);
+        setTags(newsletter.tags || []);
       }
     }
   }, [editId, newsletters]);
+
+  const handleAddTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && tagInput.trim()) {
+      e.preventDefault();
+      const newTag = tagInput.trim();
+      if (!tags.includes(newTag)) {
+        setTags([...tags, newTag]);
+      }
+      setTagInput("");
+    }
+  };
+
+  const handleRemoveTag = (tagToRemove: string) => {
+    setTags(tags.filter(tag => tag !== tagToRemove));
+  };
 
   const toggleProduct = (productId: string) => {
     setSelectedProducts(prev => 
@@ -220,15 +238,19 @@ export default function NovaNewsletter() {
                     <div>
                       <label className="block text-sm font-medium text-slate-700 mb-2">Cor Tema</label>
                       <div className="flex gap-3">
-                        {['#B8D4E8', '#D4C5E8', '#E8C5D8', '#C5E8D4', '#E8E0C5'].map((color, idx) => (
+                        {['#B8D4E8', '#D4C5E8', '#E8C5D8', '#C5E8D4', '#E8E0C5'].map((color) => (
                           <button
                             key={color}
                             onClick={() => setSelectedColor(color)}
-                            className={`w-8 h-8 rounded-full transition ${
-                              selectedColor === color ? 'ring-2 ring-offset-2 ring-purple-300' : 'hover:ring-2 hover:ring-offset-2 hover:ring-slate-200'
+                            className={`w-8 h-8 rounded-full transition relative flex items-center justify-center ${
+                              selectedColor === color ? 'ring-2 ring-offset-2 ring-purple-400 shadow-md' : 'hover:ring-2 hover:ring-offset-2 hover:ring-slate-200'
                             }`}
                             style={{ backgroundColor: color }}
-                          />
+                          >
+                            {selectedColor === color && (
+                              <Check className="w-4 h-4 text-slate-700" />
+                            )}
+                          </button>
                         ))}
                         <button className="w-8 h-8 rounded-full border border-slate-300 flex items-center justify-center text-slate-400 hover:bg-slate-50">
                           <Plus className="w-4 h-4" />
@@ -315,25 +337,30 @@ export default function NovaNewsletter() {
                       <div className="col-span-2">
                         <label className="block text-sm font-medium text-slate-700 mb-2">Tags</label>
                         <div className="p-2 border border-slate-300 rounded-lg bg-white flex flex-wrap gap-2">
-                          <span className="px-3 py-1 rounded-full text-sm flex items-center gap-1 text-slate-700" style={{ backgroundColor: '#D4C5E8' }}>
-                            Pix 
-                            <button className="hover:text-slate-900">
-                              <span className="text-xs">×</span>
-                            </button>
-                          </span>
-                          <span className="px-3 py-1 rounded-full text-sm flex items-center gap-1 text-slate-700" style={{ backgroundColor: '#C5E8D4' }}>
-                            Open Finance 
-                            <button className="hover:text-slate-900">
-                              <span className="text-xs">×</span>
-                            </button>
-                          </span>
-                          <span className="px-3 py-1 rounded-full text-sm flex items-center gap-1 text-slate-700" style={{ backgroundColor: '#E8C5D8' }}>
-                            Fintechs 
-                            <button className="hover:text-slate-900">
-                              <span className="text-xs">×</span>
-                            </button>
-                          </span>
-                          <input type="text" className="flex-1 outline-none min-w-[100px] text-sm py-1" placeholder="Digite e pressione Enter..." />
+                          {tags.map((tag, idx) => (
+                            <span 
+                              key={idx}
+                              className="px-3 py-1 rounded-full text-sm flex items-center gap-1 text-slate-700" 
+                              style={{ backgroundColor: ['#D4C5E8', '#C5E8D4', '#E8C5D8', '#B8D4E8', '#E8E0C5'][idx % 5] }}
+                            >
+                              {tag}
+                              <button 
+                                type="button"
+                                onClick={() => handleRemoveTag(tag)}
+                                className="hover:text-slate-900 ml-1"
+                              >
+                                <span className="text-xs font-bold">×</span>
+                              </button>
+                            </span>
+                          ))}
+                          <input 
+                            type="text" 
+                            value={tagInput}
+                            onChange={(e) => setTagInput(e.target.value)}
+                            onKeyDown={handleAddTag}
+                            className="flex-1 outline-none min-w-[100px] text-sm py-1" 
+                            placeholder="Digite e pressione Enter..." 
+                          />
                         </div>
                       </div>
 
@@ -972,18 +999,20 @@ export default function NovaNewsletter() {
                 </div>
 
                 {/* Tags */}
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-sm font-medium text-slate-600">Tags:</span>
-                  {['Pix', 'Open Banking', 'Fintechs', 'Regulação'].map((tag, idx) => (
-                    <span 
-                      key={idx}
-                      className="px-3 py-1.5 rounded-full text-sm font-medium text-[hsl(var(--pastel-gray-dark))]"
-                      style={{ backgroundColor: 'hsl(var(--pastel-purple))' }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+                {tags.length > 0 && (
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-sm font-medium text-slate-600">Tags:</span>
+                    {tags.map((tag, idx) => (
+                      <span 
+                        key={idx}
+                        className="px-3 py-1.5 rounded-full text-sm font-medium text-[hsl(var(--pastel-gray-dark))]"
+                        style={{ backgroundColor: ['#D4C5E8', '#C5E8D4', '#E8C5D8', '#B8D4E8', '#E8E0C5'][idx % 5] }}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
 
                 {/* Summary Grid */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -1210,13 +1239,14 @@ export default function NovaNewsletter() {
                           frequency: selectedFrequency || "weekly",
                           color: selectedColor,
                           status,
+                          tags,
                         });
                         toast({
                           title: "Newsletter atualizada",
                           description: "As alterações foram salvas com sucesso.",
                         });
                       } else {
-                        await createNewsletter(title, description, selectedFrequency || "weekly", selectedColor);
+                        await createNewsletter(title, description, selectedFrequency || "weekly", selectedColor, tags);
                       }
                       navigate('/criar-newsletter');
                     } catch (error) {
