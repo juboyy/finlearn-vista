@@ -931,6 +931,57 @@ export type Database = {
         }
         Relationships: []
       }
+      newsletters: {
+        Row: {
+          color: string
+          created_at: string
+          description: string | null
+          discount_percentage: number
+          frequency: string | null
+          id: string
+          last_sent_at: string | null
+          open_rate: number
+          sent_count: number
+          status: string
+          subscribers_count: number
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          color?: string
+          created_at?: string
+          description?: string | null
+          discount_percentage?: number
+          frequency?: string | null
+          id?: string
+          last_sent_at?: string | null
+          open_rate?: number
+          sent_count?: number
+          status?: string
+          subscribers_count?: number
+          title: string
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          color?: string
+          created_at?: string
+          description?: string | null
+          discount_percentage?: number
+          frequency?: string | null
+          id?: string
+          last_sent_at?: string | null
+          open_rate?: number
+          sent_count?: number
+          status?: string
+          subscribers_count?: number
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       presentations: {
         Row: {
           author_name: string
