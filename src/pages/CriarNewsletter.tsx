@@ -9,13 +9,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog";
-import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -29,46 +22,16 @@ import { useNewsletters, Newsletter } from "@/hooks/useNewsletters";
 
 export default function CriarNewsletter() {
   const navigate = useNavigate();
-  const { newsletters: dbNewsletters, isLoading, updateNewsletter, deleteNewsletter } = useNewsletters();
+  const { newsletters: dbNewsletters, isLoading, deleteNewsletter } = useNewsletters();
   const [selectedNewsletter, setSelectedNewsletter] = useState<string | number | null>(null);
   const [showHistoryFor, setShowHistoryFor] = useState<string | number | null>(null);
-  
-  // Edit modal state
-  const [editingNewsletter, setEditingNewsletter] = useState<Newsletter | null>(null);
-  const [editTitle, setEditTitle] = useState("");
-  const [editDescription, setEditDescription] = useState("");
-  const [editColor, setEditColor] = useState("#B8D4E8");
-  const [editStatus, setEditStatus] = useState("draft");
-  const [isUpdating, setIsUpdating] = useState(false);
   
   // Delete confirmation state
   const [deletingNewsletterId, setDeletingNewsletterId] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handleEditClick = (newsletter: Newsletter) => {
-    setEditingNewsletter(newsletter);
-    setEditTitle(newsletter.title);
-    setEditDescription(newsletter.description || "");
-    setEditColor(newsletter.color);
-    setEditStatus(newsletter.status);
-  };
-
-  const handleEditSave = async () => {
-    if (!editingNewsletter) return;
-    setIsUpdating(true);
-    try {
-      await updateNewsletter(editingNewsletter.id, {
-        title: editTitle,
-        description: editDescription,
-        color: editColor,
-        status: editStatus,
-      });
-      setEditingNewsletter(null);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsUpdating(false);
-    }
+    navigate(`/nova-newsletter?edit=${newsletter.id}`);
   };
 
   const handleDeleteConfirm = async () => {
@@ -87,14 +50,6 @@ export default function CriarNewsletter() {
     }
   };
 
-  const colorOptions = [
-    { name: "Azul Pastel", value: "#B8D4E8" },
-    { name: "Verde Pastel", value: "#C5E8D4" },
-    { name: "Roxo Pastel", value: "#D4C5E8" },
-    { name: "Rosa Pastel", value: "#E8C5D4" },
-    { name: "Amarelo Pastel", value: "#E8E4C5" },
-    { name: "Laranja Pastel", value: "#E8D4C5" },
-  ];
   const calculateTimeWithoutOpening = (lastOpened: string | null) => {
     if (!lastOpened) return { value: '—', color: 'text-slate-400' };
     
@@ -827,95 +782,6 @@ export default function CriarNewsletter() {
           </div>
         </div>
       </main>
-
-      {/* Edit Newsletter Modal */}
-      <Dialog open={!!editingNewsletter} onOpenChange={() => setEditingNewsletter(null)}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Editar Newsletter</DialogTitle>
-          </DialogHeader>
-          <div className="space-y-4 py-4">
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Título</label>
-              <input
-                type="text"
-                value={editTitle}
-                onChange={(e) => setEditTitle(e.target.value)}
-                className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B8D4E8]"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Descrição</label>
-              <textarea
-                value={editDescription}
-                onChange={(e) => setEditDescription(e.target.value)}
-                rows={3}
-                className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B8D4E8] resize-none"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">Cor</label>
-              <div className="flex flex-wrap gap-2">
-                {colorOptions.map((color) => (
-                  <button
-                    key={color.value}
-                    onClick={() => setEditColor(color.value)}
-                    className={`w-8 h-8 rounded-full border-2 transition ${
-                      editColor === color.value ? 'border-slate-600 scale-110' : 'border-transparent'
-                    }`}
-                    style={{ backgroundColor: color.value }}
-                    title={color.name}
-                  />
-                ))}
-              </div>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">Status</label>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => setEditStatus("active")}
-                  className={`flex-1 px-4 py-2 rounded-lg border-2 transition flex items-center justify-center gap-2 ${
-                    editStatus === "active" 
-                      ? 'border-emerald-500 bg-emerald-50 text-emerald-700' 
-                      : 'border-slate-200 text-slate-600 hover:border-slate-300'
-                  }`}
-                >
-                  <CheckCircle size={16} />
-                  Ativo
-                </button>
-                <button
-                  onClick={() => setEditStatus("draft")}
-                  className={`flex-1 px-4 py-2 rounded-lg border-2 transition flex items-center justify-center gap-2 ${
-                    editStatus === "draft" 
-                      ? 'border-amber-500 bg-amber-50 text-amber-700' 
-                      : 'border-slate-200 text-slate-600 hover:border-slate-300'
-                  }`}
-                >
-                  <FileText size={16} />
-                  Rascunho
-                </button>
-              </div>
-            </div>
-          </div>
-          <DialogFooter>
-            <button
-              onClick={() => setEditingNewsletter(null)}
-              className="px-4 py-2 border border-slate-200 text-slate-700 rounded-lg hover:bg-slate-50 transition"
-            >
-              Cancelar
-            </button>
-            <button
-              onClick={handleEditSave}
-              disabled={isUpdating || !editTitle.trim()}
-              className="px-4 py-2 text-white rounded-lg transition disabled:opacity-50 flex items-center gap-2"
-              style={{ backgroundColor: 'hsl(210, 50%, 35%)' }}
-            >
-              {isUpdating && <Loader2 size={16} className="animate-spin" />}
-              Salvar
-            </button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
 
       {/* Delete Confirmation Dialog */}
       <AlertDialog open={!!deletingNewsletterId} onOpenChange={() => setDeletingNewsletterId(null)}>
