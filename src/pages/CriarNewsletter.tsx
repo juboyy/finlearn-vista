@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Plus, Search, Filter, Mail, Calendar, Eye, CheckCircle, XCircle, Percent, Users, TrendingUp, Send, Edit, Trash2, MoreVertical, FileText, Clock, Wallet, Loader2 } from "lucide-react";
+import { ArrowLeft, Plus, Search, Filter, Mail, Calendar, Eye, CheckCircle, XCircle, Percent, Users, TrendingUp, Send, Edit, Trash2, MoreVertical, FileText, Clock, Wallet } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -14,15 +14,7 @@ export default function CriarNewsletter() {
   const navigate = useNavigate();
   const { newsletters: dbNewsletters, isLoading, createNewsletter } = useNewsletters();
   const [selectedNewsletter, setSelectedNewsletter] = useState<string | number | null>(null);
-  const [showCreateModal, setShowCreateModal] = useState(false);
   const [showHistoryFor, setShowHistoryFor] = useState<string | number | null>(null);
-  
-  // Form state for creating newsletter
-  const [newTitle, setNewTitle] = useState("");
-  const [newDescription, setNewDescription] = useState("");
-  const [newFrequency, setNewFrequency] = useState("weekly");
-  const [newColor, setNewColor] = useState("#B8D4E8");
-  const [isCreating, setIsCreating] = useState(false);
 
   const calculateTimeWithoutOpening = (lastOpened: string | null) => {
     if (!lastOpened) return { value: '—', color: 'text-slate-400' };
@@ -300,7 +292,7 @@ export default function CriarNewsletter() {
                   Financeiro
                 </button>
                 <button
-                  onClick={() => setShowCreateModal(true)}
+                  onClick={() => navigate("/nova-newsletter")}
                   className="px-4 py-2 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
                   style={{ backgroundColor: '#D4C5E8' }}
                 >
@@ -732,130 +724,6 @@ export default function CriarNewsletter() {
           </div>
         </div>
       </main>
-
-      {/* Create Newsletter Modal */}
-      {showCreateModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl p-6 w-full max-w-2xl mx-4">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold text-slate-800">Criar Nova Newsletter</h2>
-              <button
-                onClick={() => setShowCreateModal(false)}
-                className="text-slate-400 hover:text-slate-600 transition"
-              >
-                <XCircle size={24} />
-              </button>
-            </div>
-
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">Título da Newsletter</label>
-                <input
-                  type="text"
-                  placeholder="Ex: Insights Financeiros"
-                  value={newTitle}
-                  onChange={(e) => setNewTitle(e.target.value)}
-                  className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B8D4E8]"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">Descrição</label>
-                <textarea
-                  placeholder="Descreva o conteúdo da newsletter..."
-                  rows={3}
-                  value={newDescription}
-                  onChange={(e) => setNewDescription(e.target.value)}
-                  className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B8D4E8]"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2">Frequência</label>
-                  <select 
-                    value={newFrequency}
-                    onChange={(e) => setNewFrequency(e.target.value)}
-                    className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B8D4E8]"
-                  >
-                    <option value="weekly">Semanal</option>
-                    <option value="biweekly">Quinzenal</option>
-                    <option value="monthly">Mensal</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2">Cor</label>
-                  <div className="flex gap-2">
-                    <button 
-                      type="button"
-                      onClick={() => setNewColor('#B8D4E8')}
-                      className={`w-10 h-10 rounded-lg border-2 ${newColor === '#B8D4E8' ? 'border-slate-500' : 'border-transparent'}`} 
-                      style={{ backgroundColor: '#B8D4E8' }}
-                    />
-                    <button 
-                      type="button"
-                      onClick={() => setNewColor('#C5E8D4')}
-                      className={`w-10 h-10 rounded-lg border-2 ${newColor === '#C5E8D4' ? 'border-slate-500' : 'border-transparent'}`} 
-                      style={{ backgroundColor: '#C5E8D4' }}
-                    />
-                    <button 
-                      type="button"
-                      onClick={() => setNewColor('#D4C5E8')}
-                      className={`w-10 h-10 rounded-lg border-2 ${newColor === '#D4C5E8' ? 'border-slate-500' : 'border-transparent'}`} 
-                      style={{ backgroundColor: '#D4C5E8' }}
-                    />
-                    <button 
-                      type="button"
-                      onClick={() => setNewColor('#E8E0C5')}
-                      className={`w-10 h-10 rounded-lg border-2 ${newColor === '#E8E0C5' ? 'border-slate-500' : 'border-transparent'}`} 
-                      style={{ backgroundColor: '#E8E0C5' }}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex items-center justify-end gap-3 pt-4">
-                <button
-                  onClick={() => {
-                    setShowCreateModal(false);
-                    setNewTitle("");
-                    setNewDescription("");
-                    setNewFrequency("weekly");
-                    setNewColor("#B8D4E8");
-                  }}
-                  className="px-4 py-2 border border-slate-200 text-slate-700 rounded-lg hover:bg-slate-50 transition"
-                  disabled={isCreating}
-                >
-                  Cancelar
-                </button>
-                <button
-                  onClick={async () => {
-                    if (!newTitle.trim()) return;
-                    setIsCreating(true);
-                    try {
-                      await createNewsletter(newTitle, newDescription, newFrequency, newColor);
-                      setShowCreateModal(false);
-                      setNewTitle("");
-                      setNewDescription("");
-                      setNewFrequency("weekly");
-                      setNewColor("#B8D4E8");
-                    } finally {
-                      setIsCreating(false);
-                    }
-                  }}
-                  disabled={isCreating || !newTitle.trim()}
-                  className="px-4 py-2 text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition disabled:opacity-50 flex items-center gap-2"
-                  style={{ backgroundColor: '#D4C5E8' }}
-                >
-                  {isCreating && <Loader2 className="h-4 w-4 animate-spin" />}
-                  {isCreating ? "Criando..." : "Criar Newsletter"}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
     </div>
   );
