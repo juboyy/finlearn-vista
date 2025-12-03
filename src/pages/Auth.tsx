@@ -172,7 +172,7 @@ export default function Auth() {
                 <FormField
                   control={signupForm.control}
                   name="fullName"
-                  render={({ field }) => (
+                  render={({ field: { ref, ...fieldProps } }) => (
                     <FormItem>
                       <FormLabel className="text-foreground">Nome completo</FormLabel>
                       <div className="relative">
@@ -181,7 +181,8 @@ export default function Auth() {
                           <Input
                             placeholder="Seu nome"
                             className="pl-10"
-                            {...field}
+                            ref={ref}
+                            {...fieldProps}
                           />
                         </FormControl>
                       </div>
@@ -192,7 +193,7 @@ export default function Auth() {
                 <FormField
                   control={signupForm.control}
                   name="email"
-                  render={({ field }) => (
+                  render={({ field: { ref, ...fieldProps } }) => (
                     <FormItem>
                       <FormLabel className="text-foreground">Email</FormLabel>
                       <div className="relative">
@@ -202,7 +203,8 @@ export default function Auth() {
                             placeholder="seu@email.com"
                             className="pl-10"
                             type="email"
-                            {...field}
+                            ref={ref}
+                            {...fieldProps}
                           />
                         </FormControl>
                       </div>
@@ -213,7 +215,7 @@ export default function Auth() {
                 <FormField
                   control={signupForm.control}
                   name="password"
-                  render={({ field }) => (
+                  render={({ field: { ref, ...fieldProps } }) => (
                     <FormItem>
                       <FormLabel className="text-foreground">Senha</FormLabel>
                       <div className="relative">
@@ -223,7 +225,8 @@ export default function Auth() {
                             type="password"
                             placeholder="******"
                             className="pl-10"
-                            {...field}
+                            ref={ref}
+                            {...fieldProps}
                           />
                         </FormControl>
                       </div>
@@ -234,7 +237,7 @@ export default function Auth() {
                 <FormField
                   control={signupForm.control}
                   name="confirmPassword"
-                  render={({ field }) => (
+                  render={({ field: { ref, ...fieldProps } }) => (
                     <FormItem>
                       <FormLabel className="text-foreground">Confirmar senha</FormLabel>
                       <div className="relative">
@@ -244,7 +247,8 @@ export default function Auth() {
                             type="password"
                             placeholder="******"
                             className="pl-10"
-                            {...field}
+                            ref={ref}
+                            {...fieldProps}
                           />
                         </FormControl>
                       </div>
