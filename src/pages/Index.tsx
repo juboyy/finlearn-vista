@@ -28,8 +28,10 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useUserAgents } from "@/hooks/useUserAgents";
 import { useAnalyticsAlerts } from "@/hooks/useAnalyticsAlerts";
+import { useAuth } from "@/hooks/useAuth";
 
 const Index = () => {
+  const { user } = useAuth();
   const [podcastPanelOpen, setPodcastPanelOpen] = useState(false);
   const [ebookPanelOpen, setEbookPanelOpen] = useState(false);
   const [agendaPanelOpen, setAgendaPanelOpen] = useState(false);
@@ -40,7 +42,7 @@ const Index = () => {
   const [alertsPanelOpen, setAlertsPanelOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<any>(null);
   const { agents } = useUserAgents();
-  const { unreadCount } = useAnalyticsAlerts("user-mock-id");
+  const { unreadCount } = useAnalyticsAlerts(user?.id || null);
 
   // Automatically open chat when entering dashboard with delay
   useEffect(() => {
@@ -525,7 +527,7 @@ const Index = () => {
       <AnalyticsAlertsPanel 
         open={alertsPanelOpen} 
         onOpenChange={setAlertsPanelOpen}
-        userId="user-mock-id"
+        userId={user?.id || null}
       />
     </div>
   );
