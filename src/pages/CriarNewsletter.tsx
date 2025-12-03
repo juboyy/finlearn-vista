@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Plus, Search, Filter, Mail, Calendar, Eye, CheckCircle, XCircle, Percent, Users, TrendingUp, Send, Edit, Trash2, MoreVertical, FileText, Clock, Wallet } from "lucide-react";
+import { ArrowLeft, Plus, Search, Filter, Mail, Calendar, Eye, CheckCircle, XCircle, Percent, Users, TrendingUp, Send, Edit, Trash2, MoreVertical, FileText, Clock, Wallet, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -8,14 +8,90 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { useNewsletters, Newsletter } from "@/hooks/useNewsletters";
 
 export default function CriarNewsletter() {
   const navigate = useNavigate();
-  const { newsletters: dbNewsletters, isLoading, createNewsletter } = useNewsletters();
+  const { newsletters: dbNewsletters, isLoading, updateNewsletter, deleteNewsletter } = useNewsletters();
   const [selectedNewsletter, setSelectedNewsletter] = useState<string | number | null>(null);
   const [showHistoryFor, setShowHistoryFor] = useState<string | number | null>(null);
+  
+  // Edit modal state
+  const [editingNewsletter, setEditingNewsletter] = useState<Newsletter | null>(null);
+  const [editTitle, setEditTitle] = useState("");
+  const [editDescription, setEditDescription] = useState("");
+  const [editColor, setEditColor] = useState("#B8D4E8");
+  const [isUpdating, setIsUpdating] = useState(false);
+  
+  // Delete confirmation state
+  const [deletingNewsletterId, setDeletingNewsletterId] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
+  const handleEditClick = (newsletter: Newsletter) => {
+    setEditingNewsletter(newsletter);
+    setEditTitle(newsletter.title);
+    setEditDescription(newsletter.description || "");
+    setEditColor(newsletter.color);
+  };
+
+  const handleEditSave = async () => {
+    if (!editingNewsletter) return;
+    setIsUpdating(true);
+    try {
+      await updateNewsletter(editingNewsletter.id, {
+        title: editTitle,
+        description: editDescription,
+        color: editColor,
+      });
+      setEditingNewsletter(null);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!deletingNewsletterId) return;
+    setIsDeleting(true);
+    try {
+      await deleteNewsletter(deletingNewsletterId);
+      setDeletingNewsletterId(null);
+      if (selectedNewsletter === deletingNewsletterId) {
+        setSelectedNewsletter(null);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  const colorOptions = [
+    { name: "Azul Pastel", value: "#B8D4E8" },
+    { name: "Verde Pastel", value: "#C5E8D4" },
+    { name: "Roxo Pastel", value: "#D4C5E8" },
+    { name: "Rosa Pastel", value: "#E8C5D4" },
+    { name: "Amarelo Pastel", value: "#E8E4C5" },
+    { name: "Laranja Pastel", value: "#E8D4C5" },
+  ];
   const calculateTimeWithoutOpening = (lastOpened: string | null) => {
     if (!lastOpened) return { value: '—', color: 'text-slate-400' };
     
@@ -357,6 +433,30 @@ export default function CriarNewsletter() {
                             >
                               <FileText size={13} />
                             </button>
+                            {!String(newsletter.id).startsWith('mock-') && (
+                              <>
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleEditClick(newsletter as Newsletter);
+                                  }}
+                                  className="p-1 bg-white rounded border border-slate-200 text-slate-600 hover:text-blue-600 hover:bg-slate-50 transition shadow-sm"
+                                  title="Editar newsletter"
+                                >
+                                  <Edit size={13} />
+                                </button>
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setDeletingNewsletterId(newsletter.id as string);
+                                  }}
+                                  className="p-1 bg-white rounded border border-slate-200 text-slate-600 hover:text-red-600 hover:bg-slate-50 transition shadow-sm"
+                                  title="Excluir newsletter"
+                                >
+                                  <Trash2 size={13} />
+                                </button>
+                              </>
+                            )}
                           </div>
                         </div>
                         <p className="text-xs text-slate-600 mb-2.5 line-clamp-1">{newsletter.description}</p>
@@ -725,6 +825,90 @@ export default function CriarNewsletter() {
         </div>
       </main>
 
+      {/* Edit Newsletter Modal */}
+      <Dialog open={!!editingNewsletter} onOpenChange={() => setEditingNewsletter(null)}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Editar Newsletter</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-1">Título</label>
+              <input
+                type="text"
+                value={editTitle}
+                onChange={(e) => setEditTitle(e.target.value)}
+                className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B8D4E8]"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-1">Descrição</label>
+              <textarea
+                value={editDescription}
+                onChange={(e) => setEditDescription(e.target.value)}
+                rows={3}
+                className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B8D4E8] resize-none"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Cor</label>
+              <div className="flex flex-wrap gap-2">
+                {colorOptions.map((color) => (
+                  <button
+                    key={color.value}
+                    onClick={() => setEditColor(color.value)}
+                    className={`w-8 h-8 rounded-full border-2 transition ${
+                      editColor === color.value ? 'border-slate-600 scale-110' : 'border-transparent'
+                    }`}
+                    style={{ backgroundColor: color.value }}
+                    title={color.name}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+          <DialogFooter>
+            <button
+              onClick={() => setEditingNewsletter(null)}
+              className="px-4 py-2 border border-slate-200 text-slate-700 rounded-lg hover:bg-slate-50 transition"
+            >
+              Cancelar
+            </button>
+            <button
+              onClick={handleEditSave}
+              disabled={isUpdating || !editTitle.trim()}
+              className="px-4 py-2 text-white rounded-lg transition disabled:opacity-50 flex items-center gap-2"
+              style={{ backgroundColor: 'hsl(210, 50%, 35%)' }}
+            >
+              {isUpdating && <Loader2 size={16} className="animate-spin" />}
+              Salvar
+            </button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={!!deletingNewsletterId} onOpenChange={() => setDeletingNewsletterId(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Excluir Newsletter</AlertDialogTitle>
+            <AlertDialogDescription>
+              Tem certeza que deseja excluir esta newsletter? Esta ação não pode ser desfeita.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDeleteConfirm}
+              disabled={isDeleting}
+              className="bg-red-600 hover:bg-red-700 text-white"
+            >
+              {isDeleting ? <Loader2 size={16} className="animate-spin mr-2" /> : null}
+              Excluir
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
