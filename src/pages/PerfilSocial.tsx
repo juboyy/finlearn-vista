@@ -1,7 +1,8 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { 
   ArrowLeft, Bell, Eye, Save, Camera, MapPin, Building2, Calendar,
-  Link2, Upload, Loader2, Plus, X, Image, Briefcase, GraduationCap
+  Link2, Upload, Loader2, Plus, X, Image, Briefcase, GraduationCap,
+  Twitter, Instagram, Youtube, Linkedin, Github, Facebook, MessageCircle, Globe, Send, Phone
 } from "lucide-react";
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
@@ -23,6 +24,16 @@ interface WorkExperience {
   startYear: string;
   endYear: string;
   current: boolean;
+}
+
+interface SocialNetwork {
+  key: string;
+  label: string;
+  value: string;
+  setter: (value: string) => void;
+  placeholder: string;
+  color: string;
+  icon: React.ReactNode;
 }
 
 export default function PerfilSocial() {
@@ -168,19 +179,19 @@ export default function PerfilSocial() {
     });
   };
 
-  const socialNetworks = [
-    { key: 'twitter', label: 'Twitter/X', value: twitter, setter: setTwitter, placeholder: '@usuario', color: 'pastel-blue' },
-    { key: 'instagram', label: 'Instagram', value: instagram, setter: setInstagram, placeholder: '@usuario', color: 'pastel-pink' },
-    { key: 'youtube', label: 'YouTube', value: youtube, setter: setYoutube, placeholder: '@canal', color: 'pastel-red' },
-    { key: 'linkedin', label: 'LinkedIn', value: linkedin, setter: setLinkedin, placeholder: 'linkedin.com/in/usuario', color: 'pastel-blue' },
-    { key: 'github', label: 'GitHub', value: github, setter: setGithub, placeholder: 'github.com/usuario', color: 'pastel-gray' },
-    { key: 'tiktok', label: 'TikTok', value: tiktok, setter: setTiktok, placeholder: '@usuario', color: 'pastel-pink' },
-    { key: 'facebook', label: 'Facebook', value: facebook, setter: setFacebook, placeholder: 'facebook.com/usuario', color: 'pastel-blue' },
-    { key: 'medium', label: 'Medium', value: medium, setter: setMedium, placeholder: '@usuario', color: 'pastel-green' },
-    { key: 'threads', label: 'Threads', value: threads, setter: setThreads, placeholder: '@usuario', color: 'pastel-purple' },
-    { key: 'telegram', label: 'Telegram', value: telegram, setter: setTelegram, placeholder: '@usuario', color: 'pastel-blue' },
-    { key: 'whatsapp', label: 'WhatsApp', value: whatsapp, setter: setWhatsapp, placeholder: '+55 11 99999-9999', color: 'pastel-green' },
-    { key: 'portfolio', label: 'Portfolio/Site', value: portfolio, setter: setPortfolio, placeholder: 'https://seusite.com', color: 'pastel-orange' },
+  const socialNetworks: SocialNetwork[] = [
+    { key: 'linkedin', label: 'LinkedIn', value: linkedin, setter: setLinkedin, placeholder: 'linkedin.com/in/usuario', color: 'pastel-blue', icon: <Linkedin size={18} /> },
+    { key: 'twitter', label: 'Twitter/X', value: twitter, setter: setTwitter, placeholder: '@usuario', color: 'pastel-blue', icon: <Twitter size={18} /> },
+    { key: 'instagram', label: 'Instagram', value: instagram, setter: setInstagram, placeholder: '@usuario', color: 'pastel-pink', icon: <Instagram size={18} /> },
+    { key: 'youtube', label: 'YouTube', value: youtube, setter: setYoutube, placeholder: '@canal', color: 'pastel-red', icon: <Youtube size={18} /> },
+    { key: 'facebook', label: 'Facebook', value: facebook, setter: setFacebook, placeholder: 'facebook.com/usuario', color: 'pastel-blue', icon: <Facebook size={18} /> },
+    { key: 'github', label: 'GitHub', value: github, setter: setGithub, placeholder: 'github.com/usuario', color: 'pastel-gray', icon: <Github size={18} /> },
+    { key: 'tiktok', label: 'TikTok', value: tiktok, setter: setTiktok, placeholder: '@usuario', color: 'pastel-pink', icon: <MessageCircle size={18} /> },
+    { key: 'threads', label: 'Threads', value: threads, setter: setThreads, placeholder: '@usuario', color: 'pastel-purple', icon: <MessageCircle size={18} /> },
+    { key: 'medium', label: 'Medium', value: medium, setter: setMedium, placeholder: '@usuario', color: 'pastel-green', icon: <MessageCircle size={18} /> },
+    { key: 'telegram', label: 'Telegram', value: telegram, setter: setTelegram, placeholder: '@usuario', color: 'pastel-blue', icon: <Send size={18} /> },
+    { key: 'whatsapp', label: 'WhatsApp', value: whatsapp, setter: setWhatsapp, placeholder: '+55 11 99999-9999', color: 'pastel-green', icon: <Phone size={18} /> },
+    { key: 'portfolio', label: 'Portfolio/Site', value: portfolio, setter: setPortfolio, placeholder: 'https://seusite.com', color: 'pastel-orange', icon: <Globe size={18} /> },
   ];
 
   return (
@@ -526,10 +537,13 @@ export default function PerfilSocial() {
                 Redes Sociais e Links
               </h2>
               
-              <div className="grid grid-cols-3 gap-5">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                 {socialNetworks.map((social) => (
-                  <div key={social.key}>
-                    <Label htmlFor={social.key} className="text-sm font-medium text-slate-700">
+                  <div key={social.key} className="group">
+                    <Label htmlFor={social.key} className="text-sm font-medium text-slate-700 flex items-center gap-2 mb-1.5">
+                      <span className={`w-8 h-8 rounded-lg bg-${social.color}/40 flex items-center justify-center text-slate-600 group-hover:bg-${social.color}/60 transition-colors`}>
+                        {social.icon}
+                      </span>
                       {social.label}
                     </Label>
                     <Input
@@ -537,7 +551,7 @@ export default function PerfilSocial() {
                       value={social.value}
                       onChange={(e) => social.setter(e.target.value)}
                       placeholder={social.placeholder}
-                      className="mt-1"
+                      className="text-sm"
                     />
                   </div>
                 ))}
@@ -654,14 +668,20 @@ export default function PerfilSocial() {
             {socialNetworks.some(s => s.value) && (
               <div className="bg-card border border-border rounded-xl p-6">
                 <h3 className="text-sm font-semibold uppercase text-muted-foreground mb-4">Redes Sociais</h3>
-                <div className="flex flex-wrap gap-2">
+                <div className="grid grid-cols-2 gap-2">
                   {socialNetworks.filter(s => s.value).map((social) => (
-                    <span 
+                    <div 
                       key={social.key} 
-                      className={`px-3 py-1.5 bg-${social.color}/50 rounded-full text-sm text-slate-700`}
+                      className={`flex items-center gap-2 px-3 py-2 bg-${social.color}/30 rounded-lg`}
                     >
-                      {social.label}: {social.value}
-                    </span>
+                      <span className={`w-7 h-7 rounded-md bg-${social.color}/50 flex items-center justify-center text-slate-600`}>
+                        {social.icon}
+                      </span>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs text-muted-foreground">{social.label}</p>
+                        <p className="text-sm text-slate-700 truncate">{social.value}</p>
+                      </div>
+                    </div>
                   ))}
                 </div>
               </div>
