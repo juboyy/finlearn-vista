@@ -5,6 +5,7 @@ import { Play, Pause, RotateCcw, Volume2, VolumeX, User } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import aiAvatarImage from "@/assets/ai-avatar-presenter.png";
 
 interface VideoAvatarModalProps {
   open: boolean;
@@ -59,19 +60,6 @@ export const VideoAvatarModal = ({
   const [selectedVoice, setSelectedVoice] = useState(ELEVENLABS_VOICES[0].id);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const { toast } = useToast();
-
-  // Animation for mouth movement
-  const [mouthOpen, setMouthOpen] = useState(false);
-
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (isPlaying && isSpeaking) {
-      interval = setInterval(() => {
-        setMouthOpen(prev => !prev);
-      }, 150);
-    }
-    return () => clearInterval(interval);
-  }, [isPlaying, isSpeaking]);
 
   const generateAvatarAudio = async () => {
     setIsLoading(true);
@@ -211,57 +199,30 @@ export const VideoAvatarModal = ({
 
         <div className="flex flex-col items-center gap-6 py-4">
           {/* Avatar Display */}
-          <div className="relative w-64 h-64 rounded-full overflow-hidden border-4 border-pastel-purple/30 shadow-lg" style={{ backgroundColor: 'hsl(271, 35%, 90%)' }}>
-            {/* Avatar SVG */}
-            <svg viewBox="0 0 200 200" className="w-full h-full">
-              {/* Background circle */}
-              <circle cx="100" cy="100" r="95" fill="hsl(271, 35%, 85%)" />
-              
-              {/* Face */}
-              <ellipse cx="100" cy="110" rx="60" ry="70" fill="hsl(30, 40%, 85%)" />
-              
-              {/* Hair */}
-              <path d="M40 90 Q40 40 100 35 Q160 40 160 90 Q160 60 100 55 Q40 60 40 90" fill="hsl(25, 30%, 30%)" />
-              
-              {/* Left eye */}
-              <ellipse cx="75" cy="100" rx="12" ry="8" fill="white" />
-              <circle cx="75" cy="100" r="5" fill="hsl(200, 50%, 30%)" />
-              <circle cx="77" cy="98" r="2" fill="white" />
-              
-              {/* Right eye */}
-              <ellipse cx="125" cy="100" rx="12" ry="8" fill="white" />
-              <circle cx="125" cy="100" r="5" fill="hsl(200, 50%, 30%)" />
-              <circle cx="127" cy="98" r="2" fill="white" />
-              
-              {/* Eyebrows */}
-              <path d="M60 85 Q75 80 90 85" stroke="hsl(25, 30%, 30%)" strokeWidth="3" fill="none" />
-              <path d="M110 85 Q125 80 140 85" stroke="hsl(25, 30%, 30%)" strokeWidth="3" fill="none" />
-              
-              {/* Nose */}
-              <path d="M100 105 Q95 120 100 125 Q105 120 100 105" fill="hsl(30, 30%, 75%)" />
-              
-              {/* Mouth - animated */}
-              {isSpeaking && mouthOpen ? (
-                <ellipse cx="100" cy="145" rx="15" ry="10" fill="hsl(0, 30%, 40%)" />
-              ) : (
-                <path d="M85 145 Q100 155 115 145" stroke="hsl(0, 30%, 50%)" strokeWidth="3" fill="none" />
-              )}
-              
-              {/* Blush */}
-              <ellipse cx="60" cy="125" rx="10" ry="6" fill="hsl(350, 60%, 85%)" opacity="0.6" />
-              <ellipse cx="140" cy="125" rx="10" ry="6" fill="hsl(350, 60%, 85%)" opacity="0.6" />
-            </svg>
+          <div className="relative w-64 h-64 rounded-full overflow-hidden border-4 border-pastel-purple/30 shadow-2xl">
+            {/* Realistic Avatar Image */}
+            <img 
+              src={aiAvatarImage} 
+              alt="Avatar IA" 
+              className={`w-full h-full object-cover transition-all duration-200 ${isSpeaking ? 'scale-105' : 'scale-100'}`}
+            />
+            
+            {/* Speaking glow effect */}
+            {isSpeaking && (
+              <div className="absolute inset-0 rounded-full border-4 border-pastel-purple animate-pulse opacity-60" />
+            )}
             
             {/* Speaking indicator */}
             {isSpeaking && (
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1">
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 bg-black/40 px-3 py-1.5 rounded-full backdrop-blur-sm">
                 {[1, 2, 3, 4, 5].map((i) => (
                   <div
                     key={i}
-                    className="w-1.5 bg-pastel-purple rounded-full animate-pulse"
+                    className="w-1 bg-white rounded-full animate-pulse"
                     style={{
-                      height: `${Math.random() * 16 + 8}px`,
-                      animationDelay: `${i * 0.1}s`
+                      height: `${8 + (i % 3) * 6}px`,
+                      animationDelay: `${i * 0.15}s`,
+                      animationDuration: '0.5s'
                     }}
                   />
                 ))}
