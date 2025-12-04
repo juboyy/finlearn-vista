@@ -904,7 +904,7 @@ export default function NovaNewsletter() {
             {currentStep === 4 && (
               <div className="space-y-8 mb-8">
                 {/* Header */}
-                <div className="bg-purple-300 rounded-2xl p-8 text-center shadow-lg">
+                <div className="bg-purple-400 rounded-2xl p-8 text-center shadow-lg">
                   <h2 className="text-3xl font-bold text-slate-800 mb-3">Configurações de Monetização</h2>
                   <p className="text-slate-700 text-lg">Configure os planos de assinatura, preços e estratégias de monetização</p>
                 </div>
