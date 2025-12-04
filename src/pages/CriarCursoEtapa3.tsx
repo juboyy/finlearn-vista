@@ -3,7 +3,7 @@ import { ArrowLeft, ArrowRight, Save, Plus, Gift, DollarSign, RefreshCw, CreditC
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-export default function CriarEbookEtapa3() {
+export default function CriarCursoEtapa3() {
   const [pricingStrategy, setPricingStrategy] = useState<'free' | 'onetime' | 'subscription'>('free');
   const [paymentMethods, setPaymentMethods] = useState({
     creditCard: true,
@@ -26,11 +26,11 @@ export default function CriarEbookEtapa3() {
         <header className="bg-card border-b border-border sticky top-0 z-10">
           <div className="px-8 py-4 flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Link to="/criar-ebook/etapa-2" className="p-2 text-muted-foreground hover:bg-muted rounded-lg transition-colors">
+              <Link to="/criar-curso/etapa-2" className="p-2 text-muted-foreground hover:bg-muted rounded-lg transition-colors">
                 <ArrowLeft className="w-5 h-5" />
               </Link>
               <div>
-                <h1 className="text-2xl font-semibold text-foreground">Criar Novo E-book</h1>
+                <h1 className="text-2xl font-semibold text-foreground">Criar Novo Curso</h1>
                 <p className="text-sm text-muted-foreground mt-1">Passo 3 de 3 - Valores e Formas de Pagamento</p>
               </div>
             </div>
@@ -38,14 +38,14 @@ export default function CriarEbookEtapa3() {
               <button className="px-5 py-2 text-muted-foreground hover:bg-muted rounded-lg font-medium transition-colors">
                 Salvar Rascunho
               </button>
-              <Link to="/criar-ebook/etapa-2">
+              <Link to="/criar-curso/etapa-2">
                 <button className="px-5 py-2 bg-muted text-muted-foreground rounded-lg font-medium hover:opacity-80 transition-opacity">
                   Voltar
                 </button>
               </Link>
-              <Link to="/criar-ebook/resumo">
+              <Link to="/criar-curso/resumo">
                 <button className="px-6 py-2 bg-[hsl(var(--pastel-purple))] text-foreground rounded-lg font-semibold hover:opacity-80 transition-opacity">
-                  Publicar E-book
+                  Publicar Curso
                 </button>
               </Link>
             </div>
@@ -104,7 +104,7 @@ export default function CriarEbookEtapa3() {
                 <div className="flex items-start justify-between mb-6">
                   <div>
                     <h2 className="text-xl font-semibold text-foreground mb-2">Estratégia de Precificação</h2>
-                    <p className="text-sm text-muted-foreground">Defina a estratégia de preços do seu e-book</p>
+                    <p className="text-sm text-muted-foreground">Defina a estrategia de precos do seu curso</p>
                   </div>
                   <div className="px-4 py-2 bg-[hsl(var(--pastel-blue))] rounded-lg flex items-center gap-2">
                     <Lightbulb className="w-4 h-4 text-foreground" />
@@ -178,7 +178,7 @@ export default function CriarEbookEtapa3() {
                   <Info className="w-5 h-5 text-[hsl(var(--pastel-yellow))] mt-0.5 flex-shrink-0" />
                   <div className="text-sm text-foreground">
                     <p className="font-medium mb-1">Recomendação de Preço</p>
-                    <p className="text-muted-foreground">Baseado em e-books similares, o preço médio varia entre R$ 47,00 e R$ 197,00. E-books com materiais complementares tendem a ter valores mais altos.</p>
+                    <p className="text-muted-foreground">Baseado em cursos similares, o preco medio varia entre R$ 197,00 e R$ 997,00. Cursos com certificacao tendem a ter valores mais altos.</p>
                   </div>
                 </div>
               </div>
@@ -193,7 +193,7 @@ export default function CriarEbookEtapa3() {
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
                       Preço Original *
-                      <span className="text-muted-foreground font-normal ml-1">(Valor cheio do e-book)</span>
+                      <span className="text-muted-foreground font-normal ml-1">(Valor cheio do curso)</span>
                     </label>
                     <div className="relative">
                       <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground">R$</span>

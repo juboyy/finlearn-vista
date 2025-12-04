@@ -3,7 +3,7 @@ import { ArrowLeft, Save, Image, Video, Plus, X, Lightbulb, Check, Book, HelpCir
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-export default function CriarEbook() {
+export default function CriarCurso() {
   const [objectives, setObjectives] = useState([
     "Avaliar empresas através de indicadores financeiros",
     "Dominar técnicas de precificação de ativos",
@@ -57,8 +57,8 @@ export default function CriarEbook() {
                 <ArrowLeft className="w-5 h-5" />
               </Link>
               <div>
-                <h1 className="text-2xl font-semibold text-foreground">Criar Novo E-book</h1>
-                <p className="text-sm text-muted-foreground mt-1">Preencha as informações para criar seu e-book</p>
+                <h1 className="text-2xl font-semibold text-foreground">Criar Novo Curso</h1>
+                <p className="text-sm text-muted-foreground mt-1">Preencha as informacoes para criar seu curso</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -67,7 +67,7 @@ export default function CriarEbook() {
                 Salvar Rascunho
               </button>
               <button className="px-5 py-2 bg-muted text-muted-foreground rounded-lg font-medium cursor-not-allowed">
-                Publicar E-book
+                Publicar Curso
               </button>
             </div>
           </div>
@@ -95,8 +95,8 @@ export default function CriarEbook() {
                     <span className="text-sm font-semibold text-muted-foreground">2</span>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-muted-foreground">Conteúdo do E-book</h3>
-                    <p className="text-xs text-muted-foreground">Capítulos, páginas e materiais</p>
+                    <h3 className="font-semibold text-muted-foreground">Conteudo do Curso</h3>
+                    <p className="text-xs text-muted-foreground">Modulos, aulas e materiais</p>
                   </div>
                 </div>
                 <div className="flex-1 mx-6 h-1 bg-muted rounded-full"></div>
@@ -126,7 +126,7 @@ export default function CriarEbook() {
                 <h2 className="text-lg font-semibold text-foreground mb-4">Título e Descrição</h2>
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Título do E-book *</label>
+                    <label className="block text-sm font-medium text-foreground mb-2">Titulo do Curso *</label>
                     <input 
                       type="text" 
                       placeholder="Ex: Domine o Mercado de Capitais em 2025" 
@@ -141,7 +141,7 @@ export default function CriarEbook() {
                       placeholder="Ex: Guia completo com certificação internacional" 
                       className="w-full px-4 py-3 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-[hsl(var(--pastel-blue))] focus:border-transparent"
                     />
-                    <p className="text-xs text-muted-foreground mt-2">Opcional - Breve resumo do e-book</p>
+                    <p className="text-xs text-muted-foreground mt-2">Opcional - Breve resumo do curso</p>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">Descrição Completa *</label>
@@ -183,7 +183,7 @@ export default function CriarEbook() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Nível do E-book *</label>
+                    <label className="block text-sm font-medium text-foreground mb-2">Nivel do Curso *</label>
                     <select className="w-full px-4 py-3 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-[hsl(var(--pastel-blue))] focus:border-transparent">
                       <option>Selecione o nível</option>
                       <option>Iniciante</option>
@@ -221,7 +221,7 @@ export default function CriarEbook() {
               {/* Introduction Video Section */}
               <div className="bg-card rounded-xl border border-border p-6">
                 <h2 className="text-lg font-semibold text-foreground mb-4">Vídeo de Introdução</h2>
-                <p className="text-sm text-muted-foreground mb-4">Adicione um vídeo de apresentação para atrair mais leitores. Este vídeo será exibido na página do e-book.</p>
+                <p className="text-sm text-muted-foreground mb-4">Adicione um video de apresentacao para atrair mais alunos. Este video sera exibido na pagina do curso.</p>
                 <div className="border-2 border-dashed border-border rounded-lg p-8 text-center hover:border-[hsl(var(--pastel-purple))] transition-colors cursor-pointer">
                   <div className="w-16 h-16 bg-[hsl(var(--pastel-purple))] rounded-full flex items-center justify-center mx-auto mb-4">
                     <Video className="w-8 h-8 text-foreground" />
@@ -237,7 +237,7 @@ export default function CriarEbook() {
               {/* Learning Objectives Section */}
               <div className="bg-card rounded-xl border border-border p-6">
                 <h2 className="text-lg font-semibold text-foreground mb-4">O Que os Leitores Aprenderão</h2>
-                <p className="text-sm text-muted-foreground mb-4">Liste os principais objetivos de aprendizado do e-book (mínimo 4 objetivos)</p>
+                <p className="text-sm text-muted-foreground mb-4">Liste os principais objetivos de aprendizado do curso (minimo 4 objetivos)</p>
                 <div className="space-y-3">
                   {objectives.map((objective, index) => (
                     <div key={index} className="flex items-center gap-3">
@@ -269,7 +269,7 @@ export default function CriarEbook() {
               {/* Requirements Section */}
               <div className="bg-card rounded-xl border border-border p-6">
                 <h2 className="text-lg font-semibold text-foreground mb-4">Requisitos</h2>
-                <p className="text-sm text-muted-foreground mb-4">Liste os conhecimentos ou habilidades necessários para o e-book</p>
+                <p className="text-sm text-muted-foreground mb-4">Liste os conhecimentos ou habilidades necessarios para o curso</p>
                 <div className="space-y-3">
                   {requirements.map((requirement, index) => (
                     <div key={index} className="flex items-center gap-3">
