@@ -3,7 +3,7 @@ import {
   Camera, IdCard, Edit, Briefcase, Plus, Star, Crown, GraduationCap, 
   Award, CheckCircle, CreditCard, Rocket, Shield, Eye, TrendingUp, 
   Download, FileText, AlertTriangle, XCircle, X, Bell, User, Building2,
-  Upload, Loader2, Landmark, ChevronDown, Share2, Link2, Calendar
+  Upload, Loader2, Landmark, ChevronDown, Share2
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -83,17 +83,6 @@ export default function MinhaConta() {
     holder_document: '',
   });
   
-  // Social Profile states
-  const [isSocialProfileOpen, setIsSocialProfileOpen] = useState(false);
-  const [socialTitle, setSocialTitle] = useState("");
-  const [socialSubtitle, setSocialSubtitle] = useState("");
-  const [socialBio, setSocialBio] = useState("");
-  const [socialInstitution, setSocialInstitution] = useState("");
-  const [socialMemberSince, setSocialMemberSince] = useState("2023");
-  const [socialTwitter, setSocialTwitter] = useState("");
-  const [socialInstagram, setSocialInstagram] = useState("");
-  const [socialYoutube, setSocialYoutube] = useState("");
-  const [socialPortfolio, setSocialPortfolio] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const mainRef = useRef<HTMLElement>(null);
   const { toast } = useToast();
@@ -542,7 +531,7 @@ export default function MinhaConta() {
             </div>
             <div className="flex items-center gap-4">
               <button 
-                onClick={() => setIsSocialProfileOpen(true)}
+                onClick={() => navigate("/perfil-social")}
                 className="px-4 py-2 bg-pastel-green text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2"
               >
                 <Share2 size={16} />
@@ -1564,176 +1553,6 @@ export default function MinhaConta() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-
-      {/* Social Profile Sheet */}
-      <Sheet open={isSocialProfileOpen} onOpenChange={setIsSocialProfileOpen}>
-        <SheetContent className="w-[500px] sm:max-w-[500px] overflow-y-auto">
-          <SheetHeader>
-            <SheetTitle className="flex items-center gap-2">
-              <Share2 size={20} className="text-pastel-green" />
-              Perfil Social
-            </SheetTitle>
-            <SheetDescription>
-              Configure as informacoes do seu perfil publico de criador
-            </SheetDescription>
-          </SheetHeader>
-          
-          <div className="space-y-6 mt-6">
-            {/* Title and Subtitle */}
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="social-title" className="text-sm font-medium text-slate-700">
-                  Titulo Profissional
-                </Label>
-                <Input
-                  id="social-title"
-                  value={socialTitle}
-                  onChange={(e) => setSocialTitle(e.target.value)}
-                  placeholder="Ex: Especialista em Mercado Financeiro"
-                  className="mt-1"
-                />
-              </div>
-              
-              <div>
-                <Label htmlFor="social-subtitle" className="text-sm font-medium text-slate-700">
-                  Subtitulo
-                </Label>
-                <Input
-                  id="social-subtitle"
-                  value={socialSubtitle}
-                  onChange={(e) => setSocialSubtitle(e.target.value)}
-                  placeholder="Ex: Analista CNPI | CPA-20"
-                  className="mt-1"
-                />
-              </div>
-            </div>
-
-            {/* Bio */}
-            <div>
-              <Label htmlFor="social-bio" className="text-sm font-medium text-slate-700">
-                Biografia
-              </Label>
-              <textarea
-                id="social-bio"
-                value={socialBio}
-                onChange={(e) => setSocialBio(e.target.value)}
-                placeholder="Conte um pouco sobre voce e sua experiencia..."
-                rows={4}
-                className="mt-1 w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-pastel-blue"
-              />
-            </div>
-
-            {/* Institution */}
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="social-institution" className="text-sm font-medium text-slate-700 flex items-center gap-2">
-                  <Building2 size={14} />
-                  Instituicao
-                </Label>
-                <Input
-                  id="social-institution"
-                  value={socialInstitution}
-                  onChange={(e) => setSocialInstitution(e.target.value)}
-                  placeholder="Ex: XP Investimentos"
-                  className="mt-1"
-                />
-              </div>
-              
-              <div>
-                <Label htmlFor="social-member-since" className="text-sm font-medium text-slate-700 flex items-center gap-2">
-                  <Calendar size={14} />
-                  Membro desde
-                </Label>
-                <Input
-                  id="social-member-since"
-                  value={socialMemberSince}
-                  onChange={(e) => setSocialMemberSince(e.target.value)}
-                  placeholder="Ex: 2023"
-                  className="mt-1"
-                />
-              </div>
-            </div>
-
-            {/* Social Links */}
-            <div className="space-y-4">
-              <h3 className="text-sm font-semibold text-slate-800 flex items-center gap-2">
-                <Link2 size={16} />
-                Redes Sociais
-              </h3>
-              
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="social-twitter" className="text-sm font-medium text-slate-700">
-                    Twitter/X
-                  </Label>
-                  <Input
-                    id="social-twitter"
-                    value={socialTwitter}
-                    onChange={(e) => setSocialTwitter(e.target.value)}
-                    placeholder="@usuario"
-                    className="mt-1"
-                  />
-                </div>
-                
-                <div>
-                  <Label htmlFor="social-instagram" className="text-sm font-medium text-slate-700">
-                    Instagram
-                  </Label>
-                  <Input
-                    id="social-instagram"
-                    value={socialInstagram}
-                    onChange={(e) => setSocialInstagram(e.target.value)}
-                    placeholder="@usuario"
-                    className="mt-1"
-                  />
-                </div>
-                
-                <div>
-                  <Label htmlFor="social-youtube" className="text-sm font-medium text-slate-700">
-                    YouTube
-                  </Label>
-                  <Input
-                    id="social-youtube"
-                    value={socialYoutube}
-                    onChange={(e) => setSocialYoutube(e.target.value)}
-                    placeholder="@canal"
-                    className="mt-1"
-                  />
-                </div>
-                
-                <div>
-                  <Label htmlFor="social-portfolio" className="text-sm font-medium text-slate-700">
-                    Portfolio/Site
-                  </Label>
-                  <Input
-                    id="social-portfolio"
-                    value={socialPortfolio}
-                    onChange={(e) => setSocialPortfolio(e.target.value)}
-                    placeholder="https://..."
-                    className="mt-1"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Save Button */}
-            <div className="pt-4 border-t border-slate-200">
-              <button 
-                onClick={() => {
-                  toast({
-                    title: "Perfil Social salvo",
-                    description: "Suas informacoes foram atualizadas com sucesso.",
-                  });
-                  setIsSocialProfileOpen(false);
-                }}
-                className="w-full px-4 py-3 bg-pastel-green text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
-              >
-                Salvar Perfil Social
-              </button>
-            </div>
-          </div>
-        </SheetContent>
-      </Sheet>
 
     </div>
   );
