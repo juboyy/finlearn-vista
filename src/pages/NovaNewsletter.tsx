@@ -204,14 +204,26 @@ export default function NovaNewsletter() {
     })
   );
 
-  const handleDragEnd = (event: DragEndEvent) => {
+  const handleDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event;
     if (over && active.id !== over.id) {
-      setContentTypesList((items) => {
-        const oldIndex = items.findIndex((item) => item.id === active.id);
-        const newIndex = items.findIndex((item) => item.id === over.id);
-        return arrayMove(items, oldIndex, newIndex);
-      });
+      const newOrder = (() => {
+        const oldIndex = contentTypesList.findIndex((item) => item.id === active.id);
+        const newIndex = contentTypesList.findIndex((item) => item.id === over.id);
+        return arrayMove(contentTypesList, oldIndex, newIndex);
+      })();
+      
+      setContentTypesList(newOrder);
+      
+      // Auto-save to database if in edit mode
+      if (isEditMode && editId) {
+        try {
+          await updateNewsletter(editId, { content_types_config: newOrder });
+          toast({ title: "Ordem salva", description: "A ordem dos tipos de conteúdo foi atualizada." });
+        } catch (error) {
+          console.error('Error saving content types order:', error);
+        }
+      }
     }
   };
 
