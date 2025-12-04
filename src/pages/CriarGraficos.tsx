@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { ExplainChartChat } from "@/components/Dashboard/ExplainChartChat";
@@ -42,6 +43,8 @@ import {
   Grid3X3,
   ToggleLeft,
   MessageSquare,
+  Shuffle,
+  Filter,
 } from "lucide-react";
 import {
   ResponsiveContainer,
@@ -188,6 +191,10 @@ export default function CriarGraficos() {
   const [isExporting, setIsExporting] = useState(false);
   const [chartStyle, setChartStyle] = useState<ChartStyle>(DEFAULT_CHART_STYLE);
   const [explainChartOpen, setExplainChartOpen] = useState(false);
+  const [dataPreviewOpen, setDataPreviewOpen] = useState(false);
+  const [crossColumn1, setCrossColumn1] = useState<string>("");
+  const [crossColumn2, setCrossColumn2] = useState<string>("");
+  const [visibleRows, setVisibleRows] = useState<number[]>([]);
   const chartRef = useRef<HTMLDivElement>(null);
 
   // Load saved charts on mount
@@ -1219,55 +1226,227 @@ export default function CriarGraficos() {
             </div>
           </div>
 
-          {/* Right Panel - Data Table Preview */}
+          {/* Right Panel - Data Manipulation */}
           {data.length > 0 && (
-            <div className="w-96 border-l border-border bg-card flex flex-col overflow-hidden">
-              <div className="p-4 border-b border-border">
+            <div className="w-80 border-l border-border bg-card flex flex-col overflow-hidden">
+              <div className="p-4 border-b border-border flex items-center justify-between">
                 <h3 className="font-medium text-foreground flex items-center gap-2">
-                  <Table className="h-4 w-4" />
-                  Prévia dos Dados
+                  <Shuffle className="h-4 w-4" />
+                  Manipular Dados
                 </h3>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setDataPreviewOpen(true)}
+                  className="gap-1.5"
+                >
+                  <Eye className="h-3.5 w-3.5" />
+                  Ver Dados
+                </Button>
               </div>
               <ScrollArea className="flex-1">
-                <div className="p-4">
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-xs">
-                      <thead>
-                        <tr className="border-b border-border">
-                          {columns.map(col => (
-                            <th
-                              key={col}
-                              className="text-left p-2 font-medium text-muted-foreground"
-                            >
-                              {col}
-                            </th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {data.slice(0, 20).map((row, index) => (
-                          <tr key={index} className="border-b border-border/50">
+                <div className="p-4 space-y-4">
+                  {/* Colunas Visíveis */}
+                  <Card>
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-sm flex items-center gap-2">
+                        <Columns className="h-4 w-4" />
+                        Colunas Visíveis
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-2">
+                      {columns.map(col => (
+                        <div key={col} className="flex items-center gap-2">
+                          <Checkbox
+                            id={`visible-${col}`}
+                            checked={selectedColumns.length === 0 || selectedColumns.includes(col)}
+                            onCheckedChange={() => toggleColumnSelection(col)}
+                          />
+                          <Label htmlFor={`visible-${col}`} className="text-sm cursor-pointer">
+                            {col}
+                          </Label>
+                        </div>
+                      ))}
+                    </CardContent>
+                  </Card>
+
+                  {/* Cruzar Colunas */}
+                  <Card>
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-sm flex items-center gap-2">
+                        <Shuffle className="h-4 w-4" />
+                        Cruzar Colunas
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                      <div className="space-y-1.5">
+                        <Label className="text-xs text-muted-foreground">Coluna 1</Label>
+                        <Select value={crossColumn1} onValueChange={setCrossColumn1}>
+                          <SelectTrigger className="text-sm">
+                            <SelectValue placeholder="Selecione" />
+                          </SelectTrigger>
+                          <SelectContent>
                             {columns.map(col => (
-                              <td key={col} className="p-2 text-foreground">
-                                {String(row[col])}
-                              </td>
+                              <SelectItem key={col} value={col}>{col}</SelectItem>
                             ))}
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                    {data.length > 20 && (
-                      <p className="text-xs text-muted-foreground text-center mt-3">
-                        Mostrando 20 de {data.length} linhas
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label className="text-xs text-muted-foreground">Coluna 2</Label>
+                        <Select value={crossColumn2} onValueChange={setCrossColumn2}>
+                          <SelectTrigger className="text-sm">
+                            <SelectValue placeholder="Selecione" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {columns.filter(c => c !== crossColumn1).map(col => (
+                              <SelectItem key={col} value={col}>{col}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      {crossColumn1 && crossColumn2 && (
+                        <Button
+                          size="sm"
+                          className="w-full mt-2"
+                          onClick={() => {
+                            setChartConfig(prev => ({
+                              ...prev,
+                              xAxis: crossColumn1,
+                              yAxis: [crossColumn2]
+                            }));
+                            toast.success(`Cruzamento aplicado: ${crossColumn1} x ${crossColumn2}`);
+                          }}
+                        >
+                          Aplicar Cruzamento
+                        </Button>
+                      )}
+                    </CardContent>
+                  </Card>
+
+                  {/* Filtrar Linhas */}
+                  <Card>
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-sm flex items-center gap-2">
+                        <Filter className="h-4 w-4" />
+                        Filtrar Linhas
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-xs text-muted-foreground mb-2">
+                        Total de linhas: {data.length}
                       </p>
-                    )}
-                  </div>
+                      <div className="flex gap-2">
+                        <Input
+                          type="number"
+                          placeholder="De"
+                          className="text-sm"
+                          min={1}
+                          max={data.length}
+                          onChange={(e) => {
+                            const from = parseInt(e.target.value) || 1;
+                            setVisibleRows(prev => [from - 1, prev[1] || data.length]);
+                          }}
+                        />
+                        <Input
+                          type="number"
+                          placeholder="Até"
+                          className="text-sm"
+                          min={1}
+                          max={data.length}
+                          onChange={(e) => {
+                            const to = parseInt(e.target.value) || data.length;
+                            setVisibleRows(prev => [prev[0] || 0, to]);
+                          }}
+                        />
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  {/* Resumo dos Dados */}
+                  <Card>
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-sm flex items-center gap-2">
+                        <BarChart3 className="h-4 w-4" />
+                        Resumo
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-2 text-xs">
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Total de colunas:</span>
+                        <span className="font-medium">{columns.length}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Total de linhas:</span>
+                        <span className="font-medium">{data.length}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Eixo X:</span>
+                        <span className="font-medium">{chartConfig.xAxis || "-"}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Eixo Y:</span>
+                        <span className="font-medium">{chartConfig.yAxis.join(", ") || "-"}</span>
+                      </div>
+                    </CardContent>
+                  </Card>
                 </div>
               </ScrollArea>
             </div>
           )}
         </div>
       </div>
+
+      {/* Data Preview Dialog */}
+      <Dialog open={dataPreviewOpen} onOpenChange={setDataPreviewOpen}>
+        <DialogContent className="max-w-4xl max-h-[80vh]">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Table className="h-5 w-5" />
+              Prévia dos Dados
+            </DialogTitle>
+          </DialogHeader>
+          <ScrollArea className="h-[60vh]">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border bg-muted/50">
+                    <th className="text-left p-3 font-medium text-muted-foreground">#</th>
+                    {columns.map(col => (
+                      <th
+                        key={col}
+                        className="text-left p-3 font-medium text-muted-foreground"
+                      >
+                        {col}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.map((row, index) => (
+                    <tr key={index} className="border-b border-border/50 hover:bg-muted/30">
+                      <td className="p-3 text-muted-foreground">{index + 1}</td>
+                      {columns.map(col => (
+                        <td key={col} className="p-3 text-foreground">
+                          {String(row[col])}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </ScrollArea>
+          <div className="flex justify-between items-center pt-4 border-t">
+            <p className="text-sm text-muted-foreground">
+              Total: {data.length} linhas, {columns.length} colunas
+            </p>
+            <Button variant="outline" onClick={() => setDataPreviewOpen(false)}>
+              Fechar
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <ExplainChartChat
         open={explainChartOpen}
