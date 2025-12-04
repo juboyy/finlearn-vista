@@ -200,7 +200,7 @@ const PerfilAutor = () => {
                         <UserPlus size={16} className="inline mr-2 text-primary-foreground" />Seguir
                       </button>
                     </div>
-                    <button onClick={() => navigate('/meus-certificados')} className="h-10 w-full bg-card border border-border rounded-lg text-sm font-medium hover:bg-accent transition-colors flex items-center justify-center gap-2">
+                    <button onClick={() => navigate('/meus-certificados')} className="h-10 w-full bg-pastel-orange/50 border border-pastel-orange rounded-lg text-sm font-medium hover:bg-pastel-orange/70 transition-colors flex items-center justify-center gap-2">
                       <Award className="text-slate-600" size={16} />
                       <span className="text-foreground">Meus Certificados</span>
                     </button>
