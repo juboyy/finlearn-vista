@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
-import { ArrowLeft, Search, Bell, Filter, Bookmark, Check, Clock, Star, Newspaper, Video, FileText, FileType, Mic, Circle, MoreHorizontal, CheckCircle, ChevronLeft, ChevronRight, Layers, Loader2, Trash2 } from "lucide-react";
+import { ArrowLeft, Search, Bell, Filter, Bookmark, Check, Clock, Star, Newspaper, Video, FileText, FileType, Mic, Circle, MoreHorizontal, CheckCircle, ChevronLeft, ChevronRight, Layers, Loader2, Trash2, Pencil, X, Save } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
@@ -44,6 +47,9 @@ export default function LerDepois() {
   const [items, setItems] = useState<ReadLaterItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [filterStatus, setFilterStatus] = useState<'all' | 'completed' | 'pending'>('all');
+  const [editingItem, setEditingItem] = useState<ReadLaterItem | null>(null);
+  const [isEditSheetOpen, setIsEditSheetOpen] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   // Fetch saved items from database
   useEffect(() => {
@@ -176,12 +182,88 @@ export default function LerDepois() {
         return null;
     }
   };
-  const toggleItemStatus = (id: string) => {
-    setItems(items.map(item => item.id === id ? {
-      ...item,
-      status: item.status === 'pending' ? 'completed' : 'pending' as 'pending' | 'completed'
-    } : item));
+  const toggleItemStatus = async (id: string) => {
+    const item = items.find(i => i.id === id);
+    if (!item) return;
+    
+    const newStatus = item.status === 'pending' ? 'completed' : 'pending';
+    
+    try {
+      const { error } = await supabase
+        .from('saved_items')
+        .update({
+          metadata: {
+            ...item,
+            status: newStatus
+          }
+        })
+        .eq('id', id);
+
+      if (error) throw error;
+
+      setItems(items.map(i => i.id === id ? {
+        ...i,
+        status: newStatus as 'pending' | 'completed'
+      } : i));
+    } catch (err) {
+      console.error('Error updating status:', err);
+      toast({
+        title: "Erro",
+        description: "Não foi possível atualizar o status.",
+        variant: "destructive"
+      });
+    }
   };
+
+  const openEditSheet = (item: ReadLaterItem) => {
+    setEditingItem({ ...item });
+    setIsEditSheetOpen(true);
+  };
+
+  const handleSaveEdit = async () => {
+    if (!editingItem) return;
+    
+    setIsSaving(true);
+    try {
+      const { error } = await supabase
+        .from('saved_items')
+        .update({
+          item_title: editingItem.title,
+          metadata: {
+            content_type: editingItem.type,
+            duration: editingItem.duration,
+            source: editingItem.source,
+            priority: editingItem.priority,
+            status: editingItem.status
+          }
+        })
+        .eq('id', editingItem.id);
+
+      if (error) throw error;
+
+      setItems(items.map(item => 
+        item.id === editingItem.id ? editingItem : item
+      ));
+      
+      setIsEditSheetOpen(false);
+      setEditingItem(null);
+      
+      toast({
+        title: "Salvo",
+        description: "Item atualizado com sucesso."
+      });
+    } catch (err) {
+      console.error('Error updating item:', err);
+      toast({
+        title: "Erro",
+        description: "Não foi possível salvar as alterações.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   const filteredItems = items.filter(item => {
     if (filterStatus === 'all') return true;
     return item.status === filterStatus;
@@ -484,12 +566,22 @@ export default function LerDepois() {
                             Concluído
                           </span>}
                       </div>
-                      <div className="col-span-1 flex items-center justify-end gap-2">
+                      <div className="col-span-1 flex items-center justify-end gap-1">
+                        <button 
+                          onClick={e => {
+                            e.stopPropagation();
+                            openEditSheet(item);
+                          }} 
+                          className="p-2 text-muted-foreground hover:text-primary transition-colors"
+                          title="Editar"
+                        >
+                          <Pencil size={16} />
+                        </button>
                         <button onClick={e => {
-                      e.stopPropagation();
-                      toggleItemStatus(item.id);
-                    }} className={`p-2 transition-colors ${item.status === 'completed' ? 'text-pastel-green hover:text-pastel-green/80' : 'text-muted-foreground hover:text-pastel-green'}`} title={item.status === 'completed' ? 'Concluído' : 'Marcar como concluído'}>
-                          {item.status === 'completed' ? <CheckCircle size={18} className="fill-current" /> : <CheckCircle size={18} />}
+                          e.stopPropagation();
+                          toggleItemStatus(item.id);
+                        }} className={`p-2 transition-colors ${item.status === 'completed' ? 'text-pastel-green hover:text-pastel-green/80' : 'text-muted-foreground hover:text-pastel-green'}`} title={item.status === 'completed' ? 'Concluído' : 'Marcar como concluído'}>
+                          {item.status === 'completed' ? <CheckCircle size={16} className="fill-current" /> : <CheckCircle size={16} />}
                         </button>
                         <button 
                           onClick={e => {
@@ -499,7 +591,7 @@ export default function LerDepois() {
                           className="p-2 text-muted-foreground hover:text-destructive transition-colors"
                           title="Remover"
                         >
-                          <Trash2 size={18} />
+                          <Trash2 size={16} />
                         </button>
                       </div>
                     </div>
@@ -539,5 +631,198 @@ export default function LerDepois() {
           </div>
         </div>
       </main>
+
+      {/* Edit Sheet */}
+      <Sheet open={isEditSheetOpen} onOpenChange={setIsEditSheetOpen}>
+        <SheetContent className="w-[400px] sm:w-[450px] overflow-y-auto">
+          <SheetHeader>
+            <SheetTitle className="flex items-center gap-2">
+              <Pencil size={18} />
+              Editar Item
+            </SheetTitle>
+          </SheetHeader>
+          
+          {editingItem && (
+            <div className="mt-6 space-y-6">
+              {/* Title */}
+              <div className="space-y-2">
+                <Label htmlFor="edit-title">Titulo</Label>
+                <Input
+                  id="edit-title"
+                  value={editingItem.title}
+                  onChange={(e) => setEditingItem({ ...editingItem, title: e.target.value })}
+                  placeholder="Titulo do item"
+                />
+              </div>
+
+              {/* Type */}
+              <div className="space-y-2">
+                <Label>Tipo de Conteudo</Label>
+                <Select 
+                  value={editingItem.type} 
+                  onValueChange={(value) => setEditingItem({ ...editingItem, type: value as ReadLaterItem['type'] })}
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="article">Artigo</SelectItem>
+                    <SelectItem value="video">Video</SelectItem>
+                    <SelectItem value="blog">Blog Post</SelectItem>
+                    <SelectItem value="pdf">PDF</SelectItem>
+                    <SelectItem value="podcast">Podcast</SelectItem>
+                    <SelectItem value="ebook">E-book</SelectItem>
+                    <SelectItem value="course">Curso</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Priority */}
+              <div className="space-y-2">
+                <Label>Prioridade</Label>
+                <Select 
+                  value={editingItem.priority} 
+                  onValueChange={(value) => setEditingItem({ ...editingItem, priority: value as ReadLaterItem['priority'] })}
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="urgent">
+                      <div className="flex items-center gap-2">
+                        <Circle className="fill-pastel-rose text-pastel-rose" size={8} />
+                        Urgente
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="high">
+                      <div className="flex items-center gap-2">
+                        <Circle className="fill-pastel-peach text-pastel-peach" size={8} />
+                        Alta
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="medium">
+                      <div className="flex items-center gap-2">
+                        <Circle className="fill-pastel-yellow text-pastel-yellow" size={8} />
+                        Media
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="low">
+                      <div className="flex items-center gap-2">
+                        <Circle className="fill-pastel-blue text-pastel-blue" size={8} />
+                        Baixa
+                      </div>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Status */}
+              <div className="space-y-2">
+                <Label>Status</Label>
+                <Select 
+                  value={editingItem.status} 
+                  onValueChange={(value) => setEditingItem({ ...editingItem, status: value as ReadLaterItem['status'] })}
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="pending">
+                      <div className="flex items-center gap-2">
+                        <Clock size={14} />
+                        Pendente
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="completed">
+                      <div className="flex items-center gap-2">
+                        <Check size={14} />
+                        Concluido
+                      </div>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Duration */}
+              <div className="space-y-2">
+                <Label htmlFor="edit-duration">Duracao</Label>
+                <Input
+                  id="edit-duration"
+                  value={editingItem.duration}
+                  onChange={(e) => setEditingItem({ ...editingItem, duration: e.target.value })}
+                  placeholder="Ex: 10 min, 1h 30min"
+                />
+              </div>
+
+              {/* Source */}
+              <div className="space-y-2">
+                <Label htmlFor="edit-source">Fonte</Label>
+                <Input
+                  id="edit-source"
+                  value={editingItem.source}
+                  onChange={(e) => setEditingItem({ ...editingItem, source: e.target.value })}
+                  placeholder="Ex: FinLearn, YouTube"
+                />
+              </div>
+
+              {/* Info Card */}
+              <div className="bg-muted/50 rounded-lg p-4 border border-border">
+                <h4 className="text-sm font-medium text-foreground mb-2">Informacoes</h4>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <div className="flex justify-between">
+                    <span>Salvo em:</span>
+                    <span>{editingItem.savedDate}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Tempo:</span>
+                    <span>{editingItem.savedDateRelative}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Actions */}
+              <div className="flex gap-3 pt-4">
+                <Button
+                  variant="outline"
+                  className="flex-1"
+                  onClick={() => {
+                    setIsEditSheetOpen(false);
+                    setEditingItem(null);
+                  }}
+                >
+                  <X size={16} className="mr-2" />
+                  Cancelar
+                </Button>
+                <Button
+                  className="flex-1 bg-pastel-green/70 hover:bg-pastel-green/80 text-pastel-gray-dark border border-pastel-green/80"
+                  onClick={handleSaveEdit}
+                  disabled={isSaving}
+                >
+                  {isSaving ? (
+                    <Loader2 size={16} className="mr-2 animate-spin" />
+                  ) : (
+                    <Save size={16} className="mr-2" />
+                  )}
+                  Salvar
+                </Button>
+              </div>
+
+              {/* Delete Button */}
+              <Button
+                variant="outline"
+                className="w-full text-destructive hover:text-destructive hover:bg-destructive/10 border-destructive/30"
+                onClick={() => {
+                  handleDeleteItem(editingItem.id);
+                  setIsEditSheetOpen(false);
+                  setEditingItem(null);
+                }}
+              >
+                <Trash2 size={16} className="mr-2" />
+                Remover Item
+              </Button>
+            </div>
+          )}
+        </SheetContent>
+      </Sheet>
     </div>;
 }
