@@ -549,9 +549,7 @@ export default function PerfilSocial() {
                 {socialNetworks.map((social) => (
                   <div key={social.key} className="group">
                     <Label htmlFor={social.key} className="text-sm font-medium text-slate-700 flex items-center gap-2 mb-1.5">
-                      <span className={`w-8 h-8 rounded-lg bg-${social.color} flex items-center justify-center group-hover:opacity-80 transition-opacity`}>
-                        <span className="text-slate-600">{social.icon}</span>
-                      </span>
+                      <span className="text-slate-500">{social.icon}</span>
                       {social.label}
                     </Label>
                     <Input
@@ -680,11 +678,9 @@ export default function PerfilSocial() {
                   {socialNetworks.filter(s => s.value).map((social) => (
                     <div 
                       key={social.key} 
-                      className={`flex items-center gap-2 px-3 py-2 bg-accent/50 rounded-lg`}
+                      className="flex items-center gap-2 px-3 py-2 bg-accent/50 rounded-lg"
                     >
-                      <span className={`w-7 h-7 rounded-md bg-${social.color} flex items-center justify-center`}>
-                        <span className="text-slate-600">{social.icon}</span>
-                      </span>
+                      <span className="text-slate-500">{social.icon}</span>
                       <div className="flex-1 min-w-0">
                         <p className="text-xs text-muted-foreground">{social.label}</p>
                         <p className="text-sm text-slate-700 truncate">{social.value}</p>
