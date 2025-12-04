@@ -838,8 +838,8 @@ export default function HistoricoIngressos() {
                 )}
                 {isDownloading ? "Gerando..." : "Baixar PDF"}
               </Button>
-              <Button className="flex items-center gap-2 text-sm bg-slate-800 hover:bg-slate-700">
-                <Award className="w-4 h-4" /> Compartilhar
+              <Button className="flex items-center gap-2 text-sm bg-slate-800 hover:bg-slate-700 text-white">
+                <Award className="w-4 h-4 text-white" /> Compartilhar
               </Button>
             </div>
           </div>
