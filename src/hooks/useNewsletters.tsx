@@ -24,6 +24,7 @@ export interface Newsletter {
   subscribers_count: number;
   open_rate: number;
   discount_percentage: number;
+  monthly_price: number;
   sent_count: number;
   frequency: string | null;
   last_sent_at: string | null;
@@ -75,7 +76,8 @@ export const useNewsletters = () => {
     tags: string[] = [],
     productTypes: string[] = [],
     distributionChannels: string[] = [],
-    contentTypesConfig: ContentTypeConfig[] = []
+    contentTypesConfig: ContentTypeConfig[] = [],
+    monthlyPrice: number = 0
   ) => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
@@ -94,6 +96,7 @@ export const useNewsletters = () => {
           product_types: productTypes,
           distribution_channels: distributionChannels,
           content_types_config: contentTypesConfig as unknown as any,
+          monthly_price: monthlyPrice,
         })
         .select()
         .single();

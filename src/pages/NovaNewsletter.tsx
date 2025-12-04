@@ -34,6 +34,7 @@ export default function NovaNewsletter() {
     { id: "2", name: "Podcast Semanal", icon: "Podcast", color: "bg-[hsl(var(--pastel-peach))]", description: "Episódios em áudio", frequency: "Semanal", days: "Quarta-feira", time: "09:00", isActive: true },
     { id: "3", name: "Webinar Mensal", icon: "Video", color: "bg-pink-100", description: "Aulas ao vivo", frequency: "Mensal", days: "Última quinta-feira", time: "19:00", isActive: true },
   ]);
+  const [monthlyPrice, setMonthlyPrice] = useState(29.90);
   const [showAddContentTypeModal, setShowAddContentTypeModal] = useState(false);
   const [newContentType, setNewContentType] = useState({
     name: "",
@@ -62,6 +63,9 @@ export default function NovaNewsletter() {
         setSelectedChannels(newsletter.distribution_channels || ["email"]);
         if (newsletter.content_types_config && newsletter.content_types_config.length > 0) {
           setContentTypesList(newsletter.content_types_config);
+        }
+        if (newsletter.monthly_price) {
+          setMonthlyPrice(newsletter.monthly_price);
         }
       }
     }
@@ -916,7 +920,8 @@ export default function NovaNewsletter() {
                           <input 
                             type="number" 
                             className="w-full pl-12 pr-4 py-4 text-2xl font-bold rounded-xl border-2 border-slate-300 focus:ring-4 focus:ring-pastel-purple/20 focus:border-pastel-purple outline-none bg-slate-50" 
-                            defaultValue="29.90" 
+                            value={monthlyPrice}
+                            onChange={(e) => setMonthlyPrice(parseFloat(e.target.value) || 0)}
                             step="0.01"
                           />
                         </div>
@@ -1236,7 +1241,7 @@ export default function NovaNewsletter() {
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="text-2xl font-bold text-[hsl(var(--pastel-gray-dark))]">R$ 49,90</span>
+                        <span className="text-2xl font-bold text-[hsl(var(--pastel-gray-dark))]">R$ {monthlyPrice.toFixed(2).replace('.', ',')}</span>
                         <span className="text-sm text-slate-500">/mês</span>
                       </div>
                     </div>
@@ -1486,6 +1491,7 @@ export default function NovaNewsletter() {
                       product_types: selectedProducts,
                       distribution_channels: selectedChannels,
                       content_types_config: contentTypesList,
+                      monthly_price: monthlyPrice,
                     };
                     console.log('Saving newsletter with data:', updateData);
                     try {
@@ -1497,7 +1503,7 @@ export default function NovaNewsletter() {
                           description: "As alterações foram salvas com sucesso.",
                         });
                       } else {
-                        const newNewsletter = await createNewsletter(title, description, selectedFrequency || "weekly", selectedColor, tags, selectedProducts, selectedChannels, contentTypesList);
+                        const newNewsletter = await createNewsletter(title, description, selectedFrequency || "weekly", selectedColor, tags, selectedProducts, selectedChannels, contentTypesList, monthlyPrice);
                         if (newNewsletter) {
                           newsletterId = newNewsletter.id;
                         }

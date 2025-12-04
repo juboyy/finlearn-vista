@@ -36,6 +36,7 @@ interface NewsletterData {
   subscribers_count: number;
   open_rate: number;
   discount_percentage: number;
+  monthly_price: number;
 }
 
 export default function NewsletterRevisao() {
@@ -80,7 +81,8 @@ export default function NewsletterRevisao() {
 
         setNewsletterData({
           ...data,
-          content_types_config: (data.content_types_config as unknown as ContentTypeConfig[]) || []
+          content_types_config: (data.content_types_config as unknown as ContentTypeConfig[]) || [],
+          monthly_price: data.monthly_price || 0
         });
       } catch (error) {
         console.error("Error fetching newsletter:", error);
@@ -228,6 +230,7 @@ export default function NewsletterRevisao() {
       icon: DollarSign,
       color: "bg-[hsl(var(--pastel-peach))]",
       items: [
+        { label: "Preço Mensal", value: `R$ ${newsletterData.monthly_price.toFixed(2).replace('.', ',')}`, icon: DollarSign },
         { label: "Desconto", value: `${newsletterData.discount_percentage}%`, icon: Tag },
         { label: "Assinantes", value: newsletterData.subscribers_count.toString(), icon: Users },
         { label: "Taxa de Abertura", value: `${newsletterData.open_rate}%`, icon: Mail }
@@ -322,8 +325,8 @@ export default function NewsletterRevisao() {
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-2xl font-bold text-[hsl(var(--pastel-gray-dark))]">{newsletterData.discount_percentage}%</span>
-                    <span className="text-sm text-slate-500">desconto</span>
+                    <span className="text-2xl font-bold text-[hsl(var(--pastel-gray-dark))]">R$ {newsletterData.monthly_price.toFixed(2).replace('.', ',')}</span>
+                    <span className="text-sm text-slate-500">/mês</span>
                   </div>
                 </div>
               </div>
