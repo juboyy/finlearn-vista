@@ -7,7 +7,7 @@ import {
   Italic, Underline, List, Link, Image, Calendar, Users, DollarSign,
   ChartPie, MessageCircle, Eye, ArrowRight, ArrowLeft, Info, Mail, 
   MessageSquare, Smartphone, Hash, Send, CreditCard, Receipt, CheckCircle,
-  Palette, Clock, Loader2
+  Palette, Clock, Loader2, Trash2, X
 } from "lucide-react";
 import { useNewsletters } from "@/hooks/useNewsletters";
 import { useToast } from "@/hooks/use-toast";
@@ -29,6 +29,21 @@ export default function NovaNewsletter() {
   const [isPublishing, setIsPublishing] = useState(false);
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
+  const [contentTypesList, setContentTypesList] = useState([
+    { id: "1", name: "Newsletter Principal", icon: "Newspaper", color: "bg-[hsl(var(--pastel-purple))]", description: "Conteúdo base da assinatura", frequency: "Diária", days: "Seg a Sex", time: "07:00", isActive: true },
+    { id: "2", name: "Podcast Semanal", icon: "Podcast", color: "bg-[hsl(var(--pastel-peach))]", description: "Episódios em áudio", frequency: "Semanal", days: "Quarta-feira", time: "09:00", isActive: true },
+    { id: "3", name: "Webinar Mensal", icon: "Video", color: "bg-pink-100", description: "Aulas ao vivo", frequency: "Mensal", days: "Última quinta-feira", time: "19:00", isActive: true },
+  ]);
+  const [showAddContentTypeModal, setShowAddContentTypeModal] = useState(false);
+  const [newContentType, setNewContentType] = useState({
+    name: "",
+    description: "",
+    frequency: "Semanal",
+    days: "Segunda-feira",
+    time: "09:00",
+    icon: "FileText",
+    color: "bg-[hsl(var(--pastel-blue))]"
+  });
   
   const isEditMode = !!editId;
 
@@ -64,6 +79,61 @@ export default function NovaNewsletter() {
     setTags(tags.filter(tag => tag !== tagToRemove));
   };
 
+  const frequencyOptions = ["Diária", "Semanal", "Quinzenal", "Mensal", "Trimestral", "Sob Demanda"];
+  const daysOptions = ["Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado", "Domingo", "Seg a Sex", "Última quinta-feira", "1º dia do mês", "Manual"];
+  const iconOptions = [
+    { id: "Newspaper", icon: Newspaper },
+    { id: "Podcast", icon: Podcast },
+    { id: "Video", icon: Video },
+    { id: "Book", icon: Book },
+    { id: "FileText", icon: FileText },
+    { id: "BarChart3", icon: BarChart3 },
+    { id: "GraduationCap", icon: GraduationCap },
+    { id: "Bot", icon: Bot },
+  ];
+  const colorOptions = [
+    "bg-[hsl(var(--pastel-purple))]",
+    "bg-[hsl(var(--pastel-peach))]",
+    "bg-[hsl(var(--pastel-blue))]",
+    "bg-[hsl(var(--pastel-green))]",
+    "bg-[hsl(var(--pastel-yellow))]",
+    "bg-pink-100",
+    "bg-teal-100",
+    "bg-indigo-100",
+  ];
+
+  const getIconComponent = (iconId: string) => {
+    const found = iconOptions.find(opt => opt.id === iconId);
+    return found ? found.icon : FileText;
+  };
+
+  const handleAddContentType = () => {
+    if (!newContentType.name.trim()) {
+      toast({ title: "Nome obrigatório", description: "Informe o nome do tipo de conteúdo.", variant: "destructive" });
+      return;
+    }
+    const newItem = {
+      id: Date.now().toString(),
+      ...newContentType,
+      isActive: true,
+    };
+    setContentTypesList([...contentTypesList, newItem]);
+    setShowAddContentTypeModal(false);
+    setNewContentType({ name: "", description: "", frequency: "Semanal", days: "Segunda-feira", time: "09:00", icon: "FileText", color: "bg-[hsl(var(--pastel-blue))]" });
+    toast({ title: "Tipo adicionado", description: `"${newContentType.name}" foi adicionado com sucesso.` });
+  };
+
+  const handleDeleteContentType = (id: string) => {
+    setContentTypesList(contentTypesList.filter(item => item.id !== id));
+    toast({ title: "Tipo removido", description: "O tipo de conteúdo foi removido." });
+  };
+
+  const handleUpdateContentType = (id: string, field: string, value: string) => {
+    setContentTypesList(contentTypesList.map(item => 
+      item.id === id ? { ...item, [field]: value } : item
+    ));
+  };
+
   const toggleProduct = (productId: string) => {
     setSelectedProducts(prev => 
       prev.includes(productId) 
@@ -91,14 +161,6 @@ export default function NovaNewsletter() {
     { id: "analysis", name: "Análises", icon: BarChart3, description: "Dados de mercado", color: "bg-teal-100" },
     { id: "reports", name: "Relatórios", icon: FileCheck, description: "Deep dives", color: "bg-gray-100" },
     { id: "studies", name: "Estudos", icon: FlaskConical, description: "Acadêmicos e Papers", color: "bg-rose-100" }
-  ];
-
-  const contentTypes = [
-    { name: "Newsletter Principal", icon: Newspaper, color: "bg-[hsl(var(--pastel-purple))]", description: "Conteúdo base da assinatura", frequency: "Diária", days: "Seg a Sex", time: "07:00" },
-    { name: "Podcast Semanal", icon: Podcast, color: "bg-[hsl(var(--pastel-peach))]", description: "Episódios em áudio", frequency: "Semanal", days: "Quarta-feira", time: "09:00" },
-    { name: "Webinar Mensal", icon: Video, color: "bg-pink-100", description: "Aulas ao vivo", frequency: "Mensal", days: "Última quinta-feira", time: "19:00" },
-    { name: "E-book Trimestral", icon: Book, color: "bg-[hsl(var(--pastel-yellow))]", description: "Conteúdo aprofundado", frequency: "Trimestral", days: "Mar, Jun, Set, Dez", time: "1º dia do mês" },
-    { name: "Análises Especiais", icon: BarChart3, color: "bg-teal-100", description: "Sob demanda", frequency: "Sob Demanda", days: "Manual", time: "N/A" }
   ];
 
   return (
@@ -421,68 +483,102 @@ export default function NovaNewsletter() {
                         <p className="text-sm text-slate-600">Configure a frequência de publicação para cada formato</p>
                       </div>
                     </div>
-                    <button className="px-4 py-2 bg-white text-purple-700 rounded-lg font-medium hover:bg-purple-50 transition text-sm flex items-center gap-2 shadow-sm">
+                    <button 
+                      onClick={() => setShowAddContentTypeModal(true)}
+                      className="px-4 py-2 bg-white text-purple-700 rounded-lg font-medium hover:bg-purple-50 transition text-sm flex items-center gap-2 shadow-sm"
+                    >
                       <Plus className="w-4 h-4" /> Adicionar Tipo
                     </button>
                   </div>
 
                   <div className="space-y-3">
-                    {contentTypes.map((type, index) => {
-                      const Icon = type.icon;
-                      return (
-                        <div key={index} className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm">
-                          <div className="flex items-center justify-between mb-3">
-                            <div className="flex items-center gap-3">
-                              <div className={`w-10 h-10 rounded-lg ${type.color} flex items-center justify-center`}>
-                                <Icon className="w-5 h-5 text-slate-700" />
+                    {contentTypesList.length === 0 ? (
+                      <div className="text-center py-8 text-slate-500">
+                        <Calendar className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                        <p>Nenhum tipo de conteúdo configurado.</p>
+                        <p className="text-sm">Clique em "Adicionar Tipo" para começar.</p>
+                      </div>
+                    ) : (
+                      contentTypesList.map((type) => {
+                        const IconComponent = getIconComponent(type.icon);
+                        return (
+                          <div key={type.id} className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm">
+                            <div className="flex items-center justify-between mb-3">
+                              <div className="flex items-center gap-3">
+                                <div className={`w-10 h-10 rounded-lg ${type.color} flex items-center justify-center`}>
+                                  <IconComponent className="w-5 h-5 text-slate-700" />
+                                </div>
+                                <div>
+                                  <h4 className="font-bold text-slate-800">{type.name}</h4>
+                                  <p className="text-xs text-slate-500">{type.description}</p>
+                                </div>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <span className={`px-3 py-1 rounded-full text-xs font-medium ${type.isActive ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-600'}`}>
+                                  {type.isActive ? 'Ativo' : 'Inativo'}
+                                </span>
+                                <button 
+                                  onClick={() => handleDeleteContentType(type.id)}
+                                  className="w-8 h-8 flex items-center justify-center text-red-400 hover:text-red-600 hover:bg-red-50 rounded transition"
+                                  title="Remover"
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </button>
+                              </div>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                              <div>
+                                <label className="block text-xs font-medium text-slate-600 mb-1.5">Frequência</label>
+                                <select 
+                                  value={type.frequency}
+                                  onChange={(e) => handleUpdateContentType(type.id, 'frequency', e.target.value)}
+                                  className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-purple-200 outline-none"
+                                >
+                                  {frequencyOptions.map(opt => (
+                                    <option key={opt} value={opt}>{opt}</option>
+                                  ))}
+                                </select>
                               </div>
                               <div>
-                                <h4 className="font-bold text-slate-800">{type.name}</h4>
-                                <p className="text-xs text-slate-500">{type.description}</p>
+                                <label className="block text-xs font-medium text-slate-600 mb-1.5">Dias de Publicação</label>
+                                <select 
+                                  value={type.days}
+                                  onChange={(e) => handleUpdateContentType(type.id, 'days', e.target.value)}
+                                  className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-purple-200 outline-none"
+                                >
+                                  {daysOptions.map(opt => (
+                                    <option key={opt} value={opt}>{opt}</option>
+                                  ))}
+                                </select>
+                              </div>
+                              <div>
+                                <label className="block text-xs font-medium text-slate-600 mb-1.5">Horário de Envio</label>
+                                <input 
+                                  type="time" 
+                                  value={type.time} 
+                                  onChange={(e) => handleUpdateContentType(type.id, 'time', e.target.value)}
+                                  className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-purple-200 outline-none" 
+                                />
                               </div>
                             </div>
-                            <div className="flex items-center gap-2">
-                              <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">Ativo</span>
-                              <button className="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-50 rounded transition">
-                                <span className="text-lg">⋮</span>
-                              </button>
-                            </div>
                           </div>
-                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div>
-                              <label className="block text-xs font-medium text-slate-600 mb-1.5">Frequência</label>
-                              <select className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-purple-200 outline-none">
-                                <option>{type.frequency}</option>
-                              </select>
-                            </div>
-                            <div>
-                              <label className="block text-xs font-medium text-slate-600 mb-1.5">Dias de Publicação</label>
-                              <div className="flex items-center gap-1 px-3 py-2 border border-slate-300 rounded-lg bg-slate-50">
-                                <span className="text-xs font-medium text-slate-700">{type.days}</span>
-                              </div>
-                            </div>
-                            <div>
-                              <label className="block text-xs font-medium text-slate-600 mb-1.5">Horário de Envio</label>
-                              <input type="time" defaultValue={type.time} className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-purple-200 outline-none" />
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })
+                    )}
                   </div>
 
                   {/* Summary Stats */}
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 pt-6 border-t border-purple-100">
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-purple-700">5</div>
+                      <div className="text-2xl font-bold text-purple-700">{contentTypesList.filter(t => t.isActive).length}</div>
                       <div className="text-xs text-slate-600 mt-1">Tipos Ativos</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-purple-700">~28</div>
+                      <div className="text-2xl font-bold text-purple-700">~{contentTypesList.length * 4}</div>
                       <div className="text-xs text-slate-600 mt-1">Publicações/Mês</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-purple-700">3</div>
+                      <div className="text-2xl font-bold text-purple-700">{contentTypesList.length}</div>
                       <div className="text-xs text-slate-600 mt-1">Formatos Diferentes</div>
                     </div>
                     <div className="text-center">
@@ -491,6 +587,131 @@ export default function NovaNewsletter() {
                     </div>
                   </div>
                 </div>
+
+                {/* Add Content Type Modal */}
+                {showAddContentTypeModal && (
+                  <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                    <div className="bg-white rounded-2xl p-6 w-full max-w-md mx-4 shadow-xl">
+                      <div className="flex items-center justify-between mb-6">
+                        <h3 className="text-lg font-bold text-slate-800">Adicionar Tipo de Conteúdo</h3>
+                        <button 
+                          onClick={() => setShowAddContentTypeModal(false)}
+                          className="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full"
+                        >
+                          <X className="w-5 h-5" />
+                        </button>
+                      </div>
+                      
+                      <div className="space-y-4">
+                        <div>
+                          <label className="block text-sm font-medium text-slate-700 mb-1.5">Nome</label>
+                          <input 
+                            type="text"
+                            value={newContentType.name}
+                            onChange={(e) => setNewContentType({...newContentType, name: e.target.value})}
+                            placeholder="Ex: Newsletter Semanal"
+                            className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-200 outline-none"
+                          />
+                        </div>
+                        
+                        <div>
+                          <label className="block text-sm font-medium text-slate-700 mb-1.5">Descrição</label>
+                          <input 
+                            type="text"
+                            value={newContentType.description}
+                            onChange={(e) => setNewContentType({...newContentType, description: e.target.value})}
+                            placeholder="Ex: Resumo semanal das principais notícias"
+                            className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-200 outline-none"
+                          />
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-sm font-medium text-slate-700 mb-1.5">Ícone</label>
+                            <select 
+                              value={newContentType.icon}
+                              onChange={(e) => setNewContentType({...newContentType, icon: e.target.value})}
+                              className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-200 outline-none"
+                            >
+                              {iconOptions.map(opt => (
+                                <option key={opt.id} value={opt.id}>{opt.id}</option>
+                              ))}
+                            </select>
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium text-slate-700 mb-1.5">Cor</label>
+                            <select 
+                              value={newContentType.color}
+                              onChange={(e) => setNewContentType({...newContentType, color: e.target.value})}
+                              className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-200 outline-none"
+                            >
+                              <option value="bg-[hsl(var(--pastel-purple))]">Roxo</option>
+                              <option value="bg-[hsl(var(--pastel-peach))]">Pêssego</option>
+                              <option value="bg-[hsl(var(--pastel-blue))]">Azul</option>
+                              <option value="bg-[hsl(var(--pastel-green))]">Verde</option>
+                              <option value="bg-[hsl(var(--pastel-yellow))]">Amarelo</option>
+                              <option value="bg-pink-100">Rosa</option>
+                              <option value="bg-teal-100">Teal</option>
+                              <option value="bg-indigo-100">Índigo</option>
+                            </select>
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <label className="block text-sm font-medium text-slate-700 mb-1.5">Frequência</label>
+                          <select 
+                            value={newContentType.frequency}
+                            onChange={(e) => setNewContentType({...newContentType, frequency: e.target.value})}
+                            className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-200 outline-none"
+                          >
+                            {frequencyOptions.map(opt => (
+                              <option key={opt} value={opt}>{opt}</option>
+                            ))}
+                          </select>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-sm font-medium text-slate-700 mb-1.5">Dias</label>
+                            <select 
+                              value={newContentType.days}
+                              onChange={(e) => setNewContentType({...newContentType, days: e.target.value})}
+                              className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-200 outline-none"
+                            >
+                              {daysOptions.map(opt => (
+                                <option key={opt} value={opt}>{opt}</option>
+                              ))}
+                            </select>
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium text-slate-700 mb-1.5">Horário</label>
+                            <input 
+                              type="time"
+                              value={newContentType.time}
+                              onChange={(e) => setNewContentType({...newContentType, time: e.target.value})}
+                              className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-200 outline-none"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex gap-3 mt-6">
+                        <button 
+                          onClick={() => setShowAddContentTypeModal(false)}
+                          className="flex-1 px-4 py-2.5 border border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-slate-50 transition"
+                        >
+                          Cancelar
+                        </button>
+                        <button 
+                          onClick={handleAddContentType}
+                          className="flex-1 px-4 py-2.5 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition"
+                        >
+                          Adicionar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 <h3 className="font-bold text-slate-800 mb-4">Recursos Adicionais</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
