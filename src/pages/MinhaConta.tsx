@@ -633,13 +633,22 @@ export default function MinhaConta() {
                       <p className="text-sm text-slate-500">Atualize sua foto de perfil</p>
                     </div>
                   </div>
-                  <button 
-                    onClick={() => navigate("/conta-empresarial")}
-                    className="px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
-                  >
-                    <Building2 className="inline mr-2" size={16} />
-                    Conta Empresarial
-                  </button>
+                  <div className="flex gap-2">
+                    <button 
+                      onClick={() => navigate("/conta-empresarial")}
+                      className="px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
+                    >
+                      <Building2 className="inline mr-2" size={16} />
+                      Conta Empresarial
+                    </button>
+                    <button 
+                      onClick={() => navigate("/perfil-mentor")}
+                      className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
+                    >
+                      <GraduationCap className="inline mr-2" size={16} />
+                      Conta de Mentoria
+                    </button>
+                  </div>
                 </div>
 
                 <div className="flex items-start gap-6">
