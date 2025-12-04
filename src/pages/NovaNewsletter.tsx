@@ -11,6 +11,9 @@ import {
 } from "lucide-react";
 import { useNewsletters } from "@/hooks/useNewsletters";
 import { useToast } from "@/hooks/use-toast";
+import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent } from "@dnd-kit/core";
+import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { SortableContentTypeItem } from "@/components/SortableContentTypeItem";
 
 export default function NovaNewsletter() {
   const navigate = useNavigate();
@@ -191,6 +194,25 @@ export default function NovaNewsletter() {
     setContentTypesList(contentTypesList.map(item => 
       item.id === id ? { ...item, isActive: !item.isActive } : item
     ));
+  };
+
+  // Drag and drop sensors
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (over && active.id !== over.id) {
+      setContentTypesList((items) => {
+        const oldIndex = items.findIndex((item) => item.id === active.id);
+        const newIndex = items.findIndex((item) => item.id === over.id);
+        return arrayMove(items, oldIndex, newIndex);
+      });
+    }
   };
 
   const toggleProduct = (productId: string) => {
@@ -558,84 +580,29 @@ export default function NovaNewsletter() {
                         <p className="text-sm">Clique em "Adicionar Tipo" para começar.</p>
                       </div>
                     ) : (
-                      contentTypesList.map((type) => {
-                        const IconComponent = getIconComponent(type.icon);
-                        return (
-                          <div key={type.id} className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm">
-                            <div className="flex items-center justify-between mb-3">
-                              <div className="flex items-center gap-3">
-                                <div className={`w-10 h-10 rounded-lg ${type.color} flex items-center justify-center`}>
-                                  <IconComponent className="w-5 h-5 text-slate-700" />
-                                </div>
-                                <div>
-                                  <h4 className="font-bold text-slate-800">{type.name}</h4>
-                                  <p className="text-xs text-slate-500">{type.description}</p>
-                                </div>
-                              </div>
-                              <div className="flex items-center gap-3">
-                                <button
-                                  onClick={() => toggleContentTypeActive(type.id)}
-                                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-purple-200 ${
-                                    type.isActive ? 'bg-green-500' : 'bg-slate-300'
-                                  }`}
-                                  title={type.isActive ? 'Desativar' : 'Ativar'}
-                                >
-                                  <span
-                                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                                      type.isActive ? 'translate-x-6' : 'translate-x-1'
-                                    }`}
-                                  />
-                                </button>
-                                <span className={`text-xs font-medium min-w-[45px] ${type.isActive ? 'text-green-700' : 'text-slate-500'}`}>
-                                  {type.isActive ? 'Ativo' : 'Inativo'}
-                                </span>
-                                <button 
-                                  onClick={() => handleDeleteContentType(type.id)}
-                                  className="w-8 h-8 flex items-center justify-center text-red-400 hover:text-red-600 hover:bg-red-50 rounded transition"
-                                  title="Remover"
-                                >
-                                  <Trash2 className="w-4 h-4" />
-                                </button>
-                              </div>
-                            </div>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                              <div>
-                                <label className="block text-xs font-medium text-slate-600 mb-1.5">Frequência</label>
-                                <select 
-                                  value={type.frequency}
-                                  onChange={(e) => handleUpdateContentType(type.id, 'frequency', e.target.value)}
-                                  className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-purple-200 outline-none"
-                                >
-                                  {frequencyOptions.map(opt => (
-                                    <option key={opt} value={opt}>{opt}</option>
-                                  ))}
-                                </select>
-                              </div>
-                              <div>
-                                <label className="block text-xs font-medium text-slate-600 mb-1.5">Dias de Publicação</label>
-                                <select 
-                                  value={type.days}
-                                  onChange={(e) => handleUpdateContentType(type.id, 'days', e.target.value)}
-                                  className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-purple-200 outline-none"
-                                >
-                                  {daysOptions.map(opt => (
-                                    <option key={opt} value={opt}>{opt}</option>
-                                  ))}
-                                </select>
-                              </div>
-                              <div>
-                                <label className="block text-xs font-medium text-slate-600 mb-1.5">Horário de Envio</label>
-                                <input 
-                                  type="time" 
-                                  value={type.time} 
-                                  onChange={(e) => handleUpdateContentType(type.id, 'time', e.target.value)}
-                                  className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-purple-200 outline-none" 
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      })
+                      <DndContext
+                        sensors={sensors}
+                        collisionDetection={closestCenter}
+                        onDragEnd={handleDragEnd}
+                      >
+                        <SortableContext
+                          items={contentTypesList.map(item => item.id)}
+                          strategy={verticalListSortingStrategy}
+                        >
+                          {contentTypesList.map((type) => (
+                            <SortableContentTypeItem
+                              key={type.id}
+                              item={type}
+                              frequencyOptions={frequencyOptions}
+                              daysOptions={daysOptions}
+                              getIconComponent={getIconComponent}
+                              onToggleActive={toggleContentTypeActive}
+                              onDelete={handleDeleteContentType}
+                              onUpdate={handleUpdateContentType}
+                            />
+                          ))}
+                        </SortableContext>
+                      </DndContext>
                     )}
                   </div>
 
