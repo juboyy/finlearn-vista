@@ -1437,6 +1437,48 @@ export type Database = {
           },
         ]
       }
+      saved_items: {
+        Row: {
+          created_at: string
+          id: string
+          item_description: string | null
+          item_id: string
+          item_image: string | null
+          item_title: string
+          item_type: string
+          item_url: string | null
+          metadata: Json | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          item_description?: string | null
+          item_id: string
+          item_image?: string | null
+          item_title: string
+          item_type: string
+          item_url?: string | null
+          metadata?: Json | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          item_description?: string | null
+          item_id?: string
+          item_image?: string | null
+          item_title?: string
+          item_type?: string
+          item_url?: string | null
+          metadata?: Json | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_browsing_history: {
         Row: {
           id: string

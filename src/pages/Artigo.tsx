@@ -30,11 +30,109 @@ const Artigo = () => {
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
   const [savedProgress, setSavedProgress] = useState<number | null>(null);
   const [hasSavedProgress, setHasSavedProgress] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const saveIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const { toast } = useToast();
 
   const articleTitle = "Guia Completo de Crédito Imobiliário: Tudo que Você Precisa Saber em 2024";
+  const articleImage = "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400";
+  const articleDescription = "Um guia completo sobre crédito imobiliário no Brasil, abordando taxas, documentação e dicas para conseguir as melhores condições.";
+
+  // Check if article is already saved
+  useEffect(() => {
+    const checkIfSaved = async () => {
+      if (!user || !articleId) return;
+      
+      try {
+        const { data, error } = await supabase
+          .from('saved_items')
+          .select('id')
+          .eq('user_id', user.id)
+          .eq('item_id', articleId)
+          .eq('item_type', 'article')
+          .single();
+        
+        if (data && !error) {
+          setIsSaved(true);
+        }
+      } catch (err) {
+        console.log('Article not saved yet');
+      }
+    };
+    
+    checkIfSaved();
+  }, [user, articleId]);
+
+  // Handle save/unsave article
+  const handleSaveArticle = async () => {
+    if (!user) {
+      toast({
+        title: "Login necessário",
+        description: "Faça login para salvar artigos.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (!articleId) return;
+
+    setIsSaving(true);
+    
+    try {
+      if (isSaved) {
+        // Remove from saved items
+        const { error } = await supabase
+          .from('saved_items')
+          .delete()
+          .eq('user_id', user.id)
+          .eq('item_id', articleId)
+          .eq('item_type', 'article');
+
+        if (error) throw error;
+
+        setIsSaved(false);
+        toast({
+          title: "Removido dos salvos",
+          description: "Artigo removido da sua lista de itens salvos."
+        });
+      } else {
+        // Add to saved items
+        const { error } = await supabase
+          .from('saved_items')
+          .insert({
+            user_id: user.id,
+            item_id: articleId,
+            item_type: 'article',
+            item_title: articleTitle,
+            item_image: articleImage,
+            item_description: articleDescription,
+            item_url: `/artigo/${articleId}`,
+            metadata: {
+              tags: ['Crédito', 'Imobiliário', 'Financiamento']
+            }
+          });
+
+        if (error) throw error;
+
+        setIsSaved(true);
+        toast({
+          title: "Artigo salvo",
+          description: "Artigo adicionado à sua lista de itens salvos."
+        });
+      }
+    } catch (err) {
+      console.error('Error saving article:', err);
+      toast({
+        title: "Erro",
+        description: "Não foi possível salvar o artigo. Tente novamente.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSaving(false);
+    }
+  };
   const speedOptions = [0.5, 0.75, 1, 1.25, 1.5, 2];
 
   // Load saved progress on mount
@@ -432,9 +530,20 @@ const Artigo = () => {
                 </p>
               </div>
               <div className="space-y-2 pt-4 border-t border-border">
-                <button className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition text-left">
-                  <Bookmark size={16} className="text-muted-foreground" />
-                  <span className="text-sm text-muted-foreground">Salvar</span>
+                <button 
+                  onClick={handleSaveArticle}
+                  disabled={isSaving}
+                  className={`w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition text-left ${isSaved ? 'bg-pastel-green/20' : ''}`}
+                >
+                  {isSaving ? (
+                    <Loader2 size={16} className="text-muted-foreground animate-spin" />
+                  ) : (
+                    <Bookmark size={16} className={isSaved ? "text-pastel-green fill-pastel-green" : "text-muted-foreground"} />
+                  )}
+                  <span className={`text-sm ${isSaved ? 'text-pastel-green font-medium' : 'text-muted-foreground'}`}>
+                    {isSaved ? 'Salvo' : 'Salvar'}
+                  </span>
+                  {isSaved && <CheckCircle2 size={14} className="ml-auto text-pastel-green" />}
                 </button>
                 <button className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition text-left">
                   <Printer size={16} className="text-muted-foreground" />
