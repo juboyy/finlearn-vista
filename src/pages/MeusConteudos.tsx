@@ -121,6 +121,7 @@ export default function MeusConteudos() {
     if (activeFilter === 'todos') return true;
     if (activeFilter === 'rascunho') return item.status === 'Rascunho';
     if (activeFilter === 'revisao') return item.status === 'Em Revisão';
+    if (activeFilter === 'concluido') return item.status === 'Concluído';
     if (activeFilter === 'publicado') return item.status === 'Publicado';
     return true;
   });
