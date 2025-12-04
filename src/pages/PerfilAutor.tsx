@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Search, Bell, Share2, UserPlus, MessageCircle, Phone, Video, Award, Calendar, Clock, Check, X } from "lucide-react";
+import { ArrowLeft, Search, Bell, Share2, UserPlus, MessageCircle, Phone, Video, Award, Calendar, Clock, Check, X, Mail } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
 const PerfilAutor = () => {
@@ -223,11 +223,19 @@ const PerfilAutor = () => {
                   <Video className="text-slate-600" />
                   <span className="font-medium text-foreground">Video</span>
                 </button>
-                <button onClick={() => navigate('/meus-certificados')} className="bg-card border border-border rounded-lg p-4 flex items-center justify-center gap-3 hover:bg-accent transition-colors">
-                  <Award className="text-slate-600" />
-                  <span className="font-medium text-foreground">Meus Certificados</span>
+                <button className="bg-card border border-border rounded-lg p-4 flex items-center justify-center gap-3 hover:bg-accent transition-colors">
+                  <Mail className="text-slate-600" />
+                  <span className="font-medium text-foreground">Email</span>
                 </button>
               </div>
+            </div>
+
+            <div className="flex items-center justify-between mb-4">
+              <div></div>
+              <button onClick={() => navigate('/meus-certificados')} className="bg-card border border-border rounded-lg px-4 py-2 flex items-center gap-2 hover:bg-accent transition-colors">
+                <Award className="text-slate-600" size={18} />
+                <span className="font-medium text-foreground text-sm">Meus Certificados</span>
+              </button>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
