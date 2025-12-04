@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -30,6 +31,7 @@ import {
   Save,
   Sparkles,
   XCircle,
+  ChevronLeft,
 } from "lucide-react";
 import { SlideCanvasEditor } from "@/components/SlideCanvasEditor";
 import {
@@ -66,6 +68,7 @@ interface Slide {
 
 export default function EditorSlides() {
   const { agents } = useUserAgents();
+  const navigate = useNavigate();
   const [projectInfo, setProjectInfo] = useState({
     title: "",
     description: "",
@@ -642,9 +645,19 @@ IMPORTANTE:
           {/* Toolbar */}
           <div className="bg-white border-b border-slate-200 p-4 w-full">
             <div className="flex items-center justify-between w-full">
-              <h1 className="text-xl font-semibold text-slate-800">
-                {projectInfo.title || "Nova Apresentação"}
-              </h1>
+              <div className="flex items-center gap-3">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => navigate(-1)}
+                  className="text-slate-600 hover:text-slate-800 hover:bg-slate-100"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </Button>
+                <h1 className="text-xl font-semibold text-slate-800">
+                  {projectInfo.title || "Nova Apresentação"}
+                </h1>
+              </div>
               <div className="flex gap-2">
                 <Button
                   onClick={() => setShowSettingsSheet(true)}
