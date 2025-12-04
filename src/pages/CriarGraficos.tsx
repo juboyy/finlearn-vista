@@ -719,30 +719,47 @@ export default function CriarGraficos() {
 
         <div className="flex-1 flex overflow-hidden">
           {/* Left Panel - Data Source & Configuration */}
-          <div className="w-80 border-r border-border bg-card flex flex-col">
+          <div className="w-80 border-r border-border bg-gradient-to-b from-card to-muted/30 flex flex-col">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col">
-              <TabsList className="w-full justify-start px-4 pt-4 bg-transparent flex-wrap gap-1">
-                <TabsTrigger value="upload" className="text-xs">
-                  <Upload className="h-3 w-3 mr-1" />
-                  Upload
-                </TabsTrigger>
-                <TabsTrigger value="sheets" className="text-xs">
-                  <FileSpreadsheet className="h-3 w-3 mr-1" />
-                  Sheets
-                </TabsTrigger>
-                <TabsTrigger value="config" className="text-xs">
-                  <Settings className="h-3 w-3 mr-1" />
-                  Config
-                </TabsTrigger>
-                <TabsTrigger value="saved" className="text-xs">
-                  <FolderOpen className="h-3 w-3 mr-1" />
-                  Salvos
-                </TabsTrigger>
-                <TabsTrigger value="style" className="text-xs">
-                  <Palette className="h-3 w-3 mr-1" />
-                  Estilo
-                </TabsTrigger>
-              </TabsList>
+              <div className="px-4 pt-4 pb-2 border-b border-border/50 bg-card/80 backdrop-blur-sm">
+                <TabsList className="w-full grid grid-cols-5 gap-1 bg-muted/50 p-1 rounded-xl">
+                  <TabsTrigger 
+                    value="upload" 
+                    className="text-xs rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-pastel-blue flex flex-col gap-0.5 py-2"
+                  >
+                    <Upload className="h-4 w-4" />
+                    <span className="text-[10px]">Upload</span>
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    value="sheets" 
+                    className="text-xs rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-pastel-green flex flex-col gap-0.5 py-2"
+                  >
+                    <FileSpreadsheet className="h-4 w-4" />
+                    <span className="text-[10px]">Sheets</span>
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    value="config" 
+                    className="text-xs rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-pastel-purple flex flex-col gap-0.5 py-2"
+                  >
+                    <Settings className="h-4 w-4" />
+                    <span className="text-[10px]">Config</span>
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    value="saved" 
+                    className="text-xs rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-pastel-orange flex flex-col gap-0.5 py-2"
+                  >
+                    <FolderOpen className="h-4 w-4" />
+                    <span className="text-[10px]">Salvos</span>
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    value="style" 
+                    className="text-xs rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-pastel-pink flex flex-col gap-0.5 py-2"
+                  >
+                    <Palette className="h-4 w-4" />
+                    <span className="text-[10px]">Estilo</span>
+                  </TabsTrigger>
+                </TabsList>
+              </div>
 
               <ScrollArea className="flex-1 p-4">
                 <TabsContent value="upload" className="mt-0 space-y-4">
@@ -827,64 +844,55 @@ export default function CriarGraficos() {
 
                 <TabsContent value="config" className="mt-0 space-y-4">
                   <Card className="border-pastel-blue/30 bg-gradient-to-br from-white to-pastel-blue/5">
-                    <CardHeader className="pb-4">
-                      <CardTitle className="text-sm font-semibold flex items-center gap-2 text-pastel-gray-dark">
-                        <div className="p-1.5 rounded-lg bg-pastel-purple/20">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-sm font-semibold flex items-center gap-2 text-foreground">
+                        <div className="p-2 rounded-xl bg-gradient-to-br from-pastel-purple/30 to-pastel-blue/20">
                           <BarChart3 className="h-4 w-4 text-pastel-purple" />
                         </div>
                         Tipo de Grafico
                       </CardTitle>
                     </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="grid grid-cols-4 gap-3">
-                        {[
-                          { type: "bar" as const, icon: BarChart3, label: "Barras", bgActive: "bg-pastel-blue/20", borderActive: "border-pastel-blue", iconBgActive: "bg-pastel-blue/30", iconActive: "text-pastel-blue", hoverBorder: "hover:border-pastel-blue/50", hoverBg: "hover:bg-pastel-blue/10" },
-                          { type: "line" as const, icon: LineChart, label: "Linha", bgActive: "bg-pastel-green/20", borderActive: "border-pastel-green", iconBgActive: "bg-pastel-green/30", iconActive: "text-pastel-green", hoverBorder: "hover:border-pastel-green/50", hoverBg: "hover:bg-pastel-green/10" },
-                          { type: "pie" as const, icon: PieChart, label: "Pizza", bgActive: "bg-pastel-pink/20", borderActive: "border-pastel-pink", iconBgActive: "bg-pastel-pink/30", iconActive: "text-pastel-pink", hoverBorder: "hover:border-pastel-pink/50", hoverBg: "hover:bg-pastel-pink/10" },
-                          { type: "area" as const, icon: Activity, label: "Area", bgActive: "bg-pastel-purple/20", borderActive: "border-pastel-purple", iconBgActive: "bg-pastel-purple/30", iconActive: "text-pastel-purple", hoverBorder: "hover:border-pastel-purple/50", hoverBg: "hover:bg-pastel-purple/10" },
-                        ].map(({ type, icon: Icon, label, bgActive, borderActive, iconBgActive, iconActive, hoverBorder, hoverBg }) => (
-                          <button
-                            key={type}
-                            className={`flex flex-col items-center justify-center h-20 rounded-xl text-xs font-medium transition-all duration-200 border-2 ${
-                              chartConfig.type === type 
-                                ? `${bgActive} ${borderActive} text-pastel-gray-dark shadow-md scale-105` 
-                                : `bg-white border-pastel-gray/20 text-pastel-gray ${hoverBorder} ${hoverBg}`
-                            }`}
-                            onClick={() => setChartConfig(prev => ({ ...prev, type }))}
-                          >
-                            <div className={`p-2.5 rounded-lg mb-1.5 ${
-                              chartConfig.type === type ? iconBgActive : 'bg-pastel-gray/10'
+                    <CardContent className="space-y-2">
+                      {[
+                        { type: "bar" as const, icon: BarChart3, label: "Grafico de Barras", description: "Comparar valores entre categorias", bgActive: "bg-pastel-blue/15", borderActive: "border-pastel-blue", iconBgActive: "bg-pastel-blue/25", iconActive: "text-pastel-blue", hoverBorder: "hover:border-pastel-blue/30", hoverBg: "hover:bg-pastel-blue/5", dotBg: "bg-pastel-blue" },
+                        { type: "line" as const, icon: LineChart, label: "Grafico de Linha", description: "Mostrar tendencias ao longo do tempo", bgActive: "bg-pastel-green/15", borderActive: "border-pastel-green", iconBgActive: "bg-pastel-green/25", iconActive: "text-pastel-green", hoverBorder: "hover:border-pastel-green/30", hoverBg: "hover:bg-pastel-green/5", dotBg: "bg-pastel-green" },
+                        { type: "pie" as const, icon: PieChart, label: "Grafico de Pizza", description: "Mostrar proporcoes do total", bgActive: "bg-pastel-pink/15", borderActive: "border-pastel-pink", iconBgActive: "bg-pastel-pink/25", iconActive: "text-pastel-pink", hoverBorder: "hover:border-pastel-pink/30", hoverBg: "hover:bg-pastel-pink/5", dotBg: "bg-pastel-pink" },
+                        { type: "area" as const, icon: Activity, label: "Grafico de Area", description: "Visualizar volume e tendencia", bgActive: "bg-pastel-purple/15", borderActive: "border-pastel-purple", iconBgActive: "bg-pastel-purple/25", iconActive: "text-pastel-purple", hoverBorder: "hover:border-pastel-purple/30", hoverBg: "hover:bg-pastel-purple/5", dotBg: "bg-pastel-purple" },
+                        { type: "scatter" as const, icon: Target, label: "Grafico Scatter", description: "Correlacao entre variaveis", bgActive: "bg-pastel-orange/15", borderActive: "border-pastel-orange", iconBgActive: "bg-pastel-orange/25", iconActive: "text-pastel-orange", hoverBorder: "hover:border-pastel-orange/30", hoverBg: "hover:bg-pastel-orange/5", dotBg: "bg-pastel-orange" },
+                        { type: "radar" as const, icon: Radar, label: "Grafico Radar", description: "Comparar multiplas metricas", bgActive: "bg-pastel-blue/15", borderActive: "border-pastel-blue", iconBgActive: "bg-pastel-blue/25", iconActive: "text-pastel-blue", hoverBorder: "hover:border-pastel-blue/30", hoverBg: "hover:bg-pastel-blue/5", dotBg: "bg-pastel-blue" },
+                        { type: "treemap" as const, icon: LayoutGrid, label: "Treemap", description: "Hierarquia e proporcoes", bgActive: "bg-pastel-green/15", borderActive: "border-pastel-green", iconBgActive: "bg-pastel-green/25", iconActive: "text-pastel-green", hoverBorder: "hover:border-pastel-green/30", hoverBg: "hover:bg-pastel-green/5", dotBg: "bg-pastel-green" },
+                      ].map(({ type, icon: Icon, label, description, bgActive, borderActive, iconBgActive, iconActive, hoverBorder, hoverBg, dotBg }) => (
+                        <button
+                          key={type}
+                          className={`w-full flex items-center gap-3 p-3 rounded-xl text-left transition-all duration-200 border-2 group ${
+                            chartConfig.type === type 
+                              ? `${bgActive} ${borderActive} shadow-sm` 
+                              : `bg-white/50 border-transparent ${hoverBorder} ${hoverBg}`
+                          }`}
+                          onClick={() => setChartConfig(prev => ({ ...prev, type }))}
+                        >
+                          <div className={`p-2.5 rounded-xl transition-colors ${
+                            chartConfig.type === type ? iconBgActive : 'bg-muted'
+                          }`}>
+                            <Icon className={`h-5 w-5 transition-colors ${
+                              chartConfig.type === type ? iconActive : 'text-muted-foreground'
+                            }`} />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className={`text-sm font-medium ${
+                              chartConfig.type === type ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'
                             }`}>
-                              <Icon className={`h-5 w-5 ${chartConfig.type === type ? iconActive : 'text-pastel-gray'}`} />
-                            </div>
-                            {label}
-                          </button>
-                        ))}
-                      </div>
-                      <div className="grid grid-cols-3 gap-3">
-                        {[
-                          { type: "scatter" as const, icon: Target, label: "Scatter", bgActive: "bg-pastel-orange/20", borderActive: "border-pastel-orange", iconBgActive: "bg-pastel-orange/30", iconActive: "text-pastel-orange", hoverBorder: "hover:border-pastel-orange/50", hoverBg: "hover:bg-pastel-orange/10" },
-                          { type: "radar" as const, icon: Radar, label: "Radar", bgActive: "bg-pastel-blue/20", borderActive: "border-pastel-blue", iconBgActive: "bg-pastel-blue/30", iconActive: "text-pastel-blue", hoverBorder: "hover:border-pastel-blue/50", hoverBg: "hover:bg-pastel-blue/10" },
-                          { type: "treemap" as const, icon: LayoutGrid, label: "Treemap", bgActive: "bg-pastel-green/20", borderActive: "border-pastel-green", iconBgActive: "bg-pastel-green/30", iconActive: "text-pastel-green", hoverBorder: "hover:border-pastel-green/50", hoverBg: "hover:bg-pastel-green/10" },
-                        ].map(({ type, icon: Icon, label, bgActive, borderActive, iconBgActive, iconActive, hoverBorder, hoverBg }) => (
-                          <button
-                            key={type}
-                            className={`flex flex-col items-center justify-center h-20 rounded-xl text-xs font-medium transition-all duration-200 border-2 ${
-                              chartConfig.type === type 
-                                ? `${bgActive} ${borderActive} text-pastel-gray-dark shadow-md scale-105` 
-                                : `bg-white border-pastel-gray/20 text-pastel-gray ${hoverBorder} ${hoverBg}`
-                            }`}
-                            onClick={() => setChartConfig(prev => ({ ...prev, type }))}
-                          >
-                            <div className={`p-2.5 rounded-lg mb-1.5 ${
-                              chartConfig.type === type ? iconBgActive : 'bg-pastel-gray/10'
-                            }`}>
-                              <Icon className={`h-5 w-5 ${chartConfig.type === type ? iconActive : 'text-pastel-gray'}`} />
-                            </div>
-                            {label}
-                          </button>
-                        ))}
-                      </div>
+                              {label}
+                            </p>
+                            <p className="text-xs text-muted-foreground truncate">
+                              {description}
+                            </p>
+                          </div>
+                          {chartConfig.type === type && (
+                            <div className={`w-2 h-2 rounded-full ${dotBg}`} />
+                          )}
+                        </button>
+                      ))}
                     </CardContent>
                   </Card>
 
