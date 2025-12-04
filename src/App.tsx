@@ -143,6 +143,7 @@ import TodasComunidades from "./pages/TodasComunidades";
 import CriarInsights from "./pages/CriarInsights";
 import CriarGraficos from "./pages/CriarGraficos";
 import ContaMentoria from "./pages/ContaMentoria";
+import PerfilSocial from "./pages/PerfilSocial";
 
 import NotFound from "./pages/NotFound";
 
@@ -204,6 +205,7 @@ const App = () => {
               <Route path="/ebook/:id" element={<ProtectedRoute><EbookDetalhes /></ProtectedRoute>} />
               <Route path="/ler-ebook/:id" element={<ProtectedRoute><LerEbook /></ProtectedRoute>} />
               <Route path="/minha-conta" element={<ProtectedRoute><MinhaConta /></ProtectedRoute>} />
+              <Route path="/perfil-social" element={<ProtectedRoute><PerfilSocial /></ProtectedRoute>} />
               <Route path="/assinaturas" element={<ProtectedRoute><Assinaturas /></ProtectedRoute>} />
               <Route path="/configuracoes" element={<ProtectedRoute><Configuracoes /></ProtectedRoute>} />
               <Route path="/notificacoes" element={<ProtectedRoute><Notificacoes /></ProtectedRoute>} />
