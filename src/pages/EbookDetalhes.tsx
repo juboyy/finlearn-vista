@@ -1,12 +1,22 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Bell, Share2, Heart, ShoppingCart, Download, Check, ThumbsUp, MessageCircle } from "lucide-react";
+import { ArrowLeft, Bell, Share2, Heart, ShoppingCart, Download, Check, ThumbsUp, MessageCircle, Bookmark, BookmarkCheck } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useProductViewTracker } from "@/hooks/useProductViewTracker";
+import { useSaveForLater } from "@/hooks/useSaveForLater";
 
 const EbookDetalhes = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const mockUserId = "user-123"; // In production, get from auth context
+
+  // Save for later functionality
+  const { isSaved, isLoading: isSaving, toggleSave } = useSaveForLater({
+    itemId: id || 'ebook-001',
+    itemTitle: 'Guia Completo dos Cartões de Crédito',
+    itemType: 'ebook',
+    itemDescription: 'Guia completo sobre cartões de crédito no Brasil',
+    itemUrl: `/ebook/${id}`
+  });
 
   // Track product view time
   useProductViewTracker({
@@ -42,6 +52,18 @@ const EbookDetalhes = () => {
                 <button className="relative p-2 text-muted-foreground hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition">
                   <Bell size={20} />
                   <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                </button>
+                <button 
+                  onClick={toggleSave}
+                  disabled={isSaving}
+                  className={`px-4 py-2 rounded-lg font-semibold transition flex items-center gap-2 ${
+                    isSaved 
+                      ? 'bg-pastel-purple/40 text-slate-700' 
+                      : 'text-muted-foreground hover:bg-slate-100 dark:hover:bg-slate-700'
+                  }`}
+                >
+                  {isSaved ? <BookmarkCheck size={20} className="fill-slate-700" /> : <Bookmark size={20} />}
+                  {isSaved ? 'Ler Depois' : 'Ler Depois'}
                 </button>
                 <button className="p-2 text-muted-foreground hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition">
                   <Share2 size={20} />

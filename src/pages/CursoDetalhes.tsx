@@ -1,17 +1,27 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Share2, Heart, ShoppingCart, Gift, Video, Clock, FileText, Infinity, Smartphone, Award, Star, CheckCircle, PlayCircle, FileDown, Lock, Trophy, BadgeCheck, Briefcase, Users, Wrench, Headphones, RefreshCw, User, GraduationCap, ChartLine, Repeat, ShieldCheck } from "lucide-react";
+import { ArrowLeft, Share2, Heart, ShoppingCart, Gift, Video, Clock, FileText, Infinity, Smartphone, Award, Star, CheckCircle, PlayCircle, FileDown, Lock, Trophy, BadgeCheck, Briefcase, Users, Wrench, Headphones, RefreshCw, User, GraduationCap, ChartLine, Repeat, ShieldCheck, Bookmark, BookmarkCheck } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { useProductViewTracker } from "@/hooks/useProductViewTracker";
+import { useSaveForLater } from "@/hooks/useSaveForLater";
 
 const CursoDetalhes = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const mockUserId = "user-123"; // In production, get from auth context
   const [expandedModule, setExpandedModule] = useState(1);
+
+  // Save for later functionality
+  const { isSaved, isLoading: isSaving, toggleSave } = useSaveForLater({
+    itemId: id || 'curso-001',
+    itemTitle: 'Domine o Mercado de Capitais em 2025',
+    itemType: 'curso',
+    itemDescription: 'Curso completo com certificação internacional',
+    itemUrl: `/curso/${id}`
+  });
   
   // Track product view time
   useProductViewTracker({
@@ -78,6 +88,18 @@ const CursoDetalhes = () => {
               </div>
             </div>
             <div className="flex items-center gap-4">
+              <button 
+                onClick={toggleSave}
+                disabled={isSaving}
+                className={`px-4 py-2 rounded-lg font-semibold transition flex items-center gap-2 ${
+                  isSaved 
+                    ? 'bg-pastel-purple/40 text-slate-700' 
+                    : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'
+                }`}
+              >
+                {isSaved ? <BookmarkCheck size={20} className="fill-slate-700" /> : <Bookmark size={20} />}
+                {isSaved ? 'Assistir Depois' : 'Assistir Depois'}
+              </button>
               <button className="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition">
                 <Share2 size={20} />
               </button>

@@ -27,8 +27,10 @@ import {
   MessageCircle,
   CheckCircle2,
   PlayCircle,
-  Circle
+  Circle,
+  BookmarkCheck
 } from "lucide-react";
+import { useSaveForLater } from "@/hooks/useSaveForLater";
 import { Badge } from "@/components/ui/badge";
 import { useProductViewTracker } from "@/hooks/useProductViewTracker";
 import { usePodcastProgress } from "@/hooks/usePodcastProgress";
@@ -64,6 +66,15 @@ export default function PodcastDetalhes() {
   const [isMuted, setIsMuted] = useState(false);
   const [selectedEpisode, setSelectedEpisode] = useState(142);
   const audioRef = useRef<HTMLAudioElement>(null);
+
+  // Save for later functionality
+  const { isSaved, isLoading: isSaving, toggleSave } = useSaveForLater({
+    itemId: id || 'podcast-mercados-em-foco',
+    itemTitle: 'Mercados em Foco',
+    itemType: 'podcast',
+    itemDescription: 'Podcast semanal de análise de mercado',
+    itemUrl: `/podcast/${id}`
+  });
 
   // Track product view time
   useProductViewTracker({
@@ -321,6 +332,18 @@ export default function PodcastDetalhes() {
                   <div className="flex items-center gap-3">
                     <button className="px-6 py-3 bg-white text-slate-800 rounded-xl font-bold hover:bg-white/90 transition-all shadow-lg flex items-center gap-2">
                       <Plus className="w-5 h-5" /> Seguir
+                    </button>
+                    <button 
+                      onClick={toggleSave}
+                      disabled={isSaving}
+                      className={`px-4 py-3 rounded-xl font-semibold transition-all border flex items-center gap-2 ${
+                        isSaved 
+                          ? 'bg-pastel-purple/40 text-slate-700 border-pastel-purple/50' 
+                          : 'bg-white/10 backdrop-blur-sm text-white border-white/20 hover:bg-white/20'
+                      }`}
+                    >
+                      {isSaved ? <BookmarkCheck className="w-5 h-5 fill-slate-700" /> : <Bookmark className="w-5 h-5" />}
+                      {isSaved ? 'Ouvir Depois' : 'Ouvir Depois'}
                     </button>
                     <button className="p-3 bg-white/10 backdrop-blur-sm text-white rounded-xl hover:bg-white/20 transition-all border border-white/20">
                       <Heart className="w-5 h-5" />
