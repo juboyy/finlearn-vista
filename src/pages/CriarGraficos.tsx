@@ -1207,7 +1207,7 @@ export default function CriarGraficos() {
 
           {/* Right Panel - Data Table Preview */}
           {data.length > 0 && (
-            <div className="w-96 border-l border-border bg-card flex flex-col">
+            <div className="w-96 border-l border-border bg-card flex flex-col overflow-hidden">
               <div className="p-4 border-b border-border">
                 <h3 className="font-medium text-foreground flex items-center gap-2">
                   <Table className="h-4 w-4" />
