@@ -141,6 +141,7 @@ import ProgramacaoEvento from "./pages/ProgramacaoEvento";
 import ParticipantesConfirmados from "./pages/ParticipantesConfirmados";
 import TodasComunidades from "./pages/TodasComunidades";
 import CriarInsights from "./pages/CriarInsights";
+import CriarGraficos from "./pages/CriarGraficos";
 
 import NotFound from "./pages/NotFound";
 
@@ -217,6 +218,7 @@ const App = () => {
               <Route path="/analises" element={<ProtectedRoute><Analises /></ProtectedRoute>} />
               <Route path="/meus-conteudos" element={<ProtectedRoute><MeusConteudos /></ProtectedRoute>} />
               <Route path="/criar-conteudo" element={<ProtectedRoute><CriarConteudo /></ProtectedRoute>} />
+              <Route path="/criar-graficos" element={<ProtectedRoute><CriarGraficos /></ProtectedRoute>} />
               <Route path="/novo-documento" element={<ProtectedRoute><NovoDocumento /></ProtectedRoute>} />
               <Route path="/evolucao-cartao-credito" element={<ProtectedRoute><EvolucaoCartaoCredito /></ProtectedRoute>} />
               <Route path="/ler-depois" element={<ProtectedRoute><LerDepois /></ProtectedRoute>} />
