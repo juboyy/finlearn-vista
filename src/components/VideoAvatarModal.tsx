@@ -1,10 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Play, Pause, RotateCcw, Volume2, VolumeX, X } from "lucide-react";
+import { Play, Pause, RotateCcw, Volume2, VolumeX, User } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { Progress } from "@/components/ui/progress";
 
 interface VideoAvatarModalProps {
   open: boolean;
@@ -12,6 +12,29 @@ interface VideoAvatarModalProps {
   articleTitle: string;
   articleContent: string;
 }
+
+const ELEVENLABS_VOICES = [
+  { id: "9BWtsMINqrJLrRacOk9x", name: "Aria", gender: "Feminino" },
+  { id: "CwhRBWXzGAHq8TQ4Fs17", name: "Roger", gender: "Masculino" },
+  { id: "EXAVITQu4vr4xnSDxMaL", name: "Sarah", gender: "Feminino" },
+  { id: "FGY2WhTYpPnrIDTdsKH5", name: "Laura", gender: "Feminino" },
+  { id: "IKne3meq5aSn9XLyUdCD", name: "Charlie", gender: "Masculino" },
+  { id: "JBFqnCBsd6RMkjVDRZzb", name: "George", gender: "Masculino" },
+  { id: "N2lVS1w4EtoT3dr4eOWO", name: "Callum", gender: "Masculino" },
+  { id: "SAz9YHcvj6GT2YYXdXww", name: "River", gender: "Neutro" },
+  { id: "TX3LPaxmHKxFdv7VOQHJ", name: "Liam", gender: "Masculino" },
+  { id: "XB0fDUnXU5powFXDhCwa", name: "Charlotte", gender: "Feminino" },
+  { id: "Xb7hH8MSUJpSbSDYk0k2", name: "Alice", gender: "Feminino" },
+  { id: "XrExE9yKIg1WjnnlVkGX", name: "Matilda", gender: "Feminino" },
+  { id: "bIHbv24MWmeRgasZH58o", name: "Will", gender: "Masculino" },
+  { id: "cgSgspJ2msm6clMCkdW9", name: "Jessica", gender: "Feminino" },
+  { id: "cjVigY5qzO86Huf0OWal", name: "Eric", gender: "Masculino" },
+  { id: "iP95p4xoKVk53GoZ742B", name: "Chris", gender: "Masculino" },
+  { id: "nPczCjzI2devNBz1zQrb", name: "Brian", gender: "Masculino" },
+  { id: "onwK4e9ZLuTAKqWW03F9", name: "Daniel", gender: "Masculino" },
+  { id: "pFZP5JQG7iQjIQuC4Bku", name: "Lily", gender: "Feminino" },
+  { id: "pqHfZKP75CvOlQylNhV4", name: "Bill", gender: "Masculino" },
+];
 
 const formatTime = (seconds: number) => {
   const mins = Math.floor(seconds / 60);
@@ -33,6 +56,7 @@ export const VideoAvatarModal = ({
   const [progress, setProgress] = useState(0);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [audioGenerated, setAudioGenerated] = useState(false);
+  const [selectedVoice, setSelectedVoice] = useState(ELEVENLABS_VOICES[0].id);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const { toast } = useToast();
 
@@ -53,7 +77,7 @@ export const VideoAvatarModal = ({
     setIsLoading(true);
     try {
       const { data, error } = await supabase.functions.invoke('text-to-speech-elevenlabs', {
-        body: { text: articleContent }
+        body: { text: articleContent, voiceId: selectedVoice }
       });
 
       if (error) throw error;
@@ -150,11 +174,22 @@ export const VideoAvatarModal = ({
     }
   };
 
-  useEffect(() => {
-    if (open && !audioGenerated && !isLoading) {
-      generateAvatarAudio();
+  const handleVoiceChange = (voiceId: string) => {
+    setSelectedVoice(voiceId);
+    // Reset audio if already generated
+    if (audioGenerated) {
+      setAudioGenerated(false);
+      setCurrentTime(0);
+      setProgress(0);
+      setIsPlaying(false);
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
     }
-  }, [open]);
+  };
+
+  const selectedVoiceData = ELEVENLABS_VOICES.find(v => v.id === selectedVoice);
 
   useEffect(() => {
     return () => {
@@ -234,17 +269,51 @@ export const VideoAvatarModal = ({
             )}
           </div>
 
+          {/* Voice Selector */}
+          <div className="w-full max-w-md space-y-2">
+            <label className="text-sm font-medium text-foreground flex items-center gap-2">
+              <User size={16} className="text-pastel-purple" />
+              Escolha a voz do avatar
+            </label>
+            <Select value={selectedVoice} onValueChange={handleVoiceChange}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Selecione uma voz" />
+              </SelectTrigger>
+              <SelectContent className="max-h-60">
+                {ELEVENLABS_VOICES.map((voice) => (
+                  <SelectItem key={voice.id} value={voice.id}>
+                    <span className="flex items-center gap-2">
+                      {voice.name}
+                      <span className="text-xs text-muted-foreground">({voice.gender})</span>
+                    </span>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
           {/* Article Title */}
           <div className="text-center">
             <p className="text-sm text-muted-foreground mb-1">Narrando:</p>
             <p className="font-medium text-foreground text-sm max-w-md truncate">{articleTitle}</p>
           </div>
 
+          {/* Generate Button */}
+          {!audioGenerated && !isLoading && (
+            <Button
+              onClick={generateAvatarAudio}
+              className="px-6"
+              style={{ backgroundColor: 'hsl(271, 35%, 65%)' }}
+            >
+              Gerar Narracao com {selectedVoiceData?.name}
+            </Button>
+          )}
+
           {/* Loading State */}
           {isLoading && (
             <div className="flex flex-col items-center gap-3">
               <div className="w-8 h-8 border-2 border-pastel-purple border-t-transparent rounded-full animate-spin" />
-              <p className="text-sm text-muted-foreground">Preparando avatar...</p>
+              <p className="text-sm text-muted-foreground">Gerando audio com voz de {selectedVoiceData?.name}...</p>
             </div>
           )}
 
