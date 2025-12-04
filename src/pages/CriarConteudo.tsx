@@ -152,7 +152,7 @@ export default function CriarConteudo() {
                   </button>
 
                   {/* Option 2: Cursos */}
-                  <button className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
+                  <Link to="/criar-curso" className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
                     <div className="w-12 h-12 rounded-lg bg-[hsl(45,60%,75%)] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
                       <GraduationCap className="w-6 h-6" />
                     </div>
@@ -163,7 +163,7 @@ export default function CriarConteudo() {
                     <div className="text-muted-foreground/30 group-hover:text-muted-foreground transition-colors">
                       <i className="fa-solid fa-chevron-right text-sm"></i>
                     </div>
-                  </button>
+                  </Link>
 
                   {/* Option 3: Avatar IA */}
                   <button className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
@@ -183,7 +183,7 @@ export default function CriarConteudo() {
                   </button>
 
                   {/* Option 4: E-books */}
-                  <Link to="/criar-ebook" className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
+                  <Link to="/novo-ebook" className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
                     <div className="w-12 h-12 rounded-lg bg-[hsl(45,60%,75%)] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
                       <Book className="w-6 h-6" />
                     </div>
