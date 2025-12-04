@@ -51,14 +51,14 @@ const Artigo = () => {
           .select('id')
           .eq('user_id', user.id)
           .eq('item_id', articleId)
-          .eq('item_type', 'article')
+          .eq('item_type', 'read_later')
           .single();
         
         if (data && !error) {
           setIsSaved(true);
         }
       } catch (err) {
-        console.log('Article not saved yet');
+        console.log('Article not in read later');
       }
     };
     
@@ -82,35 +82,36 @@ const Artigo = () => {
     
     try {
       if (isSaved) {
-        // Remove from saved items
+        // Remove from read later
         const { error } = await supabase
           .from('saved_items')
           .delete()
           .eq('user_id', user.id)
           .eq('item_id', articleId)
-          .eq('item_type', 'article');
+          .eq('item_type', 'read_later');
 
         if (error) throw error;
 
         setIsSaved(false);
         toast({
-          title: "Removido dos salvos",
-          description: "Artigo removido da sua lista de itens salvos."
+          title: "Removido",
+          description: "Artigo removido de Ler Depois."
         });
       } else {
-        // Add to saved items
+        // Add to read later
         const { error } = await supabase
           .from('saved_items')
           .insert({
             user_id: user.id,
             item_id: articleId,
-            item_type: 'article',
+            item_type: 'read_later',
             item_title: articleTitle,
             item_image: articleImage,
             item_description: articleDescription,
             item_url: `/artigo/${articleId}`,
             metadata: {
-              tags: ['Crédito', 'Imobiliário', 'Financiamento']
+              tags: ['Crédito', 'Imobiliário', 'Financiamento'],
+              content_type: 'article'
             }
           });
 
@@ -118,8 +119,8 @@ const Artigo = () => {
 
         setIsSaved(true);
         toast({
-          title: "Artigo salvo",
-          description: "Artigo adicionado à sua lista de itens salvos."
+          title: "Adicionado",
+          description: "Artigo adicionado a Ler Depois."
         });
       }
     } catch (err) {
@@ -533,17 +534,17 @@ const Artigo = () => {
                 <button 
                   onClick={handleSaveArticle}
                   disabled={isSaving}
-                  className={`w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition text-left ${isSaved ? 'bg-pastel-green/20' : ''}`}
+                  className={`w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition text-left ${isSaved ? 'bg-pastel-purple/20' : ''}`}
                 >
                   {isSaving ? (
                     <Loader2 size={16} className="text-muted-foreground animate-spin" />
                   ) : (
-                    <Bookmark size={16} className={isSaved ? "text-pastel-green fill-pastel-green" : "text-muted-foreground"} />
+                    <Bookmark size={16} className={isSaved ? "text-pastel-purple fill-pastel-purple" : "text-muted-foreground"} />
                   )}
-                  <span className={`text-sm ${isSaved ? 'text-pastel-green font-medium' : 'text-muted-foreground'}`}>
-                    {isSaved ? 'Salvo' : 'Salvar'}
+                  <span className={`text-sm ${isSaved ? 'text-pastel-purple font-medium' : 'text-muted-foreground'}`}>
+                    {isSaved ? 'Ler Depois' : 'Ler Depois'}
                   </span>
-                  {isSaved && <CheckCircle2 size={14} className="ml-auto text-pastel-green" />}
+                  {isSaved && <CheckCircle2 size={14} className="ml-auto text-pastel-purple" />}
                 </button>
                 <button className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition text-left">
                   <Printer size={16} className="text-muted-foreground" />
