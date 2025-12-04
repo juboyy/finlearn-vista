@@ -104,6 +104,7 @@ import TransformarTabelas from "./pages/TransformarTabelas";
 import NovoEbook from "./pages/NovoEbook";
 import NovoEbookEtapa2 from "./pages/NovoEbookEtapa2";
 import CriarEbook from "./pages/CriarEbook";
+import CriarEbookEtapa2 from "./pages/CriarEbookEtapa2";
 import NovoEbookEtapa3 from "./pages/NovoEbookEtapa3";
 import ResumoEbook from "./pages/ResumoEbook";
 import HistoricoPodcasts from "./pages/HistoricoPodcasts";
@@ -259,6 +260,7 @@ const App = () => {
               <Route path="/novo-ebook/etapa-2" element={<ProtectedRoute><NovoEbookEtapa2 /></ProtectedRoute>} />
               <Route path="/novo-ebook/etapa-3" element={<ProtectedRoute><NovoEbookEtapa3 /></ProtectedRoute>} />
               <Route path="/criar-ebook" element={<ProtectedRoute><CriarEbook /></ProtectedRoute>} />
+              <Route path="/criar-ebook/etapa-2" element={<ProtectedRoute><CriarEbookEtapa2 /></ProtectedRoute>} />
               <Route path="/resumo-ebook" element={<ProtectedRoute><ResumoEbook /></ProtectedRoute>} />
               <Route path="/historico-podcasts" element={<ProtectedRoute><HistoricoPodcasts /></ProtectedRoute>} />
               <Route path="/editor-markdown" element={<ProtectedRoute><EditorMarkdown /></ProtectedRoute>} />

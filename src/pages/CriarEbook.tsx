@@ -431,10 +431,12 @@ export default function CriarEbook() {
                 <Save className="w-4 h-4" />
                 Salvar e Sair
               </button>
-              <button className="px-6 py-3 bg-[hsl(var(--pastel-blue))] text-foreground rounded-lg font-semibold hover:opacity-80 transition-opacity flex items-center gap-2">
-                Próxima Etapa
-                <i className="fa-solid fa-arrow-right"></i>
-              </button>
+              <Link to="/criar-ebook/etapa-2">
+                <button className="px-6 py-3 bg-[hsl(var(--pastel-blue))] text-foreground rounded-lg font-semibold hover:opacity-80 transition-opacity flex items-center gap-2">
+                  Próxima Etapa
+                  <i className="fa-solid fa-arrow-right"></i>
+                </button>
+              </Link>
             </div>
           </div>
         </div>
