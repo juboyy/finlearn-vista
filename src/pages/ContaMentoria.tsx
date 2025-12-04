@@ -2,7 +2,8 @@ import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { 
   Bell, ArrowLeft, MapPin, Briefcase, Users, Video, Mic, 
   MessageCircle, UsersRound, Award, Mail, Linkedin, Globe, 
-  Plus, Trash2, Save, Camera, Loader2, Clock, Bot, Check
+  Plus, Trash2, Save, Camera, Loader2, Clock, Bot, Check,
+  User, Eye, Share2, Building2, Calendar, Link2
 } from "lucide-react";
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
@@ -18,6 +19,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 interface Experience {
   id: string;
@@ -90,6 +98,18 @@ const ContaMentoria = () => {
   // Avatar IA
   const [avatarIAEnabled, setAvatarIAEnabled] = useState(false);
   const [avatarIAPerConsultation, setAvatarIAPerConsultation] = useState("");
+
+  // Social Profile (Perfil do Criador)
+  const [socialProfileOpen, setSocialProfileOpen] = useState(false);
+  const [socialTitle, setSocialTitle] = useState("");
+  const [socialSubtitle, setSocialSubtitle] = useState("");
+  const [socialBio, setSocialBio] = useState("");
+  const [socialInstitution, setSocialInstitution] = useState("");
+  const [socialMemberSince, setSocialMemberSince] = useState("");
+  const [socialTwitter, setSocialTwitter] = useState("");
+  const [socialInstagram, setSocialInstagram] = useState("");
+  const [socialYoutube, setSocialYoutube] = useState("");
+  const [socialPortfolioUrl, setSocialPortfolioUrl] = useState("");
   const [avatarIAMonthly, setAvatarIAMonthly] = useState("");
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -196,6 +216,226 @@ const ContaMentoria = () => {
               <button className="relative p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
                 <Bell size={20} />
               </button>
+              
+              <Sheet open={socialProfileOpen} onOpenChange={setSocialProfileOpen}>
+                <SheetTrigger asChild>
+                  <button className="px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2">
+                    <Share2 size={16} />
+                    Perfil Social
+                  </button>
+                </SheetTrigger>
+                <SheetContent className="w-[500px] sm:max-w-[500px] overflow-y-auto">
+                  <SheetHeader>
+                    <SheetTitle className="text-xl font-semibold text-slate-800">Perfil Social do Criador</SheetTitle>
+                  </SheetHeader>
+                  
+                  <div className="mt-6 space-y-6">
+                    {/* Photo Section */}
+                    <div className="flex items-center gap-4">
+                      <div className="w-20 h-20 rounded-full border-2 border-dashed border-slate-300 flex items-center justify-center bg-slate-50">
+                        {avatarPreview ? (
+                          <img src={avatarPreview} alt="Preview" className="w-full h-full object-cover rounded-full" />
+                        ) : (
+                          <Camera className="text-slate-400" size={24} />
+                        )}
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-slate-700">Foto do Perfil</p>
+                        <p className="text-xs text-slate-500">Mesma foto usada no cadastro de mentoria</p>
+                      </div>
+                    </div>
+                    
+                    {/* Basic Info */}
+                    <div className="space-y-4">
+                      <div>
+                        <Label>Nome de exibicao</Label>
+                        <Input
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          placeholder="Como deseja ser chamado"
+                          className="mt-1"
+                        />
+                      </div>
+                      
+                      <div>
+                        <Label>Titulo/Especialidade</Label>
+                        <Input
+                          value={socialTitle}
+                          onChange={(e) => setSocialTitle(e.target.value)}
+                          placeholder="Ex: Especialista em Pagamentos e Sistemas Financeiros"
+                          className="mt-1"
+                        />
+                      </div>
+                      
+                      <div>
+                        <Label>Subtitulo</Label>
+                        <Input
+                          value={socialSubtitle}
+                          onChange={(e) => setSocialSubtitle(e.target.value)}
+                          placeholder="Breve descricao adicional"
+                          className="mt-1"
+                        />
+                      </div>
+                      
+                      <div>
+                        <Label>Localizacao</Label>
+                        <div className="relative mt-1">
+                          <MapPin size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                          <Input
+                            value={location}
+                            onChange={(e) => setLocation(e.target.value)}
+                            placeholder="Cidade, Pais"
+                            className="pl-9"
+                          />
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <Label>Instituicao/Empresa</Label>
+                        <div className="relative mt-1">
+                          <Building2 size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                          <Input
+                            value={socialInstitution}
+                            onChange={(e) => setSocialInstitution(e.target.value)}
+                            placeholder="Ex: Banco Central do Brasil"
+                            className="pl-9"
+                          />
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <Label>Membro desde</Label>
+                        <div className="relative mt-1">
+                          <Calendar size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                          <Input
+                            value={socialMemberSince}
+                            onChange={(e) => setSocialMemberSince(e.target.value)}
+                            placeholder="Ex: 2020"
+                            className="pl-9"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Bio */}
+                    <div>
+                      <Label>Biografia</Label>
+                      <Textarea
+                        value={socialBio}
+                        onChange={(e) => setSocialBio(e.target.value)}
+                        placeholder="Conte sua historia profissional, experiencias e areas de atuacao..."
+                        className="mt-1 min-h-[120px]"
+                      />
+                    </div>
+                    
+                    {/* Social Links */}
+                    <div className="space-y-4">
+                      <h4 className="text-sm font-semibold text-slate-700">Redes Sociais</h4>
+                      
+                      <div>
+                        <Label>LinkedIn</Label>
+                        <div className="relative mt-1">
+                          <Linkedin size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                          <Input
+                            value={linkedin}
+                            onChange={(e) => setLinkedin(e.target.value)}
+                            placeholder="linkedin.com/in/seu-perfil"
+                            className="pl-9"
+                          />
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <Label>Twitter/X</Label>
+                        <div className="relative mt-1">
+                          <Link2 size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                          <Input
+                            value={socialTwitter}
+                            onChange={(e) => setSocialTwitter(e.target.value)}
+                            placeholder="@seu_usuario"
+                            className="pl-9"
+                          />
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <Label>Instagram</Label>
+                        <div className="relative mt-1">
+                          <Link2 size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                          <Input
+                            value={socialInstagram}
+                            onChange={(e) => setSocialInstagram(e.target.value)}
+                            placeholder="@seu_usuario"
+                            className="pl-9"
+                          />
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <Label>YouTube</Label>
+                        <div className="relative mt-1">
+                          <Link2 size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                          <Input
+                            value={socialYoutube}
+                            onChange={(e) => setSocialYoutube(e.target.value)}
+                            placeholder="youtube.com/@seu_canal"
+                            className="pl-9"
+                          />
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <Label>Website/Portfolio</Label>
+                        <div className="relative mt-1">
+                          <Globe size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                          <Input
+                            value={socialPortfolioUrl}
+                            onChange={(e) => setSocialPortfolioUrl(e.target.value)}
+                            placeholder="https://seu-site.com"
+                            className="pl-9"
+                          />
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <Label>Email de contato</Label>
+                        <div className="relative mt-1">
+                          <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                          <Input
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="contato@email.com"
+                            className="pl-9"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <button
+                      onClick={() => {
+                        setSocialProfileOpen(false);
+                        toast({
+                          title: "Perfil Social atualizado",
+                          description: "As informacoes do seu perfil de criador foram salvas.",
+                        });
+                      }}
+                      className="w-full py-3 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center justify-center gap-2"
+                    >
+                      <Save size={16} />
+                      Salvar Perfil Social
+                    </button>
+                  </div>
+                </SheetContent>
+              </Sheet>
+              
+              <button
+                onClick={() => navigate('/perfil-autor/meu-perfil')}
+                className="px-4 py-2 bg-pastel-green text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2"
+              >
+                <Eye size={16} />
+                Perfil
+              </button>
+              
               <button
                 onClick={handleSave}
                 disabled={isSaving}
