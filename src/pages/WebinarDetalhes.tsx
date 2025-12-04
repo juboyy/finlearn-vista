@@ -1,8 +1,9 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { SpeakerModal } from "@/components/Dashboard/SpeakerModal";
-import { ArrowLeft, Share2, Bookmark, Calendar, Clock, Users, Video, PlayCircle, FileText, Award, MessageCircle, Shield, Star, Linkedin, Mail, Link as LinkIcon } from "lucide-react";
-import { Link } from "react-router-dom";
+import { ArrowLeft, Share2, Bookmark, BookmarkCheck, Calendar, Clock, Users, Video, PlayCircle, FileText, Award, MessageCircle, Shield, Star, Linkedin, Mail, Link as LinkIcon } from "lucide-react";
+import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
+import { useSaveForLater } from "@/hooks/useSaveForLater";
 
 const speakersData = [
   {
@@ -271,8 +272,18 @@ const speakersData = [
 ];
 
 export default function WebinarDetalhes() {
+  const { id } = useParams();
   const [selectedSpeaker, setSelectedSpeaker] = useState<typeof speakersData[0] | null>(null);
   const [speakerModalOpen, setSpeakerModalOpen] = useState(false);
+
+  // Save for later functionality
+  const { isSaved, isLoading: isSaving, toggleSave } = useSaveForLater({
+    itemId: id || 'webinar-macroeconomico-2025',
+    itemTitle: 'Cenário Macroeconômico 2025',
+    itemType: 'webinar',
+    itemDescription: 'O que esperar dos mercados globais no próximo ano',
+    itemUrl: `/webinar/${id}`
+  });
 
   const handleSpeakerClick = (speaker: typeof speakersData[0]) => {
     setSelectedSpeaker(speaker);
@@ -299,8 +310,17 @@ export default function WebinarDetalhes() {
               <button className="p-2 text-foreground hover:bg-accent rounded-lg transition">
                 <Share2 className="text-lg" />
               </button>
-              <button className="p-2 text-foreground hover:bg-accent rounded-lg transition">
-                <Bookmark className="text-lg" />
+              <button 
+                onClick={toggleSave}
+                disabled={isSaving}
+                className={`px-4 py-2 rounded-lg font-semibold transition flex items-center gap-2 ${
+                  isSaved 
+                    ? 'bg-pastel-purple/40 text-slate-700' 
+                    : 'text-foreground hover:bg-accent'
+                }`}
+              >
+                {isSaved ? <BookmarkCheck className="text-lg fill-slate-700" /> : <Bookmark className="text-lg" />}
+                {isSaved ? 'Assistir Depois' : 'Assistir Depois'}
               </button>
             </div>
           </div>
