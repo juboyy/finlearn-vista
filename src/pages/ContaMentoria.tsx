@@ -78,6 +78,7 @@ const ContaMentoria = () => {
 
   // Pricing
   const [individualPrice, setIndividualPrice] = useState("");
+  const [packageSessions, setPackageSessions] = useState("5");
   const [packagePrice, setPackagePrice] = useState("");
   const [groupPrice, setGroupPrice] = useState("");
 
@@ -599,13 +600,27 @@ const ContaMentoria = () => {
                     />
                   </div>
                   <div>
-                    <Label>Pacote 5 sessoes (R$)</Label>
-                    <Input
-                      value={packagePrice}
-                      onChange={(e) => setPackagePrice(e.target.value)}
-                      placeholder="Ex: 2025"
-                      className="mt-1"
-                    />
+                    <Label>Pacote de sessoes</Label>
+                    <div className="flex gap-3 mt-1">
+                      <Select value={packageSessions} onValueChange={setPackageSessions}>
+                        <SelectTrigger className="w-32">
+                          <SelectValue placeholder="Qtd" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="3">3 sessoes</SelectItem>
+                          <SelectItem value="5">5 sessoes</SelectItem>
+                          <SelectItem value="8">8 sessoes</SelectItem>
+                          <SelectItem value="10">10 sessoes</SelectItem>
+                          <SelectItem value="12">12 sessoes</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <Input
+                        value={packagePrice}
+                        onChange={(e) => setPackagePrice(e.target.value)}
+                        placeholder="Valor total (R$)"
+                        className="flex-1"
+                      />
+                    </div>
                   </div>
                   <div>
                     <Label>Mentoria em grupo (R$/pessoa/hora)</Label>
