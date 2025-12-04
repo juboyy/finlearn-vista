@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState, useRef, useMemo } from "react";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Filter, Download, CalendarCheck, Award, Clock, Wallet, Search, MapPin, User, CheckCircle, Utensils, Video, FileText, Play, Images, Network, Gift, Star, ChevronDown, Ticket, X } from "lucide-react";
+import { ArrowLeft, Filter, Download, CalendarCheck, Award, Clock, Wallet, Search, MapPin, User, CheckCircle, Utensils, Video, FileText, Play, Images, Network, Gift, Star, ChevronDown, Ticket, X, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { QRCodeSVG } from "qrcode.react";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 import ebookCompliance from "@/assets/ebook-compliance.png";
 import ebookDerivatives from "@/assets/ebook-derivatives.png";
 import eventoWorkshopPagamentos from "@/assets/evento-workshop-pagamentos.png";
@@ -17,11 +20,54 @@ interface Certificate {
   title: string;
   date: string;
   image: string;
+  id: string;
 }
 
 export default function HistoricoIngressos() {
   const navigate = useNavigate();
   const [selectedCertificate, setSelectedCertificate] = useState<Certificate | null>(null);
+  const [isDownloading, setIsDownloading] = useState(false);
+  const certificateRef = useRef<HTMLDivElement>(null);
+
+  const verificationUrl = useMemo(() => {
+    if (!selectedCertificate) return "";
+    return `https://finlearn.com.br/verificar/${selectedCertificate.id}`;
+  }, [selectedCertificate]);
+
+  const handleDownloadPDF = async () => {
+    if (!certificateRef.current || !selectedCertificate) return;
+    
+    setIsDownloading(true);
+    try {
+      const canvas = await html2canvas(certificateRef.current, {
+        scale: 2,
+        backgroundColor: "#ffffff",
+        useCORS: true,
+      });
+      
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF({
+        orientation: "landscape",
+        unit: "mm",
+        format: "a4",
+      });
+      
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgWidth = canvas.width;
+      const imgHeight = canvas.height;
+      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+      const imgX = (pdfWidth - imgWidth * ratio) / 2;
+      const imgY = (pdfHeight - imgHeight * ratio) / 2;
+      
+      pdf.addImage(imgData, "PNG", imgX, imgY, imgWidth * ratio, imgHeight * ratio);
+      pdf.save(`certificado-${selectedCertificate.title.toLowerCase().replace(/\s+/g, "-")}.pdf`);
+    } catch (error) {
+      console.error("Erro ao gerar PDF:", error);
+    } finally {
+      setIsDownloading(false);
+    }
+  };
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -596,7 +642,7 @@ export default function HistoricoIngressos() {
             </div>
 
             <div className="grid grid-cols-4 gap-4">
-              <div className="group cursor-pointer" onClick={() => setSelectedCertificate({ title: "Regulação do Mercado Financeiro", date: "15 Nov 2024", image: ebookCompliance })}>
+              <div className="group cursor-pointer" onClick={() => setSelectedCertificate({ title: "Regulação do Mercado Financeiro", date: "15 Nov 2024", image: ebookCompliance, id: "CERT-2024-RMF7X9K2L" })}>
                 <div className="bg-slate-50 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition mb-3 aspect-[3/4] relative">
                   <img 
                     src={ebookCompliance} 
@@ -609,7 +655,7 @@ export default function HistoricoIngressos() {
                 </div>
                 <p className="text-xs text-slate-600 text-center font-medium">15 Nov 2024</p>
               </div>
-              <div className="group cursor-pointer" onClick={() => setSelectedCertificate({ title: "Workshop Derivativos", date: "02 Nov 2024", image: ebookDerivatives })}>
+              <div className="group cursor-pointer" onClick={() => setSelectedCertificate({ title: "Workshop Derivativos", date: "02 Nov 2024", image: ebookDerivatives, id: "CERT-2024-WD3M8N5P" })}>
                 <div className="bg-slate-50 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition mb-3 aspect-[3/4] relative">
                   <img 
                     src={ebookDerivatives} 
@@ -622,7 +668,7 @@ export default function HistoricoIngressos() {
                 </div>
                 <p className="text-xs text-slate-600 text-center font-medium">02 Nov 2024</p>
               </div>
-              <div className="group cursor-pointer" onClick={() => setSelectedCertificate({ title: "Fórum de Meios de Pagamento", date: "20 Out 2024", image: eventoWorkshopPagamentos })}>
+              <div className="group cursor-pointer" onClick={() => setSelectedCertificate({ title: "Fórum de Meios de Pagamento", date: "20 Out 2024", image: eventoWorkshopPagamentos, id: "CERT-2024-FMP4R6T9" })}>
                 <div className="bg-slate-50 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition mb-3 aspect-[3/4] relative">
                   <img 
                     src={eventoWorkshopPagamentos} 
@@ -635,7 +681,7 @@ export default function HistoricoIngressos() {
                 </div>
                 <p className="text-xs text-slate-600 text-center font-medium">20 Out 2024</p>
               </div>
-              <div className="group cursor-pointer" onClick={() => setSelectedCertificate({ title: "Summit de Investimentos", date: "08 Dez 2023", image: ebookMercadoCapitais })}>
+              <div className="group cursor-pointer" onClick={() => setSelectedCertificate({ title: "Summit de Investimentos", date: "08 Dez 2023", image: ebookMercadoCapitais, id: "CERT-2023-SI2K7J4H" })}>
                 <div className="bg-slate-50 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition mb-3 aspect-[3/4] relative">
                   <img 
                     src={ebookMercadoCapitais} 
@@ -648,7 +694,7 @@ export default function HistoricoIngressos() {
                 </div>
                 <p className="text-xs text-slate-600 text-center font-medium">08 Dez 2023</p>
               </div>
-              <div className="group cursor-pointer" onClick={() => setSelectedCertificate({ title: "Compliance e Gestão de Riscos", date: "22 Set 2023", image: ebookGestaoRiscos })}>
+              <div className="group cursor-pointer" onClick={() => setSelectedCertificate({ title: "Compliance e Gestão de Riscos", date: "22 Set 2023", image: ebookGestaoRiscos, id: "CERT-2023-CGR9L1M5" })}>
                 <div className="bg-slate-50 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition mb-3 aspect-[3/4] relative">
                   <img 
                     src={ebookGestaoRiscos} 
@@ -661,7 +707,7 @@ export default function HistoricoIngressos() {
                 </div>
                 <p className="text-xs text-slate-600 text-center font-medium">22 Set 2023</p>
               </div>
-              <div className="group cursor-pointer" onClick={() => setSelectedCertificate({ title: "Fintech Brasil Conference", date: "15 Jun 2023", image: eventoConferenciaFintech })}>
+              <div className="group cursor-pointer" onClick={() => setSelectedCertificate({ title: "Fintech Brasil Conference", date: "15 Jun 2023", image: eventoConferenciaFintech, id: "CERT-2023-FBC6P3Q8" })}>
                 <div className="bg-slate-50 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition mb-3 aspect-[3/4] relative">
                   <img 
                     src={eventoConferenciaFintech} 
@@ -674,7 +720,7 @@ export default function HistoricoIngressos() {
                 </div>
                 <p className="text-xs text-slate-600 text-center font-medium">15 Jun 2023</p>
               </div>
-              <div className="group cursor-pointer" onClick={() => setSelectedCertificate({ title: "Open Finance Brasil", date: "03 Mai 2023", image: ebookOpenFinance })}>
+              <div className="group cursor-pointer" onClick={() => setSelectedCertificate({ title: "Open Finance Brasil", date: "03 Mai 2023", image: ebookOpenFinance, id: "CERT-2023-OFB1W5V2" })}>
                 <div className="bg-slate-50 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition mb-3 aspect-[3/4] relative">
                   <img 
                     src={ebookOpenFinance} 
@@ -687,7 +733,7 @@ export default function HistoricoIngressos() {
                 </div>
                 <p className="text-xs text-slate-600 text-center font-medium">03 Mai 2023</p>
               </div>
-              <div className="group cursor-pointer" onClick={() => setSelectedCertificate({ title: "Gestão de Risco Operacional", date: "18 Mar 2023", image: eventoTreinamentoRisco })}>
+              <div className="group cursor-pointer" onClick={() => setSelectedCertificate({ title: "Gestão de Risco Operacional", date: "18 Mar 2023", image: eventoTreinamentoRisco, id: "CERT-2023-GRO4Z8Y6" })}>
                 <div className="bg-slate-50 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition mb-3 aspect-[3/4] relative">
                   <img 
                     src={eventoTreinamentoRisco} 
@@ -708,17 +754,17 @@ export default function HistoricoIngressos() {
 
       {/* Certificate Popup */}
       <Dialog open={!!selectedCertificate} onOpenChange={() => setSelectedCertificate(null)}>
-        <DialogContent className="max-w-3xl p-0 overflow-hidden">
+        <DialogContent className="max-w-4xl p-0 overflow-hidden">
           <div className="relative bg-gradient-to-br from-slate-50 to-slate-100 p-8">
             <button 
               onClick={() => setSelectedCertificate(null)}
-              className="absolute top-4 right-4 p-2 rounded-full hover:bg-slate-200 transition"
+              className="absolute top-4 right-4 p-2 rounded-full hover:bg-slate-200 transition z-10"
             >
               <X className="w-5 h-5 text-slate-600" />
             </button>
             
             {/* Certificate Design */}
-            <div className="bg-white border-8 border-double border-slate-300 rounded-lg p-8 shadow-lg">
+            <div ref={certificateRef} className="bg-white border-8 border-double border-slate-300 rounded-lg p-8 shadow-lg">
               {/* Header */}
               <div className="text-center border-b-2 border-slate-200 pb-6 mb-6">
                 <div className="flex justify-center mb-4">
@@ -741,19 +787,27 @@ export default function HistoricoIngressos() {
                 </p>
               </div>
 
-              {/* Footer */}
+              {/* Footer with QR Code */}
               <div className="flex justify-between items-end mt-8 pt-6 border-t border-slate-200">
                 <div className="text-center">
                   <div className="w-32 border-t border-slate-400 mb-2"></div>
                   <p className="text-xs text-slate-500">Data de Emissão</p>
                   <p className="text-sm font-medium text-slate-700">{selectedCertificate?.date}</p>
                 </div>
+                
+                {/* QR Code for Verification */}
                 <div className="text-center">
-                  <div className="bg-slate-100 rounded-full p-3 mb-2 mx-auto w-fit">
-                    <CheckCircle className="w-8 h-8 text-green-600" />
+                  <div className="bg-white p-2 rounded-lg border border-slate-200 mb-2">
+                    <QRCodeSVG 
+                      value={verificationUrl} 
+                      size={80}
+                      level="M"
+                      includeMargin={false}
+                    />
                   </div>
-                  <p className="text-xs text-slate-500">Verificado</p>
+                  <p className="text-xs text-slate-500">Escaneie para verificar</p>
                 </div>
+                
                 <div className="text-center">
                   <div className="w-32 border-t border-slate-400 mb-2"></div>
                   <p className="text-xs text-slate-500">Assinatura</p>
@@ -764,15 +818,25 @@ export default function HistoricoIngressos() {
               {/* Certificate ID */}
               <div className="mt-6 text-center">
                 <p className="text-xs text-slate-400">
-                  ID: CERT-2024-{Math.random().toString(36).substr(2, 9).toUpperCase()}
+                  ID: {selectedCertificate?.id}
                 </p>
               </div>
             </div>
 
             {/* Actions */}
             <div className="flex justify-center gap-4 mt-6">
-              <Button variant="outline" className="flex items-center gap-2">
-                <Download className="w-4 h-4" /> Baixar PDF
+              <Button 
+                variant="outline" 
+                className="flex items-center gap-2"
+                onClick={handleDownloadPDF}
+                disabled={isDownloading}
+              >
+                {isDownloading ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Download className="w-4 h-4" />
+                )}
+                {isDownloading ? "Gerando..." : "Baixar PDF"}
               </Button>
               <Button className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700">
                 <Award className="w-4 h-4" /> Compartilhar
