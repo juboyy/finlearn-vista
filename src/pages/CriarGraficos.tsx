@@ -26,8 +26,10 @@ import {
   Rows,
   Link2,
   Eye,
-  Trash2,
-  Plus,
+  Activity,
+  Target,
+  Radar,
+  LayoutGrid,
 } from "lucide-react";
 import {
   ResponsiveContainer,
@@ -43,6 +45,16 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  AreaChart,
+  Area,
+  ScatterChart,
+  Scatter,
+  RadarChart,
+  Radar as RadarComponent,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+  Treemap,
 } from "recharts";
 import * as XLSX from "xlsx";
 
@@ -51,7 +63,7 @@ interface DataRow {
 }
 
 interface ChartConfig {
-  type: "bar" | "line" | "pie";
+  type: "bar" | "line" | "pie" | "area" | "scatter" | "radar" | "treemap";
   xAxis: string;
   yAxis: string[];
   title: string;
@@ -261,6 +273,135 @@ export default function CriarGraficos() {
           </ResponsiveContainer>
         );
 
+      case "area":
+        return (
+          <ResponsiveContainer width="100%" height={400}>
+            <AreaChart data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(215, 20%, 85%)" />
+              <XAxis
+                dataKey={chartConfig.xAxis}
+                tick={{ fill: "hsl(215, 16%, 47%)", fontSize: 12 }}
+              />
+              <YAxis tick={{ fill: "hsl(215, 16%, 47%)", fontSize: 12 }} />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "white",
+                  border: "1px solid hsl(215, 20%, 85%)",
+                  borderRadius: "8px",
+                }}
+              />
+              <Legend />
+              {chartConfig.yAxis.map((key, index) => (
+                <Area
+                  key={key}
+                  type="monotone"
+                  dataKey={key}
+                  stroke={CHART_COLORS[index % CHART_COLORS.length]}
+                  fill={CHART_COLORS[index % CHART_COLORS.length]}
+                  fillOpacity={0.3}
+                  strokeWidth={2}
+                />
+              ))}
+            </AreaChart>
+          </ResponsiveContainer>
+        );
+
+      case "scatter":
+        return (
+          <ResponsiveContainer width="100%" height={400}>
+            <ScatterChart>
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(215, 20%, 85%)" />
+              <XAxis
+                dataKey={chartConfig.xAxis}
+                type="number"
+                tick={{ fill: "hsl(215, 16%, 47%)", fontSize: 12 }}
+                name={chartConfig.xAxis}
+              />
+              <YAxis
+                dataKey={chartConfig.yAxis[0]}
+                type="number"
+                tick={{ fill: "hsl(215, 16%, 47%)", fontSize: 12 }}
+                name={chartConfig.yAxis[0]}
+              />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "white",
+                  border: "1px solid hsl(215, 20%, 85%)",
+                  borderRadius: "8px",
+                }}
+              />
+              <Legend />
+              <Scatter
+                name={chartConfig.yAxis[0]}
+                data={chartData}
+                fill={CHART_COLORS[0]}
+              />
+            </ScatterChart>
+          </ResponsiveContainer>
+        );
+
+      case "radar":
+        const radarData = chartData.map(row => ({
+          subject: String(row[chartConfig.xAxis]),
+          ...chartConfig.yAxis.reduce((acc, key) => ({
+            ...acc,
+            [key]: Number(row[key]) || 0,
+          }), {}),
+        }));
+        return (
+          <ResponsiveContainer width="100%" height={400}>
+            <RadarChart cx="50%" cy="50%" outerRadius="80%" data={radarData}>
+              <PolarGrid stroke="hsl(215, 20%, 85%)" />
+              <PolarAngleAxis
+                dataKey="subject"
+                tick={{ fill: "hsl(215, 16%, 47%)", fontSize: 11 }}
+              />
+              <PolarRadiusAxis tick={{ fill: "hsl(215, 16%, 47%)", fontSize: 10 }} />
+              {chartConfig.yAxis.map((key, index) => (
+                <RadarComponent
+                  key={key}
+                  name={key}
+                  dataKey={key}
+                  stroke={CHART_COLORS[index % CHART_COLORS.length]}
+                  fill={CHART_COLORS[index % CHART_COLORS.length]}
+                  fillOpacity={0.3}
+                />
+              ))}
+              <Legend />
+              <Tooltip />
+            </RadarChart>
+          </ResponsiveContainer>
+        );
+
+      case "treemap":
+        const treemapData = chartData.map((row, index) => ({
+          name: String(row[chartConfig.xAxis]),
+          size: Number(row[chartConfig.yAxis[0]]) || 0,
+          fill: CHART_COLORS[index % CHART_COLORS.length],
+        }));
+        return (
+          <ResponsiveContainer width="100%" height={400}>
+            <Treemap
+              data={treemapData}
+              dataKey="size"
+              aspectRatio={4 / 3}
+              stroke="hsl(215, 20%, 95%)"
+              fill="hsl(207, 35%, 55%)"
+            >
+              {treemapData.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.fill} />
+              ))}
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "white",
+                  border: "1px solid hsl(215, 20%, 85%)",
+                  borderRadius: "8px",
+                }}
+              />
+            </Treemap>
+          </ResponsiveContainer>
+        );
+
       default:
         return null;
     }
@@ -408,20 +549,38 @@ export default function CriarGraficos() {
                     <CardHeader className="pb-3">
                       <CardTitle className="text-sm">Tipo de Gráfico</CardTitle>
                     </CardHeader>
-                    <CardContent className="space-y-2">
-                      <div className="grid grid-cols-3 gap-2">
+                    <CardContent className="space-y-3">
+                      <div className="grid grid-cols-4 gap-2">
                         {[
                           { type: "bar" as const, icon: BarChart3, label: "Barras" },
                           { type: "line" as const, icon: LineChart, label: "Linha" },
                           { type: "pie" as const, icon: PieChart, label: "Pizza" },
+                          { type: "area" as const, icon: Activity, label: "Area" },
                         ].map(({ type, icon: Icon, label }) => (
                           <Button
                             key={type}
                             variant={chartConfig.type === type ? "default" : "outline"}
-                            className="flex flex-col h-16 text-xs"
+                            className="flex flex-col h-14 text-xs p-1"
                             onClick={() => setChartConfig(prev => ({ ...prev, type }))}
                           >
-                            <Icon className="h-5 w-5 mb-1" />
+                            <Icon className="h-4 w-4 mb-1" />
+                            {label}
+                          </Button>
+                        ))}
+                      </div>
+                      <div className="grid grid-cols-3 gap-2">
+                        {[
+                          { type: "scatter" as const, icon: Target, label: "Scatter" },
+                          { type: "radar" as const, icon: Radar, label: "Radar" },
+                          { type: "treemap" as const, icon: LayoutGrid, label: "Treemap" },
+                        ].map(({ type, icon: Icon, label }) => (
+                          <Button
+                            key={type}
+                            variant={chartConfig.type === type ? "default" : "outline"}
+                            className="flex flex-col h-14 text-xs p-1"
+                            onClick={() => setChartConfig(prev => ({ ...prev, type }))}
+                          >
+                            <Icon className="h-4 w-4 mb-1" />
                             {label}
                           </Button>
                         ))}
