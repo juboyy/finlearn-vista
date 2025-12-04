@@ -2,6 +2,18 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
+export interface ContentTypeConfig {
+  id: string;
+  name: string;
+  icon: string;
+  color: string;
+  description: string;
+  frequency: string;
+  days: string;
+  time: string;
+  isActive: boolean;
+}
+
 export interface Newsletter {
   id: string;
   user_id: string;
@@ -20,6 +32,7 @@ export interface Newsletter {
   tags: string[];
   product_types: string[];
   distribution_channels: string[];
+  content_types_config: ContentTypeConfig[];
 }
 
 export const useNewsletters = () => {
@@ -36,7 +49,12 @@ export const useNewsletters = () => {
         .order("created_at", { ascending: false });
 
       if (error) throw error;
-      setNewsletters(data || []);
+      // Cast the data to Newsletter type, handling content_types_config
+      const newsletters = (data || []).map(item => ({
+        ...item,
+        content_types_config: (item.content_types_config as unknown as ContentTypeConfig[]) || []
+      })) as Newsletter[];
+      setNewsletters(newsletters);
     } catch (error) {
       console.error("Error fetching newsletters:", error);
       toast({
@@ -56,7 +74,8 @@ export const useNewsletters = () => {
     color: string,
     tags: string[] = [],
     productTypes: string[] = [],
-    distributionChannels: string[] = []
+    distributionChannels: string[] = [],
+    contentTypesConfig: ContentTypeConfig[] = []
   ) => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
@@ -74,20 +93,25 @@ export const useNewsletters = () => {
           tags,
           product_types: productTypes,
           distribution_channels: distributionChannels,
+          content_types_config: contentTypesConfig as unknown as any,
         })
         .select()
         .single();
 
       if (error) throw error;
 
-      setNewsletters((prev) => [data, ...prev]);
+      const newNewsletter = {
+        ...data,
+        content_types_config: (data.content_types_config as unknown as ContentTypeConfig[]) || []
+      } as Newsletter;
+      setNewsletters((prev) => [newNewsletter, ...prev]);
       
       toast({
         title: "Newsletter criada",
         description: "Sua newsletter foi criada com sucesso.",
       });
 
-      return data;
+      return newNewsletter;
     } catch (error: any) {
       console.error("Error creating newsletter:", error);
       toast({
@@ -99,19 +123,24 @@ export const useNewsletters = () => {
     }
   };
 
-  const updateNewsletter = async (id: string, updates: Partial<Newsletter>) => {
+  const updateNewsletter = async (id: string, updates: Partial<Omit<Newsletter, 'content_types_config'>> & { content_types_config?: ContentTypeConfig[] }) => {
     try {
       const { data, error } = await supabase
         .from("newsletters")
-        .update(updates)
+        .update(updates as any)
         .eq("id", id)
         .select()
         .single();
 
       if (error) throw error;
 
+      const updatedNewsletter = {
+        ...data,
+        content_types_config: (data.content_types_config as unknown as ContentTypeConfig[]) || []
+      } as Newsletter;
+      
       setNewsletters((prev) =>
-        prev.map((n) => (n.id === id ? data : n))
+        prev.map((n) => (n.id === id ? updatedNewsletter : n))
       );
 
       toast({
@@ -119,7 +148,7 @@ export const useNewsletters = () => {
         description: "As alterações foram salvas.",
       });
 
-      return data;
+      return updatedNewsletter;
     } catch (error: any) {
       console.error("Error updating newsletter:", error);
       toast({

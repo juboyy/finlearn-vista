@@ -60,6 +60,9 @@ export default function NovaNewsletter() {
         setTags(newsletter.tags || []);
         setSelectedProducts(newsletter.product_types || ["newspaper"]);
         setSelectedChannels(newsletter.distribution_channels || ["email"]);
+        if (newsletter.content_types_config && newsletter.content_types_config.length > 0) {
+          setContentTypesList(newsletter.content_types_config);
+        }
       }
     }
   }, [editId, newsletters]);
@@ -128,9 +131,15 @@ export default function NovaNewsletter() {
     toast({ title: "Tipo removido", description: "O tipo de conteúdo foi removido." });
   };
 
-  const handleUpdateContentType = (id: string, field: string, value: string) => {
+  const handleUpdateContentType = (id: string, field: string, value: string | boolean) => {
     setContentTypesList(contentTypesList.map(item => 
       item.id === id ? { ...item, [field]: value } : item
+    ));
+  };
+
+  const toggleContentTypeActive = (id: string) => {
+    setContentTypesList(contentTypesList.map(item => 
+      item.id === id ? { ...item, isActive: !item.isActive } : item
     ));
   };
 
@@ -513,8 +522,21 @@ export default function NovaNewsletter() {
                                   <p className="text-xs text-slate-500">{type.description}</p>
                                 </div>
                               </div>
-                              <div className="flex items-center gap-2">
-                                <span className={`px-3 py-1 rounded-full text-xs font-medium ${type.isActive ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-600'}`}>
+                              <div className="flex items-center gap-3">
+                                <button
+                                  onClick={() => toggleContentTypeActive(type.id)}
+                                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-purple-200 ${
+                                    type.isActive ? 'bg-green-500' : 'bg-slate-300'
+                                  }`}
+                                  title={type.isActive ? 'Desativar' : 'Ativar'}
+                                >
+                                  <span
+                                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                                      type.isActive ? 'translate-x-6' : 'translate-x-1'
+                                    }`}
+                                  />
+                                </button>
+                                <span className={`text-xs font-medium min-w-[45px] ${type.isActive ? 'text-green-700' : 'text-slate-500'}`}>
                                   {type.isActive ? 'Ativo' : 'Inativo'}
                                 </span>
                                 <button 
@@ -1463,6 +1485,7 @@ export default function NovaNewsletter() {
                       tags,
                       product_types: selectedProducts,
                       distribution_channels: selectedChannels,
+                      content_types_config: contentTypesList,
                     };
                     console.log('Saving newsletter with data:', updateData);
                     try {
@@ -1473,7 +1496,7 @@ export default function NovaNewsletter() {
                           description: "As alterações foram salvas com sucesso.",
                         });
                       } else {
-                        await createNewsletter(title, description, selectedFrequency || "weekly", selectedColor, tags, selectedProducts, selectedChannels);
+                        await createNewsletter(title, description, selectedFrequency || "weekly", selectedColor, tags, selectedProducts, selectedChannels, contentTypesList);
                       }
                       navigate('/criar-newsletter');
                     } catch (error) {
