@@ -1,4 +1,6 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 import { useNavigate } from "react-router-dom";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Button } from "@/components/ui/button";
@@ -111,6 +113,8 @@ export default function CriarGraficos() {
   const [savedCharts, setSavedCharts] = useState<SavedChart[]>([]);
   const [isSaving, setIsSaving] = useState(false);
   const [loadingSavedCharts, setLoadingSavedCharts] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
+  const chartRef = useRef<HTMLDivElement>(null);
 
   // Load saved charts on mount
   useEffect(() => {
@@ -525,8 +529,68 @@ export default function CriarGraficos() {
     }
   };
 
-  const handleExport = () => {
-    toast.success("Gráfico exportado");
+  const handleExportPNG = async () => {
+    if (!chartRef.current || data.length === 0) {
+      toast.error("Nenhum gráfico para exportar");
+      return;
+    }
+
+    setIsExporting(true);
+    try {
+      const canvas = await html2canvas(chartRef.current, {
+        backgroundColor: "#ffffff",
+        scale: 2,
+      });
+
+      canvas.toBlob((blob) => {
+        if (!blob) return;
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `${chartConfig.title || "grafico"}-${Date.now()}.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+        toast.success("PNG exportado com sucesso");
+      });
+    } catch (error) {
+      console.error("Error exporting PNG:", error);
+      toast.error("Erro ao exportar PNG");
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
+  const handleExportPDF = async () => {
+    if (!chartRef.current || data.length === 0) {
+      toast.error("Nenhum gráfico para exportar");
+      return;
+    }
+
+    setIsExporting(true);
+    try {
+      const canvas = await html2canvas(chartRef.current, {
+        backgroundColor: "#ffffff",
+        scale: 2,
+      });
+
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF({
+        orientation: canvas.width > canvas.height ? "landscape" : "portrait",
+        unit: "px",
+        format: [canvas.width, canvas.height],
+      });
+
+      pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
+      pdf.save(`${chartConfig.title || "grafico"}-${Date.now()}.pdf`);
+      toast.success("PDF exportado com sucesso");
+    } catch (error) {
+      console.error("Error exporting PDF:", error);
+      toast.error("Erro ao exportar PDF");
+    } finally {
+      setIsExporting(false);
+    }
   };
 
   return (
@@ -546,9 +610,29 @@ export default function CriarGraficos() {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <Button variant="outline" onClick={handleExport}>
-                <Download className="h-4 w-4 mr-2" />
-                Exportar
+              <Button 
+                variant="outline" 
+                onClick={handleExportPNG}
+                disabled={isExporting || data.length === 0}
+              >
+                {isExporting ? (
+                  <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
+                ) : (
+                  <Download className="h-4 w-4 mr-2" />
+                )}
+                PNG
+              </Button>
+              <Button 
+                variant="outline" 
+                onClick={handleExportPDF}
+                disabled={isExporting || data.length === 0}
+              >
+                {isExporting ? (
+                  <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
+                ) : (
+                  <Download className="h-4 w-4 mr-2" />
+                )}
+                PDF
               </Button>
               <Button onClick={handleSave} disabled={isSaving} className="bg-primary text-primary-foreground">
                 {isSaving ? (
@@ -891,7 +975,9 @@ export default function CriarGraficos() {
               {data.length > 0 ? (
                 <Card className="h-full">
                   <CardContent className="p-6 h-full flex items-center justify-center">
-                    {renderChart()}
+                    <div ref={chartRef} className="w-full h-full bg-white p-4 rounded-lg">
+                      {renderChart()}
+                    </div>
                   </CardContent>
                 </Card>
               ) : (
