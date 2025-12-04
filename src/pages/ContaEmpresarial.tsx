@@ -1,7 +1,8 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { 
   Building2, MapPin, Phone, Mail, FileText, Users, CreditCard, 
-  Briefcase, Save, X, CheckCircle, AlertCircle, Building
+  Briefcase, Save, X, CheckCircle, AlertCircle, Building, Shield,
+  UserPlus, Crown, Eye, Edit, Trash2, Plus
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
@@ -60,6 +61,8 @@ export default function ContaEmpresarial() {
   const responsavelRef = useRef<HTMLElement>(null);
   const comercialRef = useRef<HTMLElement>(null);
   const bancarioRef = useRef<HTMLElement>(null);
+  const acessoRef = useRef<HTMLElement>(null);
+  const creatorsRef = useRef<HTMLElement>(null);
 
   const fadeEmpresaRef = useFadeInOnScroll<HTMLElement>();
   const fadeEnderecoRef = useFadeInOnScroll<HTMLElement>();
@@ -67,6 +70,8 @@ export default function ContaEmpresarial() {
   const fadeResponsavelRef = useFadeInOnScroll<HTMLElement>();
   const fadeComercialRef = useFadeInOnScroll<HTMLElement>();
   const fadeBancarioRef = useFadeInOnScroll<HTMLElement>();
+  const fadeAcessoRef = useFadeInOnScroll<HTMLElement>();
+  const fadeCreatorsRef = useFadeInOnScroll<HTMLElement>();
 
   const combineRefs = (scrollRef: React.RefObject<HTMLElement>, fadeRef: React.RefObject<HTMLElement>) => 
     (element: HTMLElement | null) => {
@@ -86,6 +91,8 @@ export default function ContaEmpresarial() {
         { name: 'responsavel', ref: responsavelRef },
         { name: 'comercial', ref: comercialRef },
         { name: 'bancario', ref: bancarioRef },
+        { name: 'acesso', ref: acessoRef },
+        { name: 'creators', ref: creatorsRef },
       ];
 
       const scrollPosition = mainRef.current.scrollTop + 150;
@@ -114,6 +121,8 @@ export default function ContaEmpresarial() {
       responsavel: responsavelRef,
       comercial: comercialRef,
       bancario: bancarioRef,
+      acesso: acessoRef,
+      creators: creatorsRef,
     };
 
     const targetRef = refs[section];
@@ -285,8 +294,38 @@ export default function ContaEmpresarial() {
                     >
                       <CreditCard size={20} />
                       <div>
-                        <div className="font-medium">Dados Bancários</div>
+                        <div className="font-medium">Dados Bancarios</div>
                         <div className="text-xs text-slate-500">Conta para pagamentos</div>
+                      </div>
+                    </button>
+
+                    <button
+                      onClick={() => scrollToSection("acesso")}
+                      className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition border-2 ${
+                        activeSection === "acesso"
+                          ? "bg-[#B8D4E8] border-slate-300 text-slate-800 font-semibold"
+                          : "border-transparent text-slate-600 hover:bg-slate-50"
+                      }`}
+                    >
+                      <Shield size={20} />
+                      <div>
+                        <div className="font-medium">Niveis de Acesso</div>
+                        <div className="text-xs text-slate-500">Permissoes e funcoes</div>
+                      </div>
+                    </button>
+
+                    <button
+                      onClick={() => scrollToSection("creators")}
+                      className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition border-2 ${
+                        activeSection === "creators"
+                          ? "bg-[#B8D4E8] border-slate-300 text-slate-800 font-semibold"
+                          : "border-transparent text-slate-600 hover:bg-slate-50"
+                      }`}
+                    >
+                      <UserPlus size={20} />
+                      <div>
+                        <div className="font-medium">Adicionar Creators</div>
+                        <div className="text-xs text-slate-500">Convidar colaboradores</div>
                       </div>
                     </button>
                   </nav>
@@ -843,7 +882,255 @@ export default function ContaEmpresarial() {
                   </div>
                 </section>
 
-                {/* Action Buttons */}
+                {/* Níveis de Acesso */}
+                <section
+                  ref={combineRefs(acessoRef, fadeAcessoRef)}
+                  className="bg-white rounded-2xl border-2 border-slate-300 p-8 opacity-0"
+                >
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 bg-[#D4C5E8] rounded-xl flex items-center justify-center border-2 border-slate-300">
+                        <Shield className="text-slate-700" size={24} />
+                      </div>
+                      <div>
+                        <h2 className="text-2xl font-bold text-slate-800">Niveis de Acesso</h2>
+                        <p className="text-slate-600">Gerencie as permissoes e funcoes dos usuarios</p>
+                      </div>
+                    </div>
+                    <button className="px-4 py-2 bg-[#D4C5E8] border-2 border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-opacity-70 transition text-sm">
+                      <Plus size={16} className="inline mr-2" />
+                      Novo Nivel
+                    </button>
+                  </div>
+
+                  <div className="space-y-4">
+                    {/* Administrador */}
+                    <div className="p-4 rounded-xl border-2 border-slate-300 bg-[#C5E8D4] bg-opacity-20">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 bg-[#C5E8D4] rounded-lg flex items-center justify-center border-2 border-slate-300">
+                            <Crown className="text-slate-700" size={20} />
+                          </div>
+                          <div>
+                            <div className="flex items-center gap-2 mb-1">
+                              <p className="font-semibold text-slate-800">Administrador</p>
+                              <span className="px-2 py-0.5 bg-[#C5E8D4] text-slate-700 text-xs rounded-full font-medium">Padrao</span>
+                            </div>
+                            <p className="text-sm text-slate-600">Acesso total a todas as funcionalidades e configuracoes</p>
+                          </div>
+                        </div>
+                        <div className="flex gap-2">
+                          <button className="p-2 bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200 transition">
+                            <Eye size={16} />
+                          </button>
+                          <button className="p-2 bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200 transition">
+                            <Edit size={16} />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Editor */}
+                    <div className="p-4 rounded-xl border-2 border-slate-300">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 bg-[#B8D4E8] rounded-lg flex items-center justify-center border-2 border-slate-300">
+                            <Edit className="text-slate-700" size={20} />
+                          </div>
+                          <div>
+                            <p className="font-semibold text-slate-800 mb-1">Editor</p>
+                            <p className="text-sm text-slate-600">Pode criar, editar e publicar conteudos</p>
+                          </div>
+                        </div>
+                        <div className="flex gap-2">
+                          <button className="p-2 bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200 transition">
+                            <Eye size={16} />
+                          </button>
+                          <button className="p-2 bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200 transition">
+                            <Edit size={16} />
+                          </button>
+                          <button className="p-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition">
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Visualizador */}
+                    <div className="p-4 rounded-xl border-2 border-slate-300">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 bg-[#E8D4C5] rounded-lg flex items-center justify-center border-2 border-slate-300">
+                            <Eye className="text-slate-700" size={20} />
+                          </div>
+                          <div>
+                            <p className="font-semibold text-slate-800 mb-1">Visualizador</p>
+                            <p className="text-sm text-slate-600">Apenas visualizacao de conteudos e relatorios</p>
+                          </div>
+                        </div>
+                        <div className="flex gap-2">
+                          <button className="p-2 bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200 transition">
+                            <Eye size={16} />
+                          </button>
+                          <button className="p-2 bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200 transition">
+                            <Edit size={16} />
+                          </button>
+                          <button className="p-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition">
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="bg-[#B8D4E8] bg-opacity-30 border-2 border-slate-300 rounded-xl p-4">
+                      <div className="flex items-start gap-3">
+                        <AlertCircle className="text-slate-600 flex-shrink-0 mt-0.5" size={20} />
+                        <div>
+                          <p className="text-sm font-semibold text-slate-700 mb-1">
+                            Sobre Niveis de Acesso
+                          </p>
+                          <p className="text-sm text-slate-600">
+                            Os niveis de acesso determinam o que cada usuario pode fazer na plataforma. Crie niveis personalizados de acordo com as necessidades da sua empresa.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                {/* Adicionar Creators */}
+                <section
+                  ref={combineRefs(creatorsRef, fadeCreatorsRef)}
+                  className="bg-white rounded-2xl border-2 border-slate-300 p-8 opacity-0"
+                >
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 bg-[#E8C5D8] rounded-xl flex items-center justify-center border-2 border-slate-300">
+                        <UserPlus className="text-slate-700" size={24} />
+                      </div>
+                      <div>
+                        <h2 className="text-2xl font-bold text-slate-800">Adicionar Creators</h2>
+                        <p className="text-slate-600">Convide colaboradores para sua equipe</p>
+                      </div>
+                    </div>
+                    <button className="px-4 py-2 bg-[#E8C5D8] border-2 border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-opacity-70 transition text-sm">
+                      <Plus size={16} className="inline mr-2" />
+                      Convidar Creator
+                    </button>
+                  </div>
+
+                  <div className="space-y-6">
+                    {/* Formulário de Convite */}
+                    <div className="p-6 rounded-xl border-2 border-dashed border-slate-300 bg-slate-50">
+                      <div className="text-center mb-6">
+                        <div className="w-16 h-16 bg-[#E8C5D8] rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-slate-300">
+                          <Mail className="text-slate-700" size={28} />
+                        </div>
+                        <h3 className="text-lg font-semibold text-slate-800 mb-2">Convidar por Email</h3>
+                        <p className="text-sm text-slate-600">Envie convites para colaboradores ingressarem na sua equipe</p>
+                      </div>
+                      
+                      <div className="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                          <label className="block text-sm font-semibold text-slate-700 mb-2">
+                            Email do Creator
+                          </label>
+                          <input
+                            type="email"
+                            placeholder="email@exemplo.com"
+                            className="w-full px-4 py-3 border-2 border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E8C5D8] text-slate-700"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-semibold text-slate-700 mb-2">
+                            Nivel de Acesso
+                          </label>
+                          <select className="w-full px-4 py-3 border-2 border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E8C5D8] text-slate-700">
+                            <option value="">Selecione um nivel</option>
+                            <option value="admin">Administrador</option>
+                            <option value="editor">Editor</option>
+                            <option value="viewer">Visualizador</option>
+                          </select>
+                        </div>
+                      </div>
+                      
+                      <button className="w-full px-4 py-3 bg-[#E8C5D8] border-2 border-slate-300 text-slate-700 rounded-xl font-semibold hover:bg-opacity-70 transition">
+                        <Mail size={18} className="inline mr-2" />
+                        Enviar Convite
+                      </button>
+                    </div>
+
+                    {/* Lista de Creators Convidados */}
+                    <div>
+                      <h3 className="text-lg font-semibold text-slate-800 mb-4">Creators da Equipe</h3>
+                      
+                      <div className="space-y-3">
+                        <div className="p-4 rounded-xl border-2 border-slate-300 flex items-center justify-between">
+                          <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 bg-[#D4C5E8] rounded-full flex items-center justify-center border-2 border-slate-300">
+                              <span className="text-slate-700 font-semibold">MC</span>
+                            </div>
+                            <div>
+                              <p className="font-semibold text-slate-800">Maria Costa</p>
+                              <p className="text-sm text-slate-600">maria.costa@empresa.com</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <span className="px-3 py-1 bg-[#C5E8D4] text-slate-700 text-sm rounded-full font-medium">Administrador</span>
+                            <span className="px-3 py-1 bg-[#C5E8D4] text-slate-700 text-xs rounded-full">Ativo</span>
+                          </div>
+                        </div>
+
+                        <div className="p-4 rounded-xl border-2 border-slate-300 flex items-center justify-between">
+                          <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 bg-[#B8D4E8] rounded-full flex items-center justify-center border-2 border-slate-300">
+                              <span className="text-slate-700 font-semibold">JS</span>
+                            </div>
+                            <div>
+                              <p className="font-semibold text-slate-800">Joao Silva</p>
+                              <p className="text-sm text-slate-600">joao.silva@empresa.com</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <span className="px-3 py-1 bg-[#B8D4E8] text-slate-700 text-sm rounded-full font-medium">Editor</span>
+                            <span className="px-3 py-1 bg-[#C5E8D4] text-slate-700 text-xs rounded-full">Ativo</span>
+                          </div>
+                        </div>
+
+                        <div className="p-4 rounded-xl border-2 border-slate-300 flex items-center justify-between">
+                          <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 bg-[#E8D4C5] rounded-full flex items-center justify-center border-2 border-slate-300">
+                              <span className="text-slate-700 font-semibold">AP</span>
+                            </div>
+                            <div>
+                              <p className="font-semibold text-slate-800">Ana Pereira</p>
+                              <p className="text-sm text-slate-600">ana.pereira@empresa.com</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <span className="px-3 py-1 bg-[#E8E0C5] text-slate-700 text-sm rounded-full font-medium">Visualizador</span>
+                            <span className="px-3 py-1 bg-[#E8E0C5] text-slate-700 text-xs rounded-full">Pendente</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="bg-[#E8C5D8] bg-opacity-30 border-2 border-slate-300 rounded-xl p-4">
+                      <div className="flex items-start gap-3">
+                        <AlertCircle className="text-slate-600 flex-shrink-0 mt-0.5" size={20} />
+                        <div>
+                          <p className="text-sm font-semibold text-slate-700 mb-1">
+                            Gerenciamento de Creators
+                          </p>
+                          <p className="text-sm text-slate-600">
+                            Creators convidados receberao um email para criar sua conta. Voce pode gerenciar permissoes e remover colaboradores a qualquer momento.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
                 <div className="flex items-center justify-end gap-4">
                   <button 
                     onClick={handleCancel}
