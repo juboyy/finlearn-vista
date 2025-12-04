@@ -29,12 +29,19 @@ export default function NovaNewsletter() {
   const [isPublishing, setIsPublishing] = useState(false);
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
-  const [contentTypesList, setContentTypesList] = useState([
-    { id: "1", name: "Newsletter Principal", icon: "Newspaper", color: "bg-[hsl(var(--pastel-purple))]", description: "Conteúdo base da assinatura", frequency: "Diária", days: "Seg a Sex", time: "07:00", isActive: true },
-    { id: "2", name: "Podcast Semanal", icon: "Podcast", color: "bg-[hsl(var(--pastel-peach))]", description: "Episódios em áudio", frequency: "Semanal", days: "Quarta-feira", time: "09:00", isActive: true },
-    { id: "3", name: "Webinar Mensal", icon: "Video", color: "bg-pink-100", description: "Aulas ao vivo", frequency: "Mensal", days: "Última quinta-feira", time: "19:00", isActive: true },
-  ]);
+  const [contentTypesList, setContentTypesList] = useState<{
+    id: string;
+    name: string;
+    icon: string;
+    color: string;
+    description: string;
+    frequency: string;
+    days: string;
+    time: string;
+    isActive: boolean;
+  }[]>([]);
   const [monthlyPrice, setMonthlyPrice] = useState(29.90);
+  const [hasInitializedContentTypes, setHasInitializedContentTypes] = useState(false);
   const [showAddContentTypeModal, setShowAddContentTypeModal] = useState(false);
   const [newContentType, setNewContentType] = useState({
     name: "",
@@ -47,6 +54,20 @@ export default function NovaNewsletter() {
   });
   
   const isEditMode = !!editId;
+
+  // Product type icon and info mapping
+  const productTypeInfo: Record<string, { name: string; icon: string; color: string; description: string }> = {
+    newspaper: { name: "Newspaper", icon: "Newspaper", color: "bg-[hsl(var(--pastel-purple))]", description: "Notícias diárias e curadoria" },
+    podcast: { name: "Podcast", icon: "Podcast", color: "bg-[hsl(var(--pastel-peach))]", description: "Áudio e entrevistas" },
+    courses: { name: "Cursos", icon: "GraduationCap", color: "bg-[hsl(var(--pastel-blue))]", description: "Aulas e módulos" },
+    avatar: { name: "Avatar IA", icon: "Bot", color: "bg-[hsl(var(--pastel-green))]", description: "Vídeos gerados por IA" },
+    ebooks: { name: "E-books", icon: "Book", color: "bg-[hsl(var(--pastel-yellow))]", description: "Livros digitais" },
+    webinars: { name: "Webinars", icon: "Video", color: "bg-pink-100", description: "Ao vivo e gravados" },
+    articles: { name: "Artigos", icon: "FileText", color: "bg-indigo-100", description: "Textos técnicos" },
+    analysis: { name: "Análises", icon: "BarChart3", color: "bg-teal-100", description: "Dados de mercado" },
+    reports: { name: "Relatórios", icon: "FileCheck", color: "bg-gray-100", description: "Deep dives" },
+    studies: { name: "Estudos", icon: "FlaskConical", color: "bg-rose-100", description: "Acadêmicos e Papers" }
+  };
 
   // Load existing newsletter data for edit mode
   useEffect(() => {
@@ -63,6 +84,7 @@ export default function NovaNewsletter() {
         setSelectedChannels(newsletter.distribution_channels || ["email"]);
         if (newsletter.content_types_config && newsletter.content_types_config.length > 0) {
           setContentTypesList(newsletter.content_types_config);
+          setHasInitializedContentTypes(true);
         }
         if (newsletter.monthly_price) {
           setMonthlyPrice(newsletter.monthly_price);
@@ -70,6 +92,30 @@ export default function NovaNewsletter() {
       }
     }
   }, [editId, newsletters]);
+
+  // Sync content types with selected products (only for new newsletters)
+  useEffect(() => {
+    if (hasInitializedContentTypes) return;
+    
+    const newContentTypes = selectedProducts.map((productId, index) => {
+      const info = productTypeInfo[productId];
+      if (!info) return null;
+      
+      return {
+        id: `${productId}-${index}`,
+        name: info.name,
+        icon: info.icon,
+        color: info.color,
+        description: info.description,
+        frequency: "Semanal",
+        days: "Segunda-feira",
+        time: "09:00",
+        isActive: true
+      };
+    }).filter(Boolean) as typeof contentTypesList;
+    
+    setContentTypesList(newContentTypes);
+  }, [selectedProducts, hasInitializedContentTypes]);
 
   const handleAddTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && tagInput.trim()) {
