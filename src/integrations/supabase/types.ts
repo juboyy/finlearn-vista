@@ -367,6 +367,39 @@ export type Database = {
         }
         Relationships: []
       }
+      daily_insights: {
+        Row: {
+          content: string
+          created_at: string
+          generated_date: string
+          id: string
+          insight_type: string
+          metadata: Json | null
+          title: string
+          user_id: string | null
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          generated_date?: string
+          id?: string
+          insight_type?: string
+          metadata?: Json | null
+          title: string
+          user_id?: string | null
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          generated_date?: string
+          id?: string
+          insight_type?: string
+          metadata?: Json | null
+          title?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       documents: {
         Row: {
           content: string | null

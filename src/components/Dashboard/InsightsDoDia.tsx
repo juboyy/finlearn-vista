@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Send, Loader2, Newspaper, BookOpen, Video, Target, Headphones, Award, Sparkles, Trash2, ExternalLink, Tag, History, Clock } from "lucide-react";
+import { Send, Loader2, Newspaper, BookOpen, Video, Target, Headphones, Award, Sparkles, Trash2, ExternalLink, Tag, History, Clock, Lightbulb, RefreshCw, TrendingUp, BarChart3, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -7,6 +7,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useAgentChat } from "@/hooks/useAgentChat";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useDailyInsights } from "@/hooks/useDailyInsights";
 import { MessageRenderer } from "@/components/Dashboard/MessageRenderer";
 import auxiliarAvatar from "@/assets/auxiliar-do-dia-avatar.png";
 import {
@@ -43,6 +44,7 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
   const [input, setInput] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
+  const { insights: dailyInsights, loading: loadingInsights, generating: generatingInsights, generateInsights } = useDailyInsights();
   const [chatHistory, setChatHistory] = useState<ChatHistory[]>([
     {
       id: "1",
@@ -299,9 +301,93 @@ export const InsightsDoDia = ({ open, onOpenChange }: InsightsDoDiaProps) => {
             <ScrollArea className="flex-1 p-6" ref={scrollRef}>
               <div className="space-y-4">
                 {messages.length === 0 && (
-                  <div className="text-center text-muted-foreground py-8">
-                    <p>Olá! Sou seu Auxiliar do dia.</p>
-                    <p className="text-sm mt-2">Como posso ajudá-lo hoje?</p>
+                  <div className="space-y-6">
+                    <div className="text-center text-muted-foreground py-4">
+                      <p>Ola! Sou seu Auxiliar do dia.</p>
+                      <p className="text-sm mt-2">Confira os insights de hoje ou me pergunte algo!</p>
+                    </div>
+                    
+                    {/* Daily Insights Section */}
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
+                          <Lightbulb size={16} className="text-pastel-yellow" />
+                          Insights do Dia
+                        </h3>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => generateInsights()}
+                          disabled={generatingInsights || loadingInsights}
+                          className="h-7 px-2"
+                        >
+                          {generatingInsights ? (
+                            <Loader2 size={14} className="animate-spin" />
+                          ) : (
+                            <RefreshCw size={14} />
+                          )}
+                        </Button>
+                      </div>
+                      
+                      {loadingInsights || generatingInsights ? (
+                        <div className="flex items-center justify-center py-8">
+                          <Loader2 className="animate-spin text-muted-foreground" size={24} />
+                          <span className="ml-2 text-sm text-muted-foreground">
+                            {generatingInsights ? "Gerando insights..." : "Carregando..."}
+                          </span>
+                        </div>
+                      ) : dailyInsights.length > 0 ? (
+                        <div className="grid gap-3">
+                          {dailyInsights.map((insight) => {
+                            const typeConfig: Record<string, { icon: typeof TrendingUp; color: string }> = {
+                              mercado: { icon: TrendingUp, color: "bg-pastel-green" },
+                              economia: { icon: BarChart3, color: "bg-pastel-blue" },
+                              investimentos: { icon: Target, color: "bg-pastel-purple" },
+                              tendencias: { icon: Sparkles, color: "bg-pastel-pink" },
+                              educacao: { icon: GraduationCap, color: "bg-pastel-orange" },
+                              general: { icon: Lightbulb, color: "bg-pastel-yellow" },
+                            };
+                            const config = typeConfig[insight.insight_type] || typeConfig.general;
+                            const IconComponent = config.icon;
+                            
+                            return (
+                              <div
+                                key={insight.id}
+                                className="p-4 rounded-lg border border-border bg-card hover:bg-muted/50 transition-colors cursor-pointer"
+                                onClick={() => sendMessage(`Me conte mais sobre: ${insight.title}`)}
+                              >
+                                <div className="flex items-start gap-3">
+                                  <div className={`p-2 rounded-lg ${config.color}`}>
+                                    <IconComponent size={16} className="text-foreground" />
+                                  </div>
+                                  <div className="flex-1 min-w-0">
+                                    <h4 className="font-medium text-sm text-foreground mb-1">
+                                      {insight.title}
+                                    </h4>
+                                    <p className="text-xs text-muted-foreground line-clamp-2">
+                                      {insight.content}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      ) : (
+                        <div className="text-center py-6 text-muted-foreground">
+                          <Lightbulb size={32} className="mx-auto mb-2 opacity-50" />
+                          <p className="text-sm">Nenhum insight disponivel</p>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => generateInsights()}
+                            className="mt-2"
+                          >
+                            Gerar Insights
+                          </Button>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 )}
                 {messages.map((msg, idx) => (
