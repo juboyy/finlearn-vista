@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Filter, Download, CalendarCheck, Award, Clock, Wallet, Search, MapPin, User, CheckCircle, Utensils, Video, FileText, Play, Images, Network, Gift, Star, ChevronDown, Ticket } from "lucide-react";
+import { ArrowLeft, Filter, Download, CalendarCheck, Award, Clock, Wallet, Search, MapPin, User, CheckCircle, Utensils, Video, FileText, Play, Images, Network, Gift, Star, ChevronDown, Ticket, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import ebookCompliance from "@/assets/ebook-compliance.png";
 import ebookDerivatives from "@/assets/ebook-derivatives.png";
 import eventoWorkshopPagamentos from "@/assets/evento-workshop-pagamentos.png";
@@ -11,8 +13,15 @@ import eventoConferenciaFintech from "@/assets/evento-conferencia-fintech.png";
 import ebookOpenFinance from "@/assets/ebook-open-finance.png";
 import eventoTreinamentoRisco from "@/assets/evento-treinamento-risco.png";
 
+interface Certificate {
+  title: string;
+  date: string;
+  image: string;
+}
+
 export default function HistoricoIngressos() {
   const navigate = useNavigate();
+  const [selectedCertificate, setSelectedCertificate] = useState<Certificate | null>(null);
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -587,7 +596,7 @@ export default function HistoricoIngressos() {
             </div>
 
             <div className="grid grid-cols-4 gap-4">
-              <div className="group cursor-pointer">
+              <div className="group cursor-pointer" onClick={() => setSelectedCertificate({ title: "Regulação do Mercado Financeiro", date: "15 Nov 2024", image: ebookCompliance })}>
                 <div className="bg-slate-50 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition mb-3 aspect-[3/4] relative">
                   <img 
                     src={ebookCompliance} 
@@ -600,7 +609,7 @@ export default function HistoricoIngressos() {
                 </div>
                 <p className="text-xs text-slate-600 text-center font-medium">15 Nov 2024</p>
               </div>
-              <div className="group cursor-pointer">
+              <div className="group cursor-pointer" onClick={() => setSelectedCertificate({ title: "Workshop Derivativos", date: "02 Nov 2024", image: ebookDerivatives })}>
                 <div className="bg-slate-50 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition mb-3 aspect-[3/4] relative">
                   <img 
                     src={ebookDerivatives} 
@@ -613,7 +622,7 @@ export default function HistoricoIngressos() {
                 </div>
                 <p className="text-xs text-slate-600 text-center font-medium">02 Nov 2024</p>
               </div>
-              <div className="group cursor-pointer">
+              <div className="group cursor-pointer" onClick={() => setSelectedCertificate({ title: "Fórum de Meios de Pagamento", date: "20 Out 2024", image: eventoWorkshopPagamentos })}>
                 <div className="bg-slate-50 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition mb-3 aspect-[3/4] relative">
                   <img 
                     src={eventoWorkshopPagamentos} 
@@ -626,7 +635,7 @@ export default function HistoricoIngressos() {
                 </div>
                 <p className="text-xs text-slate-600 text-center font-medium">20 Out 2024</p>
               </div>
-              <div className="group cursor-pointer">
+              <div className="group cursor-pointer" onClick={() => setSelectedCertificate({ title: "Summit de Investimentos", date: "08 Dez 2023", image: ebookMercadoCapitais })}>
                 <div className="bg-slate-50 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition mb-3 aspect-[3/4] relative">
                   <img 
                     src={ebookMercadoCapitais} 
@@ -639,7 +648,7 @@ export default function HistoricoIngressos() {
                 </div>
                 <p className="text-xs text-slate-600 text-center font-medium">08 Dez 2023</p>
               </div>
-              <div className="group cursor-pointer">
+              <div className="group cursor-pointer" onClick={() => setSelectedCertificate({ title: "Compliance e Gestão de Riscos", date: "22 Set 2023", image: ebookGestaoRiscos })}>
                 <div className="bg-slate-50 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition mb-3 aspect-[3/4] relative">
                   <img 
                     src={ebookGestaoRiscos} 
@@ -652,7 +661,7 @@ export default function HistoricoIngressos() {
                 </div>
                 <p className="text-xs text-slate-600 text-center font-medium">22 Set 2023</p>
               </div>
-              <div className="group cursor-pointer">
+              <div className="group cursor-pointer" onClick={() => setSelectedCertificate({ title: "Fintech Brasil Conference", date: "15 Jun 2023", image: eventoConferenciaFintech })}>
                 <div className="bg-slate-50 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition mb-3 aspect-[3/4] relative">
                   <img 
                     src={eventoConferenciaFintech} 
@@ -665,7 +674,7 @@ export default function HistoricoIngressos() {
                 </div>
                 <p className="text-xs text-slate-600 text-center font-medium">15 Jun 2023</p>
               </div>
-              <div className="group cursor-pointer">
+              <div className="group cursor-pointer" onClick={() => setSelectedCertificate({ title: "Open Finance Brasil", date: "03 Mai 2023", image: ebookOpenFinance })}>
                 <div className="bg-slate-50 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition mb-3 aspect-[3/4] relative">
                   <img 
                     src={ebookOpenFinance} 
@@ -678,7 +687,7 @@ export default function HistoricoIngressos() {
                 </div>
                 <p className="text-xs text-slate-600 text-center font-medium">03 Mai 2023</p>
               </div>
-              <div className="group cursor-pointer">
+              <div className="group cursor-pointer" onClick={() => setSelectedCertificate({ title: "Gestão de Risco Operacional", date: "18 Mar 2023", image: eventoTreinamentoRisco })}>
                 <div className="bg-slate-50 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition mb-3 aspect-[3/4] relative">
                   <img 
                     src={eventoTreinamentoRisco} 
@@ -696,6 +705,82 @@ export default function HistoricoIngressos() {
 
         </div>
       </main>
+
+      {/* Certificate Popup */}
+      <Dialog open={!!selectedCertificate} onOpenChange={() => setSelectedCertificate(null)}>
+        <DialogContent className="max-w-3xl p-0 overflow-hidden">
+          <div className="relative bg-gradient-to-br from-slate-50 to-slate-100 p-8">
+            <button 
+              onClick={() => setSelectedCertificate(null)}
+              className="absolute top-4 right-4 p-2 rounded-full hover:bg-slate-200 transition"
+            >
+              <X className="w-5 h-5 text-slate-600" />
+            </button>
+            
+            {/* Certificate Design */}
+            <div className="bg-white border-8 border-double border-slate-300 rounded-lg p-8 shadow-lg">
+              {/* Header */}
+              <div className="text-center border-b-2 border-slate-200 pb-6 mb-6">
+                <div className="flex justify-center mb-4">
+                  <Award className="w-16 h-16 text-amber-500" />
+                </div>
+                <h2 className="text-3xl font-serif font-bold text-slate-800 mb-2">Certificado de Conclusão</h2>
+                <p className="text-slate-500 text-sm uppercase tracking-widest">FinLearn Platform</p>
+              </div>
+
+              {/* Body */}
+              <div className="text-center py-6">
+                <p className="text-slate-600 mb-4">Certificamos que</p>
+                <h3 className="text-2xl font-bold text-slate-800 mb-4">Maria Silva Santos</h3>
+                <p className="text-slate-600 mb-6">concluiu com êxito o programa</p>
+                <h4 className="text-xl font-semibold text-slate-800 mb-6 px-8">
+                  {selectedCertificate?.title}
+                </h4>
+                <p className="text-slate-500 text-sm">
+                  com carga horária de 40 horas, demonstrando aproveitamento satisfatório em todas as atividades propostas.
+                </p>
+              </div>
+
+              {/* Footer */}
+              <div className="flex justify-between items-end mt-8 pt-6 border-t border-slate-200">
+                <div className="text-center">
+                  <div className="w-32 border-t border-slate-400 mb-2"></div>
+                  <p className="text-xs text-slate-500">Data de Emissão</p>
+                  <p className="text-sm font-medium text-slate-700">{selectedCertificate?.date}</p>
+                </div>
+                <div className="text-center">
+                  <div className="bg-slate-100 rounded-full p-3 mb-2 mx-auto w-fit">
+                    <CheckCircle className="w-8 h-8 text-green-600" />
+                  </div>
+                  <p className="text-xs text-slate-500">Verificado</p>
+                </div>
+                <div className="text-center">
+                  <div className="w-32 border-t border-slate-400 mb-2"></div>
+                  <p className="text-xs text-slate-500">Assinatura</p>
+                  <p className="text-sm font-medium text-slate-700 font-serif italic">Dr. Carlos Mendes</p>
+                </div>
+              </div>
+
+              {/* Certificate ID */}
+              <div className="mt-6 text-center">
+                <p className="text-xs text-slate-400">
+                  ID: CERT-2024-{Math.random().toString(36).substr(2, 9).toUpperCase()}
+                </p>
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div className="flex justify-center gap-4 mt-6">
+              <Button variant="outline" className="flex items-center gap-2">
+                <Download className="w-4 h-4" /> Baixar PDF
+              </Button>
+              <Button className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700">
+                <Award className="w-4 h-4" /> Compartilhar
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
