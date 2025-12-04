@@ -198,37 +198,99 @@ export const VideoAvatarModal = ({
         </DialogHeader>
 
         <div className="flex flex-col items-center gap-6 py-4">
-          {/* Avatar Display */}
-          <div className="relative w-64 h-64 rounded-full overflow-hidden border-4 border-pastel-purple/30 shadow-2xl">
-            {/* Realistic Avatar Image */}
-            <img 
-              src={aiAvatarImage} 
-              alt="Avatar IA" 
-              className={`w-full h-full object-cover transition-all duration-200 ${isSpeaking ? 'scale-105' : 'scale-100'}`}
-            />
+          {/* Avatar Display with Video-like Animation */}
+          <div className="relative w-72 h-72 rounded-2xl overflow-hidden border-4 border-pastel-purple/30 shadow-2xl bg-gradient-to-br from-slate-100 to-slate-200">
+            {/* Animated Avatar Container */}
+            <div 
+              className={`w-full h-full relative ${isSpeaking ? 'animate-speaking' : ''}`}
+              style={{
+                animation: isSpeaking 
+                  ? 'breathe 3s ease-in-out infinite, headMove 4s ease-in-out infinite' 
+                  : 'breathe 4s ease-in-out infinite'
+              }}
+            >
+              <img 
+                src={aiAvatarImage} 
+                alt="Avatar IA" 
+                className="w-full h-full object-cover"
+                style={{
+                  transformOrigin: 'center center',
+                }}
+              />
+            </div>
             
-            {/* Speaking glow effect */}
+            {/* Speaking overlay effects */}
             {isSpeaking && (
-              <div className="absolute inset-0 rounded-full border-4 border-pastel-purple animate-pulse opacity-60" />
+              <>
+                {/* Animated ring */}
+                <div 
+                  className="absolute inset-0 rounded-2xl border-2 border-pastel-purple/50"
+                  style={{
+                    animation: 'pulse-ring 1.5s ease-in-out infinite'
+                  }}
+                />
+                
+                {/* Glow effect */}
+                <div 
+                  className="absolute inset-0 rounded-2xl"
+                  style={{
+                    background: 'radial-gradient(circle at center, transparent 60%, rgba(160, 120, 200, 0.15) 100%)',
+                    animation: 'glow-pulse 2s ease-in-out infinite'
+                  }}
+                />
+              </>
             )}
             
-            {/* Speaking indicator */}
+            {/* Speaking indicator bar */}
             {isSpeaking && (
-              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 bg-black/40 px-3 py-1.5 rounded-full backdrop-blur-sm">
-                {[1, 2, 3, 4, 5].map((i) => (
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1 bg-black/50 px-4 py-2 rounded-full backdrop-blur-md">
+                {[1, 2, 3, 4, 5, 6, 7].map((i) => (
                   <div
                     key={i}
-                    className="w-1 bg-white rounded-full animate-pulse"
+                    className="w-1 bg-white rounded-full"
                     style={{
-                      height: `${8 + (i % 3) * 6}px`,
-                      animationDelay: `${i * 0.15}s`,
-                      animationDuration: '0.5s'
+                      animation: 'soundWave 0.6s ease-in-out infinite',
+                      animationDelay: `${i * 0.08}s`,
+                      height: '12px'
                     }}
                   />
                 ))}
               </div>
             )}
+            
+            {/* Live indicator */}
+            {isSpeaking && (
+              <div className="absolute top-3 right-3 flex items-center gap-2 bg-red-500/90 text-white text-xs font-medium px-2.5 py-1 rounded-full">
+                <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
+                AO VIVO
+              </div>
+            )}
           </div>
+          
+          {/* Custom animation styles */}
+          <style>{`
+            @keyframes breathe {
+              0%, 100% { transform: scale(1); }
+              50% { transform: scale(1.02); }
+            }
+            @keyframes headMove {
+              0%, 100% { transform: translateX(0) rotate(0deg); }
+              25% { transform: translateX(2px) rotate(0.5deg); }
+              75% { transform: translateX(-2px) rotate(-0.5deg); }
+            }
+            @keyframes pulse-ring {
+              0%, 100% { opacity: 0.5; transform: scale(1); }
+              50% { opacity: 0.8; transform: scale(1.02); }
+            }
+            @keyframes glow-pulse {
+              0%, 100% { opacity: 0.3; }
+              50% { opacity: 0.6; }
+            }
+            @keyframes soundWave {
+              0%, 100% { height: 4px; opacity: 0.5; }
+              50% { height: 16px; opacity: 1; }
+            }
+          `}</style>
 
           {/* Voice Selector */}
           <div className="w-full max-w-md space-y-2">
