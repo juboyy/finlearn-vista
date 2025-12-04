@@ -697,7 +697,7 @@ export default function NovoEbook() {
                 <div className="col-span-1">
                   <div className="sticky top-24 space-y-6">
                     {/* Help Card */}
-                    <div className="bg-[hsl(48,50%,85%)] rounded-2xl border-2 border-[hsl(48,50%,75%)] p-6">
+                    <div className="bg-[hsl(48,60%,90%)] rounded-2xl border-2 border-[hsl(48,50%,75%)] p-6">
                       <div className="flex items-center gap-3 mb-5">
                         <div className="w-12 h-12 bg-[hsl(48,60%,75%)] rounded-xl flex items-center justify-center">
                           <Lightbulb className="w-6 h-6 text-[hsl(215,20%,40%)]" />
