@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { X, Pin } from "lucide-react";
+import { Pin, Lightbulb, RefreshCw, Loader2, TrendingUp, BarChart3, Target, Sparkles, GraduationCap } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { AssistantSuggestionCard } from "@/components/Dashboard/AssistantSuggestionCard";
+import { useDailyInsights } from "@/hooks/useDailyInsights";
 import {
   Sheet,
   SheetContent,
@@ -119,6 +120,7 @@ export const InsightsSuggestions = ({ open, onOpenChange }: InsightsSuggestionsP
   const [activeTab, setActiveTab] = useState("todas");
   const [insights, setInsights] = useState(mockInsights);
   const [pinnedIds, setPinnedIds] = useState<string[]>([]);
+  const { insights: dailyInsights, loading: loadingInsights, generating: generatingInsights, generateInsights } = useDailyInsights();
 
   console.log("📊 Total insights:", insights.length);
   console.log("🔍 Insights data:", insights.slice(0, 3).map(i => ({ id: i.id, title: i.title })));
@@ -220,6 +222,88 @@ export const InsightsSuggestions = ({ open, onOpenChange }: InsightsSuggestionsP
         </SheetHeader>
 
         <ScrollArea className="h-[calc(100vh-180px)] px-6 py-4">
+          {/* Daily Insights Section from Database */}
+          <div className="mb-6">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
+                <Lightbulb size={16} className="text-pastel-yellow" />
+                Insights Gerados por IA
+              </h3>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => generateInsights()}
+                disabled={generatingInsights || loadingInsights}
+                className="h-7 px-2"
+              >
+                {generatingInsights ? (
+                  <Loader2 size={14} className="animate-spin" />
+                ) : (
+                  <RefreshCw size={14} />
+                )}
+              </Button>
+            </div>
+            
+            {loadingInsights || generatingInsights ? (
+              <div className="flex items-center justify-center py-6">
+                <Loader2 className="animate-spin text-muted-foreground" size={24} />
+                <span className="ml-2 text-sm text-muted-foreground">
+                  {generatingInsights ? "Gerando insights..." : "Carregando..."}
+                </span>
+              </div>
+            ) : dailyInsights.length > 0 ? (
+              <div className="grid gap-3 mb-6">
+                {dailyInsights.map((insight) => {
+                  const typeConfig: Record<string, { icon: typeof TrendingUp; color: string }> = {
+                    mercado: { icon: TrendingUp, color: "bg-pastel-green" },
+                    economia: { icon: BarChart3, color: "bg-pastel-blue" },
+                    investimentos: { icon: Target, color: "bg-pastel-purple" },
+                    tendencias: { icon: Sparkles, color: "bg-pastel-pink" },
+                    educacao: { icon: GraduationCap, color: "bg-pastel-orange" },
+                    general: { icon: Lightbulb, color: "bg-pastel-yellow" },
+                  };
+                  const config = typeConfig[insight.insight_type] || typeConfig.general;
+                  const IconComponent = config.icon;
+                  
+                  return (
+                    <div
+                      key={insight.id}
+                      className="p-4 rounded-lg border border-border bg-card hover:bg-muted/50 transition-colors"
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className={`p-2 rounded-lg ${config.color}`}>
+                          <IconComponent size={16} className="text-foreground" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-medium text-sm text-foreground mb-1">
+                            {insight.title}
+                          </h4>
+                          <p className="text-xs text-muted-foreground line-clamp-2">
+                            {insight.content}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="text-center py-4 text-muted-foreground border border-dashed border-border rounded-lg mb-6">
+                <Lightbulb size={24} className="mx-auto mb-2 opacity-50" />
+                <p className="text-sm">Nenhum insight disponivel</p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => generateInsights()}
+                  className="mt-2"
+                >
+                  Gerar Insights
+                </Button>
+              </div>
+            )}
+          </div>
+
+          {/* Suggestions Section */}
           {sortedInsights.length > 0 ? (
             <div className="space-y-6">
               {pinnedInsights.length > 0 && (
