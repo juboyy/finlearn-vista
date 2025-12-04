@@ -904,9 +904,9 @@ export default function NovaNewsletter() {
             {currentStep === 4 && (
               <div className="space-y-8 mb-8">
                 {/* Header */}
-                <div className="bg-pastel-purple rounded-2xl p-8 text-center shadow-lg">
-                  <h2 className="text-3xl font-bold text-white mb-3">Configurações de Monetização</h2>
-                  <p className="text-white/90 text-lg">Configure os planos de assinatura, preços e estratégias de monetização</p>
+                <div className="bg-purple-300 rounded-2xl p-8 text-center shadow-lg">
+                  <h2 className="text-3xl font-bold text-slate-800 mb-3">Configurações de Monetização</h2>
+                  <p className="text-slate-700 text-lg">Configure os planos de assinatura, preços e estratégias de monetização</p>
                 </div>
                 
                 {/* Monetization Type */}
@@ -956,13 +956,13 @@ export default function NovaNewsletter() {
 
                 {/* Pricing Plans */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="bg-white rounded-2xl border-2 border-pastel-purple/30 shadow-md overflow-hidden group hover:shadow-xl transition-shadow">
-                    <div className="bg-pastel-purple p-6">
+                  <div className="bg-white rounded-2xl border-2 border-purple-300 shadow-md overflow-hidden group hover:shadow-xl transition-shadow">
+                    <div className="bg-purple-300 p-6">
                       <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-xl font-bold text-white">Plano Mensal</h3>
-                        <span className="px-3 py-1 text-xs font-bold rounded-full bg-white/90 text-pastel-gray-dark">Ativo</span>
+                        <h3 className="text-xl font-bold text-slate-800">Plano Mensal</h3>
+                        <span className="px-3 py-1 text-xs font-bold rounded-full bg-white/90 text-slate-700">Ativo</span>
                       </div>
-                      <p className="text-white/90 text-sm">Cobrança recorrente mensal</p>
+                      <p className="text-slate-700 text-sm">Cobrança recorrente mensal</p>
                     </div>
                     <div className="p-6 space-y-6">
                       <div>
