@@ -43,9 +43,11 @@ export default function CriarEbookEtapa3() {
                   Voltar
                 </button>
               </Link>
-              <button className="px-6 py-2 bg-[hsl(var(--pastel-purple))] text-foreground rounded-lg font-semibold hover:opacity-80 transition-opacity">
-                Publicar E-book
-              </button>
+              <Link to="/criar-ebook/resumo">
+                <button className="px-6 py-2 bg-[hsl(var(--pastel-purple))] text-foreground rounded-lg font-semibold hover:opacity-80 transition-opacity">
+                  Publicar E-book
+                </button>
+              </Link>
             </div>
           </div>
         </header>
