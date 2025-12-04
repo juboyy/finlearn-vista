@@ -44,3 +44,6 @@ verify_jwt = false
 
 [functions.generate-daily-insights]
 verify_jwt = false
+
+[functions.text-to-speech-elevenlabs]
+verify_jwt = false

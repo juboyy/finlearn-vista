@@ -1,19 +1,26 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { 
   Bookmark, Share2, Printer, TrendingUp, ChevronRight, Volume2, 
   Video, Lightbulb, CheckCircle2, ChartLine, Percent, Smartphone,
-  Plus, Linkedin, Twitter, Mail, Facebook, Link as LinkIcon, MessageCircle, Bot
+  Plus, Linkedin, Twitter, Mail, Facebook, Link as LinkIcon, MessageCircle, Bot,
+  Loader2, Pause, Play
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
 import { ArticleExpertChat } from "@/components/Dashboard/ArticleExpertChat";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const Artigo = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState(12);
   const [activeSection, setActiveSection] = useState("");
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const { toast } = useToast();
 
   // Refs para animação de fade-in
   const headerRef = useFadeInOnScroll<HTMLDivElement>();
@@ -88,6 +95,100 @@ const Artigo = () => {
       });
     }
   };
+
+  const articleText = `
+    Guia Completo de Crédito Imobiliário: Tudo que Você Precisa Saber em 2024.
+    
+    O crédito imobiliário é uma das principais ferramentas para realização do sonho da casa própria no Brasil. Com as recentes mudanças nas taxas de juros e nas condições de financiamento, entender os detalhes desse mercado tornou-se ainda mais essencial para profissionais do setor financeiro e futuros compradores.
+    
+    O que é Crédito Imobiliário?
+    O crédito imobiliário é uma modalidade de empréstimo de longo prazo destinado exclusivamente à compra, construção ou reforma de imóveis. No Brasil, esse tipo de financiamento é regulamentado pelo Sistema Financeiro de Habitação e pelo Sistema de Financiamento Imobiliário, cada um com suas características e regras específicas.
+    
+    Dica Importante: A taxa de juros do crédito imobiliário está entre as mais baixas do mercado, variando entre 8% e 12% ao ano, dependendo do banco e das condições do financiamento.
+    
+    Principais Modalidades de Financiamento.
+    Existem diferentes tipos de financiamento imobiliário disponíveis no mercado brasileiro, cada um adequado a perfis específicos de compradores:
+    
+    Primeiro: Sistema Financeiro de Habitação. Destinado a imóveis de até 1,5 milhão de reais, com financiamento de até 80% do valor. Oferece as menores taxas de juros do mercado e permite o uso do FGTS.
+    
+    Segundo: Sistema de Financiamento Imobiliário. Ideal para imóveis acima de 1,5 milhão de reais. Não há limite de valor e permite financiar até 90% do imóvel, porém com taxas de juros ligeiramente mais altas.
+    
+    Terceiro: Programa Casa Verde e Amarela. Programa habitacional do governo para famílias de baixa renda, com subsídios e condições especiais de financiamento.
+    
+    Documentação Necessária.
+    Para solicitar um financiamento imobiliário, é necessário reunir uma série de documentos que comprovem sua capacidade de pagamento e regularidade fiscal.
+    
+    Conclusão.
+    O crédito imobiliário continua sendo uma das formas mais acessíveis de financiar a compra de um imóvel no Brasil. Com planejamento adequado e conhecimento das opções disponíveis, é possível encontrar condições favoráveis que se adequem ao seu perfil financeiro.
+  `;
+
+  const handleListenArticle = async () => {
+    // Se já tem áudio e está tocando, pausa
+    if (audioRef.current && isPlaying) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+      return;
+    }
+
+    // Se já tem áudio e está pausado, retoma
+    if (audioRef.current && !isPlaying) {
+      audioRef.current.play();
+      setIsPlaying(true);
+      return;
+    }
+
+    // Gera novo áudio
+    setIsGeneratingAudio(true);
+    
+    try {
+      const { data, error } = await supabase.functions.invoke('text-to-speech-elevenlabs', {
+        body: { text: articleText }
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      if (data?.audioContent) {
+        const audioBlob = new Blob(
+          [Uint8Array.from(atob(data.audioContent), c => c.charCodeAt(0))],
+          { type: 'audio/mpeg' }
+        );
+        const audioUrl = URL.createObjectURL(audioBlob);
+        
+        audioRef.current = new Audio(audioUrl);
+        audioRef.current.onended = () => {
+          setIsPlaying(false);
+        };
+        audioRef.current.play();
+        setIsPlaying(true);
+        
+        toast({
+          title: "Reproduzindo artigo",
+          description: "O áudio do artigo está sendo reproduzido.",
+        });
+      }
+    } catch (error) {
+      console.error('Error generating audio:', error);
+      toast({
+        title: "Erro ao gerar áudio",
+        description: "Não foi possível gerar o áudio do artigo. Tente novamente.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsGeneratingAudio(false);
+    }
+  };
+
+  // Cleanup audio on unmount
+  useEffect(() => {
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, []);
 
   const circumference = 2 * Math.PI * 40;
   const offset = circumference - (scrollProgress / 100) * circumference;
@@ -231,13 +332,27 @@ const Artigo = () => {
                   Escolha como consumir este conteúdo
                 </h3>
                 <div className="grid grid-cols-2 gap-3">
-                  <button className="flex items-center gap-3 p-4 bg-card rounded-lg border border-border hover:border-pastel-blue hover:bg-pastel-blue/10 transition">
+                  <button 
+                    onClick={handleListenArticle}
+                    disabled={isGeneratingAudio}
+                    className="flex items-center gap-3 p-4 bg-card rounded-lg border border-border hover:border-pastel-blue hover:bg-pastel-blue/10 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
                     <div className="w-10 h-10 bg-pastel-blue/30 rounded-lg flex items-center justify-center">
-                      <Volume2 size={18} className="text-foreground" />
+                      {isGeneratingAudio ? (
+                        <Loader2 size={18} className="text-foreground animate-spin" />
+                      ) : isPlaying ? (
+                        <Pause size={18} className="text-foreground" />
+                      ) : (
+                        <Volume2 size={18} className="text-foreground" />
+                      )}
                     </div>
                     <div className="text-left">
-                      <p className="text-sm font-medium text-foreground">Ouvir Artigo</p>
-                      <p className="text-xs text-muted-foreground">Áudio narrado</p>
+                      <p className="text-sm font-medium text-foreground">
+                        {isGeneratingAudio ? "Gerando áudio..." : isPlaying ? "Pausar Áudio" : "Ouvir Artigo"}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {isGeneratingAudio ? "Aguarde" : isPlaying ? "Reproduzindo" : "Áudio narrado"}
+                      </p>
                     </div>
                   </button>
                   <button className="flex items-center gap-3 p-4 bg-card rounded-lg border border-border hover:border-pastel-purple hover:bg-pastel-purple/10 transition">
