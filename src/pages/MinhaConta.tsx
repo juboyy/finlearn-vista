@@ -3,7 +3,7 @@ import {
   Camera, IdCard, Edit, Briefcase, Plus, Star, Crown, GraduationCap, 
   Award, CheckCircle, CreditCard, Rocket, Shield, Eye, TrendingUp, 
   Download, FileText, AlertTriangle, XCircle, X, Bell, User, Building2,
-  Upload, Loader2
+  Upload, Loader2, Landmark
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -42,6 +42,7 @@ export default function MinhaConta() {
   const assinaturaRef = useRef<HTMLElement>(null);
   const privacidadeRef = useRef<HTMLElement>(null);
   const documentosRef = useRef<HTMLElement>(null);
+  const bancariosRef = useRef<HTMLElement>(null);
   const perigoRef = useRef<HTMLElement>(null);
 
   // Fade-in animations
@@ -52,6 +53,7 @@ export default function MinhaConta() {
   const fadeAssinaturaRef = useFadeInOnScroll<HTMLElement>();
   const fadePrivacidadeRef = useFadeInOnScroll<HTMLElement>();
   const fadeDocumentosRef = useFadeInOnScroll<HTMLElement>();
+  const fadeBancariosRef = useFadeInOnScroll<HTMLElement>();
   const fadePerigoRef = useFadeInOnScroll<HTMLElement>();
 
   // Combine refs for each section
@@ -236,6 +238,7 @@ export default function MinhaConta() {
       assinatura: assinaturaRef,
       privacidade: privacidadeRef,
       documentos: documentosRef,
+      bancarios: bancariosRef,
       perigo: perigoRef,
     };
 
@@ -367,6 +370,17 @@ export default function MinhaConta() {
                 >
                   <FileText size={20} />
                   <span>Documentos</span>
+                </button>
+                <button 
+                  onClick={() => scrollToSection("bancarios")}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-all ${
+                    activeSection === "bancarios" 
+                      ? "bg-pastel-blue text-slate-800 font-medium" 
+                      : "text-slate-600 hover:bg-slate-100"
+                  }`}
+                >
+                  <Landmark size={20} />
+                  <span>Dados Bancários</span>
                 </button>
                 <button 
                   onClick={() => scrollToSection("perigo")}
@@ -903,6 +917,106 @@ export default function MinhaConta() {
                 <button className="w-full mt-4 px-4 py-3 bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition">
                   Ver Todos os Certificados
                 </button>
+              </section>
+
+              <section ref={combineRefs(bancariosRef, fadeBancariosRef)} className="bg-white rounded-xl border border-slate-200 p-6 scroll-mt-24 opacity-0">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-pastel-purple rounded-lg flex items-center justify-center">
+                      <Landmark className="text-slate-700" size={24} />
+                    </div>
+                    <div>
+                      <h2 className="text-lg font-semibold text-slate-800">Dados Bancários</h2>
+                      <p className="text-sm text-slate-500">Gerencie suas contas para recebimento</p>
+                    </div>
+                  </div>
+                  <button className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                    <Plus className="inline mr-2" size={16} />
+                    Nova Conta
+                  </button>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="p-4 rounded-lg border-2 border-pastel-green bg-pastel-green bg-opacity-10">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center border border-slate-200">
+                          <Landmark className="text-slate-600" size={24} />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2 mb-1">
+                            <p className="font-medium text-slate-800">Banco do Brasil</p>
+                            <span className="px-2 py-0.5 bg-pastel-green text-slate-700 text-xs rounded-full font-medium">Principal</span>
+                          </div>
+                          <p className="text-sm text-slate-600">Ag. 1234-5 | C/C •••• 6789-0</p>
+                          <p className="text-xs text-slate-500">João Silva Santos - CPF: •••.•••.789-00</p>
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        <button className="px-3 py-1.5 bg-slate-100 text-slate-700 rounded-lg text-sm hover:bg-slate-200 transition">
+                          <Edit className="inline mr-1" size={14} />
+                          Editar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-4 rounded-lg border border-slate-200">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 bg-slate-50 rounded-lg flex items-center justify-center border border-slate-200">
+                          <Landmark className="text-slate-600" size={24} />
+                        </div>
+                        <div>
+                          <p className="font-medium text-slate-800">Nubank</p>
+                          <p className="text-sm text-slate-600">Ag. 0001 | C/C •••• 1234-5</p>
+                          <p className="text-xs text-slate-500">João Silva Santos - CPF: •••.•••.789-00</p>
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        <button className="px-3 py-1.5 bg-pastel-blue text-slate-700 rounded-lg text-sm hover:bg-opacity-80 transition">
+                          Tornar Principal
+                        </button>
+                        <button className="px-3 py-1.5 bg-slate-100 text-slate-700 rounded-lg text-sm hover:bg-slate-200 transition">
+                          <Edit className="inline mr-1" size={14} />
+                          Editar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-4 rounded-lg border border-dashed border-slate-300 bg-slate-50">
+                    <h3 className="font-medium text-slate-800 mb-3">Chaves PIX</h3>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="p-3 bg-white rounded-lg border border-slate-200">
+                        <p className="text-xs text-slate-500 mb-1">CPF</p>
+                        <p className="text-sm font-medium text-slate-800">•••.•••.789-00</p>
+                      </div>
+                      <div className="p-3 bg-white rounded-lg border border-slate-200">
+                        <p className="text-xs text-slate-500 mb-1">E-mail</p>
+                        <p className="text-sm font-medium text-slate-800">j***@email.com</p>
+                      </div>
+                      <div className="p-3 bg-white rounded-lg border border-slate-200">
+                        <p className="text-xs text-slate-500 mb-1">Celular</p>
+                        <p className="text-sm font-medium text-slate-800">+55 11 •••••-6789</p>
+                      </div>
+                      <div className="p-3 bg-white rounded-lg border border-slate-200">
+                        <p className="text-xs text-slate-500 mb-1">Chave Aleatória</p>
+                        <p className="text-sm font-medium text-slate-800 truncate">a1b2c3d4-e5f6...</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-4 rounded-lg border border-slate-200 bg-pastel-yellow bg-opacity-20">
+                    <div className="flex items-start gap-3">
+                      <Shield className="text-slate-700 mt-0.5" size={20} />
+                      <div>
+                        <h3 className="font-medium text-slate-800 mb-1">Segurança dos seus dados</h3>
+                        <p className="text-sm text-slate-600">Seus dados bancários são criptografados e armazenados com segurança. Nunca compartilhamos suas informações com terceiros.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </section>
 
               <section ref={combineRefs(perigoRef, fadePerigoRef)} className="bg-white rounded-xl border-2 border-red-200 p-6 scroll-mt-24 opacity-0">
