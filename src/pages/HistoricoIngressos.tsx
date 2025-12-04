@@ -754,80 +754,80 @@ export default function HistoricoIngressos() {
 
       {/* Certificate Popup */}
       <Dialog open={!!selectedCertificate} onOpenChange={() => setSelectedCertificate(null)}>
-        <DialogContent className="max-w-4xl p-0 overflow-hidden">
-          <div className="relative bg-gradient-to-br from-slate-50 to-slate-100 p-8">
+        <DialogContent className="max-w-2xl p-0 overflow-hidden">
+          <div className="relative bg-gradient-to-br from-slate-50 to-slate-100 p-5">
             <button 
               onClick={() => setSelectedCertificate(null)}
-              className="absolute top-4 right-4 p-2 rounded-full hover:bg-slate-200 transition z-10"
+              className="absolute top-3 right-3 p-1.5 rounded-full hover:bg-slate-200 transition z-10"
             >
-              <X className="w-5 h-5 text-slate-600" />
+              <X className="w-4 h-4 text-slate-600" />
             </button>
             
             {/* Certificate Design */}
-            <div ref={certificateRef} className="bg-white border-8 border-double border-slate-300 rounded-lg p-8 shadow-lg">
+            <div ref={certificateRef} className="bg-white border-4 border-double border-slate-300 rounded-lg p-5 shadow-lg">
               {/* Header */}
-              <div className="text-center border-b-2 border-slate-200 pb-6 mb-6">
-                <div className="flex justify-center mb-4">
-                  <Award className="w-16 h-16 text-amber-500" />
+              <div className="text-center border-b-2 border-slate-200 pb-4 mb-4">
+                <div className="flex justify-center mb-3">
+                  <Award className="w-10 h-10 text-amber-500" />
                 </div>
-                <h2 className="text-3xl font-serif font-bold text-slate-800 mb-2">Certificado de Conclusão</h2>
-                <p className="text-slate-500 text-sm uppercase tracking-widest">FinLearn Platform</p>
+                <h2 className="text-xl font-serif font-bold text-slate-800 mb-1">Certificado de Conclusão</h2>
+                <p className="text-slate-500 text-xs uppercase tracking-widest">FinLearn Platform</p>
               </div>
 
               {/* Body */}
-              <div className="text-center py-6">
-                <p className="text-slate-600 mb-4">Certificamos que</p>
-                <h3 className="text-2xl font-bold text-slate-800 mb-4">Maria Silva Santos</h3>
-                <p className="text-slate-600 mb-6">concluiu com êxito o programa</p>
-                <h4 className="text-xl font-semibold text-slate-800 mb-6 px-8">
+              <div className="text-center py-4">
+                <p className="text-slate-600 text-sm mb-2">Certificamos que</p>
+                <h3 className="text-lg font-bold text-slate-800 mb-2">Maria Silva Santos</h3>
+                <p className="text-slate-600 text-sm mb-3">concluiu com êxito o programa</p>
+                <h4 className="text-base font-semibold text-slate-800 mb-3 px-4">
                   {selectedCertificate?.title}
                 </h4>
-                <p className="text-slate-500 text-sm">
+                <p className="text-slate-500 text-xs">
                   com carga horária de 40 horas, demonstrando aproveitamento satisfatório em todas as atividades propostas.
                 </p>
               </div>
 
               {/* Footer with QR Code */}
-              <div className="flex justify-between items-end mt-8 pt-6 border-t border-slate-200">
+              <div className="flex justify-between items-end mt-4 pt-4 border-t border-slate-200">
                 <div className="text-center">
-                  <div className="w-32 border-t border-slate-400 mb-2"></div>
-                  <p className="text-xs text-slate-500">Data de Emissão</p>
-                  <p className="text-sm font-medium text-slate-700">{selectedCertificate?.date}</p>
+                  <div className="w-24 border-t border-slate-400 mb-1"></div>
+                  <p className="text-[10px] text-slate-500">Data de Emissão</p>
+                  <p className="text-xs font-medium text-slate-700">{selectedCertificate?.date}</p>
                 </div>
                 
                 {/* QR Code for Verification */}
                 <div className="text-center">
-                  <div className="bg-white p-2 rounded-lg border border-slate-200 mb-2">
+                  <div className="bg-white p-1.5 rounded-lg border border-slate-200 mb-1">
                     <QRCodeSVG 
                       value={verificationUrl} 
-                      size={80}
+                      size={56}
                       level="M"
                       includeMargin={false}
                     />
                   </div>
-                  <p className="text-xs text-slate-500">Escaneie para verificar</p>
+                  <p className="text-[10px] text-slate-500">Escaneie para verificar</p>
                 </div>
                 
                 <div className="text-center">
-                  <div className="w-32 border-t border-slate-400 mb-2"></div>
-                  <p className="text-xs text-slate-500">Assinatura</p>
-                  <p className="text-sm font-medium text-slate-700 font-serif italic">Dr. Carlos Mendes</p>
+                  <div className="w-24 border-t border-slate-400 mb-1"></div>
+                  <p className="text-[10px] text-slate-500">Assinatura</p>
+                  <p className="text-xs font-medium text-slate-700 font-serif italic">Dr. Carlos Mendes</p>
                 </div>
               </div>
 
               {/* Certificate ID */}
-              <div className="mt-6 text-center">
-                <p className="text-xs text-slate-400">
+              <div className="mt-4 text-center">
+                <p className="text-[10px] text-slate-400">
                   ID: {selectedCertificate?.id}
                 </p>
               </div>
             </div>
 
             {/* Actions */}
-            <div className="flex justify-center gap-4 mt-6">
+            <div className="flex justify-center gap-3 mt-4">
               <Button 
                 variant="outline" 
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 text-sm"
                 onClick={handleDownloadPDF}
                 disabled={isDownloading}
               >
@@ -838,7 +838,7 @@ export default function HistoricoIngressos() {
                 )}
                 {isDownloading ? "Gerando..." : "Baixar PDF"}
               </Button>
-              <Button className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700">
+              <Button className="flex items-center gap-2 text-sm bg-slate-800 hover:bg-slate-700">
                 <Award className="w-4 h-4" /> Compartilhar
               </Button>
             </div>
