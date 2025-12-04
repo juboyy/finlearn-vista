@@ -992,12 +992,12 @@ export default function NovaNewsletter() {
                   </div>
 
                   <div className="bg-white rounded-2xl border-2 border-pastel-green/30 shadow-md overflow-hidden group hover:shadow-xl transition-shadow">
-                    <div className="bg-pastel-green p-6">
+                    <div className="bg-yellow-200 p-6">
                       <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-xl font-bold text-white">Plano Anual</h3>
-                        <span className="px-3 py-1 text-xs font-bold rounded-full bg-white/90 text-pastel-gray-dark">Ativo</span>
+                        <h3 className="text-xl font-bold text-slate-700">Plano Anual</h3>
+                        <span className="px-3 py-1 text-xs font-bold rounded-full bg-white/90 text-slate-700">Ativo</span>
                       </div>
-                      <p className="text-white/90 text-sm">Cobrança anual com desconto</p>
+                      <p className="text-slate-600 text-sm">Cobrança anual com desconto</p>
                     </div>
                     <div className="p-6 space-y-6">
                       <div>
