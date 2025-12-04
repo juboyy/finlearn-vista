@@ -942,6 +942,7 @@ export type Database = {
           frequency: string | null
           id: string
           last_sent_at: string | null
+          monthly_price: number | null
           open_rate: number
           product_types: string[] | null
           sent_count: number
@@ -962,6 +963,7 @@ export type Database = {
           frequency?: string | null
           id?: string
           last_sent_at?: string | null
+          monthly_price?: number | null
           open_rate?: number
           product_types?: string[] | null
           sent_count?: number
@@ -982,6 +984,7 @@ export type Database = {
           frequency?: string | null
           id?: string
           last_sent_at?: string | null
+          monthly_price?: number | null
           open_rate?: number
           product_types?: string[] | null
           sent_count?: number
