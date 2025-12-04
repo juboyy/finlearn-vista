@@ -934,6 +934,7 @@ export type Database = {
       newsletters: {
         Row: {
           color: string
+          content_types_config: Json | null
           created_at: string
           description: string | null
           discount_percentage: number
@@ -953,6 +954,7 @@ export type Database = {
         }
         Insert: {
           color?: string
+          content_types_config?: Json | null
           created_at?: string
           description?: string | null
           discount_percentage?: number
@@ -972,6 +974,7 @@ export type Database = {
         }
         Update: {
           color?: string
+          content_types_config?: Json | null
           created_at?: string
           description?: string | null
           discount_percentage?: number
