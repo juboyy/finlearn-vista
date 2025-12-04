@@ -142,6 +142,7 @@ import ParticipantesConfirmados from "./pages/ParticipantesConfirmados";
 import TodasComunidades from "./pages/TodasComunidades";
 import CriarInsights from "./pages/CriarInsights";
 import CriarGraficos from "./pages/CriarGraficos";
+import ContaMentoria from "./pages/ContaMentoria";
 
 import NotFound from "./pages/NotFound";
 
@@ -299,6 +300,7 @@ const App = () => {
               <Route path="/programacao-evento" element={<ProtectedRoute><ProgramacaoEvento /></ProtectedRoute>} />
               <Route path="/participantes-confirmados" element={<ProtectedRoute><ParticipantesConfirmados /></ProtectedRoute>} />
               <Route path="/criar-insights" element={<ProtectedRoute><CriarInsights /></ProtectedRoute>} />
+              <Route path="/conta-mentoria" element={<ProtectedRoute><ContaMentoria /></ProtectedRoute>} />
              
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

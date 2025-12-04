@@ -642,7 +642,7 @@ export default function MinhaConta() {
                       Conta Empresarial
                     </button>
                     <button 
-                      onClick={() => navigate("/perfil-mentor")}
+                      onClick={() => navigate("/conta-mentoria")}
                       className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
                     >
                       <GraduationCap className="inline mr-2" size={16} />
