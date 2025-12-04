@@ -1,11 +1,39 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { MenutabbarFix } from "@/components/Dashboard/MenutabbarFix";
 import { useState } from "react";
-import { Bell, Video, Headphones, FileText, User, Building2, Bot, Play, Eye, Clock } from "lucide-react";
+import { Bell, Video, Headphones, FileText, User, Building2, Bot, Play, Eye, Clock, Bookmark, BookmarkCheck } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { useSaveForLater } from "@/hooks/useSaveForLater";
 
 type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'relatorios' | 'documentos' | 'estudos' | 'infograficos' | 'whitepaper' | 'apresentacoes' | 'live' | 'entrevistas' | 'insights' | 'graficos';
 type MediaType = 'todos' | 'video' | 'audio' | 'escrita';
+
+const InterviewSaveButton = ({ id, title, mediaType }: { id: string; title: string; mediaType: string }) => {
+  const { isSaved, isLoading, toggleSave } = useSaveForLater({
+    itemId: id,
+    itemTitle: title,
+    itemType: 'entrevista',
+    itemDescription: `Entrevista - ${mediaType}`,
+    itemUrl: `/entrevistas/${id}`
+  });
+
+  const label = mediaType === 'escrita' ? 'Ler Depois' : mediaType === 'audio' ? 'Ouvir Depois' : 'Assistir Depois';
+
+  return (
+    <button 
+      onClick={(e) => { e.stopPropagation(); toggleSave(); }}
+      disabled={isLoading}
+      className={`px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-1.5 ${
+        isSaved 
+          ? 'bg-pastel-purple/40 text-slate-700' 
+          : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+      }`}
+    >
+      {isSaved ? <BookmarkCheck className="w-3 h-3 fill-slate-700" /> : <Bookmark className="w-3 h-3" />}
+      {label}
+    </button>
+  );
+};
 
 export default function Entrevistas() {
   const [activeTab, setActiveTab] = useState<TabType>('entrevistas');
@@ -373,15 +401,18 @@ export default function Entrevistas() {
                   </div>
 
                   {/* Stats */}
-                  <div className="flex items-center gap-4 mb-4 text-xs text-slate-600">
-                    <div className="flex items-center gap-1">
-                      <Clock className="w-3 h-3" />
-                      <span>{interview.duration}</span>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-4 text-xs text-slate-600">
+                      <div className="flex items-center gap-1">
+                        <Clock className="w-3 h-3" />
+                        <span>{interview.duration}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Eye className="w-3 h-3" />
+                        <span>{interview.views.toLocaleString()} views</span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <Eye className="w-3 h-3" />
-                      <span>{interview.views.toLocaleString()} views</span>
-                    </div>
+                    <InterviewSaveButton id={interview.id} title={interview.title} mediaType={interview.mediaType} />
                   </div>
 
                   {/* Action Button */}
