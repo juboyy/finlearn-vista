@@ -957,7 +957,7 @@ export default function NovaNewsletter() {
                 {/* Pricing Plans */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="bg-white rounded-2xl border-2 border-purple-300 shadow-md overflow-hidden group hover:shadow-xl transition-shadow">
-                    <div className="bg-purple-300 p-6">
+                    <div className="bg-blue-300 p-6">
                       <div className="flex items-center justify-between mb-2">
                         <h3 className="text-xl font-bold text-slate-800">Plano Mensal</h3>
                         <span className="px-3 py-1 text-xs font-bold rounded-full bg-white/90 text-slate-700">Ativo</span>
