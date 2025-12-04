@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, Save, Image, Video, Plus, X, Lightbulb, Check, Book, HelpCircle, FileText } from "lucide-react";
+import { ArrowLeft, ArrowRight, Save, Image, Video, Plus, X, Lightbulb, Check, Book, HelpCircle, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -431,10 +431,10 @@ export default function CriarCurso() {
                 <Save className="w-4 h-4" />
                 Salvar e Sair
               </button>
-              <Link to="/criar-ebook/etapa-2">
+              <Link to="/criar-curso/etapa-2">
                 <button className="px-6 py-3 bg-[hsl(var(--pastel-blue))] text-foreground rounded-lg font-semibold hover:opacity-80 transition-opacity flex items-center gap-2">
                   Próxima Etapa
-                  <i className="fa-solid fa-arrow-right"></i>
+                  <ArrowRight className="w-4 h-4" />
                 </button>
               </Link>
             </div>

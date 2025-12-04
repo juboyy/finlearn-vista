@@ -727,7 +727,7 @@ export default function CriarCursoEtapa2() {
 
           {/* Navigation Buttons */}
           <div className="flex items-center justify-between mt-8 pt-6 border-t border-border">
-            <Link to="/criar-ebook">
+            <Link to="/criar-curso">
               <button className="px-6 py-3 text-muted-foreground hover:bg-muted rounded-lg font-medium transition-colors flex items-center gap-2">
                 <ArrowLeft className="w-4 h-4" />
                 Etapa Anterior
@@ -738,7 +738,7 @@ export default function CriarCursoEtapa2() {
                 <Save className="w-4 h-4" />
                 Salvar e Sair
               </button>
-              <Link to="/criar-ebook/etapa-3">
+              <Link to="/criar-curso/etapa-3">
                 <button className="px-6 py-3 bg-[hsl(var(--pastel-blue))] text-foreground rounded-lg font-semibold hover:opacity-80 transition-opacity flex items-center gap-2">
                   Próxima Etapa
                   <ArrowRight className="w-4 h-4" />
