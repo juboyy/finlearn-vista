@@ -722,7 +722,7 @@ export default function CriarGraficos() {
 
         <div className="flex-1 flex overflow-hidden">
           {/* Left Panel - Data Source & Configuration */}
-          <div className="w-96 border-r border-border bg-gradient-to-b from-card to-muted/30 flex flex-col">
+          <div className="w-96 border-r border-border bg-gradient-to-b from-card to-muted/30 flex flex-col overflow-hidden">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col">
               <div className="px-4 pt-4 pb-2 border-b border-border/50 bg-card/80 backdrop-blur-sm">
                 <TabsList className="w-full grid grid-cols-5 gap-1.5 bg-muted/50 p-1.5 rounded-xl">
