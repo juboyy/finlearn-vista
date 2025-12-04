@@ -719,41 +719,46 @@ export default function CriarGraficos() {
 
         <div className="flex-1 flex overflow-hidden">
           {/* Left Panel - Data Source & Configuration */}
-          <div className="w-80 border-r border-border bg-gradient-to-b from-card to-muted/30 flex flex-col">
+          <div className="w-96 border-r border-border bg-gradient-to-b from-card to-muted/30 flex flex-col">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col">
               <div className="px-4 pt-4 pb-2 border-b border-border/50 bg-card/80 backdrop-blur-sm">
-                <TabsList className="w-full grid grid-cols-5 gap-1 bg-muted/50 p-1.5 rounded-xl">
+                <TabsList className="w-full grid grid-cols-5 gap-1.5 bg-muted/50 p-1.5 rounded-xl">
                   <TabsTrigger 
                     value="upload" 
-                    className="text-xs rounded-lg data-[state=active]:bg-pastel-blue data-[state=active]:shadow-md data-[state=active]:text-white flex flex-col gap-0.5 py-2 text-muted-foreground hover:bg-muted transition-colors"
+                    className="text-xs rounded-lg flex flex-col gap-0.5 py-2 text-muted-foreground hover:bg-muted transition-colors data-[state=active]:shadow-md data-[state=active]:text-white"
+                    style={{ backgroundColor: activeTab === "upload" ? "hsl(206, 45%, 45%)" : undefined }}
                   >
                     <Upload className="h-4 w-4" />
                     <span className="text-[10px]">Upload</span>
                   </TabsTrigger>
                   <TabsTrigger 
                     value="sheets" 
-                    className="text-xs rounded-lg data-[state=active]:bg-pastel-green data-[state=active]:shadow-md data-[state=active]:text-white flex flex-col gap-0.5 py-2 text-muted-foreground hover:bg-muted transition-colors"
+                    className="text-xs rounded-lg flex flex-col gap-0.5 py-2 text-muted-foreground hover:bg-muted transition-colors data-[state=active]:shadow-md data-[state=active]:text-white"
+                    style={{ backgroundColor: activeTab === "sheets" ? "hsl(152, 40%, 40%)" : undefined }}
                   >
                     <FileSpreadsheet className="h-4 w-4" />
                     <span className="text-[10px]">Sheets</span>
                   </TabsTrigger>
                   <TabsTrigger 
                     value="config" 
-                    className="text-xs rounded-lg data-[state=active]:bg-pastel-purple data-[state=active]:shadow-md data-[state=active]:text-white flex flex-col gap-0.5 py-2 text-muted-foreground hover:bg-muted transition-colors"
+                    className="text-xs rounded-lg flex flex-col gap-0.5 py-2 text-muted-foreground hover:bg-muted transition-colors data-[state=active]:shadow-md data-[state=active]:text-white"
+                    style={{ backgroundColor: activeTab === "config" ? "hsl(270, 35%, 50%)" : undefined }}
                   >
                     <Settings className="h-4 w-4" />
                     <span className="text-[10px]">Config</span>
                   </TabsTrigger>
                   <TabsTrigger 
                     value="saved" 
-                    className="text-xs rounded-lg data-[state=active]:bg-pastel-orange data-[state=active]:shadow-md data-[state=active]:text-white flex flex-col gap-0.5 py-2 text-muted-foreground hover:bg-muted transition-colors"
+                    className="text-xs rounded-lg flex flex-col gap-0.5 py-2 text-muted-foreground hover:bg-muted transition-colors data-[state=active]:shadow-md data-[state=active]:text-white"
+                    style={{ backgroundColor: activeTab === "saved" ? "hsl(30, 55%, 50%)" : undefined }}
                   >
                     <FolderOpen className="h-4 w-4" />
                     <span className="text-[10px]">Salvos</span>
                   </TabsTrigger>
                   <TabsTrigger 
                     value="style" 
-                    className="text-xs rounded-lg data-[state=active]:bg-pastel-pink data-[state=active]:shadow-md data-[state=active]:text-white flex flex-col gap-0.5 py-2 text-muted-foreground hover:bg-muted transition-colors"
+                    className="text-xs rounded-lg flex flex-col gap-0.5 py-2 text-muted-foreground hover:bg-muted transition-colors data-[state=active]:shadow-md data-[state=active]:text-white"
+                    style={{ backgroundColor: activeTab === "style" ? "hsl(322, 40%, 50%)" : undefined }}
                   >
                     <Palette className="h-4 w-4" />
                     <span className="text-[10px]">Estilo</span>
