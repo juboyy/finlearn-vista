@@ -3,7 +3,7 @@ import {
   Camera, IdCard, Edit, Briefcase, Plus, Star, Crown, GraduationCap, 
   Award, CheckCircle, CreditCard, Rocket, Shield, Eye, TrendingUp, 
   Download, FileText, AlertTriangle, XCircle, X, Bell, User, Building2,
-  Upload, Loader2, Landmark
+  Upload, Loader2, Landmark, ChevronDown
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -16,11 +16,49 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
+
+// Brazilian banks with logos
+const BRAZILIAN_BANKS = [
+  { code: "001", name: "Banco do Brasil", logo: "https://logo.clearbit.com/bb.com.br" },
+  { code: "104", name: "Caixa Econômica Federal", logo: "https://logo.clearbit.com/caixa.gov.br" },
+  { code: "237", name: "Bradesco", logo: "https://logo.clearbit.com/bradesco.com.br" },
+  { code: "341", name: "Itaú Unibanco", logo: "https://logo.clearbit.com/itau.com.br" },
+  { code: "033", name: "Santander", logo: "https://logo.clearbit.com/santander.com.br" },
+  { code: "260", name: "Nubank", logo: "https://logo.clearbit.com/nubank.com.br" },
+  { code: "077", name: "Inter", logo: "https://logo.clearbit.com/bancointer.com.br" },
+  { code: "212", name: "Banco Original", logo: "https://logo.clearbit.com/original.com.br" },
+  { code: "756", name: "Sicoob", logo: "https://logo.clearbit.com/sicoob.com.br" },
+  { code: "748", name: "Sicredi", logo: "https://logo.clearbit.com/sicredi.com.br" },
+  { code: "336", name: "C6 Bank", logo: "https://logo.clearbit.com/c6bank.com.br" },
+  { code: "290", name: "PagBank", logo: "https://logo.clearbit.com/pagseguro.com.br" },
+  { code: "380", name: "PicPay", logo: "https://logo.clearbit.com/picpay.com" },
+  { code: "422", name: "Safra", logo: "https://logo.clearbit.com/safra.com.br" },
+  { code: "655", name: "Votorantim", logo: "https://logo.clearbit.com/bancovotorantim.com.br" },
+  { code: "070", name: "BRB", logo: "https://logo.clearbit.com/brb.com.br" },
+  { code: "389", name: "Mercantil do Brasil", logo: "https://logo.clearbit.com/mercantildobrasil.com.br" },
+  { code: "746", name: "Modal", logo: "https://logo.clearbit.com/modalmais.com.br" },
+  { code: "208", name: "BTG Pactual", logo: "https://logo.clearbit.com/btgpactual.com" },
+  { code: "218", name: "BS2", logo: "https://logo.clearbit.com/bs2.com" },
+];
 
 export default function MinhaConta() {
   const navigate = useNavigate();
@@ -1145,8 +1183,19 @@ export default function MinhaConta() {
                       >
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-4">
-                            <div className={`w-12 h-12 ${account.is_primary ? 'bg-white' : 'bg-slate-50'} rounded-lg flex items-center justify-center border border-slate-200`}>
-                              <Landmark className="text-slate-600" size={24} />
+                            <div className={`w-12 h-12 ${account.is_primary ? 'bg-white' : 'bg-slate-50'} rounded-lg flex items-center justify-center border border-slate-200 overflow-hidden`}>
+                              {BRAZILIAN_BANKS.find(b => b.name === account.bank_name)?.logo ? (
+                                <img 
+                                  src={BRAZILIAN_BANKS.find(b => b.name === account.bank_name)?.logo} 
+                                  alt={account.bank_name}
+                                  className="w-8 h-8 object-contain"
+                                  onError={(e) => {
+                                    (e.target as HTMLImageElement).style.display = 'none';
+                                    (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
+                                  }}
+                                />
+                              ) : null}
+                              <Landmark className={`text-slate-600 ${BRAZILIAN_BANKS.find(b => b.name === account.bank_name)?.logo ? 'hidden' : ''}`} size={24} />
                             </div>
                             <div>
                               <div className="flex items-center gap-2 mb-1">
@@ -1271,65 +1320,101 @@ export default function MinhaConta() {
         </div>
       </main>
 
-      {/* Bank Account Dialog */}
-      <Dialog open={isBankDialogOpen} onOpenChange={setIsBankDialogOpen}>
-        <DialogContent className="sm:max-w-[500px]">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
+      {/* Bank Account Sheet (Right Panel) */}
+      <Sheet open={isBankDialogOpen} onOpenChange={setIsBankDialogOpen}>
+        <SheetContent side="right" className="w-full sm:max-w-[480px] overflow-y-auto">
+          <SheetHeader className="mb-6">
+            <SheetTitle className="flex items-center gap-2">
               <Landmark className="text-pastel-purple" size={24} />
               {editingBankId ? 'Editar Conta Bancária' : 'Nova Conta Bancária'}
-            </DialogTitle>
-            <DialogDescription>
+            </SheetTitle>
+            <SheetDescription>
               Preencha os dados da sua conta bancária para recebimento.
-            </DialogDescription>
-          </DialogHeader>
+            </SheetDescription>
+          </SheetHeader>
           
-          <div className="space-y-4 py-4">
+          <div className="space-y-5">
             <div>
-              <Label htmlFor="bank_name">Nome do Banco *</Label>
-              <Input
-                id="bank_name"
+              <Label htmlFor="bank_name">Banco *</Label>
+              <Select
                 value={bankForm.bank_name}
-                onChange={(e) => setBankForm(prev => ({ ...prev, bank_name: e.target.value }))}
-                placeholder="Ex: Banco do Brasil, Nubank, Itaú..."
-                className="mt-1"
-              />
+                onValueChange={(value) => setBankForm(prev => ({ ...prev, bank_name: value }))}
+              >
+                <SelectTrigger className="mt-1.5 w-full h-12">
+                  <SelectValue placeholder="Selecione o banco">
+                    {bankForm.bank_name && (
+                      <div className="flex items-center gap-3">
+                        <img 
+                          src={BRAZILIAN_BANKS.find(b => b.name === bankForm.bank_name)?.logo} 
+                          alt={bankForm.bank_name}
+                          className="w-6 h-6 rounded object-contain bg-white"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).style.display = 'none';
+                          }}
+                        />
+                        <span>{bankForm.bank_name}</span>
+                      </div>
+                    )}
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent className="bg-white max-h-[300px]">
+                  {BRAZILIAN_BANKS.map((bank) => (
+                    <SelectItem key={bank.code} value={bank.name} className="py-2.5">
+                      <div className="flex items-center gap-3">
+                        <img 
+                          src={bank.logo} 
+                          alt={bank.name}
+                          className="w-6 h-6 rounded object-contain bg-white"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%236b7280"><path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/></svg>';
+                          }}
+                        />
+                        <span className="text-slate-700">{bank.name}</span>
+                        <span className="text-xs text-slate-400 ml-auto">{bank.code}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="agency">Agência *</Label>
+                <Label htmlFor="agency">Agencia *</Label>
                 <Input
                   id="agency"
                   value={bankForm.agency}
                   onChange={(e) => setBankForm(prev => ({ ...prev, agency: e.target.value }))}
                   placeholder="0000-0"
-                  className="mt-1"
+                  className="mt-1.5"
                 />
               </div>
               <div>
-                <Label htmlFor="account_number">Número da Conta *</Label>
+                <Label htmlFor="account_number">Numero da Conta *</Label>
                 <Input
                   id="account_number"
                   value={bankForm.account_number}
                   onChange={(e) => setBankForm(prev => ({ ...prev, account_number: e.target.value }))}
                   placeholder="00000-0"
-                  className="mt-1"
+                  className="mt-1.5"
                 />
               </div>
             </div>
             
             <div>
               <Label htmlFor="account_type">Tipo de Conta *</Label>
-              <select
-                id="account_type"
+              <Select
                 value={bankForm.account_type}
-                onChange={(e) => setBankForm(prev => ({ ...prev, account_type: e.target.value }))}
-                className="mt-1 w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-pastel-purple focus:border-transparent"
+                onValueChange={(value) => setBankForm(prev => ({ ...prev, account_type: value }))}
               >
-                <option value="corrente">Conta Corrente</option>
-                <option value="poupanca">Conta Poupança</option>
-              </select>
+                <SelectTrigger className="mt-1.5 w-full">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-white">
+                  <SelectItem value="corrente">Conta Corrente</SelectItem>
+                  <SelectItem value="poupanca">Conta Poupanca</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             
             <div>
@@ -1339,7 +1424,7 @@ export default function MinhaConta() {
                 value={bankForm.holder_name}
                 onChange={(e) => setBankForm(prev => ({ ...prev, holder_name: e.target.value }))}
                 placeholder="Nome completo conforme documento"
-                className="mt-1"
+                className="mt-1.5"
               />
             </div>
             
@@ -1350,29 +1435,29 @@ export default function MinhaConta() {
                 value={bankForm.holder_document}
                 onChange={(e) => setBankForm(prev => ({ ...prev, holder_document: e.target.value }))}
                 placeholder="000.000.000-00"
-                className="mt-1"
+                className="mt-1.5"
               />
             </div>
+            
+            <div className="pt-4 flex gap-3">
+              <button
+                onClick={() => setIsBankDialogOpen(false)}
+                className="flex-1 px-4 py-2.5 bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={handleSaveBankAccount}
+                disabled={isSavingBank}
+                className="flex-1 px-4 py-2.5 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition disabled:opacity-50 flex items-center justify-center gap-2"
+              >
+                {isSavingBank && <Loader2 className="animate-spin" size={16} />}
+                {isSavingBank ? 'Salvando...' : (editingBankId ? 'Atualizar' : 'Cadastrar')}
+              </button>
+            </div>
           </div>
-          
-          <DialogFooter>
-            <button
-              onClick={() => setIsBankDialogOpen(false)}
-              className="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition"
-            >
-              Cancelar
-            </button>
-            <button
-              onClick={handleSaveBankAccount}
-              disabled={isSavingBank}
-              className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition disabled:opacity-50 flex items-center gap-2"
-            >
-              {isSavingBank && <Loader2 className="animate-spin" size={16} />}
-              {isSavingBank ? 'Salvando...' : (editingBankId ? 'Atualizar' : 'Cadastrar')}
-            </button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+        </SheetContent>
+      </Sheet>
 
       <Dialog open={isDeleteModalOpen} onOpenChange={handleCloseDeleteModal}>
         <DialogContent className="sm:max-w-[500px]">
