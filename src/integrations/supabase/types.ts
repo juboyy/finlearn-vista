@@ -247,6 +247,51 @@ export type Database = {
         }
         Relationships: []
       }
+      bank_accounts: {
+        Row: {
+          account_number: string
+          account_type: string
+          agency: string
+          bank_name: string
+          created_at: string
+          holder_document: string
+          holder_name: string
+          id: string
+          is_primary: boolean
+          pix_keys: Json | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          account_number: string
+          account_type?: string
+          agency: string
+          bank_name: string
+          created_at?: string
+          holder_document: string
+          holder_name: string
+          id?: string
+          is_primary?: boolean
+          pix_keys?: Json | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          account_number?: string
+          account_type?: string
+          agency?: string
+          bank_name?: string
+          created_at?: string
+          holder_document?: string
+          holder_name?: string
+          id?: string
+          is_primary?: boolean
+          pix_keys?: Json | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       chart_explanations: {
         Row: {
           attention_points: string[] | null

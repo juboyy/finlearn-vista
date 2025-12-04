@@ -31,6 +31,19 @@ export default function MinhaConta() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
+  const [bankAccounts, setBankAccounts] = useState<any[]>([]);
+  const [isBankDialogOpen, setIsBankDialogOpen] = useState(false);
+  const [isLoadingBanks, setIsLoadingBanks] = useState(false);
+  const [isSavingBank, setIsSavingBank] = useState(false);
+  const [editingBankId, setEditingBankId] = useState<string | null>(null);
+  const [bankForm, setBankForm] = useState({
+    bank_name: '',
+    agency: '',
+    account_number: '',
+    account_type: 'corrente',
+    holder_name: '',
+    holder_document: '',
+  });
   const fileInputRef = useRef<HTMLInputElement>(null);
   const mainRef = useRef<HTMLElement>(null);
   const { toast } = useToast();
@@ -229,6 +242,179 @@ export default function MinhaConta() {
     }
   };
 
+  // Load bank accounts
+  useEffect(() => {
+    const loadBankAccounts = async () => {
+      if (!user?.id) return;
+      
+      setIsLoadingBanks(true);
+      try {
+        const { data, error } = await supabase
+          .from('bank_accounts')
+          .select('*')
+          .eq('user_id', user.id)
+          .order('is_primary', { ascending: false });
+        
+        if (error) throw error;
+        setBankAccounts(data || []);
+      } catch (error) {
+        console.error('Error loading bank accounts:', error);
+      } finally {
+        setIsLoadingBanks(false);
+      }
+    };
+    
+    loadBankAccounts();
+  }, [user?.id]);
+
+  const handleOpenBankDialog = (account?: any) => {
+    if (account) {
+      setEditingBankId(account.id);
+      setBankForm({
+        bank_name: account.bank_name,
+        agency: account.agency,
+        account_number: account.account_number,
+        account_type: account.account_type,
+        holder_name: account.holder_name,
+        holder_document: account.holder_document,
+      });
+    } else {
+      setEditingBankId(null);
+      setBankForm({
+        bank_name: '',
+        agency: '',
+        account_number: '',
+        account_type: 'corrente',
+        holder_name: '',
+        holder_document: '',
+      });
+    }
+    setIsBankDialogOpen(true);
+  };
+
+  const handleSaveBankAccount = async () => {
+    if (!user?.id) return;
+    
+    if (!bankForm.bank_name || !bankForm.agency || !bankForm.account_number || !bankForm.holder_name || !bankForm.holder_document) {
+      toast({
+        variant: "destructive",
+        title: "Campos obrigatórios",
+        description: "Preencha todos os campos obrigatórios.",
+      });
+      return;
+    }
+
+    setIsSavingBank(true);
+    try {
+      if (editingBankId) {
+        const { error } = await supabase
+          .from('bank_accounts')
+          .update(bankForm)
+          .eq('id', editingBankId);
+        
+        if (error) throw error;
+        
+        setBankAccounts(prev => prev.map(acc => 
+          acc.id === editingBankId ? { ...acc, ...bankForm } : acc
+        ));
+        
+        toast({
+          title: "Conta atualizada",
+          description: "Dados bancários atualizados com sucesso.",
+        });
+      } else {
+        const isPrimary = bankAccounts.length === 0;
+        const { data, error } = await supabase
+          .from('bank_accounts')
+          .insert({
+            ...bankForm,
+            user_id: user.id,
+            is_primary: isPrimary,
+          })
+          .select()
+          .single();
+        
+        if (error) throw error;
+        
+        setBankAccounts(prev => [...prev, data]);
+        
+        toast({
+          title: "Conta adicionada",
+          description: "Nova conta bancária cadastrada com sucesso.",
+        });
+      }
+      
+      setIsBankDialogOpen(false);
+    } catch (error) {
+      console.error('Error saving bank account:', error);
+      toast({
+        variant: "destructive",
+        title: "Erro ao salvar",
+        description: "Não foi possível salvar a conta bancária.",
+      });
+    } finally {
+      setIsSavingBank(false);
+    }
+  };
+
+  const handleSetPrimaryBank = async (accountId: string) => {
+    if (!user?.id) return;
+    
+    try {
+      await supabase
+        .from('bank_accounts')
+        .update({ is_primary: false })
+        .eq('user_id', user.id);
+      
+      await supabase
+        .from('bank_accounts')
+        .update({ is_primary: true })
+        .eq('id', accountId);
+      
+      setBankAccounts(prev => prev.map(acc => ({
+        ...acc,
+        is_primary: acc.id === accountId
+      })));
+      
+      toast({
+        title: "Conta principal definida",
+        description: "A conta foi definida como principal.",
+      });
+    } catch (error) {
+      console.error('Error setting primary bank:', error);
+      toast({
+        variant: "destructive",
+        title: "Erro",
+        description: "Não foi possível definir a conta como principal.",
+      });
+    }
+  };
+
+  const handleDeleteBank = async (accountId: string) => {
+    try {
+      const { error } = await supabase
+        .from('bank_accounts')
+        .delete()
+        .eq('id', accountId);
+      
+      if (error) throw error;
+      
+      setBankAccounts(prev => prev.filter(acc => acc.id !== accountId));
+      
+      toast({
+        title: "Conta removida",
+        description: "Conta bancária removida com sucesso.",
+      });
+    } catch (error) {
+      console.error('Error deleting bank:', error);
+      toast({
+        variant: "destructive",
+        title: "Erro",
+        description: "Não foi possível remover a conta bancária.",
+      });
+    }
+  };
+
   const scrollToSection = (section: string) => {
     const refs: { [key: string]: React.RefObject<HTMLElement> } = {
       perfil: perfilRef,
@@ -271,6 +457,7 @@ export default function MinhaConta() {
         { id: "assinatura", ref: assinaturaRef },
         { id: "privacidade", ref: privacidadeRef },
         { id: "documentos", ref: documentosRef },
+        { id: "bancarios", ref: bancariosRef },
         { id: "perigo", ref: perigoRef },
       ];
 
@@ -930,82 +1117,77 @@ export default function MinhaConta() {
                       <p className="text-sm text-slate-500">Gerencie suas contas para recebimento</p>
                     </div>
                   </div>
-                  <button className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                  <button 
+                    onClick={() => handleOpenBankDialog()}
+                    className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
+                  >
                     <Plus className="inline mr-2" size={16} />
                     Nova Conta
                   </button>
                 </div>
 
                 <div className="space-y-4">
-                  <div className="p-4 rounded-lg border-2 border-pastel-green bg-pastel-green bg-opacity-10">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center border border-slate-200">
-                          <Landmark className="text-slate-600" size={24} />
-                        </div>
-                        <div>
-                          <div className="flex items-center gap-2 mb-1">
-                            <p className="font-medium text-slate-800">Banco do Brasil</p>
-                            <span className="px-2 py-0.5 bg-pastel-green text-slate-700 text-xs rounded-full font-medium">Principal</span>
+                  {isLoadingBanks ? (
+                    <div className="flex items-center justify-center py-8">
+                      <Loader2 className="animate-spin text-slate-400" size={32} />
+                    </div>
+                  ) : bankAccounts.length === 0 ? (
+                    <div className="text-center py-8 text-slate-500">
+                      <Landmark className="mx-auto mb-3 text-slate-300" size={48} />
+                      <p>Nenhuma conta bancária cadastrada</p>
+                      <p className="text-sm mt-1">Clique em "Nova Conta" para adicionar</p>
+                    </div>
+                  ) : (
+                    bankAccounts.map((account) => (
+                      <div 
+                        key={account.id}
+                        className={`p-4 rounded-lg ${account.is_primary ? 'border-2 border-pastel-green bg-pastel-green bg-opacity-10' : 'border border-slate-200'}`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-4">
+                            <div className={`w-12 h-12 ${account.is_primary ? 'bg-white' : 'bg-slate-50'} rounded-lg flex items-center justify-center border border-slate-200`}>
+                              <Landmark className="text-slate-600" size={24} />
+                            </div>
+                            <div>
+                              <div className="flex items-center gap-2 mb-1">
+                                <p className="font-medium text-slate-800">{account.bank_name}</p>
+                                {account.is_primary && (
+                                  <span className="px-2 py-0.5 bg-pastel-green text-slate-700 text-xs rounded-full font-medium">Principal</span>
+                                )}
+                              </div>
+                              <p className="text-sm text-slate-600">
+                                Ag. {account.agency} | {account.account_type === 'corrente' ? 'C/C' : 'Poupança'} •••• {account.account_number.slice(-4)}
+                              </p>
+                              <p className="text-xs text-slate-500">{account.holder_name} - {account.holder_document.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '•••.•••.$3-$4')}</p>
+                            </div>
                           </div>
-                          <p className="text-sm text-slate-600">Ag. 1234-5 | C/C •••• 6789-0</p>
-                          <p className="text-xs text-slate-500">João Silva Santos - CPF: •••.•••.789-00</p>
+                          <div className="flex gap-2">
+                            {!account.is_primary && (
+                              <button 
+                                onClick={() => handleSetPrimaryBank(account.id)}
+                                className="px-3 py-1.5 bg-pastel-blue text-slate-700 rounded-lg text-sm hover:bg-opacity-80 transition"
+                              >
+                                Tornar Principal
+                              </button>
+                            )}
+                            <button 
+                              onClick={() => handleOpenBankDialog(account)}
+                              className="px-3 py-1.5 bg-slate-100 text-slate-700 rounded-lg text-sm hover:bg-slate-200 transition"
+                            >
+                              <Edit className="inline mr-1" size={14} />
+                              Editar
+                            </button>
+                            <button 
+                              onClick={() => handleDeleteBank(account.id)}
+                              className="px-3 py-1.5 bg-red-50 text-red-600 rounded-lg text-sm hover:bg-red-100 transition"
+                            >
+                              <X className="inline" size={14} />
+                            </button>
+                          </div>
                         </div>
                       </div>
-                      <div className="flex gap-2">
-                        <button className="px-3 py-1.5 bg-slate-100 text-slate-700 rounded-lg text-sm hover:bg-slate-200 transition">
-                          <Edit className="inline mr-1" size={14} />
-                          Editar
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-4 rounded-lg border border-slate-200">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-slate-50 rounded-lg flex items-center justify-center border border-slate-200">
-                          <Landmark className="text-slate-600" size={24} />
-                        </div>
-                        <div>
-                          <p className="font-medium text-slate-800">Nubank</p>
-                          <p className="text-sm text-slate-600">Ag. 0001 | C/C •••• 1234-5</p>
-                          <p className="text-xs text-slate-500">João Silva Santos - CPF: •••.•••.789-00</p>
-                        </div>
-                      </div>
-                      <div className="flex gap-2">
-                        <button className="px-3 py-1.5 bg-pastel-blue text-slate-700 rounded-lg text-sm hover:bg-opacity-80 transition">
-                          Tornar Principal
-                        </button>
-                        <button className="px-3 py-1.5 bg-slate-100 text-slate-700 rounded-lg text-sm hover:bg-slate-200 transition">
-                          <Edit className="inline mr-1" size={14} />
-                          Editar
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-4 rounded-lg border border-dashed border-slate-300 bg-slate-50">
-                    <h3 className="font-medium text-slate-800 mb-3">Chaves PIX</h3>
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="p-3 bg-white rounded-lg border border-slate-200">
-                        <p className="text-xs text-slate-500 mb-1">CPF</p>
-                        <p className="text-sm font-medium text-slate-800">•••.•••.789-00</p>
-                      </div>
-                      <div className="p-3 bg-white rounded-lg border border-slate-200">
-                        <p className="text-xs text-slate-500 mb-1">E-mail</p>
-                        <p className="text-sm font-medium text-slate-800">j***@email.com</p>
-                      </div>
-                      <div className="p-3 bg-white rounded-lg border border-slate-200">
-                        <p className="text-xs text-slate-500 mb-1">Celular</p>
-                        <p className="text-sm font-medium text-slate-800">+55 11 •••••-6789</p>
-                      </div>
-                      <div className="p-3 bg-white rounded-lg border border-slate-200">
-                        <p className="text-xs text-slate-500 mb-1">Chave Aleatória</p>
-                        <p className="text-sm font-medium text-slate-800 truncate">a1b2c3d4-e5f6...</p>
-                      </div>
-                    </div>
-                  </div>
+                    ))
+                  )}
 
                   <div className="p-4 rounded-lg border border-slate-200 bg-pastel-yellow bg-opacity-20">
                     <div className="flex items-start gap-3">
@@ -1088,6 +1270,109 @@ export default function MinhaConta() {
           </div>
         </div>
       </main>
+
+      {/* Bank Account Dialog */}
+      <Dialog open={isBankDialogOpen} onOpenChange={setIsBankDialogOpen}>
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Landmark className="text-pastel-purple" size={24} />
+              {editingBankId ? 'Editar Conta Bancária' : 'Nova Conta Bancária'}
+            </DialogTitle>
+            <DialogDescription>
+              Preencha os dados da sua conta bancária para recebimento.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <div>
+              <Label htmlFor="bank_name">Nome do Banco *</Label>
+              <Input
+                id="bank_name"
+                value={bankForm.bank_name}
+                onChange={(e) => setBankForm(prev => ({ ...prev, bank_name: e.target.value }))}
+                placeholder="Ex: Banco do Brasil, Nubank, Itaú..."
+                className="mt-1"
+              />
+            </div>
+            
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="agency">Agência *</Label>
+                <Input
+                  id="agency"
+                  value={bankForm.agency}
+                  onChange={(e) => setBankForm(prev => ({ ...prev, agency: e.target.value }))}
+                  placeholder="0000-0"
+                  className="mt-1"
+                />
+              </div>
+              <div>
+                <Label htmlFor="account_number">Número da Conta *</Label>
+                <Input
+                  id="account_number"
+                  value={bankForm.account_number}
+                  onChange={(e) => setBankForm(prev => ({ ...prev, account_number: e.target.value }))}
+                  placeholder="00000-0"
+                  className="mt-1"
+                />
+              </div>
+            </div>
+            
+            <div>
+              <Label htmlFor="account_type">Tipo de Conta *</Label>
+              <select
+                id="account_type"
+                value={bankForm.account_type}
+                onChange={(e) => setBankForm(prev => ({ ...prev, account_type: e.target.value }))}
+                className="mt-1 w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-pastel-purple focus:border-transparent"
+              >
+                <option value="corrente">Conta Corrente</option>
+                <option value="poupanca">Conta Poupança</option>
+              </select>
+            </div>
+            
+            <div>
+              <Label htmlFor="holder_name">Nome do Titular *</Label>
+              <Input
+                id="holder_name"
+                value={bankForm.holder_name}
+                onChange={(e) => setBankForm(prev => ({ ...prev, holder_name: e.target.value }))}
+                placeholder="Nome completo conforme documento"
+                className="mt-1"
+              />
+            </div>
+            
+            <div>
+              <Label htmlFor="holder_document">CPF/CNPJ do Titular *</Label>
+              <Input
+                id="holder_document"
+                value={bankForm.holder_document}
+                onChange={(e) => setBankForm(prev => ({ ...prev, holder_document: e.target.value }))}
+                placeholder="000.000.000-00"
+                className="mt-1"
+              />
+            </div>
+          </div>
+          
+          <DialogFooter>
+            <button
+              onClick={() => setIsBankDialogOpen(false)}
+              className="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition"
+            >
+              Cancelar
+            </button>
+            <button
+              onClick={handleSaveBankAccount}
+              disabled={isSavingBank}
+              className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition disabled:opacity-50 flex items-center gap-2"
+            >
+              {isSavingBank && <Loader2 className="animate-spin" size={16} />}
+              {isSavingBank ? 'Salvando...' : (editingBankId ? 'Atualizar' : 'Cadastrar')}
+            </button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       <Dialog open={isDeleteModalOpen} onOpenChange={handleCloseDeleteModal}>
         <DialogContent className="sm:max-w-[500px]">
