@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 import {
   ChevronLeft,
   Upload,
@@ -30,6 +31,9 @@ import {
   Target,
   Radar,
   LayoutGrid,
+  FolderOpen,
+  Trash2,
+  Clock,
 } from "lucide-react";
 import {
   ResponsiveContainer,
@@ -69,6 +73,18 @@ interface ChartConfig {
   title: string;
 }
 
+interface SavedChart {
+  id: string;
+  name: string;
+  chart_type: string;
+  chart_data: {
+    data: DataRow[];
+    columns: string[];
+    config: ChartConfig;
+  };
+  created_at: string;
+}
+
 const CHART_COLORS = [
   "hsl(207, 35%, 55%)",
   "hsl(142, 35%, 55%)",
@@ -92,6 +108,71 @@ export default function CriarGraficos() {
   const [googleSheetUrl, setGoogleSheetUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("upload");
+  const [savedCharts, setSavedCharts] = useState<SavedChart[]>([]);
+  const [isSaving, setIsSaving] = useState(false);
+  const [loadingSavedCharts, setLoadingSavedCharts] = useState(false);
+
+  // Load saved charts on mount
+  useEffect(() => {
+    loadSavedCharts();
+  }, []);
+
+  const loadSavedCharts = async () => {
+    setLoadingSavedCharts(true);
+    try {
+      const { data: charts, error } = await supabase
+        .from("saved_charts")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+      
+      const typedCharts = (charts || []).map(chart => ({
+        ...chart,
+        chart_data: chart.chart_data as unknown as SavedChart["chart_data"]
+      }));
+      
+      setSavedCharts(typedCharts);
+    } catch (error) {
+      console.error("Error loading saved charts:", error);
+    } finally {
+      setLoadingSavedCharts(false);
+    }
+  };
+
+  const handleLoadChart = (chart: SavedChart) => {
+    try {
+      const chartData = chart.chart_data;
+      setData(chartData.data || []);
+      setColumns(chartData.columns || []);
+      setChartConfig(chartData.config || {
+        type: chart.chart_type as ChartConfig["type"],
+        xAxis: "",
+        yAxis: [],
+        title: chart.name,
+      });
+      setActiveTab("config");
+      toast.success(`Gráfico "${chart.name}" carregado`);
+    } catch (error) {
+      toast.error("Erro ao carregar gráfico");
+    }
+  };
+
+  const handleDeleteChart = async (chartId: string) => {
+    try {
+      const { error } = await supabase
+        .from("saved_charts")
+        .delete()
+        .eq("id", chartId);
+
+      if (error) throw error;
+      
+      setSavedCharts(prev => prev.filter(c => c.id !== chartId));
+      toast.success("Gráfico excluído");
+    } catch (error) {
+      toast.error("Erro ao excluir gráfico");
+    }
+  };
 
   const handleFileUpload = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -407,8 +488,41 @@ export default function CriarGraficos() {
     }
   };
 
-  const handleSave = () => {
-    toast.success("Gráfico salvo com sucesso");
+  const handleSave = async () => {
+    if (data.length === 0) {
+      toast.error("Importe dados antes de salvar o gráfico");
+      return;
+    }
+
+    if (!chartConfig.title.trim()) {
+      toast.error("Adicione um título ao gráfico");
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      const chartData = {
+        data,
+        columns,
+        config: chartConfig,
+      };
+
+      const { error } = await supabase.from("saved_charts").insert([{
+        name: chartConfig.title,
+        chart_type: chartConfig.type,
+        chart_data: JSON.parse(JSON.stringify(chartData)),
+      }]);
+
+      if (error) throw error;
+
+      toast.success("Gráfico salvo com sucesso");
+      loadSavedCharts();
+    } catch (error) {
+      console.error("Error saving chart:", error);
+      toast.error("Erro ao salvar gráfico");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleExport = () => {
@@ -436,9 +550,13 @@ export default function CriarGraficos() {
                 <Download className="h-4 w-4 mr-2" />
                 Exportar
               </Button>
-              <Button onClick={handleSave} className="bg-primary text-primary-foreground">
-                <Save className="h-4 w-4 mr-2" />
-                Salvar
+              <Button onClick={handleSave} disabled={isSaving} className="bg-primary text-primary-foreground">
+                {isSaving ? (
+                  <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
+                ) : (
+                  <Save className="h-4 w-4 mr-2" />
+                )}
+                {isSaving ? "Salvando..." : "Salvar"}
               </Button>
             </div>
           </div>
@@ -448,7 +566,7 @@ export default function CriarGraficos() {
           {/* Left Panel - Data Source & Configuration */}
           <div className="w-80 border-r border-border bg-card flex flex-col">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col">
-              <TabsList className="w-full justify-start px-4 pt-4 bg-transparent">
+              <TabsList className="w-full justify-start px-4 pt-4 bg-transparent flex-wrap gap-1">
                 <TabsTrigger value="upload" className="text-xs">
                   <Upload className="h-3 w-3 mr-1" />
                   Upload
@@ -460,6 +578,10 @@ export default function CriarGraficos() {
                 <TabsTrigger value="config" className="text-xs">
                   <Settings className="h-3 w-3 mr-1" />
                   Config
+                </TabsTrigger>
+                <TabsTrigger value="saved" className="text-xs">
+                  <FolderOpen className="h-3 w-3 mr-1" />
+                  Salvos
                 </TabsTrigger>
               </TabsList>
 
@@ -664,6 +786,63 @@ export default function CriarGraficos() {
                       </Card>
                     </>
                   )}
+                </TabsContent>
+
+                <TabsContent value="saved" className="mt-0 space-y-4">
+                  <Card>
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-sm flex items-center gap-2">
+                        <FolderOpen className="h-4 w-4" />
+                        Gráficos Salvos
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      {loadingSavedCharts ? (
+                        <div className="flex items-center justify-center py-8">
+                          <RefreshCw className="h-5 w-5 animate-spin text-muted-foreground" />
+                        </div>
+                      ) : savedCharts.length === 0 ? (
+                        <p className="text-sm text-muted-foreground text-center py-4">
+                          Nenhum gráfico salvo
+                        </p>
+                      ) : (
+                        <div className="space-y-2">
+                          {savedCharts.map((chart) => (
+                            <div
+                              key={chart.id}
+                              className="flex items-center justify-between p-3 rounded-lg border border-border hover:bg-muted/50 transition-colors"
+                            >
+                              <div
+                                className="flex-1 cursor-pointer"
+                                onClick={() => handleLoadChart(chart)}
+                              >
+                                <p className="text-sm font-medium text-foreground">
+                                  {chart.name}
+                                </p>
+                                <div className="flex items-center gap-2 mt-1">
+                                  <span className="text-xs text-muted-foreground capitalize">
+                                    {chart.chart_type}
+                                  </span>
+                                  <span className="text-xs text-muted-foreground flex items-center gap-1">
+                                    <Clock className="h-3 w-3" />
+                                    {new Date(chart.created_at).toLocaleDateString("pt-BR")}
+                                  </span>
+                                </div>
+                              </div>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8 text-muted-foreground hover:text-destructive"
+                                onClick={() => handleDeleteChart(chart.id)}
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
                 </TabsContent>
               </ScrollArea>
             </Tabs>
