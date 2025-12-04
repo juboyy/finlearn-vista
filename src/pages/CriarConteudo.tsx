@@ -337,7 +337,7 @@ export default function CriarConteudo() {
                   </button>
 
                   {/* Option 15: Gráficos */}
-                  <button className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
+                  <Link to="/criar-graficos" className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
                     <div className="w-12 h-12 rounded-lg bg-[hsl(190,50%,65%)] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
                       <BarChart3 className="w-6 h-6" />
                     </div>
@@ -348,7 +348,7 @@ export default function CriarConteudo() {
                     <div className="text-muted-foreground/30 group-hover:text-muted-foreground transition-colors">
                       <i className="fa-solid fa-chevron-right text-sm"></i>
                     </div>
-                  </button>
+                  </Link>
 
                   {/* Option 16: Insights */}
                   <Link to="/criar-insights" className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
