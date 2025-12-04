@@ -536,11 +536,11 @@ export default function CriarEbookEtapa2() {
                 <div className="w-16 h-16 bg-[hsl(var(--pastel-blue))] rounded-full flex items-center justify-center mx-auto mb-4">
                   <Folder className="w-8 h-8 text-foreground" />
                 </div>
-                <h3 className="font-semibold text-foreground mb-2">Adicionar Novo Capítulo</h3>
-                <p className="text-sm text-muted-foreground mb-4">Organize seu conteúdo em capítulos temáticos</p>
+                <h3 className="font-semibold text-foreground mb-2">Adicionar Certificado</h3>
+                <p className="text-sm text-muted-foreground mb-4">Configure o certificado de conclusão do e-book</p>
                 <button className="px-6 py-2 bg-[hsl(var(--pastel-blue))] text-foreground rounded-lg font-medium hover:opacity-80 transition-opacity flex items-center gap-2 mx-auto">
                   <Plus className="w-4 h-4" />
-                  Criar Capítulo
+                  Criar Certificado
                 </button>
               </div>
             </div>
