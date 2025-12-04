@@ -2,6 +2,25 @@ import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { ArrowLeft, ArrowRight, Save, Plus, Folder, Video, FileText, Eye, Edit, Trash2, GripVertical, ChevronDown, Lightbulb, Check, HelpCircle, ClipboardCheck, FileQuestion, File, Book } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+  DragOverlay,
+  DragStartEvent,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 interface Lesson {
   id: string;
@@ -20,6 +39,151 @@ interface Module {
   totalDuration: string;
   color: string;
   isExpanded: boolean;
+}
+
+// Sortable Module Component
+function SortableModule({ 
+  module, 
+  children, 
+  onToggle,
+  getModuleBgColor,
+  getModuleColor
+}: { 
+  module: Module; 
+  children: React.ReactNode;
+  onToggle: () => void;
+  getModuleBgColor: (color: string) => string;
+  getModuleColor: (color: string) => string;
+}) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: module.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+  };
+
+  return (
+    <div ref={setNodeRef} style={style} className="bg-card rounded-xl border border-border overflow-hidden">
+      {/* Module Header */}
+      <div className={`${getModuleBgColor(module.color)} p-6 border-b border-border`}>
+        <div className="flex items-start justify-between">
+          <div className="flex items-start gap-4 flex-1">
+            <div
+              {...attributes}
+              {...listeners}
+              className="cursor-grab active:cursor-grabbing text-muted-foreground hover:text-foreground transition-colors mt-1"
+            >
+              <GripVertical className="w-5 h-5" />
+            </div>
+            <div className={`w-10 h-10 ${getModuleColor(module.color)} rounded-lg flex items-center justify-center flex-shrink-0`}>
+              <Folder className="w-5 h-5 text-foreground" />
+            </div>
+            <div className="flex-1">
+              <div className="flex items-center gap-3 mb-2">
+                <span className="px-2 py-1 bg-card text-muted-foreground text-xs font-medium rounded">Capítulo {module.number}</span>
+                <span className="text-xs text-muted-foreground">{module.lessons.length} seções • {module.totalDuration}</span>
+              </div>
+              <h3 className="text-lg font-semibold text-foreground mb-2">{module.title}</h3>
+              <p className="text-sm text-muted-foreground">{module.description}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <button className="p-2 text-muted-foreground hover:bg-card rounded-lg transition-colors">
+              <Edit className="w-4 h-4" />
+            </button>
+            <button className="p-2 text-muted-foreground hover:bg-card rounded-lg transition-colors">
+              <Trash2 className="w-4 h-4" />
+            </button>
+            <button 
+              onClick={onToggle}
+              className="p-2 text-muted-foreground hover:bg-card rounded-lg transition-colors"
+            >
+              <ChevronDown className={`w-4 h-4 transition-transform ${module.isExpanded ? '' : '-rotate-90'}`} />
+            </button>
+          </div>
+        </div>
+      </div>
+      {children}
+    </div>
+  );
+}
+
+// Sortable Lesson Component
+function SortableLesson({ 
+  lesson, 
+  getTypeIcon, 
+  getTypeColor, 
+  getTypeLabel 
+}: { 
+  lesson: Lesson;
+  getTypeIcon: (type: string) => React.ReactNode;
+  getTypeColor: (type: string) => string;
+  getTypeLabel: (type: string) => string;
+}) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: lesson.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+  };
+
+  return (
+    <div 
+      ref={setNodeRef} 
+      style={style} 
+      className="p-4 hover:bg-muted/50 transition-colors cursor-pointer border-b border-border last:border-b-0"
+    >
+      <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 flex-1">
+          <div
+            {...attributes}
+            {...listeners}
+            className="cursor-grab active:cursor-grabbing text-muted-foreground/50 hover:text-muted-foreground transition-colors"
+          >
+            <GripVertical className="w-4 h-4" />
+          </div>
+          <div className={`w-8 h-8 ${lesson.type === 'video' ? 'bg-[hsl(var(--pastel-purple))]/30' : lesson.type === 'text' ? 'bg-[hsl(var(--pastel-blue))]/30' : 'bg-[hsl(var(--pastel-pink))]/30'} rounded flex items-center justify-center flex-shrink-0`}>
+            {getTypeIcon(lesson.type)}
+          </div>
+          <div className="flex-1">
+            <h4 className="font-medium text-foreground text-sm mb-1">{lesson.title}</h4>
+            <div className="flex items-center gap-4 text-xs text-muted-foreground">
+              <span><i className="far fa-clock mr-1"></i>{lesson.duration}</span>
+              <span><i className="fas fa-paperclip mr-1"></i>{lesson.materials} materiais</span>
+              <span className={`px-2 py-0.5 ${getTypeColor(lesson.type)} text-muted-foreground rounded`}>{getTypeLabel(lesson.type)}</span>
+            </div>
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <button className="p-2 text-muted-foreground hover:text-foreground transition-colors">
+            <Eye className="w-4 h-4" />
+          </button>
+          <button className="p-2 text-muted-foreground hover:text-foreground transition-colors">
+            <Edit className="w-4 h-4" />
+          </button>
+          <button className="p-2 text-muted-foreground hover:text-destructive transition-colors">
+            <Trash2 className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default function CriarEbookEtapa2() {
@@ -77,10 +241,68 @@ export default function CriarEbookEtapa2() {
     downloadMaterials: true
   });
 
+  const [activeModuleId, setActiveModuleId] = useState<string | null>(null);
+  const [activeLessonId, setActiveLessonId] = useState<string | null>(null);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
   const toggleModule = (moduleId: string) => {
     setModules(modules.map(m => 
       m.id === moduleId ? { ...m, isExpanded: !m.isExpanded } : m
     ));
+  };
+
+  const handleModuleDragStart = (event: DragStartEvent) => {
+    setActiveModuleId(event.active.id as string);
+  };
+
+  const handleModuleDragEnd = (event: DragEndEvent) => {
+    setActiveModuleId(null);
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      setModules((items) => {
+        const oldIndex = items.findIndex((item) => item.id === active.id);
+        const newIndex = items.findIndex((item) => item.id === over.id);
+        
+        const reordered = arrayMove(items, oldIndex, newIndex);
+        // Update module numbers
+        return reordered.map((module, index) => ({
+          ...module,
+          number: index + 1
+        }));
+      });
+    }
+  };
+
+  const handleLessonDragStart = (event: DragStartEvent) => {
+    setActiveLessonId(event.active.id as string);
+  };
+
+  const handleLessonDragEnd = (moduleId: string) => (event: DragEndEvent) => {
+    setActiveLessonId(null);
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      setModules((items) =>
+        items.map((module) => {
+          if (module.id === moduleId) {
+            const oldIndex = module.lessons.findIndex((l) => l.id === active.id);
+            const newIndex = module.lessons.findIndex((l) => l.id === over.id);
+            return {
+              ...module,
+              lessons: arrayMove(module.lessons, oldIndex, newIndex),
+            };
+          }
+          return module;
+        })
+      );
+    }
   };
 
   const getTypeLabel = (type: string) => {
@@ -222,7 +444,7 @@ export default function CriarEbookEtapa2() {
                 <div className="flex items-center justify-between mb-6">
                   <div>
                     <h2 className="text-lg font-semibold text-foreground">Estrutura do E-book</h2>
-                    <p className="text-sm text-muted-foreground mt-1">Organize seu conteúdo em capítulos e seções</p>
+                    <p className="text-sm text-muted-foreground mt-1">Arraste para reordenar capítulos e seções</p>
                   </div>
                   <button className="px-4 py-2 bg-[hsl(var(--pastel-blue))] text-foreground rounded-lg font-medium hover:opacity-80 transition-opacity flex items-center gap-2">
                     <Plus className="w-4 h-4" />
@@ -250,89 +472,64 @@ export default function CriarEbookEtapa2() {
                 </div>
               </div>
 
-              {/* Modules */}
-              {modules.map((module) => (
-                <div key={module.id} className="bg-card rounded-xl border border-border overflow-hidden">
-                  {/* Module Header */}
-                  <div className={`${getModuleBgColor(module.color)} p-6 border-b border-border`}>
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-start gap-4 flex-1">
-                        <div className={`w-10 h-10 ${getModuleColor(module.color)} rounded-lg flex items-center justify-center flex-shrink-0`}>
-                          <Folder className="w-5 h-5 text-foreground" />
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex items-center gap-3 mb-2">
-                            <span className="px-2 py-1 bg-card text-muted-foreground text-xs font-medium rounded">Capítulo {module.number}</span>
-                            <span className="text-xs text-muted-foreground">{module.lessons.length} seções • {module.totalDuration}</span>
-                          </div>
-                          <h3 className="text-lg font-semibold text-foreground mb-2">{module.title}</h3>
-                          <p className="text-sm text-muted-foreground">{module.description}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <button className="p-2 text-muted-foreground hover:bg-card rounded-lg transition-colors">
-                          <Edit className="w-4 h-4" />
-                        </button>
-                        <button className="p-2 text-muted-foreground hover:bg-card rounded-lg transition-colors">
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                        <button 
-                          onClick={() => toggleModule(module.id)}
-                          className="p-2 text-muted-foreground hover:bg-card rounded-lg transition-colors"
-                        >
-                          <ChevronDown className={`w-4 h-4 transition-transform ${module.isExpanded ? '' : '-rotate-90'}`} />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Lessons */}
-                  {module.isExpanded && (
-                    <>
-                      <div className="divide-y divide-border">
-                        {module.lessons.map((lesson) => (
-                          <div key={lesson.id} className="p-4 hover:bg-muted/50 transition-colors cursor-pointer">
-                            <div className="flex items-center gap-4">
-                              <div className="flex items-center gap-3 flex-1">
-                                <GripVertical className="w-4 h-4 text-muted-foreground/50" />
-                                <div className={`w-8 h-8 ${lesson.type === 'video' ? 'bg-[hsl(var(--pastel-purple))]/30' : lesson.type === 'text' ? 'bg-[hsl(var(--pastel-blue))]/30' : 'bg-[hsl(var(--pastel-pink))]/30'} rounded flex items-center justify-center flex-shrink-0`}>
-                                  {getTypeIcon(lesson.type)}
-                                </div>
-                                <div className="flex-1">
-                                  <h4 className="font-medium text-foreground text-sm mb-1">{lesson.title}</h4>
-                                  <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                                    <span><i className="far fa-clock mr-1"></i>{lesson.duration}</span>
-                                    <span><i className="fas fa-paperclip mr-1"></i>{lesson.materials} materiais</span>
-                                    <span className={`px-2 py-0.5 ${getTypeColor(lesson.type)} text-muted-foreground rounded`}>{getTypeLabel(lesson.type)}</span>
-                                  </div>
-                                </div>
+              {/* Modules with Drag and Drop */}
+              <DndContext
+                sensors={sensors}
+                collisionDetection={closestCenter}
+                onDragStart={handleModuleDragStart}
+                onDragEnd={handleModuleDragEnd}
+              >
+                <SortableContext
+                  items={modules.map(m => m.id)}
+                  strategy={verticalListSortingStrategy}
+                >
+                  {modules.map((module) => (
+                    <SortableModule 
+                      key={module.id} 
+                      module={module}
+                      onToggle={() => toggleModule(module.id)}
+                      getModuleBgColor={getModuleBgColor}
+                      getModuleColor={getModuleColor}
+                    >
+                      {/* Lessons with their own DndContext */}
+                      {module.isExpanded && (
+                        <>
+                          <DndContext
+                            sensors={sensors}
+                            collisionDetection={closestCenter}
+                            onDragStart={handleLessonDragStart}
+                            onDragEnd={handleLessonDragEnd(module.id)}
+                          >
+                            <SortableContext
+                              items={module.lessons.map(l => l.id)}
+                              strategy={verticalListSortingStrategy}
+                            >
+                              <div>
+                                {module.lessons.map((lesson) => (
+                                  <SortableLesson
+                                    key={lesson.id}
+                                    lesson={lesson}
+                                    getTypeIcon={getTypeIcon}
+                                    getTypeColor={getTypeColor}
+                                    getTypeLabel={getTypeLabel}
+                                  />
+                                ))}
                               </div>
-                              <div className="flex items-center gap-2">
-                                <button className="p-2 text-muted-foreground hover:text-foreground transition-colors">
-                                  <Eye className="w-4 h-4" />
-                                </button>
-                                <button className="p-2 text-muted-foreground hover:text-foreground transition-colors">
-                                  <Edit className="w-4 h-4" />
-                                </button>
-                                <button className="p-2 text-muted-foreground hover:text-destructive transition-colors">
-                                  <Trash2 className="w-4 h-4" />
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
+                            </SortableContext>
+                          </DndContext>
 
-                      <div className="p-4 border-t border-border bg-muted/30">
-                        <button className="w-full px-4 py-3 text-muted-foreground hover:bg-card rounded-lg font-medium transition-colors text-sm flex items-center justify-center gap-2">
-                          <Plus className="w-4 h-4" />
-                          Adicionar Nova Seção
-                        </button>
-                      </div>
-                    </>
-                  )}
-                </div>
-              ))}
+                          <div className="p-4 border-t border-border bg-muted/30">
+                            <button className="w-full px-4 py-3 text-muted-foreground hover:bg-card rounded-lg font-medium transition-colors text-sm flex items-center justify-center gap-2">
+                              <Plus className="w-4 h-4" />
+                              Adicionar Nova Seção
+                            </button>
+                          </div>
+                        </>
+                      )}
+                    </SortableModule>
+                  ))}
+                </SortableContext>
+              </DndContext>
 
               {/* Add New Module Section */}
               <div className="bg-card rounded-xl border-2 border-dashed border-border p-8 text-center hover:border-[hsl(var(--pastel-blue))] transition-colors cursor-pointer">
@@ -361,7 +558,15 @@ export default function CriarEbookEtapa2() {
                 <div className="space-y-3 text-sm text-muted-foreground">
                   <div className="flex items-start gap-2">
                     <Check className="w-4 h-4 text-[hsl(var(--pastel-green))] mt-0.5 flex-shrink-0" />
-                    <p>Organize o conteúdo do simples para o complexo</p>
+                    <p>Arraste os capítulos para reordená-los</p>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <Check className="w-4 h-4 text-[hsl(var(--pastel-green))] mt-0.5 flex-shrink-0" />
+                    <p>Arraste as seções dentro de cada capítulo</p>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <Check className="w-4 h-4 text-[hsl(var(--pastel-green))] mt-0.5 flex-shrink-0" />
+                    <p>Organize do simples para o complexo</p>
                   </div>
                   <div className="flex items-start gap-2">
                     <Check className="w-4 h-4 text-[hsl(var(--pastel-green))] mt-0.5 flex-shrink-0" />
@@ -369,15 +574,7 @@ export default function CriarEbookEtapa2() {
                   </div>
                   <div className="flex items-start gap-2">
                     <Check className="w-4 h-4 text-[hsl(var(--pastel-green))] mt-0.5 flex-shrink-0" />
-                    <p>Adicione materiais complementares em PDF</p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-[hsl(var(--pastel-green))] mt-0.5 flex-shrink-0" />
                     <p>Use quizzes para reforçar o aprendizado</p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-[hsl(var(--pastel-green))] mt-0.5 flex-shrink-0" />
-                    <p>Inclua exercícios práticos ao final de cada capítulo</p>
                   </div>
                 </div>
               </div>
