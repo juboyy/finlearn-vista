@@ -140,6 +140,7 @@ import HistoricoIngressos from "./pages/HistoricoIngressos";
 import ProgramacaoEvento from "./pages/ProgramacaoEvento";
 import ParticipantesConfirmados from "./pages/ParticipantesConfirmados";
 import TodasComunidades from "./pages/TodasComunidades";
+import CriarInsights from "./pages/CriarInsights";
 
 import NotFound from "./pages/NotFound";
 
@@ -295,6 +296,7 @@ const App = () => {
               <Route path="/historico-ingressos" element={<ProtectedRoute><HistoricoIngressos /></ProtectedRoute>} />
               <Route path="/programacao-evento" element={<ProtectedRoute><ProgramacaoEvento /></ProtectedRoute>} />
               <Route path="/participantes-confirmados" element={<ProtectedRoute><ParticipantesConfirmados /></ProtectedRoute>} />
+              <Route path="/criar-insights" element={<ProtectedRoute><CriarInsights /></ProtectedRoute>} />
              
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
