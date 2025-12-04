@@ -1,18 +1,21 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { 
   Bookmark, Share2, Printer, TrendingUp, ChevronRight, Volume2, 
   Video, Lightbulb, CheckCircle2, ChartLine, Percent, Smartphone,
   Plus, Linkedin, Twitter, Mail, Facebook, Link as LinkIcon, MessageCircle, Bot,
-  Loader2, Pause, Play
+  Loader2, Pause, Play, RotateCcw
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
 import { ArticleExpertChat } from "@/components/Dashboard/ArticleExpertChat";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
 
 const Artigo = () => {
+  const { id: articleId } = useParams();
+  const { user } = useAuth();
   const [scrollProgress, setScrollProgress] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState(12);
   const [activeSection, setActiveSection] = useState("");
@@ -23,10 +26,94 @@ const Artigo = () => {
   const [audioDuration, setAudioDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
+  const [savedProgress, setSavedProgress] = useState<number | null>(null);
+  const [hasSavedProgress, setHasSavedProgress] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const saveIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const { toast } = useToast();
 
+  const articleTitle = "Guia Completo de Crédito Imobiliário: Tudo que Você Precisa Saber em 2024";
   const speedOptions = [0.5, 0.75, 1, 1.25, 1.5, 2];
+
+  // Load saved progress on mount
+  useEffect(() => {
+    const loadSavedProgress = async () => {
+      if (!user || !articleId) return;
+      
+      try {
+        const { data, error } = await supabase
+          .from('article_audio_progress')
+          .select('*')
+          .eq('user_id', user.id)
+          .eq('article_id', articleId)
+          .single();
+        
+        if (data && !error && !data.completed) {
+          setSavedProgress(data.current_time_seconds);
+          setPlaybackSpeed(data.playback_speed);
+          setHasSavedProgress(true);
+        }
+      } catch (err) {
+        console.log('No saved progress found');
+      }
+    };
+    
+    loadSavedProgress();
+  }, [user, articleId]);
+
+  // Save progress function
+  const saveProgress = useCallback(async () => {
+    if (!user || !articleId || !audioRef.current) return;
+    
+    const currentTimeValue = audioRef.current.currentTime;
+    const durationValue = audioRef.current.duration;
+    const progressValue = (currentTimeValue / durationValue) * 100;
+    const isCompleted = progressValue >= 95;
+    
+    try {
+      await supabase
+        .from('article_audio_progress')
+        .upsert({
+          user_id: user.id,
+          article_id: articleId,
+          article_title: articleTitle,
+          current_time_seconds: currentTimeValue,
+          total_duration_seconds: durationValue,
+          progress_percentage: progressValue,
+          playback_speed: playbackSpeed,
+          completed: isCompleted,
+          last_played_at: new Date().toISOString()
+        }, {
+          onConflict: 'user_id,article_id'
+        });
+    } catch (err) {
+      console.error('Error saving progress:', err);
+    }
+  }, [user, articleId, playbackSpeed]);
+
+  // Auto-save progress every 5 seconds while playing
+  useEffect(() => {
+    if (isPlaying && user) {
+      saveIntervalRef.current = setInterval(() => {
+        saveProgress();
+      }, 5000);
+    }
+    
+    return () => {
+      if (saveIntervalRef.current) {
+        clearInterval(saveIntervalRef.current);
+      }
+    };
+  }, [isPlaying, saveProgress, user]);
+
+  // Save progress when component unmounts or audio stops
+  useEffect(() => {
+    return () => {
+      if (audioRef.current && user) {
+        saveProgress();
+      }
+    };
+  }, [saveProgress, user]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -46,6 +133,13 @@ const Artigo = () => {
     setCurrentTime(newTime);
     if (audioRef.current) {
       audioRef.current.currentTime = newTime;
+    }
+  };
+
+  const handleResumeFromSaved = () => {
+    if (audioRef.current && savedProgress !== null) {
+      audioRef.current.currentTime = savedProgress;
+      setCurrentTime(savedProgress);
     }
   };
 
@@ -189,6 +283,15 @@ const Artigo = () => {
         audioRef.current.onloadedmetadata = () => {
           if (audioRef.current) {
             setAudioDuration(audioRef.current.duration);
+            // Resume from saved progress if available
+            if (savedProgress !== null && savedProgress > 0) {
+              audioRef.current.currentTime = savedProgress;
+              setCurrentTime(savedProgress);
+              toast({
+                title: "Continuando de onde parou",
+                description: `Retomando em ${formatTime(savedProgress)}`,
+              });
+            }
           }
         };
         
@@ -203,6 +306,10 @@ const Artigo = () => {
           setIsPlaying(false);
           setAudioProgress(0);
           setCurrentTime(0);
+          setSavedProgress(null);
+          setHasSavedProgress(false);
+          // Save as completed
+          saveProgress();
         };
         
         audioRef.current.play();
@@ -380,23 +487,43 @@ const Artigo = () => {
                   <button 
                     onClick={handleListenArticle}
                     disabled={isGeneratingAudio}
-                    className="flex items-center gap-3 p-4 bg-card rounded-lg border border-border hover:border-pastel-blue hover:bg-pastel-blue/10 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                    className={`flex items-center gap-3 p-4 bg-card rounded-lg border transition disabled:opacity-50 disabled:cursor-not-allowed ${
+                      hasSavedProgress 
+                        ? 'border-pastel-green hover:border-pastel-green hover:bg-pastel-green/10' 
+                        : 'border-border hover:border-pastel-blue hover:bg-pastel-blue/10'
+                    }`}
                   >
-                    <div className="w-10 h-10 bg-pastel-blue/30 rounded-lg flex items-center justify-center">
+                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                      hasSavedProgress ? 'bg-pastel-green/30' : 'bg-pastel-blue/30'
+                    }`}>
                       {isGeneratingAudio ? (
                         <Loader2 size={18} className="text-foreground animate-spin" />
                       ) : isPlaying ? (
                         <Pause size={18} className="text-foreground" />
+                      ) : hasSavedProgress ? (
+                        <RotateCcw size={18} className="text-foreground" />
                       ) : (
                         <Volume2 size={18} className="text-foreground" />
                       )}
                     </div>
                     <div className="text-left">
                       <p className="text-sm font-medium text-foreground">
-                        {isGeneratingAudio ? "Gerando áudio..." : isPlaying ? "Pausar Áudio" : "Ouvir Artigo"}
+                        {isGeneratingAudio 
+                          ? "Gerando áudio..." 
+                          : isPlaying 
+                            ? "Pausar Áudio" 
+                            : hasSavedProgress 
+                              ? "Continuar Ouvindo" 
+                              : "Ouvir Artigo"}
                       </p>
                       <p className="text-xs text-muted-foreground">
-                        {isGeneratingAudio ? "Aguarde" : isPlaying ? "Reproduzindo" : "Áudio narrado"}
+                        {isGeneratingAudio 
+                          ? "Aguarde" 
+                          : isPlaying 
+                            ? "Reproduzindo" 
+                            : hasSavedProgress && savedProgress !== null
+                              ? `Continuar em ${formatTime(savedProgress)}`
+                              : "Áudio narrado"}
                       </p>
                     </div>
                   </button>

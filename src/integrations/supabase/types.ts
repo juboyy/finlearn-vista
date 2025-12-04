@@ -208,6 +208,51 @@ export type Database = {
         }
         Relationships: []
       }
+      article_audio_progress: {
+        Row: {
+          article_id: string
+          article_title: string
+          completed: boolean
+          created_at: string
+          current_time_seconds: number
+          id: string
+          last_played_at: string
+          playback_speed: number
+          progress_percentage: number
+          total_duration_seconds: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          article_id: string
+          article_title: string
+          completed?: boolean
+          created_at?: string
+          current_time_seconds?: number
+          id?: string
+          last_played_at?: string
+          playback_speed?: number
+          progress_percentage?: number
+          total_duration_seconds?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          article_id?: string
+          article_title?: string
+          completed?: boolean
+          created_at?: string
+          current_time_seconds?: number
+          id?: string
+          last_played_at?: string
+          playback_speed?: number
+          progress_percentage?: number
+          total_duration_seconds?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       assistant_suggestions: {
         Row: {
           content: string
