@@ -29,9 +29,18 @@ import { Switch } from "@/components/ui/switch";
 import { Progress } from "@/components/ui/progress";
 import { useUserAgents } from "@/hooks/useUserAgents";
 import { SidebarMeusAgentes } from "@/components/Dashboard/SidebarMeusAgentes";
+import { VideoCallModal } from "@/components/VideoCallModal";
+import { useState } from "react";
 
 export default function MeusAgentes() {
   const { agents, loading, toggleAgentStatus } = useUserAgents();
+  const [videoCallOpen, setVideoCallOpen] = useState(false);
+  const [selectedAgent, setSelectedAgent] = useState<{ name: string; avatar: string } | null>(null);
+
+  const handleOpenVideoCall = (agentName: string, agentAvatar: string) => {
+    setSelectedAgent({ name: agentName, avatar: agentAvatar });
+    setVideoCallOpen(true);
+  };
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
@@ -222,7 +231,12 @@ export default function MeusAgentes() {
                           <Button variant="outline" size="icon" disabled={!agent.is_active}>
                             <Mic size={16} />
                           </Button>
-                          <Button variant="outline" size="icon" disabled={!agent.is_active}>
+                          <Button 
+                            variant="outline" 
+                            size="icon" 
+                            disabled={!agent.is_active}
+                            onClick={() => handleOpenVideoCall(agent.agent_name, agent.agent_image)}
+                          >
                             <Video size={16} />
                           </Button>
                           <Button variant="outline" size="icon" disabled={!agent.is_active}>
@@ -347,6 +361,16 @@ export default function MeusAgentes() {
         )}
       </main>
       </div>
+
+      {/* Video Call Modal */}
+      {selectedAgent && (
+        <VideoCallModal
+          open={videoCallOpen}
+          onOpenChange={setVideoCallOpen}
+          agentName={selectedAgent.name}
+          agentAvatar={selectedAgent.avatar}
+        />
+      )}
     </div>
   );
 }
