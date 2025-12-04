@@ -2,10 +2,43 @@ import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { MenutabbarFix } from "@/components/Dashboard/MenutabbarFix";
 import { LiveChatPanel } from "@/components/Dashboard/LiveChatPanel";
 import { useState } from "react";
-import { Bell, PlayCircle, Eye, X } from "lucide-react";
+import { Bell, PlayCircle, Eye, X, Bookmark, BookmarkCheck } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { useSaveForLater } from "@/hooks/useSaveForLater";
 
 type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'relatorios' | 'documentos' | 'estudos' | 'infograficos' | 'whitepaper' | 'apresentacoes' | 'live' | 'entrevistas' | 'insights' | 'graficos';
+
+interface LiveCardProps {
+  id: string;
+  title: string;
+  description: string;
+  onWatch: () => void;
+}
+
+const LiveSaveButton = ({ id, title }: { id: string; title: string }) => {
+  const { isSaved, isLoading, toggleSave } = useSaveForLater({
+    itemId: id,
+    itemTitle: title,
+    itemType: 'live',
+    itemDescription: 'Transmissão ao vivo',
+    itemUrl: `/live/${id}`
+  });
+
+  return (
+    <button 
+      onClick={(e) => { e.stopPropagation(); toggleSave(); }}
+      disabled={isLoading}
+      className={`p-2 rounded-lg transition flex items-center gap-1 ${
+        isSaved 
+          ? 'bg-pastel-purple/40 text-slate-700' 
+          : 'bg-white/90 backdrop-blur text-slate-700 hover:bg-white'
+      }`}
+      title={isSaved ? 'Remover de Assistir Depois' : 'Assistir Depois'}
+    >
+      {isSaved ? <BookmarkCheck className="w-4 h-4 fill-slate-700" /> : <Bookmark className="w-4 h-4" />}
+    </button>
+  );
+};
 
 export default function Live() {
   const [activeTab, setActiveTab] = useState<TabType>('live');
@@ -64,6 +97,7 @@ export default function Live() {
                     </span>
                   </div>
                   <div className="absolute top-4 right-4 flex gap-2">
+                    <LiveSaveButton id="live-1" title="Análise do Mercado em Tempo Real" />
                     <span className="px-3 py-1.5 bg-white/90 backdrop-blur text-slate-700 text-sm font-medium rounded-full flex items-center gap-1.5">
                       <i className="fas fa-users text-xs"></i>
                       2.1k assistindo
@@ -114,6 +148,7 @@ export default function Live() {
                     </span>
                   </div>
                   <div className="absolute top-4 right-4 flex gap-2">
+                    <LiveSaveButton id="live-2" title="Perguntas e Respostas: Investimentos 2025" />
                     <span className="px-3 py-1.5 bg-white/90 backdrop-blur text-slate-700 text-sm font-medium rounded-full flex items-center gap-1.5">
                       <i className="fas fa-users text-xs"></i>
                       1.5k assistindo
@@ -253,7 +288,8 @@ export default function Live() {
                         AO VIVO
                       </span>
                     </div>
-                    <div className="absolute top-4 right-4">
+                    <div className="absolute top-4 right-4 flex gap-2">
+                      <LiveSaveButton id="live-3" title="Lançamento: Nova Plataforma Open Finance" />
                       <span className="px-3 py-1.5 bg-white/90 backdrop-blur text-slate-700 text-sm font-medium rounded-full flex items-center gap-1.5">
                         <i className="fas fa-users text-xs"></i>
                         892 assistindo
