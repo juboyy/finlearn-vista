@@ -797,7 +797,7 @@ export default function HistoricoIngressos() {
                 
                 {/* QR Code for Verification */}
                 <div className="text-center">
-                  <div className="bg-white p-1.5 rounded-lg border border-slate-200 mb-1">
+                  <div className="bg-white p-1.5 rounded-lg border border-slate-200 mb-1 flex items-center justify-center">
                     <QRCodeSVG 
                       value={verificationUrl} 
                       size={56}
