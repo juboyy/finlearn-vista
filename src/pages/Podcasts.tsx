@@ -3,7 +3,7 @@ import { MenutabbarFix } from "@/components/Dashboard/MenutabbarFix";
 import { Bell } from "lucide-react";
 import { useState } from "react";
 
-type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'relatorios' | 'documentos' | 'estudos' | 'infograficos' | 'whitepaper' | 'apresentacoes' | 'live' | 'entrevistas';
+type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'relatorios' | 'documentos' | 'estudos' | 'infograficos' | 'whitepaper' | 'apresentacoes' | 'live' | 'entrevistas' | 'insights' | 'graficos';
 
 const Podcasts = () => {
   const [activeTab, setActiveTab] = useState<TabType>('podcasts');

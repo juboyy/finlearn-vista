@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Bell, Video, Headphones, FileText, User, Building2, Bot, Play, Eye, Clock } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 
-type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'relatorios' | 'documentos' | 'estudos' | 'infograficos' | 'whitepaper' | 'apresentacoes' | 'live' | 'entrevistas';
+type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'relatorios' | 'documentos' | 'estudos' | 'infograficos' | 'whitepaper' | 'apresentacoes' | 'live' | 'entrevistas' | 'insights' | 'graficos';
 type MediaType = 'todos' | 'video' | 'audio' | 'escrita';
 
 export default function Entrevistas() {

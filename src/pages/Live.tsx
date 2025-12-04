@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Bell, PlayCircle, Eye, X } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 
-type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'relatorios' | 'documentos' | 'estudos' | 'infograficos' | 'whitepaper' | 'apresentacoes' | 'live' | 'entrevistas';
+type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'relatorios' | 'documentos' | 'estudos' | 'infograficos' | 'whitepaper' | 'apresentacoes' | 'live' | 'entrevistas' | 'insights' | 'graficos';
 
 export default function Live() {
   const [activeTab, setActiveTab] = useState<TabType>('live');
