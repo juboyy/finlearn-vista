@@ -1,7 +1,7 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { 
   ArrowLeft, Bell, Eye, Save, Camera, MapPin, Building2, Calendar,
-  Link2, Upload, Loader2
+  Link2, Upload, Loader2, Plus, X, Image, Briefcase, GraduationCap
 } from "lucide-react";
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
@@ -15,15 +15,28 @@ import {
 } from "@/components/ui/sheet";
 import { useToast } from "@/hooks/use-toast";
 
+interface WorkExperience {
+  id: string;
+  company: string;
+  role: string;
+  location: string;
+  startYear: string;
+  endYear: string;
+  current: boolean;
+}
+
 export default function PerfilSocial() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const coverInputRef = useRef<HTMLInputElement>(null);
   
   // Profile states
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
+  const [isUploadingCover, setIsUploadingCover] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState("https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg");
+  const [coverUrl, setCoverUrl] = useState("");
   
   // Form states
   const [displayName, setDisplayName] = useState("");
@@ -40,6 +53,16 @@ export default function PerfilSocial() {
   const [youtube, setYoutube] = useState("");
   const [linkedin, setLinkedin] = useState("");
   const [portfolio, setPortfolio] = useState("");
+  const [github, setGithub] = useState("");
+  const [tiktok, setTiktok] = useState("");
+  const [facebook, setFacebook] = useState("");
+  const [medium, setMedium] = useState("");
+  const [threads, setThreads] = useState("");
+  const [telegram, setTelegram] = useState("");
+  const [whatsapp, setWhatsapp] = useState("");
+
+  // Work Experience
+  const [workExperiences, setWorkExperiences] = useState<WorkExperience[]>([]);
 
   const handleAvatarUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -66,7 +89,6 @@ export default function PerfilSocial() {
 
     setIsUploadingAvatar(true);
     
-    // Simulate upload
     setTimeout(() => {
       const url = URL.createObjectURL(file);
       setAvatarUrl(url);
@@ -78,12 +100,88 @@ export default function PerfilSocial() {
     }, 1000);
   };
 
+  const handleCoverUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      toast({
+        variant: "destructive",
+        title: "Formato invalido",
+        description: "Por favor, selecione uma imagem JPG, PNG ou WebP.",
+      });
+      return;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      toast({
+        variant: "destructive",
+        title: "Arquivo muito grande",
+        description: "O tamanho maximo permitido e 10MB.",
+      });
+      return;
+    }
+
+    setIsUploadingCover(true);
+    
+    setTimeout(() => {
+      const url = URL.createObjectURL(file);
+      setCoverUrl(url);
+      setIsUploadingCover(false);
+      toast({
+        title: "Capa atualizada",
+        description: "Sua foto de capa foi atualizada com sucesso.",
+      });
+    }, 1000);
+  };
+
+  const addWorkExperience = () => {
+    setWorkExperiences([
+      ...workExperiences,
+      {
+        id: Date.now().toString(),
+        company: "",
+        role: "",
+        location: "",
+        startYear: "",
+        endYear: "",
+        current: false
+      }
+    ]);
+  };
+
+  const updateWorkExperience = (id: string, field: keyof WorkExperience, value: string | boolean) => {
+    setWorkExperiences(workExperiences.map(exp => 
+      exp.id === id ? { ...exp, [field]: value } : exp
+    ));
+  };
+
+  const removeWorkExperience = (id: string) => {
+    setWorkExperiences(workExperiences.filter(exp => exp.id !== id));
+  };
+
   const handleSave = () => {
     toast({
       title: "Perfil salvo",
       description: "Suas informacoes foram salvas com sucesso.",
     });
   };
+
+  const socialNetworks = [
+    { key: 'twitter', label: 'Twitter/X', value: twitter, setter: setTwitter, placeholder: '@usuario', color: 'pastel-blue' },
+    { key: 'instagram', label: 'Instagram', value: instagram, setter: setInstagram, placeholder: '@usuario', color: 'pastel-pink' },
+    { key: 'youtube', label: 'YouTube', value: youtube, setter: setYoutube, placeholder: '@canal', color: 'pastel-red' },
+    { key: 'linkedin', label: 'LinkedIn', value: linkedin, setter: setLinkedin, placeholder: 'linkedin.com/in/usuario', color: 'pastel-blue' },
+    { key: 'github', label: 'GitHub', value: github, setter: setGithub, placeholder: 'github.com/usuario', color: 'pastel-gray' },
+    { key: 'tiktok', label: 'TikTok', value: tiktok, setter: setTiktok, placeholder: '@usuario', color: 'pastel-pink' },
+    { key: 'facebook', label: 'Facebook', value: facebook, setter: setFacebook, placeholder: 'facebook.com/usuario', color: 'pastel-blue' },
+    { key: 'medium', label: 'Medium', value: medium, setter: setMedium, placeholder: '@usuario', color: 'pastel-green' },
+    { key: 'threads', label: 'Threads', value: threads, setter: setThreads, placeholder: '@usuario', color: 'pastel-purple' },
+    { key: 'telegram', label: 'Telegram', value: telegram, setter: setTelegram, placeholder: '@usuario', color: 'pastel-blue' },
+    { key: 'whatsapp', label: 'WhatsApp', value: whatsapp, setter: setWhatsapp, placeholder: '+55 11 99999-9999', color: 'pastel-green' },
+    { key: 'portfolio', label: 'Portfolio/Site', value: portfolio, setter: setPortfolio, placeholder: 'https://seusite.com', color: 'pastel-orange' },
+  ];
 
   return (
     <div className="flex h-screen overflow-hidden bg-background">
@@ -129,64 +227,90 @@ export default function PerfilSocial() {
         </header>
 
         <main className="p-8">
-          <div className="max-w-4xl mx-auto space-y-8">
-            {/* Profile Photo Section */}
-            <section className="bg-card border border-border rounded-xl p-6">
-              <h2 className="text-lg font-semibold text-foreground mb-6 flex items-center gap-2">
-                <Camera size={20} className="text-pastel-blue" />
-                Foto do Perfil
-              </h2>
+          <div className="max-w-5xl mx-auto space-y-8">
+            
+            {/* Cover Photo Section */}
+            <section className="bg-card border border-border rounded-xl overflow-hidden">
+              <div 
+                className="relative h-48 bg-gradient-to-br from-pastel-blue/30 via-pastel-purple/20 to-pastel-pink/30"
+                style={coverUrl ? { backgroundImage: `url(${coverUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}
+              >
+                <div className="absolute inset-0 bg-black/10" />
+                <button 
+                  onClick={() => coverInputRef.current?.click()}
+                  disabled={isUploadingCover}
+                  className="absolute top-4 right-4 px-4 py-2 bg-white/90 backdrop-blur-sm text-slate-700 rounded-lg font-medium hover:bg-white transition flex items-center gap-2 shadow-sm"
+                >
+                  {isUploadingCover ? (
+                    <Loader2 className="animate-spin" size={16} />
+                  ) : (
+                    <Image size={16} />
+                  )}
+                  {coverUrl ? 'Alterar Capa' : 'Adicionar Capa'}
+                </button>
+                {coverUrl && (
+                  <button 
+                    onClick={() => setCoverUrl("")}
+                    className="absolute top-4 right-40 px-3 py-2 bg-white/90 backdrop-blur-sm text-red-600 rounded-lg font-medium hover:bg-white transition flex items-center gap-2 shadow-sm"
+                  >
+                    <X size={16} />
+                    Remover
+                  </button>
+                )}
+                <input
+                  ref={coverInputRef}
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  onChange={handleCoverUpload}
+                  className="hidden"
+                />
+              </div>
               
-              <div className="flex items-center gap-6">
-                <div className="relative">
-                  <img 
-                    src={avatarUrl} 
-                    alt="Profile" 
-                    className="w-32 h-32 rounded-xl object-cover border-4 border-slate-100"
-                  />
-                  <button 
-                    onClick={() => fileInputRef.current?.click()}
-                    disabled={isUploadingAvatar}
-                    className="absolute bottom-0 right-0 w-10 h-10 bg-pastel-blue rounded-full flex items-center justify-center hover:bg-opacity-80 transition disabled:opacity-50"
-                  >
-                    {isUploadingAvatar ? (
-                      <Loader2 className="text-slate-700 animate-spin" size={20} />
-                    ) : (
-                      <Camera className="text-slate-700" size={20} />
-                    )}
-                  </button>
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm text-muted-foreground mb-4">
-                    Sua foto ajuda outras pessoas a reconhecer voce na plataforma. 
-                    Formatos aceitos: JPG, PNG. Tamanho maximo: 5MB.
-                  </p>
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/jpeg,image/png,image/webp"
-                    onChange={handleAvatarUpload}
-                    className="hidden"
-                  />
-                  <button 
-                    onClick={() => fileInputRef.current?.click()}
-                    disabled={isUploadingAvatar}
-                    className="px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition disabled:opacity-50 flex items-center"
-                  >
-                    {isUploadingAvatar ? (
-                      <Loader2 className="inline mr-2 animate-spin" size={16} />
-                    ) : (
-                      <Upload className="inline mr-2" size={16} />
-                    )}
-                    {isUploadingAvatar ? 'Carregando...' : 'Carregar Foto'}
-                  </button>
+              <div className="p-6 pt-0 -mt-16 relative z-10">
+                <div className="flex items-end gap-6">
+                  <div className="relative">
+                    <img 
+                      src={avatarUrl} 
+                      alt="Profile" 
+                      className="w-32 h-32 rounded-2xl object-cover border-4 border-card shadow-lg"
+                    />
+                    <button 
+                      onClick={() => fileInputRef.current?.click()}
+                      disabled={isUploadingAvatar}
+                      className="absolute bottom-0 right-0 w-10 h-10 bg-pastel-blue rounded-full flex items-center justify-center hover:bg-opacity-80 transition disabled:opacity-50 shadow-md"
+                    >
+                      {isUploadingAvatar ? (
+                        <Loader2 className="text-slate-700 animate-spin" size={18} />
+                      ) : (
+                        <Camera className="text-slate-700" size={18} />
+                      )}
+                    </button>
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/jpeg,image/png,image/webp"
+                      onChange={handleAvatarUpload}
+                      className="hidden"
+                    />
+                  </div>
+                  <div className="flex-1 pb-2">
+                    <p className="text-sm text-muted-foreground">
+                      Foto de perfil e capa ajudam outras pessoas a reconhecer voce na plataforma.
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Perfil: JPG, PNG ou WebP ate 5MB | Capa: ate 10MB (recomendado: 1500x500px)
+                    </p>
+                  </div>
                 </div>
               </div>
             </section>
 
             {/* Basic Info Section */}
             <section className="bg-card border border-border rounded-xl p-6">
-              <h2 className="text-lg font-semibold text-foreground mb-6">Informacoes Basicas</h2>
+              <h2 className="text-lg font-semibold text-foreground mb-6 flex items-center gap-2">
+                <GraduationCap size={20} className="text-pastel-purple" />
+                Informacoes Basicas
+              </h2>
               
               <div className="grid grid-cols-2 gap-6">
                 <div>
@@ -217,7 +341,7 @@ export default function PerfilSocial() {
                 
                 <div className="col-span-2">
                   <Label htmlFor="subtitle" className="text-sm font-medium text-slate-700">
-                    Subtitulo
+                    Subtitulo / Headline
                   </Label>
                   <Input
                     id="subtitle"
@@ -238,15 +362,19 @@ export default function PerfilSocial() {
                     onChange={(e) => setBio(e.target.value)}
                     placeholder="Conte um pouco sobre voce, sua experiencia e areas de atuacao..."
                     rows={5}
-                    className="mt-1 w-full px-3 py-2 border border-input rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-ring bg-background"
+                    className="mt-1 w-full px-3 py-2 border border-input rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-ring bg-background resize-none"
                   />
+                  <p className="text-xs text-muted-foreground mt-1">{bio.length}/500 caracteres</p>
                 </div>
               </div>
             </section>
 
             {/* Location & Institution Section */}
             <section className="bg-card border border-border rounded-xl p-6">
-              <h2 className="text-lg font-semibold text-foreground mb-6">Localizacao e Instituicao</h2>
+              <h2 className="text-lg font-semibold text-foreground mb-6 flex items-center gap-2">
+                <MapPin size={20} className="text-pastel-green" />
+                Localizacao e Instituicao Atual
+              </h2>
               
               <div className="grid grid-cols-3 gap-6">
                 <div>
@@ -266,7 +394,7 @@ export default function PerfilSocial() {
                 <div>
                   <Label htmlFor="institution" className="text-sm font-medium text-slate-700 flex items-center gap-2">
                     <Building2 size={14} />
-                    Instituicao
+                    Instituicao Atual
                   </Label>
                   <Input
                     id="institution"
@@ -293,83 +421,131 @@ export default function PerfilSocial() {
               </div>
             </section>
 
+            {/* Work Experience Section */}
+            <section className="bg-card border border-border rounded-xl p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
+                  <Briefcase size={20} className="text-pastel-orange" />
+                  Experiencia Profissional
+                </h2>
+                <button
+                  onClick={addWorkExperience}
+                  className="px-4 py-2 bg-pastel-blue/50 text-slate-700 rounded-lg font-medium hover:bg-pastel-blue/70 transition flex items-center gap-2 text-sm"
+                >
+                  <Plus size={16} />
+                  Adicionar Experiencia
+                </button>
+              </div>
+              
+              {workExperiences.length === 0 ? (
+                <div className="text-center py-12 border-2 border-dashed border-border rounded-xl">
+                  <Briefcase className="mx-auto text-muted-foreground mb-3" size={40} />
+                  <p className="text-muted-foreground mb-2">Nenhuma experiencia adicionada</p>
+                  <p className="text-sm text-muted-foreground">Adicione seus locais de trabalho anteriores</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {workExperiences.map((exp, index) => (
+                    <div key={exp.id} className="bg-accent/30 border border-border rounded-xl p-5 relative">
+                      <button
+                        onClick={() => removeWorkExperience(exp.id)}
+                        className="absolute top-4 right-4 p-1.5 text-muted-foreground hover:text-red-500 hover:bg-red-50 rounded-lg transition"
+                      >
+                        <X size={18} />
+                      </button>
+                      
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <Label className="text-sm font-medium text-slate-700">Empresa/Instituicao</Label>
+                          <Input
+                            value={exp.company}
+                            onChange={(e) => updateWorkExperience(exp.id, 'company', e.target.value)}
+                            placeholder="Ex: Banco Itau"
+                            className="mt-1"
+                          />
+                        </div>
+                        <div>
+                          <Label className="text-sm font-medium text-slate-700">Cargo/Funcao</Label>
+                          <Input
+                            value={exp.role}
+                            onChange={(e) => updateWorkExperience(exp.id, 'role', e.target.value)}
+                            placeholder="Ex: Analista de Pagamentos"
+                            className="mt-1"
+                          />
+                        </div>
+                        <div>
+                          <Label className="text-sm font-medium text-slate-700">Localizacao</Label>
+                          <Input
+                            value={exp.location}
+                            onChange={(e) => updateWorkExperience(exp.id, 'location', e.target.value)}
+                            placeholder="Ex: Sao Paulo, SP"
+                            className="mt-1"
+                          />
+                        </div>
+                        <div className="grid grid-cols-2 gap-3">
+                          <div>
+                            <Label className="text-sm font-medium text-slate-700">Inicio</Label>
+                            <Input
+                              value={exp.startYear}
+                              onChange={(e) => updateWorkExperience(exp.id, 'startYear', e.target.value)}
+                              placeholder="2020"
+                              className="mt-1"
+                            />
+                          </div>
+                          <div>
+                            <Label className="text-sm font-medium text-slate-700">Fim</Label>
+                            <Input
+                              value={exp.endYear}
+                              onChange={(e) => updateWorkExperience(exp.id, 'endYear', e.target.value)}
+                              placeholder="2023"
+                              disabled={exp.current}
+                              className="mt-1"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <label className="flex items-center gap-2 mt-3 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={exp.current}
+                          onChange={(e) => updateWorkExperience(exp.id, 'current', e.target.checked)}
+                          className="w-4 h-4 rounded border-border text-pastel-blue focus:ring-pastel-blue"
+                        />
+                        <span className="text-sm text-muted-foreground">Trabalho atual</span>
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </section>
+
             {/* Social Links Section */}
             <section className="bg-card border border-border rounded-xl p-6">
               <h2 className="text-lg font-semibold text-foreground mb-6 flex items-center gap-2">
                 <Link2 size={20} className="text-pastel-purple" />
-                Redes Sociais
+                Redes Sociais e Links
               </h2>
               
-              <div className="grid grid-cols-2 gap-6">
-                <div>
-                  <Label htmlFor="twitter" className="text-sm font-medium text-slate-700">
-                    Twitter/X
-                  </Label>
-                  <Input
-                    id="twitter"
-                    value={twitter}
-                    onChange={(e) => setTwitter(e.target.value)}
-                    placeholder="@usuario"
-                    className="mt-1"
-                  />
-                </div>
-                
-                <div>
-                  <Label htmlFor="instagram" className="text-sm font-medium text-slate-700">
-                    Instagram
-                  </Label>
-                  <Input
-                    id="instagram"
-                    value={instagram}
-                    onChange={(e) => setInstagram(e.target.value)}
-                    placeholder="@usuario"
-                    className="mt-1"
-                  />
-                </div>
-                
-                <div>
-                  <Label htmlFor="youtube" className="text-sm font-medium text-slate-700">
-                    YouTube
-                  </Label>
-                  <Input
-                    id="youtube"
-                    value={youtube}
-                    onChange={(e) => setYoutube(e.target.value)}
-                    placeholder="@canal"
-                    className="mt-1"
-                  />
-                </div>
-                
-                <div>
-                  <Label htmlFor="linkedin" className="text-sm font-medium text-slate-700">
-                    LinkedIn
-                  </Label>
-                  <Input
-                    id="linkedin"
-                    value={linkedin}
-                    onChange={(e) => setLinkedin(e.target.value)}
-                    placeholder="linkedin.com/in/usuario"
-                    className="mt-1"
-                  />
-                </div>
-                
-                <div className="col-span-2">
-                  <Label htmlFor="portfolio" className="text-sm font-medium text-slate-700">
-                    Portfolio/Site Pessoal
-                  </Label>
-                  <Input
-                    id="portfolio"
-                    value={portfolio}
-                    onChange={(e) => setPortfolio(e.target.value)}
-                    placeholder="https://seusite.com"
-                    className="mt-1"
-                  />
-                </div>
+              <div className="grid grid-cols-3 gap-5">
+                {socialNetworks.map((social) => (
+                  <div key={social.key}>
+                    <Label htmlFor={social.key} className="text-sm font-medium text-slate-700">
+                      {social.label}
+                    </Label>
+                    <Input
+                      id={social.key}
+                      value={social.value}
+                      onChange={(e) => social.setter(e.target.value)}
+                      placeholder={social.placeholder}
+                      className="mt-1"
+                    />
+                  </div>
+                ))}
               </div>
             </section>
 
             {/* Save Button */}
-            <div className="flex justify-end gap-4">
+            <div className="flex justify-end gap-4 pb-8">
               <button 
                 onClick={() => navigate('/minha-conta')}
                 className="px-6 py-3 bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition"
@@ -396,22 +572,26 @@ export default function PerfilSocial() {
           </SheetHeader>
           
           <div className="mt-6 space-y-6">
-            {/* Profile Preview Card */}
-            <div className="bg-card border border-border rounded-xl p-6">
-              <div className="flex items-start gap-6">
+            {/* Cover + Profile Preview */}
+            <div className="bg-card border border-border rounded-xl overflow-hidden">
+              <div 
+                className="h-32 bg-gradient-to-br from-pastel-blue/30 via-pastel-purple/20 to-pastel-pink/30"
+                style={coverUrl ? { backgroundImage: `url(${coverUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}
+              />
+              <div className="px-6 pb-6 -mt-12 relative">
                 <img 
                   src={avatarUrl} 
                   alt="Profile" 
-                  className="w-24 h-24 rounded-xl object-cover"
+                  className="w-20 h-20 rounded-xl object-cover border-4 border-card shadow-lg"
                 />
-                <div className="flex-1">
-                  <h2 className="text-2xl font-bold text-foreground">
+                <div className="mt-3">
+                  <h2 className="text-xl font-bold text-foreground">
                     {displayName || "Seu Nome"}
                   </h2>
-                  <p className="text-lg text-muted-foreground font-medium">
+                  <p className="text-muted-foreground font-medium">
                     {subtitle || "Seu titulo profissional"}
                   </p>
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground mt-3">
+                  <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground mt-2">
                     {location && (
                       <span className="flex items-center gap-1">
                         <MapPin size={14} />
@@ -427,7 +607,7 @@ export default function PerfilSocial() {
                     {memberSince && (
                       <span className="flex items-center gap-1">
                         <Calendar size={14} />
-                        Membro desde {memberSince}
+                        Desde {memberSince}
                       </span>
                     )}
                   </div>
@@ -435,42 +615,54 @@ export default function PerfilSocial() {
               </div>
               
               {bio && (
-                <p className="text-foreground/80 leading-relaxed mt-4 pt-4 border-t border-border">
-                  {bio}
-                </p>
+                <div className="px-6 pb-6 pt-0">
+                  <p className="text-foreground/80 leading-relaxed border-t border-border pt-4">
+                    {bio}
+                  </p>
+                </div>
               )}
             </div>
 
+            {/* Work Experience Preview */}
+            {workExperiences.length > 0 && (
+              <div className="bg-card border border-border rounded-xl p-6">
+                <h3 className="text-sm font-semibold uppercase text-muted-foreground mb-4 flex items-center gap-2">
+                  <Briefcase size={16} />
+                  Experiencia Profissional
+                </h3>
+                <div className="space-y-3">
+                  {workExperiences.map((exp) => (
+                    <div key={exp.id} className="flex items-start gap-3 p-3 bg-accent/30 rounded-lg">
+                      <div className="w-10 h-10 bg-pastel-blue/50 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <Building2 size={18} className="text-slate-600" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground">{exp.role || "Cargo"}</p>
+                        <p className="text-sm text-muted-foreground">{exp.company || "Empresa"}</p>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {exp.location && `${exp.location} • `}
+                          {exp.startYear} - {exp.current ? "Atual" : exp.endYear}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Social Links Preview */}
-            {(twitter || instagram || youtube || linkedin || portfolio) && (
+            {socialNetworks.some(s => s.value) && (
               <div className="bg-card border border-border rounded-xl p-6">
                 <h3 className="text-sm font-semibold uppercase text-muted-foreground mb-4">Redes Sociais</h3>
-                <div className="flex flex-wrap gap-3">
-                  {twitter && (
-                    <span className="px-3 py-1.5 bg-pastel-blue/50 rounded-full text-sm text-slate-700">
-                      Twitter: {twitter}
+                <div className="flex flex-wrap gap-2">
+                  {socialNetworks.filter(s => s.value).map((social) => (
+                    <span 
+                      key={social.key} 
+                      className={`px-3 py-1.5 bg-${social.color}/50 rounded-full text-sm text-slate-700`}
+                    >
+                      {social.label}: {social.value}
                     </span>
-                  )}
-                  {instagram && (
-                    <span className="px-3 py-1.5 bg-pastel-pink/50 rounded-full text-sm text-slate-700">
-                      Instagram: {instagram}
-                    </span>
-                  )}
-                  {youtube && (
-                    <span className="px-3 py-1.5 bg-pastel-red/50 rounded-full text-sm text-slate-700">
-                      YouTube: {youtube}
-                    </span>
-                  )}
-                  {linkedin && (
-                    <span className="px-3 py-1.5 bg-pastel-blue/50 rounded-full text-sm text-slate-700">
-                      LinkedIn: {linkedin}
-                    </span>
-                  )}
-                  {portfolio && (
-                    <span className="px-3 py-1.5 bg-pastel-green/50 rounded-full text-sm text-slate-700">
-                      Site: {portfolio}
-                    </span>
-                  )}
+                  ))}
                 </div>
               </div>
             )}
