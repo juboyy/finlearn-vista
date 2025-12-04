@@ -13,7 +13,7 @@ serve(async (req) => {
   }
 
   try {
-    const { text } = await req.json();
+    const { text, voiceId: requestedVoiceId } = await req.json();
 
     if (!text) {
       throw new Error('Text is required');
@@ -24,10 +24,10 @@ serve(async (req) => {
       throw new Error('ELEVENLABS_API_KEY is not configured');
     }
 
-    console.log('Generating speech for text length:', text.length);
+    // Use requested voice or default to Aria
+    const voiceId = requestedVoiceId || '9BWtsMINqrJLrRacOk9x';
 
-    // Using Laura voice (FGY2WhTYpPnrIDTdsKH5) - Female Portuguese voice
-    const voiceId = 'FGY2WhTYpPnrIDTdsKH5';
+    console.log('Generating speech for text length:', text.length, 'with voice:', voiceId);
     
     const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
       method: 'POST',
