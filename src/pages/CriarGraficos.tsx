@@ -13,6 +13,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { ExplainChartChat } from "@/components/Dashboard/ExplainChartChat";
 import {
   ChevronLeft,
   Upload,
@@ -40,6 +41,7 @@ import {
   Type,
   Grid3X3,
   ToggleLeft,
+  MessageSquare,
 } from "lucide-react";
 import {
   ResponsiveContainer,
@@ -185,6 +187,7 @@ export default function CriarGraficos() {
   const [loadingSavedCharts, setLoadingSavedCharts] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
   const [chartStyle, setChartStyle] = useState<ChartStyle>(DEFAULT_CHART_STYLE);
+  const [explainChartOpen, setExplainChartOpen] = useState(false);
   const chartRef = useRef<HTMLDivElement>(null);
 
   // Load saved charts on mount
@@ -1172,6 +1175,17 @@ export default function CriarGraficos() {
                   />
                 </div>
                 <div className="flex items-center gap-2">
+                  {data.length > 0 && (
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => setExplainChartOpen(true)}
+                      className="gap-2"
+                    >
+                      <MessageSquare className="h-4 w-4" />
+                      Explicar Gráfico
+                    </Button>
+                  )}
                   <Button variant="ghost" size="icon">
                     <Eye className="h-4 w-4" />
                   </Button>
@@ -1254,6 +1268,13 @@ export default function CriarGraficos() {
           )}
         </div>
       </div>
+
+      <ExplainChartChat
+        open={explainChartOpen}
+        onOpenChange={setExplainChartOpen}
+        chartData={data}
+        chartType={chartConfig.type}
+      />
     </div>
   );
 }
