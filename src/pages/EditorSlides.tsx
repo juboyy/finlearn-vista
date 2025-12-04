@@ -483,17 +483,17 @@ IMPORTANTE:
         </SheetContent>
       </Sheet>
 
-      {/* Initial Info Dialog */}
-      <Dialog open={showInfoDialog} onOpenChange={setShowInfoDialog}>
-        <DialogContent className="max-w-2xl">
-          <DialogHeader>
-            <DialogTitle>Nova Apresentação de Slides</DialogTitle>
-            <DialogDescription>
+      {/* Initial Info Sheet */}
+      <Sheet open={showInfoDialog} onOpenChange={setShowInfoDialog}>
+        <SheetContent side="right" className="w-[500px] overflow-y-auto">
+          <SheetHeader>
+            <SheetTitle>Nova Apresentação de Slides</SheetTitle>
+            <p className="text-sm text-slate-500">
               Preencha as informações abaixo para gerar sua apresentação com IA
-            </DialogDescription>
-          </DialogHeader>
+            </p>
+          </SheetHeader>
 
-          <div className="space-y-4">
+          <div className="space-y-4 mt-6">
             <div className="space-y-2">
               <Label>Selecione o Agente de IA</Label>
               <Select value={selectedAgentId} onValueChange={setSelectedAgentId}>
@@ -555,14 +555,14 @@ IMPORTANTE:
             </div>
           </div>
 
-          <DialogFooter>
+          <div className="mt-6">
             <Button onClick={handleInfoSubmit} className="w-full">
               <Sparkles className="w-4 h-4 mr-2" />
               Gerar Apresentação com IA
             </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+          </div>
+        </SheetContent>
+      </Sheet>
 
       {/* Clear All Dialog */}
       <Dialog open={showClearDialog} onOpenChange={setShowClearDialog}>
