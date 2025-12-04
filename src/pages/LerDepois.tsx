@@ -655,14 +655,14 @@ export default function LerDepois() {
                 />
               </div>
 
-              {/* Type */}
+              {/* Type - Read Only */}
               <div className="space-y-2">
                 <Label>Tipo de Conteudo</Label>
                 <Select 
                   value={editingItem.type} 
-                  onValueChange={(value) => setEditingItem({ ...editingItem, type: value as ReadLaterItem['type'] })}
+                  disabled
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="opacity-60 cursor-not-allowed">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -743,13 +743,14 @@ export default function LerDepois() {
                 </Select>
               </div>
 
-              {/* Duration */}
+              {/* Duration - Read Only */}
               <div className="space-y-2">
                 <Label htmlFor="edit-duration">Duracao</Label>
                 <Input
                   id="edit-duration"
                   value={editingItem.duration}
-                  onChange={(e) => setEditingItem({ ...editingItem, duration: e.target.value })}
+                  disabled
+                  className="opacity-60 cursor-not-allowed"
                   placeholder="Ex: 10 min, 1h 30min"
                 />
               </div>
