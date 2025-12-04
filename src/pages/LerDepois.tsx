@@ -1,126 +1,123 @@
-import { useState } from "react";
-import { ArrowLeft, Search, Bell, Filter, Bookmark, Check, Clock, Star, Newspaper, Video, FileText, FileType, Mic, Circle, MoreHorizontal, CheckCircle, ChevronLeft, ChevronRight, Layers } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { ArrowLeft, Search, Bell, Filter, Bookmark, Check, Clock, Star, Newspaper, Video, FileText, FileType, Mic, Circle, MoreHorizontal, CheckCircle, ChevronLeft, ChevronRight, Layers, Loader2, Trash2 } from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
+import { formatDistanceToNow } from "date-fns";
+import { ptBR } from "date-fns/locale";
+
+interface SavedItem {
+  id: string;
+  item_id: string;
+  item_type: string;
+  item_title: string;
+  item_image: string | null;
+  item_description: string | null;
+  item_url: string | null;
+  metadata: any;
+  created_at: string;
+}
+
 interface ReadLaterItem {
   id: string;
+  item_id: string;
   title: string;
-  type: 'article' | 'video' | 'blog' | 'pdf' | 'podcast';
+  type: 'article' | 'video' | 'blog' | 'pdf' | 'podcast' | 'ebook' | 'course';
   duration: string;
   source: string;
   savedDate: string;
   savedDateRelative: string;
   priority: 'urgent' | 'high' | 'medium' | 'low';
   status: 'pending' | 'completed';
+  url: string | null;
 }
-const mockItems: ReadLaterItem[] = [{
-  id: '1',
-  title: 'Novas Diretrizes CVM para Fundos de Investimento',
-  type: 'article',
-  duration: '12 min',
-  source: 'Valor Econômico',
-  savedDate: '17/11/2024',
-  savedDateRelative: 'há 1 hora',
-  priority: 'urgent',
-  status: 'pending'
-}, {
-  id: '2',
-  title: 'Webinar: Gestão de Risco em Cartões de Crédito',
-  type: 'video',
-  duration: '45 min',
-  source: 'FinLearn Academy',
-  savedDate: '16/11/2024',
-  savedDateRelative: 'há 1 dia',
-  priority: 'high',
-  status: 'pending'
-}, {
-  id: '3',
-  title: 'Análise: Tendências do Mercado de Pagamentos',
-  type: 'blog',
-  duration: '8 min',
-  source: 'InfoMoney',
-  savedDate: '15/11/2024',
-  savedDateRelative: 'há 2 dias',
-  priority: 'high',
-  status: 'completed'
-}, {
-  id: '4',
-  title: 'Relatório: Open Finance no Brasil 2024',
-  type: 'pdf',
-  duration: '42 páginas',
-  source: 'Banco Central',
-  savedDate: '14/11/2024',
-  savedDateRelative: 'há 3 dias',
-  priority: 'medium',
-  status: 'pending'
-}, {
-  id: '5',
-  title: 'Estratégias de Compliance para Instituições Financeiras',
-  type: 'article',
-  duration: '15 min',
-  source: 'Valor Econômico',
-  savedDate: '10/11/2024',
-  savedDateRelative: 'há 7 dias',
-  priority: 'medium',
-  status: 'pending'
-}, {
-  id: '6',
-  title: 'Como Analisar Demonstrações Financeiras',
-  type: 'video',
-  duration: '28 min',
-  source: 'FinLearn Academy',
-  savedDate: '08/11/2024',
-  savedDateRelative: 'há 9 dias',
-  priority: 'low',
-  status: 'completed'
-}, {
-  id: '7',
-  title: 'Inovações em Meios de Pagamento Digital',
-  type: 'blog',
-  duration: '10 min',
-  source: 'InfoMoney',
-  savedDate: '05/11/2024',
-  savedDateRelative: 'há 12 dias',
-  priority: 'medium',
-  status: 'pending'
-}, {
-  id: '8',
-  title: 'Podcast: Futuro dos Investimentos no Brasil',
-  type: 'podcast',
-  duration: '52 min',
-  source: 'FinCast',
-  savedDate: '01/11/2024',
-  savedDateRelative: 'há 16 dias',
-  priority: 'low',
-  status: 'pending'
-}, {
-  id: '9',
-  title: 'Análise Técnica: Padrões de Candlestick',
-  type: 'article',
-  duration: '18 min',
-  source: 'Valor Econômico',
-  savedDate: '28/10/2024',
-  savedDateRelative: 'há 20 dias',
-  priority: 'urgent',
-  status: 'pending'
-}, {
-  id: '10',
-  title: 'Guia Completo: Prevenção à Lavagem de Dinheiro',
-  type: 'pdf',
-  duration: '68 páginas',
-  source: 'COAF',
-  savedDate: '15/10/2024',
-  savedDateRelative: 'há 33 dias',
-  priority: 'high',
-  status: 'completed'
-}];
+
 export default function LerDepois() {
   const navigate = useNavigate();
-  const [items, setItems] = useState<ReadLaterItem[]>(mockItems);
+  const { user } = useAuth();
+  const { toast } = useToast();
+  const [items, setItems] = useState<ReadLaterItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [filterStatus, setFilterStatus] = useState<'all' | 'completed' | 'pending'>('all');
+
+  // Fetch saved items from database
+  useEffect(() => {
+    const fetchSavedItems = async () => {
+      if (!user) {
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const { data, error } = await supabase
+          .from('saved_items')
+          .select('*')
+          .eq('user_id', user.id)
+          .eq('item_type', 'read_later')
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        const transformedItems: ReadLaterItem[] = (data || []).map((item: SavedItem) => ({
+          id: item.id,
+          item_id: item.item_id,
+          title: item.item_title,
+          type: item.metadata?.content_type || 'article',
+          duration: item.metadata?.duration || '10 min',
+          source: item.metadata?.source || 'FinLearn',
+          savedDate: new Date(item.created_at).toLocaleDateString('pt-BR'),
+          savedDateRelative: formatDistanceToNow(new Date(item.created_at), { addSuffix: true, locale: ptBR }),
+          priority: item.metadata?.priority || 'medium',
+          status: item.metadata?.status || 'pending',
+          url: item.item_url
+        }));
+
+        setItems(transformedItems);
+      } catch (err) {
+        console.error('Error fetching saved items:', err);
+        toast({
+          title: "Erro",
+          description: "Não foi possível carregar os itens salvos.",
+          variant: "destructive"
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchSavedItems();
+  }, [user, toast]);
+
+  // Delete saved item
+  const handleDeleteItem = async (id: string) => {
+    try {
+      const { error } = await supabase
+        .from('saved_items')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+
+      setItems(items.filter(item => item.id !== id));
+      toast({
+        title: "Removido",
+        description: "Item removido de Ler Depois."
+      });
+    } catch (err) {
+      console.error('Error deleting item:', err);
+      toast({
+        title: "Erro",
+        description: "Não foi possível remover o item.",
+        variant: "destructive"
+      });
+    }
+  };
+
   const getTypeIcon = (type: string) => {
     switch (type) {
       case 'article':
@@ -237,7 +234,7 @@ export default function LerDepois() {
                       </div>
                       <span className="text-sm text-muted-foreground">Total Salvos</span>
                     </div>
-                    <span className="font-semibold text-foreground">87</span>
+                    <span className="font-semibold text-foreground">{items.length}</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
@@ -246,7 +243,7 @@ export default function LerDepois() {
                       </div>
                       <span className="text-sm text-muted-foreground">Já Lidos</span>
                     </div>
-                    <span className="font-semibold text-foreground">34</span>
+                    <span className="font-semibold text-foreground">{items.filter(i => i.status === 'completed').length}</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
@@ -255,7 +252,7 @@ export default function LerDepois() {
                       </div>
                       <span className="text-sm text-muted-foreground">Pendentes</span>
                     </div>
-                    <span className="font-semibold text-foreground">53</span>
+                    <span className="font-semibold text-foreground">{items.filter(i => i.status === 'pending').length}</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
@@ -264,7 +261,7 @@ export default function LerDepois() {
                       </div>
                       <span className="text-sm text-muted-foreground">Alta Prioridade</span>
                     </div>
-                    <span className="font-semibold text-foreground">21</span>
+                    <span className="font-semibold text-foreground">{items.filter(i => i.priority === 'high' || i.priority === 'urgent').length}</span>
                   </div>
                 </div>
               </section>
@@ -314,7 +311,7 @@ export default function LerDepois() {
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-medium text-foreground">Artigos</p>
-                      <p className="text-xs text-muted-foreground">42 itens</p>
+                      <p className="text-xs text-muted-foreground">{items.filter(i => i.type === 'article').length} itens</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2 p-2 rounded-lg hover:bg-muted cursor-pointer transition">
@@ -323,7 +320,7 @@ export default function LerDepois() {
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-medium text-foreground">Vídeos</p>
-                      <p className="text-xs text-muted-foreground">18 itens</p>
+                      <p className="text-xs text-muted-foreground">{items.filter(i => i.type === 'video').length} itens</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2 p-2 rounded-lg hover:bg-muted cursor-pointer transition">
@@ -332,7 +329,7 @@ export default function LerDepois() {
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-medium text-foreground">Blog Posts</p>
-                      <p className="text-xs text-muted-foreground">15 itens</p>
+                      <p className="text-xs text-muted-foreground">{items.filter(i => i.type === 'blog').length} itens</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2 p-2 rounded-lg hover:bg-muted cursor-pointer transition">
@@ -341,7 +338,7 @@ export default function LerDepois() {
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-medium text-foreground">PDFs</p>
-                      <p className="text-xs text-muted-foreground">8 itens</p>
+                      <p className="text-xs text-muted-foreground">{items.filter(i => i.type === 'pdf').length} itens</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2 p-2 rounded-lg hover:bg-muted cursor-pointer transition">
@@ -350,7 +347,7 @@ export default function LerDepois() {
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-medium text-foreground">Podcasts</p>
-                      <p className="text-xs text-muted-foreground">4 itens</p>
+                      <p className="text-xs text-muted-foreground">{items.filter(i => i.type === 'podcast').length} itens</p>
                     </div>
                   </div>
                 </div>
@@ -432,18 +429,39 @@ export default function LerDepois() {
                   </div>
                 </div>
 
+                {/* Loading State */}
+                {isLoading && (
+                  <div className="flex items-center justify-center py-12">
+                    <Loader2 className="animate-spin text-muted-foreground" size={32} />
+                  </div>
+                )}
+
+                {/* Empty State */}
+                {!isLoading && filteredItems.length === 0 && (
+                  <div className="flex flex-col items-center justify-center py-12 text-center">
+                    <Bookmark className="text-muted-foreground mb-4" size={48} />
+                    <h3 className="text-lg font-medium text-foreground mb-2">Nenhum item salvo</h3>
+                    <p className="text-sm text-muted-foreground">Salve artigos e conteúdos para ler depois</p>
+                  </div>
+                )}
+
                 {/* Table Body */}
-                {filteredItems.map((item, index) => <div key={item.id} className={`${index !== filteredItems.length - 1 ? 'border-b border-border' : ''} hover:bg-muted/30 transition-colors cursor-pointer`}>
+                {!isLoading && filteredItems.map((item, index) => (
+                  <div key={item.id} className={`${index !== filteredItems.length - 1 ? 'border-b border-border' : ''} hover:bg-muted/30 transition-colors`}>
                     <div className="grid grid-cols-12 gap-4 px-6 py-4 items-center">
                       <div className="col-span-5 flex items-center gap-4">
                         <div className={`w-10 h-10 ${getTypeColor(item.type)} rounded-lg flex items-center justify-center flex-shrink-0 border ${getTypeColor(item.type).replace('/70', '/80')}`}>
                           {getTypeIcon(item.type)}
                         </div>
                         <div className="min-w-0 flex-1">
-                          <h3 className="font-semibold text-foreground truncate">{item.title}</h3>
+                          {item.url ? (
+                            <Link to={item.url} className="font-semibold text-foreground truncate block hover:text-primary transition-colors">{item.title}</Link>
+                          ) : (
+                            <h3 className="font-semibold text-foreground truncate">{item.title}</h3>
+                          )}
                           <div className="flex items-center gap-3 mt-1">
                             <span className="text-xs text-muted-foreground">
-                              {item.type === 'article' ? 'Artigo' : item.type === 'video' ? 'Vídeo' : item.type === 'blog' ? 'Blog' : item.type === 'pdf' ? 'PDF' : 'Podcast'} • {item.duration}
+                              {item.type === 'article' ? 'Artigo' : item.type === 'video' ? 'Vídeo' : item.type === 'blog' ? 'Blog' : item.type === 'pdf' ? 'PDF' : item.type === 'podcast' ? 'Podcast' : item.type === 'ebook' ? 'E-book' : 'Curso'} • {item.duration}
                             </span>
                             <span className="text-xs text-muted-foreground">•</span>
                             <span className="text-xs text-muted-foreground">{item.source}</span>
@@ -473,12 +491,20 @@ export default function LerDepois() {
                     }} className={`p-2 transition-colors ${item.status === 'completed' ? 'text-pastel-green hover:text-pastel-green/80' : 'text-muted-foreground hover:text-pastel-green'}`} title={item.status === 'completed' ? 'Concluído' : 'Marcar como concluído'}>
                           {item.status === 'completed' ? <CheckCircle size={18} className="fill-current" /> : <CheckCircle size={18} />}
                         </button>
-                        <button className="p-2 text-muted-foreground hover:text-foreground transition-colors">
-                          <MoreHorizontal size={18} />
+                        <button 
+                          onClick={e => {
+                            e.stopPropagation();
+                            handleDeleteItem(item.id);
+                          }} 
+                          className="p-2 text-muted-foreground hover:text-destructive transition-colors"
+                          title="Remover"
+                        >
+                          <Trash2 size={18} />
                         </button>
                       </div>
                     </div>
-                  </div>)}
+                  </div>
+                ))}
               </section>
 
               {/* Paginação */}
