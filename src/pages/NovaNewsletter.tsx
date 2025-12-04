@@ -1233,18 +1233,20 @@ export default function NovaNewsletter() {
                       return;
                     }
                     setIsPublishing(true);
+                    const updateData = {
+                      title,
+                      description,
+                      frequency: selectedFrequency || "weekly",
+                      color: selectedColor,
+                      status,
+                      tags,
+                      product_types: selectedProducts,
+                      distribution_channels: selectedChannels,
+                    };
+                    console.log('Saving newsletter with data:', updateData);
                     try {
                       if (isEditMode && editId) {
-                        await updateNewsletter(editId, {
-                          title,
-                          description,
-                          frequency: selectedFrequency || "weekly",
-                          color: selectedColor,
-                          status,
-                          tags,
-                          product_types: selectedProducts,
-                          distribution_channels: selectedChannels,
-                        });
+                        await updateNewsletter(editId, updateData);
                         toast({
                           title: "Newsletter atualizada",
                           description: "As alterações foram salvas com sucesso.",
