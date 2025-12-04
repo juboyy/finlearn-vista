@@ -649,7 +649,7 @@ IMPORTANTE:
                 <Button
                   variant="ghost"
                   size="icon"
-                  onClick={() => navigate(-1)}
+                  onClick={() => navigate('/aprendizado')}
                   className="text-slate-600 hover:text-slate-800 hover:bg-slate-100"
                 >
                   <ChevronLeft className="w-5 h-5" />
