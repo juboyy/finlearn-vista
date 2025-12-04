@@ -9,6 +9,7 @@ import {
 import { Link, useParams } from "react-router-dom";
 import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
 import { ArticleExpertChat } from "@/components/Dashboard/ArticleExpertChat";
+import { VideoAvatarModal } from "@/components/VideoAvatarModal";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
@@ -20,6 +21,7 @@ const Artigo = () => {
   const [timeRemaining, setTimeRemaining] = useState(12);
   const [activeSection, setActiveSection] = useState("");
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isVideoAvatarOpen, setIsVideoAvatarOpen] = useState(false);
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioProgress, setAudioProgress] = useState(0);
@@ -527,12 +529,15 @@ const Artigo = () => {
                       </p>
                     </div>
                   </button>
-                  <button className="flex items-center gap-3 p-4 bg-card rounded-lg border border-border hover:border-pastel-purple hover:bg-pastel-purple/10 transition">
+                  <button 
+                    onClick={() => setIsVideoAvatarOpen(true)}
+                    className="flex items-center gap-3 p-4 bg-card rounded-lg border border-border hover:border-pastel-purple hover:bg-pastel-purple/10 transition"
+                  >
                     <div className="w-10 h-10 bg-pastel-green/50 rounded-lg flex items-center justify-center">
                       <Video size={18} className="text-foreground" />
                     </div>
                     <div className="text-left">
-                      <p className="text-sm font-medium text-foreground">Ver em Vídeo</p>
+                      <p className="text-sm font-medium text-foreground">Ver em Video</p>
                       <p className="text-xs text-muted-foreground">Avatar IA</p>
                     </div>
                   </button>
@@ -1029,6 +1034,14 @@ const Artigo = () => {
         onClose={() => setIsChatOpen(false)}
         articleTitle="Crédito Imobiliário"
         articleContext="Artigo completo sobre crédito imobiliário, abordando conceitos fundamentais, modalidades de financiamento, taxas de juros, requisitos para aprovação, diferenças entre sistemas de amortização, e tendências do mercado imobiliário brasileiro para 2025."
+      />
+
+      {/* Video Avatar Modal */}
+      <VideoAvatarModal
+        open={isVideoAvatarOpen}
+        onOpenChange={setIsVideoAvatarOpen}
+        articleTitle={articleTitle}
+        articleContent={articleText}
       />
     </div>
   );
