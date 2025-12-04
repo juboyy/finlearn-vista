@@ -36,6 +36,10 @@ import {
   FolderOpen,
   Trash2,
   Clock,
+  Palette,
+  Type,
+  Grid3X3,
+  ToggleLeft,
 } from "lucide-react";
 import {
   ResponsiveContainer,
@@ -75,6 +79,69 @@ interface ChartConfig {
   title: string;
 }
 
+interface ChartStyle {
+  colors: string[];
+  showLegend: boolean;
+  legendPosition: "top" | "bottom" | "left" | "right";
+  showGrid: boolean;
+  fontSize: number;
+  fontFamily: string;
+  backgroundColor: string;
+  showDataLabels: boolean;
+  strokeWidth: number;
+}
+
+const COLOR_PALETTES = {
+  pastel: [
+    "hsl(207, 35%, 55%)",
+    "hsl(142, 35%, 55%)",
+    "hsl(350, 35%, 55%)",
+    "hsl(44, 35%, 55%)",
+    "hsl(280, 35%, 55%)",
+    "hsl(20, 35%, 55%)",
+  ],
+  vibrant: [
+    "hsl(207, 65%, 45%)",
+    "hsl(142, 65%, 45%)",
+    "hsl(350, 65%, 45%)",
+    "hsl(44, 65%, 55%)",
+    "hsl(280, 65%, 45%)",
+    "hsl(20, 65%, 45%)",
+  ],
+  warm: [
+    "hsl(20, 45%, 55%)",
+    "hsl(40, 45%, 55%)",
+    "hsl(350, 45%, 55%)",
+    "hsl(10, 45%, 55%)",
+    "hsl(30, 45%, 55%)",
+    "hsl(0, 45%, 55%)",
+  ],
+  cool: [
+    "hsl(207, 45%, 55%)",
+    "hsl(180, 45%, 55%)",
+    "hsl(220, 45%, 55%)",
+    "hsl(190, 45%, 55%)",
+    "hsl(240, 45%, 55%)",
+    "hsl(170, 45%, 55%)",
+  ],
+  monochrome: [
+    "hsl(215, 25%, 35%)",
+    "hsl(215, 25%, 45%)",
+    "hsl(215, 25%, 55%)",
+    "hsl(215, 25%, 65%)",
+    "hsl(215, 25%, 75%)",
+    "hsl(215, 25%, 85%)",
+  ],
+};
+
+const FONT_OPTIONS = [
+  { label: "Inter", value: "Inter, sans-serif" },
+  { label: "Roboto", value: "Roboto, sans-serif" },
+  { label: "Arial", value: "Arial, sans-serif" },
+  { label: "Georgia", value: "Georgia, serif" },
+  { label: "Verdana", value: "Verdana, sans-serif" },
+];
+
 interface SavedChart {
   id: string;
   name: string;
@@ -87,14 +154,17 @@ interface SavedChart {
   created_at: string;
 }
 
-const CHART_COLORS = [
-  "hsl(207, 35%, 55%)",
-  "hsl(142, 35%, 55%)",
-  "hsl(350, 35%, 55%)",
-  "hsl(44, 35%, 55%)",
-  "hsl(280, 35%, 55%)",
-  "hsl(20, 35%, 55%)",
-];
+const DEFAULT_CHART_STYLE: ChartStyle = {
+  colors: COLOR_PALETTES.pastel,
+  showLegend: true,
+  legendPosition: "bottom",
+  showGrid: true,
+  fontSize: 12,
+  fontFamily: "Inter, sans-serif",
+  backgroundColor: "#ffffff",
+  showDataLabels: false,
+  strokeWidth: 2,
+};
 
 export default function CriarGraficos() {
   const navigate = useNavigate();
@@ -114,6 +184,7 @@ export default function CriarGraficos() {
   const [isSaving, setIsSaving] = useState(false);
   const [loadingSavedCharts, setLoadingSavedCharts] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
+  const [chartStyle, setChartStyle] = useState<ChartStyle>(DEFAULT_CHART_STYLE);
   const chartRef = useRef<HTMLDivElement>(null);
 
   // Load saved charts on mount
@@ -286,12 +357,12 @@ export default function CriarGraficos() {
                   borderRadius: "8px",
                 }}
               />
-              <Legend />
+              {chartStyle.showLegend && <Legend wrapperStyle={{ fontFamily: chartStyle.fontFamily }} />}
               {chartConfig.yAxis.map((key, index) => (
                 <Bar
                   key={key}
                   dataKey={key}
-                  fill={CHART_COLORS[index % CHART_COLORS.length]}
+                  fill={chartStyle.colors[index % chartStyle.colors.length]}
                   radius={[4, 4, 0, 0]}
                 />
               ))}
@@ -316,15 +387,15 @@ export default function CriarGraficos() {
                   borderRadius: "8px",
                 }}
               />
-              <Legend />
+              {chartStyle.showLegend && <Legend wrapperStyle={{ fontFamily: chartStyle.fontFamily }} />}
               {chartConfig.yAxis.map((key, index) => (
                 <Line
                   key={key}
                   type="monotone"
                   dataKey={key}
-                  stroke={CHART_COLORS[index % CHART_COLORS.length]}
-                  strokeWidth={2}
-                  dot={{ fill: CHART_COLORS[index % CHART_COLORS.length], r: 4 }}
+                  stroke={chartStyle.colors[index % chartStyle.colors.length]}
+                  strokeWidth={chartStyle.strokeWidth}
+                  dot={{ fill: chartStyle.colors[index % chartStyle.colors.length], r: 4 }}
                 />
               ))}
             </RechartsLineChart>
@@ -349,11 +420,11 @@ export default function CriarGraficos() {
                 dataKey="value"
               >
                 {pieData.map((_, index) => (
-                  <Cell key={`cell-${index}`} fill={CHART_COLORS[index % CHART_COLORS.length]} />
+                  <Cell key={`cell-${index}`} fill={chartStyle.colors[index % chartStyle.colors.length]} />
                 ))}
               </Pie>
               <Tooltip />
-              <Legend />
+              {chartStyle.showLegend && <Legend wrapperStyle={{ fontFamily: chartStyle.fontFamily }} />}
             </RechartsPieChart>
           </ResponsiveContainer>
         );
@@ -375,16 +446,16 @@ export default function CriarGraficos() {
                   borderRadius: "8px",
                 }}
               />
-              <Legend />
+              {chartStyle.showLegend && <Legend wrapperStyle={{ fontFamily: chartStyle.fontFamily }} />}
               {chartConfig.yAxis.map((key, index) => (
                 <Area
                   key={key}
                   type="monotone"
                   dataKey={key}
-                  stroke={CHART_COLORS[index % CHART_COLORS.length]}
-                  fill={CHART_COLORS[index % CHART_COLORS.length]}
+                  stroke={chartStyle.colors[index % chartStyle.colors.length]}
+                  fill={chartStyle.colors[index % chartStyle.colors.length]}
                   fillOpacity={0.3}
-                  strokeWidth={2}
+                  strokeWidth={chartStyle.strokeWidth}
                 />
               ))}
             </AreaChart>
@@ -415,11 +486,11 @@ export default function CriarGraficos() {
                   borderRadius: "8px",
                 }}
               />
-              <Legend />
+              {chartStyle.showLegend && <Legend wrapperStyle={{ fontFamily: chartStyle.fontFamily }} />}
               <Scatter
                 name={chartConfig.yAxis[0]}
                 data={chartData}
-                fill={CHART_COLORS[0]}
+                fill={chartStyle.colors[0]}
               />
             </ScatterChart>
           </ResponsiveContainer>
@@ -447,12 +518,12 @@ export default function CriarGraficos() {
                   key={key}
                   name={key}
                   dataKey={key}
-                  stroke={CHART_COLORS[index % CHART_COLORS.length]}
-                  fill={CHART_COLORS[index % CHART_COLORS.length]}
+                  stroke={chartStyle.colors[index % chartStyle.colors.length]}
+                  fill={chartStyle.colors[index % chartStyle.colors.length]}
                   fillOpacity={0.3}
                 />
               ))}
-              <Legend />
+              {chartStyle.showLegend && <Legend wrapperStyle={{ fontFamily: chartStyle.fontFamily }} />}
               <Tooltip />
             </RadarChart>
           </ResponsiveContainer>
@@ -462,7 +533,7 @@ export default function CriarGraficos() {
         const treemapData = chartData.map((row, index) => ({
           name: String(row[chartConfig.xAxis]),
           size: Number(row[chartConfig.yAxis[0]]) || 0,
-          fill: CHART_COLORS[index % CHART_COLORS.length],
+          fill: chartStyle.colors[index % chartStyle.colors.length],
         }));
         return (
           <ResponsiveContainer width="100%" height={400}>
@@ -666,6 +737,10 @@ export default function CriarGraficos() {
                 <TabsTrigger value="saved" className="text-xs">
                   <FolderOpen className="h-3 w-3 mr-1" />
                   Salvos
+                </TabsTrigger>
+                <TabsTrigger value="style" className="text-xs">
+                  <Palette className="h-3 w-3 mr-1" />
+                  Estilo
                 </TabsTrigger>
               </TabsList>
 
@@ -944,6 +1019,126 @@ export default function CriarGraficos() {
                           ))}
                         </div>
                       )}
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+
+                <TabsContent value="style" className="mt-0 space-y-4">
+                  <Card>
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-sm flex items-center gap-2">
+                        <Palette className="h-4 w-4" />
+                        Paleta de Cores
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                      {Object.entries(COLOR_PALETTES).map(([name, colors]) => (
+                        <button
+                          key={name}
+                          onClick={() => setChartStyle(prev => ({ ...prev, colors }))}
+                          className={`w-full p-3 rounded-lg border-2 transition-all ${
+                            JSON.stringify(chartStyle.colors) === JSON.stringify(colors)
+                              ? "border-primary bg-primary/10"
+                              : "border-border hover:border-primary/50"
+                          }`}
+                        >
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="text-xs font-medium capitalize">{name}</span>
+                          </div>
+                          <div className="flex gap-1">
+                            {colors.map((color, i) => (
+                              <div
+                                key={i}
+                                className="h-6 flex-1 rounded"
+                                style={{ backgroundColor: color }}
+                              />
+                            ))}
+                          </div>
+                        </button>
+                      ))}
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-sm flex items-center gap-2">
+                        <Type className="h-4 w-4" />
+                        Tipografia
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="space-y-2">
+                        <Label className="text-xs">Fonte</Label>
+                        <Select
+                          value={chartStyle.fontFamily}
+                          onValueChange={(value) => setChartStyle(prev => ({ ...prev, fontFamily: value }))}
+                        >
+                          <SelectTrigger className="text-sm">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {FONT_OPTIONS.map(font => (
+                              <SelectItem key={font.value} value={font.value}>
+                                <span style={{ fontFamily: font.value }}>{font.label}</span>
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-xs">Tamanho da Fonte: {chartStyle.fontSize}px</Label>
+                        <input
+                          type="range"
+                          min="10"
+                          max="18"
+                          value={chartStyle.fontSize}
+                          onChange={(e) => setChartStyle(prev => ({ ...prev, fontSize: Number(e.target.value) }))}
+                          className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-primary"
+                        />
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-sm flex items-center gap-2">
+                        <ToggleLeft className="h-4 w-4" />
+                        Opcoes
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <Label className="text-sm">Mostrar Legenda</Label>
+                        <Checkbox
+                          checked={chartStyle.showLegend}
+                          onCheckedChange={(checked) => setChartStyle(prev => ({ ...prev, showLegend: !!checked }))}
+                        />
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <Label className="text-sm">Mostrar Grade</Label>
+                        <Checkbox
+                          checked={chartStyle.showGrid}
+                          onCheckedChange={(checked) => setChartStyle(prev => ({ ...prev, showGrid: !!checked }))}
+                        />
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <Label className="text-sm">Rotulos nos Dados</Label>
+                        <Checkbox
+                          checked={chartStyle.showDataLabels}
+                          onCheckedChange={(checked) => setChartStyle(prev => ({ ...prev, showDataLabels: !!checked }))}
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-xs">Espessura da Linha: {chartStyle.strokeWidth}px</Label>
+                        <input
+                          type="range"
+                          min="1"
+                          max="5"
+                          value={chartStyle.strokeWidth}
+                          onChange={(e) => setChartStyle(prev => ({ ...prev, strokeWidth: Number(e.target.value) }))}
+                          className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-primary"
+                        />
+                      </div>
                     </CardContent>
                   </Card>
                 </TabsContent>
