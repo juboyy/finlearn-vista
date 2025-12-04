@@ -534,17 +534,17 @@ const Artigo = () => {
                 <button 
                   onClick={handleSaveArticle}
                   disabled={isSaving}
-                  className={`w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition text-left ${isSaved ? 'bg-pastel-purple/20' : ''}`}
+                  className={`w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition text-left ${isSaved ? 'bg-pastel-purple/40' : ''}`}
                 >
                   {isSaving ? (
                     <Loader2 size={16} className="text-muted-foreground animate-spin" />
                   ) : (
-                    <Bookmark size={16} className={isSaved ? "text-pastel-purple fill-pastel-purple" : "text-muted-foreground"} />
+                    <Bookmark size={16} className={isSaved ? "text-slate-700 fill-slate-700" : "text-muted-foreground"} />
                   )}
-                  <span className={`text-sm ${isSaved ? 'text-pastel-purple font-medium' : 'text-muted-foreground'}`}>
+                  <span className={`text-sm ${isSaved ? 'text-slate-700 font-medium' : 'text-muted-foreground'}`}>
                     {isSaved ? 'Ler Depois' : 'Ler Depois'}
                   </span>
-                  {isSaved && <CheckCircle2 size={14} className="ml-auto text-pastel-purple" />}
+                  {isSaved && <CheckCircle2 size={14} className="ml-auto text-slate-700" />}
                 </button>
                 <button className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition text-left">
                   <Printer size={16} className="text-muted-foreground" />
