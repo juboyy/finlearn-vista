@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { 
   Newspaper, Podcast, GraduationCap, Bot, Book, Video, FileText, BarChart3, 
@@ -57,6 +57,8 @@ export default function NovaNewsletter() {
   });
   
   const isEditMode = !!editId;
+  const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const pendingOrderRef = useRef<typeof contentTypesList | null>(null);
 
   // Product type icon and info mapping
   const productTypeInfo: Record<string, { name: string; icon: string; color: string; description: string }> = {
@@ -204,7 +206,32 @@ export default function NovaNewsletter() {
     })
   );
 
-  const handleDragEnd = async (event: DragEndEvent) => {
+  const debouncedSaveOrder = useCallback(async (newOrder: typeof contentTypesList) => {
+    if (!isEditMode || !editId) return;
+    
+    // Clear any pending save
+    if (saveTimeoutRef.current) {
+      clearTimeout(saveTimeoutRef.current);
+    }
+    
+    // Store the latest order
+    pendingOrderRef.current = newOrder;
+    
+    // Schedule save after 800ms of inactivity
+    saveTimeoutRef.current = setTimeout(async () => {
+      if (pendingOrderRef.current) {
+        try {
+          await updateNewsletter(editId, { content_types_config: pendingOrderRef.current });
+          toast({ title: "Ordem salva", description: "A ordem dos tipos de conteúdo foi atualizada." });
+        } catch (error) {
+          console.error('Error saving content types order:', error);
+        }
+        pendingOrderRef.current = null;
+      }
+    }, 800);
+  }, [isEditMode, editId, updateNewsletter, toast]);
+
+  const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (over && active.id !== over.id) {
       const newOrder = (() => {
@@ -214,16 +241,7 @@ export default function NovaNewsletter() {
       })();
       
       setContentTypesList(newOrder);
-      
-      // Auto-save to database if in edit mode
-      if (isEditMode && editId) {
-        try {
-          await updateNewsletter(editId, { content_types_config: newOrder });
-          toast({ title: "Ordem salva", description: "A ordem dos tipos de conteúdo foi atualizada." });
-        } catch (error) {
-          console.error('Error saving content types order:', error);
-        }
-      }
+      debouncedSaveOrder(newOrder);
     }
   };
 
