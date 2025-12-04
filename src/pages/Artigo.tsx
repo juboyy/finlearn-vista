@@ -19,8 +19,35 @@ const Artigo = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [audioProgress, setAudioProgress] = useState(0);
+  const [audioDuration, setAudioDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [playbackSpeed, setPlaybackSpeed] = useState(1);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const { toast } = useToast();
+
+  const speedOptions = [0.5, 0.75, 1, 1.25, 1.5, 2];
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  const handleSpeedChange = (speed: number) => {
+    setPlaybackSpeed(speed);
+    if (audioRef.current) {
+      audioRef.current.playbackRate = speed;
+    }
+  };
+
+  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newTime = parseFloat(e.target.value);
+    setCurrentTime(newTime);
+    if (audioRef.current) {
+      audioRef.current.currentTime = newTime;
+    }
+  };
 
   // Refs para animação de fade-in
   const headerRef = useFadeInOnScroll<HTMLDivElement>();
@@ -157,9 +184,27 @@ const Artigo = () => {
         const audioUrl = URL.createObjectURL(audioBlob);
         
         audioRef.current = new Audio(audioUrl);
+        audioRef.current.playbackRate = playbackSpeed;
+        
+        audioRef.current.onloadedmetadata = () => {
+          if (audioRef.current) {
+            setAudioDuration(audioRef.current.duration);
+          }
+        };
+        
+        audioRef.current.ontimeupdate = () => {
+          if (audioRef.current) {
+            setCurrentTime(audioRef.current.currentTime);
+            setAudioProgress((audioRef.current.currentTime / audioRef.current.duration) * 100);
+          }
+        };
+        
         audioRef.current.onended = () => {
           setIsPlaying(false);
+          setAudioProgress(0);
+          setCurrentTime(0);
         };
+        
         audioRef.current.play();
         setIsPlaying(true);
         
@@ -365,6 +410,58 @@ const Artigo = () => {
                     </div>
                   </button>
                 </div>
+
+                {/* Audio Player Controls - shown when audio is loaded */}
+                {audioRef.current && (isPlaying || audioProgress > 0) && (
+                  <div className="mt-4 p-4 bg-card rounded-lg border border-border">
+                    <div className="flex items-center gap-3 mb-3">
+                      <button
+                        onClick={handleListenArticle}
+                        className="w-10 h-10 bg-pastel-blue/30 rounded-full flex items-center justify-center hover:bg-pastel-blue/50 transition"
+                      >
+                        {isPlaying ? (
+                          <Pause size={18} className="text-foreground" />
+                        ) : (
+                          <Play size={18} className="text-foreground ml-0.5" />
+                        )}
+                      </button>
+                      
+                      <div className="flex-1">
+                        <input
+                          type="range"
+                          min={0}
+                          max={audioDuration || 100}
+                          value={currentTime}
+                          onChange={handleSeek}
+                          className="w-full h-2 bg-border rounded-lg appearance-none cursor-pointer accent-pastel-blue"
+                        />
+                        <div className="flex justify-between text-xs text-muted-foreground mt-1">
+                          <span>{formatTime(currentTime)}</span>
+                          <span>{formatTime(audioDuration)}</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-muted-foreground">Velocidade:</span>
+                      <div className="flex gap-1">
+                        {speedOptions.map((speed) => (
+                          <button
+                            key={speed}
+                            onClick={() => handleSpeedChange(speed)}
+                            className={`px-2 py-1 text-xs rounded transition ${
+                              playbackSpeed === speed
+                                ? 'bg-pastel-blue text-foreground font-medium'
+                                : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                            }`}
+                          >
+                            {speed}x
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Featured Image */}
