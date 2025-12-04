@@ -438,27 +438,6 @@ export default function CriarEbook() {
             </div>
           </div>
         </div>
-
-        {/* Footer */}
-        <footer className="bg-card border-t border-border p-8">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-8">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-[hsl(var(--pastel-blue))] rounded-lg flex items-center justify-center">
-                  <i className="fa-solid fa-chart-line text-foreground text-lg"></i>
-                </div>
-                <span className="text-xl font-semibold text-foreground">FinLearn</span>
-              </div>
-              <div className="flex items-center gap-6 text-sm text-muted-foreground">
-                <a href="#" className="hover:text-foreground transition-colors">Sobre</a>
-                <a href="#" className="hover:text-foreground transition-colors">Contato</a>
-                <a href="#" className="hover:text-foreground transition-colors">Termos</a>
-                <a href="#" className="hover:text-foreground transition-colors">Privacidade</a>
-              </div>
-            </div>
-            <p className="text-sm text-muted-foreground">© 2025 FinLearn. Todos os direitos reservados.</p>
-          </div>
-        </footer>
       </main>
     </div>
   );
