@@ -153,7 +153,7 @@ export default function CriarConteudo() {
 
                   {/* Option 2: Cursos */}
                   <Link to="/criar-curso" className="w-full group flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-200 border border-transparent hover:border-border text-left">
-                    <div className="w-12 h-12 rounded-lg bg-[hsl(45,60%,75%)] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
+                    <div className="w-12 h-12 rounded-lg bg-[hsl(48,60%,88%)] text-[hsl(var(--pastel-gray-dark))] flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-200">
                       <GraduationCap className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
