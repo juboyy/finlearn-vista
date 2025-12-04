@@ -318,8 +318,10 @@ export default function PerfilSocial() {
 
             {/* Basic Info Section */}
             <section className="bg-card border border-border rounded-xl p-6">
-              <h2 className="text-lg font-semibold text-foreground mb-6 flex items-center gap-2">
-                <GraduationCap size={20} className="text-pastel-purple" />
+              <h2 className="text-lg font-semibold text-foreground mb-6 flex items-center gap-3">
+                <span className="w-9 h-9 rounded-lg bg-pastel-purple flex items-center justify-center">
+                  <GraduationCap size={18} className="text-slate-600" />
+                </span>
                 Informacoes Basicas
               </h2>
               
@@ -382,8 +384,10 @@ export default function PerfilSocial() {
 
             {/* Location & Institution Section */}
             <section className="bg-card border border-border rounded-xl p-6">
-              <h2 className="text-lg font-semibold text-foreground mb-6 flex items-center gap-2">
-                <MapPin size={20} className="text-pastel-green" />
+              <h2 className="text-lg font-semibold text-foreground mb-6 flex items-center gap-3">
+                <span className="w-9 h-9 rounded-lg bg-pastel-green flex items-center justify-center">
+                  <MapPin size={18} className="text-slate-600" />
+                </span>
                 Localizacao e Instituicao Atual
               </h2>
               
@@ -435,8 +439,10 @@ export default function PerfilSocial() {
             {/* Work Experience Section */}
             <section className="bg-card border border-border rounded-xl p-6">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
-                  <Briefcase size={20} className="text-pastel-orange" />
+                <h2 className="text-lg font-semibold text-foreground flex items-center gap-3">
+                  <span className="w-9 h-9 rounded-lg bg-pastel-orange flex items-center justify-center">
+                    <Briefcase size={18} className="text-slate-600" />
+                  </span>
                   Experiencia Profissional
                 </h2>
                 <button
@@ -532,8 +538,10 @@ export default function PerfilSocial() {
 
             {/* Social Links Section */}
             <section className="bg-card border border-border rounded-xl p-6">
-              <h2 className="text-lg font-semibold text-foreground mb-6 flex items-center gap-2">
-                <Link2 size={20} className="text-pastel-purple" />
+              <h2 className="text-lg font-semibold text-foreground mb-6 flex items-center gap-3">
+                <span className="w-9 h-9 rounded-lg bg-pastel-pink flex items-center justify-center">
+                  <Link2 size={18} className="text-slate-600" />
+                </span>
                 Redes Sociais e Links
               </h2>
               
@@ -541,8 +549,8 @@ export default function PerfilSocial() {
                 {socialNetworks.map((social) => (
                   <div key={social.key} className="group">
                     <Label htmlFor={social.key} className="text-sm font-medium text-slate-700 flex items-center gap-2 mb-1.5">
-                      <span className={`w-8 h-8 rounded-lg bg-${social.color}/40 flex items-center justify-center text-slate-600 group-hover:bg-${social.color}/60 transition-colors`}>
-                        {social.icon}
+                      <span className={`w-8 h-8 rounded-lg bg-${social.color} flex items-center justify-center group-hover:opacity-80 transition-opacity`}>
+                        <span className="text-slate-600">{social.icon}</span>
                       </span>
                       {social.label}
                     </Label>
@@ -672,10 +680,10 @@ export default function PerfilSocial() {
                   {socialNetworks.filter(s => s.value).map((social) => (
                     <div 
                       key={social.key} 
-                      className={`flex items-center gap-2 px-3 py-2 bg-${social.color}/30 rounded-lg`}
+                      className={`flex items-center gap-2 px-3 py-2 bg-accent/50 rounded-lg`}
                     >
-                      <span className={`w-7 h-7 rounded-md bg-${social.color}/50 flex items-center justify-center text-slate-600`}>
-                        {social.icon}
+                      <span className={`w-7 h-7 rounded-md bg-${social.color} flex items-center justify-center`}>
+                        <span className="text-slate-600">{social.icon}</span>
                       </span>
                       <div className="flex-1 min-w-0">
                         <p className="text-xs text-muted-foreground">{social.label}</p>
@@ -689,17 +697,17 @@ export default function PerfilSocial() {
 
             {/* Stats Preview (mock) */}
             <div className="grid grid-cols-3 gap-4">
-              <div className="bg-pastel-blue/50 border border-border rounded-lg p-4 text-center">
-                <p className="text-2xl font-bold text-pastel-dark-gray">0</p>
-                <p className="text-sm text-muted-foreground mt-1">Conteudos</p>
+              <div className="bg-pastel-blue border border-border rounded-lg p-4 text-center">
+                <p className="text-2xl font-bold text-slate-600">0</p>
+                <p className="text-sm text-slate-500 mt-1">Conteudos</p>
               </div>
-              <div className="bg-pastel-purple/50 border border-border rounded-lg p-4 text-center">
-                <p className="text-2xl font-bold text-pastel-dark-gray">0</p>
-                <p className="text-sm text-muted-foreground mt-1">Seguidores</p>
+              <div className="bg-pastel-purple border border-border rounded-lg p-4 text-center">
+                <p className="text-2xl font-bold text-slate-600">0</p>
+                <p className="text-sm text-slate-500 mt-1">Seguidores</p>
               </div>
-              <div className="bg-pastel-green/50 border border-border rounded-lg p-4 text-center">
-                <p className="text-2xl font-bold text-pastel-dark-gray">0</p>
-                <p className="text-sm text-muted-foreground mt-1">Vendas</p>
+              <div className="bg-pastel-green border border-border rounded-lg p-4 text-center">
+                <p className="text-2xl font-bold text-slate-600">0</p>
+                <p className="text-sm text-slate-500 mt-1">Vendas</p>
               </div>
             </div>
           </div>
