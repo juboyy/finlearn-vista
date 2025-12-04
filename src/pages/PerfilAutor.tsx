@@ -191,12 +191,18 @@ const PerfilAutor = () => {
                       <span><i className="fa-solid fa-calendar-alt mr-2"></i>Membro desde 2020</span>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <button className="h-10 px-4 bg-secondary text-secondary-foreground rounded-lg text-sm font-medium hover:bg-secondary/80 transition-colors">
-                      <Share2 size={16} className="inline mr-2" />Compartilhar
-                    </button>
-                    <button className="h-10 px-4 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors">
-                      <UserPlus size={16} className="inline mr-2 text-primary-foreground" />Seguir
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center gap-3">
+                      <button className="h-10 px-4 bg-secondary text-secondary-foreground rounded-lg text-sm font-medium hover:bg-secondary/80 transition-colors">
+                        <Share2 size={16} className="inline mr-2" />Compartilhar
+                      </button>
+                      <button className="h-10 px-4 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors">
+                        <UserPlus size={16} className="inline mr-2 text-primary-foreground" />Seguir
+                      </button>
+                    </div>
+                    <button onClick={() => navigate('/meus-certificados')} className="h-10 w-full bg-card border border-border rounded-lg text-sm font-medium hover:bg-accent transition-colors flex items-center justify-center gap-2">
+                      <Award className="text-slate-600" size={16} />
+                      <span className="text-foreground">Meus Certificados</span>
                     </button>
                   </div>
                 </div>
@@ -230,13 +236,6 @@ const PerfilAutor = () => {
               </div>
             </div>
 
-            <div className="flex items-center justify-between mb-4">
-              <div></div>
-              <button onClick={() => navigate('/meus-certificados')} className="bg-card border border-border rounded-lg px-4 py-2 flex items-center gap-2 hover:bg-accent transition-colors">
-                <Award className="text-slate-600" size={18} />
-                <span className="font-medium text-foreground text-sm">Meus Certificados</span>
-              </button>
-            </div>
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
               <div className="bg-pastel-blue/50 border border-border rounded-lg p-4 text-center">
