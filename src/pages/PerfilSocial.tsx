@@ -2,7 +2,8 @@ import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { 
   ArrowLeft, Bell, Eye, Save, Camera, MapPin, Building2, Calendar,
   Link2, Upload, Loader2, Plus, X, Image, Briefcase, GraduationCap,
-  Twitter, Instagram, Youtube, Linkedin, Github, Facebook, MessageCircle, Globe, Send, Phone
+  Twitter, Instagram, Youtube, Linkedin, Github, Facebook, MessageCircle, Globe, Send, Phone,
+  Video, Mail
 } from "lucide-react";
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
@@ -561,6 +562,71 @@ export default function PerfilSocial() {
                     />
                   </div>
                 ))}
+              </div>
+            </section>
+
+            {/* Contact Options Section */}
+            <section className="bg-card border border-border rounded-xl p-6">
+              <h2 className="text-lg font-semibold text-foreground mb-6 flex items-center gap-3">
+                <span className="w-9 h-9 rounded-lg bg-pastel-blue flex items-center justify-center">
+                  <MessageCircle size={18} className="text-slate-600" />
+                </span>
+                Formas de Contato Direto
+              </h2>
+              
+              <p className="text-sm text-muted-foreground mb-4">
+                Selecione quais formas de contato voce deseja disponibilizar no seu perfil publico.
+              </p>
+
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                <label className="flex items-center gap-3 p-4 bg-accent/30 border border-border rounded-xl cursor-pointer hover:bg-accent/50 transition">
+                  <input type="checkbox" className="w-5 h-5 rounded border-border text-pastel-blue focus:ring-pastel-blue" />
+                  <MessageCircle size={20} className="text-slate-600" />
+                  <span className="font-medium text-foreground">Mensagem</span>
+                </label>
+                
+                <label className="flex items-center gap-3 p-4 bg-accent/30 border border-border rounded-xl cursor-pointer hover:bg-accent/50 transition">
+                  <input type="checkbox" className="w-5 h-5 rounded border-border text-pastel-blue focus:ring-pastel-blue" />
+                  <Phone size={20} className="text-slate-600" />
+                  <span className="font-medium text-foreground">Audio</span>
+                </label>
+                
+                <label className="flex items-center gap-3 p-4 bg-accent/30 border border-border rounded-xl cursor-pointer hover:bg-accent/50 transition">
+                  <input type="checkbox" className="w-5 h-5 rounded border-border text-pastel-blue focus:ring-pastel-blue" />
+                  <Video size={20} className="text-slate-600" />
+                  <span className="font-medium text-foreground">Video</span>
+                </label>
+                
+                <label className="flex items-center gap-3 p-4 bg-accent/30 border border-border rounded-xl cursor-pointer hover:bg-accent/50 transition">
+                  <input type="checkbox" className="w-5 h-5 rounded border-border text-pastel-blue focus:ring-pastel-blue" />
+                  <Mail size={20} className="text-slate-600" />
+                  <span className="font-medium text-foreground">E-mail</span>
+                </label>
+              </div>
+
+              <div className="mt-6 grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="contactEmail" className="text-sm font-medium text-slate-700">
+                    E-mail para Contato
+                  </Label>
+                  <Input
+                    id="contactEmail"
+                    type="email"
+                    placeholder="seu@email.com"
+                    className="mt-1"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="contactPhone" className="text-sm font-medium text-slate-700">
+                    Telefone para Contato
+                  </Label>
+                  <Input
+                    id="contactPhone"
+                    type="tel"
+                    placeholder="+55 11 99999-9999"
+                    className="mt-1"
+                  />
+                </div>
               </div>
             </section>
 
