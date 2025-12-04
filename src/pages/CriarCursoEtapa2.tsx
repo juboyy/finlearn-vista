@@ -186,7 +186,7 @@ function SortableLesson({
   );
 }
 
-export default function CriarEbookEtapa2() {
+export default function CriarCursoEtapa2() {
   const [modules, setModules] = useState<Module[]>([
     {
       id: '1',
@@ -371,12 +371,12 @@ export default function CriarEbookEtapa2() {
         <header className="bg-card border-b border-border sticky top-0 z-10">
           <div className="px-8 py-4 flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Link to="/criar-ebook" className="p-2 text-muted-foreground hover:bg-muted rounded-lg transition-colors">
+              <Link to="/criar-curso" className="p-2 text-muted-foreground hover:bg-muted rounded-lg transition-colors">
                 <ArrowLeft className="w-5 h-5" />
               </Link>
               <div>
-                <h1 className="text-2xl font-semibold text-foreground">Conteúdo do E-book</h1>
-                <p className="text-sm text-muted-foreground mt-1">Organize capítulos, seções e materiais</p>
+                <h1 className="text-2xl font-semibold text-foreground">Conteudo do Curso</h1>
+                <p className="text-sm text-muted-foreground mt-1">Organize modulos, aulas e materiais</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -385,7 +385,7 @@ export default function CriarEbookEtapa2() {
                 Salvar Rascunho
               </button>
               <button className="px-5 py-2 bg-muted text-muted-foreground rounded-lg font-medium cursor-not-allowed">
-                Publicar E-book
+                Publicar Curso
               </button>
             </div>
           </div>
@@ -411,8 +411,8 @@ export default function CriarEbookEtapa2() {
                     <span className="text-sm font-semibold text-foreground">2</span>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground">Conteúdo do E-book</h3>
-                    <p className="text-xs text-muted-foreground">Capítulos, seções e materiais</p>
+                    <h3 className="font-semibold text-foreground">Conteudo do Curso</h3>
+                    <p className="text-xs text-muted-foreground">Modulos, aulas e materiais</p>
                   </div>
                 </div>
                 <div className="flex-1 mx-6 h-1 bg-muted rounded-full">
@@ -443,7 +443,7 @@ export default function CriarEbookEtapa2() {
               <div className="bg-card rounded-xl border border-border p-6">
                 <div className="flex items-center justify-between mb-6">
                   <div>
-                    <h2 className="text-lg font-semibold text-foreground">Estrutura do E-book</h2>
+                    <h2 className="text-lg font-semibold text-foreground">Estrutura do Curso</h2>
                     <p className="text-sm text-muted-foreground mt-1">Arraste para reordenar capítulos e seções</p>
                   </div>
                   <button className="px-4 py-2 bg-[hsl(var(--pastel-blue))] text-foreground rounded-lg font-medium hover:opacity-80 transition-opacity flex items-center gap-2">
@@ -537,7 +537,7 @@ export default function CriarEbookEtapa2() {
                   <Folder className="w-8 h-8 text-foreground" />
                 </div>
                 <h3 className="font-semibold text-foreground mb-2">Adicionar Certificado</h3>
-                <p className="text-sm text-muted-foreground mb-4">Configure o certificado de conclusão do e-book</p>
+                <p className="text-sm text-muted-foreground mb-4">Configure o certificado de conclusao do curso</p>
                 <button className="px-6 py-2 bg-[hsl(var(--pastel-blue))] text-foreground rounded-lg font-medium hover:opacity-80 transition-opacity flex items-center gap-2 mx-auto">
                   <Plus className="w-4 h-4" />
                   Criar Certificado

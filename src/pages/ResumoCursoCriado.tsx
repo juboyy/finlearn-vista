@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-export default function ResumoEbookCriado() {
+export default function ResumoCursoCriado() {
   return (
     <div className="flex min-h-screen w-full bg-muted/30">
       <SidebarFix />
@@ -14,12 +14,12 @@ export default function ResumoEbookCriado() {
         <header className="bg-card border-b border-border sticky top-0 z-10">
           <div className="px-8 py-4 flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Link to="/criar-ebook/etapa-3" className="p-2 text-muted-foreground hover:bg-muted rounded-lg transition-colors">
+              <Link to="/criar-curso/etapa-3" className="p-2 text-muted-foreground hover:bg-muted rounded-lg transition-colors">
                 <ArrowLeft className="w-5 h-5" />
               </Link>
               <div>
-                <h1 className="text-2xl font-semibold text-foreground">Resumo do E-book</h1>
-                <p className="text-sm text-muted-foreground mt-1">Revise todas as informações antes de publicar</p>
+                <h1 className="text-2xl font-semibold text-foreground">Resumo do Curso</h1>
+                <p className="text-sm text-muted-foreground mt-1">Revise todas as informacoes antes de publicar</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -33,7 +33,7 @@ export default function ResumoEbookCriado() {
               </Button>
               <Button className="bg-[hsl(var(--pastel-green))] text-foreground hover:opacity-80 gap-2">
                 <Check className="w-4 h-4" />
-                Publicar E-book
+                Publicar Curso
               </Button>
             </div>
           </div>
@@ -47,7 +47,7 @@ export default function ResumoEbookCriado() {
             </div>
             <div>
               <p className="font-semibold text-foreground">Cadastro Completo</p>
-              <p className="text-sm text-muted-foreground">Todas as informações foram preenchidas. Revise e publique seu e-book.</p>
+              <p className="text-sm text-muted-foreground">Todas as informacoes foram preenchidas. Revise e publique seu curso.</p>
             </div>
           </div>
         </div>
@@ -66,15 +66,15 @@ export default function ResumoEbookCriado() {
                       </div>
                       <h2 className="text-lg font-semibold text-foreground">Informacoes Basicas</h2>
                     </div>
-                    <Link to="/criar-ebook" className="text-sm text-[hsl(var(--pastel-purple))] font-medium hover:underline">
+                    <Link to="/criar-curso" className="text-sm text-[hsl(var(--pastel-purple))] font-medium hover:underline">
                       Editar
                     </Link>
                   </div>
 
                   <div className="grid grid-cols-2 gap-6">
                     <div>
-                      <label className="text-sm text-muted-foreground">Titulo do E-book</label>
-                      <p className="font-medium text-foreground mt-1">Guia Completo de Investimentos em Renda Fixa</p>
+                      <label className="text-sm text-muted-foreground">Titulo do Curso</label>
+                      <p className="font-medium text-foreground mt-1">Domine o Mercado de Capitais em 2025</p>
                     </div>
                     <div>
                       <label className="text-sm text-muted-foreground">Subtitulo</label>
@@ -91,8 +91,8 @@ export default function ResumoEbookCriado() {
                     <div className="col-span-2">
                       <label className="text-sm text-muted-foreground">Descricao</label>
                       <p className="font-medium text-foreground mt-1">
-                        Este e-book oferece um guia completo sobre investimentos em renda fixa, 
-                        abordando desde conceitos basicos ate estrategias avancadas para maximizar seus rendimentos.
+                        Este curso oferece um guia completo sobre o mercado de capitais, 
+                        abordando desde conceitos basicos ate estrategias avancadas para maximizar seus investimentos.
                       </p>
                     </div>
                     <div className="col-span-2">
@@ -117,7 +117,7 @@ export default function ResumoEbookCriado() {
                       </div>
                       <h2 className="text-lg font-semibold text-foreground">Estrutura do Conteudo</h2>
                     </div>
-                    <Link to="/criar-ebook/etapa-2" className="text-sm text-[hsl(var(--pastel-purple))] font-medium hover:underline">
+                    <Link to="/criar-curso/etapa-2" className="text-sm text-[hsl(var(--pastel-purple))] font-medium hover:underline">
                       Editar
                     </Link>
                   </div>
@@ -126,52 +126,52 @@ export default function ResumoEbookCriado() {
                     <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
                       <div className="flex items-center gap-3">
                         <FileText className="w-5 h-5 text-muted-foreground" />
-                        <span className="font-medium text-foreground">Capitulo 1: Introducao a Renda Fixa</span>
+                        <span className="font-medium text-foreground">Modulo 1: Fundamentos do Mercado de Capitais</span>
                       </div>
-                      <span className="text-sm text-muted-foreground">4 secoes</span>
+                      <span className="text-sm text-muted-foreground">4 aulas</span>
                     </div>
                     <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
                       <div className="flex items-center gap-3">
                         <FileText className="w-5 h-5 text-muted-foreground" />
-                        <span className="font-medium text-foreground">Capitulo 2: Tesouro Direto</span>
+                        <span className="font-medium text-foreground">Modulo 2: Analise de Investimentos</span>
                       </div>
-                      <span className="text-sm text-muted-foreground">5 secoes</span>
+                      <span className="text-sm text-muted-foreground">5 aulas</span>
                     </div>
                     <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
                       <div className="flex items-center gap-3">
                         <FileText className="w-5 h-5 text-muted-foreground" />
-                        <span className="font-medium text-foreground">Capitulo 3: CDB e Depositos Bancarios</span>
+                        <span className="font-medium text-foreground">Modulo 3: Gestao de Portfolios</span>
                       </div>
-                      <span className="text-sm text-muted-foreground">3 secoes</span>
+                      <span className="text-sm text-muted-foreground">3 aulas</span>
                     </div>
                     <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
                       <div className="flex items-center gap-3">
                         <FileText className="w-5 h-5 text-muted-foreground" />
-                        <span className="font-medium text-foreground">Capitulo 4: LCI e LCA</span>
+                        <span className="font-medium text-foreground">Modulo 4: Derivativos e Opcoes</span>
                       </div>
-                      <span className="text-sm text-muted-foreground">4 secoes</span>
+                      <span className="text-sm text-muted-foreground">4 aulas</span>
                     </div>
                     <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
                       <div className="flex items-center gap-3">
                         <FileText className="w-5 h-5 text-muted-foreground" />
-                        <span className="font-medium text-foreground">Capitulo 5: Estrategias de Diversificacao</span>
+                        <span className="font-medium text-foreground">Modulo 5: Projeto Final</span>
                       </div>
-                      <span className="text-sm text-muted-foreground">6 secoes</span>
+                      <span className="text-sm text-muted-foreground">2 aulas</span>
                     </div>
                   </div>
 
                   <div className="mt-6 pt-6 border-t border-border grid grid-cols-3 gap-4">
                     <div className="text-center p-4 bg-[hsl(var(--pastel-blue))]/20 rounded-lg">
                       <p className="text-2xl font-bold text-foreground">5</p>
-                      <p className="text-sm text-muted-foreground">Capitulos</p>
+                      <p className="text-sm text-muted-foreground">Modulos</p>
                     </div>
                     <div className="text-center p-4 bg-[hsl(var(--pastel-purple))]/20 rounded-lg">
-                      <p className="text-2xl font-bold text-foreground">22</p>
-                      <p className="text-sm text-muted-foreground">Secoes</p>
+                      <p className="text-2xl font-bold text-foreground">18</p>
+                      <p className="text-sm text-muted-foreground">Aulas</p>
                     </div>
                     <div className="text-center p-4 bg-[hsl(var(--pastel-green))]/20 rounded-lg">
-                      <p className="text-2xl font-bold text-foreground">~180</p>
-                      <p className="text-sm text-muted-foreground">Paginas</p>
+                      <p className="text-2xl font-bold text-foreground">~8h</p>
+                      <p className="text-sm text-muted-foreground">Duracao</p>
                     </div>
                   </div>
                 </div>
@@ -185,7 +185,7 @@ export default function ResumoEbookCriado() {
                       </div>
                       <h2 className="text-lg font-semibold text-foreground">Valores e Pagamento</h2>
                     </div>
-                    <Link to="/criar-ebook/etapa-3" className="text-sm text-[hsl(var(--pastel-purple))] font-medium hover:underline">
+                    <Link to="/criar-curso/etapa-3" className="text-sm text-[hsl(var(--pastel-purple))] font-medium hover:underline">
                       Editar
                     </Link>
                   </div>
@@ -276,11 +276,11 @@ export default function ResumoEbookCriado() {
                   <div className="aspect-[3/4] bg-gradient-to-br from-[hsl(var(--pastel-blue))]/30 to-[hsl(var(--pastel-purple))]/30 flex items-center justify-center">
                     <div className="text-center p-6">
                       <BookOpen className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-                      <p className="text-sm text-muted-foreground">Capa do E-book</p>
+                      <p className="text-sm text-muted-foreground">Capa do Curso</p>
                     </div>
                   </div>
                   <div className="p-4">
-                    <h3 className="font-semibold text-foreground mb-1">Guia Completo de Investimentos</h3>
+                    <h3 className="font-semibold text-foreground mb-1">Domine o Mercado de Capitais</h3>
                     <p className="text-sm text-muted-foreground mb-3">Por Joao Silva</p>
                     <div className="flex items-center gap-2 mb-4">
                       <Star className="w-4 h-4 text-[hsl(var(--pastel-yellow))]" />
