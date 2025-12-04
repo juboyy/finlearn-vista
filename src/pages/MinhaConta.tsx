@@ -2,7 +2,8 @@ import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { 
   Camera, IdCard, Edit, Briefcase, Plus, Star, Crown, GraduationCap, 
   Award, CheckCircle, CreditCard, Rocket, Shield, Eye, TrendingUp, 
-  Download, FileText, AlertTriangle, XCircle, X, Bell, User, Building2
+  Download, FileText, AlertTriangle, XCircle, X, Bell, User, Building2,
+  Upload, Loader2
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -18,13 +19,19 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function MinhaConta() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [activeSection, setActiveSection] = useState("perfil");
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const mainRef = useRef<HTMLElement>(null);
   const { toast } = useToast();
   
@@ -86,6 +93,138 @@ export default function MinhaConta() {
   const handleCloseDeleteModal = () => {
     setIsDeleteModalOpen(false);
     setPasswordConfirmation("");
+  };
+
+  // Load user avatar on mount
+  useEffect(() => {
+    const loadAvatar = async () => {
+      if (!user?.id) return;
+      
+      const { data } = await supabase
+        .from('profiles')
+        .select('avatar_url')
+        .eq('id', user.id)
+        .single();
+      
+      if (data?.avatar_url) {
+        setAvatarUrl(data.avatar_url);
+      }
+    };
+    
+    loadAvatar();
+  }, [user?.id]);
+
+  const handleAvatarUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file || !user?.id) return;
+
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      toast({
+        variant: "destructive",
+        title: "Formato inválido",
+        description: "Por favor, selecione uma imagem JPG, PNG ou WebP.",
+      });
+      return;
+    }
+
+    // Validate file size (5MB max)
+    if (file.size > 5 * 1024 * 1024) {
+      toast({
+        variant: "destructive",
+        title: "Arquivo muito grande",
+        description: "O tamanho máximo permitido é 5MB.",
+      });
+      return;
+    }
+
+    setIsUploadingAvatar(true);
+
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${user.id}/avatar.${fileExt}`;
+
+      // Delete old avatar if exists
+      await supabase.storage.from('avatars').remove([fileName]);
+
+      // Upload new avatar
+      const { error: uploadError } = await supabase.storage
+        .from('avatars')
+        .upload(fileName, file, { upsert: true });
+
+      if (uploadError) throw uploadError;
+
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('avatars')
+        .getPublicUrl(fileName);
+
+      // Update profile with new avatar URL
+      const { error: updateError } = await supabase
+        .from('profiles')
+        .update({ avatar_url: publicUrl })
+        .eq('id', user.id);
+
+      if (updateError) throw updateError;
+
+      setAvatarUrl(publicUrl);
+      toast({
+        title: "Foto atualizada",
+        description: "Sua foto de perfil foi atualizada com sucesso.",
+      });
+    } catch (error) {
+      console.error('Error uploading avatar:', error);
+      toast({
+        variant: "destructive",
+        title: "Erro ao carregar foto",
+        description: "Não foi possível atualizar sua foto. Tente novamente.",
+      });
+    } finally {
+      setIsUploadingAvatar(false);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
+  };
+
+  const handleRemoveAvatar = async () => {
+    if (!user?.id) return;
+
+    setIsUploadingAvatar(true);
+
+    try {
+      // Remove from storage
+      const { data: files } = await supabase.storage
+        .from('avatars')
+        .list(user.id);
+
+      if (files && files.length > 0) {
+        const filesToRemove = files.map(f => `${user.id}/${f.name}`);
+        await supabase.storage.from('avatars').remove(filesToRemove);
+      }
+
+      // Update profile
+      await supabase
+        .from('profiles')
+        .update({ avatar_url: null })
+        .eq('id', user.id);
+
+      setAvatarUrl(null);
+      toast({
+        title: "Foto removida",
+        description: "Sua foto de perfil foi removida.",
+      });
+    } catch (error) {
+      console.error('Error removing avatar:', error);
+      toast({
+        variant: "destructive",
+        title: "Erro ao remover foto",
+        description: "Não foi possível remover sua foto. Tente novamente.",
+      });
+    } finally {
+      setIsUploadingAvatar(false);
+    }
   };
 
   const scrollToSection = (section: string) => {
@@ -267,22 +406,49 @@ export default function MinhaConta() {
                 <div className="flex items-start gap-6">
                   <div className="relative">
                     <img 
-                      src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" 
+                      src={avatarUrl || "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg"} 
                       alt="Profile" 
                       className="w-32 h-32 rounded-full object-cover border-4 border-slate-100"
                     />
-                    <button className="absolute bottom-0 right-0 w-10 h-10 bg-pastel-blue rounded-full flex items-center justify-center hover:bg-opacity-80 transition">
-                      <Camera className="text-slate-700" size={20} />
+                    <button 
+                      onClick={() => fileInputRef.current?.click()}
+                      disabled={isUploadingAvatar}
+                      className="absolute bottom-0 right-0 w-10 h-10 bg-pastel-blue rounded-full flex items-center justify-center hover:bg-opacity-80 transition disabled:opacity-50"
+                    >
+                      {isUploadingAvatar ? (
+                        <Loader2 className="text-slate-700 animate-spin" size={20} />
+                      ) : (
+                        <Camera className="text-slate-700" size={20} />
+                      )}
                     </button>
                   </div>
                   <div className="flex-1">
                     <p className="text-sm text-slate-600 mb-4">Sua foto ajuda outras pessoas a reconhecer você na plataforma. Formatos aceitos: JPG, PNG. Tamanho máximo: 5MB.</p>
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/jpeg,image/png,image/webp"
+                      onChange={handleAvatarUpload}
+                      className="hidden"
+                    />
                     <div className="flex gap-3">
-                      <button className="px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
-                        <Download className="inline mr-2" size={16} />
-                        Carregar Foto
+                      <button 
+                        onClick={() => fileInputRef.current?.click()}
+                        disabled={isUploadingAvatar}
+                        className="px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition disabled:opacity-50 flex items-center"
+                      >
+                        {isUploadingAvatar ? (
+                          <Loader2 className="inline mr-2 animate-spin" size={16} />
+                        ) : (
+                          <Upload className="inline mr-2" size={16} />
+                        )}
+                        {isUploadingAvatar ? 'Carregando...' : 'Carregar Foto'}
                       </button>
-                      <button className="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition">
+                      <button 
+                        onClick={handleRemoveAvatar}
+                        disabled={isUploadingAvatar || !avatarUrl}
+                        className="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition disabled:opacity-50"
+                      >
                         Remover
                       </button>
                     </div>
