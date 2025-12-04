@@ -3,10 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Video, Mic, MicOff, VideoOff, Phone, Monitor, Minimize2, Maximize2, MessageCircle, FileText, Settings, Send, ChevronLeft, ChevronRight, X, Activity, TrendingUp, Target, Lightbulb, Key, BarChart3, Clock, Coins, UserPlus, Copy, Mail, Users } from "lucide-react";
-import { useState, useRef, useEffect, useMemo } from "react";
+import { Video, Mic, MicOff, VideoOff, Phone, Monitor, Minimize2, Maximize2, MessageCircle, FileText, Settings, Send, ChevronLeft, ChevronRight, X, Activity, TrendingUp, Target, Lightbulb, Key, BarChart3, Clock, Coins, UserPlus, Copy, Mail, Users, Circle, Square, Download, FileAudio } from "lucide-react";
+import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import { toast } from "sonner";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { supabase } from "@/integrations/supabase/client";
 interface VideoCallModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -34,7 +35,7 @@ export const VideoCallModal = ({
   const [callDuration, setCallDuration] = useState(0);
   const [isAtBottom, setIsAtBottom] = useState(true);
   const [unreadCount, setUnreadCount] = useState(0);
-  const [activeTab, setActiveTab] = useState<'chat' | 'notes' | 'settings'>('chat');
+  const [activeTab, setActiveTab] = useState<'chat' | 'notes' | 'settings' | 'transcription'>('chat');
   const [notes, setNotes] = useState('');
   const [noteColor, setNoteColor] = useState('#ffffff');
   const notesRef = useRef<HTMLDivElement>(null);
@@ -53,6 +54,18 @@ export const VideoCallModal = ({
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const chatScrollRef = useRef<HTMLDivElement>(null);
+  
+  // Recording states
+  const [isRecording, setIsRecording] = useState(false);
+  const [recordedChunks, setRecordedChunks] = useState<Blob[]>([]);
+  const [recordingDuration, setRecordingDuration] = useState(0);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  
+  // Transcription states
+  const [transcription, setTranscription] = useState('');
+  const [isTranscribing, setIsTranscribing] = useState(false);
+  const [showTranscription, setShowTranscription] = useState(false);
+  const [recordedBlob, setRecordedBlob] = useState<Blob | null>(null);
 
   // Dados do gráfico de créditos
   const creditsChartData = useMemo(() => {
@@ -292,6 +305,136 @@ export const VideoCallModal = ({
     setInviteEmail('');
     setShowInviteModal(false);
   };
+
+  // Recording functions
+  const startRecording = useCallback(() => {
+    if (!streamRef.current) {
+      toast.error('Nenhum stream de áudio/vídeo disponível');
+      return;
+    }
+
+    try {
+      const options = { mimeType: 'video/webm;codecs=vp9,opus' };
+      let mediaRecorder: MediaRecorder;
+      
+      try {
+        mediaRecorder = new MediaRecorder(streamRef.current, options);
+      } catch {
+        // Fallback for browsers that don't support vp9
+        mediaRecorder = new MediaRecorder(streamRef.current, { mimeType: 'video/webm' });
+      }
+      
+      mediaRecorderRef.current = mediaRecorder;
+      const chunks: Blob[] = [];
+
+      mediaRecorder.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          chunks.push(event.data);
+          setRecordedChunks(prev => [...prev, event.data]);
+        }
+      };
+
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(chunks, { type: mediaRecorder.mimeType });
+        setRecordedBlob(blob);
+        toast.success('Gravação finalizada! Iniciando transcrição...');
+        transcribeAudio(blob);
+      };
+
+      mediaRecorder.start(1000); // Collect data every second
+      setIsRecording(true);
+      setRecordedChunks([]);
+      setRecordingDuration(0);
+      toast.success('Gravação iniciada');
+    } catch (error) {
+      console.error('Erro ao iniciar gravação:', error);
+      toast.error('Erro ao iniciar gravação');
+    }
+  }, []);
+
+  const stopRecording = useCallback(() => {
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+      mediaRecorderRef.current.stop();
+      setIsRecording(false);
+    }
+  }, []);
+
+  // Recording duration timer
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isRecording) {
+      interval = setInterval(() => {
+        setRecordingDuration(prev => prev + 1);
+      }, 1000);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isRecording]);
+
+  // Transcription function
+  const transcribeAudio = async (audioBlob: Blob) => {
+    setIsTranscribing(true);
+    setShowTranscription(true);
+    
+    try {
+      // Convert blob to base64
+      const reader = new FileReader();
+      reader.readAsDataURL(audioBlob);
+      
+      reader.onloadend = async () => {
+        const base64Data = reader.result as string;
+        const base64Audio = base64Data.split(',')[1]; // Remove data:audio/webm;base64, prefix
+        
+        const { data, error } = await supabase.functions.invoke('transcribe-audio', {
+          body: { 
+            audio: base64Audio,
+            mimeType: audioBlob.type 
+          }
+        });
+
+        if (error) {
+          console.error('Transcription error:', error);
+          toast.error('Erro na transcrição');
+          setTranscription('Erro ao transcrever áudio. Tente novamente.');
+        } else {
+          setTranscription(data.text || 'Transcrição não disponível');
+          toast.success('Transcrição concluída');
+        }
+        
+        setIsTranscribing(false);
+      };
+    } catch (error) {
+      console.error('Transcription error:', error);
+      toast.error('Erro na transcrição');
+      setIsTranscribing(false);
+    }
+  };
+
+  // Download recording
+  const downloadRecording = () => {
+    if (!recordedBlob) {
+      toast.error('Nenhuma gravação disponível');
+      return;
+    }
+
+    const url = URL.createObjectURL(recordedBlob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `gravacao-${agentName}-${new Date().toISOString().slice(0, 10)}.webm`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    toast.success('Download iniciado');
+  };
+
+  const formatRecordingDuration = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
+
   return <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[95vw] h-[90vh] p-0 bg-slate-950 border-slate-800 overflow-hidden">
         <DialogDescription className="sr-only">
@@ -404,10 +547,32 @@ export const VideoCallModal = ({
                 <Monitor size={24} />
               </Button>
 
+              {/* Recording Button */}
+              <Button 
+                variant="outline" 
+                size="lg" 
+                onClick={isRecording ? stopRecording : startRecording}
+                className={`rounded-full w-16 h-16 transition-all ${isRecording ? "bg-red-500 hover:bg-red-600 text-white border-red-400 animate-pulse" : "bg-slate-700/80 hover:bg-slate-600 text-white border-slate-600"} border-2`} 
+                title={isRecording ? "Parar gravação" : "Iniciar gravação"}
+              >
+                {isRecording ? <Square size={24} /> : <Circle size={24} />}
+              </Button>
+
               <Button size="lg" onClick={handleEndCall} className="rounded-full w-20 h-20 bg-red-500 hover:bg-red-600 text-white shadow-lg hover:shadow-red-500/50 transition-all border-2 border-red-400" title="Encerrar chamada">
                 <Phone size={28} className="rotate-[135deg]" />
               </Button>
             </div>
+
+            {/* Recording Status */}
+            {isRecording && (
+              <div className="flex items-center justify-center gap-3 mb-3">
+                <div className="flex items-center gap-2 px-4 py-2 bg-red-500/20 border border-red-500/50 rounded-full">
+                  <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                  <span className="text-red-400 font-medium">Gravando</span>
+                  <span className="text-red-300">{formatRecordingDuration(recordingDuration)}</span>
+                </div>
+              </div>
+            )}
 
             <div className="flex items-center justify-center gap-6 text-sm text-slate-300">
               <div className="flex items-center gap-2">
@@ -435,17 +600,21 @@ export const VideoCallModal = ({
                   </div>
 
                   {/* Tabs Navigation */}
-                  <div className="flex gap-2">
-                    <button onClick={() => setActiveTab('chat')} className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${activeTab === 'chat' ? 'bg-slate-700 text-white' : 'bg-slate-800/50 text-slate-400 hover:bg-slate-700/50 hover:text-white'}`}>
-                      <MessageCircle size={16} />
+                  <div className="flex gap-1">
+                    <button onClick={() => setActiveTab('chat')} className={`flex-1 flex items-center justify-center gap-1 px-2 py-2 rounded-lg text-xs font-medium transition-all ${activeTab === 'chat' ? 'bg-slate-700 text-white' : 'bg-slate-800/50 text-slate-400 hover:bg-slate-700/50 hover:text-white'}`}>
+                      <MessageCircle size={14} />
                       Chat
                     </button>
-                    <button onClick={() => setActiveTab('notes')} className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${activeTab === 'notes' ? 'bg-slate-700 text-white' : 'bg-slate-800/50 text-slate-400 hover:bg-slate-700/50 hover:text-white'}`}>
-                      <FileText size={16} />
+                    <button onClick={() => setActiveTab('notes')} className={`flex-1 flex items-center justify-center gap-1 px-2 py-2 rounded-lg text-xs font-medium transition-all ${activeTab === 'notes' ? 'bg-slate-700 text-white' : 'bg-slate-800/50 text-slate-400 hover:bg-slate-700/50 hover:text-white'}`}>
+                      <FileText size={14} />
                       Notas
                     </button>
-                    <button onClick={() => setActiveTab('settings')} className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${activeTab === 'settings' ? 'bg-slate-700 text-white' : 'bg-slate-800/50 text-slate-400 hover:bg-slate-700/50 hover:text-white'}`}>
-                      <Settings size={16} />
+                    <button onClick={() => setActiveTab('transcription')} className={`flex-1 flex items-center justify-center gap-1 px-2 py-2 rounded-lg text-xs font-medium transition-all ${activeTab === 'transcription' ? 'bg-slate-700 text-white' : 'bg-slate-800/50 text-slate-400 hover:bg-slate-700/50 hover:text-white'} ${(isTranscribing || transcription) ? 'ring-1 ring-pastel-blue/50' : ''}`}>
+                      <FileAudio size={14} />
+                      Trans
+                    </button>
+                    <button onClick={() => setActiveTab('settings')} className={`flex-1 flex items-center justify-center gap-1 px-2 py-2 rounded-lg text-xs font-medium transition-all ${activeTab === 'settings' ? 'bg-slate-700 text-white' : 'bg-slate-800/50 text-slate-400 hover:bg-slate-700/50 hover:text-white'}`}>
+                      <Settings size={14} />
                       Config
                     </button>
                   </div>
@@ -641,6 +810,99 @@ export const VideoCallModal = ({
                         </Button>
                       </div>
                     </div>
+                  </div>}
+
+                {/* Transcription Tab */}
+                {activeTab === 'transcription' && <div className="flex-1 flex flex-col p-4 overflow-hidden">
+                    <div className="flex items-center justify-between mb-4">
+                      <h4 className="text-white font-medium flex items-center gap-2">
+                        <FileAudio size={18} />
+                        Transcrição
+                      </h4>
+                      {recordedBlob && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={downloadRecording}
+                          className="bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white"
+                        >
+                          <Download size={14} className="mr-1" />
+                          Baixar
+                        </Button>
+                      )}
+                    </div>
+
+                    {/* Recording Status */}
+                    {isRecording && (
+                      <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
+                        <div className="flex items-center gap-2">
+                          <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                          <span className="text-red-400 font-medium">Gravando...</span>
+                          <span className="text-red-300 ml-auto">{formatRecordingDuration(recordingDuration)}</span>
+                        </div>
+                        <p className="text-slate-400 text-xs mt-2">
+                          A transcrição será gerada ao parar a gravação
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Transcribing Status */}
+                    {isTranscribing && (
+                      <div className="mb-4 p-3 bg-pastel-blue/10 border border-pastel-blue/30 rounded-lg">
+                        <div className="flex items-center gap-2">
+                          <div className="w-3 h-3 bg-pastel-blue rounded-full animate-pulse"></div>
+                          <span className="text-pastel-blue font-medium">Transcrevendo áudio...</span>
+                        </div>
+                        <p className="text-slate-400 text-xs mt-2">
+                          Isso pode levar alguns segundos
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Transcription Content */}
+                    {!isRecording && !isTranscribing && (
+                      <div className="flex-1 overflow-y-auto">
+                        {transcription ? (
+                          <div className="space-y-4">
+                            <div className="p-4 bg-slate-800/50 border border-slate-700 rounded-lg">
+                              <h5 className="text-white text-sm font-medium mb-2 flex items-center gap-2">
+                                <FileText size={14} />
+                                Texto Transcrito
+                              </h5>
+                              <p className="text-slate-300 text-sm whitespace-pre-wrap leading-relaxed">
+                                {transcription}
+                              </p>
+                            </div>
+                            
+                            {recordedBlob && (
+                              <div className="p-3 bg-slate-800/30 border border-slate-700/50 rounded-lg">
+                                <p className="text-slate-400 text-xs">
+                                  Gravação: {(recordedBlob.size / 1024 / 1024).toFixed(2)} MB
+                                </p>
+                              </div>
+                            )}
+                          </div>
+                        ) : (
+                          <div className="text-center text-slate-500 py-12">
+                            <FileAudio size={48} className="mx-auto mb-4 opacity-50" />
+                            <p className="font-medium mb-2">Nenhuma transcrição disponível</p>
+                            <p className="text-sm mb-4">
+                              Clique no botão de gravação para iniciar
+                            </p>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={startRecording}
+                              disabled={!isConnected || isRecording}
+                              className="bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white"
+                            >
+                              <Circle size={14} className="mr-2" />
+                              Iniciar Gravação
+                            </Button>
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>}
               </>}
           </div>
