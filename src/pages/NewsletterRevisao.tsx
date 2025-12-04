@@ -1,29 +1,186 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { 
   ChevronRight, ArrowLeft, Check, Edit, Newspaper, Calendar, 
   Clock, Mail, MessageSquare, Smartphone, Hash, DollarSign, 
-  Users, Tag, Palette, FileText, Globe, Send, CheckCircle
+  Users, Tag, Palette, FileText, Globe, Send, CheckCircle,
+  Loader2
 } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+
+interface ContentTypeConfig {
+  id: string;
+  name: string;
+  icon: string;
+  color: string;
+  description: string;
+  frequency: string;
+  days: string;
+  time: string;
+  isActive: boolean;
+}
+
+interface NewsletterData {
+  id: string;
+  title: string;
+  description: string | null;
+  frequency: string | null;
+  color: string;
+  status: string;
+  tags: string[];
+  product_types: string[];
+  distribution_channels: string[];
+  content_types_config: ContentTypeConfig[];
+  subscribers_count: number;
+  open_rate: number;
+  discount_percentage: number;
+}
 
 export default function NewsletterRevisao() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const newsletterId = searchParams.get("id");
+  const { toast } = useToast();
+  
+  const [isLoading, setIsLoading] = useState(true);
+  const [newsletterData, setNewsletterData] = useState<NewsletterData | null>(null);
 
-  const newsletterData = {
-    title: "Revolução dos Pagamentos",
-    category: "Fintechs & Inovação",
-    description: "Análise profunda sobre as transformações no mercado de pagamentos digitais e seu impacto no ecossistema financeiro.",
-    frequency: "Diária",
-    schedule: "Seg a Sex às 07:00",
-    color: "#B8D4E8",
-    tags: ["Pix", "Open Banking", "Fintechs", "Regulação"],
-    products: ["Newspaper", "Podcast", "Webinars"],
-    channels: ["Email", "WhatsApp", "SMS"],
-    price: "R$ 49,90",
-    trialPeriod: "7 dias grátis",
-    discount: "20% OFF para assinantes anuais",
-    subscribers: 0
+  useEffect(() => {
+    const fetchNewsletter = async () => {
+      if (!newsletterId) {
+        toast({
+          title: "Erro",
+          description: "ID da newsletter não encontrado",
+          variant: "destructive"
+        });
+        navigate("/criar-newsletter");
+        return;
+      }
+
+      try {
+        const { data, error } = await supabase
+          .from("newsletters")
+          .select("*")
+          .eq("id", newsletterId)
+          .maybeSingle();
+
+        if (error) throw error;
+
+        if (!data) {
+          toast({
+            title: "Newsletter não encontrada",
+            description: "A newsletter solicitada não existe",
+            variant: "destructive"
+          });
+          navigate("/criar-newsletter");
+          return;
+        }
+
+        setNewsletterData({
+          ...data,
+          content_types_config: (data.content_types_config as unknown as ContentTypeConfig[]) || []
+        });
+      } catch (error) {
+        console.error("Error fetching newsletter:", error);
+        toast({
+          title: "Erro ao carregar",
+          description: "Não foi possível carregar os dados da newsletter",
+          variant: "destructive"
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchNewsletter();
+  }, [newsletterId, navigate, toast]);
+
+  const handlePublish = async () => {
+    if (!newsletterId) return;
+
+    try {
+      const { error } = await supabase
+        .from("newsletters")
+        .update({ status: "active" })
+        .eq("id", newsletterId);
+
+      if (error) throw error;
+
+      toast({
+        title: "Newsletter publicada",
+        description: "Sua newsletter foi publicada com sucesso!"
+      });
+      navigate("/criar-newsletter");
+    } catch (error) {
+      console.error("Error publishing newsletter:", error);
+      toast({
+        title: "Erro ao publicar",
+        description: "Não foi possível publicar a newsletter",
+        variant: "destructive"
+      });
+    }
   };
+
+  const handleSaveDraft = async () => {
+    if (!newsletterId) return;
+
+    try {
+      const { error } = await supabase
+        .from("newsletters")
+        .update({ status: "draft" })
+        .eq("id", newsletterId);
+
+      if (error) throw error;
+
+      toast({
+        title: "Rascunho salvo",
+        description: "Newsletter salva como rascunho"
+      });
+    } catch (error) {
+      console.error("Error saving draft:", error);
+      toast({
+        title: "Erro ao salvar",
+        description: "Não foi possível salvar o rascunho",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const getFrequencyLabel = (frequency: string | null) => {
+    const labels: Record<string, string> = {
+      daily: "Diária",
+      weekly: "Semanal",
+      biweekly: "Quinzenal",
+      monthly: "Mensal"
+    };
+    return labels[frequency || ""] || frequency || "Não definida";
+  };
+
+  const getChannelIcon = (channel: string) => {
+    if (channel.toLowerCase().includes("email")) return Mail;
+    if (channel.toLowerCase().includes("whatsapp")) return MessageSquare;
+    if (channel.toLowerCase().includes("sms")) return Smartphone;
+    return Globe;
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen bg-slate-50">
+        <SidebarFix />
+        <main className="flex-1 flex items-center justify-center">
+          <Loader2 className="w-8 h-8 animate-spin text-[hsl(var(--pastel-purple))]" />
+        </main>
+      </div>
+    );
+  }
+
+  if (!newsletterData) {
+    return null;
+  }
+
+  const activeContentTypes = newsletterData.content_types_config.filter(ct => ct.isActive);
 
   const summaryCards = [
     {
@@ -32,39 +189,48 @@ export default function NewsletterRevisao() {
       color: "bg-[hsl(var(--pastel-blue))]",
       items: [
         { label: "Título", value: newsletterData.title, icon: Newspaper },
-        { label: "Categoria", value: newsletterData.category, icon: Tag },
-        { label: "Frequência", value: newsletterData.frequency, icon: Clock },
-        { label: "Horário", value: newsletterData.schedule, icon: Calendar }
+        { label: "Frequência", value: getFrequencyLabel(newsletterData.frequency), icon: Clock },
+        { label: "Status", value: newsletterData.status === "active" ? "Ativa" : "Rascunho", icon: CheckCircle }
       ]
     },
     {
       title: "Tipos de Conteúdo",
       icon: Newspaper,
       color: "bg-[hsl(var(--pastel-purple))]",
-      items: newsletterData.products.map(product => ({
-        label: product,
-        value: "Incluído",
-        icon: CheckCircle
-      }))
+      items: activeContentTypes.length > 0 
+        ? activeContentTypes.map(ct => ({
+            label: ct.name,
+            value: `${ct.frequency} - ${ct.days} às ${ct.time}`,
+            icon: CheckCircle
+          }))
+        : newsletterData.product_types.length > 0
+          ? newsletterData.product_types.map(product => ({
+              label: product,
+              value: "Incluído",
+              icon: CheckCircle
+            }))
+          : [{ label: "Nenhum tipo configurado", value: "-", icon: CheckCircle }]
     },
     {
       title: "Canais de Distribuição",
       icon: Send,
       color: "bg-[hsl(var(--pastel-green))]",
-      items: newsletterData.channels.map(channel => ({
-        label: channel,
-        value: "Ativo",
-        icon: channel === "Email" ? Mail : channel === "WhatsApp" ? MessageSquare : Smartphone
-      }))
+      items: newsletterData.distribution_channels.length > 0
+        ? newsletterData.distribution_channels.map(channel => ({
+            label: channel,
+            value: "Ativo",
+            icon: getChannelIcon(channel)
+          }))
+        : [{ label: "Nenhum canal configurado", value: "-", icon: Globe }]
     },
     {
       title: "Monetização",
       icon: DollarSign,
       color: "bg-[hsl(var(--pastel-peach))]",
       items: [
-        { label: "Preço", value: newsletterData.price, icon: DollarSign },
-        { label: "Período Trial", value: newsletterData.trialPeriod, icon: Calendar },
-        { label: "Desconto", value: newsletterData.discount, icon: Tag }
+        { label: "Desconto", value: `${newsletterData.discount_percentage}%`, icon: Tag },
+        { label: "Assinantes", value: newsletterData.subscribers_count.toString(), icon: Users },
+        { label: "Taxa de Abertura", value: `${newsletterData.open_rate}%`, icon: Mail }
       ]
     }
   ];
@@ -87,7 +253,7 @@ export default function NewsletterRevisao() {
                 <h1 className="text-2xl font-semibold text-slate-800">Revisar Newsletter</h1>
               </div>
               <button 
-                onClick={() => navigate("/nova-newsletter")}
+                onClick={() => navigate(`/nova-newsletter?edit=${newsletterId}`)}
                 className="px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-lg font-medium transition flex items-center gap-2"
               >
                 <ArrowLeft className="w-4 h-4" />
@@ -132,10 +298,10 @@ export default function NewsletterRevisao() {
                 <div className="relative text-center space-y-3 px-8">
                   <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium text-slate-700 bg-white/90 backdrop-blur-sm">
                     <Newspaper className="w-3.5 h-3.5" />
-                    {newsletterData.category}
+                    Newsletter
                   </div>
                   <h2 className="text-3xl font-bold text-[hsl(var(--pastel-gray-dark))]">{newsletterData.title}</h2>
-                  <p className="text-sm text-slate-600 max-w-2xl">{newsletterData.description}</p>
+                  <p className="text-sm text-slate-600 max-w-2xl">{newsletterData.description || "Sem descrição"}</p>
                 </div>
               </div>
               
@@ -144,40 +310,42 @@ export default function NewsletterRevisao() {
                   <div className="flex items-center gap-6">
                     <div className="flex items-center gap-2 text-sm text-slate-600">
                       <Clock className="w-4 h-4 text-slate-400" />
-                      <span className="font-medium">{newsletterData.frequency}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-slate-600">
-                      <Calendar className="w-4 h-4 text-slate-400" />
-                      <span>{newsletterData.schedule}</span>
+                      <span className="font-medium">{getFrequencyLabel(newsletterData.frequency)}</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm text-slate-600">
                       <Users className="w-4 h-4 text-slate-400" />
-                      <span>{newsletterData.subscribers} assinantes</span>
+                      <span>{newsletterData.subscribers_count} assinantes</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-slate-600">
+                      <Mail className="w-4 h-4 text-slate-400" />
+                      <span>{newsletterData.open_rate}% taxa de abertura</span>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-2xl font-bold text-[hsl(var(--pastel-gray-dark))]">{newsletterData.price}</span>
-                    <span className="text-sm text-slate-500">/mês</span>
+                    <span className="text-2xl font-bold text-[hsl(var(--pastel-gray-dark))]">{newsletterData.discount_percentage}%</span>
+                    <span className="text-sm text-slate-500">desconto</span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Tags */}
-            <div className="mb-8">
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-sm font-medium text-slate-600">Tags:</span>
-                {newsletterData.tags.map((tag, idx) => (
-                  <span 
-                    key={idx}
-                    className="px-3 py-1.5 rounded-full text-sm font-medium text-[hsl(var(--pastel-gray-dark))]"
-                    style={{ backgroundColor: 'hsl(var(--pastel-purple))' }}
-                  >
-                    {tag}
-                  </span>
-                ))}
+            {newsletterData.tags.length > 0 && (
+              <div className="mb-8">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-sm font-medium text-slate-600">Tags:</span>
+                  {newsletterData.tags.map((tag, idx) => (
+                    <span 
+                      key={idx}
+                      className="px-3 py-1.5 rounded-full text-sm font-medium text-[hsl(var(--pastel-gray-dark))]"
+                      style={{ backgroundColor: 'hsl(var(--pastel-purple))' }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Summary Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
@@ -195,7 +363,10 @@ export default function NewsletterRevisao() {
                         </div>
                         <h3 className="font-bold text-[hsl(var(--pastel-gray-dark))]">{card.title}</h3>
                       </div>
-                      <button className="p-2 rounded-lg bg-white/80 hover:bg-white transition text-[hsl(var(--pastel-gray-dark))]">
+                      <button 
+                        onClick={() => navigate(`/nova-newsletter?edit=${newsletterId}`)}
+                        className="p-2 rounded-lg bg-white/80 hover:bg-white transition text-[hsl(var(--pastel-gray-dark))]"
+                      >
                         <Edit className="w-4 h-4" />
                       </button>
                     </div>
@@ -228,7 +399,10 @@ export default function NewsletterRevisao() {
                   </div>
                   <h3 className="font-bold text-[hsl(var(--pastel-gray-dark))]">Tema Visual</h3>
                 </div>
-                <button className="p-2 rounded-lg hover:bg-slate-50 transition text-[hsl(var(--pastel-gray-dark))]">
+                <button 
+                  onClick={() => navigate(`/nova-newsletter?edit=${newsletterId}`)}
+                  className="p-2 rounded-lg hover:bg-slate-50 transition text-[hsl(var(--pastel-gray-dark))]"
+                >
                   <Edit className="w-4 h-4" />
                 </button>
               </div>
@@ -247,7 +421,7 @@ export default function NewsletterRevisao() {
             {/* Action Buttons */}
             <div className="flex items-center justify-between gap-4 bg-white rounded-xl border border-slate-200 p-6 sticky bottom-0 shadow-lg">
               <button 
-                onClick={() => navigate("/nova-newsletter")}
+                onClick={() => navigate(`/nova-newsletter?edit=${newsletterId}`)}
                 className="px-6 py-3 border-2 border-slate-300 text-slate-700 rounded-lg font-semibold hover:bg-slate-50 transition flex items-center gap-2"
               >
                 <ArrowLeft className="w-4 h-4" />
@@ -255,10 +429,14 @@ export default function NewsletterRevisao() {
               </button>
               
               <div className="flex gap-3">
-                <button className="px-6 py-3 border-2 border-slate-300 text-slate-700 rounded-lg font-semibold hover:bg-slate-50 transition">
+                <button 
+                  onClick={handleSaveDraft}
+                  className="px-6 py-3 border-2 border-slate-300 text-slate-700 rounded-lg font-semibold hover:bg-slate-50 transition"
+                >
                   Salvar Rascunho
                 </button>
                 <button 
+                  onClick={handlePublish}
                   className="px-8 py-3 rounded-lg font-semibold transition flex items-center gap-2 text-white shadow-md"
                   style={{ backgroundColor: 'hsl(var(--pastel-purple-btn))' }}
                 >

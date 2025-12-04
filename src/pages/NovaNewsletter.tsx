@@ -1489,6 +1489,7 @@ export default function NovaNewsletter() {
                     };
                     console.log('Saving newsletter with data:', updateData);
                     try {
+                      let newsletterId = editId;
                       if (isEditMode && editId) {
                         await updateNewsletter(editId, updateData);
                         toast({
@@ -1496,9 +1497,16 @@ export default function NovaNewsletter() {
                           description: "As alterações foram salvas com sucesso.",
                         });
                       } else {
-                        await createNewsletter(title, description, selectedFrequency || "weekly", selectedColor, tags, selectedProducts, selectedChannels, contentTypesList);
+                        const newNewsletter = await createNewsletter(title, description, selectedFrequency || "weekly", selectedColor, tags, selectedProducts, selectedChannels, contentTypesList);
+                        if (newNewsletter) {
+                          newsletterId = newNewsletter.id;
+                        }
                       }
-                      navigate('/criar-newsletter');
+                      if (newsletterId) {
+                        navigate(`/newsletter-revisao?id=${newsletterId}`);
+                      } else {
+                        navigate('/criar-newsletter');
+                      }
                     } catch (error) {
                       console.error(error);
                     } finally {
@@ -1510,7 +1518,7 @@ export default function NovaNewsletter() {
                   style={{ backgroundColor: 'hsl(210, 50%, 35%)' }}
                 >
                   {isPublishing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
-                  {isPublishing ? "Salvando..." : isEditMode ? "Salvar Alterações" : "Publicar Newsletter"}
+                  {isPublishing ? "Salvando..." : "Ver Revisão"}
                 </button>
               ) : (
                 <button 
