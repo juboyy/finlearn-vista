@@ -41,3 +41,6 @@ verify_jwt = false
 
 [functions.transcribe-audio]
 verify_jwt = false
+
+[functions.generate-daily-insights]
+verify_jwt = false
