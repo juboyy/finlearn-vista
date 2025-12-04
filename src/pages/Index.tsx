@@ -15,6 +15,7 @@ import { PodcastPanel } from "@/components/Dashboard/PodcastPanel";
 import { EbookPanel } from "@/components/Dashboard/EbookPanel";
 import { AgendaPanel } from "@/components/Dashboard/AgendaPanel";
 import { AnalyticsAlertsPanel } from "@/components/Dashboard/AnalyticsAlertsPanel";
+import { ArticlesInProgress } from "@/components/Dashboard/ArticlesInProgress";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -353,6 +354,10 @@ const Index = () => {
                 />
               </div>
             </section>
+          </div>
+          
+          <div className="grid grid-cols-3 gap-6 mb-8">
+            <ArticlesInProgress />
           </div>
           
           <div className="grid grid-cols-3 gap-6 mb-8">
