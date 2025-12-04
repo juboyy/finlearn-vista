@@ -937,10 +937,12 @@ export type Database = {
           created_at: string
           description: string | null
           discount_percentage: number
+          distribution_channels: string[] | null
           frequency: string | null
           id: string
           last_sent_at: string | null
           open_rate: number
+          product_types: string[] | null
           sent_count: number
           status: string
           subscribers_count: number
@@ -954,10 +956,12 @@ export type Database = {
           created_at?: string
           description?: string | null
           discount_percentage?: number
+          distribution_channels?: string[] | null
           frequency?: string | null
           id?: string
           last_sent_at?: string | null
           open_rate?: number
+          product_types?: string[] | null
           sent_count?: number
           status?: string
           subscribers_count?: number
@@ -971,10 +975,12 @@ export type Database = {
           created_at?: string
           description?: string | null
           discount_percentage?: number
+          distribution_channels?: string[] | null
           frequency?: string | null
           id?: string
           last_sent_at?: string | null
           open_rate?: number
+          product_types?: string[] | null
           sent_count?: number
           status?: string
           subscribers_count?: number
