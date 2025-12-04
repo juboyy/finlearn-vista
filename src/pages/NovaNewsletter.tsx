@@ -43,6 +43,8 @@ export default function NovaNewsletter() {
         setSelectedFrequency(newsletter.frequency || "weekly");
         setStatus(newsletter.status);
         setTags(newsletter.tags || []);
+        setSelectedProducts(newsletter.product_types || ["newspaper"]);
+        setSelectedChannels(newsletter.distribution_channels || ["email"]);
       }
     }
   }, [editId, newsletters]);
@@ -1240,13 +1242,15 @@ export default function NovaNewsletter() {
                           color: selectedColor,
                           status,
                           tags,
+                          product_types: selectedProducts,
+                          distribution_channels: selectedChannels,
                         });
                         toast({
                           title: "Newsletter atualizada",
                           description: "As alterações foram salvas com sucesso.",
                         });
                       } else {
-                        await createNewsletter(title, description, selectedFrequency || "weekly", selectedColor, tags);
+                        await createNewsletter(title, description, selectedFrequency || "weekly", selectedColor, tags, selectedProducts, selectedChannels);
                       }
                       navigate('/criar-newsletter');
                     } catch (error) {

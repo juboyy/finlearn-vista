@@ -18,6 +18,8 @@ export interface Newsletter {
   created_at: string;
   updated_at: string;
   tags: string[];
+  product_types: string[];
+  distribution_channels: string[];
 }
 
 export const useNewsletters = () => {
@@ -52,7 +54,9 @@ export const useNewsletters = () => {
     description: string,
     frequency: string,
     color: string,
-    tags: string[] = []
+    tags: string[] = [],
+    productTypes: string[] = [],
+    distributionChannels: string[] = []
   ) => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
@@ -68,6 +72,8 @@ export const useNewsletters = () => {
           color,
           status: "draft",
           tags,
+          product_types: productTypes,
+          distribution_channels: distributionChannels,
         })
         .select()
         .single();
