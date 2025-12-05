@@ -91,6 +91,7 @@ import CursoDetalhes from "./pages/CursoDetalhes";
 import MeusCertificados from "./pages/MeusCertificados";
 import ContaEmpresarial from "./pages/ContaEmpresarial";
 import ConfigurarPaginaEmpresa from "./pages/ConfigurarPaginaEmpresa";
+import GerenciarConteudosEmpresa from "./pages/GerenciarConteudosEmpresa";
 import PerfilEmpresa from "./pages/PerfilEmpresa";
 import PerfilEmpresaMateriais from "./pages/PerfilEmpresaMateriais";
 import PerfilEmpresaEstatisticas from "./pages/PerfilEmpresaEstatisticas";
@@ -262,6 +263,7 @@ const App = () => {
               <Route path="/meus-certificados" element={<ProtectedRoute><MeusCertificados /></ProtectedRoute>} />
               <Route path="/conta-empresarial" element={<ProtectedRoute><ContaEmpresarial /></ProtectedRoute>} />
               <Route path="/configurar-pagina-empresa" element={<ProtectedRoute><ConfigurarPaginaEmpresa /></ProtectedRoute>} />
+              <Route path="/gerenciar-conteudos-empresa" element={<ProtectedRoute><GerenciarConteudosEmpresa /></ProtectedRoute>} />
               <Route path="/podcast/:id" element={<ProtectedRoute><PodcastDetalhes /></ProtectedRoute>} />
               <Route path="/infograficos" element={<ProtectedRoute><Infograficos /></ProtectedRoute>} />
               <Route path="/editor-slides" element={<ProtectedRoute><EditorSlides /></ProtectedRoute>} />

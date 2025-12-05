@@ -610,7 +610,7 @@ export default function ConfigurarPaginaEmpresa() {
                   <Button
                     variant="outline"
                     className="w-full justify-start"
-                    onClick={() => navigate("/meus-conteudos")}
+                    onClick={() => navigate("/gerenciar-conteudos-empresa")}
                   >
                     <FileText className="w-4 h-4 mr-2" />
                     Gerenciar Todos os Conteúdos
