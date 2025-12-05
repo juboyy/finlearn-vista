@@ -256,28 +256,28 @@ const CourseQuizModal: React.FC<CourseQuizModalProps> = ({ open, onOpenChange })
         ) : quizFinished ? (
           <div className="space-y-6 py-4">
             <div className="text-center space-y-4">
-              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-pastel-green/20">
-                <Trophy className="h-10 w-10 text-pastel-green" />
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-[hsl(142,35%,45%)]/20">
+                <Trophy className="h-10 w-10 text-[hsl(142,35%,40%)]" />
               </div>
               <h3 className="text-2xl font-bold text-foreground">Quiz Finalizado</h3>
               <p className="text-muted-foreground">Confira seu desempenho</p>
             </div>
 
             <div className="grid grid-cols-3 gap-4">
-              <div className="bg-pastel-green/10 rounded-lg p-4 text-center border border-pastel-green/30">
-                <CheckCircle2 className="h-6 w-6 text-pastel-green mx-auto mb-2" />
-                <p className="text-2xl font-bold text-pastel-green">{correctCount}</p>
-                <p className="text-xs text-muted-foreground">Acertos</p>
+              <div className="bg-[hsl(142,35%,45%)]/15 rounded-lg p-4 text-center border border-[hsl(142,35%,40%)]/40">
+                <CheckCircle2 className="h-6 w-6 text-[hsl(142,35%,35%)] mx-auto mb-2" />
+                <p className="text-2xl font-bold text-[hsl(142,35%,35%)]">{correctCount}</p>
+                <p className="text-xs text-slate-600">Acertos</p>
               </div>
-              <div className="bg-pastel-pink/10 rounded-lg p-4 text-center border border-pastel-pink/30">
-                <XCircle className="h-6 w-6 text-pastel-pink mx-auto mb-2" />
-                <p className="text-2xl font-bold text-pastel-pink">{wrongCount}</p>
-                <p className="text-xs text-muted-foreground">Erros</p>
+              <div className="bg-[hsl(350,45%,55%)]/15 rounded-lg p-4 text-center border border-[hsl(350,45%,50%)]/40">
+                <XCircle className="h-6 w-6 text-[hsl(350,45%,45%)] mx-auto mb-2" />
+                <p className="text-2xl font-bold text-[hsl(350,45%,45%)]">{wrongCount}</p>
+                <p className="text-xs text-slate-600">Erros</p>
               </div>
-              <div className="bg-pastel-blue/10 rounded-lg p-4 text-center border border-pastel-blue/30">
-                <Target className="h-6 w-6 text-pastel-blue mx-auto mb-2" />
-                <p className="text-2xl font-bold text-pastel-blue">{getScorePercentage()}%</p>
-                <p className="text-xs text-muted-foreground">Aproveitamento</p>
+              <div className="bg-[hsl(207,45%,55%)]/15 rounded-lg p-4 text-center border border-[hsl(207,45%,50%)]/40">
+                <Target className="h-6 w-6 text-[hsl(207,45%,40%)] mx-auto mb-2" />
+                <p className="text-2xl font-bold text-[hsl(207,45%,40%)]">{getScorePercentage()}%</p>
+                <p className="text-xs text-slate-600">Aproveitamento</p>
               </div>
             </div>
 
