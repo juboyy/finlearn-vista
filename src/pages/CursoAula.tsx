@@ -191,7 +191,7 @@ const CursoAula = () => {
         <header className="h-16 bg-white border-b border-slate-200 flex items-center px-6 flex-shrink-0">
           <button 
             onClick={() => navigate(-1)}
-            className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition mr-4"
+            className="p-2 text-slate-600 hover:bg-pastel-pink rounded-lg transition mr-4"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
@@ -209,15 +209,15 @@ const CursoAula = () => {
               <div className="flex items-center justify-between mb-4">
                 <button 
                   onClick={() => navigate(-1)}
-                  className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition"
+                  className="p-2 text-slate-600 hover:bg-pastel-pink rounded-lg transition"
                 >
                   <ArrowLeft className="w-4 h-4" />
                 </button>
                 <div className="flex items-center gap-2">
-                  <button className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
+                  <button className="p-2 text-slate-600 hover:bg-pastel-pink rounded-lg transition">
                     <Settings className="w-4 h-4" />
                   </button>
-                  <button className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
+                  <button className="p-2 text-slate-600 hover:bg-pastel-pink rounded-lg transition">
                     <Expand className="w-4 h-4" />
                   </button>
                 </div>
@@ -241,7 +241,7 @@ const CursoAula = () => {
               <button 
                 onClick={() => setActiveTab('conteudo')}
                 className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium flex items-center justify-center gap-2 ${
-                  activeTab === 'conteudo' ? 'bg-pastel-blue text-slate-700' : 'text-slate-600 hover:bg-slate-100'
+                  activeTab === 'conteudo' ? 'bg-pastel-blue text-slate-700' : 'text-slate-600 hover:bg-pastel-pink'
                 }`}
               >
                 <List className="w-4 h-4" />
@@ -250,7 +250,7 @@ const CursoAula = () => {
               <button 
                 onClick={() => setActiveTab('notas')}
                 className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium flex items-center justify-center gap-2 transition ${
-                  activeTab === 'notas' ? 'bg-pastel-blue text-slate-700' : 'text-slate-600 hover:bg-slate-100'
+                  activeTab === 'notas' ? 'bg-pastel-blue text-slate-700' : 'text-slate-600 hover:bg-pastel-pink'
                 }`}
               >
                 <MessageSquare className="w-4 h-4" />
@@ -699,14 +699,14 @@ const CursoAula = () => {
                   <div className="flex items-center gap-2">
                     <button 
                       onClick={() => navigate('/biblioteca', { state: { exportedNotes: notes, courseTitle: 'Domine o Mercado de Capitais em 2025' } })}
-                      className="w-8 h-8 flex items-center justify-center rounded-lg bg-[hsl(270,35%,68%)] hover:bg-[hsl(270,35%,60%)] transition"
+                      className="w-8 h-8 flex items-center justify-center rounded-lg bg-[hsl(270,35%,68%)] hover:bg-pastel-pink transition"
                       title="Exportar para Biblioteca"
                     >
                       <FolderOutput className="w-4 h-4 text-[hsl(220,10%,30%)]" />
                     </button>
                     <button 
                       onClick={() => setNoteSheetOpen(true)}
-                      className="w-8 h-8 flex items-center justify-center rounded-lg bg-[hsl(207,45%,68%)] hover:bg-[hsl(207,45%,60%)] transition"
+                      className="w-8 h-8 flex items-center justify-center rounded-lg bg-[hsl(207,45%,68%)] hover:bg-pastel-pink transition"
                       title="Nova Nota"
                     >
                       <Plus className="w-4 h-4 text-[hsl(220,10%,30%)]" />
@@ -862,7 +862,7 @@ const CursoAula = () => {
                       <Button 
                         onClick={handleSaveNote}
                         disabled={!newNoteContent.trim()}
-                        className="w-full bg-pastel-blue hover:bg-pastel-blue/80 text-slate-700"
+                        className="w-full bg-pastel-blue hover:bg-pastel-pink text-slate-700"
                       >
                         <Save className="w-4 h-4 mr-2" />
                         Salvar Anotação
@@ -1003,7 +1003,7 @@ const CursoAula = () => {
                   className={`px-6 py-4 text-sm font-medium flex items-center gap-2 ${
                     activeInfoTab === 'sobre' 
                       ? 'text-slate-800 border-b-2 border-pastel-blue' 
-                      : 'text-slate-600 hover:text-slate-800'
+                      : 'text-slate-600 hover:text-pastel-pink hover:bg-pastel-pink/20'
                   }`}
                 >
                   <Info className="w-4 h-4" />
@@ -1014,7 +1014,7 @@ const CursoAula = () => {
                   className={`px-6 py-4 text-sm font-medium flex items-center gap-2 transition ${
                     activeInfoTab === 'materiais' 
                       ? 'text-slate-800 border-b-2 border-pastel-blue' 
-                      : 'text-slate-600 hover:text-slate-800'
+                      : 'text-slate-600 hover:text-pastel-pink hover:bg-pastel-pink/20'
                   }`}
                 >
                   <File className="w-4 h-4" />
@@ -1025,7 +1025,7 @@ const CursoAula = () => {
                   className={`px-6 py-4 text-sm font-medium flex items-center gap-2 transition ${
                     activeInfoTab === 'discussao' 
                       ? 'text-slate-800 border-b-2 border-pastel-blue' 
-                      : 'text-slate-600 hover:text-slate-800'
+                      : 'text-slate-600 hover:text-pastel-pink hover:bg-pastel-pink/20'
                   }`}
                 >
                   <MessagesSquare className="w-4 h-4" />
@@ -1036,7 +1036,7 @@ const CursoAula = () => {
                   className={`px-6 py-4 text-sm font-medium flex items-center gap-2 transition ${
                     activeInfoTab === 'notas' 
                       ? 'text-slate-800 border-b-2 border-pastel-blue' 
-                      : 'text-slate-600 hover:text-slate-800'
+                      : 'text-slate-600 hover:text-pastel-pink hover:bg-pastel-pink/20'
                   }`}
                 >
                   <StickyNote className="w-4 h-4" />
@@ -1047,7 +1047,7 @@ const CursoAula = () => {
                   className={`px-6 py-4 text-sm font-medium flex items-center gap-2 transition ${
                     activeInfoTab === 'duvidas' 
                       ? 'text-slate-800 border-b-2 border-pastel-blue' 
-                      : 'text-slate-600 hover:text-slate-800'
+                      : 'text-slate-600 hover:text-pastel-pink hover:bg-pastel-pink/20'
                   }`}
                 >
                   <HelpCircle className="w-4 h-4" />
@@ -1284,7 +1284,7 @@ const CursoAula = () => {
                         rows={2}
                       />
                       <div className="flex items-center justify-end pt-2 border-t border-slate-100">
-                        <button className="px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg text-sm font-medium hover:bg-pastel-blue/80 transition">
+                        <button className="px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg text-sm font-medium hover:bg-pastel-pink transition">
                           Comentar
                         </button>
                       </div>
@@ -1297,7 +1297,7 @@ const CursoAula = () => {
                   <div className="max-w-4xl">
                     <div className="flex items-center justify-between mb-6">
                       <h2 className="text-xl font-semibold text-slate-800">Minhas Notas</h2>
-                      <button className="flex items-center gap-2 px-3 py-2 bg-pastel-green text-slate-700 rounded-lg text-sm font-medium hover:bg-pastel-green/80 transition">
+                      <button className="flex items-center gap-2 px-3 py-2 bg-pastel-green text-slate-700 rounded-lg text-sm font-medium hover:bg-pastel-pink transition">
                         <Plus className="w-4 h-4" /> Nova Nota
                       </button>
                     </div>
@@ -1363,7 +1363,7 @@ const CursoAula = () => {
                   <div className="max-w-4xl">
                     <div className="flex items-center justify-between mb-6">
                       <h2 className="text-xl font-semibold text-slate-800">Tire suas Dúvidas</h2>
-                      <button className="flex items-center gap-2 px-3 py-2 bg-pastel-purple text-slate-700 rounded-lg text-sm font-medium hover:bg-pastel-purple/80 transition">
+                      <button className="flex items-center gap-2 px-3 py-2 bg-pastel-purple text-slate-700 rounded-lg text-sm font-medium hover:bg-pastel-pink transition">
                         <HelpCircle className="w-4 h-4" /> Fazer Pergunta
                       </button>
                     </div>
@@ -1450,7 +1450,7 @@ const CursoAula = () => {
                 <button 
                   onClick={() => setActiveResourceTab('recursos')}
                   className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium flex items-center justify-center gap-2 ${
-                    activeResourceTab === 'recursos' ? 'bg-pastel-purple text-slate-700' : 'text-slate-600 hover:bg-slate-100'
+                    activeResourceTab === 'recursos' ? 'bg-pastel-purple text-slate-700' : 'text-slate-600 hover:bg-pastel-pink'
                   }`}
                 >
                   <Download className="w-4 h-4" />
@@ -1459,7 +1459,7 @@ const CursoAula = () => {
                 <button 
                   onClick={() => setQuizModalOpen(true)}
                   className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium flex items-center justify-center gap-2 transition ${
-                    activeResourceTab === 'quiz' ? 'bg-pastel-purple text-slate-700' : 'text-slate-600 hover:bg-slate-100'
+                    activeResourceTab === 'quiz' ? 'bg-pastel-purple text-slate-700' : 'text-slate-600 hover:bg-pastel-pink'
                   }`}
                 >
                   <GraduationCap className="w-4 h-4" />
