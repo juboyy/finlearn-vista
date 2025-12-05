@@ -73,6 +73,14 @@ const CursoAula = () => {
   const [newNoteTag, setNewNoteTag] = useState('');
   const [newNoteColor, setNewNoteColor] = useState<CourseNote['color']>('yellow');
   
+  // Note editing state
+  const [editNoteSheetOpen, setEditNoteSheetOpen] = useState(false);
+  const [editingNote, setEditingNote] = useState<CourseNote | null>(null);
+  const [editNoteTitle, setEditNoteTitle] = useState('');
+  const [editNoteContent, setEditNoteContent] = useState('');
+  const [editNoteTag, setEditNoteTag] = useState('');
+  const [editNoteColor, setEditNoteColor] = useState<CourseNote['color']>('yellow');
+  
   // Video state (simulated - would come from video player)
   const [currentModule] = useState('Módulo 1');
   const [currentLesson] = useState('Aula 3');
@@ -172,6 +180,35 @@ const CursoAula = () => {
 
   const handleDeleteNote = (noteId: string) => {
     setNotes(prev => prev.filter(note => note.id !== noteId));
+    setEditNoteSheetOpen(false);
+    setEditingNote(null);
+  };
+
+  const handleOpenEditNote = (note: CourseNote) => {
+    setEditingNote(note);
+    setEditNoteTitle(note.title);
+    setEditNoteContent(note.content);
+    setEditNoteTag(note.tag);
+    setEditNoteColor(note.color);
+    setEditNoteSheetOpen(true);
+  };
+
+  const handleUpdateNote = () => {
+    if (!editingNote || !editNoteContent.trim()) return;
+    
+    setNotes(prev => prev.map(note => 
+      note.id === editingNote.id 
+        ? {
+            ...note,
+            title: editNoteTitle || 'Nota sem título',
+            content: editNoteContent,
+            tag: editNoteTag || 'Geral',
+            color: editNoteColor
+          }
+        : note
+    ));
+    setEditNoteSheetOpen(false);
+    setEditingNote(null);
   };
 
   const toggleModule = (moduleId: string) => {
@@ -729,15 +766,13 @@ const CursoAula = () => {
                   {notes.map((note) => {
                     const colors = getColorClasses(note.color);
                     return (
-                      <div key={note.id} className={`${colors.bg} border ${colors.border} rounded-lg p-3`}>
+                      <div 
+                        key={note.id} 
+                        onClick={() => handleOpenEditNote(note)}
+                        className={`${colors.bg} border ${colors.border} rounded-lg p-3 cursor-pointer hover:shadow-md hover:scale-[1.02] transition-all`}
+                      >
                         <div className="flex items-start justify-between mb-2">
                           <span className="text-xs text-slate-500">{note.module} - {note.lesson} • {note.timestamp}</span>
-                          <button 
-                            onClick={() => handleDeleteNote(note.id)}
-                            className="text-slate-400 hover:text-slate-600"
-                          >
-                            <X className="w-3 h-3" />
-                          </button>
                         </div>
                         {note.title && <p className="text-xs font-semibold text-slate-700 mb-1">{note.title}</p>}
                         <p className="text-sm text-slate-700 mb-2">{note.content}</p>
@@ -867,6 +902,132 @@ const CursoAula = () => {
                         <Save className="w-4 h-4 mr-2" />
                         Salvar Anotação
                       </Button>
+                    </div>
+                  </SheetContent>
+                </Sheet>
+
+                {/* Edit Note Sheet */}
+                <Sheet open={editNoteSheetOpen} onOpenChange={setEditNoteSheetOpen}>
+                  <SheetContent side="right" className="w-[400px] bg-white border-l border-slate-200 overflow-y-auto">
+                    <SheetHeader>
+                      <SheetTitle className="flex items-center gap-2 text-slate-800">
+                        <StickyNote className="w-5 h-5 text-pastel-purple" />
+                        Editar Anotação
+                      </SheetTitle>
+                    </SheetHeader>
+                    
+                    <div className="mt-6 space-y-5 pb-6">
+                      {/* Note info */}
+                      {editingNote && (
+                        <div className="bg-pastel-purple/10 border border-pastel-purple/30 rounded-lg p-3">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Clock className="w-4 h-4 text-[hsl(270,45%,40%)]" />
+                            <span className="text-xs font-medium text-slate-700">Informações da nota</span>
+                          </div>
+                          <div className="grid grid-cols-3 gap-2 text-xs text-slate-600">
+                            <div>
+                              <span className="text-slate-400">Módulo:</span>
+                              <p className="font-medium text-slate-700">{editingNote.module}</p>
+                            </div>
+                            <div>
+                              <span className="text-slate-400">Aula:</span>
+                              <p className="font-medium text-slate-700">{editingNote.lesson}</p>
+                            </div>
+                            <div>
+                              <span className="text-slate-400">Tempo:</span>
+                              <p className="font-medium text-slate-700">{editingNote.timestamp}</p>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Note Title */}
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-700">Título da Nota</label>
+                        <Input
+                          placeholder="Ex: Conceito importante..."
+                          value={editNoteTitle}
+                          onChange={(e) => setEditNoteTitle(e.target.value)}
+                          className="border-slate-200 focus:ring-pastel-purple/50"
+                        />
+                      </div>
+
+                      {/* Note Content */}
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-700">Conteúdo da Nota</label>
+                        <Textarea
+                          placeholder="Escreva sua anotação aqui..."
+                          value={editNoteContent}
+                          onChange={(e) => setEditNoteContent(e.target.value)}
+                          className="min-h-[120px] border-slate-200 focus:ring-pastel-purple/50 resize-none"
+                        />
+                      </div>
+
+                      {/* Tag */}
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-700">Tag / Categoria</label>
+                        <Input
+                          placeholder="Ex: Importante, Conceito, Dúvida..."
+                          value={editNoteTag}
+                          onChange={(e) => setEditNoteTag(e.target.value)}
+                          className="border-slate-200 focus:ring-pastel-purple/50"
+                        />
+                      </div>
+
+                      {/* Color Selection */}
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
+                          <Palette className="w-4 h-4" />
+                          Cor da Nota
+                        </label>
+                        <div className="flex flex-wrap gap-2">
+                          {colorOptions.map((color) => (
+                            <button
+                              key={color.value}
+                              onClick={() => setEditNoteColor(color.value)}
+                              className={`w-8 h-8 rounded-full ${color.bg} border-2 transition-all ${
+                                editNoteColor === color.value 
+                                  ? 'border-slate-600 scale-110' 
+                                  : 'border-transparent hover:scale-105'
+                              }`}
+                              title={color.label}
+                            />
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Preview */}
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-700">Preview</label>
+                        <div className={`${getColorClasses(editNoteColor).bg} border ${getColorClasses(editNoteColor).border} rounded-lg p-3`}>
+                          {editingNote && <span className="text-xs text-slate-500">{editingNote.module} - {editingNote.lesson} • {editingNote.timestamp}</span>}
+                          {editNoteTitle && <p className="text-xs font-semibold text-slate-700 mt-1">{editNoteTitle}</p>}
+                          <p className="text-sm text-slate-700 mt-1">{editNoteContent || 'Sua anotação aparecerá aqui...'}</p>
+                          <span className={`inline-block mt-2 px-2 py-0.5 ${getColorClasses(editNoteColor).tag} text-slate-600 text-xs rounded`}>
+                            {editNoteTag || 'Geral'}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Action Buttons */}
+                      <div className="flex gap-3">
+                        <Button 
+                          onClick={handleUpdateNote}
+                          disabled={!editNoteContent.trim()}
+                          className="flex-1 bg-pastel-purple hover:bg-pastel-pink text-slate-700"
+                        >
+                          <Save className="w-4 h-4 mr-2" />
+                          Salvar Alterações
+                        </Button>
+                        <Button 
+                          onClick={() => editingNote && handleDeleteNote(editingNote.id)}
+                          variant="outline"
+                          className="border-red-300 text-red-600 hover:bg-red-50 hover:text-red-700"
+                        >
+                          <X className="w-4 h-4 mr-2" />
+                          Excluir
+                        </Button>
+                      </div>
                     </div>
                   </SheetContent>
                 </Sheet>
