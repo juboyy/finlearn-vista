@@ -349,7 +349,10 @@ export default function ContaEmpresarial() {
                         <p className="text-slate-600">Informações legais e documentação</p>
                       </div>
                     </div>
-                    <button className="px-4 py-2 bg-[#B8D4E8] border-2 border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-opacity-70 transition text-sm">
+                    <button 
+                      onClick={() => navigate('/configurar-pagina-empresa')}
+                      className="px-4 py-2 bg-[#B8D4E8] border-2 border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-opacity-70 transition text-sm"
+                    >
                       <Building size={16} className="inline mr-2" />
                       Página da Empresa
                     </button>
