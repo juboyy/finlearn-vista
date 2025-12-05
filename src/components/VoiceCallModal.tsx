@@ -2,9 +2,19 @@ import React, { useState, useRef, useEffect } from "react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Mic, MicOff, Phone, PhoneOff, Volume2 } from "lucide-react";
+import { Mic, MicOff, Phone, PhoneOff, Volume2, Save, Trash2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface Message {
   role: "user" | "assistant";
@@ -31,6 +41,8 @@ const VoiceCallModal: React.FC<VoiceCallModalProps> = ({
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [currentTranscript, setCurrentTranscript] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
@@ -99,8 +111,58 @@ const VoiceCallModal: React.FC<VoiceCallModalProps> = ({
     }
     setIsConnected(false);
     setIsRecording(false);
-    setMessages([]);
     setCurrentTranscript("");
+  };
+
+  const handleSaveConversation = async () => {
+    if (messages.length === 0) {
+      toast({
+        title: "Nenhuma conversa",
+        description: "Nao ha mensagens para salvar.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      const firstUserMessage = messages.find(m => m.role === "user");
+      const title = firstUserMessage 
+        ? `[Voz] ${firstUserMessage.content.substring(0, 50)}${firstUserMessage.content.length > 50 ? "..." : ""}`
+        : `[Voz] Conversa com ${agentName}`;
+
+      const { error } = await supabase.from("agent_conversations").insert({
+        agent_name: agentName,
+        agent_image: agentAvatar,
+        title,
+        messages: JSON.parse(JSON.stringify(messages)),
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Conversa salva",
+        description: "Historico de voz salvo com sucesso.",
+      });
+    } catch (error) {
+      console.error("Error saving conversation:", error);
+      toast({
+        title: "Erro ao salvar",
+        description: "Nao foi possivel salvar a conversa.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleDeleteConversation = () => {
+    setMessages([]);
+    setShowDeleteDialog(false);
+    toast({
+      title: "Conversa limpa",
+      description: "Historico de mensagens removido.",
+    });
   };
 
   const toggleRecording = () => {
@@ -243,26 +305,48 @@ const VoiceCallModal: React.FC<VoiceCallModalProps> = ({
 
           {/* Messages History */}
           {messages.length > 0 && (
-            <ScrollArea className="w-full h-32 mb-4 rounded-lg border border-border bg-muted/30 p-3">
-              <div className="space-y-2">
-                {messages.map((msg, idx) => (
-                  <div
-                    key={idx}
-                    className={`text-xs p-2 rounded ${
-                      msg.role === "user"
-                        ? "bg-[hsl(206,35%,75%)]/30 text-foreground ml-4"
-                        : "bg-[hsl(142,35%,65%)]/30 text-foreground mr-4"
-                    }`}
-                  >
-                    <span className="font-medium">
-                      {msg.role === "user" ? "Você: " : `${agentName}: `}
-                    </span>
-                    {msg.content}
-                  </div>
-                ))}
-                <div ref={messagesEndRef} />
+            <>
+              <div className="flex items-center gap-2 w-full mb-2">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={handleSaveConversation}
+                  disabled={isSaving || messages.length === 0}
+                  className="bg-[hsl(142,35%,50%)] hover:bg-[hsl(142,35%,40%)] text-white border-none h-8 w-8"
+                >
+                  <Save size={14} />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setShowDeleteDialog(true)}
+                  disabled={messages.length === 0}
+                  className="bg-[hsl(330,35%,60%)] hover:bg-[hsl(330,35%,50%)] text-white border-none h-8 w-8"
+                >
+                  <Trash2 size={14} />
+                </Button>
               </div>
-            </ScrollArea>
+              <ScrollArea className="w-full h-32 mb-4 rounded-lg border border-border bg-muted/30 p-3">
+                <div className="space-y-2">
+                  {messages.map((msg, idx) => (
+                    <div
+                      key={idx}
+                      className={`text-xs p-2 rounded ${
+                        msg.role === "user"
+                          ? "bg-[hsl(206,35%,75%)]/30 text-foreground ml-4"
+                          : "bg-[hsl(142,35%,65%)]/30 text-foreground mr-4"
+                      }`}
+                    >
+                      <span className="font-medium">
+                        {msg.role === "user" ? "Voce: " : `${agentName}: `}
+                      </span>
+                      {msg.content}
+                    </div>
+                  ))}
+                  <div ref={messagesEndRef} />
+                </div>
+              </ScrollArea>
+            </>
           )}
 
           {/* Controls */}
@@ -302,12 +386,33 @@ const VoiceCallModal: React.FC<VoiceCallModalProps> = ({
           {/* Instructions */}
           <p className="text-xs text-muted-foreground mt-4 text-center max-w-xs">
             {!isConnected 
-              ? "Clique no botão verde para iniciar a chamada"
+              ? "Clique no botao verde para iniciar a chamada"
               : "Pressione o microfone para falar, solte para enviar"
             }
           </p>
         </div>
       </DialogContent>
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Limpar conversa</AlertDialogTitle>
+            <AlertDialogDescription>
+              Tem certeza que deseja limpar o historico desta conversa por voz? Esta acao nao pode ser desfeita.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={handleDeleteConversation}
+              className="bg-[hsl(350,35%,55%)] hover:bg-[hsl(350,35%,45%)]"
+            >
+              Limpar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Dialog>
   );
 };
