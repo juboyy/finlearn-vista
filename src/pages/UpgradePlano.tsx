@@ -96,7 +96,7 @@ export default function UpgradePlano() {
           </section>
 
           {/* Billing Toggle */}
-          <section className="flex items-center justify-center mb-8">
+          <section className="flex items-center justify-center mb-14">
             <div className="inline-flex items-center gap-4 p-1.5 bg-muted rounded-lg border border-border">
               <button 
                 onClick={() => setBillingPeriod("monthly")}
