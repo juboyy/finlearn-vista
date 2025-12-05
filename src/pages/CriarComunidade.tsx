@@ -39,17 +39,23 @@ import {
   Lock,
   EyeOff,
   CheckCircle,
-  Clock
+  Clock,
+  Loader2
 } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 
 const CriarComunidade = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
   const [communityName, setCommunityName] = useState("");
   const [category, setCategory] = useState("");
   const [communityType, setCommunityType] = useState("Pública");
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState("");
+  const [ethicsCode, setEthicsCode] = useState("");
 
   const [rules, setRules] = useState([
     { id: 1, title: "Seja respeitoso com todos os membros", description: "Mantenha discussões civilizadas e respeite opiniões divergentes. Não toleramos ofensas pessoais ou discriminação." },
@@ -69,14 +75,75 @@ const CriarComunidade = () => {
     { id: 4, name: "Patricia Oliveira", role: "Educadora Financeira", followers: "11.5K", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg", invited: false }
   ]);
 
-  const handleSaveDraft = () => {
-    toast.success("Rascunho salvo com sucesso!");
+  const [contentTypes, setContentTypes] = useState({
+    text: true,
+    images: true,
+    videos: true,
+    audio: true,
+    files: true
+  });
+
+  const [settings, setSettings] = useState({
+    allowMemberPosts: true,
+    requirePostApproval: false,
+    enableNotifications: true
+  });
+
+  const mapPrivacyType = (type: string) => {
+    switch (type) {
+      case "Pública": return "public";
+      case "Privada": return "private";
+      case "Somente Convidados": return "invite_only";
+      default: return "public";
+    }
   };
 
-  const handleCreateCommunity = () => {
-    toast.success("Comunidade criada com sucesso!");
-    navigate("/todas-comunidades");
+  const saveCommunity = async (status: 'draft' | 'active') => {
+    if (!user) {
+      toast.error("Você precisa estar logado para criar uma comunidade");
+      return;
+    }
+
+    if (!communityName.trim()) {
+      toast.error("Nome da comunidade é obrigatório");
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const { error } = await supabase.from('communities').insert({
+        user_id: user.id,
+        name: communityName,
+        description,
+        category,
+        privacy: mapPrivacyType(communityType),
+        rules: rules.map(r => ({ title: r.title, description: r.description })),
+        ethics_code: ethicsCode,
+        content_types: contentTypes,
+        moderators: moderators.map(m => ({ name: m.name, role: m.role, image: m.image, permission: m.permission })),
+        invited_creators: creators.filter(c => c.invited).map(c => ({ name: c.name, role: c.role, image: c.image })),
+        allow_member_posts: settings.allowMemberPosts,
+        require_post_approval: settings.requirePostApproval,
+        enable_notifications: settings.enableNotifications,
+        status
+      });
+
+      if (error) throw error;
+
+      toast.success(status === 'draft' ? "Rascunho salvo com sucesso!" : "Comunidade criada com sucesso!");
+      if (status === 'active') {
+        navigate("/todas-comunidades");
+      }
+    } catch (error: any) {
+      console.error('Error saving community:', error);
+      toast.error("Erro ao salvar comunidade: " + error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
+
+  const handleSaveDraft = () => saveCommunity('draft');
+  const handleCreateCommunity = () => saveCommunity('active');
 
   const handleRemoveRule = (id: number) => {
     setRules(rules.filter(rule => rule.id !== id));
@@ -129,16 +196,18 @@ const CriarComunidade = () => {
               <Button
                 variant="outline"
                 onClick={handleSaveDraft}
+                disabled={isLoading}
                 className="px-4 py-2 border border-input text-foreground rounded-lg text-sm font-medium hover:bg-accent transition-colors"
               >
-                <Save className="w-4 h-4 mr-2" />
+                {isLoading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />}
                 Salvar Rascunho
               </Button>
               <Button
                 onClick={handleCreateCommunity}
+                disabled={isLoading}
                 className="px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors shadow-sm"
               >
-                <Check className="w-4 h-4 mr-2" />
+                {isLoading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Check className="w-4 h-4 mr-2" />}
                 Criar Comunidade
               </Button>
             </div>
@@ -418,6 +487,8 @@ const CriarComunidade = () => {
                     <Textarea
                       rows={6}
                       placeholder="Descreva os valores e princípios éticos que guiam esta comunidade..."
+                      value={ethicsCode}
+                      onChange={(e) => setEthicsCode(e.target.value)}
                       className="w-full px-4 py-3 bg-background border border-input rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-ring transition-all resize-none"
                     />
                   </div>
