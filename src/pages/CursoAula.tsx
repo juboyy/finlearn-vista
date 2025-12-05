@@ -2,6 +2,10 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import CourseQuizModal from "@/components/Dashboard/CourseQuizModal";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { 
   ArrowLeft, 
   Settings, 
@@ -35,8 +39,22 @@ import {
   GraduationCap,
   Search,
   X,
-  Plus
+  Plus,
+  Save,
+  Palette
 } from "lucide-react";
+
+interface CourseNote {
+  id: string;
+  title: string;
+  content: string;
+  tag: string;
+  color: 'yellow' | 'blue' | 'green' | 'purple' | 'pink' | 'peach';
+  module: string;
+  lesson: string;
+  timestamp: string;
+  createdAt: Date;
+}
 
 const CursoAula = () => {
   const navigate = useNavigate();
@@ -46,6 +64,114 @@ const CursoAula = () => {
   const [activeResourceTab, setActiveResourceTab] = useState<'recursos' | 'quiz'>('recursos');
   const [expandedModules, setExpandedModules] = useState<string[]>(['module-1']);
   const [quizModalOpen, setQuizModalOpen] = useState(false);
+  
+  // Note creation state
+  const [noteSheetOpen, setNoteSheetOpen] = useState(false);
+  const [newNoteTitle, setNewNoteTitle] = useState('');
+  const [newNoteContent, setNewNoteContent] = useState('');
+  const [newNoteTag, setNewNoteTag] = useState('');
+  const [newNoteColor, setNewNoteColor] = useState<CourseNote['color']>('yellow');
+  
+  // Video state (simulated - would come from video player)
+  const [currentModule] = useState('Módulo 1');
+  const [currentLesson] = useState('Aula 3');
+  const [currentTimestamp] = useState('12:45');
+  
+  // Notes list
+  const [notes, setNotes] = useState<CourseNote[]>([
+    {
+      id: '1',
+      title: 'Tipos de Ativos',
+      content: 'Lembrar de revisar os tipos de ativos: renda fixa, renda variável e fundos de investimento.',
+      tag: 'Importante',
+      color: 'yellow',
+      module: 'Módulo 1',
+      lesson: 'Aula 3',
+      timestamp: '12:45',
+      createdAt: new Date()
+    },
+    {
+      id: '2',
+      title: 'Participantes do Mercado',
+      content: 'Participantes do mercado: investidores, corretoras, bolsas e entidades reguladoras (CVM, BACEN).',
+      tag: 'Conceito',
+      color: 'blue',
+      module: 'Módulo 1',
+      lesson: 'Aula 2',
+      timestamp: '08:32',
+      createdAt: new Date()
+    },
+    {
+      id: '3',
+      title: 'Mercado Primário vs Secundário',
+      content: 'Mercado primário vs secundário: no primário a empresa emite, no secundário ocorre negociação entre investidores.',
+      tag: 'Diferença',
+      color: 'green',
+      module: 'Módulo 1',
+      lesson: 'Aula 1',
+      timestamp: '15:20',
+      createdAt: new Date()
+    },
+    {
+      id: '4',
+      title: 'Função do Mercado',
+      content: 'Função do mercado de capitais: canalizar recursos da poupança para investimentos produtivos.',
+      tag: 'Definição',
+      color: 'purple',
+      module: 'Módulo 1',
+      lesson: 'Aula 1',
+      timestamp: '05:10',
+      createdAt: new Date()
+    }
+  ]);
+
+  const colorOptions: { value: CourseNote['color']; label: string; bg: string; border: string }[] = [
+    { value: 'yellow', label: 'Amarelo', bg: 'bg-pastel-yellow', border: 'border-pastel-yellow' },
+    { value: 'blue', label: 'Azul', bg: 'bg-pastel-blue', border: 'border-pastel-blue' },
+    { value: 'green', label: 'Verde', bg: 'bg-pastel-green', border: 'border-pastel-green' },
+    { value: 'purple', label: 'Roxo', bg: 'bg-pastel-purple', border: 'border-pastel-purple' },
+    { value: 'pink', label: 'Rosa', bg: 'bg-pastel-pink', border: 'border-pastel-pink' },
+    { value: 'peach', label: 'Laranja', bg: 'bg-pastel-peach', border: 'border-pastel-peach' },
+  ];
+
+  const getColorClasses = (color: CourseNote['color']) => {
+    const colorMap = {
+      yellow: { bg: 'bg-pastel-yellow/20', border: 'border-pastel-yellow/40', tag: 'bg-pastel-yellow/50' },
+      blue: { bg: 'bg-pastel-blue/20', border: 'border-pastel-blue/40', tag: 'bg-pastel-blue/50' },
+      green: { bg: 'bg-pastel-green/20', border: 'border-pastel-green/40', tag: 'bg-pastel-green/50' },
+      purple: { bg: 'bg-pastel-purple/20', border: 'border-pastel-purple/40', tag: 'bg-pastel-purple/50' },
+      pink: { bg: 'bg-pastel-pink/20', border: 'border-pastel-pink/40', tag: 'bg-pastel-pink/50' },
+      peach: { bg: 'bg-pastel-peach/20', border: 'border-pastel-peach/40', tag: 'bg-pastel-peach/50' },
+    };
+    return colorMap[color];
+  };
+
+  const handleSaveNote = () => {
+    if (!newNoteContent.trim()) return;
+    
+    const newNote: CourseNote = {
+      id: Date.now().toString(),
+      title: newNoteTitle || 'Nota sem título',
+      content: newNoteContent,
+      tag: newNoteTag || 'Geral',
+      color: newNoteColor,
+      module: currentModule,
+      lesson: currentLesson,
+      timestamp: currentTimestamp,
+      createdAt: new Date()
+    };
+    
+    setNotes(prev => [newNote, ...prev]);
+    setNewNoteTitle('');
+    setNewNoteContent('');
+    setNewNoteTag('');
+    setNewNoteColor('yellow');
+    setNoteSheetOpen(false);
+  };
+
+  const handleDeleteNote = (noteId: string) => {
+    setNotes(prev => prev.filter(note => note.id !== noteId));
+  };
 
   const toggleModule = (moduleId: string) => {
     setExpandedModules(prev => 
@@ -569,7 +695,10 @@ const CursoAula = () => {
                 {/* Notes Header */}
                 <div className="flex items-center justify-between">
                   <h3 className="font-semibold text-slate-800 text-sm">Minhas Anotações</h3>
-                  <button className="flex items-center gap-1 text-xs text-pastel-blue hover:underline font-medium">
+                  <button 
+                    onClick={() => setNoteSheetOpen(true)}
+                    className="flex items-center gap-1 text-xs text-pastel-blue hover:underline font-medium"
+                  >
                     <Plus className="w-3 h-3" />
                     Nova Nota
                   </button>
@@ -587,70 +716,150 @@ const CursoAula = () => {
 
                 {/* Notes List */}
                 <div className="space-y-3">
-                  {/* Note 1 */}
-                  <div className="bg-pastel-yellow/20 border border-pastel-yellow/40 rounded-lg p-3">
-                    <div className="flex items-start justify-between mb-2">
-                      <span className="text-xs text-slate-500">Módulo 1 - Aula 3 • 12:45</span>
-                      <button className="text-slate-400 hover:text-slate-600">
-                        <X className="w-3 h-3" />
-                      </button>
-                    </div>
-                    <p className="text-sm text-slate-700 mb-2">Lembrar de revisar os tipos de ativos: renda fixa, renda variável e fundos de investimento.</p>
-                    <div className="flex items-center gap-2">
-                      <span className="px-2 py-0.5 bg-pastel-yellow/50 text-slate-600 text-xs rounded">Importante</span>
-                    </div>
-                  </div>
-
-                  {/* Note 2 */}
-                  <div className="bg-pastel-blue/20 border border-pastel-blue/40 rounded-lg p-3">
-                    <div className="flex items-start justify-between mb-2">
-                      <span className="text-xs text-slate-500">Módulo 1 - Aula 2 • 08:32</span>
-                      <button className="text-slate-400 hover:text-slate-600">
-                        <X className="w-3 h-3" />
-                      </button>
-                    </div>
-                    <p className="text-sm text-slate-700 mb-2">Participantes do mercado: investidores, corretoras, bolsas e entidades reguladoras (CVM, BACEN).</p>
-                    <div className="flex items-center gap-2">
-                      <span className="px-2 py-0.5 bg-pastel-blue/50 text-slate-600 text-xs rounded">Conceito</span>
-                    </div>
-                  </div>
-
-                  {/* Note 3 */}
-                  <div className="bg-pastel-green/20 border border-pastel-green/40 rounded-lg p-3">
-                    <div className="flex items-start justify-between mb-2">
-                      <span className="text-xs text-slate-500">Módulo 1 - Aula 1 • 15:20</span>
-                      <button className="text-slate-400 hover:text-slate-600">
-                        <X className="w-3 h-3" />
-                      </button>
-                    </div>
-                    <p className="text-sm text-slate-700 mb-2">Mercado primário vs secundário: no primário a empresa emite, no secundário ocorre negociação entre investidores.</p>
-                    <div className="flex items-center gap-2">
-                      <span className="px-2 py-0.5 bg-pastel-green/50 text-slate-600 text-xs rounded">Diferença</span>
-                    </div>
-                  </div>
-
-                  {/* Note 4 */}
-                  <div className="bg-pastel-purple/20 border border-pastel-purple/40 rounded-lg p-3">
-                    <div className="flex items-start justify-between mb-2">
-                      <span className="text-xs text-slate-500">Módulo 1 - Aula 1 • 05:10</span>
-                      <button className="text-slate-400 hover:text-slate-600">
-                        <X className="w-3 h-3" />
-                      </button>
-                    </div>
-                    <p className="text-sm text-slate-700 mb-2">Função do mercado de capitais: canalizar recursos da poupança para investimentos produtivos.</p>
-                    <div className="flex items-center gap-2">
-                      <span className="px-2 py-0.5 bg-pastel-purple/50 text-slate-600 text-xs rounded">Definição</span>
-                    </div>
-                  </div>
+                  {notes.map((note) => {
+                    const colors = getColorClasses(note.color);
+                    return (
+                      <div key={note.id} className={`${colors.bg} border ${colors.border} rounded-lg p-3`}>
+                        <div className="flex items-start justify-between mb-2">
+                          <span className="text-xs text-slate-500">{note.module} - {note.lesson} • {note.timestamp}</span>
+                          <button 
+                            onClick={() => handleDeleteNote(note.id)}
+                            className="text-slate-400 hover:text-slate-600"
+                          >
+                            <X className="w-3 h-3" />
+                          </button>
+                        </div>
+                        {note.title && <p className="text-xs font-semibold text-slate-700 mb-1">{note.title}</p>}
+                        <p className="text-sm text-slate-700 mb-2">{note.content}</p>
+                        <div className="flex items-center gap-2">
+                          <span className={`px-2 py-0.5 ${colors.tag} text-slate-600 text-xs rounded`}>{note.tag}</span>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
 
                 {/* Notes Stats */}
                 <div className="bg-slate-50 rounded-lg p-3 mt-4">
                   <div className="flex items-center justify-between text-xs text-slate-600">
-                    <span>Total de notas: 4</span>
+                    <span>Total de notas: {notes.length}</span>
                     <span>Última atualização: hoje</span>
                   </div>
                 </div>
+
+                {/* New Note Sheet */}
+                <Sheet open={noteSheetOpen} onOpenChange={setNoteSheetOpen}>
+                  <SheetContent side="right" className="w-[400px] bg-white border-l border-slate-200">
+                    <SheetHeader>
+                      <SheetTitle className="flex items-center gap-2 text-slate-800">
+                        <StickyNote className="w-5 h-5 text-pastel-blue" />
+                        Nova Anotação
+                      </SheetTitle>
+                    </SheetHeader>
+                    
+                    <div className="mt-6 space-y-5">
+                      {/* Auto-captured info */}
+                      <div className="bg-pastel-blue/10 border border-pastel-blue/30 rounded-lg p-3">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Clock className="w-4 h-4 text-[hsl(207,45%,40%)]" />
+                          <span className="text-xs font-medium text-slate-700">Capturado automaticamente</span>
+                        </div>
+                        <div className="grid grid-cols-3 gap-2 text-xs text-slate-600">
+                          <div>
+                            <span className="text-slate-400">Módulo:</span>
+                            <p className="font-medium text-slate-700">{currentModule}</p>
+                          </div>
+                          <div>
+                            <span className="text-slate-400">Aula:</span>
+                            <p className="font-medium text-slate-700">{currentLesson}</p>
+                          </div>
+                          <div>
+                            <span className="text-slate-400">Minuto:</span>
+                            <p className="font-medium text-slate-700">{currentTimestamp}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Note Title */}
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-700">Título da Nota</label>
+                        <Input
+                          placeholder="Ex: Conceito importante..."
+                          value={newNoteTitle}
+                          onChange={(e) => setNewNoteTitle(e.target.value)}
+                          className="border-slate-200 focus:ring-pastel-blue/50"
+                        />
+                      </div>
+
+                      {/* Note Content */}
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-700">Conteúdo da Nota</label>
+                        <Textarea
+                          placeholder="Escreva sua anotação aqui..."
+                          value={newNoteContent}
+                          onChange={(e) => setNewNoteContent(e.target.value)}
+                          className="min-h-[120px] border-slate-200 focus:ring-pastel-blue/50 resize-none"
+                        />
+                      </div>
+
+                      {/* Tag */}
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-700">Tag / Categoria</label>
+                        <Input
+                          placeholder="Ex: Importante, Conceito, Dúvida..."
+                          value={newNoteTag}
+                          onChange={(e) => setNewNoteTag(e.target.value)}
+                          className="border-slate-200 focus:ring-pastel-blue/50"
+                        />
+                      </div>
+
+                      {/* Color Selection */}
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
+                          <Palette className="w-4 h-4" />
+                          Cor da Nota
+                        </label>
+                        <div className="flex flex-wrap gap-2">
+                          {colorOptions.map((color) => (
+                            <button
+                              key={color.value}
+                              onClick={() => setNewNoteColor(color.value)}
+                              className={`w-8 h-8 rounded-full ${color.bg} border-2 transition-all ${
+                                newNoteColor === color.value 
+                                  ? 'border-slate-600 scale-110' 
+                                  : 'border-transparent hover:scale-105'
+                              }`}
+                              title={color.label}
+                            />
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Preview */}
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-700">Preview</label>
+                        <div className={`${getColorClasses(newNoteColor).bg} border ${getColorClasses(newNoteColor).border} rounded-lg p-3`}>
+                          <span className="text-xs text-slate-500">{currentModule} - {currentLesson} • {currentTimestamp}</span>
+                          {newNoteTitle && <p className="text-xs font-semibold text-slate-700 mt-1">{newNoteTitle}</p>}
+                          <p className="text-sm text-slate-700 mt-1">{newNoteContent || 'Sua anotação aparecerá aqui...'}</p>
+                          <span className={`inline-block mt-2 px-2 py-0.5 ${getColorClasses(newNoteColor).tag} text-slate-600 text-xs rounded`}>
+                            {newNoteTag || 'Geral'}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Save Button */}
+                      <Button 
+                        onClick={handleSaveNote}
+                        disabled={!newNoteContent.trim()}
+                        className="w-full bg-pastel-blue hover:bg-pastel-blue/80 text-slate-700"
+                      >
+                        <Save className="w-4 h-4 mr-2" />
+                        Salvar Anotação
+                      </Button>
+                    </div>
+                  </SheetContent>
+                </Sheet>
               </div>
               )}
             </div>
