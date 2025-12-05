@@ -422,7 +422,7 @@ const MeusCertificados = () => {
                           <Clock size={14} className="mr-2" />
                           Carga Horária: {cert.hours}
                         </span>
-                        <span className="flex items-center">
+                        <span className={`flex items-center ${cert.scope === "Internacional" ? "bg-pastel-purple/50 text-slate-700 px-2.5 py-1 rounded-full font-semibold border border-pastel-purple" : ""}`}>
                           <ScopeIcon size={14} className="mr-2" />
                           {cert.scope}
                         </span>
