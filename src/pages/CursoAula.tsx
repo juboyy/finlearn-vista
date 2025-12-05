@@ -509,74 +509,390 @@ const CursoAula = () => {
                 </button>
               </div>
 
-              <div className="p-6">
-                <div className="max-w-4xl">
-                  <h2 className="text-xl font-semibold text-slate-800 mb-4">Tipos de Ativos Financeiros</h2>
-                  
-                  <div className="mb-6">
-                    <p className="text-sm text-slate-600 mb-3">
-                      Nesta aula, você aprenderá sobre os principais tipos de ativos financeiros disponíveis no mercado de capitais. Vamos explorar as características, riscos e retornos esperados de cada categoria de ativo.
-                    </p>
-                    <p className="text-sm text-slate-600 mb-3">
-                      Compreender os diferentes tipos de ativos é fundamental para construir uma carteira de investimentos diversificada e alinhada com seus objetivos financeiros.
-                    </p>
-                  </div>
+              <div className="p-6 flex-1 overflow-y-auto">
+                {/* Sobre a Aula */}
+                {activeInfoTab === 'sobre' && (
+                  <div className="max-w-4xl">
+                    <h2 className="text-xl font-semibold text-slate-800 mb-4">Tipos de Ativos Financeiros</h2>
+                    
+                    <div className="mb-6">
+                      <p className="text-sm text-slate-600 mb-3">
+                        Nesta aula, você aprenderá sobre os principais tipos de ativos financeiros disponíveis no mercado de capitais. Vamos explorar as características, riscos e retornos esperados de cada categoria de ativo.
+                      </p>
+                      <p className="text-sm text-slate-600 mb-3">
+                        Compreender os diferentes tipos de ativos é fundamental para construir uma carteira de investimentos diversificada e alinhada com seus objetivos financeiros.
+                      </p>
+                    </div>
 
-                  <div className="mb-6">
-                    <h3 className="text-lg font-semibold text-slate-800 mb-3">Tópicos Abordados</h3>
-                    <div className="space-y-2">
-                      {[
-                        'Ações ordinárias e preferenciais',
-                        'Títulos de renda fixa (públicos e privados)',
-                        'Fundos de investimento e ETFs',
-                        'Derivativos (opções, futuros e swaps)',
-                        'Fundos imobiliários (FIIs)',
-                        'Certificados de depósito bancário (CDBs)'
-                      ].map((topic, index) => (
-                        <div key={index} className="flex items-start gap-3 text-sm text-slate-700">
-                          <div className="w-6 h-6 bg-pastel-blue rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <Check className="w-3 h-3 text-slate-700" />
+                    <div className="mb-6">
+                      <h3 className="text-lg font-semibold text-slate-800 mb-3">Tópicos Abordados</h3>
+                      <div className="space-y-2">
+                        {[
+                          'Ações ordinárias e preferenciais',
+                          'Títulos de renda fixa (públicos e privados)',
+                          'Fundos de investimento e ETFs',
+                          'Derivativos (opções, futuros e swaps)',
+                          'Fundos imobiliários (FIIs)',
+                          'Certificados de depósito bancário (CDBs)'
+                        ].map((topic, index) => (
+                          <div key={index} className="flex items-start gap-3 text-sm text-slate-700">
+                            <div className="w-6 h-6 bg-pastel-blue rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                              <Check className="w-3 h-3 text-slate-700" />
+                            </div>
+                            <span>{topic}</span>
                           </div>
-                          <span>{topic}</span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-3 gap-4 mb-6">
+                      <div className="bg-pastel-blue/30 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Clock className="w-4 h-4 text-slate-700" />
+                          <span className="text-sm font-medium text-slate-800">Duração</span>
                         </div>
-                      ))}
+                        <p className="text-lg font-semibold text-slate-800">25:38</p>
+                      </div>
+                      <div className="bg-pastel-green/30 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Signal className="w-4 h-4 text-slate-700" />
+                          <span className="text-sm font-medium text-slate-800">Nível</span>
+                        </div>
+                        <p className="text-lg font-semibold text-slate-800">Iniciante</p>
+                      </div>
+                      <div className="bg-pastel-purple/30 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <File className="w-4 h-4 text-slate-700" />
+                          <span className="text-sm font-medium text-slate-800">Materiais</span>
+                        </div>
+                        <p className="text-lg font-semibold text-slate-800">3 arquivos</p>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="grid grid-cols-3 gap-4 mb-6">
-                    <div className="bg-pastel-blue/30 rounded-lg p-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Clock className="w-4 h-4 text-slate-700" />
-                        <span className="text-sm font-medium text-slate-800">Duração</span>
+                    <div className="bg-pastel-yellow/20 border border-pastel-yellow rounded-lg p-4">
+                      <div className="flex items-start gap-3">
+                        <Lightbulb className="w-5 h-5 text-slate-700 mt-1" />
+                        <div>
+                          <h4 className="font-semibold text-slate-800 mb-2">Dica do Instrutor</h4>
+                          <p className="text-sm text-slate-600">Faça anotações sobre cada tipo de ativo e suas características principais. Isso facilitará a compreensão dos módulos seguintes sobre análise e seleção de investimentos.</p>
+                        </div>
                       </div>
-                      <p className="text-lg font-semibold text-slate-800">25:38</p>
-                    </div>
-                    <div className="bg-pastel-green/30 rounded-lg p-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Signal className="w-4 h-4 text-slate-700" />
-                        <span className="text-sm font-medium text-slate-800">Nível</span>
-                      </div>
-                      <p className="text-lg font-semibold text-slate-800">Iniciante</p>
-                    </div>
-                    <div className="bg-pastel-purple/30 rounded-lg p-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <File className="w-4 h-4 text-slate-700" />
-                        <span className="text-sm font-medium text-slate-800">Materiais</span>
-                      </div>
-                      <p className="text-lg font-semibold text-slate-800">3 arquivos</p>
                     </div>
                   </div>
+                )}
 
-                  <div className="bg-pastel-yellow/20 border border-pastel-yellow rounded-lg p-4">
-                    <div className="flex items-start gap-3">
-                      <Lightbulb className="w-5 h-5 text-slate-700 mt-1" />
-                      <div>
-                        <h4 className="font-semibold text-slate-800 mb-2">Dica do Instrutor</h4>
-                        <p className="text-sm text-slate-600">Faça anotações sobre cada tipo de ativo e suas características principais. Isso facilitará a compreensão dos módulos seguintes sobre análise e seleção de investimentos.</p>
+                {/* Materiais */}
+                {activeInfoTab === 'materiais' && (
+                  <div className="max-w-4xl">
+                    <h2 className="text-xl font-semibold text-slate-800 mb-4">Materiais da Aula</h2>
+                    
+                    <div className="grid grid-cols-2 gap-4 mb-6">
+                      <div className="bg-pastel-blue/20 border border-pastel-blue/40 rounded-xl p-5 hover:shadow-md transition cursor-pointer">
+                        <div className="flex items-start gap-4">
+                          <div className="w-14 h-14 bg-pastel-blue rounded-xl flex items-center justify-center flex-shrink-0">
+                            <FileText className="w-7 h-7 text-slate-700" />
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="font-semibold text-slate-800 mb-1">Slides da Aula</h4>
+                            <p className="text-xs text-slate-500 mb-2">PDF - 2.4 MB</p>
+                            <span className="inline-flex items-center gap-1 text-xs font-medium text-slate-600 bg-white px-2 py-1 rounded-full">
+                              <Download className="w-3 h-3" /> Baixar
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="bg-pastel-green/20 border border-pastel-green/40 rounded-xl p-5 hover:shadow-md transition cursor-pointer">
+                        <div className="flex items-start gap-4">
+                          <div className="w-14 h-14 bg-pastel-green rounded-xl flex items-center justify-center flex-shrink-0">
+                            <FileText className="w-7 h-7 text-slate-700" />
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="font-semibold text-slate-800 mb-1">Planilha Comparativa</h4>
+                            <p className="text-xs text-slate-500 mb-2">XLSX - 1.8 MB</p>
+                            <span className="inline-flex items-center gap-1 text-xs font-medium text-slate-600 bg-white px-2 py-1 rounded-full">
+                              <Download className="w-3 h-3" /> Baixar
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="bg-pastel-purple/20 border border-pastel-purple/40 rounded-xl p-5 hover:shadow-md transition cursor-pointer">
+                        <div className="flex items-start gap-4">
+                          <div className="w-14 h-14 bg-pastel-purple rounded-xl flex items-center justify-center flex-shrink-0">
+                            <FileText className="w-7 h-7 text-slate-700" />
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="font-semibold text-slate-800 mb-1">Resumo Executivo</h4>
+                            <p className="text-xs text-slate-500 mb-2">PDF - 856 KB</p>
+                            <span className="inline-flex items-center gap-1 text-xs font-medium text-slate-600 bg-white px-2 py-1 rounded-full">
+                              <Download className="w-3 h-3" /> Baixar
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="bg-pastel-pink/20 border border-pastel-pink/40 rounded-xl p-5 hover:shadow-md transition cursor-pointer">
+                        <div className="flex items-start gap-4">
+                          <div className="w-14 h-14 bg-pastel-pink rounded-xl flex items-center justify-center flex-shrink-0">
+                            <FileText className="w-7 h-7 text-slate-700" />
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="font-semibold text-slate-800 mb-1">Glossário de Termos</h4>
+                            <p className="text-xs text-slate-500 mb-2">PDF - 420 KB</p>
+                            <span className="inline-flex items-center gap-1 text-xs font-medium text-slate-600 bg-white px-2 py-1 rounded-full">
+                              <Download className="w-3 h-3" /> Baixar
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="bg-pastel-yellow/20 border border-pastel-yellow rounded-lg p-4">
+                      <div className="flex items-start gap-3">
+                        <Lightbulb className="w-5 h-5 text-slate-700 mt-0.5" />
+                        <p className="text-sm text-slate-600">Todos os materiais são exclusivos e complementam o conteúdo das aulas. Baixe e mantenha para consultas futuras.</p>
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
+
+                {/* Discussão */}
+                {activeInfoTab === 'discussao' && (
+                  <div className="max-w-4xl">
+                    <div className="flex items-center justify-between mb-6">
+                      <h2 className="text-xl font-semibold text-slate-800">Discussão da Aula</h2>
+                      <span className="text-sm text-slate-500">24 comentários</span>
+                    </div>
+
+                    <div className="space-y-4 mb-6">
+                      <div className="bg-slate-50 rounded-xl p-4">
+                        <div className="flex items-start gap-3">
+                          <div className="w-10 h-10 bg-pastel-blue rounded-full flex items-center justify-center flex-shrink-0">
+                            <span className="text-sm font-semibold text-slate-700">MC</span>
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className="font-medium text-slate-800 text-sm">Marina Costa</span>
+                              <span className="text-xs text-slate-400">há 2 horas</span>
+                            </div>
+                            <p className="text-sm text-slate-600 mb-3">Excelente explicação sobre a diferença entre ações ON e PN! Alguém sabe se existe alguma preferência entre elas para investidores iniciantes?</p>
+                            <div className="flex items-center gap-4">
+                              <button className="flex items-center gap-1 text-xs text-slate-500 hover:text-pastel-blue transition">
+                                <Check className="w-3 h-3" /> 12 curtidas
+                              </button>
+                              <button className="text-xs text-slate-500 hover:text-pastel-blue transition">Responder</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="bg-slate-50 rounded-xl p-4">
+                        <div className="flex items-start gap-3">
+                          <div className="w-10 h-10 bg-pastel-green rounded-full flex items-center justify-center flex-shrink-0">
+                            <span className="text-sm font-semibold text-slate-700">RS</span>
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className="font-medium text-slate-800 text-sm">Ricardo Santos</span>
+                              <span className="text-xs text-pastel-blue bg-pastel-blue/20 px-2 py-0.5 rounded-full">Instrutor</span>
+                              <span className="text-xs text-slate-400">há 1 hora</span>
+                            </div>
+                            <p className="text-sm text-slate-600 mb-3">Ótima pergunta, Marina! Para iniciantes, geralmente recomendo começar com ações PN por conta da prioridade nos dividendos. Na próxima aula abordaremos mais detalhes.</p>
+                            <div className="flex items-center gap-4">
+                              <button className="flex items-center gap-1 text-xs text-slate-500 hover:text-pastel-blue transition">
+                                <Check className="w-3 h-3" /> 8 curtidas
+                              </button>
+                              <button className="text-xs text-slate-500 hover:text-pastel-blue transition">Responder</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="bg-slate-50 rounded-xl p-4">
+                        <div className="flex items-start gap-3">
+                          <div className="w-10 h-10 bg-pastel-purple rounded-full flex items-center justify-center flex-shrink-0">
+                            <span className="text-sm font-semibold text-slate-700">PL</span>
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className="font-medium text-slate-800 text-sm">Paulo Lima</span>
+                              <span className="text-xs text-slate-400">há 30 min</span>
+                            </div>
+                            <p className="text-sm text-slate-600 mb-3">A parte sobre FIIs foi muito esclarecedora! Estou considerando diversificar minha carteira com esse tipo de ativo.</p>
+                            <div className="flex items-center gap-4">
+                              <button className="flex items-center gap-1 text-xs text-slate-500 hover:text-pastel-blue transition">
+                                <Check className="w-3 h-3" /> 5 curtidas
+                              </button>
+                              <button className="text-xs text-slate-500 hover:text-pastel-blue transition">Responder</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="bg-white border border-slate-200 rounded-xl p-4">
+                      <textarea 
+                        className="w-full resize-none border-0 focus:ring-0 text-sm text-slate-700 placeholder:text-slate-400 bg-transparent"
+                        placeholder="Adicione um comentário ou tire uma dúvida..."
+                        rows={2}
+                      />
+                      <div className="flex items-center justify-end pt-2 border-t border-slate-100">
+                        <button className="px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg text-sm font-medium hover:bg-pastel-blue/80 transition">
+                          Comentar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Minhas Notas */}
+                {activeInfoTab === 'notas' && (
+                  <div className="max-w-4xl">
+                    <div className="flex items-center justify-between mb-6">
+                      <h2 className="text-xl font-semibold text-slate-800">Minhas Notas</h2>
+                      <button className="flex items-center gap-2 px-3 py-2 bg-pastel-green text-slate-700 rounded-lg text-sm font-medium hover:bg-pastel-green/80 transition">
+                        <Plus className="w-4 h-4" /> Nova Nota
+                      </button>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4 mb-6">
+                      <div className="bg-pastel-yellow/20 border-l-4 border-pastel-yellow rounded-lg p-4 hover:shadow-md transition cursor-pointer">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-xs text-slate-500">05:23 do vídeo</span>
+                          <button className="text-slate-400 hover:text-slate-600">
+                            <X className="w-4 h-4" />
+                          </button>
+                        </div>
+                        <p className="text-sm text-slate-700 font-medium mb-2">Diferença ON vs PN</p>
+                        <p className="text-xs text-slate-600">Ações ON = direito a voto. Ações PN = prioridade dividendos. Importante para estratégia de longo prazo.</p>
+                      </div>
+
+                      <div className="bg-pastel-blue/20 border-l-4 border-pastel-blue rounded-lg p-4 hover:shadow-md transition cursor-pointer">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-xs text-slate-500">12:45 do vídeo</span>
+                          <button className="text-slate-400 hover:text-slate-600">
+                            <X className="w-4 h-4" />
+                          </button>
+                        </div>
+                        <p className="text-sm text-slate-700 font-medium mb-2">Características dos FIIs</p>
+                        <p className="text-xs text-slate-600">FIIs distribuem 95% do lucro. Isenção de IR para pessoa física. Boa opção para renda passiva.</p>
+                      </div>
+
+                      <div className="bg-pastel-green/20 border-l-4 border-pastel-green rounded-lg p-4 hover:shadow-md transition cursor-pointer">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-xs text-slate-500">18:30 do vídeo</span>
+                          <button className="text-slate-400 hover:text-slate-600">
+                            <X className="w-4 h-4" />
+                          </button>
+                        </div>
+                        <p className="text-sm text-slate-700 font-medium mb-2">Renda Fixa</p>
+                        <p className="text-xs text-slate-600">CDBs, LCIs, LCAs. Garantia do FGC até R$ 250k. Tributação regressiva no tempo.</p>
+                      </div>
+
+                      <div className="bg-pastel-purple/20 border-l-4 border-pastel-purple rounded-lg p-4 hover:shadow-md transition cursor-pointer">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-xs text-slate-500">22:10 do vídeo</span>
+                          <button className="text-slate-400 hover:text-slate-600">
+                            <X className="w-4 h-4" />
+                          </button>
+                        </div>
+                        <p className="text-sm text-slate-700 font-medium mb-2">ETFs</p>
+                        <p className="text-xs text-slate-600">Diversificação automática. Taxas baixas. BOVA11 replica Ibovespa. Boa opção para iniciantes.</p>
+                      </div>
+                    </div>
+
+                    <div className="bg-slate-50 rounded-xl p-4 border border-dashed border-slate-300">
+                      <div className="text-center">
+                        <StickyNote className="w-8 h-8 text-slate-400 mx-auto mb-2" />
+                        <p className="text-sm text-slate-600 mb-2">Adicione notas durante o vídeo</p>
+                        <p className="text-xs text-slate-400">Clique no botão de marcador no player para criar uma nota naquele momento</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Dúvidas */}
+                {activeInfoTab === 'duvidas' && (
+                  <div className="max-w-4xl">
+                    <div className="flex items-center justify-between mb-6">
+                      <h2 className="text-xl font-semibold text-slate-800">Tire suas Dúvidas</h2>
+                      <button className="flex items-center gap-2 px-3 py-2 bg-pastel-purple text-slate-700 rounded-lg text-sm font-medium hover:bg-pastel-purple/80 transition">
+                        <HelpCircle className="w-4 h-4" /> Fazer Pergunta
+                      </button>
+                    </div>
+
+                    <div className="space-y-4 mb-6">
+                      <div className="bg-white border border-slate-200 rounded-xl p-4">
+                        <div className="flex items-start gap-3">
+                          <div className="w-10 h-10 bg-pastel-pink rounded-full flex items-center justify-center flex-shrink-0">
+                            <span className="text-sm font-semibold text-slate-700">AF</span>
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-2">
+                              <span className="font-medium text-slate-800 text-sm">Ana Ferreira</span>
+                              <span className="text-xs bg-pastel-green/30 text-slate-600 px-2 py-0.5 rounded-full">Respondida</span>
+                            </div>
+                            <p className="text-sm text-slate-700 font-medium mb-2">Qual a diferença prática entre CDB e LCI?</p>
+                            <div className="bg-pastel-green/10 border-l-4 border-pastel-green rounded p-3 mt-3">
+                              <div className="flex items-center gap-2 mb-1">
+                                <span className="text-xs font-medium text-slate-700">Resposta do Instrutor</span>
+                              </div>
+                              <p className="text-xs text-slate-600">A principal diferença está na tributação: CDBs têm IR regressivo, enquanto LCIs são isentas de IR para pessoa física. LCIs também têm lastro em crédito imobiliário.</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="bg-white border border-slate-200 rounded-xl p-4">
+                        <div className="flex items-start gap-3">
+                          <div className="w-10 h-10 bg-pastel-blue rounded-full flex items-center justify-center flex-shrink-0">
+                            <span className="text-sm font-semibold text-slate-700">JM</span>
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-2">
+                              <span className="font-medium text-slate-800 text-sm">João Mendes</span>
+                              <span className="text-xs bg-pastel-yellow/50 text-slate-600 px-2 py-0.5 rounded-full">Aguardando</span>
+                            </div>
+                            <p className="text-sm text-slate-700 font-medium mb-2">É possível investir em ETFs internacionais pela B3?</p>
+                            <p className="text-xs text-slate-500 mt-2">Perguntado há 3 horas</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="bg-white border border-slate-200 rounded-xl p-4">
+                        <div className="flex items-start gap-3">
+                          <div className="w-10 h-10 bg-pastel-purple rounded-full flex items-center justify-center flex-shrink-0">
+                            <span className="text-sm font-semibold text-slate-700">CS</span>
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-2">
+                              <span className="font-medium text-slate-800 text-sm">Carla Silva</span>
+                              <span className="text-xs bg-pastel-green/30 text-slate-600 px-2 py-0.5 rounded-full">Respondida</span>
+                            </div>
+                            <p className="text-sm text-slate-700 font-medium mb-2">Os derivativos são recomendados para iniciantes?</p>
+                            <div className="bg-pastel-green/10 border-l-4 border-pastel-green rounded p-3 mt-3">
+                              <div className="flex items-center gap-2 mb-1">
+                                <span className="text-xs font-medium text-slate-700">Resposta do Instrutor</span>
+                              </div>
+                              <p className="text-xs text-slate-600">Derivativos são instrumentos mais complexos e voláteis. Recomendo primeiro dominar os fundamentos de ações e renda fixa antes de explorar esse mercado.</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="bg-pastel-blue/10 border border-pastel-blue/30 rounded-xl p-4">
+                      <div className="flex items-start gap-3">
+                        <HelpCircle className="w-5 h-5 text-slate-600 mt-0.5" />
+                        <div>
+                          <p className="text-sm text-slate-700 font-medium mb-1">Dúvidas frequentes são respondidas em até 24h</p>
+                          <p className="text-xs text-slate-500">O instrutor e monitores estão disponíveis para ajudar você a entender melhor o conteúdo.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </main>
