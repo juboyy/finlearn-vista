@@ -1,16 +1,209 @@
+import { useState, useEffect } from "react";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { 
   Bell, ArrowUpCircle, Check, Plus, Edit, Trash2, Calendar, Coins, Gift, 
-  Percent, Download, CreditCard, CheckCircle, TrendingUp
+  Percent, Download, CreditCard, CheckCircle, TrendingUp, X, Loader2
 } from "lucide-react";
 import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
+import { toast } from "sonner";
+
+interface CreditCard {
+  id: string;
+  card_holder_name: string;
+  card_number_last4: string;
+  card_brand: string;
+  expiry_month: string;
+  expiry_year: string;
+  document_number: string;
+  document_type: string;
+  is_primary: boolean;
+}
 
 export default function Assinaturas() {
+  const { user } = useAuth();
   const fadeCurrentPlanRef = useFadeInOnScroll<HTMLElement>();
   const fadePaymentMethodsRef = useFadeInOnScroll<HTMLElement>();
   const fadeBillingSummaryRef = useFadeInOnScroll<HTMLElement>();
   const fadeCouponsRef = useFadeInOnScroll<HTMLElement>();
   const fadeBillingHistoryRef = useFadeInOnScroll<HTMLElement>();
+
+  const [showAddCardSheet, setShowAddCardSheet] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [cards, setCards] = useState<CreditCard[]>([]);
+
+  // Form state
+  const [cardNumber, setCardNumber] = useState("");
+  const [cardHolderName, setCardHolderName] = useState("");
+  const [expiryMonth, setExpiryMonth] = useState("");
+  const [expiryYear, setExpiryYear] = useState("");
+  const [cvv, setCvv] = useState("");
+  const [documentNumber, setDocumentNumber] = useState("");
+  const [documentType, setDocumentType] = useState<"cpf" | "cnpj">("cpf");
+  const [isPrimary, setIsPrimary] = useState(false);
+
+  // Load cards
+  useEffect(() => {
+    loadCards();
+  }, [user]);
+
+  const loadCards = async () => {
+    if (!user) return;
+    
+    const { data, error } = await supabase
+      .from('credit_cards')
+      .select('*')
+      .eq('user_id', user.id)
+      .order('created_at', { ascending: false });
+
+    if (!error && data) {
+      setCards(data);
+    }
+  };
+
+  const detectCardBrand = (number: string): string => {
+    const cleanNumber = number.replace(/\s/g, '');
+    if (cleanNumber.startsWith('4')) return 'visa';
+    if (/^5[1-5]/.test(cleanNumber)) return 'mastercard';
+    if (/^3[47]/.test(cleanNumber)) return 'amex';
+    if (/^6(?:011|5)/.test(cleanNumber)) return 'discover';
+    if (/^(?:2131|1800|35)/.test(cleanNumber)) return 'jcb';
+    return 'visa';
+  };
+
+  const formatCardNumber = (value: string): string => {
+    const v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+    const matches = v.match(/\d{4,16}/g);
+    const match = matches && matches[0] || '';
+    const parts = [];
+    for (let i = 0, len = match.length; i < len; i += 4) {
+      parts.push(match.substring(i, i + 4));
+    }
+    return parts.length ? parts.join(' ') : v;
+  };
+
+  const formatDocument = (value: string, type: "cpf" | "cnpj"): string => {
+    const v = value.replace(/\D/g, '');
+    if (type === 'cpf') {
+      return v.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4').slice(0, 14);
+    } else {
+      return v.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5').slice(0, 18);
+    }
+  };
+
+  const resetForm = () => {
+    setCardNumber("");
+    setCardHolderName("");
+    setExpiryMonth("");
+    setExpiryYear("");
+    setCvv("");
+    setDocumentNumber("");
+    setDocumentType("cpf");
+    setIsPrimary(false);
+  };
+
+  const handleSaveCard = async () => {
+    if (!user) {
+      toast.error("Você precisa estar logado");
+      return;
+    }
+
+    if (!cardNumber || !cardHolderName || !expiryMonth || !expiryYear || !documentNumber) {
+      toast.error("Preencha todos os campos obrigatórios");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      // If setting as primary, unset other primary cards first
+      if (isPrimary) {
+        await supabase
+          .from('credit_cards')
+          .update({ is_primary: false })
+          .eq('user_id', user.id);
+      }
+
+      const cardData = {
+        user_id: user.id,
+        card_holder_name: cardHolderName.toUpperCase(),
+        card_number_last4: cardNumber.replace(/\s/g, '').slice(-4),
+        card_brand: detectCardBrand(cardNumber),
+        expiry_month: expiryMonth,
+        expiry_year: expiryYear,
+        document_number: documentNumber.replace(/\D/g, ''),
+        document_type: documentType,
+        is_primary: isPrimary || cards.length === 0,
+      };
+
+      const { error } = await supabase
+        .from('credit_cards')
+        .insert(cardData);
+
+      if (error) throw error;
+
+      toast.success("Cartão adicionado com sucesso!");
+      await loadCards();
+      resetForm();
+      setShowAddCardSheet(false);
+    } catch (error) {
+      console.error('Error saving card:', error);
+      toast.error("Erro ao salvar cartão");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDeleteCard = async (cardId: string) => {
+    try {
+      const { error } = await supabase
+        .from('credit_cards')
+        .delete()
+        .eq('id', cardId);
+
+      if (error) throw error;
+      
+      toast.success("Cartão removido");
+      await loadCards();
+    } catch (error) {
+      toast.error("Erro ao remover cartão");
+    }
+  };
+
+  const handleSetPrimary = async (cardId: string) => {
+    if (!user) return;
+
+    try {
+      await supabase
+        .from('credit_cards')
+        .update({ is_primary: false })
+        .eq('user_id', user.id);
+
+      await supabase
+        .from('credit_cards')
+        .update({ is_primary: true })
+        .eq('id', cardId);
+
+      toast.success("Cartão principal atualizado");
+      await loadCards();
+    } catch (error) {
+      toast.error("Erro ao atualizar cartão principal");
+    }
+  };
+
+  const getCardBrandColor = (brand: string): string => {
+    switch (brand) {
+      case 'visa': return 'from-[hsl(210,35%,75%)] to-[hsl(210,35%,65%)]';
+      case 'mastercard': return 'from-[hsl(30,50%,75%)] to-[hsl(15,60%,65%)]';
+      case 'amex': return 'from-[hsl(210,35%,70%)] to-[hsl(220,40%,55%)]';
+      default: return 'from-[hsl(270,35%,75%)] to-[hsl(280,35%,65%)]';
+    }
+  };
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -108,51 +301,55 @@ export default function Assinaturas() {
             <section ref={fadePaymentMethodsRef} className="col-span-2 bg-white rounded-xl p-6 border border-slate-200 opacity-0">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-lg font-semibold text-slate-800">Métodos de Pagamento</h2>
-                <button className="px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+                <button 
+                  onClick={() => setShowAddCardSheet(true)}
+                  className="px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
+                >
                   <Plus className="inline mr-2" size={18} />
                   Adicionar Cartão
                 </button>
               </div>
               <div className="space-y-4">
-                <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200">
-                  <div className="w-12 h-12 bg-pastel-blue rounded-lg flex items-center justify-center">
-                    <CreditCard className="text-slate-700" size={24} />
+                {cards.length === 0 ? (
+                  <div className="text-center py-8 text-slate-500">
+                    <CreditCard className="mx-auto mb-3 text-slate-300" size={48} />
+                    <p>Nenhum cartão cadastrado</p>
+                    <p className="text-sm">Adicione um cartão para facilitar seus pagamentos</p>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="font-medium text-slate-800">Visa •••• 4532</h3>
-                    <p className="text-sm text-slate-500">Expira em 12/2026</p>
-                  </div>
-                  <span className="px-2 py-1 bg-pastel-green text-slate-700 text-xs rounded-full">Principal</span>
-                  <div className="flex gap-2">
-                    <button className="p-2 text-slate-600 hover:text-slate-800">
-                      <Edit size={16} />
-                    </button>
-                    <button className="p-2 text-slate-600 hover:text-red-600">
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-                </div>
-                
-                <div className="flex items-center gap-4 p-4 rounded-lg border border-slate-200">
-                  <div className="w-12 h-12 bg-pastel-purple rounded-lg flex items-center justify-center">
-                    <CreditCard className="text-slate-700" size={24} />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-medium text-slate-800">Mastercard •••• 8901</h3>
-                    <p className="text-sm text-slate-500">Expira em 08/2025</p>
-                  </div>
-                  <button className="px-3 py-1 text-slate-600 border border-slate-200 rounded text-xs font-medium hover:bg-slate-50 transition">
-                    Definir como Principal
-                  </button>
-                  <div className="flex gap-2">
-                    <button className="p-2 text-slate-600 hover:text-slate-800">
-                      <Edit size={16} />
-                    </button>
-                    <button className="p-2 text-slate-600 hover:text-red-600">
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-                </div>
+                ) : (
+                  cards.map((card) => (
+                    <div key={card.id} className="flex items-center gap-4 p-4 rounded-lg border border-slate-200">
+                      <div className={`w-12 h-12 bg-gradient-to-br ${getCardBrandColor(card.card_brand)} rounded-lg flex items-center justify-center`}>
+                        <CreditCard className="text-white" size={24} />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-medium text-slate-800 capitalize">{card.card_brand} •••• {card.card_number_last4}</h3>
+                        <p className="text-sm text-slate-500">Expira em {card.expiry_month}/{card.expiry_year}</p>
+                      </div>
+                      {card.is_primary ? (
+                        <span className="px-2 py-1 bg-pastel-green text-slate-700 text-xs rounded-full">Principal</span>
+                      ) : (
+                        <button 
+                          onClick={() => handleSetPrimary(card.id)}
+                          className="px-3 py-1 text-slate-600 border border-slate-200 rounded text-xs font-medium hover:bg-slate-50 transition"
+                        >
+                          Definir como Principal
+                        </button>
+                      )}
+                      <div className="flex gap-2">
+                        <button className="p-2 text-slate-600 hover:text-slate-800">
+                          <Edit size={16} />
+                        </button>
+                        <button 
+                          onClick={() => handleDeleteCard(card.id)}
+                          className="p-2 text-slate-600 hover:text-red-600"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
             </section>
 
@@ -198,138 +395,100 @@ export default function Assinaturas() {
               </button>
             </div>
             <div className="grid grid-cols-3 gap-4">
-              <div className="p-4 rounded-lg border-2 border-dashed border-pastel-green bg-pastel-green bg-opacity-20">
-                <div className="flex items-center gap-3 mb-2">
+              <div className="p-4 border border-dashed border-slate-300 rounded-lg text-center">
+                <div className="w-12 h-12 bg-pastel-green rounded-full mx-auto mb-3 flex items-center justify-center">
                   <Percent className="text-slate-700" size={20} />
-                  <span className="font-medium text-slate-800">SAVE20</span>
                 </div>
-                <p className="text-sm text-slate-600 mb-2">20% de desconto no próximo pagamento</p>
-                <p className="text-xs text-slate-500">Válido até 31/12/2024</p>
+                <h4 className="font-medium text-slate-800 mb-1">FINLEARN20</h4>
+                <p className="text-sm text-slate-600 mb-2">20% de desconto</p>
+                <span className="px-2 py-1 bg-pastel-green text-slate-700 text-xs rounded-full">Ativo</span>
               </div>
-              
-              <div className="p-4 rounded-lg border-2 border-dashed border-pastel-blue bg-pastel-blue bg-opacity-20">
-                <div className="flex items-center gap-3 mb-2">
-                  <Gift className="text-slate-700" size={20} />
-                  <span className="font-medium text-slate-800">FRIEND50</span>
+              <div className="p-4 border border-dashed border-slate-300 rounded-lg text-center opacity-50">
+                <div className="w-12 h-12 bg-slate-100 rounded-full mx-auto mb-3 flex items-center justify-center">
+                  <Percent className="text-slate-400" size={20} />
                 </div>
-                <p className="text-sm text-slate-600 mb-2">R$ 50 para você e seu amigo</p>
-                <p className="text-xs text-slate-500">Programa de indicação</p>
+                <h4 className="font-medium text-slate-600 mb-1">PROMO15</h4>
+                <p className="text-sm text-slate-500 mb-2">15% de desconto</p>
+                <span className="px-2 py-1 bg-slate-200 text-slate-500 text-xs rounded-full">Expirado</span>
               </div>
-              
-              <div className="p-4 rounded-lg border-2 border-dashed border-slate-200 bg-slate-50">
-                <div className="flex items-center gap-3 mb-2">
-                  <Plus className="text-slate-400" size={20} />
-                  <span className="font-medium text-slate-500">Adicionar Cupom</span>
-                </div>
-                <p className="text-sm text-slate-400 mb-2">Digite seu código de desconto</p>
-                <button className="text-xs text-pastel-blue hover:underline">Inserir código</button>
+              <div className="p-4 border border-dashed border-slate-300 rounded-lg flex items-center justify-center">
+                <button className="text-slate-500 hover:text-slate-700">
+                  <Plus size={24} className="mx-auto mb-2" />
+                  <span className="text-sm">Adicionar Cupom</span>
+                </button>
               </div>
             </div>
           </section>
 
           <section ref={fadeBillingHistoryRef} className="bg-white rounded-xl p-6 border border-slate-200 opacity-0">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-lg font-semibold text-slate-800">Histórico de Cobrança</h2>
-              <div className="flex gap-2">
-                <select className="px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-pastel-blue">
-                  <option>Todos os períodos</option>
-                  <option>Últimos 3 meses</option>
-                  <option>Últimos 6 meses</option>
-                  <option>Último ano</option>
-                </select>
-                <button className="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200 transition">
-                  <Download className="inline mr-2" size={16} />
-                  Exportar
-                </button>
-              </div>
+              <h2 className="text-lg font-semibold text-slate-800">Histórico de Cobranças</h2>
+              <button className="px-4 py-2 text-slate-600 border border-slate-200 rounded-lg font-medium hover:bg-slate-50 transition">
+                <Download className="inline mr-2" size={18} />
+                Exportar
+              </button>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-slate-200">
-                    <th className="text-left py-3 px-4 font-medium text-slate-600">Data</th>
-                    <th className="text-left py-3 px-4 font-medium text-slate-600">Descrição</th>
-                    <th className="text-left py-3 px-4 font-medium text-slate-600">Valor</th>
-                    <th className="text-left py-3 px-4 font-medium text-slate-600">Status</th>
-                    <th className="text-left py-3 px-4 font-medium text-slate-600">Ações</th>
+                  <tr className="text-left border-b border-slate-200">
+                    <th className="pb-3 text-sm font-medium text-slate-600">Data</th>
+                    <th className="pb-3 text-sm font-medium text-slate-600">Descrição</th>
+                    <th className="pb-3 text-sm font-medium text-slate-600">Valor</th>
+                    <th className="pb-3 text-sm font-medium text-slate-600">Status</th>
+                    <th className="pb-3 text-sm font-medium text-slate-600">Ações</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="border-b border-slate-100">
-                    <td className="py-4 px-4 text-sm text-slate-800">16 Nov 2024</td>
-                    <td className="py-4 px-4 text-sm text-slate-800">Plano Premium - Novembro</td>
-                    <td className="py-4 px-4 text-sm font-medium text-slate-800">R$ 197,00</td>
-                    <td className="py-4 px-4">
+                    <td className="py-4 text-sm text-slate-800">16 Nov 2024</td>
+                    <td className="py-4 text-sm text-slate-600">Assinatura Premium - Mensal</td>
+                    <td className="py-4 text-sm font-medium text-slate-800">R$ 197,00</td>
+                    <td className="py-4">
                       <span className="px-2 py-1 bg-pastel-green text-slate-700 text-xs rounded-full">Pago</span>
                     </td>
-                    <td className="py-4 px-4">
-                      <button className="text-pastel-blue hover:underline text-sm">
-                        <Download className="inline mr-1" size={14} />
-                        Baixar
-                      </button>
+                    <td className="py-4">
+                      <button className="text-pastel-blue hover:underline text-sm">Ver Recibo</button>
                     </td>
                   </tr>
                   <tr className="border-b border-slate-100">
-                    <td className="py-4 px-4 text-sm text-slate-800">16 Out 2024</td>
-                    <td className="py-4 px-4 text-sm text-slate-800">Plano Premium - Outubro</td>
-                    <td className="py-4 px-4 text-sm font-medium text-slate-800">R$ 197,00</td>
-                    <td className="py-4 px-4">
+                    <td className="py-4 text-sm text-slate-800">16 Out 2024</td>
+                    <td className="py-4 text-sm text-slate-600">Assinatura Premium - Mensal</td>
+                    <td className="py-4 text-sm font-medium text-slate-800">R$ 197,00</td>
+                    <td className="py-4">
                       <span className="px-2 py-1 bg-pastel-green text-slate-700 text-xs rounded-full">Pago</span>
                     </td>
-                    <td className="py-4 px-4">
-                      <button className="text-pastel-blue hover:underline text-sm">
-                        <Download className="inline mr-1" size={14} />
-                        Baixar
-                      </button>
+                    <td className="py-4">
+                      <button className="text-pastel-blue hover:underline text-sm">Ver Recibo</button>
                     </td>
                   </tr>
                   <tr className="border-b border-slate-100">
-                    <td className="py-4 px-4 text-sm text-slate-800">16 Set 2024</td>
-                    <td className="py-4 px-4 text-sm text-slate-800">Plano Premium - Setembro</td>
-                    <td className="py-4 px-4 text-sm font-medium text-slate-800">R$ 197,00</td>
-                    <td className="py-4 px-4">
+                    <td className="py-4 text-sm text-slate-800">16 Set 2024</td>
+                    <td className="py-4 text-sm text-slate-600">Assinatura Premium - Mensal</td>
+                    <td className="py-4 text-sm font-medium text-slate-800">R$ 197,00</td>
+                    <td className="py-4">
                       <span className="px-2 py-1 bg-pastel-green text-slate-700 text-xs rounded-full">Pago</span>
                     </td>
-                    <td className="py-4 px-4">
-                      <button className="text-pastel-blue hover:underline text-sm">
-                        <Download className="inline mr-1" size={14} />
-                        Baixar
-                      </button>
-                    </td>
-                  </tr>
-                  <tr className="border-b border-slate-100">
-                    <td className="py-4 px-4 text-sm text-slate-800">16 Ago 2024</td>
-                    <td className="py-4 px-4 text-sm text-slate-800">Plano Premium - Agosto</td>
-                    <td className="py-4 px-4 text-sm font-medium text-slate-800">R$ 197,00</td>
-                    <td className="py-4 px-4">
-                      <span className="px-2 py-1 bg-pastel-green text-slate-700 text-xs rounded-full">Pago</span>
-                    </td>
-                    <td className="py-4 px-4">
-                      <button className="text-pastel-blue hover:underline text-sm">
-                        <Download className="inline mr-1" size={14} />
-                        Baixar
-                      </button>
+                    <td className="py-4">
+                      <button className="text-pastel-blue hover:underline text-sm">Ver Recibo</button>
                     </td>
                   </tr>
                   <tr>
-                    <td className="py-4 px-4 text-sm text-slate-800">28 Jul 2024</td>
-                    <td className="py-4 px-4 text-sm text-slate-800">Upgrade para Premium</td>
-                    <td className="py-4 px-4 text-sm font-medium text-slate-800">R$ 98,50</td>
-                    <td className="py-4 px-4">
+                    <td className="py-4 text-sm text-slate-800">16 Ago 2024</td>
+                    <td className="py-4 text-sm text-slate-600">Assinatura Premium - Mensal</td>
+                    <td className="py-4 text-sm font-medium text-slate-800">R$ 197,00</td>
+                    <td className="py-4">
                       <span className="px-2 py-1 bg-pastel-green text-slate-700 text-xs rounded-full">Pago</span>
                     </td>
-                    <td className="py-4 px-4">
-                      <button className="text-pastel-blue hover:underline text-sm">
-                        <Download className="inline mr-1" size={14} />
-                        Baixar
-                      </button>
+                    <td className="py-4">
+                      <button className="text-pastel-blue hover:underline text-sm">Ver Recibo</button>
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <div className="flex items-center justify-between mt-6 pt-4 border-t border-slate-200">
-              <p className="text-sm text-slate-500">Mostrando 5 de 12 transações</p>
+            <div className="flex items-center justify-between mt-6">
+              <p className="text-sm text-slate-600">Mostrando 4 de 12 transações</p>
               <div className="flex gap-2">
                 <button className="px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition">
                   Anterior
@@ -348,6 +507,188 @@ export default function Assinaturas() {
           </section>
         </div>
       </main>
+
+      {/* Sheet para Adicionar Cartão */}
+      <Sheet open={showAddCardSheet} onOpenChange={setShowAddCardSheet}>
+        <SheetContent side="right" className="w-full sm:max-w-lg overflow-y-auto">
+          <SheetHeader className="mb-6">
+            <SheetTitle className="text-xl font-bold text-foreground">Adicionar Cartão</SheetTitle>
+          </SheetHeader>
+
+          <div className="space-y-6">
+            {/* Preview do Cartão */}
+            <div className={`relative w-full h-48 rounded-xl bg-gradient-to-br ${getCardBrandColor(detectCardBrand(cardNumber))} p-6 shadow-lg overflow-hidden`}>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
+              <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full -ml-12 -mb-12"></div>
+              
+              <div className="flex justify-between items-start mb-8">
+                <div className="w-12 h-8 bg-gradient-to-br from-yellow-200 to-yellow-400 rounded-md"></div>
+                <span className="text-white/80 font-bold uppercase text-sm">
+                  {detectCardBrand(cardNumber)}
+                </span>
+              </div>
+              
+              <div className="mb-4">
+                <p className="text-white/70 text-xs mb-1">Número do Cartão</p>
+                <p className="text-white text-lg font-mono tracking-wider">
+                  {cardNumber || '•••• •••• •••• ••••'}
+                </p>
+              </div>
+              
+              <div className="flex justify-between items-end">
+                <div>
+                  <p className="text-white/70 text-xs mb-1">Titular</p>
+                  <p className="text-white text-sm font-medium uppercase">
+                    {cardHolderName || 'NOME DO TITULAR'}
+                  </p>
+                </div>
+                <div className="text-right">
+                  <p className="text-white/70 text-xs mb-1">Validade</p>
+                  <p className="text-white text-sm font-mono">
+                    {expiryMonth || 'MM'}/{expiryYear || 'AA'}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Formulário */}
+            <div className="space-y-4">
+              <div>
+                <Label className="text-sm font-medium text-foreground">Número do Cartão *</Label>
+                <Input
+                  type="text"
+                  placeholder="0000 0000 0000 0000"
+                  value={cardNumber}
+                  onChange={(e) => setCardNumber(formatCardNumber(e.target.value))}
+                  maxLength={19}
+                  className="mt-1"
+                />
+              </div>
+
+              <div>
+                <Label className="text-sm font-medium text-foreground">Nome do Titular *</Label>
+                <Input
+                  type="text"
+                  placeholder="Nome como está no cartão"
+                  value={cardHolderName}
+                  onChange={(e) => setCardHolderName(e.target.value.toUpperCase())}
+                  className="mt-1"
+                />
+              </div>
+
+              <div className="grid grid-cols-3 gap-3">
+                <div>
+                  <Label className="text-sm font-medium text-foreground">Mês *</Label>
+                  <Input
+                    type="text"
+                    placeholder="MM"
+                    value={expiryMonth}
+                    onChange={(e) => setExpiryMonth(e.target.value.replace(/\D/g, '').slice(0, 2))}
+                    maxLength={2}
+                    className="mt-1"
+                  />
+                </div>
+                <div>
+                  <Label className="text-sm font-medium text-foreground">Ano *</Label>
+                  <Input
+                    type="text"
+                    placeholder="AA"
+                    value={expiryYear}
+                    onChange={(e) => setExpiryYear(e.target.value.replace(/\D/g, '').slice(0, 2))}
+                    maxLength={2}
+                    className="mt-1"
+                  />
+                </div>
+                <div>
+                  <Label className="text-sm font-medium text-foreground">CVV *</Label>
+                  <Input
+                    type="text"
+                    placeholder="123"
+                    value={cvv}
+                    onChange={(e) => setCvv(e.target.value.replace(/\D/g, '').slice(0, 4))}
+                    maxLength={4}
+                    className="mt-1"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <Label className="text-sm font-medium text-foreground mb-2 block">Tipo de Documento</Label>
+                <div className="flex gap-4 mb-2">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="docType"
+                      checked={documentType === 'cpf'}
+                      onChange={() => {
+                        setDocumentType('cpf');
+                        setDocumentNumber('');
+                      }}
+                      className="w-4 h-4 text-primary"
+                    />
+                    <span className="text-sm text-foreground">CPF</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="docType"
+                      checked={documentType === 'cnpj'}
+                      onChange={() => {
+                        setDocumentType('cnpj');
+                        setDocumentNumber('');
+                      }}
+                      className="w-4 h-4 text-primary"
+                    />
+                    <span className="text-sm text-foreground">CNPJ</span>
+                  </label>
+                </div>
+                <Input
+                  type="text"
+                  placeholder={documentType === 'cpf' ? '000.000.000-00' : '00.000.000/0000-00'}
+                  value={documentNumber}
+                  onChange={(e) => setDocumentNumber(formatDocument(e.target.value, documentType))}
+                  maxLength={documentType === 'cpf' ? 14 : 18}
+                  className="mt-1"
+                />
+              </div>
+
+              <div className="flex items-center justify-between p-4 bg-muted rounded-lg">
+                <div>
+                  <p className="font-medium text-foreground text-sm">Definir como cartão principal</p>
+                  <p className="text-xs text-muted-foreground">Este cartão será usado como padrão para pagamentos</p>
+                </div>
+                <Switch
+                  checked={isPrimary}
+                  onCheckedChange={setIsPrimary}
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-3 pt-4">
+              <button
+                onClick={() => {
+                  resetForm();
+                  setShowAddCardSheet(false);
+                }}
+                className="flex-1 py-3 border border-border rounded-xl font-medium text-foreground hover:bg-muted transition"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={handleSaveCard}
+                disabled={isLoading}
+                className="flex-1 py-3 bg-foreground text-background rounded-xl font-semibold hover:bg-foreground/90 transition disabled:opacity-50"
+              >
+                {isLoading ? (
+                  <Loader2 className="w-5 h-5 animate-spin mx-auto" />
+                ) : (
+                  'Salvar Cartão'
+                )}
+              </button>
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }

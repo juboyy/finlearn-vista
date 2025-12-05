@@ -610,6 +610,51 @@ export type Database = {
         }
         Relationships: []
       }
+      credit_cards: {
+        Row: {
+          card_brand: string
+          card_holder_name: string
+          card_number_last4: string
+          created_at: string
+          document_number: string
+          document_type: string
+          expiry_month: string
+          expiry_year: string
+          id: string
+          is_primary: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          card_brand?: string
+          card_holder_name: string
+          card_number_last4: string
+          created_at?: string
+          document_number: string
+          document_type?: string
+          expiry_month: string
+          expiry_year: string
+          id?: string
+          is_primary?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          card_brand?: string
+          card_holder_name?: string
+          card_number_last4?: string
+          created_at?: string
+          document_number?: string
+          document_type?: string
+          expiry_month?: string
+          expiry_year?: string
+          id?: string
+          is_primary?: boolean
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       daily_insights: {
         Row: {
           content: string
