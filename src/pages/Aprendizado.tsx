@@ -23,7 +23,7 @@ import { ApresentacoesAnalyticsConsumption } from "@/components/Dashboard/Aprese
 import { LiveAnalyticsConsumption } from "@/components/Dashboard/LiveAnalyticsConsumption";
 import { EntrevistasAnalyticsConsumption } from "@/components/Dashboard/EntrevistasAnalyticsConsumption";
 import { AvatarIAAnalyticsConsumption } from "@/components/Dashboard/AvatarIAAnalyticsConsumption";
-import { Bell, Play, Clock, BookOpen, TrendingUp, Headphones, Calendar, Users, MessageCircle, Star, BookMarked, Video, Award, Heart, CheckCircle, PlayCircle, Trophy, ChartLine, Shield, Bitcoin, Gavel, PieChart, Repeat, Globe, Leaf, Plus, BookOpenCheck, CreditCard, FileText, Bookmark, Quote, Download, Share2, Bot, Eye, Percent, DollarSign, Lightbulb, AlertTriangle, Coins, Mic, Search, ChevronLeft, ChevronRight, Circle } from "lucide-react";
+import { Bell, Play, Clock, BookOpen, TrendingUp, Headphones, Calendar, Users, MessageCircle, Star, BookMarked, Video, Award, Heart, CheckCircle, PlayCircle, Trophy, ChartLine, Shield, Bitcoin, Gavel, PieChart, Repeat, Globe, Leaf, Plus, BookOpenCheck, CreditCard, FileText, Bookmark, Quote, Download, Share2, Bot, Eye, Percent, DollarSign, Lightbulb, AlertTriangle, Coins, Mic, Search, ChevronLeft, ChevronRight, Circle, FolderOpen } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ebookRiskManagementPink from "@/assets/ebook-risk-management-pink.png";
@@ -353,8 +353,8 @@ const Aprendizado = () => {
                   <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                 </button>
                 <button onClick={() => navigate('/meus-conteudos')} className="px-4 py-2 bg-pastel-orange text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
-                  <Plus className="w-4 h-4 inline mr-2" />
-                  Criar Conteúdo
+                  <FolderOpen className="w-4 h-4 inline mr-2" />
+                  Meus Conteúdos
                 </button>
               </div>
             </div>
