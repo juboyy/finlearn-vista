@@ -106,6 +106,39 @@ export type Database = {
           },
         ]
       }
+      agent_conversations: {
+        Row: {
+          agent_image: string | null
+          agent_name: string
+          created_at: string
+          id: string
+          messages: Json
+          title: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          agent_image?: string | null
+          agent_name: string
+          created_at?: string
+          id?: string
+          messages?: Json
+          title?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          agent_image?: string | null
+          agent_name?: string
+          created_at?: string
+          id?: string
+          messages?: Json
+          title?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       analytics_alert_preferences: {
         Row: {
           alert_frequency: string
