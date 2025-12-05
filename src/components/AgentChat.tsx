@@ -1,17 +1,11 @@
 import { useState, useRef, useEffect } from "react";
-import { X, Send, Loader2, Trash2, Download, MoreVertical } from "lucide-react";
+import { X, Send, Loader2, Trash2, Save } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAgentChat } from "@/hooks/useAgentChat";
 import { useToast } from "@/hooks/use-toast";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu";
+import { supabase } from "@/integrations/supabase/client";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,6 +16,11 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface AgentChatProps {
   agentName: string;
@@ -32,6 +31,7 @@ interface AgentChatProps {
 export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) => {
   const [input, setInput] = useState("");
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const { messages, sendMessage, isLoading, clearMessages } = useAgentChat(agentName);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
@@ -65,7 +65,7 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
     });
   };
 
-  const handleSaveConversation = () => {
+  const handleSaveConversation = async () => {
     if (messages.length === 0) {
       toast({
         title: "Nenhuma mensagem",
@@ -75,30 +75,53 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
       return;
     }
 
-    const conversationData = {
-      agentName,
-      exportedAt: new Date().toISOString(),
-      messages: messages.map(msg => ({
-        role: msg.role,
-        content: msg.content,
-        timestamp: new Date().toISOString()
-      }))
-    };
+    setIsSaving(true);
 
-    const blob = new Blob([JSON.stringify(conversationData, null, 2)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `conversa-${agentName.replace(/\s+/g, "-").toLowerCase()}-${new Date().toISOString().split("T")[0]}.json`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        toast({
+          title: "Erro",
+          description: "Você precisa estar logado para salvar conversas.",
+          variant: "destructive",
+        });
+        setIsSaving(false);
+        return;
+      }
 
-    toast({
-      title: "Conversa salva",
-      description: "O arquivo foi baixado com sucesso.",
-    });
+      // Generate a title from the first user message
+      const firstUserMessage = messages.find(m => m.role === "user");
+      const title = firstUserMessage 
+        ? firstUserMessage.content.slice(0, 50) + (firstUserMessage.content.length > 50 ? "..." : "")
+        : `Conversa com ${agentName}`;
+
+      const { error } = await supabase
+        .from("agent_conversations")
+        .insert([{
+          user_id: user.id,
+          agent_name: agentName,
+          agent_image: agentImage,
+          title,
+          messages: JSON.parse(JSON.stringify(messages))
+        }]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Conversa salva",
+        description: "A conversa foi salva no histórico.",
+      });
+    } catch (error) {
+      console.error("Error saving conversation:", error);
+      toast({
+        title: "Erro ao salvar",
+        description: "Não foi possível salvar a conversa. Tente novamente.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -115,31 +138,41 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
               <p className="text-sm text-muted-foreground">Chat em tempo real</p>
             </div>
             
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
-                  <MoreVertical size={20} />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48">
-                <DropdownMenuItem onClick={handleSaveConversation} className="cursor-pointer">
-                  <Download size={16} className="mr-2" />
-                  Salvar conversa
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem 
-                  onClick={() => setShowDeleteDialog(true)} 
-                  className="cursor-pointer text-destructive focus:text-destructive"
-                >
-                  <Trash2 size={16} className="mr-2" />
-                  Excluir conversa
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <div className="flex items-center gap-2">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    onClick={handleSaveConversation}
+                    disabled={isSaving || messages.length === 0}
+                    className="p-2.5 rounded-lg bg-[hsl(160,35%,75%)] text-[hsl(160,35%,25%)] hover:bg-[hsl(160,35%,65%)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSaving ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Salvar no histórico</p>
+                </TooltipContent>
+              </Tooltip>
 
-            <Button variant="ghost" size="icon" onClick={onClose}>
-              <X size={20} />
-            </Button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    onClick={() => setShowDeleteDialog(true)}
+                    disabled={messages.length === 0}
+                    className="p-2.5 rounded-lg bg-[hsl(340,35%,75%)] text-[hsl(340,35%,25%)] hover:bg-[hsl(340,35%,65%)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <Trash2 size={18} />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Excluir conversa</p>
+                </TooltipContent>
+              </Tooltip>
+
+              <Button variant="ghost" size="icon" onClick={onClose}>
+                <X size={20} />
+              </Button>
+            </div>
           </div>
 
           {/* Messages */}
