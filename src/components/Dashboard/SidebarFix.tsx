@@ -23,47 +23,58 @@ export const SidebarFix = () => {
 
   return (
     <aside className={`bg-sidebar dark:bg-sidebar border-r border-sidebar-border dark:border-sidebar-border flex flex-col h-screen sticky top-0 transition-all duration-300 ${collapsed ? 'w-16' : 'w-64'}`}>
-      <div className={`p-4 border-b border-sidebar-border dark:border-sidebar-border flex items-center relative ${collapsed ? 'justify-center' : 'justify-between'}`}>
+      <div className={`p-4 border-b border-sidebar-border dark:border-sidebar-border flex items-center relative ${collapsed ? 'justify-center px-2' : 'justify-between'}`}>
         {!collapsed && (
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-sidebar-primary rounded-lg flex items-center justify-center">
+            <div className="w-10 h-10 bg-sidebar-primary rounded-lg flex items-center justify-center flex-shrink-0">
               <TrendingUp className="text-sidebar-primary-foreground" size={20} />
             </div>
             <span className="text-xl font-semibold text-sidebar-foreground">FinLearn</span>
           </div>
         )}
         {collapsed && (
-          <div className="w-10 h-10 bg-sidebar-primary rounded-lg flex items-center justify-center">
+          <div className="w-10 h-10 bg-sidebar-primary rounded-lg flex items-center justify-center flex-shrink-0">
             <TrendingUp className="text-sidebar-primary-foreground" size={20} />
           </div>
         )}
-        <button
-          onClick={() => setCollapsed(!collapsed)}
-          className={`text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent p-1.5 rounded-lg transition-colors ${collapsed ? 'absolute -right-3 top-1/2 -translate-y-1/2 bg-sidebar border border-sidebar-border shadow-sm' : ''}`}
-          title={collapsed ? 'Expandir sidebar' : 'Recolher sidebar'}
-        >
-          <ChevronLeft className={`transition-transform duration-300 ${collapsed ? 'rotate-180' : ''}`} size={18} />
-        </button>
-        {!collapsed && <ThemeToggle />}
+        {!collapsed && (
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <button
+              onClick={() => setCollapsed(!collapsed)}
+              className="text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent p-1.5 rounded-lg transition-colors"
+              title="Recolher sidebar"
+            >
+              <ChevronLeft size={18} />
+            </button>
+          </div>
+        )}
       </div>
       
       {collapsed && (
-        <div className="p-4 flex justify-center border-b border-sidebar-border dark:border-sidebar-border">
+        <div className="p-2 flex flex-col items-center gap-2 border-b border-sidebar-border dark:border-sidebar-border">
           <ThemeToggle />
+          <button
+            onClick={() => setCollapsed(!collapsed)}
+            className="text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent p-1.5 rounded-lg transition-colors"
+            title="Expandir sidebar"
+          >
+            <ChevronLeft className="rotate-180" size={18} />
+          </button>
         </div>
       )}
       
-      <nav className="flex-1 p-4 space-y-1 overflow-y-auto sidebar-scroll">
+      <nav className="flex-1 p-2 space-y-1 overflow-y-auto sidebar-scroll">
         {navigation.map((item) => (
           <NavLink
             key={item.name}
             to={item.href}
             end={item.href === "/"}
-            className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sidebar-foreground hover:bg-sidebar-accent transition-colors ${collapsed ? 'justify-center' : ''}`}
+            className={`flex items-center gap-3 py-3 rounded-lg text-sidebar-foreground hover:bg-sidebar-accent transition-colors ${collapsed ? 'justify-center px-2' : 'px-4'}`}
             activeClassName="bg-sidebar-primary text-sidebar-primary-foreground font-medium"
             title={collapsed ? item.name : undefined}
           >
-            <item.icon size={20} />
+            <item.icon size={20} className="flex-shrink-0" />
             {!collapsed && <span>{item.name}</span>}
           </NavLink>
         ))}
