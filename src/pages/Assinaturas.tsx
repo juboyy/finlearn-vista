@@ -517,18 +517,18 @@ export default function Assinaturas() {
 
           <div className="space-y-6">
             {/* Preview do Cartão */}
-            <div className={`relative w-full h-48 rounded-xl bg-gradient-to-br ${getCardBrandColor(detectCardBrand(cardNumber))} p-6 shadow-lg overflow-hidden`}>
+            <div className={`relative w-full h-56 rounded-xl bg-gradient-to-br ${getCardBrandColor(detectCardBrand(cardNumber))} p-6 shadow-lg overflow-hidden`}>
               <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
               <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full -ml-12 -mb-12"></div>
               
-              <div className="flex justify-between items-start mb-8">
+              <div className="flex justify-between items-start mb-10">
                 <div className="w-12 h-8 bg-gradient-to-br from-yellow-200 to-yellow-400 rounded-md"></div>
                 <span className="text-white/80 font-bold uppercase text-sm">
                   {detectCardBrand(cardNumber)}
                 </span>
               </div>
               
-              <div className="mb-4">
+              <div className="mb-6">
                 <p className="text-white/70 text-xs mb-1">Número do Cartão</p>
                 <p className="text-white text-lg font-mono tracking-wider">
                   {cardNumber || '•••• •••• •••• ••••'}
@@ -536,15 +536,15 @@ export default function Assinaturas() {
               </div>
               
               <div className="flex justify-between items-end">
-                <div>
+                <div className="flex-1">
                   <p className="text-white/70 text-xs mb-1">Titular</p>
-                  <p className="text-white text-sm font-medium uppercase">
+                  <p className="text-white text-sm font-medium uppercase truncate max-w-[180px]">
                     {cardHolderName || 'NOME DO TITULAR'}
                   </p>
                 </div>
-                <div className="text-right">
+                <div className="text-right flex-shrink-0 ml-4">
                   <p className="text-white/70 text-xs mb-1">Validade</p>
-                  <p className="text-white text-sm font-mono">
+                  <p className="text-white text-sm font-mono whitespace-nowrap">
                     {expiryMonth || 'MM'}/{expiryYear || 'AA'}
                   </p>
                 </div>
