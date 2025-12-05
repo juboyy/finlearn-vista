@@ -749,7 +749,7 @@ const CursoAula = () => {
 
                 {/* New Note Sheet */}
                 <Sheet open={noteSheetOpen} onOpenChange={setNoteSheetOpen}>
-                  <SheetContent side="right" className="w-[400px] bg-white border-l border-slate-200">
+                  <SheetContent side="right" className="w-[400px] bg-white border-l border-slate-200 overflow-y-auto">
                     <SheetHeader>
                       <SheetTitle className="flex items-center gap-2 text-slate-800">
                         <StickyNote className="w-5 h-5 text-pastel-blue" />
@@ -757,7 +757,7 @@ const CursoAula = () => {
                       </SheetTitle>
                     </SheetHeader>
                     
-                    <div className="mt-6 space-y-5">
+                    <div className="mt-6 space-y-5 pb-6">
                       {/* Auto-captured info */}
                       <div className="bg-pastel-blue/10 border border-pastel-blue/30 rounded-lg p-3">
                         <div className="flex items-center gap-2 mb-2">
