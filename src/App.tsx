@@ -40,6 +40,7 @@ import Webinars from "./pages/Webinars";
 import EbookDetalhes from "./pages/EbookDetalhes";
 import MinhaConta from "./pages/MinhaConta";
 import Assinaturas from "./pages/Assinaturas";
+import UpgradePlano from "./pages/UpgradePlano";
 import Configuracoes from "./pages/Configuracoes";
 import Notificacoes from "./pages/Notificacoes";
 import NovaNotificacao from "./pages/NovaNotificacao";
@@ -214,6 +215,7 @@ const App = () => {
               <Route path="/minha-conta" element={<ProtectedRoute><MinhaConta /></ProtectedRoute>} />
               <Route path="/perfil-social" element={<ProtectedRoute><PerfilSocial /></ProtectedRoute>} />
               <Route path="/assinaturas" element={<ProtectedRoute><Assinaturas /></ProtectedRoute>} />
+              <Route path="/upgrade-plano" element={<ProtectedRoute><UpgradePlano /></ProtectedRoute>} />
               <Route path="/configuracoes" element={<ProtectedRoute><Configuracoes /></ProtectedRoute>} />
               <Route path="/notificacoes" element={<ProtectedRoute><Notificacoes /></ProtectedRoute>} />
               <Route path="/nova-notificacao" element={<ProtectedRoute><NovaNotificacao /></ProtectedRoute>} />

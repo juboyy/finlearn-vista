@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { 
   Bell, ArrowUpCircle, Check, Plus, Edit, Trash2, Calendar, Coins, Gift, 
@@ -26,6 +27,7 @@ interface CreditCard {
 }
 
 export default function Assinaturas() {
+  const navigate = useNavigate();
   const { user } = useAuth();
   const fadeCurrentPlanRef = useFadeInOnScroll<HTMLElement>();
   const fadePaymentMethodsRef = useFadeInOnScroll<HTMLElement>();
@@ -271,7 +273,10 @@ export default function Assinaturas() {
                 <Bell size={20} />
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
               </button>
-              <button className="px-4 py-2 bg-pastel-green text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition">
+              <button 
+                onClick={() => navigate("/upgrade-plano")}
+                className="px-4 py-2 bg-pastel-green text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition"
+              >
                 <ArrowUpCircle className="inline mr-2" size={18} />
                 Upgrade Plano
               </button>
