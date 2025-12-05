@@ -517,9 +517,7 @@ export default function Assinaturas() {
 
           <div className="space-y-6">
             {/* Preview do Cartão */}
-            <div className={`relative w-full h-56 rounded-xl bg-gradient-to-br ${getCardBrandColor(detectCardBrand(cardNumber))} p-6 shadow-lg overflow-hidden`}>
-              <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
-              <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full -ml-12 -mb-12"></div>
+            <div className="relative w-full h-56 rounded-xl bg-gradient-to-br from-violet-600 to-purple-800 p-6 shadow-lg overflow-hidden">
               
               <div className="flex justify-between items-start mb-10">
                 <div className="w-12 h-8 bg-gradient-to-br from-yellow-200 to-yellow-400 rounded-md"></div>
