@@ -16,6 +16,7 @@ import { NotificationsPanel } from "@/components/NotificationsPanel";
 import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
 import marketplaceEbookImage from "@/assets/marketplace-card-ebook-1.png";
+import marketplaceCursoAnaliseImage from "@/assets/marketplace-card-curso-analise-fundamental.png";
 
 const Marketplace = () => {
   const navigate = useNavigate();
@@ -197,7 +198,7 @@ const Marketplace = () => {
                   ];
                   const courseImages = [
                     "https://storage.googleapis.com/uxpilot-auth.appspot.com/aa9b09b858-0994d5433f7f20c4839e.png",
-                    marketplaceEbookImage
+                    marketplaceCursoAnaliseImage
                   ];
                   const imageIndex = index % 2;
                   const imageSrc = product.type === 'ebook' 
