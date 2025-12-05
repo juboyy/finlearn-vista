@@ -143,6 +143,7 @@ import HistoricoIngressos from "./pages/HistoricoIngressos";
 import ProgramacaoEvento from "./pages/ProgramacaoEvento";
 import ParticipantesConfirmados from "./pages/ParticipantesConfirmados";
 import TodasComunidades from "./pages/TodasComunidades";
+import CriarComunidade from "./pages/CriarComunidade";
 import CriarInsights from "./pages/CriarInsights";
 import CriarGraficos from "./pages/CriarGraficos";
 import ContaMentoria from "./pages/ContaMentoria";
@@ -187,6 +188,7 @@ const App = () => {
               <Route path="/curso-detalhes" element={<ProtectedRoute><CursoDetalhes /></ProtectedRoute>} />
               <Route path="/comunidade" element={<ProtectedRoute><Comunidade /></ProtectedRoute>} />
               <Route path="/todas-comunidades" element={<ProtectedRoute><TodasComunidades /></ProtectedRoute>} />
+              <Route path="/criar-comunidade" element={<ProtectedRoute><CriarComunidade /></ProtectedRoute>} />
               <Route path="/rankings" element={<ProtectedRoute><Rankings /></ProtectedRoute>} />
               <Route path="/discussao/:id" element={<ProtectedRoute><Discussao /></ProtectedRoute>} />
               <Route path="/discussao" element={<ProtectedRoute><Discussao /></ProtectedRoute>} />

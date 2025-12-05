@@ -1,18 +1,13 @@
 import { useState } from "react";
-import { ChevronLeft, Search, Bell, Plus, Flame, Users, MessageSquare, Layers, ChevronRight, University, PieChart, CreditCard, Gavel, Briefcase, Leaf, TrendingUp, Bot, X } from "lucide-react";
+import { ChevronLeft, Search, Bell, Plus, Flame, Users, MessageSquare, Layers, ChevronRight, University, PieChart, CreditCard, Gavel, Briefcase, Leaf, TrendingUp, Bot } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 const TodasComunidades = () => {
   const navigate = useNavigate();
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
@@ -53,7 +48,7 @@ const TodasComunidades = () => {
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
               </Button>
               <Button
-                onClick={() => setIsCreateModalOpen(true)}
+                onClick={() => navigate("/criar-comunidade")}
                 className="px-4 py-2 bg-pastel-purple text-slate-700 rounded-lg font-medium hover:bg-pastel-purple/80 flex items-center gap-2"
               >
                 <Plus className="w-4 h-4" />
@@ -483,7 +478,7 @@ const TodasComunidades = () => {
                 <h3 className="font-semibold text-slate-800 mb-2">Crie sua Comunidade</h3>
                 <p className="text-sm text-slate-600 mb-4">Reúna profissionais em torno de um tema que você domina.</p>
                 <Button 
-                  onClick={() => setIsCreateModalOpen(true)}
+                  onClick={() => navigate("/criar-comunidade")}
                   className="w-full py-2 bg-white text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-50 shadow-sm"
                 >
                   Começar Agora
@@ -493,84 +488,6 @@ const TodasComunidades = () => {
           </div>
         </div>
       </main>
-
-      {/* Create Community Modal */}
-      <Dialog open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen}>
-        <DialogContent className="max-w-lg">
-          <DialogHeader>
-            <DialogTitle className="text-xl font-semibold text-slate-800">Nova Comunidade</DialogTitle>
-          </DialogHeader>
-          <div className="space-y-5">
-            <div>
-              <Label className="block text-sm font-medium text-slate-700 mb-2">Nome da Comunidade</Label>
-              <Input 
-                type="text" 
-                placeholder="Ex: Especialistas em Renda Fixa" 
-                className="w-full"
-              />
-            </div>
-            
-            <div>
-              <Label className="block text-sm font-medium text-slate-700 mb-2">Categoria Principal</Label>
-              <Select>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Selecione uma categoria..." />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="banking">Banking</SelectItem>
-                  <SelectItem value="investimentos">Investimentos</SelectItem>
-                  <SelectItem value="pagamentos">Pagamentos</SelectItem>
-                  <SelectItem value="regulatorio">Regulatório</SelectItem>
-                  <SelectItem value="tecnologia">Tecnologia</SelectItem>
-                  <SelectItem value="carreira">Carreira</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
-              <Label className="block text-sm font-medium text-slate-700 mb-2">Descrição</Label>
-              <Textarea 
-                rows={3} 
-                placeholder="Descreva o propósito da comunidade..." 
-                className="resize-none"
-              />
-            </div>
-            
-            <div>
-              <Label className="block text-sm font-medium text-slate-700 mb-2">Privacidade</Label>
-              <RadioGroup defaultValue="public" className="flex gap-4">
-                <label className="flex items-center gap-2 p-3 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 flex-1">
-                  <RadioGroupItem value="public" />
-                  <div>
-                    <span className="block text-sm font-medium text-slate-800">Pública</span>
-                    <span className="block text-xs text-slate-500">Qualquer um pode ver e entrar</span>
-                  </div>
-                </label>
-                <label className="flex items-center gap-2 p-3 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 flex-1">
-                  <RadioGroupItem value="private" />
-                  <div>
-                    <span className="block text-sm font-medium text-slate-800">Privada</span>
-                    <span className="block text-xs text-slate-500">Apenas convidados</span>
-                  </div>
-                </label>
-              </RadioGroup>
-            </div>
-
-            <div className="flex gap-3 pt-4 border-t border-slate-100 mt-2">
-              <Button className="flex-1 bg-pastel-purple text-slate-700 hover:bg-pastel-purple/80 shadow-sm">
-                Criar Comunidade
-              </Button>
-              <Button 
-                variant="outline" 
-                className="flex-1"
-                onClick={() => setIsCreateModalOpen(false)}
-              >
-                Cancelar
-              </Button>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 };
