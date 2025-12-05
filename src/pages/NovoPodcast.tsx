@@ -569,7 +569,7 @@ export default function NovoPodcast() {
 
         {/* Main Content */}
         <main className="flex-1 p-8 overflow-y-auto">
-          <div className="grid grid-cols-12 gap-8">
+          <div className="grid grid-cols-12 gap-8 items-start">
             {/* Left Column - Forms */}
             <div className="col-span-12 lg:col-span-8 space-y-8">
               {/* Basic Information */}
