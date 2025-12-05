@@ -8,6 +8,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sh
 export default function NewsletterDetalhes() {
   const [planType, setPlanType] = useState<'mensal' | 'anual'>('mensal');
   const [showSampleSheet, setShowSampleSheet] = useState(false);
+  const [showChapter, setShowChapter] = useState(false);
   
   const subscribersData = [{
     x: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out'],
@@ -508,73 +509,142 @@ export default function NewsletterDetalhes() {
       </main>
 
       {/* Sheet de Amostra Grátis */}
-      <Sheet open={showSampleSheet} onOpenChange={setShowSampleSheet}>
+      <Sheet open={showSampleSheet} onOpenChange={(open) => {
+        setShowSampleSheet(open);
+        if (!open) setShowChapter(false);
+      }}>
         <SheetContent side="right" className="w-full sm:max-w-lg overflow-y-auto">
           <SheetHeader className="mb-6">
-            <SheetTitle className="text-xl font-bold text-foreground">Amostra Grátis</SheetTitle>
+            <SheetTitle className="text-xl font-bold text-foreground">
+              {showChapter ? 'Capítulo Grátis' : 'Amostra Grátis'}
+            </SheetTitle>
           </SheetHeader>
           
-          <div className="space-y-6">
-            <div className="bg-muted/50 rounded-lg p-4 border border-border">
-              <h4 className="font-semibold text-foreground mb-2">Sobre esta Newsletter</h4>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                A newsletter "Revolução dos Pagamentos" é uma publicação semanal que analisa as principais tendências, 
-                inovações e regulamentações do mercado de meios de pagamento no Brasil e no mundo.
-              </p>
-            </div>
-
-            <div>
-              <h4 className="font-semibold text-foreground mb-3">O que você vai encontrar:</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Análises aprofundadas sobre PIX, Open Finance e cartões</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Entrevistas exclusivas com líderes do setor</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Dados e estatísticas do mercado brasileiro</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Tendências globais e casos de sucesso</span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="border-t border-border pt-6">
-              <h4 className="font-semibold text-foreground mb-3">Artigo de Amostra</h4>
-              <div className="bg-card border border-border rounded-lg p-4">
-                <span className="text-xs text-[hsl(280,35%,65%)] font-medium mb-2 block">EDIÇÃO #47</span>
-                <h5 className="font-bold text-foreground mb-2">O Futuro do PIX: Parcelamento e Crédito</h5>
-                <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-                  O Banco Central anunciou novas funcionalidades para o PIX que prometem revolucionar ainda mais 
-                  o mercado de pagamentos brasileiro. Com a chegada do PIX Parcelado e PIX Garantido, consumidores 
-                  e comerciantes terão acesso a opções de crédito integradas ao sistema de pagamentos instantâneos...
-                </p>
-                <p className="text-xs text-muted-foreground italic">
-                  Continue lendo com uma assinatura completa.
+          {!showChapter ? (
+            <div className="space-y-6">
+              <div className="bg-muted/50 rounded-lg p-4 border border-border">
+                <h4 className="font-semibold text-foreground mb-2">Sobre esta Newsletter</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  A newsletter "Revolução dos Pagamentos" é uma publicação semanal que analisa as principais tendências, 
+                  inovações e regulamentações do mercado de meios de pagamento no Brasil e no mundo.
                 </p>
               </div>
+
+              <div>
+                <h4 className="font-semibold text-foreground mb-3">O que você vai encontrar:</h4>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li className="flex items-start gap-2">
+                    <Check className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                    <span>Análises aprofundadas sobre PIX, Open Finance e cartões</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                    <span>Entrevistas exclusivas com líderes do setor</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                    <span>Dados e estatísticas do mercado brasileiro</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                    <span>Tendências globais e casos de sucesso</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="border-t border-border pt-6">
+                <h4 className="font-semibold text-foreground mb-3">Artigo de Amostra</h4>
+                <div className="bg-card border border-border rounded-lg p-4">
+                  <span className="text-xs text-[hsl(280,35%,65%)] font-medium mb-2 block">EDIÇÃO #47</span>
+                  <h5 className="font-bold text-foreground mb-2">O Futuro do PIX: Parcelamento e Crédito</h5>
+                  <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+                    O Banco Central anunciou novas funcionalidades para o PIX que prometem revolucionar ainda mais 
+                    o mercado de pagamentos brasileiro. Com a chegada do PIX Parcelado e PIX Garantido, consumidores 
+                    e comerciantes terão acesso a opções de crédito integradas ao sistema de pagamentos instantâneos...
+                  </p>
+                  <p className="text-xs text-muted-foreground italic">
+                    Continue lendo com uma assinatura completa.
+                  </p>
+                </div>
+              </div>
+
+              <button 
+                onClick={() => setShowChapter(true)}
+                className="w-full py-3 bg-[hsl(210,35%,75%)] hover:bg-[hsl(210,35%,70%)] text-[hsl(220,10%,30%)] rounded-xl font-semibold transition transform active:scale-95"
+              >
+                <BookOpen className="w-4 h-4 inline mr-2" />
+                Ler 1 Capítulo Grátis
+              </button>
+
+              <button 
+                onClick={() => setShowSampleSheet(false)}
+                className="w-full py-3 bg-foreground hover:bg-foreground/90 text-background rounded-xl font-semibold shadow-lg transition transform active:scale-95"
+              >
+                Assinar Agora
+              </button>
             </div>
+          ) : (
+            <div className="space-y-6">
+              <button 
+                onClick={() => setShowChapter(false)}
+                className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Voltar para Amostra
+              </button>
 
-            <button 
-              className="w-full py-3 bg-[hsl(210,35%,75%)] hover:bg-[hsl(210,35%,70%)] text-[hsl(220,10%,30%)] rounded-xl font-semibold transition transform active:scale-95"
-            >
-              <BookOpen className="w-4 h-4 inline mr-2" />
-              Ler 1 Capítulo Grátis
-            </button>
+              <div className="border-b border-border pb-4">
+                <span className="text-xs text-[hsl(280,35%,65%)] font-medium mb-2 block">EDIÇÃO #47 - CAPÍTULO 1</span>
+                <h3 className="text-xl font-bold text-foreground mb-2">O Futuro do PIX: Parcelamento e Crédito</h3>
+                <p className="text-xs text-muted-foreground">Por Ana Paula Costa - 15 min de leitura</p>
+              </div>
 
-            <button 
-              onClick={() => setShowSampleSheet(false)}
-              className="w-full py-3 bg-foreground hover:bg-foreground/90 text-background rounded-xl font-semibold shadow-lg transition transform active:scale-95"
-            >
-              Assinar Agora
-            </button>
-          </div>
+              <div className="prose prose-sm max-w-none">
+                <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                  O Banco Central anunciou novas funcionalidades para o PIX que prometem revolucionar ainda mais 
+                  o mercado de pagamentos brasileiro. Com a chegada do PIX Parcelado e PIX Garantido, consumidores 
+                  e comerciantes terão acesso a opções de crédito integradas ao sistema de pagamentos instantâneos.
+                </p>
+
+                <h4 className="font-semibold text-foreground mt-6 mb-3">O que é o PIX Parcelado?</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                  O PIX Parcelado permitirá que consumidores dividam suas compras em parcelas utilizando o sistema 
+                  de pagamentos instantâneos. Diferente do cartão de crédito tradicional, o PIX Parcelado oferece 
+                  taxas mais competitivas e maior flexibilidade para lojistas e consumidores.
+                </p>
+
+                <h4 className="font-semibold text-foreground mt-6 mb-3">Impacto no Mercado</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                  Especialistas estimam que essa nova modalidade pode capturar até 15% do volume transacionado 
+                  em cartões de crédito nos próximos 3 anos. Para as fintechs e bancos digitais, representa uma 
+                  oportunidade única de expandir suas ofertas de crédito.
+                </p>
+
+                <h4 className="font-semibold text-foreground mt-6 mb-3">Desafios e Oportunidades</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                  A implementação do PIX Parcelado traz desafios regulatórios e operacionais. Instituições 
+                  financeiras precisarão adaptar seus sistemas de análise de crédito e gestão de risco para 
+                  atender a essa nova demanda em tempo real.
+                </p>
+
+                <div className="bg-muted/50 rounded-lg p-4 border border-border mt-6">
+                  <p className="text-sm text-muted-foreground italic">
+                    Este é o fim do capítulo gratuito. Assine para continuar lendo e ter acesso a todos os conteúdos exclusivos.
+                  </p>
+                </div>
+              </div>
+
+              <button 
+                onClick={() => {
+                  setShowChapter(false);
+                  setShowSampleSheet(false);
+                }}
+                className="w-full py-3 bg-foreground hover:bg-foreground/90 text-background rounded-xl font-semibold shadow-lg transition transform active:scale-95"
+              >
+                Assinar Agora
+              </button>
+            </div>
+          )}
         </SheetContent>
       </Sheet>
     </div>
