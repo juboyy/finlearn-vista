@@ -469,54 +469,87 @@ export default function UpgradePlano() {
             </div>
 
             {/* Total with Addons */}
-            <div className="mt-8 bg-gradient-to-r from-primary/20 to-[hsl(270,35%,80%)]/20 border border-border rounded-lg p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="text-lg font-bold text-foreground mb-1">Resumo do Seu Plano</h3>
-                  <p className="text-sm text-muted-foreground">Plano Premium + Addons selecionados</p>
+            <div className="mt-8 relative overflow-hidden bg-gradient-to-br from-primary/25 via-[hsl(270,35%,80%)]/20 to-[hsl(140,30%,75%)]/15 border-2 border-primary/30 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
+              {/* Decorative elements */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary/20 to-transparent rounded-bl-full" />
+              <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-[hsl(270,35%,80%)]/20 to-transparent rounded-tr-full" />
+              
+              <div className="relative z-10">
+                <div className="flex items-start justify-between gap-6">
+                  <div className="flex items-center gap-4">
+                    <div className="w-14 h-14 bg-gradient-to-br from-primary/50 to-[hsl(270,35%,80%)]/50 rounded-xl flex items-center justify-center shadow-md">
+                      <Star className="text-[hsl(220,10%,40%)]" size={24} />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-foreground mb-1">Resumo do Seu Plano</h3>
+                      <p className="text-sm text-muted-foreground">Plano Premium + Addons selecionados</p>
+                    </div>
+                  </div>
+                  
+                  <div className="text-right bg-card/80 backdrop-blur-sm rounded-xl p-4 border border-border/50 shadow-sm min-w-[200px]">
+                    <div className="flex items-baseline justify-end gap-2">
+                      <span className="text-sm text-muted-foreground">Plano:</span>
+                      <span className="text-lg font-bold text-foreground">R$ {billingPeriod === "annual" ? "39" : "49"}</span>
+                    </div>
+                    {(addons.aiAgent || addons.webinars || addons.ebooks || addons.analysis) && (
+                      <div className="flex items-baseline justify-end gap-2 mt-1">
+                        <span className="text-sm text-muted-foreground">Addons:</span>
+                        <span className="text-lg font-bold text-foreground">
+                          + R$ {(addons.aiAgent ? 29 : 0) + (addons.webinars ? 19 : 0) + (addons.ebooks ? 24 : 0) + (addons.analysis ? 39 : 0)}
+                        </span>
+                      </div>
+                    )}
+                    <div className="border-t border-border mt-3 pt-3">
+                      <div className="flex items-baseline justify-end gap-2">
+                        <span className="text-sm font-medium text-muted-foreground">Total:</span>
+                        <span className="text-3xl font-extrabold bg-gradient-to-r from-primary to-[hsl(270,35%,60%)] bg-clip-text text-transparent">
+                          R$ {(billingPeriod === "annual" ? 39 : 49) + (addons.aiAgent ? 29 : 0) + (addons.webinars ? 19 : 0) + (addons.ebooks ? 24 : 0) + (addons.analysis ? 39 : 0)}
+                        </span>
+                        <span className="text-xs text-muted-foreground">/mês</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="text-right">
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-sm text-muted-foreground">Plano:</span>
-                    <span className="text-lg font-bold text-foreground">R$ {billingPeriod === "annual" ? "39" : "49"}</span>
-                  </div>
-                  {(addons.aiAgent || addons.webinars || addons.ebooks || addons.analysis) && (
-                    <div className="flex items-baseline gap-2 mt-1">
-                      <span className="text-sm text-muted-foreground">Addons:</span>
-                      <span className="text-lg font-bold text-foreground">
-                        R$ {(addons.aiAgent ? 29 : 0) + (addons.webinars ? 19 : 0) + (addons.ebooks ? 24 : 0) + (addons.analysis ? 39 : 0)}
-                      </span>
+                
+                {(addons.aiAgent || addons.webinars || addons.ebooks || addons.analysis) && (
+                  <div className="mt-6 pt-6 border-t border-border/30">
+                    <p className="text-xs font-semibold uppercase text-muted-foreground mb-3 tracking-wider">Addons inclusos:</p>
+                    <div className="flex flex-wrap gap-3">
+                      {addons.aiAgent && (
+                        <span className="px-4 py-2 bg-primary/40 text-foreground text-sm font-medium rounded-full border border-primary/30 shadow-sm flex items-center gap-2">
+                          <Bot size={14} />
+                          Agente IA (+R$ 29)
+                        </span>
+                      )}
+                      {addons.webinars && (
+                        <span className="px-4 py-2 bg-[hsl(270,35%,80%)]/60 text-foreground text-sm font-medium rounded-full border border-[hsl(270,35%,70%)]/30 shadow-sm flex items-center gap-2">
+                          <Video size={14} />
+                          Webinars (+R$ 19)
+                        </span>
+                      )}
+                      {addons.ebooks && (
+                        <span className="px-4 py-2 bg-[hsl(140,30%,75%)]/60 text-foreground text-sm font-medium rounded-full border border-[hsl(140,30%,65%)]/30 shadow-sm flex items-center gap-2">
+                          <BookOpen size={14} />
+                          E-books (+R$ 24)
+                        </span>
+                      )}
+                      {addons.analysis && (
+                        <span className="px-4 py-2 bg-[hsl(25,50%,80%)]/60 text-foreground text-sm font-medium rounded-full border border-[hsl(25,50%,70%)]/30 shadow-sm flex items-center gap-2">
+                          <LineChart size={14} />
+                          Análise (+R$ 39)
+                        </span>
+                      )}
                     </div>
-                  )}
-                  <div className="border-t border-border mt-2 pt-2">
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-sm font-medium text-muted-foreground">Total mensal:</span>
-                      <span className="text-2xl font-extrabold text-primary">
-                        R$ {(billingPeriod === "annual" ? 39 : 49) + (addons.aiAgent ? 29 : 0) + (addons.webinars ? 19 : 0) + (addons.ebooks ? 24 : 0) + (addons.analysis ? 39 : 0)}
-                      </span>
-                    </div>
                   </div>
+                )}
+                
+                <div className="mt-6 flex justify-end">
+                  <button className="px-6 py-3 bg-gradient-to-r from-primary to-[hsl(270,35%,70%)] text-primary-foreground rounded-lg text-sm font-semibold hover:opacity-90 transition-all duration-200 shadow-md hover:shadow-lg flex items-center gap-2">
+                    <Crown size={16} />
+                    Confirmar Upgrade
+                  </button>
                 </div>
               </div>
-              {(addons.aiAgent || addons.webinars || addons.ebooks || addons.analysis) && (
-                <div className="mt-4 pt-4 border-t border-border/50">
-                  <p className="text-xs text-muted-foreground mb-2">Addons inclusos:</p>
-                  <div className="flex flex-wrap gap-2">
-                    {addons.aiAgent && (
-                      <span className="px-3 py-1 bg-primary/30 text-foreground text-xs rounded-full">Agente IA (+R$ 29)</span>
-                    )}
-                    {addons.webinars && (
-                      <span className="px-3 py-1 bg-[hsl(270,35%,80%)]/50 text-foreground text-xs rounded-full">Webinars (+R$ 19)</span>
-                    )}
-                    {addons.ebooks && (
-                      <span className="px-3 py-1 bg-[hsl(140,30%,75%)]/50 text-foreground text-xs rounded-full">E-books (+R$ 24)</span>
-                    )}
-                    {addons.analysis && (
-                      <span className="px-3 py-1 bg-[hsl(25,50%,80%)]/50 text-foreground text-xs rounded-full">Análise (+R$ 39)</span>
-                    )}
-                  </div>
-                </div>
-              )}
             </div>
           </section>
 
