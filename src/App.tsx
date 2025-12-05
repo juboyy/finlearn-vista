@@ -150,6 +150,7 @@ import CriarGraficos from "./pages/CriarGraficos";
 import ContaMentoria from "./pages/ContaMentoria";
 import PerfilSocial from "./pages/PerfilSocial";
 import HistoricoConversas from "./pages/HistoricoConversas";
+import CursoAula from "./pages/CursoAula";
 
 import NotFound from "./pages/NotFound";
 
@@ -315,6 +316,7 @@ const App = () => {
               <Route path="/criar-insights" element={<ProtectedRoute><CriarInsights /></ProtectedRoute>} />
               <Route path="/conta-mentoria" element={<ProtectedRoute><ContaMentoria /></ProtectedRoute>} />
               <Route path="/novo-podcast" element={<ProtectedRoute><NovoPodcast /></ProtectedRoute>} />
+              <Route path="/curso-aula/:id" element={<ProtectedRoute><CursoAula /></ProtectedRoute>} />
              
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

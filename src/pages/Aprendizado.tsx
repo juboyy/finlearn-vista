@@ -523,7 +523,10 @@ const Aprendizado = () => {
                           Aula 12: Padrões de Candlestick
                         </p>
                       </div>
-                      <button className="w-10 h-10 bg-pastel-blue text-slate-700 rounded-full flex-shrink-0 flex items-center justify-center hover:bg-opacity-80 transition">
+                      <button 
+                        onClick={() => navigate('/curso-aula/1')}
+                        className="w-10 h-10 bg-pastel-blue text-slate-700 rounded-full flex-shrink-0 flex items-center justify-center hover:bg-opacity-80 transition"
+                      >
                         <i className="fas fa-play"></i>
                       </button>
                     </div>

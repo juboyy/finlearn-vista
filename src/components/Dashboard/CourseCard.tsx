@@ -1,6 +1,7 @@
 import { LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
 
 interface CourseCardProps {
   icon: LucideIcon;
@@ -9,6 +10,7 @@ interface CourseCardProps {
   completedLessons: number;
   totalLessons: number;
   bgColor: string;
+  courseId?: string;
 }
 
 export const CourseCard = ({ 
@@ -17,8 +19,11 @@ export const CourseCard = ({
   progress, 
   completedLessons, 
   totalLessons, 
-  bgColor 
+  bgColor,
+  courseId = "1"
 }: CourseCardProps) => {
+  const navigate = useNavigate();
+
   return (
     <div className={cn("flex items-center gap-4 p-4 rounded-lg border hover:border-opacity-50 transition-all duration-300 hover:shadow-md", `border-${bgColor}`)}>
       <div className={cn("w-16 h-16 rounded-lg flex items-center justify-center flex-shrink-0 transition-transform hover:scale-110 duration-300", bgColor)}>
@@ -39,7 +44,11 @@ export const CourseCard = ({
           </div>
         </div>
       </div>
-      <Button className={cn("font-medium transition-all hover:bg-pastel-gray-dark hover:text-gray-100", bgColor)} variant="secondary">
+      <Button 
+        onClick={() => navigate(`/curso-aula/${courseId}`)}
+        className={cn("font-medium transition-all hover:bg-pastel-gray-dark hover:text-gray-100", bgColor)} 
+        variant="secondary"
+      >
         Continuar
       </Button>
     </div>
