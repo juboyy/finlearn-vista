@@ -1279,7 +1279,7 @@ export default function NovoPodcast() {
             {/* Right Column - Sidebar */}
             <div className="col-span-12 lg:col-span-4 space-y-6">
               {/* Preview Card */}
-              <section className="bg-card border border-border rounded-lg shadow-sm p-6 sticky top-8">
+              <section className="bg-card border border-border rounded-lg shadow-sm p-6">
                 <h3 className="text-lg font-bold text-foreground mb-4">Pre-visualizacao</h3>
                 <div className="bg-muted rounded-lg overflow-hidden border border-border">
                   <div className="h-48 bg-gradient-to-br from-[hsl(var(--pastel-blue))] to-[hsl(var(--pastel-purple))] flex items-center justify-center overflow-hidden">
