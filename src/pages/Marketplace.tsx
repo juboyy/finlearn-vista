@@ -106,7 +106,7 @@ const Marketplace = () => {
                 <h2 className="text-3xl font-bold text-slate-800 mb-3">
                   Análise Fundamentalista Completa
                 </h2>
-                <p className="text-slate-600 mb-6 text-lg">
+                <p className="text-white mb-6 text-lg">
                   Aprenda a avaliar empresas como um profissional. Mais de 500 alunos já
                   transformaram seus investimentos.
                 </p>
@@ -129,21 +129,21 @@ const Marketplace = () => {
                         alt="User"
                       />
                     </div>
-                    <span className="text-sm text-slate-700 font-medium">+500 alunos</span>
+                    <span className="text-sm text-white font-medium">+500 alunos</span>
                   </div>
-                  <div className="flex items-center gap-1 text-slate-700">
+                  <div className="flex items-center gap-1 text-white">
                     <i className="fas fa-star text-yellow-500"></i>
                     <span className="font-semibold">4.9</span>
-                    <span className="text-slate-600">(234)</span>
+                    <span className="text-white/80">(234)</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
                   <button onClick={() => navigate('/ebook/1')} className="px-6 py-3 bg-slate-800 text-white rounded-lg font-medium hover:bg-slate-700 transition">
                     Ver Curso
                   </button>
-                  <div className="text-slate-700">
+                  <div className="text-white">
                     <span className="text-2xl font-bold">R$ 297</span>
-                    <span className="text-slate-500 line-through ml-2">R$ 497</span>
+                    <span className="text-white/70 line-through ml-2">R$ 497</span>
                   </div>
                 </div>
               </div>
