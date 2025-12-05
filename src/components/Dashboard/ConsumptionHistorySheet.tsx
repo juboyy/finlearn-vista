@@ -250,6 +250,15 @@ export function ConsumptionHistorySheet({ open, onOpenChange }: ConsumptionHisto
                   ))}
                 </div>
               </div>
+              <div className="mt-4 pt-4 border-t border-slate-100">
+                <Button 
+                  variant="ghost" 
+                  className="w-full text-sm text-slate-600 hover:text-slate-800"
+                >
+                  Ver mais
+                  <ChevronRight className="w-4 h-4 ml-1" />
+                </Button>
+              </div>
             </div>
           </div>
         </ScrollArea>
