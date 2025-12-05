@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
+import CourseQuizModal from "@/components/Dashboard/CourseQuizModal";
 import { 
   ArrowLeft, 
   Settings, 
@@ -44,6 +45,7 @@ const CursoAula = () => {
   const [activeInfoTab, setActiveInfoTab] = useState<'sobre' | 'materiais' | 'discussao' | 'notas' | 'duvidas'>('sobre');
   const [activeResourceTab, setActiveResourceTab] = useState<'recursos' | 'quiz'>('recursos');
   const [expandedModules, setExpandedModules] = useState<string[]>(['module-1']);
+  const [quizModalOpen, setQuizModalOpen] = useState(false);
 
   const toggleModule = (moduleId: string) => {
     setExpandedModules(prev => 
@@ -1237,7 +1239,7 @@ const CursoAula = () => {
                   Recursos
                 </button>
                 <button 
-                  onClick={() => setActiveResourceTab('quiz')}
+                  onClick={() => setQuizModalOpen(true)}
                   className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium flex items-center justify-center gap-2 transition ${
                     activeResourceTab === 'quiz' ? 'bg-pastel-purple text-slate-700' : 'text-slate-600 hover:bg-slate-100'
                   }`}
@@ -1247,6 +1249,8 @@ const CursoAula = () => {
                 </button>
               </div>
             </div>
+
+            <CourseQuizModal open={quizModalOpen} onOpenChange={setQuizModalOpen} />
 
             <div className="flex-1 overflow-y-auto p-4">
               <div className="space-y-4">
