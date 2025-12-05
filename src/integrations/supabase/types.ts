@@ -1479,6 +1479,78 @@ export type Database = {
         }
         Relationships: []
       }
+      social_profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          contact_audio: boolean | null
+          contact_email: string | null
+          contact_email_enabled: boolean | null
+          contact_message: boolean | null
+          contact_phone: string | null
+          contact_video: boolean | null
+          cover_url: string | null
+          created_at: string
+          display_name: string | null
+          id: string
+          institution: string | null
+          location: string | null
+          member_since: string | null
+          professional_title: string | null
+          social_links: Json | null
+          subtitle: string | null
+          updated_at: string
+          user_id: string
+          work_experiences: Json | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          contact_audio?: boolean | null
+          contact_email?: string | null
+          contact_email_enabled?: boolean | null
+          contact_message?: boolean | null
+          contact_phone?: string | null
+          contact_video?: boolean | null
+          cover_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          institution?: string | null
+          location?: string | null
+          member_since?: string | null
+          professional_title?: string | null
+          social_links?: Json | null
+          subtitle?: string | null
+          updated_at?: string
+          user_id: string
+          work_experiences?: Json | null
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          contact_audio?: boolean | null
+          contact_email?: string | null
+          contact_email_enabled?: boolean | null
+          contact_message?: boolean | null
+          contact_phone?: string | null
+          contact_video?: boolean | null
+          cover_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          institution?: string | null
+          location?: string | null
+          member_since?: string | null
+          professional_title?: string | null
+          social_links?: Json | null
+          subtitle?: string | null
+          updated_at?: string
+          user_id?: string
+          work_experiences?: Json | null
+        }
+        Relationships: []
+      }
       user_browsing_history: {
         Row: {
           id: string
