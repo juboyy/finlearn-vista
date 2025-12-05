@@ -1,11 +1,11 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { 
   ArrowLeft, Bell, Eye, Save, Camera, MapPin, Building2, Calendar,
-  Link2, Upload, Loader2, Plus, X, Image, Briefcase, GraduationCap,
+  Link2, Loader2, Plus, X, Image, Briefcase, GraduationCap,
   Twitter, Instagram, Youtube, Linkedin, Github, Facebook, MessageCircle, Globe, Send, Phone,
-  Video, Mail
+  Video, Mail, AlertCircle
 } from "lucide-react";
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,25 +15,15 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-
-interface WorkExperience {
-  id: string;
-  company: string;
-  role: string;
-  location: string;
-  startYear: string;
-  endYear: string;
-  current: boolean;
-}
+import { useSocialProfile } from "@/hooks/useSocialProfile";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface SocialNetwork {
   key: string;
   label: string;
-  value: string;
-  setter: (value: string) => void;
   placeholder: string;
-  color: string;
   icon: React.ReactNode;
 }
 
@@ -42,39 +32,23 @@ export default function PerfilSocial() {
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const coverInputRef = useRef<HTMLInputElement>(null);
-  
-  // Profile states
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
   const [isUploadingCover, setIsUploadingCover] = useState(false);
-  const [avatarUrl, setAvatarUrl] = useState("https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg");
-  const [coverUrl, setCoverUrl] = useState("");
-  
-  // Form states
-  const [displayName, setDisplayName] = useState("");
-  const [professionalTitle, setProfessionalTitle] = useState("");
-  const [subtitle, setSubtitle] = useState("");
-  const [bio, setBio] = useState("");
-  const [location, setLocation] = useState("");
-  const [institution, setInstitution] = useState("");
-  const [memberSince, setMemberSince] = useState("2024");
-  
-  // Social links
-  const [twitter, setTwitter] = useState("");
-  const [instagram, setInstagram] = useState("");
-  const [youtube, setYoutube] = useState("");
-  const [linkedin, setLinkedin] = useState("");
-  const [portfolio, setPortfolio] = useState("");
-  const [github, setGithub] = useState("");
-  const [tiktok, setTiktok] = useState("");
-  const [facebook, setFacebook] = useState("");
-  const [medium, setMedium] = useState("");
-  const [threads, setThreads] = useState("");
-  const [telegram, setTelegram] = useState("");
-  const [whatsapp, setWhatsapp] = useState("");
 
-  // Work Experience
-  const [workExperiences, setWorkExperiences] = useState<WorkExperience[]>([]);
+  const {
+    profile,
+    isLoading,
+    isSaving,
+    validationErrors,
+    updateProfile,
+    updateSocialLink,
+    addWorkExperience,
+    updateWorkExperience,
+    removeWorkExperience,
+    saveProfile,
+    getCompletionPercentage,
+  } = useSocialProfile();
 
   const handleAvatarUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -103,7 +77,7 @@ export default function PerfilSocial() {
     
     setTimeout(() => {
       const url = URL.createObjectURL(file);
-      setAvatarUrl(url);
+      updateProfile({ avatar_url: url });
       setIsUploadingAvatar(false);
       toast({
         title: "Foto atualizada",
@@ -139,7 +113,7 @@ export default function PerfilSocial() {
     
     setTimeout(() => {
       const url = URL.createObjectURL(file);
-      setCoverUrl(url);
+      updateProfile({ cover_url: url });
       setIsUploadingCover(false);
       toast({
         title: "Capa atualizada",
@@ -148,52 +122,34 @@ export default function PerfilSocial() {
     }, 1000);
   };
 
-  const addWorkExperience = () => {
-    setWorkExperiences([
-      ...workExperiences,
-      {
-        id: Date.now().toString(),
-        company: "",
-        role: "",
-        location: "",
-        startYear: "",
-        endYear: "",
-        current: false
-      }
-    ]);
-  };
-
-  const updateWorkExperience = (id: string, field: keyof WorkExperience, value: string | boolean) => {
-    setWorkExperiences(workExperiences.map(exp => 
-      exp.id === id ? { ...exp, [field]: value } : exp
-    ));
-  };
-
-  const removeWorkExperience = (id: string) => {
-    setWorkExperiences(workExperiences.filter(exp => exp.id !== id));
-  };
-
-  const handleSave = () => {
-    toast({
-      title: "Perfil salvo",
-      description: "Suas informacoes foram salvas com sucesso.",
-    });
-  };
-
   const socialNetworks: SocialNetwork[] = [
-    { key: 'linkedin', label: 'LinkedIn', value: linkedin, setter: setLinkedin, placeholder: 'linkedin.com/in/usuario', color: 'pastel-blue', icon: <Linkedin size={18} /> },
-    { key: 'twitter', label: 'Twitter/X', value: twitter, setter: setTwitter, placeholder: '@usuario', color: 'pastel-blue', icon: <Twitter size={18} /> },
-    { key: 'instagram', label: 'Instagram', value: instagram, setter: setInstagram, placeholder: '@usuario', color: 'pastel-pink', icon: <Instagram size={18} /> },
-    { key: 'youtube', label: 'YouTube', value: youtube, setter: setYoutube, placeholder: '@canal', color: 'pastel-red', icon: <Youtube size={18} /> },
-    { key: 'facebook', label: 'Facebook', value: facebook, setter: setFacebook, placeholder: 'facebook.com/usuario', color: 'pastel-blue', icon: <Facebook size={18} /> },
-    { key: 'github', label: 'GitHub', value: github, setter: setGithub, placeholder: 'github.com/usuario', color: 'pastel-gray', icon: <Github size={18} /> },
-    { key: 'tiktok', label: 'TikTok', value: tiktok, setter: setTiktok, placeholder: '@usuario', color: 'pastel-pink', icon: <MessageCircle size={18} /> },
-    { key: 'threads', label: 'Threads', value: threads, setter: setThreads, placeholder: '@usuario', color: 'pastel-purple', icon: <MessageCircle size={18} /> },
-    { key: 'medium', label: 'Medium', value: medium, setter: setMedium, placeholder: '@usuario', color: 'pastel-green', icon: <MessageCircle size={18} /> },
-    { key: 'telegram', label: 'Telegram', value: telegram, setter: setTelegram, placeholder: '@usuario', color: 'pastel-blue', icon: <Send size={18} /> },
-    { key: 'whatsapp', label: 'WhatsApp', value: whatsapp, setter: setWhatsapp, placeholder: '+55 11 99999-9999', color: 'pastel-green', icon: <Phone size={18} /> },
-    { key: 'portfolio', label: 'Portfolio/Site', value: portfolio, setter: setPortfolio, placeholder: 'https://seusite.com', color: 'pastel-orange', icon: <Globe size={18} /> },
+    { key: 'linkedin', label: 'LinkedIn', placeholder: 'linkedin.com/in/usuario', icon: <Linkedin size={18} /> },
+    { key: 'twitter', label: 'Twitter/X', placeholder: '@usuario', icon: <Twitter size={18} /> },
+    { key: 'instagram', label: 'Instagram', placeholder: '@usuario', icon: <Instagram size={18} /> },
+    { key: 'youtube', label: 'YouTube', placeholder: '@canal', icon: <Youtube size={18} /> },
+    { key: 'facebook', label: 'Facebook', placeholder: 'facebook.com/usuario', icon: <Facebook size={18} /> },
+    { key: 'github', label: 'GitHub', placeholder: 'github.com/usuario', icon: <Github size={18} /> },
+    { key: 'tiktok', label: 'TikTok', placeholder: '@usuario', icon: <MessageCircle size={18} /> },
+    { key: 'threads', label: 'Threads', placeholder: '@usuario', icon: <MessageCircle size={18} /> },
+    { key: 'medium', label: 'Medium', placeholder: '@usuario', icon: <MessageCircle size={18} /> },
+    { key: 'telegram', label: 'Telegram', placeholder: '@usuario', icon: <Send size={18} /> },
+    { key: 'whatsapp', label: 'WhatsApp', placeholder: '+55 11 99999-9999', icon: <Phone size={18} /> },
+    { key: 'portfolio', label: 'Portfolio/Site', placeholder: 'https://seusite.com', icon: <Globe size={18} /> },
   ];
+
+  const completionPercentage = getCompletionPercentage();
+  const hasErrors = Object.keys(validationErrors).length > 0;
+
+  if (isLoading) {
+    return (
+      <div className="flex h-screen overflow-hidden bg-background">
+        <SidebarFix />
+        <div className="flex-1 flex items-center justify-center">
+          <Loader2 className="animate-spin text-muted-foreground" size={40} />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-screen overflow-hidden bg-background">
@@ -216,6 +172,15 @@ export default function PerfilSocial() {
             </div>
             
             <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-accent/50 rounded-lg">
+                <div className="w-24 h-2 bg-muted rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-pastel-green transition-all duration-300"
+                    style={{ width: `${completionPercentage}%` }}
+                  />
+                </div>
+                <span className="text-xs font-medium text-muted-foreground">{completionPercentage}%</span>
+              </div>
               <button 
                 onClick={() => setIsPreviewOpen(true)}
                 className="px-4 py-2 bg-pastel-blue text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2"
@@ -224,10 +189,11 @@ export default function PerfilSocial() {
                 Preview do Perfil
               </button>
               <button 
-                onClick={handleSave}
-                className="px-4 py-2 bg-pastel-green text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2"
+                onClick={() => saveProfile()}
+                disabled={isSaving}
+                className="px-4 py-2 bg-pastel-green text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2 disabled:opacity-50"
               >
-                <Save size={16} />
+                {isSaving ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
                 Salvar
               </button>
               <button className="relative p-2 text-muted-foreground hover:bg-accent rounded-lg transition-colors">
@@ -241,11 +207,21 @@ export default function PerfilSocial() {
         <main className="p-8">
           <div className="max-w-5xl mx-auto space-y-8">
             
+            {/* Validation Alert */}
+            {hasErrors && (
+              <Alert variant="destructive" className="border-red-200 bg-red-50">
+                <AlertCircle className="h-4 w-4" />
+                <AlertDescription>
+                  Por favor, preencha os campos obrigatorios marcados em vermelho antes de salvar.
+                </AlertDescription>
+              </Alert>
+            )}
+
             {/* Cover Photo Section */}
             <section className="bg-card border border-border rounded-xl overflow-hidden">
               <div 
                 className="relative h-48 bg-gradient-to-br from-pastel-blue/30 via-pastel-purple/20 to-pastel-pink/30"
-                style={coverUrl ? { backgroundImage: `url(${coverUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}
+                style={profile.cover_url ? { backgroundImage: `url(${profile.cover_url})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}
               >
                 <div className="absolute inset-0 bg-black/10" />
                 <button 
@@ -258,11 +234,11 @@ export default function PerfilSocial() {
                   ) : (
                     <Image size={16} />
                   )}
-                  {coverUrl ? 'Alterar Capa' : 'Adicionar Capa'}
+                  {profile.cover_url ? 'Alterar Capa' : 'Adicionar Capa'}
                 </button>
-                {coverUrl && (
+                {profile.cover_url && (
                   <button 
-                    onClick={() => setCoverUrl("")}
+                    onClick={() => updateProfile({ cover_url: '' })}
                     className="absolute top-4 right-40 px-3 py-2 bg-white/90 backdrop-blur-sm text-red-600 rounded-lg font-medium hover:bg-white transition flex items-center gap-2 shadow-sm"
                   >
                     <X size={16} />
@@ -282,7 +258,7 @@ export default function PerfilSocial() {
                 <div className="flex items-end gap-6">
                   <div className="relative">
                     <img 
-                      src={avatarUrl} 
+                      src={profile.avatar_url} 
                       alt="Profile" 
                       className="w-32 h-32 rounded-2xl object-cover border-4 border-card shadow-lg"
                     />
@@ -328,29 +304,43 @@ export default function PerfilSocial() {
               
               <div className="grid grid-cols-2 gap-6">
                 <div>
-                  <Label htmlFor="displayName" className="text-sm font-medium text-slate-700">
+                  <Label htmlFor="displayName" className="text-sm font-medium text-slate-700 flex items-center gap-1">
                     Nome de Exibicao
+                    <span className="text-red-500">*</span>
                   </Label>
                   <Input
                     id="displayName"
-                    value={displayName}
-                    onChange={(e) => setDisplayName(e.target.value)}
+                    value={profile.display_name}
+                    onChange={(e) => updateProfile({ display_name: e.target.value })}
                     placeholder="Ex: Ana Costa"
-                    className="mt-1"
+                    className={`mt-1 ${validationErrors.display_name ? 'border-red-500 focus:ring-red-500' : ''}`}
                   />
+                  {validationErrors.display_name && (
+                    <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
+                      <AlertCircle size={12} />
+                      {validationErrors.display_name}
+                    </p>
+                  )}
                 </div>
                 
                 <div>
-                  <Label htmlFor="professionalTitle" className="text-sm font-medium text-slate-700">
+                  <Label htmlFor="professionalTitle" className="text-sm font-medium text-slate-700 flex items-center gap-1">
                     Titulo Profissional
+                    <span className="text-red-500">*</span>
                   </Label>
                   <Input
                     id="professionalTitle"
-                    value={professionalTitle}
-                    onChange={(e) => setProfessionalTitle(e.target.value)}
+                    value={profile.professional_title}
+                    onChange={(e) => updateProfile({ professional_title: e.target.value })}
                     placeholder="Ex: Especialista em Pagamentos"
-                    className="mt-1"
+                    className={`mt-1 ${validationErrors.professional_title ? 'border-red-500 focus:ring-red-500' : ''}`}
                   />
+                  {validationErrors.professional_title && (
+                    <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
+                      <AlertCircle size={12} />
+                      {validationErrors.professional_title}
+                    </p>
+                  )}
                 </div>
                 
                 <div className="col-span-2">
@@ -359,26 +349,41 @@ export default function PerfilSocial() {
                   </Label>
                   <Input
                     id="subtitle"
-                    value={subtitle}
-                    onChange={(e) => setSubtitle(e.target.value)}
+                    value={profile.subtitle}
+                    onChange={(e) => updateProfile({ subtitle: e.target.value })}
                     placeholder="Ex: Especialista em Pagamentos e Sistemas Financeiros"
                     className="mt-1"
                   />
                 </div>
                 
                 <div className="col-span-2">
-                  <Label htmlFor="bio" className="text-sm font-medium text-slate-700">
+                  <Label htmlFor="bio" className="text-sm font-medium text-slate-700 flex items-center gap-1">
                     Biografia
+                    <span className="text-red-500">*</span>
                   </Label>
                   <textarea
                     id="bio"
-                    value={bio}
-                    onChange={(e) => setBio(e.target.value)}
+                    value={profile.bio}
+                    onChange={(e) => updateProfile({ bio: e.target.value })}
                     placeholder="Conte um pouco sobre voce, sua experiencia e areas de atuacao..."
                     rows={5}
-                    className="mt-1 w-full px-3 py-2 border border-input rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-ring bg-background resize-none"
+                    className={`mt-1 w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 bg-background resize-none ${
+                      validationErrors.bio ? 'border-red-500 focus:ring-red-500' : 'border-input focus:ring-ring'
+                    }`}
                   />
-                  <p className="text-xs text-muted-foreground mt-1">{bio.length}/500 caracteres</p>
+                  <div className="flex justify-between mt-1">
+                    {validationErrors.bio ? (
+                      <p className="text-xs text-red-500 flex items-center gap-1">
+                        <AlertCircle size={12} />
+                        {validationErrors.bio}
+                      </p>
+                    ) : (
+                      <span />
+                    )}
+                    <p className={`text-xs ${profile.bio.length > 500 ? 'text-red-500' : 'text-muted-foreground'}`}>
+                      {profile.bio.length}/500 caracteres
+                    </p>
+                  </div>
                 </div>
               </div>
             </section>
@@ -400,8 +405,8 @@ export default function PerfilSocial() {
                   </Label>
                   <Input
                     id="location"
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
+                    value={profile.location}
+                    onChange={(e) => updateProfile({ location: e.target.value })}
                     placeholder="Ex: Sao Paulo, Brasil"
                     className="mt-1"
                   />
@@ -414,8 +419,8 @@ export default function PerfilSocial() {
                   </Label>
                   <Input
                     id="institution"
-                    value={institution}
-                    onChange={(e) => setInstitution(e.target.value)}
+                    value={profile.institution}
+                    onChange={(e) => updateProfile({ institution: e.target.value })}
                     placeholder="Ex: Banco Central do Brasil"
                     className="mt-1"
                   />
@@ -428,8 +433,8 @@ export default function PerfilSocial() {
                   </Label>
                   <Input
                     id="memberSince"
-                    value={memberSince}
-                    onChange={(e) => setMemberSince(e.target.value)}
+                    value={profile.member_since}
+                    onChange={(e) => updateProfile({ member_since: e.target.value })}
                     placeholder="Ex: 2020"
                     className="mt-1"
                   />
@@ -455,7 +460,7 @@ export default function PerfilSocial() {
                 </button>
               </div>
               
-              {workExperiences.length === 0 ? (
+              {profile.work_experiences.length === 0 ? (
                 <div className="text-center py-12 border-2 border-dashed border-border rounded-xl">
                   <Briefcase className="mx-auto text-muted-foreground mb-3" size={40} />
                   <p className="text-muted-foreground mb-2">Nenhuma experiencia adicionada</p>
@@ -463,7 +468,7 @@ export default function PerfilSocial() {
                 </div>
               ) : (
                 <div className="space-y-4">
-                  {workExperiences.map((exp, index) => (
+                  {profile.work_experiences.map((exp) => (
                     <div key={exp.id} className="bg-accent/30 border border-border rounded-xl p-5 relative">
                       <button
                         onClick={() => removeWorkExperience(exp.id)}
@@ -555,8 +560,8 @@ export default function PerfilSocial() {
                     </Label>
                     <Input
                       id={social.key}
-                      value={social.value}
-                      onChange={(e) => social.setter(e.target.value)}
+                      value={profile.social_links[social.key as keyof typeof profile.social_links] || ''}
+                      onChange={(e) => updateSocialLink(social.key, e.target.value)}
                       placeholder={social.placeholder}
                       className="text-sm"
                     />
@@ -580,25 +585,45 @@ export default function PerfilSocial() {
 
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                 <label className="flex items-center gap-3 p-4 bg-accent/30 border border-border rounded-xl cursor-pointer hover:bg-accent/50 transition">
-                  <input type="checkbox" className="w-5 h-5 rounded border-border text-pastel-blue focus:ring-pastel-blue" />
+                  <input 
+                    type="checkbox" 
+                    checked={profile.contact_message}
+                    onChange={(e) => updateProfile({ contact_message: e.target.checked })}
+                    className="w-5 h-5 rounded border-border text-pastel-blue focus:ring-pastel-blue" 
+                  />
                   <MessageCircle size={20} className="text-slate-600" />
                   <span className="font-medium text-foreground">Mensagem</span>
                 </label>
                 
                 <label className="flex items-center gap-3 p-4 bg-accent/30 border border-border rounded-xl cursor-pointer hover:bg-accent/50 transition">
-                  <input type="checkbox" className="w-5 h-5 rounded border-border text-pastel-blue focus:ring-pastel-blue" />
+                  <input 
+                    type="checkbox"
+                    checked={profile.contact_audio}
+                    onChange={(e) => updateProfile({ contact_audio: e.target.checked })}
+                    className="w-5 h-5 rounded border-border text-pastel-blue focus:ring-pastel-blue" 
+                  />
                   <Phone size={20} className="text-slate-600" />
                   <span className="font-medium text-foreground">Audio</span>
                 </label>
                 
                 <label className="flex items-center gap-3 p-4 bg-accent/30 border border-border rounded-xl cursor-pointer hover:bg-accent/50 transition">
-                  <input type="checkbox" className="w-5 h-5 rounded border-border text-pastel-blue focus:ring-pastel-blue" />
+                  <input 
+                    type="checkbox"
+                    checked={profile.contact_video}
+                    onChange={(e) => updateProfile({ contact_video: e.target.checked })}
+                    className="w-5 h-5 rounded border-border text-pastel-blue focus:ring-pastel-blue" 
+                  />
                   <Video size={20} className="text-slate-600" />
                   <span className="font-medium text-foreground">Video</span>
                 </label>
                 
                 <label className="flex items-center gap-3 p-4 bg-accent/30 border border-border rounded-xl cursor-pointer hover:bg-accent/50 transition">
-                  <input type="checkbox" className="w-5 h-5 rounded border-border text-pastel-blue focus:ring-pastel-blue" />
+                  <input 
+                    type="checkbox"
+                    checked={profile.contact_email_enabled}
+                    onChange={(e) => updateProfile({ contact_email_enabled: e.target.checked })}
+                    className="w-5 h-5 rounded border-border text-pastel-blue focus:ring-pastel-blue" 
+                  />
                   <Mail size={20} className="text-slate-600" />
                   <span className="font-medium text-foreground">E-mail</span>
                 </label>
@@ -612,6 +637,8 @@ export default function PerfilSocial() {
                   <Input
                     id="contactEmail"
                     type="email"
+                    value={profile.contact_email}
+                    onChange={(e) => updateProfile({ contact_email: e.target.value })}
                     placeholder="seu@email.com"
                     className="mt-1"
                   />
@@ -623,6 +650,8 @@ export default function PerfilSocial() {
                   <Input
                     id="contactPhone"
                     type="tel"
+                    value={profile.contact_phone}
+                    onChange={(e) => updateProfile({ contact_phone: e.target.value })}
                     placeholder="+55 11 99999-9999"
                     className="mt-1"
                   />
@@ -639,10 +668,11 @@ export default function PerfilSocial() {
                 Cancelar
               </button>
               <button 
-                onClick={handleSave}
-                className="px-6 py-3 bg-pastel-green text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2"
+                onClick={() => saveProfile()}
+                disabled={isSaving}
+                className="px-6 py-3 bg-pastel-green text-slate-700 rounded-lg font-medium hover:bg-opacity-80 transition flex items-center gap-2 disabled:opacity-50"
               >
-                <Save size={18} />
+                {isSaving ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
                 Salvar Perfil Social
               </button>
             </div>
@@ -662,62 +692,62 @@ export default function PerfilSocial() {
             <div className="bg-card border border-border rounded-xl overflow-hidden">
               <div 
                 className="h-32 bg-gradient-to-br from-pastel-blue/30 via-pastel-purple/20 to-pastel-pink/30"
-                style={coverUrl ? { backgroundImage: `url(${coverUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}
+                style={profile.cover_url ? { backgroundImage: `url(${profile.cover_url})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}
               />
               <div className="px-6 pb-6 -mt-12 relative">
                 <img 
-                  src={avatarUrl} 
+                  src={profile.avatar_url} 
                   alt="Profile" 
                   className="w-20 h-20 rounded-xl object-cover border-4 border-card shadow-lg"
                 />
                 <div className="mt-3">
                   <h2 className="text-xl font-bold text-foreground">
-                    {displayName || "Seu Nome"}
+                    {profile.display_name || "Seu Nome"}
                   </h2>
                   <p className="text-muted-foreground font-medium">
-                    {subtitle || "Seu titulo profissional"}
+                    {profile.subtitle || "Seu titulo profissional"}
                   </p>
                   <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground mt-2">
-                    {location && (
+                    {profile.location && (
                       <span className="flex items-center gap-1">
                         <MapPin size={14} />
-                        {location}
+                        {profile.location}
                       </span>
                     )}
-                    {institution && (
+                    {profile.institution && (
                       <span className="flex items-center gap-1">
                         <Building2 size={14} />
-                        {institution}
+                        {profile.institution}
                       </span>
                     )}
-                    {memberSince && (
+                    {profile.member_since && (
                       <span className="flex items-center gap-1">
                         <Calendar size={14} />
-                        Desde {memberSince}
+                        Desde {profile.member_since}
                       </span>
                     )}
                   </div>
                 </div>
               </div>
               
-              {bio && (
+              {profile.bio && (
                 <div className="px-6 pb-6 pt-0">
                   <p className="text-foreground/80 leading-relaxed border-t border-border pt-4">
-                    {bio}
+                    {profile.bio}
                   </p>
                 </div>
               )}
             </div>
 
             {/* Work Experience Preview */}
-            {workExperiences.length > 0 && (
+            {profile.work_experiences.length > 0 && (
               <div className="bg-card border border-border rounded-xl p-6">
                 <h3 className="text-sm font-semibold uppercase text-muted-foreground mb-4 flex items-center gap-2">
                   <Briefcase size={16} />
                   Experiencia Profissional
                 </h3>
                 <div className="space-y-3">
-                  {workExperiences.map((exp) => (
+                  {profile.work_experiences.map((exp) => (
                     <div key={exp.id} className="flex items-start gap-3 p-3 bg-accent/30 rounded-lg">
                       <div className="w-10 h-10 bg-pastel-blue/50 rounded-lg flex items-center justify-center flex-shrink-0">
                         <Building2 size={18} className="text-slate-600" />
@@ -737,11 +767,11 @@ export default function PerfilSocial() {
             )}
 
             {/* Social Links Preview */}
-            {socialNetworks.some(s => s.value) && (
+            {Object.values(profile.social_links).some(v => v) && (
               <div className="bg-card border border-border rounded-xl p-6">
                 <h3 className="text-sm font-semibold uppercase text-muted-foreground mb-4">Redes Sociais</h3>
                 <div className="grid grid-cols-2 gap-2">
-                  {socialNetworks.filter(s => s.value).map((social) => (
+                  {socialNetworks.filter(s => profile.social_links[s.key as keyof typeof profile.social_links]).map((social) => (
                     <div 
                       key={social.key} 
                       className="flex items-center gap-2 px-3 py-2 bg-accent/50 rounded-lg"
@@ -749,7 +779,9 @@ export default function PerfilSocial() {
                       <span className="text-slate-500">{social.icon}</span>
                       <div className="flex-1 min-w-0">
                         <p className="text-xs text-muted-foreground">{social.label}</p>
-                        <p className="text-sm text-slate-700 truncate">{social.value}</p>
+                        <p className="text-sm text-slate-700 truncate">
+                          {profile.social_links[social.key as keyof typeof profile.social_links]}
+                        </p>
                       </div>
                     </div>
                   ))}
