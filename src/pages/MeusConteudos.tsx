@@ -1,37 +1,126 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { MenutabbarFix } from "@/components/Dashboard/MenutabbarFix";
-import { ArrowLeft, Plus, Filter, ArrowDownWideNarrow, BookOpen, Video, PieChart, Calculator, Search, FileText, Bell, Crown, Podcast, Newspaper, TrendingUp, Users as UsersIcon, Book, GraduationCap, Bot, FileCheck, FlaskConical, Eye, Pen, MoreVertical, FileSearch, BarChart3 } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { ArrowLeft, Plus, Filter, ArrowDownWideNarrow, BookOpen, Video, PieChart, Calculator, Search, FileText, Bell, Crown, Podcast, Newspaper, TrendingUp, Users as UsersIcon, Book, GraduationCap, Bot, FileCheck, FlaskConical, Eye, Pen, MoreVertical, FileSearch, BarChart3, Trash2, Loader2 } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
+import { toast } from "sonner";
+
 type TabType = 'todos' | 'podcasts' | 'cursos' | 'avatar-ia' | 'ebooks' | 'webinars' | 'artigos' | 'analises' | 'relatorios' | 'documentos' | 'estudos' | 'infograficos' | 'whitepaper' | 'apresentacoes' | 'live' | 'entrevistas' | 'insights' | 'graficos';
 type FilterType = 'todos' | 'rascunho' | 'revisao' | 'concluido' | 'publicado';
 
+interface ContentItem {
+  id?: string;
+  type: string;
+  icon: React.ReactNode;
+  bgColor: string;
+  title: string;
+  subtitle: string;
+  status: string;
+  statusColor: string;
+  statusDot: string;
+  date: string;
+  views: string;
+  isFromDb?: boolean;
+}
+
 export default function MeusConteudos() {
+  const navigate = useNavigate();
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState<TabType>('todos');
   const [activeFilter, setActiveFilter] = useState<FilterType>('todos');
-  
-  const contentItems = [{
-    type: "Podcast",
-    icon: <Podcast className="w-5 h-5" />,
-    bgColor: "bg-[#D8BFD8]",
-    title: "Regulação do Open Finance no Brasil",
-    subtitle: "Episódio #42 • 45min",
-    status: "Rascunho",
-    statusColor: "bg-[#F4E4A6]",
-    statusDot: "bg-[#D4C186]",
-    date: "15 Out 2024",
-    views: "-"
-  }, {
+  const [podcasts, setPodcasts] = useState<ContentItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState<ContentItem | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      fetchPodcasts();
+    }
+  }, [user]);
+
+  const fetchPodcasts = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("podcasts")
+        .select("*")
+        .eq("user_id", user?.id)
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+
+      const podcastItems: ContentItem[] = (data || []).map((podcast) => ({
+        id: podcast.id,
+        type: "Podcast",
+        icon: <Podcast className="w-5 h-5" />,
+        bgColor: "bg-[#D8BFD8]",
+        title: podcast.title,
+        subtitle: `${podcast.duration_estimate || "-- min"} • ${podcast.category || "Sem categoria"}`,
+        status: podcast.status === "published" ? "Publicado" : podcast.status === "draft" ? "Rascunho" : "Em Revisão",
+        statusColor: podcast.status === "published" ? "bg-[#98D8C8]" : podcast.status === "draft" ? "bg-[#F4E4A6]" : "bg-[#B8D4E8]",
+        statusDot: podcast.status === "published" ? "bg-[#6FA997]" : podcast.status === "draft" ? "bg-[#D4C186]" : "bg-[#88A8C8]",
+        date: new Date(podcast.created_at).toLocaleDateString("pt-BR", { day: "2-digit", month: "short", year: "numeric" }),
+        views: "-",
+        isFromDb: true,
+      }));
+
+      setPodcasts(podcastItems);
+    } catch (error) {
+      console.error("Error fetching podcasts:", error);
+      toast.error("Erro ao carregar podcasts");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDeletePodcast = async () => {
+    if (!itemToDelete?.id) return;
+
+    setIsDeleting(true);
+    try {
+      const { error } = await supabase
+        .from("podcasts")
+        .delete()
+        .eq("id", itemToDelete.id);
+
+      if (error) throw error;
+
+      setPodcasts(podcasts.filter((p) => p.id !== itemToDelete.id));
+      toast.success("Podcast excluido com sucesso");
+    } catch (error) {
+      console.error("Error deleting podcast:", error);
+      toast.error("Erro ao excluir podcast");
+    } finally {
+      setIsDeleting(false);
+      setDeleteDialogOpen(false);
+      setItemToDelete(null);
+    }
+  };
+
+  const staticContentItems: ContentItem[] = [{
     type: "Artigo",
     icon: <Newspaper className="w-5 h-5" />,
     bgColor: "bg-[#B8C5D6]",
-    title: "Tendências de Pagamentos Digitais 2025",
+    title: "Tendencias de Pagamentos Digitais 2025",
     subtitle: "8min de leitura",
     status: "Publicado",
     statusColor: "bg-[#98D8C8]",
@@ -39,12 +128,12 @@ export default function MeusConteudos() {
     date: "18 Out 2024",
     views: "1.8k"
   }, {
-    type: "Análise",
+    type: "Analise",
     icon: <TrendingUp className="w-5 h-5" />,
     bgColor: "bg-[#B8D8B8]",
-    title: "Projeção Trimestral: Mercado de Capitais Q4",
-    subtitle: "Relatório completo • 24 páginas",
-    status: "Em Revisão",
+    title: "Projecao Trimestral: Mercado de Capitais Q4",
+    subtitle: "Relatorio completo • 24 paginas",
+    status: "Em Revisao",
     statusColor: "bg-[#B8D4E8]",
     statusDot: "bg-[#88A8C8]",
     date: "20 Out 2024",
@@ -53,8 +142,8 @@ export default function MeusConteudos() {
     type: "Webinar",
     icon: <Video className="w-5 h-5" />,
     bgColor: "bg-[#F4C8D8]",
-    title: "Estratégias de Investimento para 2025",
-    subtitle: "Transmissão ao vivo • 1h30min",
+    title: "Estrategias de Investimento para 2025",
+    subtitle: "Transmissao ao vivo • 1h30min",
     status: "Publicado",
     statusColor: "bg-[#98D8C8]",
     statusDot: "bg-[#6FA997]",
@@ -65,8 +154,8 @@ export default function MeusConteudos() {
     icon: <Book className="w-5 h-5" />,
     bgColor: "bg-[#A8A8B8]",
     title: "Guia Completo: Mercado de Meios de Pagamento",
-    subtitle: "120 páginas • PDF",
-    status: "Concluído",
+    subtitle: "120 paginas • PDF",
+    status: "Concluido",
     statusColor: "bg-[#D8B8D8]",
     statusDot: "bg-[#B898B8]",
     date: "22 Out 2024",
@@ -75,8 +164,8 @@ export default function MeusConteudos() {
     type: "Curso",
     icon: <GraduationCap className="w-5 h-5" />,
     bgColor: "bg-[#B8C5D6]",
-    title: "Fundamentos de Análise de Crédito",
-    subtitle: "12 módulos • 8h de conteúdo",
+    title: "Fundamentos de Analise de Credito",
+    subtitle: "12 modulos • 8h de conteudo",
     status: "Rascunho",
     statusColor: "bg-[#F4E4A6]",
     statusDot: "bg-[#D4C186]",
@@ -87,7 +176,7 @@ export default function MeusConteudos() {
     icon: <Bot className="w-5 h-5" />,
     bgColor: "bg-[#A8C8D8]",
     title: "Resumo Semanal do Mercado Financeiro",
-    subtitle: "Vídeo gerado • 5min",
+    subtitle: "Video gerado • 5min",
     status: "Publicado",
     statusColor: "bg-[#98D8C8]",
     statusDot: "bg-[#6FA997]",
@@ -97,9 +186,9 @@ export default function MeusConteudos() {
     type: "Documento",
     icon: <FileCheck className="w-5 h-5" />,
     bgColor: "bg-[#B8C5D6]",
-    title: "Relatório Anual de Compliance 2024",
-    subtitle: "PDF • 86 páginas",
-    status: "Em Revisão",
+    title: "Relatorio Anual de Compliance 2024",
+    subtitle: "PDF • 86 paginas",
+    status: "Em Revisao",
     statusColor: "bg-[#B8D4E8]",
     statusDot: "bg-[#88A8C8]",
     date: "19 Out 2024",
@@ -109,21 +198,35 @@ export default function MeusConteudos() {
     icon: <FlaskConical className="w-5 h-5" />,
     bgColor: "bg-[#F4C8A8]",
     title: "Impacto da LGPD no Setor Financeiro",
-    subtitle: "Pesquisa acadêmica • 42 páginas",
-    status: "Concluído",
+    subtitle: "Pesquisa academica • 42 paginas",
+    status: "Concluido",
     statusColor: "bg-[#D8B8D8]",
     statusDot: "bg-[#B898B8]",
     date: "17 Out 2024",
     views: "-"
   }];
 
-  const filteredItems = contentItems.filter(item => {
-    if (activeFilter === 'todos') return true;
-    if (activeFilter === 'rascunho') return item.status === 'Rascunho';
-    if (activeFilter === 'revisao') return item.status === 'Em Revisão';
-    if (activeFilter === 'concluido') return item.status === 'Concluído';
-    if (activeFilter === 'publicado') return item.status === 'Publicado';
-    return true;
+  const allContentItems = [...podcasts, ...staticContentItems];
+
+  const filteredItems = allContentItems.filter(item => {
+    const typeMatch = activeTab === 'todos' || 
+      (activeTab === 'podcasts' && item.type === 'Podcast') ||
+      (activeTab === 'artigos' && item.type === 'Artigo') ||
+      (activeTab === 'analises' && item.type === 'Analise') ||
+      (activeTab === 'webinars' && item.type === 'Webinar') ||
+      (activeTab === 'ebooks' && item.type === 'E-book') ||
+      (activeTab === 'cursos' && item.type === 'Curso') ||
+      (activeTab === 'avatar-ia' && item.type === 'Avatar IA') ||
+      (activeTab === 'documentos' && item.type === 'Documento') ||
+      (activeTab === 'estudos' && item.type === 'Estudo');
+
+    const statusMatch = activeFilter === 'todos' ||
+      (activeFilter === 'rascunho' && item.status === 'Rascunho') ||
+      (activeFilter === 'revisao' && item.status === 'Em Revisao') ||
+      (activeFilter === 'concluido' && item.status === 'Concluido') ||
+      (activeFilter === 'publicado' && item.status === 'Publicado');
+
+    return typeMatch && statusMatch;
   });
 
   return <div className="flex min-h-screen w-full bg-background">
@@ -251,73 +354,111 @@ export default function MeusConteudos() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-border">
-                      {filteredItems.map((item, index) => <tr key={index} className="hover:bg-accent/5 transition-colors group">
-                          <td className="px-6 py-4">
-                            <input type="checkbox" className="w-4 h-4 rounded border-border" />
+                      {isLoading ? (
+                        <tr>
+                          <td colSpan={7} className="px-6 py-12 text-center">
+                            <Loader2 className="w-6 h-6 animate-spin mx-auto text-muted-foreground" />
+                            <p className="text-sm text-muted-foreground mt-2">Carregando conteudos...</p>
                           </td>
-                          <td className="px-6 py-4">
-                            <div className="flex items-center gap-3">
-                              <div className={`w-10 h-10 rounded-lg ${item.bgColor} text-[#475569] flex items-center justify-center`}>
-                                {item.icon}
+                        </tr>
+                      ) : filteredItems.length === 0 ? (
+                        <tr>
+                          <td colSpan={7} className="px-6 py-12 text-center">
+                            <p className="text-sm text-muted-foreground">Nenhum conteudo encontrado</p>
+                          </td>
+                        </tr>
+                      ) : (
+                        filteredItems.map((item, index) => (
+                          <tr key={item.id || index} className="hover:bg-accent/5 transition-colors group">
+                            <td className="px-6 py-4">
+                              <input type="checkbox" className="w-4 h-4 rounded border-border" />
+                            </td>
+                            <td className="px-6 py-4">
+                              <div className="flex items-center gap-3">
+                                <div className={`w-10 h-10 rounded-lg ${item.bgColor} text-[#475569] flex items-center justify-center`}>
+                                  {item.icon}
+                                </div>
+                                <span className="text-sm font-medium text-foreground">{item.type}</span>
                               </div>
-                              <span className="text-sm font-medium text-foreground">{item.type}</span>
-                            </div>
-                          </td>
-                          <td className="px-6 py-4">
-                            <div>
-                              <h4 className="text-sm font-semibold text-foreground">{item.title}</h4>
-                              <p className="text-xs text-muted-foreground mt-0.5">{item.subtitle}</p>
-                            </div>
-                          </td>
-                          <td className="px-6 py-4">
-                            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${item.statusColor} text-[#475569]`}>
-                              <span className={`w-1.5 h-1.5 ${item.statusDot} rounded-full`}></span>
-                              {item.status}
-                            </span>
-                          </td>
-                          <td className="px-6 py-4">
-                            <span className="text-sm text-muted-foreground">{item.date}</span>
-                          </td>
-                          <td className="px-6 py-4">
-                            <div className="flex items-center gap-1.5">
-                              <Eye className="w-4 h-4 text-muted-foreground" />
-                              <span className={`text-sm font-medium ${item.views === '-' ? 'text-muted-foreground' : 'text-foreground'}`}>
-                                {item.views}
+                            </td>
+                            <td className="px-6 py-4">
+                              <div>
+                                <h4 className="text-sm font-semibold text-foreground">{item.title}</h4>
+                                <p className="text-xs text-muted-foreground mt-0.5">{item.subtitle}</p>
+                              </div>
+                            </td>
+                            <td className="px-6 py-4">
+                              <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${item.statusColor} text-[#475569]`}>
+                                <span className={`w-1.5 h-1.5 ${item.statusDot} rounded-full`}></span>
+                                {item.status}
                               </span>
-                            </div>
-                          </td>
-                          <td className="px-6 py-4">
-                            <div className="flex items-center justify-end gap-2">
-                              <button className="w-8 h-8 rounded-lg hover:bg-accent/10 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
-                                <Pen className="w-4 h-4" />
-                              </button>
-                              <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                  <button className="w-8 h-8 rounded-lg hover:bg-accent/10 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
-                                    <MoreVertical className="w-4 h-4" />
-                                  </button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="end" className="w-48 bg-card border-border z-50">
-                                  <DropdownMenuItem className="cursor-pointer hover:bg-accent/10 text-foreground">
-                                    <FileSearch className="w-4 h-4 mr-2" />
-                                    Detalhes
-                                  </DropdownMenuItem>
-                                  <DropdownMenuItem 
-                                    className="cursor-pointer hover:bg-accent/10 text-foreground"
-                                    onClick={() => {
-                                      if (item.type === 'Artigo') {
-                                        window.location.href = '/artigo-analytics';
-                                      }
-                                    }}
-                                  >
-                                    <BarChart3 className="w-4 h-4 mr-2" />
-                                    Analytics
-                                  </DropdownMenuItem>
-                                </DropdownMenuContent>
-                              </DropdownMenu>
-                            </div>
-                          </td>
-                        </tr>)}
+                            </td>
+                            <td className="px-6 py-4">
+                              <span className="text-sm text-muted-foreground">{item.date}</span>
+                            </td>
+                            <td className="px-6 py-4">
+                              <div className="flex items-center gap-1.5">
+                                <Eye className="w-4 h-4 text-muted-foreground" />
+                                <span className={`text-sm font-medium ${item.views === '-' ? 'text-muted-foreground' : 'text-foreground'}`}>
+                                  {item.views}
+                                </span>
+                              </div>
+                            </td>
+                            <td className="px-6 py-4">
+                              <div className="flex items-center justify-end gap-2">
+                                <button 
+                                  onClick={() => {
+                                    if (item.type === 'Podcast' && item.isFromDb) {
+                                      navigate(`/novo-podcast?edit=${item.id}`);
+                                    }
+                                  }}
+                                  className="w-8 h-8 rounded-lg hover:bg-accent/10 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+                                >
+                                  <Pen className="w-4 h-4" />
+                                </button>
+                                <DropdownMenu>
+                                  <DropdownMenuTrigger asChild>
+                                    <button className="w-8 h-8 rounded-lg hover:bg-accent/10 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
+                                      <MoreVertical className="w-4 h-4" />
+                                    </button>
+                                  </DropdownMenuTrigger>
+                                  <DropdownMenuContent align="end" className="w-48 bg-card border-border z-50">
+                                    <DropdownMenuItem className="cursor-pointer hover:bg-accent/10 text-foreground">
+                                      <FileSearch className="w-4 h-4 mr-2" />
+                                      Detalhes
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem 
+                                      className="cursor-pointer hover:bg-accent/10 text-foreground"
+                                      onClick={() => {
+                                        if (item.type === 'Artigo') {
+                                          navigate('/artigo-analytics');
+                                        } else if (item.type === 'Podcast') {
+                                          navigate('/podcast-analytics');
+                                        }
+                                      }}
+                                    >
+                                      <BarChart3 className="w-4 h-4 mr-2" />
+                                      Analytics
+                                    </DropdownMenuItem>
+                                    {item.isFromDb && (
+                                      <DropdownMenuItem 
+                                        className="cursor-pointer hover:bg-destructive/10 text-destructive"
+                                        onClick={() => {
+                                          setItemToDelete(item);
+                                          setDeleteDialogOpen(true);
+                                        }}
+                                      >
+                                        <Trash2 className="w-4 h-4 mr-2" />
+                                        Excluir
+                                      </DropdownMenuItem>
+                                    )}
+                                  </DropdownMenuContent>
+                                </DropdownMenu>
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      )}
                     </tbody>
                   </table>
                 </div>
@@ -331,7 +472,7 @@ export default function MeusConteudos() {
                       <option>50</option>
                       <option>100</option>
                     </select>
-                    <span className="text-sm text-muted-foreground">de {filteredItems.length} conteúdos</span>
+                    <span className="text-sm text-muted-foreground">de {filteredItems.length} conteudos</span>
                   </div>
                   
                   <div className="flex items-center gap-2">
@@ -361,5 +502,33 @@ export default function MeusConteudos() {
           </main>
         </div>
       </div>
+
+      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <AlertDialogContent className="bg-card border-border">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-foreground">Excluir conteudo</AlertDialogTitle>
+            <AlertDialogDescription className="text-muted-foreground">
+              Tem certeza que deseja excluir "{itemToDelete?.title}"? Esta acao nao pode ser desfeita.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="border-border text-foreground hover:bg-accent/10">
+              Cancelar
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDeletePodcast}
+              disabled={isDeleting}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {isDeleting ? (
+                <Loader2 className="w-4 h-4 animate-spin mr-2" />
+              ) : (
+                <Trash2 className="w-4 h-4 mr-2" />
+              )}
+              Excluir
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>;
 }
