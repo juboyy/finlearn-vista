@@ -242,8 +242,8 @@ const MeusCertificados = () => {
       
       <div className="flex-1 flex flex-col">
         {/* Header */}
-        <header className="bg-card/80 backdrop-blur-sm border-b border-border sticky top-0 z-40">
-          <div className="px-8 h-16 flex items-center justify-between">
+        <header className="bg-card border-b border-border sticky top-0 z-10">
+          <div className="px-8 py-4 flex items-center justify-between">
             <div className="flex items-center gap-4">
               <button 
                 onClick={() => navigate(-1)}
