@@ -1,9 +1,14 @@
+import { useState } from "react";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { Heart, Share2, ArrowLeft, Star, Flame, Podcast, FileText, Bot, ChartArea, Video, BookOpen, Lock, LockOpen, Check, Linkedin } from "lucide-react";
+import { Heart, Share2, ArrowLeft, Star, Flame, Podcast, FileText, Bot, ChartArea, Video, BookOpen, Lock, LockOpen, Check, Linkedin, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import Plot from 'react-plotly.js';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 
 export default function NewsletterDetalhes() {
+  const [planType, setPlanType] = useState<'mensal' | 'anual'>('mensal');
+  const [showSampleSheet, setShowSampleSheet] = useState(false);
+  
   const subscribersData = [{
     x: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out'],
     y: [1200, 1500, 2100, 2800, 3500, 4200, 4900, 5600, 6200, 6800],
@@ -251,23 +256,42 @@ export default function NewsletterDetalhes() {
                     <p className="text-sm text-muted-foreground mb-6">Cancele a qualquer momento.</p>
 
                     <div className="bg-muted p-1 rounded-lg flex mb-6">
-                      <button className="flex-1 py-1.5 text-sm font-medium rounded-md bg-card text-foreground shadow-sm transition">Mensal</button>
-                      <button className="flex-1 py-1.5 text-sm font-medium rounded-md text-muted-foreground hover:text-foreground transition relative">
+                      <button 
+                        onClick={() => setPlanType('mensal')}
+                        className={`flex-1 py-1.5 text-sm font-medium rounded-md transition ${planType === 'mensal' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
+                      >
+                        Mensal
+                      </button>
+                      <button 
+                        onClick={() => setPlanType('anual')}
+                        className={`flex-1 py-1.5 text-sm font-medium rounded-md transition relative ${planType === 'anual' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
+                      >
                         Anual
                         <span className="absolute -top-2 -right-2 bg-green-500 text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold">-15%</span>
                       </button>
                     </div>
 
                     <div className="flex items-baseline gap-1 mb-2">
-                      <span className="text-4xl font-bold text-foreground">R$ 49</span>
-                      <span className="text-muted-foreground">/mês</span>
+                      <span className="text-4xl font-bold text-foreground">
+                        {planType === 'mensal' ? 'R$ 49' : 'R$ 499'}
+                      </span>
+                      <span className="text-muted-foreground">
+                        {planType === 'mensal' ? '/mês' : '/ano'}
+                      </span>
                     </div>
-                    <p className="text-xs text-muted-foreground mb-6">Cobrado mensalmente. Renovação automática.</p>
+                    <p className="text-xs text-muted-foreground mb-6">
+                      {planType === 'mensal' 
+                        ? 'Cobrado mensalmente. Renovação automática.' 
+                        : 'Cobrado anualmente. Economia de R$ 89 por ano.'}
+                    </p>
 
                     <button className="w-full py-3 bg-foreground hover:bg-foreground/90 text-background rounded-xl font-semibold shadow-lg transition mb-4 transform active:scale-95">
                       Assinar Agora
                     </button>
-                    <button className="w-full py-3 bg-card border border-border text-foreground hover:bg-muted rounded-xl font-semibold transition mb-6">
+                    <button 
+                      onClick={() => setShowSampleSheet(true)}
+                      className="w-full py-3 bg-card border border-border text-foreground hover:bg-muted rounded-xl font-semibold transition mb-6"
+                    >
                       Ler Amostra Grátis
                     </button>
 
@@ -482,6 +506,70 @@ export default function NewsletterDetalhes() {
           </section>
         </div>
       </main>
+
+      {/* Sheet de Amostra Grátis */}
+      <Sheet open={showSampleSheet} onOpenChange={setShowSampleSheet}>
+        <SheetContent side="right" className="w-full sm:max-w-lg overflow-y-auto">
+          <SheetHeader className="mb-6">
+            <SheetTitle className="text-xl font-bold text-foreground">Amostra Grátis</SheetTitle>
+          </SheetHeader>
+          
+          <div className="space-y-6">
+            <div className="bg-muted/50 rounded-lg p-4 border border-border">
+              <h4 className="font-semibold text-foreground mb-2">Sobre esta Newsletter</h4>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                A newsletter "Revolução dos Pagamentos" é uma publicação semanal que analisa as principais tendências, 
+                inovações e regulamentações do mercado de meios de pagamento no Brasil e no mundo.
+              </p>
+            </div>
+
+            <div>
+              <h4 className="font-semibold text-foreground mb-3">O que você vai encontrar:</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  <span>Análises aprofundadas sobre PIX, Open Finance e cartões</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  <span>Entrevistas exclusivas com líderes do setor</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  <span>Dados e estatísticas do mercado brasileiro</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  <span>Tendências globais e casos de sucesso</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="border-t border-border pt-6">
+              <h4 className="font-semibold text-foreground mb-3">Artigo de Amostra</h4>
+              <div className="bg-card border border-border rounded-lg p-4">
+                <span className="text-xs text-[hsl(280,35%,65%)] font-medium mb-2 block">EDIÇÃO #47</span>
+                <h5 className="font-bold text-foreground mb-2">O Futuro do PIX: Parcelamento e Crédito</h5>
+                <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+                  O Banco Central anunciou novas funcionalidades para o PIX que prometem revolucionar ainda mais 
+                  o mercado de pagamentos brasileiro. Com a chegada do PIX Parcelado e PIX Garantido, consumidores 
+                  e comerciantes terão acesso a opções de crédito integradas ao sistema de pagamentos instantâneos...
+                </p>
+                <p className="text-xs text-muted-foreground italic">
+                  Continue lendo com uma assinatura completa.
+                </p>
+              </div>
+            </div>
+
+            <button 
+              onClick={() => setShowSampleSheet(false)}
+              className="w-full py-3 bg-foreground hover:bg-foreground/90 text-background rounded-xl font-semibold shadow-lg transition transform active:scale-95"
+            >
+              Assinar Agora
+            </button>
+          </div>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }
