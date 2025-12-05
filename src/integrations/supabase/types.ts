@@ -403,6 +403,78 @@ export type Database = {
         }
         Relationships: []
       }
+      communities: {
+        Row: {
+          allow_member_posts: boolean | null
+          category: string | null
+          content_types: Json | null
+          cover_image_url: string | null
+          created_at: string
+          description: string | null
+          enable_notifications: boolean | null
+          ethics_code: string | null
+          id: string
+          invited_creators: Json | null
+          max_members: number | null
+          members_count: number | null
+          moderators: Json | null
+          name: string
+          posts_count: number | null
+          privacy: string
+          require_post_approval: boolean | null
+          rules: Json | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          allow_member_posts?: boolean | null
+          category?: string | null
+          content_types?: Json | null
+          cover_image_url?: string | null
+          created_at?: string
+          description?: string | null
+          enable_notifications?: boolean | null
+          ethics_code?: string | null
+          id?: string
+          invited_creators?: Json | null
+          max_members?: number | null
+          members_count?: number | null
+          moderators?: Json | null
+          name: string
+          posts_count?: number | null
+          privacy?: string
+          require_post_approval?: boolean | null
+          rules?: Json | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          allow_member_posts?: boolean | null
+          category?: string | null
+          content_types?: Json | null
+          cover_image_url?: string | null
+          created_at?: string
+          description?: string | null
+          enable_notifications?: boolean | null
+          ethics_code?: string | null
+          id?: string
+          invited_creators?: Json | null
+          max_members?: number | null
+          members_count?: number | null
+          moderators?: Json | null
+          name?: string
+          posts_count?: number | null
+          privacy?: string
+          require_post_approval?: boolean | null
+          rules?: Json | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       company_profiles: {
         Row: {
           areas_atuacao: Json | null
