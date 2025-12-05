@@ -255,6 +255,101 @@ const CursoAula = () => {
                       <span className="text-xs text-slate-600 font-medium">0/10</span>
                     </div>
                   </div>
+                  
+                  {expandedModules.includes('module-2') && (
+                    <div className="bg-white">
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Play className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Introdução à Análise Fundamentalista</p>
+                          <p className="text-xs text-slate-500">25:30</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Play className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Leitura de Balanços Patrimoniais</p>
+                          <p className="text-xs text-slate-500">32:15</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Play className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Demonstração de Resultados (DRE)</p>
+                          <p className="text-xs text-slate-500">28:45</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Play className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Fluxo de Caixa</p>
+                          <p className="text-xs text-slate-500">26:20</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Play className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Indicadores de Liquidez</p>
+                          <p className="text-xs text-slate-500">24:10</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Play className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Indicadores de Rentabilidade</p>
+                          <p className="text-xs text-slate-500">29:35</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Play className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Indicadores de Endividamento</p>
+                          <p className="text-xs text-slate-500">27:50</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Play className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Análise Horizontal e Vertical</p>
+                          <p className="text-xs text-slate-500">31:00</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <FileText className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Material: Planilha de Indicadores</p>
+                          <p className="text-xs text-slate-500">Excel</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <ClipboardList className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Questionário Módulo 2</p>
+                          <p className="text-xs text-slate-500">20 questões</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Module 3 */}
@@ -278,6 +373,83 @@ const CursoAula = () => {
                       <span className="text-xs text-slate-600 font-medium">0/8</span>
                     </div>
                   </div>
+                  
+                  {expandedModules.includes('module-3') && (
+                    <div className="bg-white">
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Play className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Introdução ao Valuation</p>
+                          <p className="text-xs text-slate-500">28:15</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Play className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Fluxo de Caixa Descontado (DCF)</p>
+                          <p className="text-xs text-slate-500">35:40</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Play className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Custo de Capital (WACC)</p>
+                          <p className="text-xs text-slate-500">30:25</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Play className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Múltiplos de Mercado</p>
+                          <p className="text-xs text-slate-500">27:50</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Play className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">P/L, P/VPA e EV/EBITDA</p>
+                          <p className="text-xs text-slate-500">32:10</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Play className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Valuation de Empresas de Crescimento</p>
+                          <p className="text-xs text-slate-500">29:35</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <FileText className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Material: Modelo de Valuation</p>
+                          <p className="text-xs text-slate-500">Excel</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <ClipboardList className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Questionário Módulo 3</p>
+                          <p className="text-xs text-slate-500">18 questões</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Module 4 */}
@@ -301,6 +473,92 @@ const CursoAula = () => {
                       <span className="text-xs text-slate-600 font-medium">0/9</span>
                     </div>
                   </div>
+                  
+                  {expandedModules.includes('module-4') && (
+                    <div className="bg-white">
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Play className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Teoria Moderna do Portfólio</p>
+                          <p className="text-xs text-slate-500">30:20</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Play className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Diversificação e Correlação</p>
+                          <p className="text-xs text-slate-500">28:45</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Play className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Fronteira Eficiente</p>
+                          <p className="text-xs text-slate-500">26:30</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Play className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">CAPM e Beta</p>
+                          <p className="text-xs text-slate-500">32:15</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Play className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Índice de Sharpe e Treynor</p>
+                          <p className="text-xs text-slate-500">27:40</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Play className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Alocação de Ativos</p>
+                          <p className="text-xs text-slate-500">29:50</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Play className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Rebalanceamento de Carteira</p>
+                          <p className="text-xs text-slate-500">25:10</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <FileText className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Material: Simulador de Carteira</p>
+                          <p className="text-xs text-slate-500">Excel</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <ClipboardList className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Questionário Módulo 4</p>
+                          <p className="text-xs text-slate-500">20 questões</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Module 5 */}
@@ -324,6 +582,74 @@ const CursoAula = () => {
                       <span className="text-xs text-slate-600 font-medium">0/7</span>
                     </div>
                   </div>
+                  
+                  {expandedModules.includes('module-5') && (
+                    <div className="bg-white">
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Play className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Introdução aos Derivativos</p>
+                          <p className="text-xs text-slate-500">28:30</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Play className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Contratos Futuros</p>
+                          <p className="text-xs text-slate-500">32:45</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Play className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Opções: Call e Put</p>
+                          <p className="text-xs text-slate-500">35:20</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Play className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Precificação de Opções (Black-Scholes)</p>
+                          <p className="text-xs text-slate-500">30:15</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Play className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Swaps e Hedging</p>
+                          <p className="text-xs text-slate-500">27:40</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <FileText className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Material: Calculadora de Opções</p>
+                          <p className="text-xs text-slate-500">Excel</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <ClipboardList className="w-3 h-3 text-slate-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-800 truncate">Questionário Módulo 5</p>
+                          <p className="text-xs text-slate-500">15 questões</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
