@@ -517,16 +517,16 @@ export default function NovoPodcast() {
       <div className="flex-1 flex flex-col">
         {/* Header */}
         <header className="bg-card/80 backdrop-blur-sm border-b border-border sticky top-0 z-40">
-          <div className="px-8 h-20 flex items-center justify-between">
-            <div className="flex items-center gap-4">
+          <div className="px-8 h-16 flex items-center justify-between">
+            <div className="flex items-center gap-3">
               <Link
                 to={isEditMode ? "/meus-conteudos" : "/criar-conteudo"}
-                className="p-2 text-muted-foreground hover:bg-accent rounded-lg transition-colors"
+                className="p-1.5 text-muted-foreground hover:bg-accent rounded-lg transition-colors"
               >
-                <ArrowLeft className="w-5 h-5" />
+                <ArrowLeft className="w-4 h-4" />
               </Link>
               <div>
-                <h1 className="text-2xl font-bold text-foreground">
+                <h1 className="text-lg font-bold text-foreground">
                   {isEditMode ? "Editar Podcast" : "Adicionar Novo Podcast"}
                 </h1>
                 <p className="text-sm text-muted-foreground mt-0.5">
