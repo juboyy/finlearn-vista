@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Skeleton } from "@/components/ui/skeleton";
 import { 
   ChevronLeft, 
   Search, 
@@ -199,8 +200,25 @@ const HistoricoConversas = () => {
           <div className="w-1/3 border-r border-border bg-card">
             <ScrollArea className="h-full">
               {isLoading ? (
-                <div className="flex items-center justify-center h-32">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                <div className="divide-y divide-border">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <div key={i} className="p-4">
+                      <div className="flex items-start gap-3">
+                        <Skeleton className="w-10 h-10 rounded-full" />
+                        <div className="flex-1 space-y-2">
+                          <div className="flex items-center justify-between">
+                            <Skeleton className="h-4 w-24" />
+                            <Skeleton className="h-5 w-12 rounded-full" />
+                          </div>
+                          <Skeleton className="h-3 w-full" />
+                          <div className="flex items-center gap-4">
+                            <Skeleton className="h-3 w-20" />
+                            <Skeleton className="h-3 w-16" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               ) : filteredConversations.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-64 text-muted-foreground">
