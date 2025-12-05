@@ -1,6 +1,12 @@
 import { useState } from "react";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { 
   Headphones, 
   GraduationCap, 
@@ -23,7 +29,8 @@ import {
   TrendingUp,
   Clock,
   Calendar,
-  ChevronRight
+  ChevronRight,
+  CalendarIcon
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
@@ -70,6 +77,8 @@ const timelineEvents = [
 
 export function ConsumptionHistorySheet({ open, onOpenChange }: ConsumptionHistorySheetProps) {
   const [selectedType, setSelectedType] = useState<string | null>(null);
+  const [startDate, setStartDate] = useState<Date | undefined>(undefined);
+  const [endDate, setEndDate] = useState<Date | undefined>(undefined);
 
   const totalConsumed = contentTypes.reduce((acc, type) => acc + type.consumed, 0);
 
@@ -79,9 +88,73 @@ export function ConsumptionHistorySheet({ open, onOpenChange }: ConsumptionHisto
         <SheetHeader className="p-6 bg-white border-b border-slate-200">
           <SheetTitle className="text-xl font-semibold text-slate-800">Historico de Consumo</SheetTitle>
           <p className="text-sm text-slate-500">Acompanhe seu consumo em todos os tipos de conteudo</p>
+          
+          {/* Filtro de Data */}
+          <div className="flex items-center gap-3 mt-4">
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className={cn(
+                    "w-[160px] justify-start text-left font-normal text-sm",
+                    !startDate && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {startDate ? format(startDate, "dd/MM/yyyy", { locale: ptBR }) : "Data inicial"}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <CalendarComponent
+                  mode="single"
+                  selected={startDate}
+                  onSelect={setStartDate}
+                  initialFocus
+                  className={cn("p-3 pointer-events-auto")}
+                />
+              </PopoverContent>
+            </Popover>
+
+            <span className="text-slate-400">ate</span>
+
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className={cn(
+                    "w-[160px] justify-start text-left font-normal text-sm",
+                    !endDate && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {endDate ? format(endDate, "dd/MM/yyyy", { locale: ptBR }) : "Data final"}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <CalendarComponent
+                  mode="single"
+                  selected={endDate}
+                  onSelect={setEndDate}
+                  initialFocus
+                  className={cn("p-3 pointer-events-auto")}
+                />
+              </PopoverContent>
+            </Popover>
+
+            {(startDate || endDate) && (
+              <Button 
+                variant="ghost" 
+                size="sm"
+                onClick={() => { setStartDate(undefined); setEndDate(undefined); }}
+                className="text-slate-500 text-xs"
+              >
+                Limpar
+              </Button>
+            )}
+          </div>
         </SheetHeader>
 
-        <ScrollArea className="h-[calc(100vh-120px)]">
+        <ScrollArea className="h-[calc(100vh-200px)]">
           <div className="p-6 space-y-6">
             {/* Resumo Geral */}
             <div className="bg-white rounded-xl p-4 border border-slate-200">
