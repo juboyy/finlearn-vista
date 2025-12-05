@@ -981,7 +981,7 @@ export default function ConfigurarPaginaEmpresa() {
               {/* Redes Sociais Section */}
               <section className="bg-card border border-border rounded-lg p-6">
                 <h2 className="text-lg font-bold text-foreground mb-6 flex items-center gap-2">
-                  <Globe className="w-5 h-5 text-[hsl(var(--pastel-green))]" />
+                  <Globe className="w-5 h-5 text-[hsl(220,10%,45%)]" />
                   Redes Sociais
                 </h2>
                 
@@ -991,7 +991,7 @@ export default function ConfigurarPaginaEmpresa() {
                       key={rede.id}
                       className="flex items-center gap-3 p-4 border border-border rounded-lg bg-muted/30"
                     >
-                      <div className="w-8 h-8 rounded-lg bg-[hsl(var(--pastel-green))]/20 flex items-center justify-center text-[hsl(var(--pastel-green))]">
+                      <div className="w-8 h-8 rounded-lg bg-[hsl(220,10%,45%)]/20 flex items-center justify-center text-[hsl(220,10%,45%)]">
                         {getSocialIcon(rede.platform)}
                       </div>
                       <div className="flex-1">
