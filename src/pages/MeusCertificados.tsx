@@ -451,95 +451,95 @@ const MeusCertificados = () => {
 
       {/* Certificate Modal */}
       <Dialog open={!!selectedCertificate} onOpenChange={() => setSelectedCertificate(null)}>
-        <DialogContent className="max-w-3xl p-0 overflow-hidden">
-          <div className="relative bg-gradient-to-br from-slate-50 to-slate-100 p-6">
+        <DialogContent className="max-w-xl p-0 overflow-hidden">
+          <div className="relative bg-gradient-to-br from-slate-50 to-slate-100 p-4">
             <button 
               onClick={() => setSelectedCertificate(null)}
-              className="absolute top-4 right-4 p-2 rounded-full hover:bg-slate-200 transition z-10"
+              className="absolute top-3 right-3 p-1.5 rounded-full hover:bg-slate-200 transition z-10"
             >
-              <X className="w-5 h-5 text-slate-600" />
+              <X className="w-4 h-4 text-slate-600" />
             </button>
             
             {/* Certificate Design */}
-            <div ref={certificateRef} className="bg-white border-4 border-double border-slate-300 rounded-lg p-8 shadow-lg">
+            <div ref={certificateRef} className="bg-white border-[3px] border-double border-slate-300 rounded-lg p-5 shadow-lg">
               {/* Header */}
-              <div className="text-center border-b-2 border-slate-200 pb-6 mb-6">
-                <div className="flex justify-center mb-4">
-                  <div className={`w-16 h-16 ${selectedCertificate?.iconBg} rounded-full flex items-center justify-center`}>
-                    <Award className="w-8 h-8 text-slate-600" />
+              <div className="text-center border-b-2 border-slate-200 pb-4 mb-4">
+                <div className="flex justify-center mb-3">
+                  <div className={`w-12 h-12 ${selectedCertificate?.iconBg} rounded-full flex items-center justify-center`}>
+                    <Award className="w-6 h-6 text-slate-600" />
                   </div>
                 </div>
-                <h2 className="text-2xl font-serif font-bold text-slate-800 mb-2">Certificado de Conclusão</h2>
-                <p className="text-slate-500 text-sm uppercase tracking-widest">FinLearn Platform</p>
+                <h2 className="text-lg font-serif font-bold text-slate-800 mb-1">Certificado de Conclusão</h2>
+                <p className="text-slate-500 text-xs uppercase tracking-widest">FinLearn Platform</p>
               </div>
 
               {/* Body */}
-              <div className="text-center py-6">
-                <p className="text-slate-600 text-sm mb-3">Certificamos que</p>
-                <h3 className="text-xl font-bold text-slate-800 mb-3">Marina Santos</h3>
-                <p className="text-slate-600 text-sm mb-4">concluiu com êxito o programa</p>
-                <h4 className="text-lg font-semibold text-slate-800 mb-4 px-8">
+              <div className="text-center py-4">
+                <p className="text-slate-600 text-xs mb-2">Certificamos que</p>
+                <h3 className="text-base font-bold text-slate-800 mb-2">Marina Santos</h3>
+                <p className="text-slate-600 text-xs mb-3">concluiu com êxito o programa</p>
+                <h4 className="text-sm font-semibold text-slate-800 mb-3 px-4">
                   {selectedCertificate?.title}
                 </h4>
-                <p className="text-slate-600 text-sm mb-2">
+                <p className="text-slate-600 text-xs mb-1">
                   {selectedCertificate?.description}
                 </p>
-                <p className="text-slate-500 text-sm">
-                  com carga horária de {selectedCertificate?.hours}, demonstrando aproveitamento satisfatório em todas as atividades propostas.
+                <p className="text-slate-500 text-xs">
+                  com carga horária de {selectedCertificate?.hours}, demonstrando aproveitamento satisfatório.
                 </p>
               </div>
 
               {/* Details Grid */}
-              <div className="grid grid-cols-4 gap-4 py-6 border-y border-slate-200 my-6">
+              <div className="grid grid-cols-4 gap-3 py-4 border-y border-slate-200 my-4">
                 <div className="text-center">
-                  <p className="text-xs text-slate-500 mb-1">Instituição</p>
-                  <p className="text-sm font-semibold text-slate-700">{selectedCertificate?.institution}</p>
+                  <p className="text-[10px] text-slate-500 mb-0.5">Instituição</p>
+                  <p className="text-xs font-semibold text-slate-700">{selectedCertificate?.institution}</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-xs text-slate-500 mb-1">Nível</p>
-                  <p className="text-sm font-semibold text-slate-700">{selectedCertificate?.level}</p>
+                  <p className="text-[10px] text-slate-500 mb-0.5">Nível</p>
+                  <p className="text-xs font-semibold text-slate-700">{selectedCertificate?.level}</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-xs text-slate-500 mb-1">Data de Emissão</p>
-                  <p className="text-sm font-semibold text-slate-700">{selectedCertificate?.issueDate}</p>
+                  <p className="text-[10px] text-slate-500 mb-0.5">Data de Emissão</p>
+                  <p className="text-xs font-semibold text-slate-700">{selectedCertificate?.issueDate}</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-xs text-slate-500 mb-1">Validade</p>
-                  <p className={`text-sm font-semibold ${selectedCertificate?.validityColor}`}>{selectedCertificate?.validity}</p>
+                  <p className="text-[10px] text-slate-500 mb-0.5">Validade</p>
+                  <p className={`text-xs font-semibold ${selectedCertificate?.validityColor}`}>{selectedCertificate?.validity}</p>
                 </div>
               </div>
 
               {/* Footer with QR Code */}
-              <div className="flex justify-between items-end mt-6">
+              <div className="flex justify-between items-end mt-4">
                 <div className="text-center">
-                  <div className="w-28 border-t border-slate-400 mb-2"></div>
-                  <p className="text-xs text-slate-500">Escopo</p>
-                  <p className="text-sm font-medium text-slate-700">{selectedCertificate?.scope}</p>
+                  <div className="w-20 border-t border-slate-400 mb-1"></div>
+                  <p className="text-[10px] text-slate-500">Escopo</p>
+                  <p className="text-xs font-medium text-slate-700">{selectedCertificate?.scope}</p>
                 </div>
                 
                 {/* QR Code for Verification */}
                 <div className="text-center">
-                  <div className="bg-white p-2 rounded-lg border border-slate-200 mb-2 flex items-center justify-center">
+                  <div className="bg-white p-1.5 rounded-lg border border-slate-200 mb-1 flex items-center justify-center">
                     <QRCodeSVG 
                       value={verificationUrl} 
-                      size={70}
+                      size={50}
                       level="M"
                       includeMargin={false}
                     />
                   </div>
-                  <p className="text-xs text-slate-500">Escaneie para verificar</p>
+                  <p className="text-[10px] text-slate-500">Escaneie para verificar</p>
                 </div>
                 
                 <div className="text-center">
-                  <div className="w-28 border-t border-slate-400 mb-2"></div>
-                  <p className="text-xs text-slate-500">Assinatura</p>
-                  <p className="text-sm font-medium text-slate-700 font-serif italic">Diretor Acadêmico</p>
+                  <div className="w-20 border-t border-slate-400 mb-1"></div>
+                  <p className="text-[10px] text-slate-500">Assinatura</p>
+                  <p className="text-xs font-medium text-slate-700 font-serif italic">Diretor Acadêmico</p>
                 </div>
               </div>
 
               {/* Certificate ID */}
-              <div className="mt-6 text-center">
-                <p className="text-xs text-slate-400">
+              <div className="mt-4 text-center">
+                <p className="text-[10px] text-slate-400">
                   ID: {selectedCertificate?.certId}
                 </p>
               </div>
