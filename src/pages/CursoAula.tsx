@@ -699,17 +699,17 @@ const CursoAula = () => {
                   <div className="flex items-center gap-2">
                     <button 
                       onClick={() => navigate('/biblioteca', { state: { exportedNotes: notes, courseTitle: 'Domine o Mercado de Capitais em 2025' } })}
-                      className="w-8 h-8 flex items-center justify-center rounded-lg bg-[hsl(270,35%,45%)] hover:bg-[hsl(270,35%,40%)] transition"
+                      className="w-8 h-8 flex items-center justify-center rounded-lg bg-[hsl(270,35%,68%)] hover:bg-[hsl(270,35%,60%)] transition"
                       title="Exportar para Biblioteca"
                     >
-                      <FolderOutput className="w-4 h-4 text-[hsl(220,10%,45%)]" />
+                      <FolderOutput className="w-4 h-4 text-[hsl(220,10%,30%)]" />
                     </button>
                     <button 
                       onClick={() => setNoteSheetOpen(true)}
-                      className="w-8 h-8 flex items-center justify-center rounded-lg bg-[hsl(207,45%,45%)] hover:bg-[hsl(207,45%,40%)] transition"
+                      className="w-8 h-8 flex items-center justify-center rounded-lg bg-[hsl(207,45%,68%)] hover:bg-[hsl(207,45%,60%)] transition"
                       title="Nova Nota"
                     >
-                      <Plus className="w-4 h-4 text-[hsl(220,10%,45%)]" />
+                      <Plus className="w-4 h-4 text-[hsl(220,10%,30%)]" />
                     </button>
                   </div>
                 </div>
