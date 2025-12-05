@@ -510,7 +510,7 @@ export default function Assinaturas() {
 
       {/* Sheet para Adicionar Cartão */}
       <Sheet open={showAddCardSheet} onOpenChange={setShowAddCardSheet}>
-        <SheetContent side="right" className="w-full sm:max-w-lg overflow-y-auto">
+        <SheetContent side="right" className="w-full sm:max-w-lg overflow-y-auto bg-slate-50">
           <SheetHeader className="mb-6">
             <SheetTitle className="text-xl font-bold text-foreground">Adicionar Cartão</SheetTitle>
           </SheetHeader>
