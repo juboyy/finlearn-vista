@@ -959,7 +959,7 @@ const CursoAula = () => {
                           placeholder="Escreva sua anotação aqui..."
                           value={editNoteContent}
                           onChange={(e) => setEditNoteContent(e.target.value)}
-                          className="min-h-[120px] border-slate-200 focus:ring-pastel-purple/50 resize-none"
+                          className="min-h-[200px] border-slate-200 focus:ring-pastel-purple/50 resize-none"
                         />
                       </div>
 
