@@ -562,6 +562,13 @@ export default function NewsletterDetalhes() {
             </div>
 
             <button 
+              className="w-full py-3 bg-[hsl(210,35%,75%)] hover:bg-[hsl(210,35%,70%)] text-[hsl(220,10%,30%)] rounded-xl font-semibold transition transform active:scale-95"
+            >
+              <BookOpen className="w-4 h-4 inline mr-2" />
+              Ler 1 Capítulo Grátis
+            </button>
+
+            <button 
               onClick={() => setShowSampleSheet(false)}
               className="w-full py-3 bg-foreground hover:bg-foreground/90 text-background rounded-xl font-semibold shadow-lg transition transform active:scale-95"
             >
