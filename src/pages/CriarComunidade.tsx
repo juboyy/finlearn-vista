@@ -652,12 +652,18 @@ const CriarComunidade = () => {
 
               {/* Convidar Membros e Creators */}
               <section className="bg-card border border-border rounded-lg shadow-sm p-6">
-                <h2 className="text-xl font-bold text-foreground mb-6 flex items-center gap-3">
-                  <div className="w-10 h-10 bg-[hsl(270,35%,80%)] text-[hsl(220,10%,40%)] rounded-lg flex items-center justify-center">
-                    <UserPlus className="w-5 h-5" />
-                  </div>
-                  Convidar Membros e Creators
-                </h2>
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-bold text-foreground flex items-center gap-3">
+                    <div className="w-10 h-10 bg-[hsl(270,35%,80%)] text-[hsl(220,10%,40%)] rounded-lg flex items-center justify-center">
+                      <UserPlus className="w-5 h-5" />
+                    </div>
+                    Convidar Membros e Creators
+                  </h2>
+                  <Button variant="outline" className="flex items-center gap-2 text-sm">
+                    <Users className="w-4 h-4" />
+                    Todos Seguidores
+                  </Button>
+                </div>
 
                 <div className="space-y-5">
                   <div>
