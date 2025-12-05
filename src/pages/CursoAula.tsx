@@ -41,7 +41,8 @@ import {
   X,
   Plus,
   Save,
-  Palette
+  Palette,
+  FolderOutput
 } from "lucide-react";
 
 interface CourseNote {
@@ -695,13 +696,23 @@ const CursoAula = () => {
                 {/* Notes Header */}
                 <div className="flex items-center justify-between">
                   <h3 className="font-semibold text-slate-800 text-sm">Minhas Anotações</h3>
-                  <button 
-                    onClick={() => setNoteSheetOpen(true)}
-                    className="flex items-center gap-1 text-xs text-pastel-blue hover:underline font-medium"
-                  >
-                    <Plus className="w-3 h-3" />
-                    Nova Nota
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button 
+                      onClick={() => navigate('/biblioteca', { state: { exportedNotes: notes, courseTitle: 'Domine o Mercado de Capitais em 2025' } })}
+                      className="flex items-center gap-1 text-xs text-pastel-green hover:underline font-medium"
+                      title="Exportar para Biblioteca"
+                    >
+                      <FolderOutput className="w-3 h-3" />
+                      Exportar
+                    </button>
+                    <button 
+                      onClick={() => setNoteSheetOpen(true)}
+                      className="flex items-center gap-1 text-xs text-pastel-blue hover:underline font-medium"
+                    >
+                      <Plus className="w-3 h-3" />
+                      Nova Nota
+                    </button>
+                  </div>
                 </div>
 
                 {/* Search Notes */}
