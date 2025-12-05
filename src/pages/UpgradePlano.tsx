@@ -142,7 +142,7 @@ export default function UpgradePlano() {
                 <p className="text-muted-foreground mb-6 text-sm">Ideal para começar a explorar o conteúdo</p>
                 
                 <div className="mb-6">
-                  <p className="text-5xl font-extrabold text-foreground">R$ 0</p>
+                  <p className="text-4xl font-extrabold text-foreground">R$ 0</p>
                   <p className="text-sm text-muted-foreground mt-1">por mês</p>
                 </div>
 
@@ -208,7 +208,7 @@ export default function UpgradePlano() {
                 <p className="text-muted-foreground mb-6 text-sm">Para profissionais que buscam crescimento</p>
                 
                 <div className="mb-2">
-                  <p className="text-5xl font-extrabold text-foreground">
+                  <p className="text-4xl font-extrabold text-foreground">
                     R$ {billingPeriod === "annual" ? "39" : "49"}
                   </p>
                   <p className="text-sm text-muted-foreground mt-1">
@@ -282,7 +282,7 @@ export default function UpgradePlano() {
                 <p className="text-muted-foreground mb-6 text-sm">Experiência completa com mentoria personalizada</p>
                 
                 <div className="mb-2">
-                  <p className="text-5xl font-extrabold text-foreground">
+                  <p className="text-4xl font-extrabold text-foreground">
                     R$ {billingPeriod === "annual" ? "119" : "149"}
                   </p>
                   <p className="text-sm text-muted-foreground mt-1">
@@ -466,6 +466,57 @@ export default function UpgradePlano() {
                   </li>
                 </ul>
               </div>
+            </div>
+
+            {/* Total with Addons */}
+            <div className="mt-8 bg-gradient-to-r from-primary/20 to-[hsl(270,35%,80%)]/20 border border-border rounded-lg p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-lg font-bold text-foreground mb-1">Resumo do Seu Plano</h3>
+                  <p className="text-sm text-muted-foreground">Plano Premium + Addons selecionados</p>
+                </div>
+                <div className="text-right">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-sm text-muted-foreground">Plano:</span>
+                    <span className="text-lg font-bold text-foreground">R$ {billingPeriod === "annual" ? "39" : "49"}</span>
+                  </div>
+                  {(addons.aiAgent || addons.webinars || addons.ebooks || addons.analysis) && (
+                    <div className="flex items-baseline gap-2 mt-1">
+                      <span className="text-sm text-muted-foreground">Addons:</span>
+                      <span className="text-lg font-bold text-foreground">
+                        R$ {(addons.aiAgent ? 29 : 0) + (addons.webinars ? 19 : 0) + (addons.ebooks ? 24 : 0) + (addons.analysis ? 39 : 0)}
+                      </span>
+                    </div>
+                  )}
+                  <div className="border-t border-border mt-2 pt-2">
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-sm font-medium text-muted-foreground">Total mensal:</span>
+                      <span className="text-2xl font-extrabold text-primary">
+                        R$ {(billingPeriod === "annual" ? 39 : 49) + (addons.aiAgent ? 29 : 0) + (addons.webinars ? 19 : 0) + (addons.ebooks ? 24 : 0) + (addons.analysis ? 39 : 0)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {(addons.aiAgent || addons.webinars || addons.ebooks || addons.analysis) && (
+                <div className="mt-4 pt-4 border-t border-border/50">
+                  <p className="text-xs text-muted-foreground mb-2">Addons inclusos:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {addons.aiAgent && (
+                      <span className="px-3 py-1 bg-primary/30 text-foreground text-xs rounded-full">Agente IA (+R$ 29)</span>
+                    )}
+                    {addons.webinars && (
+                      <span className="px-3 py-1 bg-[hsl(270,35%,80%)]/50 text-foreground text-xs rounded-full">Webinars (+R$ 19)</span>
+                    )}
+                    {addons.ebooks && (
+                      <span className="px-3 py-1 bg-[hsl(140,30%,75%)]/50 text-foreground text-xs rounded-full">E-books (+R$ 24)</span>
+                    )}
+                    {addons.analysis && (
+                      <span className="px-3 py-1 bg-[hsl(25,50%,80%)]/50 text-foreground text-xs rounded-full">Análise (+R$ 39)</span>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </section>
 
