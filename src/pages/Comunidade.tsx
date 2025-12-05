@@ -16,10 +16,10 @@ export default function Comunidade() {
       
       <main className="flex-1 overflow-y-auto">
         <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
-          <div className="px-8 py-4 flex items-center justify-between">
+          <div className="px-8 py-3 flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-semibold text-slate-800">Comunidade</h1>
-              <p className="text-sm text-slate-500 mt-1">Conecte-se, compartilhe e aprenda com outros profissionais</p>
+              <h1 className="text-xl font-semibold text-slate-800">Comunidade</h1>
+              <p className="text-xs text-slate-500">Conecte-se, compartilhe e aprenda com outros profissionais</p>
             </div>
             <div className="flex items-center gap-4">
               <button className="relative p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
