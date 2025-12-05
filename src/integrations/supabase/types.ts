@@ -403,6 +403,99 @@ export type Database = {
         }
         Relationships: []
       }
+      company_profiles: {
+        Row: {
+          areas_atuacao: Json | null
+          certificados: Json | null
+          company_name: string | null
+          cover_url: string | null
+          created_at: string
+          description: string | null
+          email: string | null
+          employees: string | null
+          founded_year: string | null
+          id: string
+          location: string | null
+          logo_url: string | null
+          phone: string | null
+          primary_color: string | null
+          redes_sociais: Json | null
+          stat1_label: string | null
+          stat1_value: string | null
+          stat2_label: string | null
+          stat2_value: string | null
+          stat3_label: string | null
+          stat3_value: string | null
+          stat4_label: string | null
+          stat4_value: string | null
+          tagline: string | null
+          tags: string[] | null
+          updated_at: string
+          user_id: string
+          website: string | null
+        }
+        Insert: {
+          areas_atuacao?: Json | null
+          certificados?: Json | null
+          company_name?: string | null
+          cover_url?: string | null
+          created_at?: string
+          description?: string | null
+          email?: string | null
+          employees?: string | null
+          founded_year?: string | null
+          id?: string
+          location?: string | null
+          logo_url?: string | null
+          phone?: string | null
+          primary_color?: string | null
+          redes_sociais?: Json | null
+          stat1_label?: string | null
+          stat1_value?: string | null
+          stat2_label?: string | null
+          stat2_value?: string | null
+          stat3_label?: string | null
+          stat3_value?: string | null
+          stat4_label?: string | null
+          stat4_value?: string | null
+          tagline?: string | null
+          tags?: string[] | null
+          updated_at?: string
+          user_id: string
+          website?: string | null
+        }
+        Update: {
+          areas_atuacao?: Json | null
+          certificados?: Json | null
+          company_name?: string | null
+          cover_url?: string | null
+          created_at?: string
+          description?: string | null
+          email?: string | null
+          employees?: string | null
+          founded_year?: string | null
+          id?: string
+          location?: string | null
+          logo_url?: string | null
+          phone?: string | null
+          primary_color?: string | null
+          redes_sociais?: Json | null
+          stat1_label?: string | null
+          stat1_value?: string | null
+          stat2_label?: string | null
+          stat2_value?: string | null
+          stat3_label?: string | null
+          stat3_value?: string | null
+          stat4_label?: string | null
+          stat4_value?: string | null
+          tagline?: string | null
+          tags?: string[] | null
+          updated_at?: string
+          user_id?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
       contract_summaries: {
         Row: {
           agent_id: string
