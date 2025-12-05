@@ -10,10 +10,10 @@ const navigation = [
   { name: "Agentes IA", href: "/agentes", icon: Bot },
   { name: "Newsletter", href: "/newsletter", icon: Mail },
   { name: "Aprendizado", href: "/aprendizado", icon: GraduationCap },
-  { name: "Biblioteca", href: "/biblioteca", icon: Book },
+  { name: "Creators", href: "/autores", icon: Users },
   { name: "Comunidade", href: "/comunidade", icon: MessageCircle },
   { name: "Marketplace", href: "/marketplace", icon: Store },
-  { name: "Creators", href: "/autores", icon: Users },
+  { name: "Biblioteca", href: "/biblioteca", icon: Book },
   { name: "Analytics", href: "/analytics", icon: TrendingUp },
 ];
 
