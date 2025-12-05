@@ -357,8 +357,8 @@ const CursoAula = () => {
           </aside>
 
           {/* Video Player Main */}
-          <main className="flex-1 flex flex-col bg-slate-900">
-            <div className="flex-1 relative bg-black flex items-center justify-center min-h-0">
+          <main className="flex-1 flex flex-col bg-slate-900 overflow-hidden">
+            <div className="h-[400px] relative bg-black flex items-center justify-center flex-shrink-0">
               <img 
                 className="w-full h-full object-contain" 
                 src="https://storage.googleapis.com/uxpilot-auth.appspot.com/c37907bb40-efb5c703a3adf9ca8913.png" 
@@ -450,7 +450,7 @@ const CursoAula = () => {
             </div>
 
             {/* Lesson Info Tabs */}
-            <div className="bg-white border-t border-slate-200">
+            <div className="flex-1 flex flex-col bg-white border-t border-slate-200 overflow-hidden">
               <div className="flex items-center border-b border-slate-200">
                 <button 
                   onClick={() => setActiveInfoTab('sobre')}
