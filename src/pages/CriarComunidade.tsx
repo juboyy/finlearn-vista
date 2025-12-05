@@ -215,7 +215,7 @@ const CriarComunidade = () => {
         </header>
 
         <div className="p-8 overflow-y-auto flex-1">
-          <div className="grid grid-cols-12 gap-8">
+          <div className="grid grid-cols-12 gap-8 items-start">
             {/* Main Content - Left Column */}
             <div className="col-span-12 lg:col-span-8 space-y-8">
               {/* Informações Básicas */}
@@ -847,9 +847,9 @@ const CriarComunidade = () => {
             </div>
 
             {/* Right Sidebar */}
-            <div className="col-span-12 lg:col-span-4 space-y-6">
+            <div className="col-span-12 lg:col-span-4 lg:sticky lg:top-24 space-y-6 self-start">
               {/* Pré-visualização */}
-              <section className="bg-card border border-border rounded-lg shadow-sm p-6 sticky top-24">
+              <section className="bg-card border border-border rounded-lg shadow-sm p-6">
                 <h3 className="text-lg font-bold text-foreground mb-4">Pré-visualização</h3>
                 <div className="bg-muted rounded-lg overflow-hidden border border-border">
                   <div className="h-32 bg-gradient-to-br from-[hsl(210,35%,75%)] via-[hsl(270,35%,80%)] to-[hsl(330,40%,80%)] flex items-center justify-center">
