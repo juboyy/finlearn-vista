@@ -36,6 +36,7 @@ export default function Assinaturas() {
   const [showAddCardSheet, setShowAddCardSheet] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [cards, setCards] = useState<CreditCard[]>([]);
+  const [editingCard, setEditingCard] = useState<CreditCard | null>(null);
 
   // Form state
   const [cardNumber, setCardNumber] = useState("");
@@ -105,6 +106,19 @@ export default function Assinaturas() {
     setDocumentNumber("");
     setDocumentType("cpf");
     setIsPrimary(false);
+    setEditingCard(null);
+  };
+
+  const handleEditCard = (card: CreditCard) => {
+    setEditingCard(card);
+    setCardNumber(`**** **** **** ${card.card_number_last4}`);
+    setCardHolderName(card.card_holder_name);
+    setExpiryMonth(card.expiry_month);
+    setExpiryYear(card.expiry_year);
+    setDocumentNumber(formatDocument(card.document_number, card.document_type as "cpf" | "cnpj"));
+    setDocumentType(card.document_type as "cpf" | "cnpj");
+    setIsPrimary(card.is_primary);
+    setShowAddCardSheet(true);
   };
 
   const handleSaveCard = async () => {
@@ -113,7 +127,16 @@ export default function Assinaturas() {
       return;
     }
 
-    if (!cardNumber || !cardHolderName || !expiryMonth || !expiryYear || !documentNumber) {
+    // For edit mode, card number is not required if not changed
+    const isNewCard = !editingCard;
+    const cardNumberClean = cardNumber.replace(/[\s*]/g, '');
+    
+    if (isNewCard && (!cardNumberClean || cardNumberClean.length < 16)) {
+      toast.error("Preencha o número do cartão");
+      return;
+    }
+
+    if (!cardHolderName || !expiryMonth || !expiryYear || !documentNumber) {
       toast.error("Preencha todos os campos obrigatórios");
       return;
     }
@@ -129,25 +152,52 @@ export default function Assinaturas() {
           .eq('user_id', user.id);
       }
 
-      const cardData = {
-        user_id: user.id,
-        card_holder_name: cardHolderName.toUpperCase(),
-        card_number_last4: cardNumber.replace(/\s/g, '').slice(-4),
-        card_brand: detectCardBrand(cardNumber),
-        expiry_month: expiryMonth,
-        expiry_year: expiryYear,
-        document_number: documentNumber.replace(/\D/g, ''),
-        document_type: documentType,
-        is_primary: isPrimary || cards.length === 0,
-      };
+      if (editingCard) {
+        // Update existing card
+        const updateData: Record<string, unknown> = {
+          card_holder_name: cardHolderName.toUpperCase(),
+          expiry_month: expiryMonth,
+          expiry_year: expiryYear,
+          document_number: documentNumber.replace(/\D/g, ''),
+          document_type: documentType,
+          is_primary: isPrimary,
+        };
 
-      const { error } = await supabase
-        .from('credit_cards')
-        .insert(cardData);
+        // Only update card number if it was changed (not masked)
+        if (!cardNumber.includes('*')) {
+          updateData.card_number_last4 = cardNumber.replace(/\s/g, '').slice(-4);
+          updateData.card_brand = detectCardBrand(cardNumber);
+        }
 
-      if (error) throw error;
+        const { error } = await supabase
+          .from('credit_cards')
+          .update(updateData)
+          .eq('id', editingCard.id);
 
-      toast.success("Cartão adicionado com sucesso!");
+        if (error) throw error;
+        toast.success("Cartão atualizado com sucesso!");
+      } else {
+        // Insert new card
+        const cardData = {
+          user_id: user.id,
+          card_holder_name: cardHolderName.toUpperCase(),
+          card_number_last4: cardNumber.replace(/\s/g, '').slice(-4),
+          card_brand: detectCardBrand(cardNumber),
+          expiry_month: expiryMonth,
+          expiry_year: expiryYear,
+          document_number: documentNumber.replace(/\D/g, ''),
+          document_type: documentType,
+          is_primary: isPrimary || cards.length === 0,
+        };
+
+        const { error } = await supabase
+          .from('credit_cards')
+          .insert(cardData);
+
+        if (error) throw error;
+        toast.success("Cartão adicionado com sucesso!");
+      }
+
       await loadCards();
       resetForm();
       setShowAddCardSheet(false);
@@ -337,12 +387,17 @@ export default function Assinaturas() {
                         </button>
                       )}
                       <div className="flex gap-2">
-                        <button className="p-2 text-slate-600 hover:text-slate-800">
+                        <button 
+                          onClick={() => handleEditCard(card)}
+                          className="p-2 text-slate-600 hover:text-pastel-blue transition"
+                          title="Editar cartão"
+                        >
                           <Edit size={16} />
                         </button>
                         <button 
                           onClick={() => handleDeleteCard(card.id)}
-                          className="p-2 text-slate-600 hover:text-red-600"
+                          className="p-2 text-slate-600 hover:text-red-500 transition"
+                          title="Excluir cartão"
                         >
                           <Trash2 size={16} />
                         </button>
@@ -508,11 +563,16 @@ export default function Assinaturas() {
         </div>
       </main>
 
-      {/* Sheet para Adicionar Cartão */}
-      <Sheet open={showAddCardSheet} onOpenChange={setShowAddCardSheet}>
+      {/* Sheet para Adicionar/Editar Cartão */}
+      <Sheet open={showAddCardSheet} onOpenChange={(open) => {
+        setShowAddCardSheet(open);
+        if (!open) resetForm();
+      }}>
         <SheetContent side="right" className="w-full sm:max-w-lg overflow-y-auto bg-slate-50">
           <SheetHeader className="mb-6">
-            <SheetTitle className="text-xl font-bold text-foreground">Adicionar Cartão</SheetTitle>
+            <SheetTitle className="text-xl font-bold text-foreground">
+              {editingCard ? 'Editar Cartão' : 'Adicionar Cartão'}
+            </SheetTitle>
           </SheetHeader>
 
           <div className="space-y-6">
@@ -680,7 +740,7 @@ export default function Assinaturas() {
                 {isLoading ? (
                   <Loader2 className="w-5 h-5 animate-spin mx-auto" />
                 ) : (
-                  'Salvar Cartão'
+                  editingCard ? 'Salvar Alterações' : 'Salvar Cartão'
                 )}
               </button>
             </div>
