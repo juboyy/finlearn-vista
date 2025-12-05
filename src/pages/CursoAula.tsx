@@ -695,22 +695,21 @@ const CursoAula = () => {
               <div className="space-y-4">
                 {/* Notes Header */}
                 <div className="flex items-center justify-between">
-                  <h3 className="font-semibold text-slate-800 text-sm">Minhas Anotações</h3>
+                  <h3 className="font-semibold text-slate-800 text-base">Minhas Anotações</h3>
                   <div className="flex items-center gap-2">
                     <button 
                       onClick={() => navigate('/biblioteca', { state: { exportedNotes: notes, courseTitle: 'Domine o Mercado de Capitais em 2025' } })}
-                      className="flex items-center gap-1 text-xs text-pastel-green hover:underline font-medium"
+                      className="w-8 h-8 flex items-center justify-center rounded-lg bg-pastel-green/20 text-[hsl(142,35%,40%)] hover:bg-pastel-green/40 transition"
                       title="Exportar para Biblioteca"
                     >
-                      <FolderOutput className="w-3 h-3" />
-                      Exportar
+                      <FolderOutput className="w-4 h-4" />
                     </button>
                     <button 
                       onClick={() => setNoteSheetOpen(true)}
-                      className="flex items-center gap-1 text-xs text-pastel-blue hover:underline font-medium"
+                      className="w-8 h-8 flex items-center justify-center rounded-lg bg-pastel-blue/20 text-[hsl(207,45%,40%)] hover:bg-pastel-blue/40 transition"
+                      title="Nova Nota"
                     >
-                      <Plus className="w-3 h-3" />
-                      Nova Nota
+                      <Plus className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
