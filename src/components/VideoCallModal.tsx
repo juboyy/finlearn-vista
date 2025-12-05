@@ -465,9 +465,9 @@ export const VideoCallModal = ({
                   variant="outline"
                   size="sm"
                   onClick={() => setShowInviteModal(true)}
-                  className="bg-pastel-purple/20 hover:bg-pastel-purple/30 border-pastel-purple/40 text-pastel-gray-dark hover:text-foreground transition-all"
+                  className="bg-pastel-purple/20 hover:bg-pastel-purple/30 border-pastel-purple/40 text-white hover:text-white transition-all"
                 >
-                  <UserPlus size={16} className="mr-2" />
+                  <UserPlus size={16} className="mr-2 text-white" />
                   Convidar
                 </Button>
               </DialogTitle>
