@@ -23,7 +23,7 @@ export const SidebarFix = () => {
 
   return (
     <aside className={`bg-sidebar dark:bg-sidebar border-r border-sidebar-border dark:border-sidebar-border flex flex-col h-screen sticky top-0 transition-all duration-300 ${collapsed ? 'w-16' : 'w-64'}`}>
-      <div className={`p-4 border-b border-sidebar-border dark:border-sidebar-border flex items-center relative ${collapsed ? 'justify-center px-2' : 'justify-between'}`}>
+      <div className={`p-4 pb-5 border-b border-sidebar-border dark:border-sidebar-border flex items-center relative ${collapsed ? 'justify-center px-2' : 'justify-between'}`}>
         {!collapsed && (
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-sidebar-primary rounded-lg flex items-center justify-center flex-shrink-0">
