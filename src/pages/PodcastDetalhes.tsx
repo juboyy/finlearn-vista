@@ -28,12 +28,15 @@ import {
   CheckCircle2,
   PlayCircle,
   Circle,
-  BookmarkCheck
+  BookmarkCheck,
+  Loader2,
 } from "lucide-react";
 import { useSaveForLater } from "@/hooks/useSaveForLater";
 import { Badge } from "@/components/ui/badge";
 import { useProductViewTracker } from "@/hooks/useProductViewTracker";
 import { usePodcastProgress } from "@/hooks/usePodcastProgress";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 import ep142Image from "@/assets/podcast-ep142-volatilidade.png";
 import ep141Image from "@/assets/podcast-ep141-selic.png";
 import ep140Image from "@/assets/podcast-ep140-tendencias-2025.png";
@@ -43,36 +46,86 @@ import ep137Image from "@/assets/podcast-ep137-open-finance.png";
 import ep136Image from "@/assets/podcast-ep136-esg.png";
 import ep135Image from "@/assets/podcast-ep135-cartoes.png";
 
-interface Episode {
-  id: number;
-  number: number;
+interface PodcastData {
+  id: string;
   title: string;
-  description: string;
-  duration: string;
-  date: string;
-  plays: string;
-  status: "played" | "playing" | "unplayed";
-  image: string;
+  description: string | null;
+  category: string | null;
+  duration_estimate: string | null;
+  tags: string[] | null;
+  audio_url: string | null;
+  cover_image_url: string | null;
+  hosts: { name: string; role: string; avatar: string; isMain?: boolean }[] | null;
+  guests: { name: string; role: string; avatar: string }[] | null;
+  status: string | null;
+  created_at: string;
 }
 
 export default function PodcastDetalhes() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const mockUserId = "user-123"; // In production, get from auth context
+  const mockUserId = "user-123";
+  const audioRef = useRef<HTMLAudioElement>(null);
+  
+  // Podcast data state
+  const [podcast, setPodcast] = useState<PodcastData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  
+  // Player state
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(2700); // 45 minutes in seconds
+  const [duration, setDuration] = useState(2700);
   const [volume, setVolume] = useState(0.7);
   const [isMuted, setIsMuted] = useState(false);
-  const [selectedEpisode, setSelectedEpisode] = useState(142);
-  const audioRef = useRef<HTMLAudioElement>(null);
+
+  // Load podcast from database
+  useEffect(() => {
+    const loadPodcast = async () => {
+      if (!id) return;
+      
+      setIsLoading(true);
+      try {
+        const { data, error } = await supabase
+          .from("podcasts")
+          .select("*")
+          .eq("id", id)
+          .single();
+        
+        if (error) throw error;
+        
+        if (data) {
+          setPodcast({
+            id: data.id,
+            title: data.title,
+            description: data.description,
+            category: data.category,
+            duration_estimate: data.duration_estimate,
+            tags: data.tags,
+            audio_url: data.audio_url,
+            cover_image_url: data.cover_image_url,
+            hosts: data.hosts as PodcastData["hosts"],
+            guests: data.guests as PodcastData["guests"],
+            status: data.status,
+            created_at: data.created_at,
+          });
+        }
+      } catch (error) {
+        console.error("Error loading podcast:", error);
+        toast.error("Erro ao carregar podcast");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    loadPodcast();
+  }, [id]);
 
   // Save for later functionality
   const { isSaved, isLoading: isSaving, toggleSave } = useSaveForLater({
     itemId: id || 'podcast-mercados-em-foco',
-    itemTitle: 'Mercados em Foco',
+    itemTitle: podcast?.title || 'Podcast',
     itemType: 'podcast',
-    itemDescription: 'Podcast semanal de análise de mercado',
+    itemDescription: podcast?.description || '',
     itemUrl: `/podcast/${id}`
   });
 
@@ -80,133 +133,52 @@ export default function PodcastDetalhes() {
   useProductViewTracker({
     productId: id || 'podcast-mercados-em-foco',
     productType: 'podcast',
-    productTitle: 'Mercados em Foco',
-    productCategory: 'Análise de Mercado',
-    productTags: ['podcast', 'mercado financeiro', 'análise', 'investimentos']
+    productTitle: podcast?.title || 'Podcast',
+    productCategory: podcast?.category || 'Geral',
+    productTags: podcast?.tags || ['podcast']
   }, mockUserId);
-
-  const episodes: Episode[] = [
-    {
-      id: 142,
-      number: 142,
-      title: "Análise Semanal: Volatilidade e Oportunidades no Mercado",
-      description: "Discutimos os principais movimentos do mercado esta semana, incluindo decisões do COPOM, flutuações cambiais e oportunidades em renda variável.",
-      duration: "45:32",
-      date: "20/01/2025",
-      plays: "12.4k",
-      status: "playing",
-      image: ep142Image
-    },
-    {
-      id: 141,
-      number: 141,
-      title: "Taxa Selic: Impactos e Projeções para o Primeiro Semestre",
-      description: "Análise profunda das últimas decisões do Banco Central e seus efeitos no mercado de crédito, investimentos e consumo.",
-      duration: "52:18",
-      date: "13/01/2025",
-      plays: "15.2k",
-      status: "played",
-      image: ep141Image
-    },
-    {
-      id: 140,
-      number: 140,
-      title: "Especial: Tendências Econômicas para 2025",
-      description: "Episódio especial de fim de ano analisando as principais tendências macroeconômicas e oportunidades de investimento para 2025.",
-      duration: "68:45",
-      date: "06/01/2025",
-      plays: "18.9k",
-      status: "played",
-      image: ep140Image
-    },
-    {
-      id: 139,
-      number: 139,
-      title: "Análise de Setores: Bancos e Fintechs em Dezembro",
-      description: "Revisão completa do desempenho do setor financeiro no último mês do ano, com foco em bancos tradicionais e fintechs emergentes.",
-      duration: "47:22",
-      date: "30/12/2024",
-      plays: "11.8k",
-      status: "unplayed",
-      image: ep139Image
-    },
-    {
-      id: 138,
-      number: 138,
-      title: "Mercado de Criptoativos: Regulamentação e Oportunidades",
-      description: "Discussão sobre o cenário regulatório brasileiro para criptomoedas e as oportunidades que surgem com maior segurança jurídica.",
-      duration: "55:10",
-      date: "23/12/2024",
-      plays: "16.5k",
-      status: "unplayed",
-      image: ep138Image
-    },
-    {
-      id: 137,
-      number: 137,
-      title: "Open Finance: Um Ano de Transformações",
-      description: "Balanço do primeiro ano completo do Open Finance no Brasil, seus impactos no mercado e perspectivas futuras.",
-      duration: "49:38",
-      date: "16/12/2024",
-      plays: "13.7k",
-      status: "unplayed",
-      image: ep137Image
-    },
-    {
-      id: 136,
-      number: 136,
-      title: "ESG no Setor Financeiro: Além do Marketing",
-      description: "Análise crítica sobre práticas ESG genuínas vs. greenwashing no mercado financeiro brasileiro.",
-      duration: "51:25",
-      date: "09/12/2024",
-      plays: "14.2k",
-      status: "unplayed",
-      image: ep136Image
-    },
-    {
-      id: 135,
-      number: 135,
-      title: "Cartões de Crédito: Revolução nos Programas de Benefícios",
-      description: "Como os programas de benefícios dos cartões estão evoluindo e o que esperar para os próximos anos.",
-      duration: "43:52",
-      date: "02/12/2024",
-      plays: "10.9k",
-      status: "unplayed",
-      image: ep135Image
-    }
-  ];
-
-  const currentEpisode = episodes.find(ep => ep.number === selectedEpisode) || episodes[0];
 
   // Track podcast listening progress
   usePodcastProgress({
-    podcastId: `podcast-${id}-episode-${selectedEpisode}`,
-    podcastTitle: currentEpisode.title,
-    podcastTopic: "Mercados em Foco",
-    podcastImage: currentEpisode.image,
-    episodeNumber: selectedEpisode,
+    podcastId: id || 'podcast',
+    podcastTitle: podcast?.title || 'Podcast',
+    podcastTopic: podcast?.category || 'Geral',
+    podcastImage: podcast?.cover_image_url || ep142Image,
+    episodeNumber: 1,
     currentTimeSeconds: currentTime,
     totalDurationSeconds: duration,
     isPlaying: isPlaying,
   });
 
+  // Audio playback handling
   useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (isPlaying) {
-      interval = setInterval(() => {
-        setCurrentTime(prev => {
-          if (prev >= duration) {
-            setIsPlaying(false);
-            return 0;
-          }
-          return prev + 1;
-        });
-      }, 1000);
-    }
-    return () => clearInterval(interval);
-  }, [isPlaying, duration]);
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const handleTimeUpdate = () => setCurrentTime(audio.currentTime);
+    const handleLoadedMetadata = () => setDuration(audio.duration || 2700);
+    const handleEnded = () => setIsPlaying(false);
+
+    audio.addEventListener('timeupdate', handleTimeUpdate);
+    audio.addEventListener('loadedmetadata', handleLoadedMetadata);
+    audio.addEventListener('ended', handleEnded);
+
+    return () => {
+      audio.removeEventListener('timeupdate', handleTimeUpdate);
+      audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      audio.removeEventListener('ended', handleEnded);
+    };
+  }, [podcast?.audio_url]);
 
   const togglePlayPause = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (isPlaying) {
+      audio.pause();
+    } else {
+      audio.play();
+    }
     setIsPlaying(!isPlaying);
   };
 
@@ -219,25 +191,70 @@ export default function PodcastDetalhes() {
   const handleProgressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newTime = parseInt(e.target.value);
     setCurrentTime(newTime);
+    if (audioRef.current) {
+      audioRef.current.currentTime = newTime;
+    }
   };
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newVolume = parseFloat(e.target.value);
     setVolume(newVolume);
     setIsMuted(newVolume === 0);
+    if (audioRef.current) {
+      audioRef.current.volume = newVolume;
+    }
   };
 
   const toggleMute = () => {
+    const audio = audioRef.current;
+    if (audio) {
+      audio.muted = !isMuted;
+    }
     setIsMuted(!isMuted);
   };
 
   const skipBackward = () => {
-    setCurrentTime(Math.max(0, currentTime - 15));
+    if (audioRef.current) {
+      audioRef.current.currentTime = Math.max(0, currentTime - 15);
+    }
   };
 
   const skipForward = () => {
-    setCurrentTime(Math.min(duration, currentTime + 15));
+    if (audioRef.current) {
+      audioRef.current.currentTime = Math.min(duration, currentTime + 15);
+    }
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex h-screen overflow-hidden bg-slate-50 dark:bg-slate-900">
+        <SidebarFix />
+        <div className="flex-1 flex items-center justify-center">
+          <Loader2 className="w-8 h-8 animate-spin text-primary" />
+        </div>
+      </div>
+    );
+  }
+
+  if (!podcast) {
+    return (
+      <div className="flex h-screen overflow-hidden bg-slate-50 dark:bg-slate-900">
+        <SidebarFix />
+        <div className="flex-1 flex flex-col items-center justify-center gap-4">
+          <p className="text-muted-foreground">Podcast nao encontrado</p>
+          <button
+            onClick={() => navigate('/aprendizado')}
+            className="px-4 py-2 bg-primary text-primary-foreground rounded-lg"
+          >
+            Voltar
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const coverImage = podcast.cover_image_url || ep142Image;
+  const mainHost = podcast.hosts?.find(h => h.isMain) || podcast.hosts?.[0];
 
   return (
     <div className="flex h-screen overflow-hidden bg-slate-50 dark:bg-slate-900">
@@ -270,6 +287,11 @@ export default function PodcastDetalhes() {
 
         {/* Scrollable Content */}
         <div className="flex-1 overflow-y-auto">
+          {/* Hidden Audio Element */}
+          {podcast.audio_url && (
+            <audio ref={audioRef} src={podcast.audio_url} preload="metadata" />
+          )}
+
           {/* Hero Section */}
           <section className="bg-gradient-to-br from-[hsl(206,35%,75%)] to-[hsl(270,45%,52%)] px-8 py-12">
             <div className="max-w-7xl mx-auto">
@@ -278,8 +300,8 @@ export default function PodcastDetalhes() {
                 <div className="col-span-4">
                   <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
                     <img 
-                      src={currentEpisode.image}
-                      alt="Mercados em Foco"
+                      src={coverImage}
+                      alt={podcast.title}
                       className="w-full aspect-square object-cover"
                     />
                   </div>
@@ -288,43 +310,56 @@ export default function PodcastDetalhes() {
                 {/* Podcast Info */}
                 <div className="col-span-8">
                   <Badge className="mb-4 bg-white/20 text-white border-white/30 backdrop-blur-sm">
-                    <Headphones className="w-3 h-3 mr-1.5" /> Podcast
+                    <Headphones className="w-3 h-3 mr-1.5" /> {podcast.category || 'Podcast'}
                   </Badge>
-                  <h2 className="text-4xl font-bold text-white mb-4">Mercados em Foco</h2>
+                  <h2 className="text-4xl font-bold text-white mb-4">{podcast.title}</h2>
                   <p className="text-lg text-white/90 mb-6 leading-relaxed">
-                    Análises semanais dos principais movimentos do mercado financeiro brasileiro. 
-                    Discussões aprofundadas sobre macroeconomia, investimentos, regulação e tendências do setor.
+                    {podcast.description || 'Sem descricao disponivel'}
                   </p>
                   
+                  {/* Host Info */}
+                  {mainHost && (
+                    <div className="flex items-center gap-3 mb-6">
+                      {mainHost.avatar && (
+                        <img 
+                          src={mainHost.avatar} 
+                          alt={mainHost.name}
+                          className="w-10 h-10 rounded-full object-cover border-2 border-white/30"
+                        />
+                      )}
+                      <div>
+                        <p className="text-white font-semibold">{mainHost.name}</p>
+                        <p className="text-white/70 text-sm">{mainHost.role}</p>
+                      </div>
+                    </div>
+                  )}
+                  
                   {/* Stats */}
-                  <div className="grid grid-cols-4 gap-4 mb-6">
+                  <div className="grid grid-cols-3 gap-4 mb-6">
+                    <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Clock className="w-4 h-4 text-white/80" />
+                        <span className="text-xs text-white/80 font-semibold">Duracao</span>
+                      </div>
+                      <p className="text-xl font-bold text-white">{podcast.duration_estimate || '--'}</p>
+                    </div>
+                    <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Calendar className="w-4 h-4 text-white/80" />
+                        <span className="text-xs text-white/80 font-semibold">Publicado</span>
+                      </div>
+                      <p className="text-xl font-bold text-white">
+                        {new Date(podcast.created_at).toLocaleDateString('pt-BR')}
+                      </p>
+                    </div>
                     <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
                       <div className="flex items-center gap-2 mb-2">
                         <Users className="w-4 h-4 text-white/80" />
-                        <span className="text-xs text-white/80 font-semibold">Ouvintes</span>
+                        <span className="text-xs text-white/80 font-semibold">Participantes</span>
                       </div>
-                      <p className="text-2xl font-bold text-white">847k</p>
-                    </div>
-                    <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <PlayCircle className="w-4 h-4 text-white/80" />
-                        <span className="text-xs text-white/80 font-semibold">Episódios</span>
-                      </div>
-                      <p className="text-2xl font-bold text-white">142</p>
-                    </div>
-                    <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Star className="w-4 h-4 text-white/80" />
-                        <span className="text-xs text-white/80 font-semibold">Avaliação</span>
-                      </div>
-                      <p className="text-2xl font-bold text-white">4.9</p>
-                    </div>
-                    <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <MessageCircle className="w-4 h-4 text-white/80" />
-                        <span className="text-xs text-white/80 font-semibold">Reviews</span>
-                      </div>
-                      <p className="text-2xl font-bold text-white">12.3k</p>
+                      <p className="text-xl font-bold text-white">
+                        {(podcast.hosts?.length || 0) + (podcast.guests?.length || 0)}
+                      </p>
                     </div>
                   </div>
 
@@ -343,7 +378,7 @@ export default function PodcastDetalhes() {
                       }`}
                     >
                       {isSaved ? <BookmarkCheck className="w-5 h-5 fill-slate-700" /> : <Bookmark className="w-5 h-5" />}
-                      {isSaved ? 'Ouvir Depois' : 'Ouvir Depois'}
+                      {isSaved ? 'Salvo' : 'Ouvir Depois'}
                     </button>
                     <button className="p-3 bg-white/10 backdrop-blur-sm text-white rounded-xl hover:bg-white/20 transition-all border border-white/20">
                       <Heart className="w-5 h-5" />
@@ -368,11 +403,11 @@ export default function PodcastDetalhes() {
                   {/* Currently Playing Info */}
                   <div className="flex items-center gap-3 flex-1 min-w-0">
                     <div className="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
-                      <img src={currentEpisode.image} alt="episode" className="w-full h-full object-cover" />
+                      <img src={coverImage} alt="podcast" className="w-full h-full object-cover" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs text-slate-500 dark:text-slate-400">Episódio #{currentEpisode.number}</p>
-                      <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 truncate">{currentEpisode.title}</h3>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">{podcast.category || 'Podcast'}</p>
+                      <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 truncate">{podcast.title}</h3>
                     </div>
                   </div>
 
@@ -437,10 +472,7 @@ export default function PodcastDetalhes() {
                     />
                     <div className="flex items-center gap-2 ml-2">
                       <Badge className="bg-[hsl(206,35%,75%)]/20 text-[hsl(206,45%,30%)] border-[hsl(206,35%,75%)]/30">
-                        <Clock className="w-3 h-3 mr-1" /> {currentEpisode.duration}
-                      </Badge>
-                      <Badge className="bg-[hsl(142,35%,75%)]/20 text-[hsl(142,45%,28%)] border-[hsl(142,35%,75%)]/30">
-                        <Headphones className="w-3 h-3 mr-1" /> {currentEpisode.plays}
+                        <Clock className="w-3 h-3 mr-1" /> {podcast.duration_estimate || '--'}
                       </Badge>
                     </div>
                   </div>
@@ -449,109 +481,70 @@ export default function PodcastDetalhes() {
             </div>
           </section>
 
-          {/* Episodes List */}
-          <section className="px-8 py-8">
-            <div className="max-w-7xl mx-auto">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100">Todos os Episódios</h2>
-                <div className="flex items-center gap-3">
-                  <select className="px-4 py-2.5 border border-[hsl(215,20%,85%)] dark:border-slate-700 rounded-xl text-sm text-slate-700 dark:text-slate-300 font-medium focus:outline-none focus:ring-2 focus:ring-[hsl(206,35%,75%)] bg-white dark:bg-slate-800">
-                    <option>Mais recentes</option>
-                    <option>Mais antigos</option>
-                    <option>Mais ouvidos</option>
-                    <option>Melhor avaliados</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Episodes Grid */}
-              <div className="space-y-4">
-                {episodes.map((episode) => (
-                  <div 
-                    key={episode.id}
-                    onClick={() => setSelectedEpisode(episode.number)}
-                    className={`bg-white dark:bg-slate-800 rounded-xl border transition-all cursor-pointer ${
-                      selectedEpisode === episode.number
-                        ? 'border-[hsl(206,35%,75%)] shadow-lg ring-2 ring-[hsl(206,35%,75%)]/20'
-                        : 'border-[hsl(215,20%,85%)] dark:border-slate-700 hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600'
-                    }`}
-                  >
-                    <div className="p-6">
-                      <div className="flex gap-6">
-                        {/* Episode Image */}
-                        <div className="relative w-32 h-32 rounded-lg overflow-hidden flex-shrink-0 bg-slate-100 dark:bg-slate-700">
-                          <img src={episode.image} alt={episode.title} className="w-full h-full object-cover" />
-                          {selectedEpisode === episode.number && (
-                            <div className="absolute inset-0 bg-slate-900/60 flex items-center justify-center backdrop-blur-sm">
-                              {isPlaying ? (
-                                <Pause className="w-8 h-8 text-white" />
-                              ) : (
-                                <Play className="w-8 h-8 text-white ml-1" />
-                              )}
-                            </div>
-                          )}
+          {/* Participants Section */}
+          {(podcast.hosts?.length || podcast.guests?.length) ? (
+            <section className="px-8 py-8">
+              <div className="max-w-7xl mx-auto">
+                <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-6">Participantes</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {podcast.hosts?.map((host, idx) => (
+                    <div key={idx} className="bg-white dark:bg-slate-800 rounded-xl border border-[hsl(215,20%,85%)] dark:border-slate-700 p-4 flex items-center gap-4">
+                      {host.avatar ? (
+                        <img src={host.avatar} alt={host.name} className="w-12 h-12 rounded-full object-cover" />
+                      ) : (
+                        <div className="w-12 h-12 rounded-full bg-[hsl(206,35%,75%)]/20 flex items-center justify-center">
+                          <Users className="w-6 h-6 text-[hsl(206,45%,30%)]" />
                         </div>
-
-                        {/* Episode Info */}
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-start justify-between mb-2">
-                            <div className="flex-1">
-                              <div className="flex items-center gap-2 mb-2">
-                                <Badge className="bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-600">
-                                  Episódio #{episode.number}
-                                </Badge>
-                                <span className="text-xs text-slate-500 dark:text-slate-400">{episode.date}</span>
-                                {episode.status === "played" ? (
-                                  <CheckCircle2 className="w-4 h-4 text-[hsl(142,45%,28%)]" />
-                                ) : episode.status === "playing" ? (
-                                  <Badge className="bg-[hsl(206,35%,75%)]/20 text-[hsl(206,45%,30%)] border-[hsl(206,35%,75%)]/30">
-                                    <Activity className="w-3 h-3 mr-1" /> Reproduzindo
-                                  </Badge>
-                                ) : (
-                                  <Circle className="w-4 h-4 text-slate-300" />
-                                )}
-                              </div>
-                              <h3 className="font-bold text-slate-800 dark:text-slate-100 mb-2 text-lg">{episode.title}</h3>
-                              <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed line-clamp-2">{episode.description}</p>
-                            </div>
-                          </div>
-
-                          {/* Episode Meta */}
-                          <div className="flex items-center gap-4 mt-4">
-                            <div className="flex items-center gap-1.5 text-sm text-slate-600 dark:text-slate-400">
-                              <Clock className="w-4 h-4" />
-                              <span className="font-medium">{episode.duration}</span>
-                            </div>
-                            <div className="flex items-center gap-1.5 text-sm text-slate-600 dark:text-slate-400">
-                              <Headphones className="w-4 h-4" />
-                              <span className="font-medium">{episode.plays} reproduções</span>
-                            </div>
-                            <div className="flex-1"></div>
-                            <button className="p-2 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-all">
-                              <Download className="w-4 h-4" />
-                            </button>
-                            <button className="p-2 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-all">
-                              <Share2 className="w-4 h-4" />
-                            </button>
-                            <button className="p-2 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-all">
-                              <MoreVertical className="w-4 h-4" />
-                            </button>
-                          </div>
-                        </div>
+                      )}
+                      <div>
+                        <p className="font-semibold text-slate-800 dark:text-slate-200">{host.name}</p>
+                        <p className="text-sm text-slate-500 dark:text-slate-400">{host.role}</p>
+                        {host.isMain && (
+                          <Badge className="mt-1 bg-[hsl(206,35%,75%)]/20 text-[hsl(206,45%,30%)] border-[hsl(206,35%,75%)]/30 text-xs">
+                            Host Principal
+                          </Badge>
+                        )}
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                  {podcast.guests?.map((guest, idx) => (
+                    <div key={idx} className="bg-white dark:bg-slate-800 rounded-xl border border-[hsl(215,20%,85%)] dark:border-slate-700 p-4 flex items-center gap-4">
+                      {guest.avatar ? (
+                        <img src={guest.avatar} alt={guest.name} className="w-12 h-12 rounded-full object-cover" />
+                      ) : (
+                        <div className="w-12 h-12 rounded-full bg-[hsl(322,35%,78%)]/20 flex items-center justify-center">
+                          <Users className="w-6 h-6 text-[hsl(322,45%,38%)]" />
+                        </div>
+                      )}
+                      <div>
+                        <p className="font-semibold text-slate-800 dark:text-slate-200">{guest.name}</p>
+                        <p className="text-sm text-slate-500 dark:text-slate-400">{guest.role}</p>
+                        <Badge className="mt-1 bg-[hsl(322,35%,78%)]/20 text-[hsl(322,45%,38%)] border-[hsl(322,35%,78%)]/30 text-xs">
+                          Convidado
+                        </Badge>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          </section>
+            </section>
+          ) : null}
 
-          {/* Footer */}
-          <footer className="mt-12 pt-8 border-t border-[hsl(215,20%,85%)] dark:border-slate-700 px-8 pb-8">
-            <div className="max-w-7xl mx-auto text-center">
-              <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">© 2025 Mercados em Foco - Todos os direitos reservados. Central de Conteúdo Educacional.</p>
-            </div>
-          </footer>
+          {/* Tags Section */}
+          {podcast.tags && podcast.tags.length > 0 && (
+            <section className="px-8 py-8 bg-white dark:bg-slate-800 border-t border-[hsl(215,20%,85%)] dark:border-slate-700">
+              <div className="max-w-7xl mx-auto">
+                <h2 className="text-lg font-bold text-slate-800 dark:text-slate-100 mb-4">Tags</h2>
+                <div className="flex flex-wrap gap-2">
+                  {podcast.tags.map((tag, idx) => (
+                    <Badge key={idx} className="bg-[hsl(206,35%,75%)]/20 text-[hsl(206,45%,30%)] border-[hsl(206,35%,75%)]/30">
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
         </div>
       </main>
     </div>

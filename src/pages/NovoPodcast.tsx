@@ -1,5 +1,5 @@
-import { useState, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -57,10 +57,18 @@ const podcastSchema = z.object({
 
 export default function NovoPodcast() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const editId = searchParams.get("edit");
   const { user } = useAuth();
   const audioInputRef = useRef<HTMLInputElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
   const audioPlayerRef = useRef<HTMLAudioElement>(null);
+
+  // Edit mode state
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [isLoadingPodcast, setIsLoadingPodcast] = useState(false);
+  const [existingAudioUrl, setExistingAudioUrl] = useState<string | null>(null);
+  const [existingImageUrl, setExistingImageUrl] = useState<string | null>(null);
 
   // Form state
   const [title, setTitle] = useState("");
@@ -118,6 +126,92 @@ export default function NovoPodcast() {
   ]);
 
   const [guests, setGuests] = useState<Participant[]>([]);
+
+  // Load podcast data for edit mode
+  useEffect(() => {
+    const loadPodcast = async () => {
+      if (!editId) return;
+      
+      setIsLoadingPodcast(true);
+      setIsEditMode(true);
+      
+      try {
+        const { data, error } = await supabase
+          .from("podcasts")
+          .select("*")
+          .eq("id", editId)
+          .single();
+        
+        if (error) throw error;
+        if (!data) {
+          toast.error("Podcast nao encontrado");
+          navigate("/meus-conteudos");
+          return;
+        }
+        
+        // Populate form fields
+        setTitle(data.title || "");
+        setCategory(data.category || "");
+        setDurationEstimate(data.duration_estimate || "");
+        setDescription(data.description || "");
+        setTags(data.tags?.join(", ") || "");
+        setPublicationDate(data.publication_date || "");
+        setPublicationTime(data.publication_time || "");
+        setSlug(data.slug || "");
+        setMetaDescription(data.meta_description || "");
+        setSeoKeywords(data.seo_keywords || "");
+        setPrice(data.price?.toString() || "");
+        setMaxListeners(data.max_listeners?.toString() || "");
+        
+        // Settings
+        setPublicationType(data.publication_type as "schedule" | "now" | "draft" || "schedule");
+        setAccessType(data.access_type as "free" | "subscribers" | "paid" || "free");
+        setAllowDownload(data.allow_download || false);
+        setAllowComments(data.allow_comments || false);
+        setNotifyFollowers(data.notify_followers || false);
+        setLimitParticipants(!!data.max_listeners);
+        
+        // Existing files
+        if (data.audio_url) {
+          setExistingAudioUrl(data.audio_url);
+          setAudioPreviewUrl(data.audio_url);
+        }
+        if (data.cover_image_url) {
+          setExistingImageUrl(data.cover_image_url);
+          setImagePreviewUrl(data.cover_image_url);
+        }
+        
+        // Participants
+        const hostsData = data.hosts as { name: string; role: string; avatar: string; isMain?: boolean }[] | null;
+        if (hostsData && hostsData.length > 0) {
+          setHosts(hostsData.map(h => ({
+            id: crypto.randomUUID(),
+            name: h.name || "",
+            role: h.role || "",
+            avatar: h.avatar || "",
+            isMain: h.isMain || false,
+          })));
+        }
+        
+        const guestsData = data.guests as { name: string; role: string; avatar: string }[] | null;
+        if (guestsData && guestsData.length > 0) {
+          setGuests(guestsData.map(g => ({
+            id: crypto.randomUUID(),
+            name: g.name || "",
+            role: g.role || "",
+            avatar: g.avatar || "",
+          })));
+        }
+      } catch (error) {
+        console.error("Error loading podcast:", error);
+        toast.error("Erro ao carregar podcast");
+      } finally {
+        setIsLoadingPodcast(false);
+      }
+    };
+    
+    loadPodcast();
+  }, [editId, navigate]);
 
   const addHost = () => {
     setHosts([
@@ -258,11 +352,12 @@ export default function NovoPodcast() {
       }
     }
 
-    if (!audioFile) {
+    // Only require new files if not in edit mode or if no existing files
+    if (!audioFile && !existingAudioUrl) {
       newErrors.audio = "Arquivo de audio e obrigatorio";
     }
 
-    if (!imageFile) {
+    if (!imageFile && !existingImageUrl) {
       newErrors.image = "Imagem de capa e obrigatoria";
     }
 
@@ -306,19 +401,23 @@ export default function NovoPodcast() {
     setLoading(true);
 
     try {
-      let audioUrl = null;
-      let coverImageUrl = null;
+      let audioUrl = existingAudioUrl;
+      let coverImageUrl = existingImageUrl;
 
       if (audioFile) {
-        audioUrl = await uploadFile(audioFile, "audio");
-        if (!audioUrl && status === "published") {
+        const newAudioUrl = await uploadFile(audioFile, "audio");
+        if (newAudioUrl) {
+          audioUrl = newAudioUrl;
+        } else if (status === "published" && !existingAudioUrl) {
           throw new Error("Falha ao fazer upload do audio");
         }
       }
 
       if (imageFile) {
-        coverImageUrl = await uploadFile(imageFile, "covers");
-        if (!coverImageUrl && status === "published") {
+        const newCoverUrl = await uploadFile(imageFile, "covers");
+        if (newCoverUrl) {
+          coverImageUrl = newCoverUrl;
+        } else if (status === "published" && !existingImageUrl) {
           throw new Error("Falha ao fazer upload da imagem");
         }
       }
@@ -363,13 +462,28 @@ export default function NovoPodcast() {
         status,
       };
 
-      const { error } = await supabase.from("podcasts").insert(podcastData);
+      if (isEditMode && editId) {
+        // Update existing podcast
+        const { error } = await supabase
+          .from("podcasts")
+          .update(podcastData)
+          .eq("id", editId);
 
-      if (error) throw error;
+        if (error) throw error;
 
-      toast.success(
-        status === "draft" ? "Rascunho salvo com sucesso!" : "Podcast publicado com sucesso!"
-      );
+        toast.success(
+          status === "draft" ? "Rascunho atualizado!" : "Podcast atualizado com sucesso!"
+        );
+      } else {
+        // Insert new podcast
+        const { error } = await supabase.from("podcasts").insert(podcastData);
+
+        if (error) throw error;
+
+        toast.success(
+          status === "draft" ? "Rascunho salvo com sucesso!" : "Podcast publicado com sucesso!"
+        );
+      }
 
       if (status === "published") {
         navigate("/meus-conteudos");
@@ -385,6 +499,17 @@ export default function NovoPodcast() {
   const handleSaveDraft = () => savePodcast("draft");
   const handlePublish = () => savePodcast("published");
 
+  if (isLoadingPodcast) {
+    return (
+      <div className="flex min-h-screen w-full bg-background">
+        <SidebarFix />
+        <div className="flex-1 flex items-center justify-center">
+          <Loader2 className="w-8 h-8 animate-spin text-primary" />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex min-h-screen w-full bg-background">
       <SidebarFix />
@@ -395,15 +520,19 @@ export default function NovoPodcast() {
           <div className="px-8 h-20 flex items-center justify-between">
             <div className="flex items-center gap-4">
               <Link
-                to="/criar-conteudo"
+                to={isEditMode ? "/meus-conteudos" : "/criar-conteudo"}
                 className="p-2 text-muted-foreground hover:bg-accent rounded-lg transition-colors"
               >
                 <ArrowLeft className="w-5 h-5" />
               </Link>
               <div>
-                <h1 className="text-2xl font-bold text-foreground">Adicionar Novo Podcast</h1>
+                <h1 className="text-2xl font-bold text-foreground">
+                  {isEditMode ? "Editar Podcast" : "Adicionar Novo Podcast"}
+                </h1>
                 <p className="text-sm text-muted-foreground mt-0.5">
-                  Preencha as informacoes para criar seu podcast
+                  {isEditMode
+                    ? "Atualize as informacoes do seu podcast"
+                    : "Preencha as informacoes para criar seu podcast"}
                 </p>
               </div>
             </div>
