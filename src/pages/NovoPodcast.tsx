@@ -1,11 +1,10 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Select,
   SelectContent,
@@ -38,11 +37,46 @@ import {
   TrendingUp,
   Lightbulb,
   Trash2,
+  Loader2,
+  Play,
+  Pause,
 } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
+import { z } from "zod";
+
+const podcastSchema = z.object({
+  title: z.string().min(1, "Titulo e obrigatorio").max(200),
+  category: z.string().min(1, "Categoria e obrigatoria"),
+  durationEstimate: z.string().min(1, "Duracao e obrigatoria"),
+  description: z.string().min(1, "Descricao e obrigatoria").max(5000),
+  publicationDate: z.string().min(1, "Data de publicacao e obrigatoria"),
+  publicationTime: z.string().min(1, "Horario e obrigatorio"),
+});
 
 export default function NovoPodcast() {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const audioInputRef = useRef<HTMLInputElement>(null);
+  const imageInputRef = useRef<HTMLInputElement>(null);
+  const audioPlayerRef = useRef<HTMLAudioElement>(null);
+
+  // Form state
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("");
+  const [durationEstimate, setDurationEstimate] = useState("");
+  const [description, setDescription] = useState("");
+  const [tags, setTags] = useState("");
+  const [publicationDate, setPublicationDate] = useState("");
+  const [publicationTime, setPublicationTime] = useState("");
+  const [slug, setSlug] = useState("");
+  const [metaDescription, setMetaDescription] = useState("");
+  const [seoKeywords, setSeoKeywords] = useState("");
+  const [price, setPrice] = useState("");
+  const [maxListeners, setMaxListeners] = useState("");
+
+  // Settings state
   const [publicationType, setPublicationType] = useState<"schedule" | "now" | "draft">("schedule");
   const [accessType, setAccessType] = useState<"free" | "subscribers" | "paid">("free");
   const [allowDownload, setAllowDownload] = useState(false);
@@ -50,14 +84,227 @@ export default function NovoPodcast() {
   const [notifyFollowers, setNotifyFollowers] = useState(false);
   const [limitParticipants, setLimitParticipants] = useState(false);
 
-  const handleSaveDraft = () => {
-    toast.success("Rascunho salvo com sucesso!");
+  // File state
+  const [audioFile, setAudioFile] = useState<File | null>(null);
+  const [audioPreviewUrl, setAudioPreviewUrl] = useState<string | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+
+  // Loading state
+  const [isSaving, setIsSaving] = useState(false);
+  const [isPublishing, setIsPublishing] = useState(false);
+
+  // Validation errors
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const handleAudioUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const maxSize = 500 * 1024 * 1024; // 500MB
+      if (file.size > maxSize) {
+        toast.error("Arquivo muito grande. Maximo 500MB.");
+        return;
+      }
+      const allowedTypes = ["audio/mpeg", "audio/wav", "audio/x-m4a", "audio/mp4"];
+      if (!allowedTypes.includes(file.type)) {
+        toast.error("Formato invalido. Use MP3, WAV ou M4A.");
+        return;
+      }
+      setAudioFile(file);
+      const url = URL.createObjectURL(file);
+      setAudioPreviewUrl(url);
+      setErrors((prev) => ({ ...prev, audio: "" }));
+    }
   };
 
-  const handlePublish = () => {
-    toast.success("Podcast publicado com sucesso!");
-    navigate("/meus-conteudos");
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const maxSize = 10 * 1024 * 1024; // 10MB
+      if (file.size > maxSize) {
+        toast.error("Imagem muito grande. Maximo 10MB.");
+        return;
+      }
+      const allowedTypes = ["image/png", "image/jpeg", "image/webp"];
+      if (!allowedTypes.includes(file.type)) {
+        toast.error("Formato invalido. Use PNG, JPG ou WEBP.");
+        return;
+      }
+      setImageFile(file);
+      const url = URL.createObjectURL(file);
+      setImagePreviewUrl(url);
+      setErrors((prev) => ({ ...prev, image: "" }));
+    }
   };
+
+  const toggleAudioPlayback = () => {
+    if (audioPlayerRef.current) {
+      if (isAudioPlaying) {
+        audioPlayerRef.current.pause();
+      } else {
+        audioPlayerRef.current.play();
+      }
+      setIsAudioPlaying(!isAudioPlaying);
+    }
+  };
+
+  const removeAudio = () => {
+    setAudioFile(null);
+    if (audioPreviewUrl) {
+      URL.revokeObjectURL(audioPreviewUrl);
+      setAudioPreviewUrl(null);
+    }
+    setIsAudioPlaying(false);
+  };
+
+  const removeImage = () => {
+    setImageFile(null);
+    if (imagePreviewUrl) {
+      URL.revokeObjectURL(imagePreviewUrl);
+      setImagePreviewUrl(null);
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    try {
+      podcastSchema.parse({
+        title,
+        category,
+        durationEstimate,
+        description,
+        publicationDate,
+        publicationTime,
+      });
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        err.errors.forEach((e) => {
+          if (e.path[0]) {
+            newErrors[e.path[0] as string] = e.message;
+          }
+        });
+      }
+    }
+
+    if (!audioFile) {
+      newErrors.audio = "Arquivo de audio e obrigatorio";
+    }
+
+    if (!imageFile) {
+      newErrors.image = "Imagem de capa e obrigatoria";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const uploadFile = async (file: File, folder: string): Promise<string | null> => {
+    const fileExt = file.name.split(".").pop();
+    const fileName = `${crypto.randomUUID()}.${fileExt}`;
+    const filePath = `${folder}/${fileName}`;
+
+    const { error } = await supabase.storage
+      .from("podcast-files")
+      .upload(filePath, file);
+
+    if (error) {
+      console.error("Upload error:", error);
+      return null;
+    }
+
+    const { data } = supabase.storage
+      .from("podcast-files")
+      .getPublicUrl(filePath);
+
+    return data.publicUrl;
+  };
+
+  const savePodcast = async (status: "draft" | "published") => {
+    if (!user) {
+      toast.error("Voce precisa estar logado para salvar.");
+      return;
+    }
+
+    if (status === "published" && !validateForm()) {
+      toast.error("Preencha todos os campos obrigatorios.");
+      return;
+    }
+
+    const setLoading = status === "draft" ? setIsSaving : setIsPublishing;
+    setLoading(true);
+
+    try {
+      let audioUrl = null;
+      let coverImageUrl = null;
+
+      if (audioFile) {
+        audioUrl = await uploadFile(audioFile, "audio");
+        if (!audioUrl && status === "published") {
+          throw new Error("Falha ao fazer upload do audio");
+        }
+      }
+
+      if (imageFile) {
+        coverImageUrl = await uploadFile(imageFile, "covers");
+        if (!coverImageUrl && status === "published") {
+          throw new Error("Falha ao fazer upload da imagem");
+        }
+      }
+
+      const tagsArray = tags
+        .split(",")
+        .map((t) => t.trim())
+        .filter((t) => t.length > 0);
+
+      const podcastData = {
+        user_id: user.id,
+        title: title || "Podcast sem titulo",
+        description,
+        category,
+        duration_estimate: durationEstimate,
+        tags: tagsArray,
+        audio_url: audioUrl,
+        cover_image_url: coverImageUrl,
+        hosts: [{ name: "Marina Santos", role: "Especialista em Pagamentos", isMain: true }],
+        guests: [],
+        publication_date: publicationDate || null,
+        publication_time: publicationTime || null,
+        publication_type: publicationType,
+        allow_download: allowDownload,
+        allow_comments: allowComments,
+        notify_followers: notifyFollowers,
+        access_type: accessType,
+        price: accessType === "paid" ? parseFloat(price) || 0 : 0,
+        max_listeners: limitParticipants ? parseInt(maxListeners) || null : null,
+        slug: slug || null,
+        meta_description: metaDescription || null,
+        seo_keywords: seoKeywords || null,
+        status,
+      };
+
+      const { error } = await supabase.from("podcasts").insert(podcastData);
+
+      if (error) throw error;
+
+      toast.success(
+        status === "draft" ? "Rascunho salvo com sucesso!" : "Podcast publicado com sucesso!"
+      );
+
+      if (status === "published") {
+        navigate("/meus-conteudos");
+      }
+    } catch (error) {
+      console.error("Error saving podcast:", error);
+      toast.error("Erro ao salvar podcast. Tente novamente.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSaveDraft = () => savePodcast("draft");
+  const handlePublish = () => savePodcast("published");
 
   return (
     <div className="flex min-h-screen w-full bg-background">
@@ -86,16 +333,26 @@ export default function NovoPodcast() {
               <Button
                 variant="outline"
                 onClick={handleSaveDraft}
+                disabled={isSaving}
                 className="border-input"
               >
-                <Save className="w-4 h-4 mr-2" />
+                {isSaving ? (
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                ) : (
+                  <Save className="w-4 h-4 mr-2" />
+                )}
                 Salvar Rascunho
               </Button>
               <Button
                 onClick={handlePublish}
+                disabled={isPublishing}
                 className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm"
               >
-                <Check className="w-4 h-4 mr-2" />
+                {isPublishing ? (
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                ) : (
+                  <Check className="w-4 h-4 mr-2" />
+                )}
                 Publicar Podcast
               </Button>
             </div>
@@ -123,8 +380,13 @@ export default function NovoPodcast() {
                     </label>
                     <Input
                       placeholder="Ex: Desvendando o Mercado Financeiro"
-                      className="w-full"
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                      className={errors.title ? "border-destructive" : ""}
                     />
+                    {errors.title && (
+                      <p className="text-xs text-destructive mt-1">{errors.title}</p>
+                    )}
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
@@ -132,8 +394,8 @@ export default function NovoPodcast() {
                       <label className="block text-sm font-semibold text-foreground mb-2">
                         Categoria *
                       </label>
-                      <Select>
-                        <SelectTrigger>
+                      <Select value={category} onValueChange={setCategory}>
+                        <SelectTrigger className={errors.category ? "border-destructive" : ""}>
                           <SelectValue placeholder="Selecione uma categoria" />
                         </SelectTrigger>
                         <SelectContent>
@@ -145,12 +407,23 @@ export default function NovoPodcast() {
                           <SelectItem value="empreendedorismo">Empreendedorismo</SelectItem>
                         </SelectContent>
                       </Select>
+                      {errors.category && (
+                        <p className="text-xs text-destructive mt-1">{errors.category}</p>
+                      )}
                     </div>
                     <div>
                       <label className="block text-sm font-semibold text-foreground mb-2">
                         Duracao Estimada *
                       </label>
-                      <Input placeholder="Ex: 45 minutos" />
+                      <Input
+                        placeholder="Ex: 45 minutos"
+                        value={durationEstimate}
+                        onChange={(e) => setDurationEstimate(e.target.value)}
+                        className={errors.durationEstimate ? "border-destructive" : ""}
+                      />
+                      {errors.durationEstimate && (
+                        <p className="text-xs text-destructive mt-1">{errors.durationEstimate}</p>
+                      )}
                     </div>
                   </div>
 
@@ -161,15 +434,24 @@ export default function NovoPodcast() {
                     <Textarea
                       rows={5}
                       placeholder="Descreva sobre o que sera o podcast, topicos abordados e o que os ouvintes podem esperar..."
-                      className="resize-none"
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                      className={`resize-none ${errors.description ? "border-destructive" : ""}`}
                     />
+                    {errors.description && (
+                      <p className="text-xs text-destructive mt-1">{errors.description}</p>
+                    )}
                   </div>
 
                   <div>
                     <label className="block text-sm font-semibold text-foreground mb-2">
                       Tags (separadas por virgula)
                     </label>
-                    <Input placeholder="Ex: investimentos, bolsa de valores, analise tecnica" />
+                    <Input
+                      placeholder="Ex: investimentos, bolsa de valores, analise tecnica"
+                      value={tags}
+                      onChange={(e) => setTags(e.target.value)}
+                    />
                   </div>
                 </div>
               </section>
@@ -184,34 +466,137 @@ export default function NovoPodcast() {
                 </h2>
 
                 <div className="space-y-5">
+                  {/* Audio Upload */}
                   <div>
                     <label className="block text-sm font-semibold text-foreground mb-2">
                       Arquivo de Audio *
                     </label>
-                    <div className="border-2 border-dashed border-input rounded-lg p-8 text-center hover:border-primary transition-colors cursor-pointer">
-                      <Mic className="w-12 h-12 text-[hsl(var(--pastel-purple))] mx-auto mb-3" />
-                      <p className="text-sm font-medium text-foreground mb-1">
-                        Clique para fazer upload ou arraste o arquivo
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        MP3, WAV ou M4A (max. 500MB)
-                      </p>
-                    </div>
+                    <input
+                      ref={audioInputRef}
+                      type="file"
+                      accept="audio/mpeg,audio/wav,audio/x-m4a,audio/mp4"
+                      className="hidden"
+                      onChange={handleAudioUpload}
+                    />
+                    {audioFile ? (
+                      <div className="border border-border rounded-lg p-4 bg-muted">
+                        <div className="flex items-center gap-4">
+                          <button
+                            onClick={toggleAudioPlayback}
+                            className="w-12 h-12 bg-[hsl(var(--pastel-purple))] text-[hsl(var(--pastel-gray-dark))] rounded-full flex items-center justify-center hover:opacity-90 transition-opacity"
+                          >
+                            {isAudioPlaying ? (
+                              <Pause className="w-5 h-5" />
+                            ) : (
+                              <Play className="w-5 h-5 ml-0.5" />
+                            )}
+                          </button>
+                          <div className="flex-1">
+                            <p className="font-medium text-sm text-foreground truncate">
+                              {audioFile.name}
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              {(audioFile.size / (1024 * 1024)).toFixed(2)} MB
+                            </p>
+                          </div>
+                          <button
+                            onClick={removeAudio}
+                            className="p-2 text-muted-foreground hover:text-destructive transition-colors"
+                          >
+                            <X className="w-5 h-5" />
+                          </button>
+                        </div>
+                        {audioPreviewUrl && (
+                          <audio
+                            ref={audioPlayerRef}
+                            src={audioPreviewUrl}
+                            onEnded={() => setIsAudioPlaying(false)}
+                            className="hidden"
+                          />
+                        )}
+                      </div>
+                    ) : (
+                      <div
+                        onClick={() => audioInputRef.current?.click()}
+                        className={`border-2 border-dashed rounded-lg p-8 text-center hover:border-primary transition-colors cursor-pointer ${
+                          errors.audio ? "border-destructive" : "border-input"
+                        }`}
+                      >
+                        <Mic className="w-12 h-12 text-[hsl(var(--pastel-purple))] mx-auto mb-3" />
+                        <p className="text-sm font-medium text-foreground mb-1">
+                          Clique para fazer upload ou arraste o arquivo
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          MP3, WAV ou M4A (max. 500MB)
+                        </p>
+                      </div>
+                    )}
+                    {errors.audio && (
+                      <p className="text-xs text-destructive mt-1">{errors.audio}</p>
+                    )}
                   </div>
 
+                  {/* Image Upload */}
                   <div>
                     <label className="block text-sm font-semibold text-foreground mb-2">
                       Imagem de Capa *
                     </label>
-                    <div className="border-2 border-dashed border-input rounded-lg p-8 text-center hover:border-primary transition-colors cursor-pointer">
-                      <Image className="w-12 h-12 text-[hsl(var(--pastel-blue))] mx-auto mb-3" />
-                      <p className="text-sm font-medium text-foreground mb-1">
-                        Clique para fazer upload ou arraste a imagem
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        PNG, JPG ou WEBP (1400x1400px recomendado)
-                      </p>
-                    </div>
+                    <input
+                      ref={imageInputRef}
+                      type="file"
+                      accept="image/png,image/jpeg,image/webp"
+                      className="hidden"
+                      onChange={handleImageUpload}
+                    />
+                    {imageFile ? (
+                      <div className="border border-border rounded-lg p-4 bg-muted">
+                        <div className="flex items-start gap-4">
+                          <img
+                            src={imagePreviewUrl!}
+                            alt="Preview"
+                            className="w-32 h-32 object-cover rounded-lg"
+                          />
+                          <div className="flex-1">
+                            <p className="font-medium text-sm text-foreground truncate">
+                              {imageFile.name}
+                            </p>
+                            <p className="text-xs text-muted-foreground mb-2">
+                              {(imageFile.size / (1024 * 1024)).toFixed(2)} MB
+                            </p>
+                            <button
+                              onClick={() => imageInputRef.current?.click()}
+                              className="text-sm text-primary hover:underline"
+                            >
+                              Alterar imagem
+                            </button>
+                          </div>
+                          <button
+                            onClick={removeImage}
+                            className="p-2 text-muted-foreground hover:text-destructive transition-colors"
+                          >
+                            <X className="w-5 h-5" />
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div
+                        onClick={() => imageInputRef.current?.click()}
+                        className={`border-2 border-dashed rounded-lg p-8 text-center hover:border-primary transition-colors cursor-pointer ${
+                          errors.image ? "border-destructive" : "border-input"
+                        }`}
+                      >
+                        <Image className="w-12 h-12 text-[hsl(var(--pastel-blue))] mx-auto mb-3" />
+                        <p className="text-sm font-medium text-foreground mb-1">
+                          Clique para fazer upload ou arraste a imagem
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          PNG, JPG ou WEBP (1400x1400px recomendado)
+                        </p>
+                      </div>
+                    )}
+                    {errors.image && (
+                      <p className="text-xs text-destructive mt-1">{errors.image}</p>
+                    )}
                   </div>
                 </div>
               </section>
@@ -266,33 +651,9 @@ export default function NovoPodcast() {
                       </button>
                     </div>
                     <div className="space-y-3">
-                      <div className="flex items-center gap-3 p-3 bg-muted rounded-lg border border-border">
-                        <img
-                          src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg"
-                          alt="Guest"
-                          className="w-12 h-12 rounded-full object-cover"
-                        />
-                        <div className="flex-1">
-                          <input
-                            type="text"
-                            placeholder="Nome do convidado"
-                            defaultValue="Fernando Lima"
-                            className="w-full bg-transparent border-0 p-0 text-sm font-semibold text-foreground focus:outline-none"
-                          />
-                          <input
-                            type="text"
-                            placeholder="Cargo/Especializacao"
-                            defaultValue="Economista Chefe - XP Investimentos"
-                            className="w-full bg-transparent border-0 p-0 text-xs text-muted-foreground focus:outline-none mt-1"
-                          />
-                        </div>
-                        <button className="text-muted-foreground hover:text-destructive">
-                          <X className="w-4 h-4" />
-                        </button>
-                      </div>
                       <button className="w-full py-3 border-2 border-dashed border-input rounded-lg text-sm font-medium text-muted-foreground hover:border-primary hover:text-primary transition-colors">
                         <Plus className="w-4 h-4 inline mr-2" />
-                        Adicionar Outro Convidado
+                        Adicionar Convidado
                       </button>
                     </div>
                   </div>
@@ -314,13 +675,29 @@ export default function NovoPodcast() {
                       <label className="block text-sm font-semibold text-foreground mb-2">
                         Data de Publicacao *
                       </label>
-                      <Input type="date" />
+                      <Input
+                        type="date"
+                        value={publicationDate}
+                        onChange={(e) => setPublicationDate(e.target.value)}
+                        className={errors.publicationDate ? "border-destructive" : ""}
+                      />
+                      {errors.publicationDate && (
+                        <p className="text-xs text-destructive mt-1">{errors.publicationDate}</p>
+                      )}
                     </div>
                     <div>
                       <label className="block text-sm font-semibold text-foreground mb-2">
                         Horario *
                       </label>
-                      <Input type="time" />
+                      <Input
+                        type="time"
+                        value={publicationTime}
+                        onChange={(e) => setPublicationTime(e.target.value)}
+                        className={errors.publicationTime ? "border-destructive" : ""}
+                      />
+                      {errors.publicationTime && (
+                        <p className="text-xs text-destructive mt-1">{errors.publicationTime}</p>
+                      )}
                     </div>
                   </div>
 
@@ -503,6 +880,8 @@ export default function NovoPodcast() {
                               <Input
                                 type="number"
                                 placeholder="0.00"
+                                value={price}
+                                onChange={(e) => setPrice(e.target.value)}
                                 className="w-32"
                               />
                               <span className="text-sm text-muted-foreground">BRL</span>
@@ -535,6 +914,8 @@ export default function NovoPodcast() {
                           <Input
                             type="number"
                             placeholder="100"
+                            value={maxListeners}
+                            onChange={(e) => setMaxListeners(e.target.value)}
                             className="w-32"
                             disabled={!limitParticipants}
                           />
@@ -564,6 +945,8 @@ export default function NovoPodcast() {
                       <span className="text-sm text-muted-foreground">finlearn.ai/podcast/</span>
                       <Input
                         placeholder="desvendando-mercado-financeiro"
+                        value={slug}
+                        onChange={(e) => setSlug(e.target.value)}
                         className="flex-1"
                       />
                     </div>
@@ -576,16 +959,24 @@ export default function NovoPodcast() {
                     <Textarea
                       rows={3}
                       placeholder="Descricao otimizada para mecanismos de busca (max. 160 caracteres)"
+                      value={metaDescription}
+                      onChange={(e) => setMetaDescription(e.target.value.slice(0, 160))}
                       className="resize-none"
                     />
-                    <p className="text-xs text-muted-foreground mt-1">0 / 160 caracteres</p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      {metaDescription.length} / 160 caracteres
+                    </p>
                   </div>
 
                   <div>
                     <label className="block text-sm font-semibold text-foreground mb-2">
                       Palavras-chave SEO
                     </label>
-                    <Input placeholder="Ex: investimentos, mercado financeiro, economia" />
+                    <Input
+                      placeholder="Ex: investimentos, mercado financeiro, economia"
+                      value={seoKeywords}
+                      onChange={(e) => setSeoKeywords(e.target.value)}
+                    />
                   </div>
                 </div>
               </section>
@@ -597,25 +988,35 @@ export default function NovoPodcast() {
               <section className="bg-card border border-border rounded-lg shadow-sm p-6 sticky top-24">
                 <h3 className="text-lg font-bold text-foreground mb-4">Pre-visualizacao</h3>
                 <div className="bg-muted rounded-lg overflow-hidden border border-border">
-                  <div className="h-48 bg-gradient-to-br from-[hsl(var(--pastel-blue))] to-[hsl(var(--pastel-purple))] flex items-center justify-center">
-                    <Image className="w-12 h-12 text-white/50" />
+                  <div className="h-48 bg-gradient-to-br from-[hsl(var(--pastel-blue))] to-[hsl(var(--pastel-purple))] flex items-center justify-center overflow-hidden">
+                    {imagePreviewUrl ? (
+                      <img
+                        src={imagePreviewUrl}
+                        alt="Preview"
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <Image className="w-12 h-12 text-white/50" />
+                    )}
                   </div>
                   <div className="p-4">
                     <span className="text-xs font-semibold text-[hsl(var(--pastel-gray-dark))] bg-[hsl(var(--pastel-orange))] px-2.5 py-1 rounded-full">
                       Podcast
                     </span>
-                    <h4 className="font-bold text-foreground mt-3 mb-2">Titulo do Podcast</h4>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      Descricao do episodio aparecera aqui...
+                    <h4 className="font-bold text-foreground mt-3 mb-2">
+                      {title || "Titulo do Podcast"}
+                    </h4>
+                    <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                      {description || "Descricao do episodio aparecera aqui..."}
                     </p>
                     <div className="flex items-center justify-between text-xs text-muted-foreground mb-4 pb-4 border-b border-border">
                       <span className="flex items-center gap-1">
                         <Clock className="w-3 h-3" />
-                        -- min
+                        {durationEstimate || "-- min"}
                       </span>
                       <span className="flex items-center gap-1">
                         <Calendar className="w-3 h-3" />
-                        -- /-- /----
+                        {publicationDate || "-- /-- /----"}
                       </span>
                     </div>
                     <div className="flex items-center gap-2 mb-3">
@@ -715,17 +1116,27 @@ export default function NovoPodcast() {
                 <div className="space-y-3">
                   <Button
                     onClick={handlePublish}
+                    disabled={isPublishing}
                     className="w-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm"
                   >
-                    <Rocket className="w-4 h-4 mr-2" />
+                    {isPublishing ? (
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    ) : (
+                      <Rocket className="w-4 h-4 mr-2" />
+                    )}
                     Publicar Podcast
                   </Button>
                   <Button
                     variant="secondary"
                     onClick={handleSaveDraft}
+                    disabled={isSaving}
                     className="w-full"
                   >
-                    <Save className="w-4 h-4 mr-2" />
+                    {isSaving ? (
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    ) : (
+                      <Save className="w-4 h-4 mr-2" />
+                    )}
                     Salvar Rascunho
                   </Button>
                   <Button variant="outline" className="w-full">
@@ -734,7 +1145,8 @@ export default function NovoPodcast() {
                   </Button>
                   <Button
                     variant="outline"
-                    className="w-full text-destructive border-input hover:bg-destructive/10"
+                    onClick={() => navigate("/criar-conteudo")}
+                    className="w-full text-destructive hover:bg-destructive/10"
                   >
                     <Trash2 className="w-4 h-4 mr-2" />
                     Descartar
