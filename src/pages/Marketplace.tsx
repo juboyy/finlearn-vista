@@ -15,6 +15,7 @@ import { useNotifications } from "@/hooks/useNotifications";
 import { NotificationsPanel } from "@/components/NotificationsPanel";
 import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
+import marketplaceEbookImage from "@/assets/marketplace-card-ebook-1.png";
 
 const Marketplace = () => {
   const navigate = useNavigate();
@@ -191,12 +192,12 @@ const Marketplace = () => {
               <div className="grid grid-cols-4 gap-5">
                 {recommendations.map((product, index) => {
                   const ebookImages = [
-                    "https://storage.googleapis.com/uxpilot-auth.appspot.com/de72874cc5-bcb1610580017fd3cfe5.png",
-                    "https://storage.googleapis.com/uxpilot-auth.appspot.com/aa9b09b858-0994d5433f7f20c4839e.png"
+                    marketplaceEbookImage,
+                    "https://storage.googleapis.com/uxpilot-auth.appspot.com/de72874cc5-bcb1610580017fd3cfe5.png"
                   ];
                   const courseImages = [
                     "https://storage.googleapis.com/uxpilot-auth.appspot.com/aa9b09b858-0994d5433f7f20c4839e.png",
-                    "https://storage.googleapis.com/uxpilot-auth.appspot.com/de72874cc5-bcb1610580017fd3cfe5.png"
+                    marketplaceEbookImage
                   ];
                   const imageIndex = index % 2;
                   const imageSrc = product.type === 'ebook' 
