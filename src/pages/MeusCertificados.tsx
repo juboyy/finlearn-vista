@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { 
@@ -19,15 +19,96 @@ import {
   GraduationCap,
   Shield,
   TrendingUp,
-  Smartphone
+  Smartphone,
+  X,
+  Loader2
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { QRCodeSVG } from "qrcode.react";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
+import { useToast } from "@/hooks/use-toast";
+
+interface Certificate {
+  id: number;
+  title: string;
+  description: string;
+  institution: string;
+  level: string;
+  issueDate: string;
+  validity: string;
+  validityColor: string;
+  status: string;
+  statusBg: string;
+  accentColor: string;
+  iconBg: string;
+  icon: any;
+  certId: string;
+  hours: string;
+  scope: string;
+  scopeIcon: any;
+  showRenew: boolean;
+}
 
 const MeusCertificados = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [selectedFilter, setSelectedFilter] = useState("Todos");
   const [selectedCategory, setSelectedCategory] = useState("Todas as Categorias");
+  const [selectedCertificate, setSelectedCertificate] = useState<Certificate | null>(null);
+  const [isDownloading, setIsDownloading] = useState(false);
+  const certificateRef = useRef<HTMLDivElement>(null);
+
+  const verificationUrl = useMemo(() => {
+    if (!selectedCertificate) return "";
+    return `https://finlearn.app/verify/${selectedCertificate.certId}`;
+  }, [selectedCertificate]);
+
+  const handleDownloadPDF = async () => {
+    if (!certificateRef.current || !selectedCertificate) return;
+    
+    setIsDownloading(true);
+    try {
+      const canvas = await html2canvas(certificateRef.current, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: '#ffffff'
+      });
+      
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF({
+        orientation: 'landscape',
+        unit: 'mm',
+        format: 'a4'
+      });
+      
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgWidth = canvas.width;
+      const imgHeight = canvas.height;
+      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+      const imgX = (pdfWidth - imgWidth * ratio) / 2;
+      const imgY = (pdfHeight - imgHeight * ratio) / 2;
+      
+      pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
+      pdf.save(`certificado-${selectedCertificate.certId}.pdf`);
+      
+      toast({
+        title: "PDF gerado com sucesso",
+        description: "O certificado foi baixado para seu dispositivo."
+      });
+    } catch (error) {
+      toast({
+        title: "Erro ao gerar PDF",
+        description: "Tente novamente mais tarde.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsDownloading(false);
+    }
+  };
 
   const filters = ["Todos", "Ativos", "Expirados", "A Expirar"];
   const categories = ["Todas as Categorias", "Pagamentos", "Regulação", "Open Finance", "Gestão de Riscos", "Compliance"];
@@ -318,7 +399,10 @@ const MeusCertificados = () => {
                           </div>
                         </div>
                         <div className="flex gap-2 ml-4">
-                          <button className="w-10 h-10 flex items-center justify-center text-muted-foreground hover:bg-accent rounded-lg transition-colors">
+                          <button 
+                            onClick={() => setSelectedCertificate(cert)}
+                            className="w-10 h-10 flex items-center justify-center text-muted-foreground hover:bg-accent rounded-lg transition-colors"
+                          >
                             <Eye size={18} />
                           </button>
                           <button className="w-10 h-10 flex items-center justify-center text-muted-foreground hover:bg-accent rounded-lg transition-colors">
@@ -364,6 +448,125 @@ const MeusCertificados = () => {
           </div>
         </main>
       </div>
+
+      {/* Certificate Modal */}
+      <Dialog open={!!selectedCertificate} onOpenChange={() => setSelectedCertificate(null)}>
+        <DialogContent className="max-w-3xl p-0 overflow-hidden">
+          <div className="relative bg-gradient-to-br from-slate-50 to-slate-100 p-6">
+            <button 
+              onClick={() => setSelectedCertificate(null)}
+              className="absolute top-4 right-4 p-2 rounded-full hover:bg-slate-200 transition z-10"
+            >
+              <X className="w-5 h-5 text-slate-600" />
+            </button>
+            
+            {/* Certificate Design */}
+            <div ref={certificateRef} className="bg-white border-4 border-double border-slate-300 rounded-lg p-8 shadow-lg">
+              {/* Header */}
+              <div className="text-center border-b-2 border-slate-200 pb-6 mb-6">
+                <div className="flex justify-center mb-4">
+                  <div className={`w-16 h-16 ${selectedCertificate?.iconBg} rounded-full flex items-center justify-center`}>
+                    <Award className="w-8 h-8 text-slate-600" />
+                  </div>
+                </div>
+                <h2 className="text-2xl font-serif font-bold text-slate-800 mb-2">Certificado de Conclusão</h2>
+                <p className="text-slate-500 text-sm uppercase tracking-widest">FinLearn Platform</p>
+              </div>
+
+              {/* Body */}
+              <div className="text-center py-6">
+                <p className="text-slate-600 text-sm mb-3">Certificamos que</p>
+                <h3 className="text-xl font-bold text-slate-800 mb-3">Marina Santos</h3>
+                <p className="text-slate-600 text-sm mb-4">concluiu com êxito o programa</p>
+                <h4 className="text-lg font-semibold text-slate-800 mb-4 px-8">
+                  {selectedCertificate?.title}
+                </h4>
+                <p className="text-slate-600 text-sm mb-2">
+                  {selectedCertificate?.description}
+                </p>
+                <p className="text-slate-500 text-sm">
+                  com carga horária de {selectedCertificate?.hours}, demonstrando aproveitamento satisfatório em todas as atividades propostas.
+                </p>
+              </div>
+
+              {/* Details Grid */}
+              <div className="grid grid-cols-4 gap-4 py-6 border-y border-slate-200 my-6">
+                <div className="text-center">
+                  <p className="text-xs text-slate-500 mb-1">Instituição</p>
+                  <p className="text-sm font-semibold text-slate-700">{selectedCertificate?.institution}</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-xs text-slate-500 mb-1">Nível</p>
+                  <p className="text-sm font-semibold text-slate-700">{selectedCertificate?.level}</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-xs text-slate-500 mb-1">Data de Emissão</p>
+                  <p className="text-sm font-semibold text-slate-700">{selectedCertificate?.issueDate}</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-xs text-slate-500 mb-1">Validade</p>
+                  <p className={`text-sm font-semibold ${selectedCertificate?.validityColor}`}>{selectedCertificate?.validity}</p>
+                </div>
+              </div>
+
+              {/* Footer with QR Code */}
+              <div className="flex justify-between items-end mt-6">
+                <div className="text-center">
+                  <div className="w-28 border-t border-slate-400 mb-2"></div>
+                  <p className="text-xs text-slate-500">Escopo</p>
+                  <p className="text-sm font-medium text-slate-700">{selectedCertificate?.scope}</p>
+                </div>
+                
+                {/* QR Code for Verification */}
+                <div className="text-center">
+                  <div className="bg-white p-2 rounded-lg border border-slate-200 mb-2 flex items-center justify-center">
+                    <QRCodeSVG 
+                      value={verificationUrl} 
+                      size={70}
+                      level="M"
+                      includeMargin={false}
+                    />
+                  </div>
+                  <p className="text-xs text-slate-500">Escaneie para verificar</p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="w-28 border-t border-slate-400 mb-2"></div>
+                  <p className="text-xs text-slate-500">Assinatura</p>
+                  <p className="text-sm font-medium text-slate-700 font-serif italic">Diretor Acadêmico</p>
+                </div>
+              </div>
+
+              {/* Certificate ID */}
+              <div className="mt-6 text-center">
+                <p className="text-xs text-slate-400">
+                  ID: {selectedCertificate?.certId}
+                </p>
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div className="flex justify-center gap-4 mt-6">
+              <Button 
+                variant="outline" 
+                className="flex items-center gap-2"
+                onClick={handleDownloadPDF}
+                disabled={isDownloading}
+              >
+                {isDownloading ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Download className="w-4 h-4" />
+                )}
+                {isDownloading ? "Gerando..." : "Baixar PDF"}
+              </Button>
+              <Button className="flex items-center gap-2 bg-primary text-primary-foreground hover:bg-primary/90">
+                <Share2 className="w-4 h-4" /> Compartilhar
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
