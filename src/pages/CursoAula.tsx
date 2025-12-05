@@ -132,6 +132,7 @@ const CursoAula = () => {
             </div>
 
             <div className="flex-1 overflow-y-auto p-4">
+              {activeTab === 'conteudo' ? (
               <div className="space-y-3">
                 {/* Module 1 - Expanded */}
                 <div className="border border-slate-200 rounded-lg overflow-hidden">
@@ -180,56 +181,46 @@ const CursoAula = () => {
                       </div>
                       
                       {/* Current lesson */}
-                      <div className="flex items-center gap-3 p-3 bg-pastel-blue/30 cursor-pointer border-l-4 border-pastel-blue">
+                      <div className="flex items-center gap-3 p-3 bg-pastel-blue/30 border-l-4 border-pastel-blue cursor-pointer">
                         <div className="w-8 h-8 bg-pastel-blue rounded-full flex items-center justify-center flex-shrink-0">
                           <Play className="w-3 h-3 text-slate-700" />
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-medium text-slate-800 truncate">Tipos de Ativos Financeiros</p>
-                          <p className="text-xs text-slate-600">25:38 • Assistindo</p>
+                          <p className="text-xs text-slate-500">25:30</p>
                         </div>
                       </div>
                       
-                      {/* Pending lessons */}
+                      {/* Pending lesson */}
                       <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
                         <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
                           <Play className="w-3 h-3 text-slate-400" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-slate-800 truncate">Mercado Primário e Secundário</p>
-                          <p className="text-xs text-slate-500">30:22</p>
+                          <p className="text-sm font-medium text-slate-800 truncate">Operações no Mercado à Vista</p>
+                          <p className="text-xs text-slate-500">35:12</p>
                         </div>
                       </div>
-                      
-                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
-                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
-                          <Play className="w-3 h-3 text-slate-400" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-slate-800 truncate">Índices de Mercado</p>
-                          <p className="text-xs text-slate-500">27:18</p>
-                        </div>
-                      </div>
-                      
+
                       {/* Material */}
                       <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
-                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
-                          <FileText className="w-3 h-3 text-slate-400" />
+                        <div className="w-8 h-8 bg-pastel-purple/50 rounded-full flex items-center justify-center flex-shrink-0">
+                          <FileText className="w-3 h-3 text-slate-700" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-slate-800 truncate">Material: Glossário Completo</p>
+                          <p className="text-sm font-medium text-slate-800 truncate">Material: Glossário de Termos</p>
                           <p className="text-xs text-slate-500">PDF</p>
                         </div>
                       </div>
                       
                       {/* Quiz */}
                       <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
-                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
-                          <ClipboardList className="w-3 h-3 text-slate-400" />
+                        <div className="w-8 h-8 bg-pastel-peach/50 rounded-full flex items-center justify-center flex-shrink-0">
+                          <ClipboardList className="w-3 h-3 text-slate-700" />
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-medium text-slate-800 truncate">Questionário Módulo 1</p>
-                          <p className="text-xs text-slate-500">15 questões</p>
+                          <p className="text-xs text-slate-500">10 questões</p>
                         </div>
                       </div>
                     </div>
@@ -250,7 +241,7 @@ const CursoAula = () => {
                       )}
                       <div>
                         <h3 className="font-semibold text-slate-800 text-sm">Módulo 2: Análise Fundamentalista</h3>
-                        <p className="text-xs text-slate-600 mt-1">10 aulas • 4h 20min</p>
+                        <p className="text-xs text-slate-600 mt-1">10 aulas • 4h 30min</p>
                       </div>
                     </div>
                     <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center">
@@ -265,8 +256,8 @@ const CursoAula = () => {
                           <Play className="w-3 h-3 text-slate-400" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-slate-800 truncate">Introdução à Análise Fundamentalista</p>
-                          <p className="text-xs text-slate-500">25:30</p>
+                          <p className="text-sm font-medium text-slate-800 truncate">Balanço Patrimonial</p>
+                          <p className="text-xs text-slate-500">32:18</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
@@ -274,16 +265,7 @@ const CursoAula = () => {
                           <Play className="w-3 h-3 text-slate-400" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-slate-800 truncate">Leitura de Balanços Patrimoniais</p>
-                          <p className="text-xs text-slate-500">32:15</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
-                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
-                          <Play className="w-3 h-3 text-slate-400" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-slate-800 truncate">Demonstração de Resultados (DRE)</p>
+                          <p className="text-sm font-medium text-slate-800 truncate">DRE - Demonstração de Resultado</p>
                           <p className="text-xs text-slate-500">28:45</p>
                         </div>
                       </div>
@@ -293,16 +275,7 @@ const CursoAula = () => {
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-medium text-slate-800 truncate">Fluxo de Caixa</p>
-                          <p className="text-xs text-slate-500">26:20</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
-                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
-                          <Play className="w-3 h-3 text-slate-400" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-slate-800 truncate">Indicadores de Liquidez</p>
-                          <p className="text-xs text-slate-500">24:10</p>
+                          <p className="text-xs text-slate-500">30:20</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
@@ -311,25 +284,7 @@ const CursoAula = () => {
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-medium text-slate-800 truncate">Indicadores de Rentabilidade</p>
-                          <p className="text-xs text-slate-500">29:35</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
-                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
-                          <Play className="w-3 h-3 text-slate-400" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-slate-800 truncate">Indicadores de Endividamento</p>
-                          <p className="text-xs text-slate-500">27:50</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
-                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
-                          <Play className="w-3 h-3 text-slate-400" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-slate-800 truncate">Análise Horizontal e Vertical</p>
-                          <p className="text-xs text-slate-500">31:00</p>
+                          <p className="text-xs text-slate-500">35:10</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
@@ -337,7 +292,7 @@ const CursoAula = () => {
                           <FileText className="w-3 h-3 text-slate-400" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-slate-800 truncate">Material: Planilha de Indicadores</p>
+                          <p className="text-sm font-medium text-slate-800 truncate">Material: Planilha de Análise</p>
                           <p className="text-xs text-slate-500">Excel</p>
                         </div>
                       </div>
@@ -347,7 +302,7 @@ const CursoAula = () => {
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-medium text-slate-800 truncate">Questionário Módulo 2</p>
-                          <p className="text-xs text-slate-500">20 questões</p>
+                          <p className="text-xs text-slate-500">15 questões</p>
                         </div>
                       </div>
                     </div>
@@ -367,12 +322,12 @@ const CursoAula = () => {
                         <ChevronRight className="w-4 h-4 text-slate-700" />
                       )}
                       <div>
-                        <h3 className="font-semibold text-slate-800 text-sm">Módulo 3: Valuation e Precificação</h3>
-                        <p className="text-xs text-slate-600 mt-1">8 aulas • 3h 55min</p>
+                        <h3 className="font-semibold text-slate-800 text-sm">Módulo 3: Análise Técnica</h3>
+                        <p className="text-xs text-slate-600 mt-1">12 aulas • 5h 15min</p>
                       </div>
                     </div>
                     <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center">
-                      <span className="text-xs text-slate-600 font-medium">0/8</span>
+                      <span className="text-xs text-slate-600 font-medium">0/12</span>
                     </div>
                   </div>
                   
@@ -383,8 +338,8 @@ const CursoAula = () => {
                           <Play className="w-3 h-3 text-slate-400" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-slate-800 truncate">Introdução ao Valuation</p>
-                          <p className="text-xs text-slate-500">28:15</p>
+                          <p className="text-sm font-medium text-slate-800 truncate">Introdução à Análise Gráfica</p>
+                          <p className="text-xs text-slate-500">25:40</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
@@ -392,8 +347,8 @@ const CursoAula = () => {
                           <Play className="w-3 h-3 text-slate-400" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-slate-800 truncate">Fluxo de Caixa Descontado (DCF)</p>
-                          <p className="text-xs text-slate-500">35:40</p>
+                          <p className="text-sm font-medium text-slate-800 truncate">Candlesticks e Padrões</p>
+                          <p className="text-xs text-slate-500">38:20</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
@@ -401,8 +356,8 @@ const CursoAula = () => {
                           <Play className="w-3 h-3 text-slate-400" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-slate-800 truncate">Custo de Capital (WACC)</p>
-                          <p className="text-xs text-slate-500">30:25</p>
+                          <p className="text-sm font-medium text-slate-800 truncate">Suportes e Resistências</p>
+                          <p className="text-xs text-slate-500">30:15</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
@@ -410,8 +365,8 @@ const CursoAula = () => {
                           <Play className="w-3 h-3 text-slate-400" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-slate-800 truncate">Múltiplos de Mercado</p>
-                          <p className="text-xs text-slate-500">27:50</p>
+                          <p className="text-sm font-medium text-slate-800 truncate">Médias Móveis</p>
+                          <p className="text-xs text-slate-500">28:50</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
@@ -419,17 +374,8 @@ const CursoAula = () => {
                           <Play className="w-3 h-3 text-slate-400" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-slate-800 truncate">P/L, P/VPA e EV/EBITDA</p>
-                          <p className="text-xs text-slate-500">32:10</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
-                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
-                          <Play className="w-3 h-3 text-slate-400" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-slate-800 truncate">Valuation de Empresas de Crescimento</p>
-                          <p className="text-xs text-slate-500">29:35</p>
+                          <p className="text-sm font-medium text-slate-800 truncate">Indicadores de Momentum</p>
+                          <p className="text-xs text-slate-500">35:00</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
@@ -437,8 +383,8 @@ const CursoAula = () => {
                           <FileText className="w-3 h-3 text-slate-400" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-slate-800 truncate">Material: Modelo de Valuation</p>
-                          <p className="text-xs text-slate-500">Excel</p>
+                          <p className="text-sm font-medium text-slate-800 truncate">Material: Setup de Trading</p>
+                          <p className="text-xs text-slate-500">PDF</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
@@ -447,7 +393,7 @@ const CursoAula = () => {
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-medium text-slate-800 truncate">Questionário Módulo 3</p>
-                          <p className="text-xs text-slate-500">18 questões</p>
+                          <p className="text-xs text-slate-500">20 questões</p>
                         </div>
                       </div>
                     </div>
@@ -467,12 +413,12 @@ const CursoAula = () => {
                         <ChevronRight className="w-4 h-4 text-slate-700" />
                       )}
                       <div>
-                        <h3 className="font-semibold text-slate-800 text-sm">Módulo 4: Gestão de Portfólios</h3>
-                        <p className="text-xs text-slate-600 mt-1">9 aulas • 4h 10min</p>
+                        <h3 className="font-semibold text-slate-800 text-sm">Módulo 4: Gestão de Carteira</h3>
+                        <p className="text-xs text-slate-600 mt-1">8 aulas • 3h 50min</p>
                       </div>
                     </div>
                     <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center">
-                      <span className="text-xs text-slate-600 font-medium">0/9</span>
+                      <span className="text-xs text-slate-600 font-medium">0/8</span>
                     </div>
                   </div>
                   
@@ -483,8 +429,8 @@ const CursoAula = () => {
                           <Play className="w-3 h-3 text-slate-400" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-slate-800 truncate">Teoria Moderna do Portfólio</p>
-                          <p className="text-xs text-slate-500">30:20</p>
+                          <p className="text-sm font-medium text-slate-800 truncate">Teoria Moderna de Portfólio</p>
+                          <p className="text-xs text-slate-500">32:45</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
@@ -493,34 +439,7 @@ const CursoAula = () => {
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-medium text-slate-800 truncate">Diversificação e Correlação</p>
-                          <p className="text-xs text-slate-500">28:45</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
-                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
-                          <Play className="w-3 h-3 text-slate-400" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-slate-800 truncate">Fronteira Eficiente</p>
-                          <p className="text-xs text-slate-500">26:30</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
-                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
-                          <Play className="w-3 h-3 text-slate-400" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-slate-800 truncate">CAPM e Beta</p>
-                          <p className="text-xs text-slate-500">32:15</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
-                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
-                          <Play className="w-3 h-3 text-slate-400" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-slate-800 truncate">Índice de Sharpe e Treynor</p>
-                          <p className="text-xs text-slate-500">27:40</p>
+                          <p className="text-xs text-slate-500">28:30</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
@@ -601,8 +520,8 @@ const CursoAula = () => {
                           <Play className="w-3 h-3 text-slate-400" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-slate-800 truncate">Contratos Futuros</p>
-                          <p className="text-xs text-slate-500">32:45</p>
+                          <p className="text-sm font-medium text-slate-800 truncate">Mercado Futuro</p>
+                          <p className="text-xs text-slate-500">35:15</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
@@ -610,8 +529,8 @@ const CursoAula = () => {
                           <Play className="w-3 h-3 text-slate-400" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-slate-800 truncate">Opções: Call e Put</p>
-                          <p className="text-xs text-slate-500">35:20</p>
+                          <p className="text-sm font-medium text-slate-800 truncate">Opções: Conceitos Básicos</p>
+                          <p className="text-xs text-slate-500">32:40</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
@@ -619,17 +538,8 @@ const CursoAula = () => {
                           <Play className="w-3 h-3 text-slate-400" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-slate-800 truncate">Precificação de Opções (Black-Scholes)</p>
-                          <p className="text-xs text-slate-500">30:15</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
-                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
-                          <Play className="w-3 h-3 text-slate-400" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-slate-800 truncate">Swaps e Hedging</p>
-                          <p className="text-xs text-slate-500">27:40</p>
+                          <p className="text-sm font-medium text-slate-800 truncate">Estratégias com Opções</p>
+                          <p className="text-xs text-slate-500">40:25</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-3 p-3 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
@@ -654,6 +564,95 @@ const CursoAula = () => {
                   )}
                 </div>
               </div>
+              ) : (
+              <div className="space-y-4">
+                {/* Notes Header */}
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold text-slate-800 text-sm">Minhas Anotações</h3>
+                  <button className="flex items-center gap-1 text-xs text-pastel-blue hover:underline font-medium">
+                    <Plus className="w-3 h-3" />
+                    Nova Nota
+                  </button>
+                </div>
+
+                {/* Search Notes */}
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                  <input 
+                    type="text"
+                    placeholder="Buscar nas notas..."
+                    className="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-pastel-blue/50"
+                  />
+                </div>
+
+                {/* Notes List */}
+                <div className="space-y-3">
+                  {/* Note 1 */}
+                  <div className="bg-pastel-yellow/20 border border-pastel-yellow/40 rounded-lg p-3">
+                    <div className="flex items-start justify-between mb-2">
+                      <span className="text-xs text-slate-500">Módulo 1 - Aula 3 • 12:45</span>
+                      <button className="text-slate-400 hover:text-slate-600">
+                        <X className="w-3 h-3" />
+                      </button>
+                    </div>
+                    <p className="text-sm text-slate-700 mb-2">Lembrar de revisar os tipos de ativos: renda fixa, renda variável e fundos de investimento.</p>
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-0.5 bg-pastel-yellow/50 text-slate-600 text-xs rounded">Importante</span>
+                    </div>
+                  </div>
+
+                  {/* Note 2 */}
+                  <div className="bg-pastel-blue/20 border border-pastel-blue/40 rounded-lg p-3">
+                    <div className="flex items-start justify-between mb-2">
+                      <span className="text-xs text-slate-500">Módulo 1 - Aula 2 • 08:32</span>
+                      <button className="text-slate-400 hover:text-slate-600">
+                        <X className="w-3 h-3" />
+                      </button>
+                    </div>
+                    <p className="text-sm text-slate-700 mb-2">Participantes do mercado: investidores, corretoras, bolsas e entidades reguladoras (CVM, BACEN).</p>
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-0.5 bg-pastel-blue/50 text-slate-600 text-xs rounded">Conceito</span>
+                    </div>
+                  </div>
+
+                  {/* Note 3 */}
+                  <div className="bg-pastel-green/20 border border-pastel-green/40 rounded-lg p-3">
+                    <div className="flex items-start justify-between mb-2">
+                      <span className="text-xs text-slate-500">Módulo 1 - Aula 1 • 15:20</span>
+                      <button className="text-slate-400 hover:text-slate-600">
+                        <X className="w-3 h-3" />
+                      </button>
+                    </div>
+                    <p className="text-sm text-slate-700 mb-2">Mercado primário vs secundário: no primário a empresa emite, no secundário ocorre negociação entre investidores.</p>
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-0.5 bg-pastel-green/50 text-slate-600 text-xs rounded">Diferença</span>
+                    </div>
+                  </div>
+
+                  {/* Note 4 */}
+                  <div className="bg-pastel-purple/20 border border-pastel-purple/40 rounded-lg p-3">
+                    <div className="flex items-start justify-between mb-2">
+                      <span className="text-xs text-slate-500">Módulo 1 - Aula 1 • 05:10</span>
+                      <button className="text-slate-400 hover:text-slate-600">
+                        <X className="w-3 h-3" />
+                      </button>
+                    </div>
+                    <p className="text-sm text-slate-700 mb-2">Função do mercado de capitais: canalizar recursos da poupança para investimentos produtivos.</p>
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-0.5 bg-pastel-purple/50 text-slate-600 text-xs rounded">Definição</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Notes Stats */}
+                <div className="bg-slate-50 rounded-lg p-3 mt-4">
+                  <div className="flex items-center justify-between text-xs text-slate-600">
+                    <span>Total de notas: 4</span>
+                    <span>Última atualização: hoje</span>
+                  </div>
+                </div>
+              </div>
+              )}
             </div>
 
             {/* Progress Footer */}
