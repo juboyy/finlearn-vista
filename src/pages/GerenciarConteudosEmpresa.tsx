@@ -1,6 +1,7 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { MenutabbarFix } from "@/components/Dashboard/MenutabbarFix";
 import { ArrowLeft, Plus, BookOpen, Video, Search, FileText, Bell, Crown, Podcast, Newspaper, TrendingUp, Book, GraduationCap, Bot, FileCheck, FlaskConical, Eye, Pen, MoreVertical, FileSearch, BarChart3, Trash2, Loader2, Image, Presentation, Radio, MessageSquare } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import {
@@ -39,6 +40,7 @@ interface ContentItem {
   date: string;
   views: string;
   isFromDb?: boolean;
+  isVisible?: boolean;
 }
 
 export default function GerenciarConteudosEmpresa() {
@@ -50,6 +52,15 @@ export default function GerenciarConteudosEmpresa() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState<ContentItem | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [visibilityState, setVisibilityState] = useState<Record<string, boolean>>({});
+
+  const toggleVisibility = (id: string) => {
+    setVisibilityState(prev => ({
+      ...prev,
+      [id]: prev[id] === undefined ? false : !prev[id]
+    }));
+    toast.success("Visibilidade atualizada");
+  };
 
   // Dados estáticos específicos para conteúdos da empresa (diferentes de MeusConteudos)
   const companyContentItems: ContentItem[] = [
@@ -395,6 +406,9 @@ export default function GerenciarConteudosEmpresa() {
                         <th className="px-6 py-4 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                           Visualizações
                         </th>
+                        <th className="px-6 py-4 text-center text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                          Visível
+                        </th>
                         <th className="px-6 py-4 text-right text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                           Ações
                         </th>
@@ -403,14 +417,14 @@ export default function GerenciarConteudosEmpresa() {
                     <tbody className="divide-y divide-border">
                       {isLoading ? (
                         <tr>
-                          <td colSpan={7} className="px-6 py-12 text-center">
+                          <td colSpan={8} className="px-6 py-12 text-center">
                             <Loader2 className="w-6 h-6 animate-spin mx-auto text-muted-foreground" />
                             <p className="text-sm text-muted-foreground mt-2">Carregando conteúdos...</p>
                           </td>
                         </tr>
                       ) : filteredItems.length === 0 ? (
                         <tr>
-                          <td colSpan={7} className="px-6 py-12 text-center">
+                          <td colSpan={8} className="px-6 py-12 text-center">
                             <p className="text-sm text-muted-foreground">Nenhum conteúdo encontrado</p>
                           </td>
                         </tr>
@@ -449,6 +463,18 @@ export default function GerenciarConteudosEmpresa() {
                                 <span className={`text-sm font-medium ${item.views === '-' ? 'text-muted-foreground' : 'text-foreground'}`}>
                                   {item.views}
                                 </span>
+                              </div>
+                            </td>
+                            <td className="px-6 py-4">
+                              <div className="flex items-center justify-center">
+                                {item.status === 'Publicado' ? (
+                                  <Switch
+                                    checked={visibilityState[item.id || ''] ?? true}
+                                    onCheckedChange={() => toggleVisibility(item.id || '')}
+                                  />
+                                ) : (
+                                  <span className="text-xs text-muted-foreground">-</span>
+                                )}
                               </div>
                             </td>
                             <td className="px-6 py-4">
