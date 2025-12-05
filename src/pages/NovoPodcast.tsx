@@ -98,6 +98,76 @@ export default function NovoPodcast() {
   // Validation errors
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  // Participants state
+  interface Participant {
+    id: string;
+    name: string;
+    role: string;
+    avatar: string;
+    isMain?: boolean;
+  }
+
+  const [hosts, setHosts] = useState<Participant[]>([
+    {
+      id: crypto.randomUUID(),
+      name: "Marina Santos",
+      role: "Especialista em Pagamentos",
+      avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg",
+      isMain: true,
+    },
+  ]);
+
+  const [guests, setGuests] = useState<Participant[]>([]);
+
+  const addHost = () => {
+    setHosts([
+      ...hosts,
+      {
+        id: crypto.randomUUID(),
+        name: "",
+        role: "",
+        avatar: "",
+        isMain: false,
+      },
+    ]);
+  };
+
+  const removeHost = (id: string) => {
+    if (hosts.length > 1) {
+      setHosts(hosts.filter((h) => h.id !== id));
+    } else {
+      toast.error("E necessario pelo menos um host.");
+    }
+  };
+
+  const updateHost = (id: string, field: keyof Participant, value: string | boolean) => {
+    setHosts(hosts.map((h) => (h.id === id ? { ...h, [field]: value } : h)));
+  };
+
+  const setMainHost = (id: string) => {
+    setHosts(hosts.map((h) => ({ ...h, isMain: h.id === id })));
+  };
+
+  const addGuest = () => {
+    setGuests([
+      ...guests,
+      {
+        id: crypto.randomUUID(),
+        name: "",
+        role: "",
+        avatar: "",
+      },
+    ]);
+  };
+
+  const removeGuest = (id: string) => {
+    setGuests(guests.filter((g) => g.id !== id));
+  };
+
+  const updateGuest = (id: string, field: keyof Participant, value: string) => {
+    setGuests(guests.map((g) => (g.id === id ? { ...g, [field]: value } : g)));
+  };
+
   const handleAudioUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -267,8 +337,17 @@ export default function NovoPodcast() {
         tags: tagsArray,
         audio_url: audioUrl,
         cover_image_url: coverImageUrl,
-        hosts: [{ name: "Marina Santos", role: "Especialista em Pagamentos", isMain: true }],
-        guests: [],
+        hosts: hosts.filter((h) => h.name.trim()).map((h) => ({
+          name: h.name,
+          role: h.role,
+          avatar: h.avatar,
+          isMain: h.isMain,
+        })),
+        guests: guests.filter((g) => g.name.trim()).map((g) => ({
+          name: g.name,
+          role: g.role,
+          avatar: g.avatar,
+        })),
         publication_date: publicationDate || null,
         publication_time: publicationTime || null,
         publication_type: publicationType,
@@ -611,47 +690,133 @@ export default function NovoPodcast() {
                 </h2>
 
                 <div className="space-y-6">
+                  {/* Hosts Section */}
                   <div>
                     <div className="flex items-center justify-between mb-3">
                       <label className="text-sm font-semibold text-foreground">
                         Apresentador(es) / Host(s) *
                       </label>
-                      <button className="text-sm text-primary font-medium hover:underline flex items-center gap-1">
+                      <button
+                        type="button"
+                        onClick={addHost}
+                        className="text-sm text-primary font-medium hover:underline flex items-center gap-1"
+                      >
                         <Plus className="w-4 h-4" />
                         Adicionar Host
                       </button>
                     </div>
                     <div className="space-y-3">
-                      <div className="flex items-center gap-3 p-3 bg-muted rounded-lg border border-border">
-                        <img
-                          src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg"
-                          alt="Host"
-                          className="w-12 h-12 rounded-full object-cover"
-                        />
-                        <div className="flex-1">
-                          <p className="font-semibold text-sm text-foreground">Marina Santos</p>
-                          <p className="text-xs text-muted-foreground">Especialista em Pagamentos</p>
+                      {hosts.map((host) => (
+                        <div
+                          key={host.id}
+                          className="flex items-center gap-3 p-3 bg-muted rounded-lg border border-border"
+                        >
+                          <div className="w-12 h-12 rounded-full bg-[hsl(var(--pastel-blue))]/30 flex items-center justify-center overflow-hidden">
+                            {host.avatar ? (
+                              <img
+                                src={host.avatar}
+                                alt="Host"
+                                className="w-12 h-12 rounded-full object-cover"
+                              />
+                            ) : (
+                              <Users className="w-6 h-6 text-[hsl(var(--pastel-gray-dark))]" />
+                            )}
+                          </div>
+                          <div className="flex-1 space-y-1">
+                            <Input
+                              placeholder="Nome do host"
+                              value={host.name}
+                              onChange={(e) => updateHost(host.id, "name", e.target.value)}
+                              className="h-8 text-sm font-semibold"
+                            />
+                            <Input
+                              placeholder="Cargo/Especializacao"
+                              value={host.role}
+                              onChange={(e) => updateHost(host.id, "role", e.target.value)}
+                              className="h-8 text-xs"
+                            />
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => setMainHost(host.id)}
+                            className={`px-3 py-1 text-xs font-semibold rounded-full transition-colors ${
+                              host.isMain
+                                ? "bg-[hsl(var(--pastel-blue))] text-[hsl(var(--pastel-gray-dark))]"
+                                : "bg-muted-foreground/20 text-muted-foreground hover:bg-[hsl(var(--pastel-blue))]/50"
+                            }`}
+                          >
+                            {host.isMain ? "Host Principal" : "Definir Principal"}
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => removeHost(host.id)}
+                            className="text-muted-foreground hover:text-destructive transition-colors"
+                          >
+                            <X className="w-4 h-4" />
+                          </button>
                         </div>
-                        <span className="px-3 py-1 bg-[hsl(var(--pastel-blue))] text-[hsl(var(--pastel-gray-dark))] text-xs font-semibold rounded-full">
-                          Host Principal
-                        </span>
-                        <button className="text-muted-foreground hover:text-destructive">
-                          <X className="w-4 h-4" />
-                        </button>
-                      </div>
+                      ))}
                     </div>
                   </div>
 
+                  {/* Guests Section */}
                   <div>
                     <div className="flex items-center justify-between mb-3">
                       <label className="text-sm font-semibold text-foreground">Convidados</label>
-                      <button className="text-sm text-primary font-medium hover:underline flex items-center gap-1">
+                      <button
+                        type="button"
+                        onClick={addGuest}
+                        className="text-sm text-primary font-medium hover:underline flex items-center gap-1"
+                      >
                         <Plus className="w-4 h-4" />
                         Adicionar Convidado
                       </button>
                     </div>
                     <div className="space-y-3">
-                      <button className="w-full py-3 border-2 border-dashed border-input rounded-lg text-sm font-medium text-muted-foreground hover:border-primary hover:text-primary transition-colors">
+                      {guests.map((guest) => (
+                        <div
+                          key={guest.id}
+                          className="flex items-center gap-3 p-3 bg-muted rounded-lg border border-border"
+                        >
+                          <div className="w-12 h-12 rounded-full bg-[hsl(var(--pastel-purple))]/30 flex items-center justify-center overflow-hidden">
+                            {guest.avatar ? (
+                              <img
+                                src={guest.avatar}
+                                alt="Guest"
+                                className="w-12 h-12 rounded-full object-cover"
+                              />
+                            ) : (
+                              <Users className="w-6 h-6 text-[hsl(var(--pastel-gray-dark))]" />
+                            )}
+                          </div>
+                          <div className="flex-1 space-y-1">
+                            <Input
+                              placeholder="Nome do convidado"
+                              value={guest.name}
+                              onChange={(e) => updateGuest(guest.id, "name", e.target.value)}
+                              className="h-8 text-sm font-semibold"
+                            />
+                            <Input
+                              placeholder="Cargo/Especializacao"
+                              value={guest.role}
+                              onChange={(e) => updateGuest(guest.id, "role", e.target.value)}
+                              className="h-8 text-xs"
+                            />
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => removeGuest(guest.id)}
+                            className="text-muted-foreground hover:text-destructive transition-colors"
+                          >
+                            <X className="w-4 h-4" />
+                          </button>
+                        </div>
+                      ))}
+                      <button
+                        type="button"
+                        onClick={addGuest}
+                        className="w-full py-3 border-2 border-dashed border-input rounded-lg text-sm font-medium text-muted-foreground hover:border-primary hover:text-primary transition-colors"
+                      >
                         <Plus className="w-4 h-4 inline mr-2" />
                         Adicionar Convidado
                       </button>
