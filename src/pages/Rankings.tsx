@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { 
   Search, 
@@ -11,20 +12,31 @@ import {
   Star, 
   Crown, 
   UserPlus, 
-  Check 
+  Check,
+  ChevronLeft
 } from "lucide-react";
 
 const Rankings = () => {
+  const navigate = useNavigate();
+  
   return (
     <div className="flex min-h-screen bg-background">
       <SidebarFix />
       
       <div className="flex-1">
         <header className="bg-card/80 backdrop-blur-sm border-b border-border sticky top-0 z-40">
-          <div className="px-8 h-20 flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-foreground">Rankings & Comunidade</h1>
-              <p className="text-sm text-muted-foreground mt-1">Veja sua posição e conecte-se com outros profissionais</p>
+          <div className="px-8 py-3 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <button 
+                onClick={() => navigate(-1)}
+                className="p-2 hover:bg-muted rounded-lg transition-colors"
+              >
+                <ChevronLeft className="w-5 h-5 text-muted-foreground" />
+              </button>
+              <div>
+                <h1 className="text-xl font-bold text-foreground">Rankings & Comunidade</h1>
+                <p className="text-xs text-muted-foreground">Veja sua posição e conecte-se com outros profissionais</p>
+              </div>
             </div>
             
             <div className="flex items-center gap-4">
