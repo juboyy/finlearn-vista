@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,7 @@ import {
   Filter
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -50,6 +51,7 @@ interface Conversation {
 
 const HistoricoConversas = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -57,15 +59,13 @@ const HistoricoConversas = () => {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [selectedConversation, setSelectedConversation] = useState<Conversation | null>(null);
 
-  useEffect(() => {
-    fetchConversations();
-  }, []);
+  const fetchConversations = useCallback(async () => {
+    if (!user) {
+      setIsLoading(false);
+      return;
+    }
 
-  const fetchConversations = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
-
       const { data, error } = await supabase
         .from("agent_conversations")
         .select("*")
@@ -88,7 +88,11 @@ const HistoricoConversas = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [user]);
+
+  useEffect(() => {
+    fetchConversations();
+  }, [fetchConversations]);
 
   const handleDelete = async () => {
     if (!deleteId) return;
