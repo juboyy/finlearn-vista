@@ -246,7 +246,7 @@ const MeusCertificados = () => {
           <div className="px-8 py-4 flex items-center justify-between">
             <div className="flex items-center gap-4">
               <button 
-                onClick={() => navigate(-1)}
+                onClick={() => navigate("/")}
                 className="p-2 text-muted-foreground hover:bg-accent rounded-lg transition-colors"
               >
                 <ChevronLeft size={20} />
