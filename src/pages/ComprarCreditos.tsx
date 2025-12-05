@@ -1,10 +1,13 @@
+import { useState } from "react";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { Bell, ArrowLeft, Calculator, Lock, Check, X, ChevronDown, Mic, Pen, Video, Coins, FileText, Volume2, Newspaper, ChartBar, Info } from "lucide-react";
+import { FileBarChart, ArrowLeft, Calculator, Lock, Check, X, ChevronDown, Mic, Pen, Video, Coins, FileText, Volume2, Newspaper, ChartBar, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { ConsumptionHistorySheet } from "@/components/Dashboard/ConsumptionHistorySheet";
 
 export default function ComprarCreditos() {
   const navigate = useNavigate();
+  const [historyOpen, setHistoryOpen] = useState(false);
 
   return (
     <div className="flex h-screen overflow-hidden bg-slate-50">
@@ -30,13 +33,18 @@ export default function ComprarCreditos() {
                 <p className="text-xs text-slate-500">Saldo Total Atual</p>
                 <p className="text-lg font-semibold text-slate-800">5.510 créditos</p>
               </div>
-              <button className="relative p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
-                <Bell className="w-5 h-5" />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+              <button 
+                onClick={() => setHistoryOpen(true)}
+                className="relative p-2 rounded-lg transition"
+                style={{ backgroundColor: 'hsl(var(--pastel-purple) / 0.5)' }}
+              >
+                <FileBarChart className="w-5 h-5 text-slate-700" />
               </button>
             </div>
           </div>
         </header>
+
+        <ConsumptionHistorySheet open={historyOpen} onOpenChange={setHistoryOpen} />
 
         <div className="p-8">
           {/* Saldo Atual de Créditos */}
