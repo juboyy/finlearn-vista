@@ -30,16 +30,23 @@ import { Progress } from "@/components/ui/progress";
 import { useUserAgents } from "@/hooks/useUserAgents";
 import { SidebarMeusAgentes } from "@/components/Dashboard/SidebarMeusAgentes";
 import { VideoCallModal } from "@/components/VideoCallModal";
+import VoiceCallModal from "@/components/VoiceCallModal";
 import { useState } from "react";
 
 export default function MeusAgentes() {
   const { agents, loading, toggleAgentStatus } = useUserAgents();
   const [videoCallOpen, setVideoCallOpen] = useState(false);
+  const [voiceCallOpen, setVoiceCallOpen] = useState(false);
   const [selectedAgent, setSelectedAgent] = useState<{ name: string; avatar: string } | null>(null);
 
   const handleOpenVideoCall = (agentName: string, agentAvatar: string) => {
     setSelectedAgent({ name: agentName, avatar: agentAvatar });
     setVideoCallOpen(true);
+  };
+
+  const handleOpenVoiceCall = (agentName: string, agentAvatar: string) => {
+    setSelectedAgent({ name: agentName, avatar: agentAvatar });
+    setVoiceCallOpen(true);
   };
 
   const getCategoryIcon = (category: string) => {
@@ -228,7 +235,12 @@ export default function MeusAgentes() {
                             <MessageSquare size={16} className="mr-2" />
                             Conversar
                           </Button>
-                          <Button variant="outline" size="icon" disabled={!agent.is_active}>
+                          <Button 
+                            variant="outline" 
+                            size="icon" 
+                            disabled={!agent.is_active}
+                            onClick={() => handleOpenVoiceCall(agent.agent_name, agent.agent_image)}
+                          >
                             <Mic size={16} />
                           </Button>
                           <Button 
@@ -367,6 +379,16 @@ export default function MeusAgentes() {
         <VideoCallModal
           open={videoCallOpen}
           onOpenChange={setVideoCallOpen}
+          agentName={selectedAgent.name}
+          agentAvatar={selectedAgent.avatar}
+        />
+      )}
+
+      {/* Voice Call Modal */}
+      {selectedAgent && (
+        <VoiceCallModal
+          open={voiceCallOpen}
+          onOpenChange={setVoiceCallOpen}
           agentName={selectedAgent.name}
           agentAvatar={selectedAgent.avatar}
         />
