@@ -358,7 +358,7 @@ const CursoAula = () => {
 
           {/* Video Player Main */}
           <main className="flex-1 flex flex-col bg-slate-900">
-            <div className="h-[340px] relative bg-black flex items-center justify-center flex-shrink-0">
+            <div className="h-[510px] relative bg-black flex items-center justify-center flex-shrink-0">
               <img 
                 className="w-full h-full object-contain" 
                 src="https://storage.googleapis.com/uxpilot-auth.appspot.com/c37907bb40-efb5c703a3adf9ca8913.png" 
