@@ -29,9 +29,19 @@ import {
   Link as LinkIcon,
   Phone,
   Mail,
-  BadgeCheck
+  BadgeCheck,
+  X,
+  Award,
+  Tag,
+  Linkedin,
+  Twitter,
+  Instagram,
+  Youtube,
+  ExternalLink,
+  Briefcase
 } from "lucide-react";
 import { toast } from "sonner";
+import { Badge } from "@/components/ui/badge";
 
 interface ContentItem {
   id: string;
@@ -39,6 +49,26 @@ interface ContentItem {
   title: string;
   views: number;
   date: string;
+}
+
+interface AreaAtuacao {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+}
+
+interface Certificado {
+  id: string;
+  name: string;
+  issuer: string;
+  year: string;
+}
+
+interface RedeSocial {
+  id: string;
+  platform: string;
+  url: string;
 }
 
 export default function ConfigurarPaginaEmpresa() {
@@ -76,6 +106,107 @@ export default function ConfigurarPaginaEmpresa() {
     { id: '2', type: 'webinar', title: 'Estratégias de Investimento 2024', views: 2300, date: '2024-01-12' },
     { id: '3', type: 'ebook', title: 'Guia Completo de Meios de Pagamento', views: 4100, date: '2024-01-08' },
   ]);
+
+  // Tags/Especialidades
+  const [tags, setTags] = useState<string[]>(["Banking", "Investimentos", "Seguros", "Cartões", "PIX"]);
+  const [newTag, setNewTag] = useState("");
+
+  // Áreas de Atuação
+  const [areasAtuacao, setAreasAtuacao] = useState<AreaAtuacao[]>([
+    { id: '1', name: 'Banking', description: 'Serviços bancários completos para pessoas físicas e jurídicas', icon: 'building' },
+    { id: '2', name: 'Investimentos', description: 'Gestão de ativos e wealth management', icon: 'chart' },
+  ]);
+  const [newAreaName, setNewAreaName] = useState("");
+  const [newAreaDesc, setNewAreaDesc] = useState("");
+
+  // Certificados e Prêmios
+  const [certificados, setCertificados] = useState<Certificado[]>([
+    { id: '1', name: 'Banco Mais Valioso da América Latina', issuer: 'Brand Finance', year: '2024' },
+    { id: '2', name: 'Melhor Banco Digital', issuer: 'Época Negócios', year: '2024' },
+  ]);
+  const [newCertName, setNewCertName] = useState("");
+  const [newCertIssuer, setNewCertIssuer] = useState("");
+  const [newCertYear, setNewCertYear] = useState("");
+
+  // Redes Sociais
+  const [redesSociais, setRedesSociais] = useState<RedeSocial[]>([
+    { id: '1', platform: 'linkedin', url: 'linkedin.com/company/example' },
+    { id: '2', platform: 'twitter', url: '@example' },
+  ]);
+  const [newRedePlatform, setNewRedePlatform] = useState("linkedin");
+  const [newRedeUrl, setNewRedeUrl] = useState("");
+
+  // Helper functions
+  const addTag = () => {
+    if (newTag.trim() && !tags.includes(newTag.trim())) {
+      setTags([...tags, newTag.trim()]);
+      setNewTag("");
+    }
+  };
+
+  const removeTag = (tag: string) => {
+    setTags(tags.filter(t => t !== tag));
+  };
+
+  const addArea = () => {
+    if (newAreaName.trim()) {
+      setAreasAtuacao([...areasAtuacao, {
+        id: Date.now().toString(),
+        name: newAreaName.trim(),
+        description: newAreaDesc.trim(),
+        icon: 'briefcase'
+      }]);
+      setNewAreaName("");
+      setNewAreaDesc("");
+    }
+  };
+
+  const removeArea = (id: string) => {
+    setAreasAtuacao(areasAtuacao.filter(a => a.id !== id));
+  };
+
+  const addCertificado = () => {
+    if (newCertName.trim()) {
+      setCertificados([...certificados, {
+        id: Date.now().toString(),
+        name: newCertName.trim(),
+        issuer: newCertIssuer.trim(),
+        year: newCertYear.trim()
+      }]);
+      setNewCertName("");
+      setNewCertIssuer("");
+      setNewCertYear("");
+    }
+  };
+
+  const removeCertificado = (id: string) => {
+    setCertificados(certificados.filter(c => c.id !== id));
+  };
+
+  const addRedeSocial = () => {
+    if (newRedeUrl.trim()) {
+      setRedesSociais([...redesSociais, {
+        id: Date.now().toString(),
+        platform: newRedePlatform,
+        url: newRedeUrl.trim()
+      }]);
+      setNewRedeUrl("");
+    }
+  };
+
+  const removeRedeSocial = (id: string) => {
+    setRedesSociais(redesSociais.filter(r => r.id !== id));
+  };
+
+  const getSocialIcon = (platform: string) => {
+    switch(platform) {
+      case 'linkedin': return <Linkedin className="w-4 h-4" />;
+      case 'twitter': return <Twitter className="w-4 h-4" />;
+      case 'instagram': return <Instagram className="w-4 h-4" />;
+      case 'youtube': return <Youtube className="w-4 h-4" />;
+      default: return <Globe className="w-4 h-4" />;
+    }
+  };
   
   const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -130,7 +261,7 @@ export default function ConfigurarPaginaEmpresa() {
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
         <header className="bg-card border-b border-border sticky top-0 z-40">
-          <div className="px-8 h-16 flex items-center justify-between">
+          <div className="px-6 h-14 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <button 
                 onClick={() => navigate("/conta-empresarial")}
@@ -138,15 +269,13 @@ export default function ConfigurarPaginaEmpresa() {
               >
                 <ArrowLeft className="w-4 h-4" />
               </button>
-              <div>
-                <h1 className="text-lg font-bold text-foreground">Configurar Página da Empresa</h1>
-                <p className="text-xs text-muted-foreground">Personalize como sua empresa aparece na plataforma</p>
-              </div>
+              <h1 className="text-base font-semibold text-foreground">Configurar Página da Empresa</h1>
             </div>
             
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <Button
                 variant="outline"
+                size="sm"
                 onClick={handlePreview}
                 className="border-input"
               >
@@ -154,11 +283,12 @@ export default function ConfigurarPaginaEmpresa() {
                 Visualizar
               </Button>
               <Button
+                size="sm"
                 onClick={handleSave}
                 className="bg-primary text-primary-foreground"
               >
                 <Save className="w-4 h-4 mr-2" />
-                Salvar Alterações
+                Salvar
               </Button>
             </div>
           </div>
@@ -497,6 +627,229 @@ export default function ConfigurarPaginaEmpresa() {
                     <p className="text-sm">Adicione artigos, webinars, e-books ou podcasts</p>
                   </div>
                 )}
+              </section>
+
+              {/* Especialidades/Tags Section */}
+              <section className="bg-card border border-border rounded-lg p-6">
+                <h2 className="text-lg font-bold text-foreground mb-6 flex items-center gap-2">
+                  <Tag className="w-5 h-5 text-[hsl(var(--pastel-purple))]" />
+                  Especialidades
+                </h2>
+                
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {tags.map((tag) => (
+                    <Badge 
+                      key={tag} 
+                      variant="secondary" 
+                      className="bg-[hsl(var(--pastel-gray-dark))]/20 text-[hsl(var(--pastel-gray-dark))] px-3 py-1.5 flex items-center gap-2"
+                    >
+                      {tag}
+                      <button 
+                        onClick={() => removeTag(tag)}
+                        className="hover:bg-destructive/20 rounded-full p-0.5"
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    </Badge>
+                  ))}
+                </div>
+                
+                <div className="flex gap-2">
+                  <Input
+                    value={newTag}
+                    onChange={(e) => setNewTag(e.target.value)}
+                    placeholder="Nova especialidade..."
+                    className="flex-1"
+                    onKeyPress={(e) => e.key === 'Enter' && addTag()}
+                  />
+                  <Button 
+                    variant="outline" 
+                    onClick={addTag}
+                    className="border-[hsl(var(--pastel-purple))]/30"
+                  >
+                    <Plus className="w-4 h-4 mr-2" />
+                    Adicionar
+                  </Button>
+                </div>
+              </section>
+
+              {/* Áreas de Atuação Section */}
+              <section className="bg-card border border-border rounded-lg p-6">
+                <h2 className="text-lg font-bold text-foreground mb-6 flex items-center gap-2">
+                  <Briefcase className="w-5 h-5 text-[hsl(var(--pastel-blue))]" />
+                  Áreas de Atuação
+                </h2>
+                
+                <div className="space-y-3 mb-4">
+                  {areasAtuacao.map((area) => (
+                    <div 
+                      key={area.id}
+                      className="flex items-start gap-3 p-4 border border-border rounded-lg bg-muted/30"
+                    >
+                      <div className="w-8 h-8 rounded-lg bg-[hsl(var(--pastel-blue))]/20 flex items-center justify-center">
+                        <Briefcase className="w-4 h-4 text-[hsl(var(--pastel-blue))]" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-foreground text-sm">{area.name}</h4>
+                        <p className="text-xs text-muted-foreground mt-0.5">{area.description}</p>
+                      </div>
+                      <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        className="h-8 w-8 text-destructive"
+                        onClick={() => removeArea(area.id)}
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="space-y-3 p-4 border border-dashed border-border rounded-lg bg-muted/20">
+                  <Input
+                    value={newAreaName}
+                    onChange={(e) => setNewAreaName(e.target.value)}
+                    placeholder="Nome da área..."
+                  />
+                  <Textarea
+                    value={newAreaDesc}
+                    onChange={(e) => setNewAreaDesc(e.target.value)}
+                    placeholder="Descrição da área..."
+                    className="min-h-[60px]"
+                  />
+                  <Button 
+                    variant="outline" 
+                    onClick={addArea}
+                    className="w-full border-[hsl(var(--pastel-blue))]/30"
+                  >
+                    <Plus className="w-4 h-4 mr-2" />
+                    Adicionar Área
+                  </Button>
+                </div>
+              </section>
+
+              {/* Certificados e Prêmios Section */}
+              <section className="bg-card border border-border rounded-lg p-6">
+                <h2 className="text-lg font-bold text-foreground mb-6 flex items-center gap-2">
+                  <Award className="w-5 h-5 text-[hsl(var(--pastel-orange))]" />
+                  Certificações e Prêmios
+                </h2>
+                
+                <div className="space-y-3 mb-4">
+                  {certificados.map((cert) => (
+                    <div 
+                      key={cert.id}
+                      className="flex items-center gap-3 p-4 border border-border rounded-lg bg-muted/30"
+                    >
+                      <div className="w-8 h-8 rounded-lg bg-[hsl(var(--pastel-orange))]/20 flex items-center justify-center">
+                        <Award className="w-4 h-4 text-[hsl(var(--pastel-orange))]" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-foreground text-sm">{cert.name}</h4>
+                        <p className="text-xs text-muted-foreground">{cert.issuer} • {cert.year}</p>
+                      </div>
+                      <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        className="h-8 w-8 text-destructive"
+                        onClick={() => removeCertificado(cert.id)}
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="space-y-3 p-4 border border-dashed border-border rounded-lg bg-muted/20">
+                  <Input
+                    value={newCertName}
+                    onChange={(e) => setNewCertName(e.target.value)}
+                    placeholder="Nome do certificado/prêmio..."
+                  />
+                  <div className="grid grid-cols-2 gap-3">
+                    <Input
+                      value={newCertIssuer}
+                      onChange={(e) => setNewCertIssuer(e.target.value)}
+                      placeholder="Instituição..."
+                    />
+                    <Input
+                      value={newCertYear}
+                      onChange={(e) => setNewCertYear(e.target.value)}
+                      placeholder="Ano..."
+                    />
+                  </div>
+                  <Button 
+                    variant="outline" 
+                    onClick={addCertificado}
+                    className="w-full border-[hsl(var(--pastel-orange))]/30"
+                  >
+                    <Plus className="w-4 h-4 mr-2" />
+                    Adicionar Certificado
+                  </Button>
+                </div>
+              </section>
+
+              {/* Redes Sociais Section */}
+              <section className="bg-card border border-border rounded-lg p-6">
+                <h2 className="text-lg font-bold text-foreground mb-6 flex items-center gap-2">
+                  <Globe className="w-5 h-5 text-[hsl(var(--pastel-green))]" />
+                  Redes Sociais
+                </h2>
+                
+                <div className="space-y-3 mb-4">
+                  {redesSociais.map((rede) => (
+                    <div 
+                      key={rede.id}
+                      className="flex items-center gap-3 p-4 border border-border rounded-lg bg-muted/30"
+                    >
+                      <div className="w-8 h-8 rounded-lg bg-[hsl(var(--pastel-green))]/20 flex items-center justify-center text-[hsl(var(--pastel-green))]">
+                        {getSocialIcon(rede.platform)}
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-foreground text-sm capitalize">{rede.platform}</h4>
+                        <p className="text-xs text-muted-foreground flex items-center gap-1">
+                          <ExternalLink className="w-3 h-3" />
+                          {rede.url}
+                        </p>
+                      </div>
+                      <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        className="h-8 w-8 text-destructive"
+                        onClick={() => removeRedeSocial(rede.id)}
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="space-y-3 p-4 border border-dashed border-border rounded-lg bg-muted/20">
+                  <select
+                    value={newRedePlatform}
+                    onChange={(e) => setNewRedePlatform(e.target.value)}
+                    className="w-full h-10 px-3 rounded-md border border-input bg-background text-sm"
+                  >
+                    <option value="linkedin">LinkedIn</option>
+                    <option value="twitter">Twitter/X</option>
+                    <option value="instagram">Instagram</option>
+                    <option value="youtube">YouTube</option>
+                    <option value="website">Website</option>
+                  </select>
+                  <Input
+                    value={newRedeUrl}
+                    onChange={(e) => setNewRedeUrl(e.target.value)}
+                    placeholder="URL ou @usuario..."
+                  />
+                  <Button 
+                    variant="outline" 
+                    onClick={addRedeSocial}
+                    className="w-full border-[hsl(var(--pastel-green))]/30"
+                  >
+                    <Plus className="w-4 h-4 mr-2" />
+                    Adicionar Rede Social
+                  </Button>
+                </div>
               </section>
             </div>
             
