@@ -189,7 +189,21 @@ const Marketplace = () => {
               </div>
             ) : recommendations.length > 0 ? (
               <div className="grid grid-cols-4 gap-5">
-                {recommendations.map((product) => (
+                {recommendations.map((product, index) => {
+                  const ebookImages = [
+                    "https://storage.googleapis.com/uxpilot-auth.appspot.com/de72874cc5-bcb1610580017fd3cfe5.png",
+                    "https://storage.googleapis.com/uxpilot-auth.appspot.com/aa9b09b858-0994d5433f7f20c4839e.png"
+                  ];
+                  const courseImages = [
+                    "https://storage.googleapis.com/uxpilot-auth.appspot.com/aa9b09b858-0994d5433f7f20c4839e.png",
+                    "https://storage.googleapis.com/uxpilot-auth.appspot.com/de72874cc5-bcb1610580017fd3cfe5.png"
+                  ];
+                  const imageIndex = index % 2;
+                  const imageSrc = product.type === 'ebook' 
+                    ? ebookImages[imageIndex] 
+                    : courseImages[imageIndex];
+                  
+                  return (
                   <div 
                     key={product.id}
                     className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-xl transition group cursor-pointer" 
@@ -201,10 +215,7 @@ const Marketplace = () => {
                       }`}>
                         <img
                           className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                          src={product.type === 'ebook' 
-                            ? "https://storage.googleapis.com/uxpilot-auth.appspot.com/de72874cc5-bcb1610580017fd3cfe5.png"
-                            : "https://storage.googleapis.com/uxpilot-auth.appspot.com/aa9b09b858-0994d5433f7f20c4839e.png"
-                          }
+                          src={imageSrc}
                           alt={product.title}
                         />
                       </div>
@@ -243,7 +254,8 @@ const Marketplace = () => {
                       <p className="text-xs text-slate-500 mt-2 line-clamp-2">{product.reason}</p>
                     </div>
                   </div>
-                ))}
+                  );
+                })}
               </div>
             ) : (
               <div className="bg-pastel-blue/10 rounded-xl p-8 text-center">
