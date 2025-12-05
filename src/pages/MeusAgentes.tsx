@@ -111,6 +111,14 @@ export default function MeusAgentes() {
               <Bell size={20} />
               <span className="absolute top-1 right-1 w-2 h-2 bg-[hsl(45,35%,75%)] rounded-full"></span>
             </Button>
+            <Button
+              variant="outline"
+              onClick={() => window.location.href = "/historico-conversas"}
+              className="border-pastel-blue/50 text-pastel-gray-dark hover:bg-pastel-blue/10"
+            >
+              <History size={16} className="mr-2" />
+              Historico
+            </Button>
             <Button 
               className="bg-[hsl(160,35%,75%)] text-[hsl(220,15%,30%)] hover:bg-[hsl(160,35%,65%)]"
               onClick={() => window.location.href = "/criar-agente"}

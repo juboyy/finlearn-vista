@@ -144,6 +144,7 @@ import CriarInsights from "./pages/CriarInsights";
 import CriarGraficos from "./pages/CriarGraficos";
 import ContaMentoria from "./pages/ContaMentoria";
 import PerfilSocial from "./pages/PerfilSocial";
+import HistoricoConversas from "./pages/HistoricoConversas";
 
 import NotFound from "./pages/NotFound";
 
@@ -172,6 +173,7 @@ const App = () => {
               <Route path="/artigo/compliance" element={<ProtectedRoute><ArtigoCompliance /></ProtectedRoute>} />
               <Route path="/agentes" element={<ProtectedRoute><Agentes /></ProtectedRoute>} />
               <Route path="/meus-agentes" element={<ProtectedRoute><MeusAgentes /></ProtectedRoute>} />
+              <Route path="/historico-conversas" element={<ProtectedRoute><HistoricoConversas /></ProtectedRoute>} />
               <Route path="/criar-agente" element={<ProtectedRoute><CriarAgente /></ProtectedRoute>} />
               <Route path="/criar-agente/personalidade" element={<ProtectedRoute><CriarAgentePersonalidade /></ProtectedRoute>} />
               <Route path="/criar-agente/resumo" element={<ProtectedRoute><CriarAgenteResumo /></ProtectedRoute>} />
