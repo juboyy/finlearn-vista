@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 import { 
   ArrowLeft, 
   Upload, 
@@ -38,7 +40,8 @@ import {
   Instagram,
   Youtube,
   ExternalLink,
-  Briefcase
+  Briefcase,
+  Loader2
 } from "lucide-react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
@@ -56,6 +59,7 @@ interface AreaAtuacao {
   name: string;
   description: string;
   icon: string;
+  color: string;
 }
 
 interface Certificado {
@@ -71,8 +75,25 @@ interface RedeSocial {
   url: string;
 }
 
+const AREA_COLORS = [
+  { name: 'Laranja', value: '#F97316' },
+  { name: 'Azul', value: '#3B82F6' },
+  { name: 'Verde', value: '#22C55E' },
+  { name: 'Roxo', value: '#8B5CF6' },
+  { name: 'Rosa', value: '#EC4899' },
+  { name: 'Amarelo', value: '#EAB308' },
+  { name: 'Vermelho', value: '#EF4444' },
+  { name: 'Ciano', value: '#06B6D4' },
+];
+
 export default function ConfigurarPaginaEmpresa() {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  
+  // Loading states
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+  const [profileId, setProfileId] = useState<string | null>(null);
   
   // Company Info
   const [companyName, setCompanyName] = useState("");
@@ -113,11 +134,12 @@ export default function ConfigurarPaginaEmpresa() {
 
   // Áreas de Atuação
   const [areasAtuacao, setAreasAtuacao] = useState<AreaAtuacao[]>([
-    { id: '1', name: 'Banking', description: 'Serviços bancários completos para pessoas físicas e jurídicas', icon: 'building' },
-    { id: '2', name: 'Investimentos', description: 'Gestão de ativos e wealth management', icon: 'chart' },
+    { id: '1', name: 'Banking', description: 'Serviços bancários completos para pessoas físicas e jurídicas', icon: 'building', color: '#F97316' },
+    { id: '2', name: 'Investimentos', description: 'Gestão de ativos e wealth management', icon: 'chart', color: '#3B82F6' },
   ]);
   const [newAreaName, setNewAreaName] = useState("");
   const [newAreaDesc, setNewAreaDesc] = useState("");
+  const [newAreaColor, setNewAreaColor] = useState("#F97316");
 
   // Certificados e Prêmios
   const [certificados, setCertificados] = useState<Certificado[]>([
@@ -154,10 +176,12 @@ export default function ConfigurarPaginaEmpresa() {
         id: Date.now().toString(),
         name: newAreaName.trim(),
         description: newAreaDesc.trim(),
-        icon: 'briefcase'
+        icon: 'briefcase',
+        color: newAreaColor
       }]);
       setNewAreaName("");
       setNewAreaDesc("");
+      setNewAreaColor("#F97316");
     }
   };
 
@@ -207,6 +231,61 @@ export default function ConfigurarPaginaEmpresa() {
       default: return <Globe className="w-4 h-4" />;
     }
   };
+
+  // Load data from Supabase
+  useEffect(() => {
+    const loadProfile = async () => {
+      if (!user) {
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const { data, error } = await supabase
+          .from('company_profiles')
+          .select('*')
+          .eq('user_id', user.id)
+          .maybeSingle();
+
+        if (error) throw error;
+
+        if (data) {
+          setProfileId(data.id);
+          setCompanyName(data.company_name || '');
+          setTagline(data.tagline || '');
+          setDescription(data.description || '');
+          setLocation(data.location || '');
+          setFoundedYear(data.founded_year || '');
+          setEmployees(data.employees || '');
+          setWebsite(data.website || '');
+          setPhone(data.phone || '');
+          setEmail(data.email || '');
+          setLogoPreview(data.logo_url);
+          setCoverPreview(data.cover_url);
+          setPrimaryColor(data.primary_color || '#F5D5B8');
+          setStat1Label(data.stat1_label || 'Clientes');
+          setStat1Value(data.stat1_value || '');
+          setStat2Label(data.stat2_label || 'Presença');
+          setStat2Value(data.stat2_value || '');
+          setStat3Label(data.stat3_label || 'Ativos');
+          setStat3Value(data.stat3_value || '');
+          setStat4Label(data.stat4_label || 'Países');
+          setStat4Value(data.stat4_value || '');
+          setTags(data.tags || []);
+          setAreasAtuacao((data.areas_atuacao as unknown as AreaAtuacao[]) || []);
+          setCertificados((data.certificados as unknown as Certificado[]) || []);
+          setRedesSociais((data.redes_sociais as unknown as RedeSocial[]) || []);
+        }
+      } catch (error) {
+        console.error('Error loading profile:', error);
+        toast.error('Erro ao carregar dados da empresa');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadProfile();
+  }, [user]);
   
   const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -226,8 +305,68 @@ export default function ConfigurarPaginaEmpresa() {
     }
   };
   
-  const handleSave = () => {
-    toast.success("Página da empresa salva com sucesso!");
+  const handleSave = async () => {
+    if (!user) {
+      toast.error('Você precisa estar logado para salvar');
+      return;
+    }
+
+    setIsSaving(true);
+
+    try {
+      const profileData = {
+        user_id: user.id,
+        company_name: companyName,
+        tagline,
+        description,
+        location,
+        founded_year: foundedYear,
+        employees,
+        website,
+        phone,
+        email,
+        logo_url: logoPreview,
+        cover_url: coverPreview,
+        primary_color: primaryColor,
+        stat1_label: stat1Label,
+        stat1_value: stat1Value,
+        stat2_label: stat2Label,
+        stat2_value: stat2Value,
+        stat3_label: stat3Label,
+        stat3_value: stat3Value,
+        stat4_label: stat4Label,
+        stat4_value: stat4Value,
+        tags,
+        areas_atuacao: JSON.parse(JSON.stringify(areasAtuacao)),
+        certificados: JSON.parse(JSON.stringify(certificados)),
+        redes_sociais: JSON.parse(JSON.stringify(redesSociais)),
+      };
+
+      if (profileId) {
+        const { error } = await supabase
+          .from('company_profiles')
+          .update(profileData)
+          .eq('id', profileId);
+
+        if (error) throw error;
+      } else {
+        const { data, error } = await supabase
+          .from('company_profiles')
+          .insert(profileData)
+          .select()
+          .single();
+
+        if (error) throw error;
+        setProfileId(data.id);
+      }
+
+      toast.success("Página da empresa salva com sucesso!");
+    } catch (error) {
+      console.error('Error saving profile:', error);
+      toast.error('Erro ao salvar dados da empresa');
+    } finally {
+      setIsSaving(false);
+    }
   };
   
   const handlePreview = () => {
@@ -285,15 +424,33 @@ export default function ConfigurarPaginaEmpresa() {
               <Button
                 size="sm"
                 onClick={handleSave}
+                disabled={isSaving}
                 className="bg-primary text-primary-foreground"
               >
-                <Save className="w-4 h-4 mr-2" />
-                Salvar
+                {isSaving ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Salvando...
+                  </>
+                ) : (
+                  <>
+                    <Save className="w-4 h-4 mr-2" />
+                    Salvar
+                  </>
+                )}
               </Button>
             </div>
           </div>
         </header>
         
+        {isLoading ? (
+          <div className="flex-1 flex items-center justify-center">
+            <div className="text-center">
+              <Loader2 className="w-8 h-8 animate-spin mx-auto text-primary" />
+              <p className="text-sm text-muted-foreground mt-2">Carregando dados...</p>
+            </div>
+          </div>
+        ) : (
         <main className="flex-1 overflow-y-auto p-8">
           <div className="grid grid-cols-12 gap-8 items-start">
             {/* Left Column - Form */}
@@ -684,23 +841,33 @@ export default function ConfigurarPaginaEmpresa() {
                   {areasAtuacao.map((area) => (
                     <div 
                       key={area.id}
-                      className="flex items-start gap-3 p-4 border border-border rounded-lg bg-muted/30"
+                      className="flex items-start gap-0 border border-border rounded-lg bg-muted/30 overflow-hidden"
                     >
-                      <div className="w-8 h-8 rounded-lg bg-[hsl(var(--pastel-blue))]/20 flex items-center justify-center">
-                        <Briefcase className="w-4 h-4 text-[hsl(var(--pastel-blue))]" />
+                      {/* Color Bar */}
+                      <div 
+                        className="w-1.5 self-stretch flex-shrink-0"
+                        style={{ backgroundColor: area.color }}
+                      />
+                      <div className="flex items-start gap-3 p-4 flex-1">
+                        <div 
+                          className="w-8 h-8 rounded-lg flex items-center justify-center"
+                          style={{ backgroundColor: `${area.color}20` }}
+                        >
+                          <Briefcase className="w-4 h-4" style={{ color: area.color }} />
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-foreground text-sm">{area.name}</h4>
+                          <p className="text-xs text-muted-foreground mt-0.5">{area.description}</p>
+                        </div>
+                        <Button 
+                          variant="ghost" 
+                          size="icon" 
+                          className="h-8 w-8 text-destructive"
+                          onClick={() => removeArea(area.id)}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
                       </div>
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-foreground text-sm">{area.name}</h4>
-                        <p className="text-xs text-muted-foreground mt-0.5">{area.description}</p>
-                      </div>
-                      <Button 
-                        variant="ghost" 
-                        size="icon" 
-                        className="h-8 w-8 text-destructive"
-                        onClick={() => removeArea(area.id)}
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
                     </div>
                   ))}
                 </div>
@@ -717,6 +884,28 @@ export default function ConfigurarPaginaEmpresa() {
                     placeholder="Descrição da área..."
                     className="min-h-[60px]"
                   />
+                  
+                  {/* Color Selector */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">Cor da área</label>
+                    <div className="flex flex-wrap gap-2">
+                      {AREA_COLORS.map((color) => (
+                        <button
+                          key={color.value}
+                          type="button"
+                          onClick={() => setNewAreaColor(color.value)}
+                          className={`w-8 h-8 rounded-lg border-2 transition-all ${
+                            newAreaColor === color.value 
+                              ? 'border-foreground scale-110' 
+                              : 'border-transparent hover:scale-105'
+                          }`}
+                          style={{ backgroundColor: color.value }}
+                          title={color.name}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  
                   <Button 
                     variant="outline" 
                     onClick={addArea}
@@ -981,6 +1170,7 @@ export default function ConfigurarPaginaEmpresa() {
             </div>
           </div>
         </main>
+        )}
       </div>
     </div>
   );
