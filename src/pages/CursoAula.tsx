@@ -757,7 +757,7 @@ const CursoAula = () => {
                     </div>
 
                     <div className="grid grid-cols-2 gap-4 mb-6">
-                      <div className="bg-pastel-yellow/20 border-l-4 border-pastel-yellow rounded-lg p-4 hover:shadow-md transition cursor-pointer">
+                      <div className="bg-pastel-yellow/20 border border-pastel-yellow/40 rounded-lg p-4 hover:shadow-md transition cursor-pointer">
                         <div className="flex items-center justify-between mb-2">
                           <span className="text-xs text-slate-500">05:23 do vídeo</span>
                           <button className="text-slate-400 hover:text-slate-600">
@@ -768,7 +768,7 @@ const CursoAula = () => {
                         <p className="text-xs text-slate-600">Ações ON = direito a voto. Ações PN = prioridade dividendos. Importante para estratégia de longo prazo.</p>
                       </div>
 
-                      <div className="bg-pastel-blue/20 border-l-4 border-pastel-blue rounded-lg p-4 hover:shadow-md transition cursor-pointer">
+                      <div className="bg-pastel-blue/20 border border-pastel-blue/40 rounded-lg p-4 hover:shadow-md transition cursor-pointer">
                         <div className="flex items-center justify-between mb-2">
                           <span className="text-xs text-slate-500">12:45 do vídeo</span>
                           <button className="text-slate-400 hover:text-slate-600">
@@ -779,7 +779,7 @@ const CursoAula = () => {
                         <p className="text-xs text-slate-600">FIIs distribuem 95% do lucro. Isenção de IR para pessoa física. Boa opção para renda passiva.</p>
                       </div>
 
-                      <div className="bg-pastel-green/20 border-l-4 border-pastel-green rounded-lg p-4 hover:shadow-md transition cursor-pointer">
+                      <div className="bg-pastel-green/20 border border-pastel-green/40 rounded-lg p-4 hover:shadow-md transition cursor-pointer">
                         <div className="flex items-center justify-between mb-2">
                           <span className="text-xs text-slate-500">18:30 do vídeo</span>
                           <button className="text-slate-400 hover:text-slate-600">
@@ -790,7 +790,7 @@ const CursoAula = () => {
                         <p className="text-xs text-slate-600">CDBs, LCIs, LCAs. Garantia do FGC até R$ 250k. Tributação regressiva no tempo.</p>
                       </div>
 
-                      <div className="bg-pastel-purple/20 border-l-4 border-pastel-purple rounded-lg p-4 hover:shadow-md transition cursor-pointer">
+                      <div className="bg-pastel-peach/20 border border-pastel-peach/40 rounded-lg p-4 hover:shadow-md transition cursor-pointer">
                         <div className="flex items-center justify-between mb-2">
                           <span className="text-xs text-slate-500">22:10 do vídeo</span>
                           <button className="text-slate-400 hover:text-slate-600">
