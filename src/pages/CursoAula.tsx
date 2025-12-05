@@ -617,9 +617,9 @@ const CursoAula = () => {
                         </div>
                       </div>
 
-                      <div className="bg-pastel-purple/20 border border-pastel-purple/40 rounded-xl p-5 hover:shadow-md transition cursor-pointer">
+                      <div className="bg-pastel-peach/20 border border-pastel-peach/40 rounded-xl p-5 hover:shadow-md transition cursor-pointer">
                         <div className="flex items-start gap-4">
-                          <div className="w-14 h-14 bg-pastel-purple rounded-xl flex items-center justify-center flex-shrink-0">
+                          <div className="w-14 h-14 bg-pastel-peach rounded-xl flex items-center justify-center flex-shrink-0">
                             <FileText className="w-7 h-7 text-slate-700" />
                           </div>
                           <div className="flex-1">
