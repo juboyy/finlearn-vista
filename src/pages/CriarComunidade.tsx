@@ -847,7 +847,7 @@ const CriarComunidade = () => {
             </div>
 
             {/* Right Sidebar */}
-            <div className="col-span-12 lg:col-span-4 lg:sticky lg:top-24 space-y-6 self-start">
+            <div className="col-span-12 lg:col-span-4 space-y-6">
               {/* Pré-visualização */}
               <section className="bg-card border border-border rounded-lg shadow-sm p-6">
                 <h3 className="text-lg font-bold text-foreground mb-4">Pré-visualização</h3>
