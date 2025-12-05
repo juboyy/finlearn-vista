@@ -103,6 +103,7 @@ import HistoricoResumos from "./pages/HistoricoResumos";
 import TransformarTabelas from "./pages/TransformarTabelas";
 import NovoEbook from "./pages/NovoEbook";
 import NovoEbookEtapa2 from "./pages/NovoEbookEtapa2";
+import NovoPodcast from "./pages/NovoPodcast";
 import CriarCurso from "./pages/CriarCurso";
 import CriarCursoEtapa2 from "./pages/CriarCursoEtapa2";
 import CriarCursoEtapa3 from "./pages/CriarCursoEtapa3";
@@ -305,6 +306,7 @@ const App = () => {
               <Route path="/participantes-confirmados" element={<ProtectedRoute><ParticipantesConfirmados /></ProtectedRoute>} />
               <Route path="/criar-insights" element={<ProtectedRoute><CriarInsights /></ProtectedRoute>} />
               <Route path="/conta-mentoria" element={<ProtectedRoute><ContaMentoria /></ProtectedRoute>} />
+              <Route path="/novo-podcast" element={<ProtectedRoute><NovoPodcast /></ProtectedRoute>} />
              
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
