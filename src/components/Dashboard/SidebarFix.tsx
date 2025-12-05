@@ -23,7 +23,7 @@ export const SidebarFix = () => {
 
   return (
     <aside className={`bg-sidebar dark:bg-sidebar border-r border-sidebar-border dark:border-sidebar-border flex flex-col h-screen sticky top-0 transition-all duration-300 ${collapsed ? 'w-16' : 'w-64'}`}>
-      <div className={`p-6 border-b border-sidebar-border dark:border-sidebar-border flex items-center ${collapsed ? 'justify-center' : 'justify-between'}`}>
+      <div className={`p-4 border-b border-sidebar-border dark:border-sidebar-border flex items-center relative ${collapsed ? 'justify-center' : 'justify-between'}`}>
         {!collapsed && (
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-sidebar-primary rounded-lg flex items-center justify-center">
@@ -37,16 +37,14 @@ export const SidebarFix = () => {
             <TrendingUp className="text-sidebar-primary-foreground" size={20} />
           </div>
         )}
-        <div className="flex items-center gap-2">
-          {!collapsed && <ThemeToggle />}
-          <button
-            onClick={() => setCollapsed(!collapsed)}
-            className={`text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent p-2 rounded-lg transition-colors ${collapsed ? 'absolute top-6 right-2' : ''}`}
-            title={collapsed ? 'Expandir sidebar' : 'Recolher sidebar'}
-          >
-            <ChevronLeft className={`transition-transform duration-300 ${collapsed ? 'rotate-180' : ''}`} size={20} />
-          </button>
-        </div>
+        <button
+          onClick={() => setCollapsed(!collapsed)}
+          className={`text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent p-1.5 rounded-lg transition-colors ${collapsed ? 'absolute -right-3 top-1/2 -translate-y-1/2 bg-sidebar border border-sidebar-border shadow-sm' : ''}`}
+          title={collapsed ? 'Expandir sidebar' : 'Recolher sidebar'}
+        >
+          <ChevronLeft className={`transition-transform duration-300 ${collapsed ? 'rotate-180' : ''}`} size={18} />
+        </button>
+        {!collapsed && <ThemeToggle />}
       </div>
       
       {collapsed && (
