@@ -1153,6 +1153,93 @@ export type Database = {
         }
         Relationships: []
       }
+      podcasts: {
+        Row: {
+          access_type: string | null
+          allow_comments: boolean | null
+          allow_download: boolean | null
+          audio_url: string | null
+          category: string | null
+          cover_image_url: string | null
+          created_at: string
+          description: string | null
+          duration_estimate: string | null
+          guests: Json | null
+          hosts: Json | null
+          id: string
+          max_listeners: number | null
+          meta_description: string | null
+          notify_followers: boolean | null
+          price: number | null
+          publication_date: string | null
+          publication_time: string | null
+          publication_type: string | null
+          seo_keywords: string | null
+          slug: string | null
+          status: string | null
+          tags: string[] | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          access_type?: string | null
+          allow_comments?: boolean | null
+          allow_download?: boolean | null
+          audio_url?: string | null
+          category?: string | null
+          cover_image_url?: string | null
+          created_at?: string
+          description?: string | null
+          duration_estimate?: string | null
+          guests?: Json | null
+          hosts?: Json | null
+          id?: string
+          max_listeners?: number | null
+          meta_description?: string | null
+          notify_followers?: boolean | null
+          price?: number | null
+          publication_date?: string | null
+          publication_time?: string | null
+          publication_type?: string | null
+          seo_keywords?: string | null
+          slug?: string | null
+          status?: string | null
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          access_type?: string | null
+          allow_comments?: boolean | null
+          allow_download?: boolean | null
+          audio_url?: string | null
+          category?: string | null
+          cover_image_url?: string | null
+          created_at?: string
+          description?: string | null
+          duration_estimate?: string | null
+          guests?: Json | null
+          hosts?: Json | null
+          id?: string
+          max_listeners?: number | null
+          meta_description?: string | null
+          notify_followers?: boolean | null
+          price?: number | null
+          publication_date?: string | null
+          publication_time?: string | null
+          publication_type?: string | null
+          seo_keywords?: string | null
+          slug?: string | null
+          status?: string | null
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       presentations: {
         Row: {
           author_name: string
