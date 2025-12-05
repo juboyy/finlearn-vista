@@ -1,5 +1,5 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { ArrowLeft, RefreshCw, Download, FileText, Calendar, Clock, Eye, Link as LinkIcon, Check, AlertTriangle, Lightbulb, ArrowUp, ArrowDown } from "lucide-react";
+import { ArrowLeft, RefreshCw, Download, FileText, Calendar, Clock, Eye, Link as LinkIcon, Check, AlertTriangle, Lightbulb, ArrowUp, ArrowDown, Search, MousePointer, BarChart3, Trophy, Timer, Link2, TrendingUp } from "lucide-react";
 import { Link } from "react-router-dom";
 import Plot from "react-plotly.js";
 
@@ -222,17 +222,17 @@ export default function ArtigoAnalytics() {
             {/* SEO KPIs */}
             <section className="grid grid-cols-6 gap-6 mb-8">
               {[
-                { label: 'Impressões', value: '2.847', change: '+24%', icon: '🔍', bg: '#B8D4E8' },
-                { label: 'Cliques', value: '487', change: '+18%', icon: '🖱️', bg: '#C5E8D4' },
-                { label: 'CTR', value: '17.1%', change: '+3%', icon: '📊', bg: '#D4C5E8' },
-                { label: 'Posição Média', value: '3.2', change: '↑ 2', icon: '🏆', bg: '#E8E0C5' },
-                { label: 'Tempo Médio', value: '4:32', change: '+45s', icon: '⏱️', bg: '#E8C5D8' },
-                { label: 'Backlinks', value: '23', change: '+5', icon: '🔗', bg: '#E8D4C5' },
+                { label: 'Impressões', value: '2.847', change: '+24%', Icon: Search, bg: '#B8D4E8' },
+                { label: 'Cliques', value: '487', change: '+18%', Icon: MousePointer, bg: '#C5E8D4' },
+                { label: 'CTR', value: '17.1%', change: '+3%', Icon: BarChart3, bg: '#D4C5E8' },
+                { label: 'Posição Média', value: '3.2', change: '↑ 2', Icon: Trophy, bg: '#E8E0C5' },
+                { label: 'Tempo Médio', value: '4:32', change: '+45s', Icon: Timer, bg: '#E8C5D8' },
+                { label: 'Backlinks', value: '23', change: '+5', Icon: Link2, bg: '#E8D4C5' },
               ].map((kpi, index) => (
                 <div key={index} className="bg-card rounded-xl p-6 border border-border">
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-10 h-10 rounded-lg flex items-center justify-center text-xl" style={{ backgroundColor: kpi.bg }}>
-                      {kpi.icon}
+                    <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: kpi.bg }}>
+                      <kpi.Icon className="w-5 h-5 text-[hsl(220,10%,35%)]" />
                     </div>
                     <span className="text-xs font-medium text-green-600 bg-green-50 px-2 py-1 rounded">{kpi.change}</span>
                   </div>
@@ -308,9 +308,9 @@ export default function ArtigoAnalytics() {
                       <div className="flex-1">
                         <h3 className="text-sm font-semibold text-foreground mb-1">{item.keyword}</h3>
                         <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                          <span>🔍 {item.impressions} impressões</span>
-                          <span>🖱️ {item.clicks} cliques</span>
-                          <span>📊 {item.ctr} CTR</span>
+                          <span className="flex items-center gap-1"><Search className="w-3 h-3 text-[hsl(220,10%,35%)]" /> {item.impressions} impressões</span>
+                          <span className="flex items-center gap-1"><MousePointer className="w-3 h-3 text-[hsl(220,10%,35%)]" /> {item.clicks} cliques</span>
+                          <span className="flex items-center gap-1"><BarChart3 className="w-3 h-3 text-[hsl(220,10%,35%)]" /> {item.ctr} CTR</span>
                         </div>
                       </div>
                     </div>
@@ -566,7 +566,7 @@ export default function ArtigoAnalytics() {
                   <div className="mt-4 bg-blue-50 rounded-lg p-4 border border-blue-100">
                     <div className="flex items-start gap-3">
                       <div className="w-8 h-8 bg-[#B8D4E8] rounded-lg flex items-center justify-center flex-shrink-0">
-                        📈
+                        <TrendingUp className="w-4 h-4 text-[hsl(220,10%,35%)]" />
                       </div>
                       <div>
                         <p className="text-xs font-medium text-foreground mb-1">Posição no Ranking</p>
