@@ -346,9 +346,9 @@ export default function MinhaAssinatura() {
                 <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#B8D4E8' }}>
                   <FileText className="text-slate-700" size={20} />
                 </div>
-                <span className="text-xs text-green-600 font-medium bg-green-50 px-2 py-1 rounded">+12%</span>
+                <span className="text-xs text-green-600 font-medium bg-green-50 px-2 py-1 rounded">+{allContentData.artigos?.length || 0}</span>
               </div>
-              <div className="text-2xl font-bold text-slate-800 mb-1">124</div>
+              <div className="text-2xl font-bold text-slate-800 mb-1">{allContentData.artigos?.length || 0}</div>
               <div className="text-sm text-slate-600">Artigos Disponíveis</div>
             </div>
             <div className="bg-white rounded-xl border border-slate-200 p-5">
@@ -356,9 +356,9 @@ export default function MinhaAssinatura() {
                 <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#D4C5E8' }}>
                   <Podcast className="text-slate-700" size={20} />
                 </div>
-                <span className="text-xs text-green-600 font-medium bg-green-50 px-2 py-1 rounded">+2</span>
+                <span className="text-xs text-green-600 font-medium bg-green-50 px-2 py-1 rounded">+{allContentData.podcasts?.length || 0}</span>
               </div>
-              <div className="text-2xl font-bold text-slate-800 mb-1">18</div>
+              <div className="text-2xl font-bold text-slate-800 mb-1">{allContentData.podcasts?.length || 0}</div>
               <div className="text-sm text-slate-600">Podcasts Exclusivos</div>
             </div>
             <div className="bg-white rounded-xl border border-slate-200 p-5">
@@ -366,9 +366,9 @@ export default function MinhaAssinatura() {
                 <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#E8D4C5' }}>
                   <Video className="text-slate-700" size={20} />
                 </div>
-                <span className="text-xs text-green-600 font-medium bg-green-50 px-2 py-1 rounded">+1</span>
+                <span className="text-xs text-green-600 font-medium bg-green-50 px-2 py-1 rounded">+{allContentData.webinars?.length || 0}</span>
               </div>
-              <div className="text-2xl font-bold text-slate-800 mb-1">6</div>
+              <div className="text-2xl font-bold text-slate-800 mb-1">{allContentData.webinars?.length || 0}</div>
               <div className="text-sm text-slate-600">Webinars Gravados</div>
             </div>
             <div className="bg-white rounded-xl border border-slate-200 p-5">
@@ -376,9 +376,9 @@ export default function MinhaAssinatura() {
                 <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#C5E8D4' }}>
                   <File className="text-slate-700" size={20} />
                 </div>
-                <span className="text-xs text-green-600 font-medium bg-green-50 px-2 py-1 rounded">+3</span>
+                <span className="text-xs text-green-600 font-medium bg-green-50 px-2 py-1 rounded">+{allContentData.relatorios?.length || 0}</span>
               </div>
-              <div className="text-2xl font-bold text-slate-800 mb-1">12</div>
+              <div className="text-2xl font-bold text-slate-800 mb-1">{allContentData.relatorios?.length || 0}</div>
               <div className="text-sm text-slate-600">Relatórios Deep Dive</div>
             </div>
           </section>
