@@ -5,19 +5,20 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { useState, useRef, useEffect } from "react";
 import { Separator } from "@/components/ui/separator";
 
-const contentTabs = [
-  { id: 'artigos', label: 'Artigos', count: 124, icon: FileText },
-  { id: 'podcasts', label: 'Podcasts', count: 18, icon: Podcast },
-  { id: 'webinars', label: 'Webinars', count: 6, icon: Video },
-  { id: 'relatorios', label: 'Relatórios', count: 12, icon: File },
-  { id: 'ebooks', label: 'E-books', count: 8, icon: BookText },
-  { id: 'analises', label: 'Análises', count: 15, icon: BarChart3 },
-  { id: 'newspaper', label: 'Newspaper', count: 32, icon: Newspaper },
-  { id: 'cursos', label: 'Cursos', count: 5, icon: GraduationCap },
-  { id: 'infograficos', label: 'Infográficos', count: 22, icon: Image },
-  { id: 'apresentacoes', label: 'Apresentações', count: 9, icon: Presentation },
-  { id: 'lives', label: 'Lives', count: 14, icon: Radio },
-  { id: 'entrevistas', label: 'Entrevistas', count: 7, icon: Mic },
+// Content tabs will get counts from allContentData
+const getContentTabs = (data: typeof allContentData) => [
+  { id: 'artigos', label: 'Artigos', count: data.artigos?.length || 0, icon: FileText },
+  { id: 'podcasts', label: 'Podcasts', count: data.podcasts?.length || 0, icon: Podcast },
+  { id: 'webinars', label: 'Webinars', count: data.webinars?.length || 0, icon: Video },
+  { id: 'relatorios', label: 'Relatórios', count: data.relatorios?.length || 0, icon: File },
+  { id: 'ebooks', label: 'E-books', count: data.ebooks?.length || 0, icon: BookText },
+  { id: 'analises', label: 'Análises', count: data.analises?.length || 0, icon: BarChart3 },
+  { id: 'newspaper', label: 'Newspaper', count: data.newspaper?.length || 0, icon: Newspaper },
+  { id: 'cursos', label: 'Cursos', count: data.cursos?.length || 0, icon: GraduationCap },
+  { id: 'infograficos', label: 'Infográficos', count: data.infograficos?.length || 0, icon: Image },
+  { id: 'apresentacoes', label: 'Apresentações', count: data.apresentacoes?.length || 0, icon: Presentation },
+  { id: 'lives', label: 'Lives', count: data.lives?.length || 0, icon: Radio },
+  { id: 'entrevistas', label: 'Entrevistas', count: data.entrevistas?.length || 0, icon: Mic },
 ];
 
 // Mock data for all content types
@@ -95,6 +96,9 @@ export default function MinhaAssinatura() {
   const tabsContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  
+  // Generate content tabs with real counts
+  const contentTabs = getContentTabs(allContentData);
 
   const checkScrollButtons = () => {
     if (tabsContainerRef.current) {
