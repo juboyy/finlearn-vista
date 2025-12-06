@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { Pin, Lightbulb, RefreshCw, Loader2, TrendingUp, BarChart3, Target, Sparkles, GraduationCap } from "lucide-react";
+import { Pin, Lightbulb, RefreshCw, Loader2, TrendingUp, BarChart3, Target, Sparkles, GraduationCap, Clock } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { AssistantSuggestionCard } from "@/components/Dashboard/AssistantSuggestionCard";
 import { useDailyInsights } from "@/hooks/useDailyInsights";
+import { format, formatDistanceToNow } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import {
   Sheet,
   SheetContent,
@@ -265,6 +267,10 @@ export const InsightsSuggestions = ({ open, onOpenChange }: InsightsSuggestionsP
                   const config = typeConfig[insight.insight_type] || typeConfig.general;
                   const IconComponent = config.icon;
                   
+                  const createdDate = new Date(insight.created_at);
+                  const formattedDate = format(createdDate, "dd 'de' MMMM 'de' yyyy", { locale: ptBR });
+                  const timeAgo = formatDistanceToNow(createdDate, { addSuffix: true, locale: ptBR });
+                  
                   return (
                     <div
                       key={insight.id}
@@ -275,12 +281,19 @@ export const InsightsSuggestions = ({ open, onOpenChange }: InsightsSuggestionsP
                           <IconComponent size={16} className="text-foreground" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h4 className="font-medium text-sm text-foreground mb-1">
-                            {insight.title}
-                          </h4>
-                          <p className="text-xs text-muted-foreground line-clamp-2">
+                          <div className="flex items-center justify-between mb-1">
+                            <h4 className="font-medium text-sm text-foreground">
+                              {insight.title}
+                            </h4>
+                          </div>
+                          <p className="text-xs text-muted-foreground line-clamp-2 mb-2">
                             {insight.content}
                           </p>
+                          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                            <Clock size={12} />
+                            <span>{formattedDate}</span>
+                            <span className="text-pastel-blue">({timeAgo})</span>
+                          </div>
                         </div>
                       </div>
                     </div>
