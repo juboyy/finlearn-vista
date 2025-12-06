@@ -123,16 +123,16 @@ export default function EventosPresenciais() {
                     <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
                     Evento em Destaque
                   </span>
-                  <h2 className="text-3xl font-bold text-slate-800 mb-4">Summit Mercado de Capitais 2025</h2>
-                  <p className="text-slate-700 mb-6 leading-relaxed">O maior encontro de profissionais do mercado financeiro do Brasil. Três dias de conteúdo premium, networking de alto nível e insights exclusivos com os principais executivos do setor.</p>
+                  <h2 className="text-3xl font-bold text-white mb-4">Summit Mercado de Capitais 2025</h2>
+                  <p className="text-white mb-6 leading-relaxed">O maior encontro de profissionais do mercado financeiro do Brasil. Três dias de conteúdo premium, networking de alto nível e insights exclusivos com os principais executivos do setor.</p>
                     <div className="grid grid-cols-2 gap-4 mb-6">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center">
                         <Calendar className="text-slate-600 w-5 h-5" />
                       </div>
                       <div>
-                        <p className="text-xs text-slate-600">Data</p>
-                        <p className="font-semibold text-slate-800">15-17 Março 2025</p>
+                        <p className="text-xs text-white">Data</p>
+                        <p className="font-semibold text-white">15-17 Março 2025</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
@@ -140,8 +140,8 @@ export default function EventosPresenciais() {
                         <MapPin className="text-slate-600 w-5 h-5" />
                       </div>
                       <div>
-                        <p className="text-xs text-slate-600">Local</p>
-                        <p className="font-semibold text-slate-800">São Paulo - SP</p>
+                        <p className="text-xs text-white">Local</p>
+                        <p className="font-semibold text-white">São Paulo - SP</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
@@ -149,8 +149,8 @@ export default function EventosPresenciais() {
                         <Users className="text-slate-600 w-5 h-5" />
                       </div>
                       <div>
-                        <p className="text-xs text-slate-600">Participantes</p>
-                        <p className="font-semibold text-slate-800">2.500+ esperados</p>
+                        <p className="text-xs text-white">Participantes</p>
+                        <p className="font-semibold text-white">2.500+ esperados</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
@@ -158,8 +158,8 @@ export default function EventosPresenciais() {
                         <Mic className="text-slate-600 w-5 h-5" />
                       </div>
                       <div>
-                        <p className="text-xs text-slate-600">Palestrantes</p>
-                        <p className="font-semibold text-slate-800">45+ especialistas</p>
+                        <p className="text-xs text-white">Palestrantes</p>
+                        <p className="font-semibold text-white">45+ especialistas</p>
                       </div>
                     </div>
                   </div>
