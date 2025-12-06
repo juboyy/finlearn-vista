@@ -1881,6 +1881,60 @@ export type Database = {
         }
         Relationships: []
       }
+      subscription_contents: {
+        Row: {
+          badge: string | null
+          category: string | null
+          category_bg: string | null
+          content_type: string
+          created_at: string
+          date: string | null
+          favorited: boolean | null
+          id: string
+          image_url: string | null
+          status: string
+          subtitle: string | null
+          time_duration: string | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          badge?: string | null
+          category?: string | null
+          category_bg?: string | null
+          content_type: string
+          created_at?: string
+          date?: string | null
+          favorited?: boolean | null
+          id?: string
+          image_url?: string | null
+          status?: string
+          subtitle?: string | null
+          time_duration?: string | null
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          badge?: string | null
+          category?: string | null
+          category_bg?: string | null
+          content_type?: string
+          created_at?: string
+          date?: string | null
+          favorited?: boolean | null
+          id?: string
+          image_url?: string | null
+          status?: string
+          subtitle?: string | null
+          time_duration?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_browsing_history: {
         Row: {
           id: string
