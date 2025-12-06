@@ -10,7 +10,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
+import { moderatorSchema, banUserSchema, chatFilterSchema, validateForm, getFirstError } from "@/lib/validations";
 interface Moderator {
   id: string;
   user_id: string;
@@ -92,16 +92,25 @@ export const LiveModerationPanel = ({ liveId, isOpen, onClose }: LiveModerationP
   };
 
   const addModerator = async () => {
-    if (!newModeratorName.trim()) return;
+    const validation = validateForm(moderatorSchema, { name: newModeratorName });
+    if (!validation.success || !validation.data) {
+      toast({
+        title: "Erro de validacao",
+        description: getFirstError(validation.errors),
+        variant: "destructive",
+      });
+      return;
+    }
 
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
+      const moderatorName = validation.data.name;
       const { error } = await supabase.from("live_moderators").insert({
         live_id: liveId,
         user_id: user.id,
-        user_name: newModeratorName,
+        user_name: moderatorName,
         assigned_by: user.id,
       });
 
@@ -109,7 +118,7 @@ export const LiveModerationPanel = ({ liveId, isOpen, onClose }: LiveModerationP
 
       toast({
         title: "Moderador adicionado",
-        description: `${newModeratorName} agora é moderador desta live.`,
+        description: `${moderatorName} agora e moderador desta live.`,
       });
 
       setNewModeratorName("");
@@ -148,27 +157,42 @@ export const LiveModerationPanel = ({ liveId, isOpen, onClose }: LiveModerationP
   };
 
   const banUser = async () => {
-    if (!banUserId || !banUserName.trim()) return;
+    const validation = validateForm(banUserSchema, {
+      userId: banUserId,
+      userName: banUserName,
+      reason: banReason,
+      banType: banType,
+    });
+    
+    if (!validation.success || !validation.data) {
+      toast({
+        title: "Erro de validacao",
+        description: getFirstError(validation.errors),
+        variant: "destructive",
+      });
+      return;
+    }
 
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
+      const banData = validation.data;
       const { error } = await supabase.from("live_banned_users").insert({
         live_id: liveId,
-        user_id: banUserId,
-        user_name: banUserName,
+        user_id: banData.userId,
+        user_name: banData.userName,
         banned_by: user.id,
-        ban_reason: banReason || null,
-        ban_type: banType,
-        ban_expires_at: banType === "temporary" ? new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() : null,
+        ban_reason: banData.reason || null,
+        ban_type: banData.banType,
+        ban_expires_at: banData.banType === "temporary" ? new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() : null,
       });
 
       if (error) throw error;
 
       toast({
-        title: "Usuário banido",
-        description: `${banUserName} foi banido do chat.`,
+        title: "Usuario banido",
+        description: `${banData.userName} foi banido do chat.`,
       });
 
       setBanUserId("");
@@ -176,9 +200,9 @@ export const LiveModerationPanel = ({ liveId, isOpen, onClose }: LiveModerationP
       setBanReason("");
       loadModerationData();
     } catch (error) {
-      console.error("Erro ao banir usuário:", error);
+      console.error("Erro ao banir usuario:", error);
       toast({
-        title: "Erro ao banir usuário",
+        title: "Erro ao banir usuario",
         variant: "destructive",
       });
     }
@@ -209,16 +233,29 @@ export const LiveModerationPanel = ({ liveId, isOpen, onClose }: LiveModerationP
   };
 
   const addFilter = async () => {
-    if (!newFilterValue.trim()) return;
+    const validation = validateForm(chatFilterSchema, {
+      filterType: newFilterType,
+      filterValue: newFilterValue,
+    });
+    
+    if (!validation.success || !validation.data) {
+      toast({
+        title: "Erro de validacao",
+        description: getFirstError(validation.errors),
+        variant: "destructive",
+      });
+      return;
+    }
 
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
+      const filterData = validation.data;
       const { error } = await supabase.from("live_chat_filters").insert({
         live_id: liveId,
-        filter_type: newFilterType,
-        filter_value: newFilterValue,
+        filter_type: filterData.filterType,
+        filter_value: filterData.filterValue,
         action: "block",
         created_by: user.id,
       });

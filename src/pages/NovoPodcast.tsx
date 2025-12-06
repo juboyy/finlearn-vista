@@ -45,15 +45,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { z } from "zod";
-
-const podcastSchema = z.object({
-  title: z.string().min(1, "Titulo e obrigatorio").max(200),
-  category: z.string().min(1, "Categoria e obrigatoria"),
-  durationEstimate: z.string().min(1, "Duracao e obrigatoria"),
-  description: z.string().min(1, "Descricao e obrigatoria").max(5000),
-  publicationDate: z.string().min(1, "Data de publicacao e obrigatoria"),
-  publicationTime: z.string().min(1, "Horario e obrigatorio"),
-});
+import { podcastSchema, validateForm, getFirstError } from "@/lib/validations";
 
 export default function NovoPodcast() {
   const navigate = useNavigate();
@@ -330,27 +322,17 @@ export default function NovoPodcast() {
     }
   };
 
-  const validateForm = () => {
-    const newErrors: Record<string, string> = {};
+  const validatePodcastForm = () => {
+    const validation = validateForm(podcastSchema, {
+      title,
+      category,
+      durationEstimate,
+      description,
+      publicationDate,
+      publicationTime,
+    });
 
-    try {
-      podcastSchema.parse({
-        title,
-        category,
-        durationEstimate,
-        description,
-        publicationDate,
-        publicationTime,
-      });
-    } catch (err) {
-      if (err instanceof z.ZodError) {
-        err.errors.forEach((e) => {
-          if (e.path[0]) {
-            newErrors[e.path[0] as string] = e.message;
-          }
-        });
-      }
-    }
+    const newErrors: Record<string, string> = { ...validation.errors };
 
     // Only require new files if not in edit mode or if no existing files
     if (!audioFile && !existingAudioUrl) {
@@ -392,7 +374,7 @@ export default function NovoPodcast() {
       return;
     }
 
-    if (status === "published" && !validateForm()) {
+    if (status === "published" && !validatePodcastForm()) {
       toast.error("Preencha todos os campos obrigatorios.");
       return;
     }
