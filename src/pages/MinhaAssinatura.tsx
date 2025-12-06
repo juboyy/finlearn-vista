@@ -20,6 +20,74 @@ const contentTabs = [
   { id: 'entrevistas', label: 'Entrevistas', count: 7, icon: Mic },
 ];
 
+// Mock data for all content types
+const allContentData: Record<string, Array<{
+  title: string;
+  subtitle: string;
+  category: string;
+  date: string;
+  time: string;
+  status: string;
+  image: string;
+  categoryBg: string;
+  badge?: string;
+  favorited?: boolean;
+}>> = {
+  artigos: [
+    { title: "Drex: O que muda para o varejo em 2024", subtitle: "Análise completa sobre implementação do Real Digital", category: "Regulação", date: "20 Nov 2023", time: "12 min", status: "lido", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4130ae5a64-cc3eeac0dc56bb648ccb.png", categoryBg: '#B8D4E8' },
+    { title: "Open Finance: Dados de conversão revelados", subtitle: "Relatório exclusivo com métricas dos principais bancos", category: "Open Finance", date: "18 Nov 2023", time: "15 min", status: "nao-lido", badge: "NOVO", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4130ae5a64-640177462dea5e4389d0.png", categoryBg: '#D4C5E8' },
+    { title: "PIX Automático: Estratégias de adoção", subtitle: "Como grandes varejistas estão implementando recorrência", category: "PIX", date: "15 Nov 2023", time: "10 min", status: "lendo", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/412d9e8d3c-5b783ac9bdcf2157dc2d.png", categoryBg: '#C5E8D4' },
+    { title: "Fintechs vs Bancos: Guerra de taxas 2024", subtitle: "Análise comparativa de precificação no mercado", category: "Fintechs", date: "13 Nov 2023", time: "18 min", status: "lido", favorited: true, image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/3ff4a772cc-7580381a35e8e40fb5d6.png", categoryBg: '#E8D4C5' },
+  ],
+  podcasts: [
+    { title: "EP 142 - Volatilidade nos Mercados", subtitle: "Análise do cenário econômico atual", category: "Economia", date: "22 Nov 2023", time: "45 min", status: "lido", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4130ae5a64-cc3eeac0dc56bb648ccb.png", categoryBg: '#D4C5E8' },
+    { title: "EP 141 - Impacto da Selic", subtitle: "Como a taxa de juros afeta investimentos", category: "Investimentos", date: "20 Nov 2023", time: "38 min", status: "nao-lido", badge: "NOVO", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4130ae5a64-640177462dea5e4389d0.png", categoryBg: '#B8D4E8' },
+    { title: "EP 140 - Tendências 2025", subtitle: "Previsões para o mercado financeiro", category: "Tendências", date: "18 Nov 2023", time: "52 min", status: "lendo", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/412d9e8d3c-5b783ac9bdcf2157dc2d.png", categoryBg: '#C5E8D4' },
+  ],
+  webinars: [
+    { title: "Masterclass: Open Banking na Prática", subtitle: "Workshop completo com especialistas do setor", category: "Open Finance", date: "25 Nov 2023", time: "2h 15min", status: "nao-lido", badge: "AO VIVO", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4130ae5a64-cc3eeac0dc56bb648ccb.png", categoryBg: '#E8D4C5' },
+    { title: "PIX: Novas Funcionalidades 2024", subtitle: "Tudo sobre PIX Automático e PIX por aproximação", category: "PIX", date: "22 Nov 2023", time: "1h 45min", status: "lido", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4130ae5a64-640177462dea5e4389d0.png", categoryBg: '#C5E8D4' },
+  ],
+  relatorios: [
+    { title: "Relatório Trimestral Q3 2023", subtitle: "Análise completa do mercado de pagamentos", category: "Mercado", date: "15 Nov 2023", time: "25 min", status: "lido", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4130ae5a64-cc3eeac0dc56bb648ccb.png", categoryBg: '#B8D4E8' },
+    { title: "Deep Dive: Fintechs Brasileiras", subtitle: "Mapeamento completo do ecossistema", category: "Fintechs", date: "10 Nov 2023", time: "35 min", status: "nao-lido", badge: "PREMIUM", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4130ae5a64-640177462dea5e4389d0.png", categoryBg: '#E8D4C5' },
+    { title: "Benchmark: Taxas de Conversão", subtitle: "Comparativo entre players do mercado", category: "Analytics", date: "5 Nov 2023", time: "20 min", status: "lendo", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/412d9e8d3c-5b783ac9bdcf2157dc2d.png", categoryBg: '#D4C5E8' },
+  ],
+  ebooks: [
+    { title: "Guia Completo do PIX", subtitle: "Tudo que você precisa saber sobre o sistema", category: "PIX", date: "20 Nov 2023", time: "1h 30min", status: "lido", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4130ae5a64-cc3eeac0dc56bb648ccb.png", categoryBg: '#C5E8D4' },
+    { title: "Open Finance para Iniciantes", subtitle: "Conceitos fundamentais explicados", category: "Open Finance", date: "15 Nov 2023", time: "2h", status: "nao-lido", badge: "NOVO", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4130ae5a64-640177462dea5e4389d0.png", categoryBg: '#D4C5E8' },
+  ],
+  analises: [
+    { title: "Análise: Mercado de Crédito 2024", subtitle: "Tendências e oportunidades no setor", category: "Crédito", date: "23 Nov 2023", time: "18 min", status: "nao-lido", badge: "NOVO", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4130ae5a64-cc3eeac0dc56bb648ccb.png", categoryBg: '#E8C5D8' },
+    { title: "Comparativo: Wallets Digitais", subtitle: "Apple Pay vs Google Pay vs Samsung Pay", category: "Pagamentos", date: "20 Nov 2023", time: "22 min", status: "lido", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4130ae5a64-640177462dea5e4389d0.png", categoryBg: '#B8D4E8' },
+  ],
+  newspaper: [
+    { title: "Bacen anuncia novas regras para carteiras digitais", subtitle: "Impactos para empresas de meios de pagamento", category: "Regulação", date: "24 Nov 2023", time: "5 min", status: "nao-lido", badge: "HOJE", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4130ae5a64-cc3eeac0dc56bb648ccb.png", categoryBg: '#B8D4E8' },
+    { title: "Nubank atinge 100 milhões de clientes", subtitle: "Fintech brasileira bate novo recorde", category: "Fintechs", date: "23 Nov 2023", time: "4 min", status: "lido", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4130ae5a64-640177462dea5e4389d0.png", categoryBg: '#E8D4C5' },
+    { title: "PIX bate recorde de transações em novembro", subtitle: "Sistema supera 4 bilhões de operações", category: "PIX", date: "22 Nov 2023", time: "3 min", status: "lido", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/412d9e8d3c-5b783ac9bdcf2157dc2d.png", categoryBg: '#C5E8D4' },
+  ],
+  cursos: [
+    { title: "Fundamentos de Pagamentos Digitais", subtitle: "Curso completo para iniciantes", category: "Fundamentos", date: "20 Nov 2023", time: "8h", status: "lendo", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4130ae5a64-cc3eeac0dc56bb648ccb.png", categoryBg: '#D4C5E8' },
+    { title: "Certificação em Open Finance", subtitle: "Prepare-se para a certificação oficial", category: "Certificação", date: "15 Nov 2023", time: "12h", status: "nao-lido", badge: "CERTIFICADO", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4130ae5a64-640177462dea5e4389d0.png", categoryBg: '#C5E8D4' },
+  ],
+  infograficos: [
+    { title: "Ecossistema PIX: Mapa Completo", subtitle: "Visualização de todos os participantes", category: "PIX", date: "22 Nov 2023", time: "2 min", status: "lido", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4130ae5a64-cc3eeac0dc56bb648ccb.png", categoryBg: '#C5E8D4' },
+    { title: "Jornada do Cliente Open Finance", subtitle: "Do consentimento ao compartilhamento", category: "Open Finance", date: "20 Nov 2023", time: "3 min", status: "nao-lido", badge: "INTERATIVO", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4130ae5a64-640177462dea5e4389d0.png", categoryBg: '#D4C5E8' },
+  ],
+  apresentacoes: [
+    { title: "Pitch Deck: Tendências 2024", subtitle: "Slides prontos para apresentação", category: "Tendências", date: "21 Nov 2023", time: "15 slides", status: "nao-lido", badge: "NOVO", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4130ae5a64-cc3eeac0dc56bb648ccb.png", categoryBg: '#E8E0C5' },
+    { title: "Workshop: Regulação Bancária", subtitle: "Material de apoio completo", category: "Regulação", date: "18 Nov 2023", time: "28 slides", status: "lido", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4130ae5a64-640177462dea5e4389d0.png", categoryBg: '#B8D4E8' },
+  ],
+  lives: [
+    { title: "Live: Debate sobre DREX", subtitle: "Especialistas discutem o Real Digital", category: "DREX", date: "24 Nov 2023", time: "1h 30min", status: "nao-lido", badge: "GRAVADO", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4130ae5a64-cc3eeac0dc56bb648ccb.png", categoryBg: '#E8C5D8' },
+    { title: "AMA: Pergunte aos Especialistas", subtitle: "Sessão de perguntas e respostas", category: "Q&A", date: "22 Nov 2023", time: "45 min", status: "lido", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4130ae5a64-640177462dea5e4389d0.png", categoryBg: '#D4C5E8' },
+  ],
+  entrevistas: [
+    { title: "Entrevista: CEO do Nubank", subtitle: "Visão sobre o futuro das fintechs", category: "Fintechs", date: "23 Nov 2023", time: "35 min", status: "nao-lido", badge: "EXCLUSIVO", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4130ae5a64-cc3eeac0dc56bb648ccb.png", categoryBg: '#E8D4C5' },
+    { title: "Conversa com Diretor do Bacen", subtitle: "Regulação e inovação no setor", category: "Regulação", date: "20 Nov 2023", time: "42 min", status: "lido", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4130ae5a64-640177462dea5e4389d0.png", categoryBg: '#B8D4E8' },
+  ],
+};
+
 export default function MinhaAssinatura() {
   const [isManageOpen, setIsManageOpen] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState<any>(null);
@@ -404,16 +472,7 @@ export default function MinhaAssinatura() {
                     </tr>
                   </thead>
                   <tbody>
-                    {[
-                      { title: "Drex: O que muda para o varejo em 2024", subtitle: "Análise completa sobre implementação do Real Digital", category: "Regulação", date: "20 Nov 2023", time: "12 min", status: "lido", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4130ae5a64-cc3eeac0dc56bb648ccb.png", categoryBg: '#B8D4E8' },
-                      { title: "Open Finance: Dados de conversão revelados", subtitle: "Relatório exclusivo com métricas dos principais bancos", category: "Open Finance", date: "18 Nov 2023", time: "15 min", status: "nao-lido", badge: "NOVO", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4130ae5a64-640177462dea5e4389d0.png", categoryBg: '#D4C5E8' },
-                      { title: "PIX Automático: Estratégias de adoção", subtitle: "Como grandes varejistas estão implementando recorrência", category: "PIX", date: "15 Nov 2023", time: "10 min", status: "lendo", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/412d9e8d3c-5b783ac9bdcf2157dc2d.png", categoryBg: '#C5E8D4' },
-                      { title: "Fintechs vs Bancos: Guerra de taxas 2024", subtitle: "Análise comparativa de precificação no mercado", category: "Fintechs", date: "13 Nov 2023", time: "18 min", status: "lido", favorited: true, image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/3ff4a772cc-7580381a35e8e40fb5d6.png", categoryBg: '#E8D4C5' },
-                      { title: "Bacen anuncia novas regras para carteiras digitais", subtitle: "Impactos para empresas de meios de pagamento", category: "Regulação", date: "10 Nov 2023", time: "8 min", status: "lido", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4130ae5a64-cc3eeac0dc56bb648ccb.png", categoryBg: '#B8D4E8' },
-                      { title: "Como a Nubank está revolucionando crédito", subtitle: "Análise de modelos de scoring e aprovação instantânea", category: "Inovação", date: "8 Nov 2023", time: "14 min", status: "nao-lido", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4130ae5a64-640177462dea5e4389d0.png", categoryBg: '#E8C5D8' },
-                      { title: "Cartões de crédito: O fim está próximo?", subtitle: "Tendências globais e o futuro dos pagamentos no Brasil", category: "Tendências", date: "5 Nov 2023", time: "16 min", status: "lido", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/412d9e8d3c-5b783ac9bdcf2157dc2d.png", categoryBg: '#E8E0C5' },
-                      { title: "Embedded Finance: Cases de sucesso no Brasil", subtitle: "Como empresas não-financeiras estão monetizando serviços", category: "Inovação", date: "3 Nov 2023", time: "20 min", status: "nao-lido", image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/2cd1c67dd4-920f4b14030d7b9c806d.png", categoryBg: '#E8C5D8' }
-                    ].map((article, index) => (
+                    {(allContentData[activeTab] || []).map((item, index) => (
                       <tr key={index} className="border-b border-slate-100 hover:bg-slate-50 transition">
                         <td className="py-4 px-4">
                           <input type="checkbox" className="rounded border-slate-300" />
@@ -421,38 +480,38 @@ export default function MinhaAssinatura() {
                         <td className="py-4 px-4">
                           <div className="flex items-center gap-3">
                             <div className="w-12 h-12 rounded-lg bg-slate-100 overflow-hidden shrink-0">
-                              <img src={article.image} className="w-full h-full object-cover" alt={article.title} />
+                              <img src={item.image} className="w-full h-full object-cover" alt={item.title} />
                             </div>
                             <div>
                               <div className="font-semibold text-slate-800 text-sm mb-0.5 flex items-center gap-2">
-                                {article.title}
-                                {article.badge && (
-                                  <span className="px-1.5 py-0.5 bg-orange-100 text-orange-700 rounded text-[10px] font-bold">{article.badge}</span>
+                                {item.title}
+                                {item.badge && (
+                                  <span className="px-1.5 py-0.5 bg-orange-100 text-orange-700 rounded text-[10px] font-bold">{item.badge}</span>
                                 )}
                               </div>
-                              <div className="text-xs text-slate-500">{article.subtitle}</div>
+                              <div className="text-xs text-slate-500">{item.subtitle}</div>
                             </div>
                           </div>
                         </td>
                         <td className="py-4 px-4">
-                          <span className="px-2 py-1 text-slate-700 rounded text-xs font-medium" style={{ backgroundColor: article.categoryBg }}>{article.category}</span>
+                          <span className="px-2 py-1 text-slate-700 rounded text-xs font-medium" style={{ backgroundColor: item.categoryBg }}>{item.category}</span>
                         </td>
-                        <td className="py-4 px-4 text-sm text-slate-600">{article.date}</td>
-                        <td className="py-4 px-4 text-sm text-slate-600">{article.time}</td>
+                        <td className="py-4 px-4 text-sm text-slate-600">{item.date}</td>
+                        <td className="py-4 px-4 text-sm text-slate-600">{item.time}</td>
                         <td className="py-4 px-4">
-                          {article.status === 'lido' && (
+                          {item.status === 'lido' && (
                             <span className="px-2 py-1 bg-green-50 text-green-700 rounded text-xs font-medium flex items-center gap-1 w-fit">
                               <ThumbsUp size={12} />
                               Lido
                             </span>
                           )}
-                          {article.status === 'nao-lido' && (
+                          {item.status === 'nao-lido' && (
                             <span className="px-2 py-1 bg-slate-100 text-slate-600 rounded text-xs font-medium flex items-center gap-1 w-fit">
                               <span className="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
                               Não lido
                             </span>
                           )}
-                          {article.status === 'lendo' && (
+                          {item.status === 'lendo' && (
                             <span className="px-2 py-1 bg-yellow-50 text-yellow-700 rounded text-xs font-medium flex items-center gap-1 w-fit">
                               <Clock size={12} />
                               Lendo
@@ -461,11 +520,11 @@ export default function MinhaAssinatura() {
                         </td>
                         <td className="py-4 px-4">
                           <div className="flex items-center gap-2">
-                            <button className="w-8 h-8 rounded-lg border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-100 transition" title={article.status === 'lido' ? 'Ler novamente' : article.status === 'lendo' ? 'Continuar' : 'Ler'}>
-                              {article.status === 'lendo' ? <Play size={14} /> : <BookOpen size={14} />}
+                            <button className="w-8 h-8 rounded-lg border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-100 transition" title={item.status === 'lido' ? 'Ler novamente' : item.status === 'lendo' ? 'Continuar' : 'Ler'}>
+                              {item.status === 'lendo' ? <Play size={14} /> : <BookOpen size={14} />}
                             </button>
-                            <button className={`w-8 h-8 rounded-lg border border-slate-200 flex items-center justify-center hover:bg-slate-100 transition ${article.favorited ? 'text-red-500' : 'text-slate-600'}`} title="Favoritar">
-                              <Heart size={14} fill={article.favorited ? 'currentColor' : 'none'} />
+                            <button className={`w-8 h-8 rounded-lg border border-slate-200 flex items-center justify-center hover:bg-slate-100 transition ${item.favorited ? 'text-red-500' : 'text-slate-600'}`} title="Favoritar">
+                              <Heart size={14} fill={item.favorited ? 'currentColor' : 'none'} />
                             </button>
                             <button className="w-8 h-8 rounded-lg border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-100 transition" title="Compartilhar">
                               <Share2 size={14} />
@@ -480,7 +539,7 @@ export default function MinhaAssinatura() {
 
               <div className="flex items-center justify-between mt-6 pt-6 border-t border-slate-200">
                 <div className="text-sm text-slate-600">
-                  Mostrando <span className="font-semibold">1-8</span> de <span className="font-semibold">124</span> artigos
+                  Mostrando <span className="font-semibold">1-{(allContentData[activeTab] || []).length}</span> de <span className="font-semibold">{contentTabs.find(t => t.id === activeTab)?.count || 0}</span> {contentTabs.find(t => t.id === activeTab)?.label.toLowerCase() || 'itens'}
                 </div>
                 <div className="flex items-center gap-2">
                   <button className="px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-50 transition disabled:opacity-50" disabled>
