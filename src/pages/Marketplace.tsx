@@ -140,7 +140,7 @@ const Marketplace = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
-                  <button onClick={() => navigate('/ebook/1')} className="px-6 py-3 bg-slate-800 text-white rounded-lg font-medium hover:bg-slate-700 transition">
+                  <button onClick={() => navigate('/curso-detalhes')} className="px-6 py-3 bg-slate-800 text-white rounded-lg font-medium hover:bg-slate-700 transition">
                     Ver Curso
                   </button>
                   <div className="text-white">
