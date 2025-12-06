@@ -478,26 +478,26 @@ export default function UpgradePlano() {
                   </div>
                   <div className="flex-1">
                     <h3 className="text-lg font-bold text-foreground">Resumo do Seu Plano</h3>
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      <span className="px-2.5 py-1 bg-primary/30 text-foreground text-xs font-medium rounded-full">Premium</span>
+                    <div className="flex flex-wrap gap-2.5 mt-2">
+                      <span className="px-3.5 py-1.5 bg-primary/30 text-foreground text-sm font-medium rounded-full">Premium</span>
                       {addons.aiAgent && (
-                        <span className="px-2.5 py-1 bg-primary/40 text-foreground text-xs rounded-full flex items-center gap-1">
-                          <Bot size={10} /> IA +R$29
+                        <span className="px-3.5 py-1.5 bg-primary/40 text-foreground text-sm rounded-full flex items-center gap-1.5">
+                          <Bot size={13} /> IA +R$29
                         </span>
                       )}
                       {addons.webinars && (
-                        <span className="px-2.5 py-1 bg-[hsl(270,35%,80%)]/60 text-foreground text-xs rounded-full flex items-center gap-1">
-                          <Video size={10} /> Webinars +R$19
+                        <span className="px-3.5 py-1.5 bg-[hsl(270,35%,80%)]/60 text-foreground text-sm rounded-full flex items-center gap-1.5">
+                          <Video size={13} /> Webinars +R$19
                         </span>
                       )}
                       {addons.ebooks && (
-                        <span className="px-2.5 py-1 bg-[hsl(140,30%,75%)]/60 text-foreground text-xs rounded-full flex items-center gap-1">
-                          <BookOpen size={10} /> E-books +R$24
+                        <span className="px-3.5 py-1.5 bg-[hsl(140,30%,75%)]/60 text-foreground text-sm rounded-full flex items-center gap-1.5">
+                          <BookOpen size={13} /> E-books +R$24
                         </span>
                       )}
                       {addons.analysis && (
-                        <span className="px-2.5 py-1 bg-[hsl(25,50%,80%)]/60 text-foreground text-xs rounded-full flex items-center gap-1">
-                          <LineChart size={10} /> Análise +R$39
+                        <span className="px-3.5 py-1.5 bg-[hsl(25,50%,80%)]/60 text-foreground text-sm rounded-full flex items-center gap-1.5">
+                          <LineChart size={13} /> Análise +R$39
                         </span>
                       )}
                     </div>
