@@ -8,7 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { BarChart3, X, Plus, Vote, TrendingUp } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-
+import { pollSchema, validateForm, getFirstError } from "@/lib/validations";
 interface LivePollPanelProps {
   liveId: string;
   isModerator: boolean;
@@ -119,26 +119,33 @@ export const LivePollPanel = ({ liveId, isModerator, userId }: LivePollPanelProp
   };
 
   const createPoll = async () => {
-    if (!newQuestion.trim() || newOptions.filter((o) => o.trim()).length < 2) {
+    const validOptions = newOptions.filter((o) => o.trim());
+    const validation = validateForm(pollSchema, {
+      question: newQuestion,
+      options: validOptions,
+    });
+    
+    if (!validation.success || !validation.data) {
       toast({
-        title: "Erro",
-        description: "Adicione uma pergunta e pelo menos 2 opções",
+        title: "Erro de validacao",
+        description: getFirstError(validation.errors),
         variant: "destructive",
       });
       return;
     }
 
-    const { data: pollData, error: pollError } = await supabase
+    const pollData = validation.data;
+    const { data: createdPoll, error: pollError } = await supabase
       .from("live_polls")
       .insert({
         live_id: liveId,
         created_by: userId,
-        question: newQuestion.trim(),
+        question: pollData.question,
       })
       .select()
       .single();
 
-    if (pollError || !pollData) {
+    if (pollError || !createdPoll) {
       toast({
         title: "Erro ao criar enquete",
         variant: "destructive",
@@ -146,10 +153,9 @@ export const LivePollPanel = ({ liveId, isModerator, userId }: LivePollPanelProp
       return;
     }
 
-    const validOptions = newOptions.filter((o) => o.trim());
     const { error: optionsError } = await supabase.from("live_poll_options").insert(
-      validOptions.map((option, index) => ({
-        poll_id: pollData.id,
+      pollData.options.map((option, index) => ({
+        poll_id: createdPoll.id,
         option_text: option.trim(),
         option_order: index,
       }))
@@ -157,7 +163,7 @@ export const LivePollPanel = ({ liveId, isModerator, userId }: LivePollPanelProp
 
     if (optionsError) {
       toast({
-        title: "Erro ao criar opções",
+        title: "Erro ao criar opcoes",
         variant: "destructive",
       });
       return;

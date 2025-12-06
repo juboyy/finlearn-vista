@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useLiveModeration } from "@/hooks/useLiveModeration";
 import { LiveModerationPanel } from "./LiveModerationPanel";
+import { chatMessageSchema, validateForm, getFirstError } from "@/lib/validations";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -118,24 +119,34 @@ export const LiveChatPanel = ({ liveId }: LiveChatPanelProps) => {
   }, [liveId]);
 
   const sendMessage = async () => {
-    if (!newMessage.trim()) return;
-
-    // Verificar se está banido
-    if (isBanned) {
+    const validation = validateForm(chatMessageSchema, { message: newMessage });
+    if (!validation.success || !validation.data) {
       toast({
-        title: "Você está banido",
-        description: "Você não pode enviar mensagens nesta live.",
+        title: "Erro de validacao",
+        description: getFirstError(validation.errors),
         variant: "destructive",
       });
       return;
     }
 
+    // Verificar se esta banido
+    if (isBanned) {
+      toast({
+        title: "Voce esta banido",
+        description: "Voce nao pode enviar mensagens nesta live.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const messageText = validation.data.message;
+    
     // Verificar mensagem contra filtros
-    const filterResult = checkMessageAgainstFilters(newMessage.trim());
+    const filterResult = checkMessageAgainstFilters(messageText);
     if (filterResult.blocked) {
       toast({
         title: "Mensagem bloqueada",
-        description: filterResult.reason || "Sua mensagem contém conteúdo proibido.",
+        description: filterResult.reason || "Sua mensagem contem conteudo proibido.",
         variant: "destructive",
       });
       return;
@@ -147,9 +158,9 @@ export const LiveChatPanel = ({ liveId }: LiveChatPanelProps) => {
       const { error } = await supabase.from("live_chat_messages").insert({
         live_id: liveId,
         user_id: currentUserId,
-        user_name: "Usuário",
+        user_name: "Usuario",
         user_avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/b24014b83d-0b455d5abe744d3f9416.png",
-        message: newMessage.trim(),
+        message: messageText,
       });
 
       if (error) throw error;

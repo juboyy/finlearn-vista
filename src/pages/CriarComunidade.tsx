@@ -45,7 +45,7 @@ import {
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
-
+import { communitySchema, validateForm, getFirstError } from "@/lib/validations";
 const CriarComunidade = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -100,23 +100,31 @@ const CriarComunidade = () => {
 
   const saveCommunity = async (status: 'draft' | 'active') => {
     if (!user) {
-      toast.error("Você precisa estar logado para criar uma comunidade");
+      toast.error("Voce precisa estar logado para criar uma comunidade");
       return;
     }
 
-    if (!communityName.trim()) {
-      toast.error("Nome da comunidade é obrigatório");
+    const validation = validateForm(communitySchema, {
+      name: communityName,
+      description,
+      category,
+      privacy: mapPrivacyType(communityType),
+    });
+
+    if (!validation.success || !validation.data) {
+      toast.error(getFirstError(validation.errors));
       return;
     }
 
     setIsLoading(true);
     try {
+      const communityData = validation.data;
       const { error } = await supabase.from('communities').insert({
         user_id: user.id,
-        name: communityName,
-        description,
-        category,
-        privacy: mapPrivacyType(communityType),
+        name: communityData.name,
+        description: communityData.description,
+        category: communityData.category,
+        privacy: communityData.privacy,
         rules: rules.map(r => ({ title: r.title, description: r.description })),
         ethics_code: ethicsCode,
         content_types: contentTypes,
