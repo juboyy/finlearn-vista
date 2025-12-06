@@ -1,13 +1,59 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
-import { Download, Bell, Settings2, XCircle, Calendar, BookOpen, Clock, FileText, Podcast, Video, File, BookText, Search, ChevronLeft, ChevronRight, CreditCard, Receipt, Play, Heart, Share2, ThumbsUp, CheckCircle2, AlertCircle, Building2, Mail, Phone, MapPin } from "lucide-react";
+import { Download, Bell, Settings2, XCircle, Calendar, BookOpen, Clock, FileText, Podcast, Video, File, BookText, Search, ChevronLeft, ChevronRight, CreditCard, Receipt, Play, Heart, Share2, ThumbsUp, CheckCircle2, AlertCircle, Building2, Mail, Phone, MapPin, BarChart3, Newspaper, GraduationCap, Image, Presentation, Radio, Users, Mic } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Separator } from "@/components/ui/separator";
+
+const contentTabs = [
+  { id: 'artigos', label: 'Artigos', count: 124, icon: FileText },
+  { id: 'podcasts', label: 'Podcasts', count: 18, icon: Podcast },
+  { id: 'webinars', label: 'Webinars', count: 6, icon: Video },
+  { id: 'relatorios', label: 'Relatórios', count: 12, icon: File },
+  { id: 'ebooks', label: 'E-books', count: 8, icon: BookText },
+  { id: 'analises', label: 'Análises', count: 15, icon: BarChart3 },
+  { id: 'newspaper', label: 'Newspaper', count: 32, icon: Newspaper },
+  { id: 'cursos', label: 'Cursos', count: 5, icon: GraduationCap },
+  { id: 'infograficos', label: 'Infográficos', count: 22, icon: Image },
+  { id: 'apresentacoes', label: 'Apresentações', count: 9, icon: Presentation },
+  { id: 'lives', label: 'Lives', count: 14, icon: Radio },
+  { id: 'entrevistas', label: 'Entrevistas', count: 7, icon: Mic },
+];
 
 export default function MinhaAssinatura() {
   const [isManageOpen, setIsManageOpen] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState<any>(null);
+  const [activeTab, setActiveTab] = useState('artigos');
+  const tabsContainerRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const checkScrollButtons = () => {
+    if (tabsContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = tabsContainerRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 5);
+    }
+  };
+
+  useEffect(() => {
+    checkScrollButtons();
+    const container = tabsContainerRef.current;
+    if (container) {
+      container.addEventListener('scroll', checkScrollButtons);
+      return () => container.removeEventListener('scroll', checkScrollButtons);
+    }
+  }, []);
+
+  const scrollTabs = (direction: 'left' | 'right') => {
+    if (tabsContainerRef.current) {
+      const scrollAmount = 200;
+      tabsContainerRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   return (
     <div className="flex h-screen overflow-hidden bg-slate-50">
@@ -268,26 +314,47 @@ export default function MinhaAssinatura() {
           {/* Content Tabs */}
           <section className="bg-white rounded-2xl border border-slate-200 mb-8">
             <div className="border-b border-slate-200 px-6">
-              <div className="flex gap-6">
-                <button className="px-4 py-4 border-b-2 text-slate-800 font-medium" style={{ borderColor: '#D4C5E8' }}>
-                  <FileText size={16} className="inline mr-2" />
-                  Artigos (124)
+              <div className="flex items-center gap-2">
+                <button 
+                  onClick={() => scrollTabs('left')}
+                  disabled={!canScrollLeft}
+                  className={`p-2 rounded-lg transition shrink-0 ${canScrollLeft ? 'hover:bg-slate-100 text-slate-600' : 'text-slate-300 cursor-not-allowed'}`}
+                >
+                  <ChevronLeft size={20} />
                 </button>
-                <button className="px-4 py-4 border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition">
-                  <Podcast size={16} className="inline mr-2" />
-                  Podcasts (18)
-                </button>
-                <button className="px-4 py-4 border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition">
-                  <Video size={16} className="inline mr-2" />
-                  Webinars (6)
-                </button>
-                <button className="px-4 py-4 border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition">
-                  <File size={16} className="inline mr-2" />
-                  Relatórios (12)
-                </button>
-                <button className="px-4 py-4 border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition">
-                  <BookText size={16} className="inline mr-2" />
-                  E-books (8)
+                
+                <div 
+                  ref={tabsContainerRef}
+                  className="flex gap-2 overflow-x-auto scrollbar-hide flex-1"
+                  style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                >
+                  {contentTabs.map((tab) => {
+                    const IconComponent = tab.icon;
+                    const isActive = activeTab === tab.id;
+                    return (
+                      <button 
+                        key={tab.id}
+                        onClick={() => setActiveTab(tab.id)}
+                        className={`px-4 py-4 border-b-2 font-medium whitespace-nowrap transition flex items-center gap-2 shrink-0 ${
+                          isActive 
+                            ? 'text-slate-800 border-pastel-purple' 
+                            : 'border-transparent text-slate-500 hover:text-slate-800'
+                        }`}
+                        style={isActive ? { borderColor: '#D4C5E8' } : {}}
+                      >
+                        <IconComponent size={16} />
+                        {tab.label} ({tab.count})
+                      </button>
+                    );
+                  })}
+                </div>
+                
+                <button 
+                  onClick={() => scrollTabs('right')}
+                  disabled={!canScrollRight}
+                  className={`p-2 rounded-lg transition shrink-0 ${canScrollRight ? 'hover:bg-slate-100 text-slate-600' : 'text-slate-300 cursor-not-allowed'}`}
+                >
+                  <ChevronRight size={20} />
                 </button>
               </div>
             </div>
