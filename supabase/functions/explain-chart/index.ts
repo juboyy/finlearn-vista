@@ -7,17 +7,63 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// Input validation
+function validateInput(body: unknown): { valid: boolean; error?: string } {
+  if (typeof body !== "object" || body === null) {
+    return { valid: false, error: "Request body must be an object" };
+  }
+
+  const { chartData, chartType } = body as Record<string, unknown>;
+
+  if (!Array.isArray(chartData)) {
+    return { valid: false, error: "chartData must be an array" };
+  }
+
+  if (chartData.length === 0 || chartData.length > 1000) {
+    return { valid: false, error: "chartData must have between 1 and 1000 items" };
+  }
+
+  // Validate each item is an object
+  for (let i = 0; i < chartData.length; i++) {
+    if (typeof chartData[i] !== "object" || chartData[i] === null) {
+      return { valid: false, error: `chartData[${i}] must be an object` };
+    }
+  }
+
+  if (chartType !== undefined && (typeof chartType !== "string" || chartType.length > 50)) {
+    return { valid: false, error: "chartType must be a string with max 50 characters" };
+  }
+
+  return { valid: true };
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { chartData, chartType } = await req.json();
-
-    if (!chartData || !Array.isArray(chartData) || chartData.length === 0) {
-      throw new Error('Dados do gráfico inválidos');
+    // Validate authorization header
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: "Unauthorized: Missing authorization header" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
     }
+
+    const body = await req.json();
+    
+    // Validate input
+    const validation = validateInput(body);
+    if (!validation.valid) {
+      return new Response(
+        JSON.stringify({ error: validation.error }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const { chartData, chartType } = body;
 
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     if (!LOVABLE_API_KEY) {

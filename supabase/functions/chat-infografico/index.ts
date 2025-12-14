@@ -5,14 +5,57 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+// Input validation
+function validateMessages(messages: unknown): string | null {
+  if (!Array.isArray(messages)) {
+    return "messages must be an array";
+  }
+  if (messages.length === 0 || messages.length > 50) {
+    return "messages must have between 1 and 50 items";
+  }
+  for (let i = 0; i < messages.length; i++) {
+    const msg = messages[i];
+    if (typeof msg !== "object" || msg === null) {
+      return `messages[${i}] must be an object`;
+    }
+    if (!["user", "assistant", "system"].includes(msg.role)) {
+      return `messages[${i}].role must be user, assistant, or system`;
+    }
+    if (typeof msg.content !== "string" || msg.content.length === 0 || msg.content.length > 10000) {
+      return `messages[${i}].content must be a string between 1 and 10000 characters`;
+    }
+  }
+  return null;
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { messages } = await req.json();
-    console.log("Received messages:", messages);
+    // Validate authorization header
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: "Unauthorized: Missing authorization header" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const body = await req.json();
+    const { messages } = body;
+    
+    // Validate input
+    const messagesError = validateMessages(messages);
+    if (messagesError) {
+      return new Response(
+        JSON.stringify({ error: messagesError }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    console.log("Received messages:", messages.length);
     
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {

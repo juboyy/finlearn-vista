@@ -1,49 +1,61 @@
 project_id = "p98pqg"
 
 [functions.chat-agent]
-verify_jwt = false
+verify_jwt = true
 
 [functions.generate-reading-insights]
-verify_jwt = false
+verify_jwt = true
 
 [functions.chat-infografico]
-verify_jwt = false
+verify_jwt = true
 
 [functions.generate-content]
-verify_jwt = false
+verify_jwt = true
 
 [functions.generate-slides-content]
-verify_jwt = false
+verify_jwt = true
 
 [functions.resumir-contrato]
-verify_jwt = false
+verify_jwt = true
 
 [functions.explain-chart]
-verify_jwt = false
+verify_jwt = true
 
 [functions.generate-assistant-suggestions]
-verify_jwt = false
+verify_jwt = true
 
 [functions.generate-chat-image]
-verify_jwt = false
+verify_jwt = true
 
 [functions.generate-recommendations]
-verify_jwt = false
+verify_jwt = true
 
 [functions.notify-similar-promotions]
-verify_jwt = false
+verify_jwt = true
 
 [functions.ebook-reading-agent]
-verify_jwt = false
+verify_jwt = true
 
 [functions.generate-reading-questions]
-verify_jwt = false
+verify_jwt = true
 
 [functions.transcribe-audio]
-verify_jwt = false
+verify_jwt = true
+
+[functions.text-to-speech-elevenlabs]
+verify_jwt = true
 
 [functions.generate-daily-insights]
 verify_jwt = false
 
-[functions.text-to-speech-elevenlabs]
+[functions.check-live-notifications]
 verify_jwt = false
+
+[functions.detect-analytics-anomalies]
+verify_jwt = false
+
+[functions.article-expert-chat]
+verify_jwt = true
+
+[functions.voice-chat-agent]
+verify_jwt = true
