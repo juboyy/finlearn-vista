@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
 interface UseSpeechRecognitionReturn {
@@ -6,9 +6,11 @@ interface UseSpeechRecognitionReturn {
   transcript: string;
   isSupported: boolean;
   isProcessing: boolean;
+  hasFinishedRecording: boolean;
   startListening: () => void;
   stopListening: () => void;
   resetTranscript: () => void;
+  resetFinished: () => void;
 }
 
 export const useSpeechRecognition = (): UseSpeechRecognitionReturn => {
@@ -16,12 +18,29 @@ export const useSpeechRecognition = (): UseSpeechRecognitionReturn => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [transcript, setTranscript] = useState("");
   const [isSupported, setIsSupported] = useState(true);
+  const [hasFinishedRecording, setHasFinishedRecording] = useState(false);
   
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
   const streamRef = useRef<MediaStream | null>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const analyserRef = useRef<AnalyserNode | null>(null);
+  const silenceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const lastSoundTimeRef = useRef<number>(Date.now());
+
+  // Voice Activity Detection constants
+  const SILENCE_THRESHOLD = 0.015; // Threshold for detecting silence
+  const SILENCE_DURATION = 1500; // 1.5 seconds of silence to stop
 
   const stopMediaRecorder = useCallback(() => {
+    if (silenceTimeoutRef.current) {
+      clearTimeout(silenceTimeoutRef.current);
+      silenceTimeoutRef.current = null;
+    }
+    if (audioContextRef.current) {
+      audioContextRef.current.close();
+      audioContextRef.current = null;
+    }
     if (mediaRecorderRef.current && mediaRecorderRef.current.state !== "inactive") {
       mediaRecorderRef.current.stop();
     }
@@ -58,6 +77,7 @@ export const useSpeechRecognition = (): UseSpeechRecognitionReturn => {
 
       if (data?.text) {
         setTranscript(data.text);
+        setHasFinishedRecording(true);
       }
     } catch (error) {
       console.error("Error transcribing audio:", error);
@@ -65,6 +85,40 @@ export const useSpeechRecognition = (): UseSpeechRecognitionReturn => {
       setIsProcessing(false);
     }
   }, []);
+
+  const checkAudioLevel = useCallback(() => {
+    if (!analyserRef.current || !isListening) return;
+
+    const dataArray = new Uint8Array(analyserRef.current.frequencyBinCount);
+    analyserRef.current.getByteFrequencyData(dataArray);
+
+    // Calculate average volume level
+    const average = dataArray.reduce((sum, value) => sum + value, 0) / dataArray.length;
+    const normalizedLevel = average / 255;
+
+    if (normalizedLevel > SILENCE_THRESHOLD) {
+      // Sound detected - reset silence timer
+      lastSoundTimeRef.current = Date.now();
+      if (silenceTimeoutRef.current) {
+        clearTimeout(silenceTimeoutRef.current);
+        silenceTimeoutRef.current = null;
+      }
+    } else {
+      // Silence detected - check if we should stop
+      const silenceDuration = Date.now() - lastSoundTimeRef.current;
+      if (silenceDuration > SILENCE_DURATION && !silenceTimeoutRef.current) {
+        silenceTimeoutRef.current = setTimeout(() => {
+          stopMediaRecorder();
+          setIsListening(false);
+        }, 100);
+      }
+    }
+
+    // Continue monitoring if still listening
+    if (isListening) {
+      requestAnimationFrame(checkAudioLevel);
+    }
+  }, [isListening, stopMediaRecorder]);
 
   const startListening = useCallback(async () => {
     if (isListening) return;
@@ -81,6 +135,14 @@ export const useSpeechRecognition = (): UseSpeechRecognitionReturn => {
 
       streamRef.current = stream;
       chunksRef.current = [];
+      lastSoundTimeRef.current = Date.now();
+
+      // Setup audio analysis for VAD
+      audioContextRef.current = new AudioContext();
+      const source = audioContextRef.current.createMediaStreamSource(stream);
+      analyserRef.current = audioContextRef.current.createAnalyser();
+      analyserRef.current.fftSize = 256;
+      source.connect(analyserRef.current);
 
       const mediaRecorder = new MediaRecorder(stream, {
         mimeType: MediaRecorder.isTypeSupported("audio/webm") ? "audio/webm" : "audio/mp4",
@@ -113,11 +175,15 @@ export const useSpeechRecognition = (): UseSpeechRecognitionReturn => {
       mediaRecorder.start();
       setIsListening(true);
       setTranscript("");
+      setHasFinishedRecording(false);
+
+      // Start voice activity detection
+      requestAnimationFrame(checkAudioLevel);
     } catch (error) {
       console.error("Error accessing microphone:", error);
       setIsSupported(false);
     }
-  }, [isListening, transcribeAudio]);
+  }, [isListening, transcribeAudio, checkAudioLevel]);
 
   const stopListening = useCallback(() => {
     if (!isListening) return;
@@ -130,13 +196,26 @@ export const useSpeechRecognition = (): UseSpeechRecognitionReturn => {
     setTranscript("");
   }, []);
 
+  const resetFinished = useCallback(() => {
+    setHasFinishedRecording(false);
+  }, []);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      stopMediaRecorder();
+    };
+  }, [stopMediaRecorder]);
+
   return {
     isListening,
     transcript,
     isSupported,
     isProcessing,
+    hasFinishedRecording,
     startListening,
     stopListening,
     resetTranscript,
+    resetFinished,
   };
 };
