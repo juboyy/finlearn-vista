@@ -6,6 +6,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAgentChat } from "@/hooks/useAgentChat";
 import { useToast } from "@/hooks/use-toast";
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
+import { useStreamingTTS } from "@/hooks/useStreamingTTS";
 import { supabase } from "@/integrations/supabase/client";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -35,14 +36,13 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
   const [input, setInput] = useState("");
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
-  const [isSpeaking, setIsSpeaking] = useState(false);
   const { messages, sendMessage, isLoading, clearMessages } = useAgentChat(agentName);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
-  const lastMessageCountRef = useRef(0);
   const pendingVoiceResponseRef = useRef(false);
-  const currentAudioRef = useRef<HTMLAudioElement | null>(null);
+  
+  // Streaming TTS Hook
+  const { isGenerating: isGeneratingAudio, isPlaying: isSpeaking, speak, stop: stopSpeaking } = useStreamingTTS();
 
   // Speech Recognition Hook
   const {
@@ -56,68 +56,6 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
     resetTranscript,
     resetFinished,
   } = useSpeechRecognition();
-
-  // Stop current audio playback
-  const stopSpeaking = useCallback(() => {
-    if (currentAudioRef.current) {
-      currentAudioRef.current.pause();
-      currentAudioRef.current.currentTime = 0;
-      currentAudioRef.current = null;
-    }
-    setIsSpeaking(false);
-    setIsGeneratingAudio(false);
-  }, []);
-
-  // Generate TTS audio via edge function for complete responses
-  const generateTTSAudio = useCallback(async (text: string) => {
-    setIsGeneratingAudio(true);
-    try {
-      const { data, error } = await supabase.functions.invoke("text-to-speech-elevenlabs", {
-        body: { text },
-      });
-
-      if (error) {
-        console.error("TTS error:", error);
-        setIsGeneratingAudio(false);
-        return;
-      }
-
-      if (data?.audioContent) {
-        // Decode base64 and play audio
-        const audioData = atob(data.audioContent);
-        const audioArray = new Uint8Array(audioData.length);
-        for (let i = 0; i < audioData.length; i++) {
-          audioArray[i] = audioData.charCodeAt(i);
-        }
-        const audioBlob = new Blob([audioArray], { type: "audio/mpeg" });
-        const audioUrl = URL.createObjectURL(audioBlob);
-        const audio = new Audio(audioUrl);
-        currentAudioRef.current = audio;
-        
-        audio.onplay = () => {
-          setIsGeneratingAudio(false);
-          setIsSpeaking(true);
-        };
-        
-        audio.onended = () => {
-          URL.revokeObjectURL(audioUrl);
-          setIsSpeaking(false);
-          currentAudioRef.current = null;
-        };
-        
-        audio.onerror = () => {
-          setIsGeneratingAudio(false);
-          setIsSpeaking(false);
-          currentAudioRef.current = null;
-        };
-        
-        audio.play();
-      }
-    } catch (error) {
-      console.error("Error generating TTS:", error);
-      setIsGeneratingAudio(false);
-    }
-  }, []);
 
   // Update input field with transcript
   useEffect(() => {
@@ -151,10 +89,10 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
     
     // Only trigger when loading just finished and we have a pending voice response
     if (!isLoading && pendingVoiceResponseRef.current && lastMessage?.role === "assistant") {
-      generateTTSAudio(lastMessage.content);
+      speak(lastMessage.content);
       pendingVoiceResponseRef.current = false;
     }
-  }, [messages, isLoading, generateTTSAudio]);
+  }, [messages, isLoading, speak]);
 
   // Stop speaking when user starts listening
   useEffect(() => {

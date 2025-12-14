@@ -62,3 +62,6 @@ verify_jwt = true
 
 [functions.transcribe-audio-elevenlabs]
 verify_jwt = true
+
+[functions.text-to-speech-elevenlabs-stream]
+verify_jwt = true
