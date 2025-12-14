@@ -1,10 +1,12 @@
 import { useState, useRef, useEffect } from "react";
-import { X, Send, Loader2, Trash2, Save } from "lucide-react";
+import { X, Send, Loader2, Trash2, Save, Mic, MicOff, Volume2, VolumeX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAgentChat } from "@/hooks/useAgentChat";
 import { useToast } from "@/hooks/use-toast";
+import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
+import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
 import { supabase } from "@/integrations/supabase/client";
 import {
   AlertDialog,
@@ -35,12 +37,68 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
   const { messages, sendMessage, isLoading, clearMessages } = useAgentChat(agentName);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+  const lastMessageCountRef = useRef(0);
 
+  // Speech Recognition Hook
+  const {
+    isListening,
+    transcript,
+    isSupported: isRecognitionSupported,
+    startListening,
+    stopListening,
+    resetTranscript,
+  } = useSpeechRecognition();
+
+  // Speech Synthesis Hook
+  const {
+    isSpeaking,
+    isVoiceModeEnabled,
+    isSupported: isSynthesisSupported,
+    speak,
+    stop: stopSpeaking,
+    toggleVoiceMode,
+  } = useSpeechSynthesis();
+
+  // Update input field with transcript
+  useEffect(() => {
+    if (transcript) {
+      setInput(transcript);
+    }
+  }, [transcript]);
+
+  // Auto-scroll to bottom
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages]);
+
+  // Auto-speak new assistant messages when voice mode is enabled
+  useEffect(() => {
+    if (isVoiceModeEnabled && messages.length > lastMessageCountRef.current) {
+      const lastMessage = messages[messages.length - 1];
+      if (lastMessage && lastMessage.role === "assistant") {
+        speak(lastMessage.content);
+      }
+    }
+    lastMessageCountRef.current = messages.length;
+  }, [messages, isVoiceModeEnabled, speak]);
+
+  // Stop speaking when user starts listening
+  useEffect(() => {
+    if (isListening && isSpeaking) {
+      stopSpeaking();
+    }
+  }, [isListening, isSpeaking, stopSpeaking]);
+
+  const handleMicClick = () => {
+    if (isListening) {
+      stopListening();
+    } else {
+      resetTranscript();
+      startListening();
+    }
+  };
 
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
@@ -139,6 +197,27 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
             </div>
             
             <div className="flex items-center gap-2">
+              {/* Voice Mode Toggle */}
+              {isSynthesisSupported && (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={toggleVoiceMode}
+                      className={`p-2.5 rounded-lg transition-colors ${
+                        isVoiceModeEnabled
+                          ? "bg-[hsl(207,35%,55%)] text-white"
+                          : "bg-[hsl(207,35%,75%)] text-[hsl(207,35%,25%)] hover:bg-[hsl(207,35%,65%)]"
+                      } ${isSpeaking ? "animate-pulse" : ""}`}
+                    >
+                      {isVoiceModeEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{isVoiceModeEnabled ? "Desativar modo voz" : "Ativar modo voz"}</p>
+                  </TooltipContent>
+                </Tooltip>
+              )}
+
               <Tooltip>
                 <TooltipTrigger asChild>
                   <button
@@ -221,11 +300,34 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
           {/* Input */}
           <div className="p-6 border-t border-border">
             <div className="flex gap-3">
+              {/* Microphone Button */}
+              {isRecognitionSupported && (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={handleMicClick}
+                      className={`flex-shrink-0 transition-all ${
+                        isListening
+                          ? "bg-[hsl(340,35%,55%)] text-white border-[hsl(340,35%,55%)] animate-pulse"
+                          : "hover:bg-[hsl(207,35%,85%)]"
+                      }`}
+                    >
+                      {isListening ? <MicOff size={20} /> : <Mic size={20} />}
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{isListening ? "Parar de ouvir" : "Falar"}</p>
+                  </TooltipContent>
+                </Tooltip>
+              )}
+
               <Input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder="Digite sua mensagem..."
+                placeholder={isListening ? "Ouvindo..." : "Digite sua mensagem..."}
                 disabled={isLoading}
                 className="flex-1"
               />
@@ -233,6 +335,30 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
                 {isLoading ? <Loader2 className="animate-spin" size={20} /> : <Send size={20} />}
               </Button>
             </div>
+            
+            {/* Voice Status Indicator */}
+            {(isListening || isSpeaking) && (
+              <div className="mt-2 flex items-center gap-2 text-xs text-muted-foreground">
+                {isListening && (
+                  <span className="flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-[hsl(340,35%,55%)] animate-pulse" />
+                    Ouvindo...
+                  </span>
+                )}
+                {isSpeaking && (
+                  <span className="flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-[hsl(207,35%,55%)] animate-pulse" />
+                    Falando...
+                    <button
+                      onClick={stopSpeaking}
+                      className="ml-1 underline hover:text-foreground"
+                    >
+                      Parar
+                    </button>
+                  </span>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
