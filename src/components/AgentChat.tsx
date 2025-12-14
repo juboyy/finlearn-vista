@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { X, Send, Loader2, Trash2, Save, Mic, MicOff, Volume2 } from "lucide-react";
+import { X, Send, Loader2, Trash2, Save, Mic, MicOff, Volume2, Brain } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Switch } from "@/components/ui/switch";
 import { useAgentChat } from "@/hooks/useAgentChat";
 import { useToast } from "@/hooks/use-toast";
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
@@ -36,6 +37,7 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
   const [input, setInput] = useState("");
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [useReasoning, setUseReasoning] = useState(false);
   const { messages, sendMessage, isLoading, clearMessages } = useAgentChat(agentName);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
@@ -72,9 +74,9 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
       setInput("");
       resetTranscript();
       resetFinished();
-      sendMessage(message);
+      sendMessage(message, undefined, useReasoning);
     }
-  }, [hasFinishedRecording, transcript, isLoading, sendMessage, resetTranscript, resetFinished]);
+  }, [hasFinishedRecording, transcript, isLoading, sendMessage, resetTranscript, resetFinished, useReasoning]);
 
   // Auto-scroll to bottom
   useEffect(() => {
@@ -115,7 +117,7 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
     const message = input;
     setInput("");
     pendingVoiceResponseRef.current = false; // Manual send, don't auto-speak unless voice mode is on
-    await sendMessage(message);
+    await sendMessage(message, undefined, useReasoning);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -208,6 +210,27 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
             </div>
             
             <div className="flex items-center gap-2">
+              {/* Reasoning Toggle */}
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors ${
+                    useReasoning 
+                      ? "bg-[hsl(270,35%,75%)] text-[hsl(270,35%,25%)]" 
+                      : "bg-muted text-muted-foreground"
+                  }`}>
+                    <Brain size={16} />
+                    <span className="text-xs font-medium">Raciocínio</span>
+                    <Switch
+                      checked={useReasoning}
+                      onCheckedChange={setUseReasoning}
+                      className="scale-75"
+                    />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{useReasoning ? "Usando Gemini Pro (raciocínio avançado)" : "Usando Flash Lite (respostas rápidas)"}</p>
+                </TooltipContent>
+              </Tooltip>
 
               <Tooltip>
                 <TooltipTrigger asChild>

@@ -27,7 +27,7 @@ export const useAgentChat = (agentName: string) => {
 
   const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat-agent`;
 
-  const sendMessage = useCallback(async (input: string, contextPrompt?: string) => {
+  const sendMessage = useCallback(async (input: string, contextPrompt?: string, useReasoning?: boolean) => {
     const userMsg: Message = { role: "user", content: input };
     setMessages(prev => [...prev, userMsg]);
     setIsLoading(true);
@@ -39,7 +39,7 @@ export const useAgentChat = (agentName: string) => {
       const messageToSend = contextPrompt || input;
       const messageForBackend: Message = { role: "user", content: messageToSend };
       
-      console.log('Sending message to agent:', { input, contextPrompt, messageToSend });
+      console.log('Sending message to agent:', { input, contextPrompt, messageToSend, useReasoning });
       
       const resp = await fetch(CHAT_URL, {
         method: "POST",
@@ -49,7 +49,8 @@ export const useAgentChat = (agentName: string) => {
         },
         body: JSON.stringify({ 
           messages: [...messages, messageForBackend],
-          agentName 
+          agentName,
+          useReasoning: useReasoning || false
         }),
       });
 
