@@ -54,7 +54,10 @@ serve(async (req) => {
     }
 
     const body = await req.json();
-    const { messages, agentName } = body;
+    const { messages, agentName, useReasoning } = body;
+    
+    // Select model based on reasoning mode
+    const model = useReasoning ? "google/gemini-2.5-pro" : "google/gemini-2.5-flash-lite";
     
     // Validate input
     const messagesError = validateMessages(messages);
@@ -141,7 +144,7 @@ IMPORTANTE SOBRE IMAGENS:
     };
 
     const systemPrompt = systemPrompts[agentName] || "Você é um assistente financeiro útil e conhecedor. Forneça respostas claras e concisas.";
-    console.log("Using system prompt for agent:", agentName);
+    console.log("Using system prompt for agent:", agentName, "| Model:", model);
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -150,7 +153,7 @@ IMPORTANTE SOBRE IMAGENS:
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
+        model,
         messages: [
           { role: "system", content: systemPrompt },
           ...messages,
