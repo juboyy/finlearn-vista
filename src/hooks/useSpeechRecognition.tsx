@@ -31,7 +31,9 @@ export const useSpeechRecognition = (): UseSpeechRecognitionReturn => {
   // Voice Activity Detection constants
   const SILENCE_THRESHOLD = 0.01; // Lower threshold for better sensitivity
   const SILENCE_DURATION = 1500; // 1.5 seconds of silence to stop
+  const GRACE_PERIOD = 2000; // 2 seconds grace period before VAD starts checking
   const isListeningRef = useRef(false);
+  const startTimeRef = useRef<number>(0);
 
   const stopMediaRecorder = useCallback(() => {
     if (silenceTimeoutRef.current) {
@@ -97,6 +99,10 @@ export const useSpeechRecognition = (): UseSpeechRecognitionReturn => {
     const average = dataArray.reduce((sum, value) => sum + value, 0) / dataArray.length;
     const normalizedLevel = average / 255;
 
+    // Check if we're still in grace period
+    const timeSinceStart = Date.now() - startTimeRef.current;
+    const inGracePeriod = timeSinceStart < GRACE_PERIOD;
+
     if (normalizedLevel > SILENCE_THRESHOLD) {
       // Sound detected - reset silence timer
       lastSoundTimeRef.current = Date.now();
@@ -104,8 +110,8 @@ export const useSpeechRecognition = (): UseSpeechRecognitionReturn => {
         clearTimeout(silenceTimeoutRef.current);
         silenceTimeoutRef.current = null;
       }
-    } else {
-      // Silence detected - check if we should stop
+    } else if (!inGracePeriod) {
+      // Silence detected (and grace period passed) - check if we should stop
       const silenceDuration = Date.now() - lastSoundTimeRef.current;
       if (silenceDuration > SILENCE_DURATION && !silenceTimeoutRef.current) {
         silenceTimeoutRef.current = setTimeout(() => {
@@ -138,6 +144,7 @@ export const useSpeechRecognition = (): UseSpeechRecognitionReturn => {
 
       streamRef.current = stream;
       chunksRef.current = [];
+      startTimeRef.current = Date.now(); // Record start time for grace period
       lastSoundTimeRef.current = Date.now();
 
       // Setup audio analysis for VAD
