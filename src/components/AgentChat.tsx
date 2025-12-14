@@ -1,12 +1,11 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { X, Send, Loader2, Trash2, Save, Mic, MicOff, Volume2, VolumeX } from "lucide-react";
+import { X, Send, Loader2, Trash2, Save, Mic, MicOff, Volume2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAgentChat } from "@/hooks/useAgentChat";
 import { useToast } from "@/hooks/use-toast";
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
-import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
 import { supabase } from "@/integrations/supabase/client";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -36,12 +35,14 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
   const [input, setInput] = useState("");
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const [usedVoiceInput, setUsedVoiceInput] = useState(false);
+  const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
   const { messages, sendMessage, isLoading, clearMessages } = useAgentChat(agentName);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
   const lastMessageCountRef = useRef(0);
   const pendingVoiceResponseRef = useRef(false);
+  const currentAudioRef = useRef<HTMLAudioElement | null>(null);
 
   // Speech Recognition Hook
   const {
@@ -56,19 +57,20 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
     resetFinished,
   } = useSpeechRecognition();
 
-  // Speech Synthesis Hook
-  const {
-    isSpeaking,
-    isVoiceModeEnabled,
-    isSupported: isSynthesisSupported,
-    speak,
-    stop: stopSpeaking,
-    toggleVoiceMode,
-    setVoiceModeEnabled,
-  } = useSpeechSynthesis();
+  // Stop current audio playback
+  const stopSpeaking = useCallback(() => {
+    if (currentAudioRef.current) {
+      currentAudioRef.current.pause();
+      currentAudioRef.current.currentTime = 0;
+      currentAudioRef.current = null;
+    }
+    setIsSpeaking(false);
+    setIsGeneratingAudio(false);
+  }, []);
 
   // Generate TTS audio via edge function for complete responses
   const generateTTSAudio = useCallback(async (text: string) => {
+    setIsGeneratingAudio(true);
     try {
       const { data, error } = await supabase.functions.invoke("text-to-speech-elevenlabs", {
         body: { text },
@@ -76,6 +78,7 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
 
       if (error) {
         console.error("TTS error:", error);
+        setIsGeneratingAudio(false);
         return;
       }
 
@@ -89,13 +92,30 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
         const audioBlob = new Blob([audioArray], { type: "audio/mpeg" });
         const audioUrl = URL.createObjectURL(audioBlob);
         const audio = new Audio(audioUrl);
-        audio.play();
+        currentAudioRef.current = audio;
+        
+        audio.onplay = () => {
+          setIsGeneratingAudio(false);
+          setIsSpeaking(true);
+        };
+        
         audio.onended = () => {
           URL.revokeObjectURL(audioUrl);
+          setIsSpeaking(false);
+          currentAudioRef.current = null;
         };
+        
+        audio.onerror = () => {
+          setIsGeneratingAudio(false);
+          setIsSpeaking(false);
+          currentAudioRef.current = null;
+        };
+        
+        audio.play();
       }
     } catch (error) {
       console.error("Error generating TTS:", error);
+      setIsGeneratingAudio(false);
     }
   }, []);
 
@@ -109,7 +129,6 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
   // Auto-send message when voice recording finishes
   useEffect(() => {
     if (hasFinishedRecording && transcript && !isLoading) {
-      setUsedVoiceInput(true);
       pendingVoiceResponseRef.current = true;
       const message = transcript;
       setInput("");
@@ -126,27 +145,27 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
     }
   }, [messages]);
 
-  // Auto-speak new assistant messages when voice input was used or voice mode is enabled
+  // Auto-speak new assistant messages when voice input was used
   useEffect(() => {
     if (messages.length > lastMessageCountRef.current) {
       const lastMessage = messages[messages.length - 1];
       if (lastMessage && lastMessage.role === "assistant" && !isLoading) {
-        // Speak if voice mode is on OR if user used voice input for this exchange
-        if (isVoiceModeEnabled || pendingVoiceResponseRef.current) {
+        // Speak if user used voice input for this exchange
+        if (pendingVoiceResponseRef.current) {
           generateTTSAudio(lastMessage.content);
           pendingVoiceResponseRef.current = false;
         }
       }
     }
     lastMessageCountRef.current = messages.length;
-  }, [messages, isLoading, isVoiceModeEnabled, generateTTSAudio]);
+  }, [messages, isLoading, generateTTSAudio]);
 
   // Stop speaking when user starts listening
   useEffect(() => {
-    if (isListening && isSpeaking) {
+    if (isListening && (isSpeaking || isGeneratingAudio)) {
       stopSpeaking();
     }
-  }, [isListening, isSpeaking, stopSpeaking]);
+  }, [isListening, isSpeaking, isGeneratingAudio, stopSpeaking]);
 
   const handleMicClick = () => {
     if (isListening) {
@@ -255,26 +274,6 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
             </div>
             
             <div className="flex items-center gap-2">
-              {/* Voice Mode Toggle */}
-              {isSynthesisSupported && (
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      onClick={toggleVoiceMode}
-                      className={`p-2.5 rounded-lg transition-colors ${
-                        isVoiceModeEnabled
-                          ? "bg-[hsl(207,35%,55%)] text-white"
-                          : "bg-[hsl(207,35%,75%)] text-[hsl(207,35%,25%)] hover:bg-[hsl(207,35%,65%)]"
-                      } ${isSpeaking ? "animate-pulse" : ""}`}
-                    >
-                      {isVoiceModeEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>{isVoiceModeEnabled ? "Desativar modo voz" : "Ativar modo voz"}</p>
-                  </TooltipContent>
-                </Tooltip>
-              )}
 
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -403,24 +402,30 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
             </div>
             
             {/* Voice Status Indicator */}
-            {(isListening || isTranscribing || isSpeaking) && (
+            {(isListening || isTranscribing || isGeneratingAudio || isSpeaking) && (
               <div className="mt-2 flex items-center gap-2 text-xs text-muted-foreground">
                 {isListening && (
                   <span className="flex items-center gap-1">
                     <span className="w-2 h-2 rounded-full bg-[hsl(340,35%,55%)] animate-pulse" />
-                    Gravando...
+                    Ouvindo...
                   </span>
                 )}
                 {isTranscribing && (
                   <span className="flex items-center gap-1">
                     <Loader2 size={12} className="animate-spin" />
-                    Transcrevendo audio...
+                    Transcrevendo...
+                  </span>
+                )}
+                {isGeneratingAudio && (
+                  <span className="flex items-center gap-1">
+                    <Loader2 size={12} className="animate-spin" />
+                    Gerando audio...
                   </span>
                 )}
                 {isSpeaking && (
                   <span className="flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-full bg-[hsl(207,35%,55%)] animate-pulse" />
-                    Falando...
+                    <Volume2 size={12} className="text-[hsl(207,35%,55%)]" />
+                    Reproduzindo...
                     <button
                       onClick={stopSpeaking}
                       className="ml-1 underline hover:text-foreground"
