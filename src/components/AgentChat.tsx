@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { X, Send, Loader2, Trash2, Save, Mic, MicOff, Volume2, VolumeX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,6 +8,8 @@ import { useToast } from "@/hooks/use-toast";
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
 import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
 import { supabase } from "@/integrations/supabase/client";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -34,10 +36,12 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
   const [input, setInput] = useState("");
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [usedVoiceInput, setUsedVoiceInput] = useState(false);
   const { messages, sendMessage, isLoading, clearMessages } = useAgentChat(agentName);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
   const lastMessageCountRef = useRef(0);
+  const pendingVoiceResponseRef = useRef(false);
 
   // Speech Recognition Hook
   const {
@@ -45,9 +49,11 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
     transcript,
     isSupported: isRecognitionSupported,
     isProcessing: isTranscribing,
+    hasFinishedRecording,
     startListening,
     stopListening,
     resetTranscript,
+    resetFinished,
   } = useSpeechRecognition();
 
   // Speech Synthesis Hook
@@ -58,7 +64,40 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
     speak,
     stop: stopSpeaking,
     toggleVoiceMode,
+    setVoiceModeEnabled,
   } = useSpeechSynthesis();
+
+  // Generate TTS audio via edge function for complete responses
+  const generateTTSAudio = useCallback(async (text: string) => {
+    try {
+      const { data, error } = await supabase.functions.invoke("text-to-speech-elevenlabs", {
+        body: { text },
+      });
+
+      if (error) {
+        console.error("TTS error:", error);
+        return;
+      }
+
+      if (data?.audioContent) {
+        // Decode base64 and play audio
+        const audioData = atob(data.audioContent);
+        const audioArray = new Uint8Array(audioData.length);
+        for (let i = 0; i < audioData.length; i++) {
+          audioArray[i] = audioData.charCodeAt(i);
+        }
+        const audioBlob = new Blob([audioArray], { type: "audio/mpeg" });
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const audio = new Audio(audioUrl);
+        audio.play();
+        audio.onended = () => {
+          URL.revokeObjectURL(audioUrl);
+        };
+      }
+    } catch (error) {
+      console.error("Error generating TTS:", error);
+    }
+  }, []);
 
   // Update input field with transcript
   useEffect(() => {
@@ -67,6 +106,19 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
     }
   }, [transcript]);
 
+  // Auto-send message when voice recording finishes
+  useEffect(() => {
+    if (hasFinishedRecording && transcript && !isLoading) {
+      setUsedVoiceInput(true);
+      pendingVoiceResponseRef.current = true;
+      const message = transcript;
+      setInput("");
+      resetTranscript();
+      resetFinished();
+      sendMessage(message);
+    }
+  }, [hasFinishedRecording, transcript, isLoading, sendMessage, resetTranscript, resetFinished]);
+
   // Auto-scroll to bottom
   useEffect(() => {
     if (scrollRef.current) {
@@ -74,16 +126,20 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
     }
   }, [messages]);
 
-  // Auto-speak new assistant messages when voice mode is enabled
+  // Auto-speak new assistant messages when voice input was used or voice mode is enabled
   useEffect(() => {
-    if (isVoiceModeEnabled && messages.length > lastMessageCountRef.current) {
+    if (messages.length > lastMessageCountRef.current) {
       const lastMessage = messages[messages.length - 1];
-      if (lastMessage && lastMessage.role === "assistant") {
-        speak(lastMessage.content);
+      if (lastMessage && lastMessage.role === "assistant" && !isLoading) {
+        // Speak if voice mode is on OR if user used voice input for this exchange
+        if (isVoiceModeEnabled || pendingVoiceResponseRef.current) {
+          generateTTSAudio(lastMessage.content);
+          pendingVoiceResponseRef.current = false;
+        }
       }
     }
     lastMessageCountRef.current = messages.length;
-  }, [messages, isVoiceModeEnabled, speak]);
+  }, [messages, isLoading, isVoiceModeEnabled, generateTTSAudio]);
 
   // Stop speaking when user starts listening
   useEffect(() => {
@@ -105,6 +161,7 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
     if (!input.trim() || isLoading) return;
     const message = input;
     setInput("");
+    pendingVoiceResponseRef.current = false; // Manual send, don't auto-speak unless voice mode is on
     await sendMessage(message);
   };
 
@@ -280,7 +337,15 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
                         : "bg-muted text-foreground"
                     }`}
                   >
-                    <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
+                    {msg.role === "assistant" ? (
+                      <div className="text-sm prose prose-sm dark:prose-invert max-w-none prose-p:my-1 prose-headings:my-2 prose-ul:my-1 prose-ol:my-1 prose-li:my-0.5">
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                          {msg.content}
+                        </ReactMarkdown>
+                      </div>
+                    ) : (
+                      <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
+                    )}
                   </div>
                 </div>
               ))}
