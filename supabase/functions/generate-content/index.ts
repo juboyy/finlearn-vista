@@ -5,13 +5,67 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+// Input validation
+function validateInput(body: unknown): { valid: boolean; error?: string } {
+  if (typeof body !== "object" || body === null) {
+    return { valid: false, error: "Request body must be an object" };
+  }
+
+  const { prompt, agentType, specificAgent, tone, contentSize } = body as Record<string, unknown>;
+
+  if (typeof prompt !== "string" || prompt.length === 0 || prompt.length > 10000) {
+    return { valid: false, error: "prompt must be a string between 1 and 10000 characters" };
+  }
+
+  const validAgentTypes = ["analise", "compliance", "educacional", "estrategia", "juridico", "comunicacao"];
+  if (agentType !== undefined && (typeof agentType !== "string" || !validAgentTypes.includes(agentType))) {
+    return { valid: false, error: `agentType must be one of: ${validAgentTypes.join(", ")}` };
+  }
+
+  if (specificAgent !== undefined && (typeof specificAgent !== "string" || specificAgent.length > 200)) {
+    return { valid: false, error: "specificAgent must be a string with max 200 characters" };
+  }
+
+  const validTones = ["Profissional", "Técnico", "Conversacional", "Formal"];
+  if (tone !== undefined && (typeof tone !== "string" || !validTones.includes(tone))) {
+    return { valid: false, error: `tone must be one of: ${validTones.join(", ")}` };
+  }
+
+  const validSizes = ["Curto (500 palavras)", "Médio (1000 palavras)", "Longo (2000+ palavras)"];
+  if (contentSize !== undefined && (typeof contentSize !== "string" || !validSizes.includes(contentSize))) {
+    return { valid: false, error: `contentSize must be one of: ${validSizes.join(", ")}` };
+  }
+
+  return { valid: true };
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { prompt, agentType, specificAgent, tone, contentSize } = await req.json();
+    // Validate authorization header
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: "Unauthorized: Missing authorization header" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const body = await req.json();
+    
+    // Validate input
+    const validation = validateInput(body);
+    if (!validation.valid) {
+      return new Response(
+        JSON.stringify({ error: validation.error }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const { prompt, agentType, specificAgent, tone, contentSize } = body;
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     
     if (!LOVABLE_API_KEY) {

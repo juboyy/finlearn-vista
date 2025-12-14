@@ -5,13 +5,53 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+// Input validation
+function validateInput(body: unknown): { valid: boolean; error?: string } {
+  if (typeof body !== "object" || body === null) {
+    return { valid: false, error: "Request body must be an object" };
+  }
+
+  const { prompt, type } = body as Record<string, unknown>;
+
+  if (typeof prompt !== "string" || prompt.length === 0 || prompt.length > 10000) {
+    return { valid: false, error: "prompt must be a string between 1 and 10000 characters" };
+  }
+
+  const validTypes = ["image", "text", undefined];
+  if (type !== undefined && (typeof type !== "string" || !["image", "text"].includes(type))) {
+    return { valid: false, error: "type must be 'image' or 'text'" };
+  }
+
+  return { valid: true };
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { prompt, type } = await req.json();
+    // Validate authorization header
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: "Unauthorized: Missing authorization header" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const body = await req.json();
+    
+    // Validate input
+    const validation = validateInput(body);
+    if (!validation.valid) {
+      return new Response(
+        JSON.stringify({ error: validation.error }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const { prompt, type } = body;
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     
     if (!LOVABLE_API_KEY) {

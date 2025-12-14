@@ -5,13 +5,74 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+// Input validation
+function validateMessages(messages: unknown): string | null {
+  if (!Array.isArray(messages)) {
+    return "messages must be an array";
+  }
+  if (messages.length === 0 || messages.length > 50) {
+    return "messages must have between 1 and 50 items";
+  }
+  for (let i = 0; i < messages.length; i++) {
+    const msg = messages[i];
+    if (typeof msg !== "object" || msg === null) {
+      return `messages[${i}] must be an object`;
+    }
+    if (!["user", "assistant", "system"].includes(msg.role)) {
+      return `messages[${i}].role must be user, assistant, or system`;
+    }
+    if (typeof msg.content !== "string" || msg.content.length === 0 || msg.content.length > 10000) {
+      return `messages[${i}].content must be a string between 1 and 10000 characters`;
+    }
+  }
+  return null;
+}
+
+function validateAgentName(agentName: unknown): string | null {
+  if (typeof agentName !== "string") {
+    return "agentName must be a string";
+  }
+  if (agentName.length === 0 || agentName.length > 100) {
+    return "agentName must be between 1 and 100 characters";
+  }
+  return null;
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { messages, agentName } = await req.json();
+    // Validate authorization header
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: "Unauthorized: Missing authorization header" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const body = await req.json();
+    const { messages, agentName } = body;
+    
+    // Validate input
+    const messagesError = validateMessages(messages);
+    if (messagesError) {
+      return new Response(
+        JSON.stringify({ error: messagesError }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const agentNameError = validateAgentName(agentName);
+    if (agentNameError) {
+      return new Response(
+        JSON.stringify({ error: agentNameError }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     console.log("Chat request received for agent:", agentName, "with", messages.length, "messages");
     
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
@@ -67,163 +128,6 @@ Use Markdown para formatar suas respostas de forma rica e visualmente atrativa:
   Tipos disponíveis: chart-bar, chart-line, chart-pie
 - **Imagens**: Use ![descrição](IMAGE_GENERATE:prompt detalhado) para gerar imagens no estilo da plataforma
 - **Espaçamento**: Use parágrafos separados para melhor legibilidade
-
-TEMPLATES DE RESPOSTA:
-
-**Notícias do dia**:
-# 📰 Principais Notícias - [Data]
-
-## [Título da Notícia 1]
-![Ilustração da notícia](IMAGE_GENERATE:Financial news about [topic])
-
-*Categoria* | **[Destaque importante]**
-
-[Breve resumo da notícia em 2-3 linhas]
-
-[Leia mais](url)
-
----
-
-## [Título da Notícia 2]
-![Ilustração da notícia](IMAGE_GENERATE:Financial market news illustration about [topic])
-
-*Categoria* | **[Destaque importante]**
-
-[Breve resumo da notícia]
-
----
-
-**Focar nas Metas**:
-# 🎯 Suas Metas
-
-## Meta de Hoje
-
-\`\`\`progress
-85
-\`\`\`
-
-**Status**: 85% concluída - Faltam 2 tarefas
-
-## Meta do Mês
-
-\`\`\`progress
-65
-\`\`\`
-
-**Status**: 65% concluída - No caminho certo!
-
-### ⚠️ Metas em Atraso
-
-1. **Completar Módulo 3 do Curso de Renda Fixa**
-   - Prazo original: há 2 dias
-   - Ação sugerida: Reserve 1h hoje para finalizar
-
-2. **Revisar Relatório de Análise Técnica**
-   - Prazo original: ontem
-   - Ação sugerida: Priorize para esta manhã
-
-### 🔜 Próximas Ações Prioritárias
-1. **Finalizar metas em atraso** (Alta prioridade)
-2. **[Próxima tarefa importante]**
-
----
-
-**Podcasts rolando**:
-# 🎧 Podcasts Recomendados Esta Semana
-
-## Mercados em Foco - EP142: Volatilidade nos Mercados
-
-![Capa do Podcast](IMAGE_GENERATE:Podcast cover for financial market volatility episode)
-
-*Duração: 45 min* | **Lançado hoje**
-
-Análise profunda sobre a volatilidade recente nos mercados globais e seu impacto no Brasil.
-
-**Tópicos abordados**:
-- Principais fatores de volatilidade
-- Estratégias de proteção
-- Oportunidades no cenário atual
-
-\`\`\`audio
-https://example.com/podcast-ep142.mp3
-\`\`\`
-
----
-
-## Open Finance em Destaque - EP25
-
-![Capa do Podcast](IMAGE_GENERATE:Open finance podcast cover illustration)
-
-*Duração: 38 min*
-
-[Ouça agora](https://example.com/podcast-audio-ep25)
-
----
-
-**Completar Cursos**:
-# 📖 Continue Seus Cursos
-
-## Análise Técnica Avançada
-
-\`\`\`progress
-72
-\`\`\`
-
-**De onde parou**: Módulo 5 - Padrões de Reversão
-
-### 🎬 Próximo Vídeo
-**Aula 5.3**: Ombro-Cabeça-Ombro na Prática
-*Duração: 18 minutos*
-
-\`\`\`video
-https://example.com/curso-video-5-3.mp4
-\`\`\`
-
-**Tempo para concluir o curso**: ~4 horas restantes
-
----
-
-## Certificação CPA-20
-
-\`\`\`progress
-45
-\`\`\`
-
-**De onde parou**: Módulo 3 - Fundos de Investimento
-
-[Continuar assistindo](url)
-
-**Tempo para concluir**: ~8 horas restantes
-
----
-
-**Promoções**:
-# 🏷️ Promoções Ativas
-
-## 🔥 Cursos com Desconto
-
-### Curso Completo de Day Trade
-**60% OFF** - De R$ 497 por R$ 197
-*Válido até: [data]*
-
-[Aproveitar promoção](url)
-
----
-
-### Certificação CEA 2025
-**40% OFF** - De R$ 897 por R$ 537
-*Últimas 48 horas!*
-
-[Garantir desconto](url)
-
----
-
-## 📚 E-books Gratuitos Esta Semana
-
-- **Guia Completo de Renda Fixa 2025** - [Baixar grátis](url)
-- **10 Estratégias de Proteção de Carteira** - [Baixar grátis](url)
-
----
 
 Mantenha suas respostas focadas, práticas e orientadas a ação. Use dados do mercado brasileiro quando relevante.
 

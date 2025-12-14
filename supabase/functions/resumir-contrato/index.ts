@@ -5,21 +5,83 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+// Input validation
+function validateInput(body: unknown): { valid: boolean; error?: string } {
+  if (typeof body !== "object" || body === null) {
+    return { valid: false, error: "Request body must be an object" };
+  }
+
+  const { fileName, fileContent, summaryType, agent } = body as Record<string, unknown>;
+
+  if (typeof fileName !== "string" || fileName.length === 0 || fileName.length > 500) {
+    return { valid: false, error: "fileName must be a string between 1 and 500 characters" };
+  }
+
+  if (typeof fileContent !== "string" || fileContent.length === 0) {
+    return { valid: false, error: "fileContent must be a non-empty string" };
+  }
+
+  // Limit fileContent to prevent abuse (base64 encoded content)
+  if (fileContent.length > 500000) {
+    return { valid: false, error: "fileContent exceeds maximum size of 500KB" };
+  }
+
+  const validSummaryTypes = ["short", "medium", "extensive"];
+  if (typeof summaryType !== "string" || !validSummaryTypes.includes(summaryType)) {
+    return { valid: false, error: `summaryType must be one of: ${validSummaryTypes.join(", ")}` };
+  }
+
+  const validAgents = ["analise", "juridico", "compliance", "estrategia"];
+  if (typeof agent !== "string" || !validAgents.includes(agent)) {
+    return { valid: false, error: `agent must be one of: ${validAgents.join(", ")}` };
+  }
+
+  return { valid: true };
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { fileName, fileContent, summaryType, agent } = await req.json();
+    // Validate authorization header
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: "Unauthorized: Missing authorization header" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const body = await req.json();
+    
+    // Validate input
+    const validation = validateInput(body);
+    if (!validation.valid) {
+      return new Response(
+        JSON.stringify({ error: validation.error }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const { fileName, fileContent, summaryType, agent } = body;
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
 
     if (!LOVABLE_API_KEY) {
       throw new Error("LOVABLE_API_KEY não está configurada");
     }
 
-    // Decode base64 content
-    const decodedContent = atob(fileContent);
+    // Decode base64 content with error handling
+    let decodedContent: string;
+    try {
+      decodedContent = atob(fileContent);
+    } catch {
+      return new Response(
+        JSON.stringify({ error: "fileContent must be valid base64 encoded content" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
     
     // Definir prompts baseados no tipo de resumo
     const summaryPrompts = {
