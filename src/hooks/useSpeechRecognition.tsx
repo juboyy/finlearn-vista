@@ -29,8 +29,9 @@ export const useSpeechRecognition = (): UseSpeechRecognitionReturn => {
   const lastSoundTimeRef = useRef<number>(Date.now());
 
   // Voice Activity Detection constants
-  const SILENCE_THRESHOLD = 0.015; // Threshold for detecting silence
+  const SILENCE_THRESHOLD = 0.01; // Lower threshold for better sensitivity
   const SILENCE_DURATION = 1500; // 1.5 seconds of silence to stop
+  const isListeningRef = useRef(false);
 
   const stopMediaRecorder = useCallback(() => {
     if (silenceTimeoutRef.current) {
@@ -87,7 +88,7 @@ export const useSpeechRecognition = (): UseSpeechRecognitionReturn => {
   }, []);
 
   const checkAudioLevel = useCallback(() => {
-    if (!analyserRef.current || !isListening) return;
+    if (!analyserRef.current || !isListeningRef.current) return;
 
     const dataArray = new Uint8Array(analyserRef.current.frequencyBinCount);
     analyserRef.current.getByteFrequencyData(dataArray);
@@ -108,17 +109,19 @@ export const useSpeechRecognition = (): UseSpeechRecognitionReturn => {
       const silenceDuration = Date.now() - lastSoundTimeRef.current;
       if (silenceDuration > SILENCE_DURATION && !silenceTimeoutRef.current) {
         silenceTimeoutRef.current = setTimeout(() => {
+          console.log("VAD: Silence detected, stopping recording");
           stopMediaRecorder();
           setIsListening(false);
+          isListeningRef.current = false;
         }, 100);
       }
     }
 
     // Continue monitoring if still listening
-    if (isListening) {
+    if (isListeningRef.current) {
       requestAnimationFrame(checkAudioLevel);
     }
-  }, [isListening, stopMediaRecorder]);
+  }, [stopMediaRecorder]);
 
   const startListening = useCallback(async () => {
     if (isListening) return;
@@ -174,9 +177,11 @@ export const useSpeechRecognition = (): UseSpeechRecognitionReturn => {
       mediaRecorderRef.current = mediaRecorder;
       mediaRecorder.start();
       setIsListening(true);
+      isListeningRef.current = true;
       setTranscript("");
       setHasFinishedRecording(false);
 
+      console.log("Started listening with VAD enabled");
       // Start voice activity detection
       requestAnimationFrame(checkAudioLevel);
     } catch (error) {
@@ -186,11 +191,12 @@ export const useSpeechRecognition = (): UseSpeechRecognitionReturn => {
   }, [isListening, transcribeAudio, checkAudioLevel]);
 
   const stopListening = useCallback(() => {
-    if (!isListening) return;
+    if (!isListeningRef.current) return;
     
     stopMediaRecorder();
     setIsListening(false);
-  }, [isListening, stopMediaRecorder]);
+    isListeningRef.current = false;
+  }, [stopMediaRecorder]);
 
   const resetTranscript = useCallback(() => {
     setTranscript("");

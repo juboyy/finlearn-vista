@@ -147,17 +147,13 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
 
   // Auto-speak new assistant messages when voice input was used
   useEffect(() => {
-    if (messages.length > lastMessageCountRef.current) {
-      const lastMessage = messages[messages.length - 1];
-      if (lastMessage && lastMessage.role === "assistant" && !isLoading) {
-        // Speak if user used voice input for this exchange
-        if (pendingVoiceResponseRef.current) {
-          generateTTSAudio(lastMessage.content);
-          pendingVoiceResponseRef.current = false;
-        }
-      }
+    const lastMessage = messages[messages.length - 1];
+    
+    // Only trigger when loading just finished and we have a pending voice response
+    if (!isLoading && pendingVoiceResponseRef.current && lastMessage?.role === "assistant") {
+      generateTTSAudio(lastMessage.content);
+      pendingVoiceResponseRef.current = false;
     }
-    lastMessageCountRef.current = messages.length;
   }, [messages, isLoading, generateTTSAudio]);
 
   // Stop speaking when user starts listening
