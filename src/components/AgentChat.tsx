@@ -44,6 +44,7 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
     isListening,
     transcript,
     isSupported: isRecognitionSupported,
+    isProcessing: isTranscribing,
     startListening,
     stopListening,
     resetTranscript,
@@ -327,22 +328,28 @@ export const AgentChat = ({ agentName, agentImage, onClose }: AgentChatProps) =>
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder={isListening ? "Ouvindo..." : "Digite sua mensagem..."}
-                disabled={isLoading}
+                placeholder={isListening ? "Ouvindo..." : isTranscribing ? "Transcrevendo..." : "Digite sua mensagem..."}
+                disabled={isLoading || isTranscribing}
                 className="flex-1"
               />
-              <Button onClick={handleSend} disabled={isLoading || !input.trim()}>
+              <Button onClick={handleSend} disabled={isLoading || isTranscribing || !input.trim()}>
                 {isLoading ? <Loader2 className="animate-spin" size={20} /> : <Send size={20} />}
               </Button>
             </div>
             
             {/* Voice Status Indicator */}
-            {(isListening || isSpeaking) && (
+            {(isListening || isTranscribing || isSpeaking) && (
               <div className="mt-2 flex items-center gap-2 text-xs text-muted-foreground">
                 {isListening && (
                   <span className="flex items-center gap-1">
                     <span className="w-2 h-2 rounded-full bg-[hsl(340,35%,55%)] animate-pulse" />
-                    Ouvindo...
+                    Gravando...
+                  </span>
+                )}
+                {isTranscribing && (
+                  <span className="flex items-center gap-1">
+                    <Loader2 size={12} className="animate-spin" />
+                    Transcrevendo audio...
                   </span>
                 )}
                 {isSpeaking && (
