@@ -1,10 +1,20 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Bell, Bookmark, Heart, MessageCircle, Flame, Crown, ChevronLeft, ChevronRight, SlidersHorizontal } from "lucide-react";
+import { Search, Bell, Bookmark, Heart, MessageCircle, Flame, Crown, ChevronLeft, ChevronRight, SlidersHorizontal, Loader2 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
-const articles = [
+interface Post {
+  id: number;
+  title: string | null;
+  html: string | null;
+  published_at: string;
+  visibility: string | null;
+}
+
+const staticArticles = [
   {
     id: 1,
     title: "Regulamentação de Criptoativos: O Que Muda em 2024",
@@ -98,7 +108,47 @@ const featuredAuthors = [
 
 const Conteudo = () => {
   const navigate = useNavigate();
-  
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const { data, error } = await supabase
+        .from('posts')
+        .select('*')
+        .eq('visibility', 'public')
+        .order('published_at', { ascending: false });
+
+      if (!error && data) {
+        setPosts(data);
+      }
+      setLoading(false);
+    };
+
+    fetchPosts();
+  }, []);
+
+  // Combina posts do banco com artigos estáticos
+  const articles = [
+    ...posts.map((post, index) => ({
+      id: post.id,
+      title: post.title || 'Sem título',
+      description: post.html ? post.html.replace(/<[^>]*>/g, '').slice(0, 150) + '...' : '',
+      category: 'Post',
+      categoryColor: ['primary', 'secondary', 'accent', 'success'][index % 4],
+      readTime: '5 min',
+      author: 'Equipe FinLearn',
+      date: new Date(post.published_at).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' }),
+      image: `https://storage.googleapis.com/uxpilot-auth.appspot.com/${['a69d0f0f30-c71f4c7b19fb437a8431', '948cf700f0-4648b908f2d8dd666e3e', 'c31ab9aafc-385ba2bf03ba05453e6f', '85bb5f78b9-37c3a71c93a8d1418f34'][index % 4]}.png`,
+      avatar: `https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-${(index % 9) + 1}.jpg`,
+      likes: Math.floor(Math.random() * 500) + 50,
+      comments: Math.floor(Math.random() * 100) + 10,
+      isPremium: post.visibility === 'premium',
+      isFromDatabase: true,
+    })),
+    ...staticArticles.map(a => ({ ...a, isFromDatabase: false })),
+  ];
+
   return (
     <div className="flex h-screen overflow-hidden">
       <SidebarFix />
