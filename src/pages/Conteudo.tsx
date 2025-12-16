@@ -17,10 +17,18 @@ const fetchPosts = async () => {
   return data;
 };
 
+// Some sources store HTML with escaped quotes (ex: src=\"...\").
+// Normalize it so images and other attributes render correctly.
+const normalizeHtml = (html: string | null): string | null => {
+  if (!html) return null;
+  return html.replace(/\\"/g, '"').replace(/\\n/g, '\n');
+};
+
 // Extract first image from HTML content
 const extractFirstImage = (html: string | null): string | null => {
-  if (!html) return null;
-  const imgMatch = html.match(/<img[^>]+src=["']([^"']+)["']/i);
+  const normalized = normalizeHtml(html);
+  if (!normalized) return null;
+  const imgMatch = normalized.match(/<img[^>]+src=["']([^"']+)["']/i);
   return imgMatch ? imgMatch[1] : null;
 };
 
@@ -59,6 +67,32 @@ const Conteudo = () => {
     queryKey: ['posts'],
     queryFn: fetchPosts,
   });
+
+  // SEO basics (title, description, canonical)
+  useEffect(() => {
+    const rawTitle = 'Portal de Conteudo | FinLearn';
+    document.title = rawTitle.length > 60 ? `${rawTitle.slice(0, 57)}...` : rawTitle;
+
+    const metaDesc = 'Artigos, entrevistas e conteudo premium sobre mercado financeiro.'.slice(0, 160);
+    const existingMeta = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
+    if (existingMeta) {
+      existingMeta.setAttribute('content', metaDesc);
+    } else {
+      const meta = document.createElement('meta');
+      meta.name = 'description';
+      meta.content = metaDesc;
+      document.head.appendChild(meta);
+    }
+
+    const canonicalUrl = `${window.location.origin}/conteudo`;
+    let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.rel = 'canonical';
+      document.head.appendChild(canonical);
+    }
+    canonical.href = canonicalUrl;
+  }, []);
 
   // Supabase Realtime subscription for automatic updates
   useEffect(() => {

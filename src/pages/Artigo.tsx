@@ -20,6 +20,13 @@ const extractFirstImage = (html: string | null): string | null => {
   return imgMatch ? imgMatch[1] : null;
 };
 
+// Some sources store HTML with escaped quotes (ex: src=\"...\").
+// Normalize it so images and other attributes render correctly.
+const normalizeHtml = (html: string | null): string | null => {
+  if (!html) return null;
+  return html.replace(/\\"/g, '"').replace(/\\n/g, '\n');
+};
+
 // Strip HTML tags for plain text
 const stripHtml = (html: string | null): string => {
   if (!html) return '';
@@ -97,11 +104,12 @@ const Artigo = () => {
   });
 
   // Memoized values from post
+  const normalizedHtml = useMemo(() => normalizeHtml(post?.html), [post?.html]);
   const articleTitle = post?.title || 'Artigo';
-  const articleImage = useMemo(() => extractFirstImage(post?.html), [post?.html]);
+  const articleImage = useMemo(() => extractFirstImage(normalizedHtml), [normalizedHtml]);
   const articleDescription = post?.description || '';
-  const articleText = useMemo(() => stripHtml(post?.html), [post?.html]);
-  const tableOfContents = useMemo(() => extractHeadings(post?.html), [post?.html]);
+  const articleText = useMemo(() => stripHtml(normalizedHtml), [normalizedHtml]);
+  const tableOfContents = useMemo(() => extractHeadings(normalizedHtml), [normalizedHtml]);
 
   // Scroll to heading
   const scrollToHeading = (index: number) => {
@@ -435,6 +443,35 @@ const Artigo = () => {
     ? new Date(post.published_at).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' })
     : '';
 
+  // SEO basics (title, description, canonical)
+  useEffect(() => {
+    if (!post) return;
+
+    const rawTitle = post.title ? `${post.title} | FinLearn` : 'Artigo | FinLearn';
+    document.title = rawTitle.length > 60 ? `${rawTitle.slice(0, 57)}...` : rawTitle;
+
+    const descSource = post.description || stripHtml(normalizedHtml);
+    const metaDesc = (descSource || '').slice(0, 160);
+
+    const existingMeta = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
+    if (existingMeta) {
+      existingMeta.setAttribute('content', metaDesc);
+    } else {
+      const meta = document.createElement('meta');
+      meta.name = 'description';
+      meta.content = metaDesc;
+      document.head.appendChild(meta);
+    }
+
+    const canonicalUrl = `${window.location.origin}/artigo/${articleId}`;
+    let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.rel = 'canonical';
+      document.head.appendChild(canonical);
+    }
+    canonical.href = canonicalUrl;
+  }, [post, articleId, normalizedHtml]);
   if (isLoading) {
     return (
       <div className="bg-background min-h-screen flex items-center justify-center">
@@ -729,6 +766,8 @@ const Artigo = () => {
                   <img 
                     src={articleImage} 
                     alt={post.title || 'Imagem do artigo'} 
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-auto object-cover"
                   />
                 </div>
@@ -751,7 +790,7 @@ const Artigo = () => {
                   prose-blockquote:border-l-primary prose-blockquote:text-muted-foreground prose-blockquote:italic
                   prose-code:text-primary prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:rounded
                   prose-pre:bg-muted prose-pre:border prose-pre:border-border"
-                dangerouslySetInnerHTML={{ __html: post.html || '<p>Conteudo nao disponivel.</p>' }}
+                dangerouslySetInnerHTML={{ __html: normalizedHtml || '<p>Conteudo nao disponivel.</p>' }}
               />
 
               {/* Social engagement */}
