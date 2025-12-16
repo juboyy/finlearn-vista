@@ -1,86 +1,33 @@
 import { SidebarFix } from "@/components/Dashboard/SidebarFix";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Bell, Bookmark, Heart, MessageCircle, Flame, Crown, ChevronLeft, ChevronRight, SlidersHorizontal } from "lucide-react";
+import { Search, Bell, Bookmark, Heart, MessageCircle, Flame, Crown, ChevronLeft, ChevronRight, SlidersHorizontal, Loader2 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
-const articles = [
-  {
-    id: 1,
-    title: "Regulamentação de Criptoativos: O Que Muda em 2024",
-    description: "Entenda as novas regras do Banco Central para exchanges e como isso impacta investidores e empresas do setor.",
-    category: "Criptomoedas",
-    categoryColor: "secondary",
-    readTime: "8 min",
-    author: "Ricardo Alves",
-    date: "15 Mar 2024",
-    image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/a69d0f0f30-c71f4c7b19fb437a8431.png",
-    avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg",
-    likes: 234,
-    comments: 45,
-    isPremium: false,
-  },
-  {
-    id: 2,
-    title: "Estratégias de Diversificação para 2024",
-    description: "Como montar uma carteira equilibrada considerando renda fixa, ações, fundos imobiliários e investimentos alternativos.",
-    category: "Investimentos",
-    categoryColor: "accent",
-    readTime: "12 min",
-    author: "Ana Costa",
-    date: "14 Mar 2024",
-    image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/948cf700f0-4648b908f2d8dd666e3e.png",
-    avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg",
-    likes: 567,
-    comments: 89,
-    isPremium: true,
-  },
-  {
-    id: 3,
-    title: "IA no Trading: Mito ou Realidade?",
-    description: "Análise sobre o uso de inteligência artificial em operações financeiras e seus resultados práticos no mercado brasileiro.",
-    category: "Tecnologia",
-    categoryColor: "success",
-    readTime: "10 min",
-    author: "Pedro Lima",
-    date: "13 Mar 2024",
-    image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/c31ab9aafc-385ba2bf03ba05453e6f.png",
-    avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-9.jpg",
-    likes: 423,
-    comments: 67,
-    isPremium: false,
-  },
-  {
-    id: 4,
-    title: "Entrevista Exclusiva: CEO da XP sobre o Mercado",
-    description: "Conversa com o executivo sobre tendências, desafios e oportunidades no mercado financeiro brasileiro para os próximos anos.",
-    category: "Entrevista",
-    categoryColor: "primary",
-    readTime: "20 min",
-    author: "Marina Santos",
-    date: "12 Mar 2024",
-    image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/85bb5f78b9-37c3a71c93a8d1418f34.png",
-    avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg",
-    likes: 892,
-    comments: 134,
-    isPremium: false,
-  },
-  {
-    id: 5,
-    title: "Compliance Bancário: Novas Diretrizes do BACEN",
-    description: "Análise detalhada das mudanças regulatórias e seus impactos na gestão de riscos e conformidade das instituições financeiras.",
-    category: "Compliance",
-    categoryColor: "secondary",
-    readTime: "15 min",
-    author: "Luiza Fernandes",
-    date: "11 Mar 2024",
-    image: "https://storage.googleapis.com/uxpilot-auth.appspot.com/59ca7bdc38-6c1a900d95c3331dc027.png",
-    avatar: "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg",
-    likes: 156,
-    comments: 28,
-    isPremium: false,
-  },
-];
+const fetchPosts = async () => {
+  const { data, error } = await supabase
+    .from('posts')
+    .select('*')
+    .order('published_at', { ascending: false });
+  
+  if (error) throw error;
+  return data;
+};
+
+const getCategoryColor = (category: string | null) => {
+  const colors: Record<string, string> = {
+    'Criptomoedas': 'secondary',
+    'Investimentos': 'accent',
+    'Tecnologia': 'success',
+    'Entrevista': 'primary',
+    'Compliance': 'secondary',
+    'Mercado': 'primary',
+    'Fintech': 'accent',
+  };
+  return colors[category || ''] || 'primary';
+};
 
 const trendingTopics = [
   { title: "Nova Regulação do Banco Central para Pagamentos Instantâneos", views: "2.4K", color: "primary" },
@@ -98,6 +45,11 @@ const featuredAuthors = [
 
 const Conteudo = () => {
   const navigate = useNavigate();
+  
+  const { data: posts, isLoading } = useQuery({
+    queryKey: ['posts'],
+    queryFn: fetchPosts,
+  });
   
   return (
     <div className="flex h-screen overflow-hidden">
@@ -210,69 +162,90 @@ const Conteudo = () => {
           <div className="grid grid-cols-3 gap-6 mb-8">
             {/* Main Articles */}
             <section className="col-span-2 space-y-6">
-              {articles.map((article) => (
-                <article key={article.id} className="bg-card border border-border rounded-xl overflow-hidden hover:shadow-md transition">
-                  <div className="grid grid-cols-5">
-                    <div className="col-span-2 h-56 overflow-hidden">
-                      <img src={article.image} alt={article.title} className="w-full h-full object-cover" />
-                    </div>
-                    <div className="col-span-3 p-6">
-                      <div className="flex items-center gap-2 mb-3">
-                        <span className={`text-xs font-medium px-2 py-1 rounded ${
-                          article.categoryColor === 'primary' ? 'text-primary bg-primary/10' :
-                          article.categoryColor === 'secondary' ? 'text-secondary bg-secondary/10' :
-                          article.categoryColor === 'accent' ? 'text-accent bg-accent/10' :
-                          article.categoryColor === 'success' ? 'text-success bg-success/10' :
-                          'text-primary bg-primary/10'
-                        }`}>
-                          {article.category}
-                        </span>
-                        <span className="text-xs text-muted-foreground">•</span>
-                        <span className="text-xs text-muted-foreground">{article.readTime} de leitura</span>
-                        {article.isPremium && (
-                          <>
-                            <span className="text-xs text-muted-foreground">•</span>
-                            <span className="text-xs font-medium text-warning bg-warning/10 px-2 py-1 rounded">
-                              <Crown size={10} className="inline mr-1" />
-                              Premium
+              {isLoading ? (
+                <div className="flex items-center justify-center py-12">
+                  <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                </div>
+              ) : posts && posts.length > 0 ? (
+                posts.map((post) => {
+                  const categoryColor = getCategoryColor(post.category);
+                  const isPremium = post.visibility === 'premium';
+                  const formattedDate = post.published_at 
+                    ? new Date(post.published_at).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' })
+                    : '';
+                  
+                  return (
+                    <article key={post.id} className="bg-card border border-border rounded-xl overflow-hidden hover:shadow-md transition">
+                      <div className="p-6">
+                        <div className="flex items-center gap-2 mb-3">
+                          {post.category && (
+                            <span className={`text-xs font-medium px-2 py-1 rounded ${
+                              categoryColor === 'primary' ? 'text-primary bg-primary/10' :
+                              categoryColor === 'secondary' ? 'text-secondary bg-secondary/10' :
+                              categoryColor === 'accent' ? 'text-accent bg-accent/10' :
+                              categoryColor === 'success' ? 'text-success bg-success/10' :
+                              'text-primary bg-primary/10'
+                            }`}>
+                              {post.category}
                             </span>
-                          </>
+                          )}
+                          <span className="text-xs text-muted-foreground">•</span>
+                          <span className="text-xs text-muted-foreground">{post.read_time || '5 min'} de leitura</span>
+                          {isPremium && (
+                            <>
+                              <span className="text-xs text-muted-foreground">•</span>
+                              <span className="text-xs font-medium text-warning bg-warning/10 px-2 py-1 rounded">
+                                <Crown size={10} className="inline mr-1" />
+                                Premium
+                              </span>
+                            </>
+                          )}
+                        </div>
+                        <Link to={`/artigo/${post.id}`}>
+                          <h3 className="text-xl font-semibold text-foreground mb-3 hover:text-primary cursor-pointer">
+                            {post.title}
+                          </h3>
+                        </Link>
+                        {post.description && (
+                          <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
+                            {post.description}
+                          </p>
                         )}
-                      </div>
-                      <Link to={article.id === 5 ? '/artigo/compliance' : `/artigo/${article.id}`}>
-                        <h3 className="text-xl font-semibold text-foreground mb-3 hover:text-primary cursor-pointer">
-                          {article.title}
-                        </h3>
-                      </Link>
-                      <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
-                        {article.description}
-                      </p>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <img src={article.avatar} alt="Author" className="w-8 h-8 rounded-full object-cover" />
-                          <div>
-                            <div className="font-medium text-sm text-foreground">{article.author}</div>
-                            <div className="text-xs text-muted-foreground">{article.date}</div>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+                              <span className="text-xs font-medium text-primary">
+                                {post.author_name?.charAt(0) || 'A'}
+                              </span>
+                            </div>
+                            <div>
+                              <div className="font-medium text-sm text-foreground">{post.author_name || 'Autor'}</div>
+                              <div className="text-xs text-muted-foreground">{formattedDate}</div>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                            <button className="hover:text-primary transition">
+                              <Heart size={16} className="inline mr-1" />
+                              {post.likes || 0}
+                            </button>
+                            <button className="hover:text-primary transition">
+                              <MessageCircle size={16} className="inline mr-1" />
+                              {post.comments || 0}
+                            </button>
+                            <button className="hover:text-primary transition">
+                              <Bookmark size={16} />
+                            </button>
                           </div>
                         </div>
-                        <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                          <button className="hover:text-primary transition">
-                            <Heart size={16} className="inline mr-1" />
-                            {article.likes}
-                          </button>
-                          <button className="hover:text-primary transition">
-                            <MessageCircle size={16} className="inline mr-1" />
-                            {article.comments}
-                          </button>
-                          <button className="hover:text-primary transition">
-                            <Bookmark size={16} />
-                          </button>
-                        </div>
                       </div>
-                    </div>
-                  </div>
-                </article>
-              ))}
+                    </article>
+                  );
+                })
+              ) : (
+                <div className="text-center py-12 text-muted-foreground">
+                  Nenhum artigo encontrado
+                </div>
+              )}
             </section>
 
             {/* Sidebar */}
