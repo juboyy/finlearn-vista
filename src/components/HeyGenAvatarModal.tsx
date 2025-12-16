@@ -39,6 +39,8 @@ export const HeyGenAvatarModal = ({
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [callDuration, setCallDuration] = useState(0);
   const [retryCount, setRetryCount] = useState(0);
+  const [hasVideoStream, setHasVideoStream] = useState(false);
+  const [videoDebugInfo, setVideoDebugInfo] = useState<string>('');
   
   const videoRef = useRef<HTMLVideoElement>(null);
   const peerConnectionRef = useRef<RTCPeerConnection | null>(null);
@@ -116,10 +118,43 @@ export const HeyGenAvatarModal = ({
 
       // Handle incoming video/audio tracks
       pc.ontrack = (event) => {
-        console.log('Received track:', event.track.kind, event.track.readyState);
-        if (videoRef.current && event.streams[0]) {
-          videoRef.current.srcObject = event.streams[0];
-          console.log('Video stream attached to element');
+        console.log('=== RECEIVED TRACK ===');
+        console.log('Track kind:', event.track.kind);
+        console.log('Track state:', event.track.readyState);
+        console.log('Streams count:', event.streams.length);
+        
+        if (event.streams[0]) {
+          const stream = event.streams[0];
+          console.log('Stream tracks:', stream.getTracks().map(t => `${t.kind}: ${t.readyState}`));
+          setVideoDebugInfo(`Track: ${event.track.kind}, State: ${event.track.readyState}`);
+          
+          if (videoRef.current) {
+            console.log('Attaching stream to video element');
+            videoRef.current.srcObject = stream;
+            setHasVideoStream(true);
+            
+            // Force play with muted fallback for autoplay policy
+            videoRef.current.play().then(() => {
+              console.log('Video playback started successfully');
+            }).catch(err => {
+              console.warn('Autoplay blocked, trying muted:', err);
+              if (videoRef.current) {
+                videoRef.current.muted = true;
+                videoRef.current.play().then(() => {
+                  console.log('Video playback started (muted)');
+                }).catch(e => console.error('Video play failed even muted:', e));
+              }
+            });
+          }
+        } else {
+          // Direct track without stream
+          console.log('Track received without stream, creating new MediaStream');
+          if (videoRef.current) {
+            const newStream = new MediaStream([event.track]);
+            videoRef.current.srcObject = newStream;
+            setHasVideoStream(true);
+            videoRef.current.play().catch(console.error);
+          }
         }
       };
 
@@ -183,6 +218,11 @@ export const HeyGenAvatarModal = ({
 
       // Process SDP from HeyGen - handle both object and string formats
       if (data.sdp) {
+        // Add transceivers to ensure we can receive media
+        console.log('Adding transceivers for recvonly');
+        pc.addTransceiver('video', { direction: 'recvonly' });
+        pc.addTransceiver('audio', { direction: 'recvonly' });
+        
         let sdpOffer: RTCSessionDescriptionInit;
         
         // Handle SDP that could be object {type, sdp} or just string
@@ -201,7 +241,7 @@ export const HeyGenAvatarModal = ({
           sdpOffer = data.sdp as RTCSessionDescriptionInit;
         }
 
-        console.log('Setting remote description (offer)');
+        console.log('Setting remote description (offer)', sdpOffer.type);
         await pc.setRemoteDescription(new RTCSessionDescription(sdpOffer));
 
         // Create and set local answer
@@ -288,6 +328,8 @@ export const HeyGenAvatarModal = ({
     setConnectionState('new');
     setMessages([]);
     setRetryCount(0);
+    setHasVideoStream(false);
+    setVideoDebugInfo('');
   }, [sessionId]);
 
   const sendTextToAvatar = useCallback(async (text: string) => {
@@ -454,13 +496,46 @@ export const HeyGenAvatarModal = ({
                   )}
                 </div>
               ) : (
-                <video
-                  ref={videoRef}
-                  autoPlay
-                  playsInline
-                  muted={false}
-                  className="w-full h-full object-contain bg-slate-900"
-                />
+                <div className="relative w-full h-full">
+                  <video
+                    ref={videoRef}
+                    autoPlay
+                    playsInline
+                    muted={true}
+                    onLoadedMetadata={() => {
+                      console.log('Video metadata loaded');
+                      if (videoRef.current) {
+                        console.log('Video dimensions:', videoRef.current.videoWidth, 'x', videoRef.current.videoHeight);
+                        // Try to unmute after metadata loads
+                        videoRef.current.muted = false;
+                      }
+                    }}
+                    onPlay={() => console.log('Video playing')}
+                    onError={(e) => console.error('Video error:', e)}
+                    onLoadedData={() => console.log('Video data loaded')}
+                    className="w-full h-full object-contain bg-slate-900"
+                  />
+                  
+                  {/* Debug info overlay */}
+                  {isConnected && !hasVideoStream && (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-900/80">
+                      <div className="w-24 h-24 rounded-full bg-gradient-to-br from-pastel-purple to-pastel-blue mb-4 flex items-center justify-center">
+                        <img src={agentAvatar} alt={agentName} className="w-20 h-20 rounded-full object-cover" />
+                      </div>
+                      <p className="text-white text-lg mb-2">Aguardando video do avatar...</p>
+                      <p className="text-slate-400 text-sm">{videoDebugInfo || 'Conectando stream de video...'}</p>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={handleRetry}
+                        className="mt-4 border-slate-600"
+                      >
+                        <RefreshCw className="w-4 h-4 mr-2" />
+                        Reconectar
+                      </Button>
+                    </div>
+                  )}
+                </div>
               )}
             </div>
 
