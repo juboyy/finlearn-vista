@@ -3,8 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, Bell, Bookmark, Heart, MessageCircle, Flame, Crown, ChevronLeft, ChevronRight, SlidersHorizontal, Loader2 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { useEffect } from "react";
 
 const fetchPosts = async () => {
   const { data, error } = await supabase
@@ -52,11 +53,34 @@ const featuredAuthors = [
 
 const Conteudo = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   
   const { data: posts, isLoading } = useQuery({
     queryKey: ['posts'],
     queryFn: fetchPosts,
   });
+
+  // Supabase Realtime subscription for automatic updates
+  useEffect(() => {
+    const channel = supabase
+      .channel('posts-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'posts'
+        },
+        () => {
+          queryClient.invalidateQueries({ queryKey: ['posts'] });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [queryClient]);
   
   return (
     <div className="flex h-screen overflow-hidden">
