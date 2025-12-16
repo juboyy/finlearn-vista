@@ -16,7 +16,8 @@ serve(async (req) => {
       throw new Error('HEYGEN_API_KEY is not configured');
     }
 
-    const { action, sessionId, text, taskId } = await req.json();
+    const body = await req.json();
+    const { action, sessionId, text, sdp: clientSdp } = body;
 
     // Create new streaming session
     if (action === 'create_session') {
@@ -40,7 +41,7 @@ serve(async (req) => {
       const tokenData = await tokenResponse.json();
       console.log('Token created successfully');
 
-      // Create a new streaming session
+      // Create a new streaming session - using default voice from avatar
       const sessionResponse = await fetch('https://api.heygen.com/v1/streaming.new', {
         method: 'POST',
         headers: {
@@ -48,22 +49,19 @@ serve(async (req) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          quality: 'high',
-          avatar_name: 'Wayne_20240711', // Default professional avatar
-          voice: {
-            voice_id: 'en-US-JennyNeural', // Professional voice
-          },
+          quality: 'medium',
+          avatar_name: 'Anna_public_3_20240108', // Public demo avatar
         }),
       });
 
       if (!sessionResponse.ok) {
         const errorText = await sessionResponse.text();
         console.error('Session creation error:', errorText);
-        throw new Error(`Failed to create session: ${sessionResponse.status}`);
+        throw new Error(`Failed to create session: ${sessionResponse.status} - ${errorText}`);
       }
 
       const sessionData = await sessionResponse.json();
-      console.log('Session created:', sessionData);
+      console.log('Session created:', JSON.stringify(sessionData));
 
       return new Response(JSON.stringify({
         success: true,
@@ -76,11 +74,9 @@ serve(async (req) => {
       });
     }
 
-    // Start the session
+    // Start the session with client SDP
     if (action === 'start_session' && sessionId) {
-      console.log('Starting HeyGen session:', sessionId);
-      
-      const { sdp: clientSdp } = await req.json();
+      console.log('Starting HeyGen session:', sessionId, 'with SDP');
       
       const startResponse = await fetch('https://api.heygen.com/v1/streaming.start', {
         method: 'POST',
@@ -101,12 +97,34 @@ serve(async (req) => {
       }
 
       const startData = await startResponse.json();
-      console.log('Session started:', startData);
+      console.log('Session started:', JSON.stringify(startData));
 
       return new Response(JSON.stringify({
         success: true,
         sdp: startData.data?.sdp,
       }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    // Send ICE candidate
+    if (action === 'ice' && sessionId) {
+      const { candidate } = body;
+      console.log('Sending ICE candidate');
+      
+      const iceResponse = await fetch('https://api.heygen.com/v1/streaming.ice', {
+        method: 'POST',
+        headers: {
+          'x-api-key': HEYGEN_API_KEY,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          session_id: sessionId,
+          candidate,
+        }),
+      });
+
+      return new Response(JSON.stringify({ success: iceResponse.ok }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
@@ -135,7 +153,7 @@ serve(async (req) => {
       }
 
       const speakData = await speakResponse.json();
-      console.log('Speak task created:', speakData);
+      console.log('Speak task created:', JSON.stringify(speakData));
 
       return new Response(JSON.stringify({
         success: true,
@@ -163,7 +181,6 @@ serve(async (req) => {
       if (!stopResponse.ok) {
         const errorText = await stopResponse.text();
         console.error('Stop session error:', errorText);
-        // Don't throw, just log - session might already be stopped
       }
 
       return new Response(JSON.stringify({
@@ -191,7 +208,7 @@ serve(async (req) => {
       }
 
       const avatarsData = await avatarsResponse.json();
-      console.log('Avatars listed:', avatarsData);
+      console.log('Avatars listed:', JSON.stringify(avatarsData));
 
       return new Response(JSON.stringify({
         success: true,
