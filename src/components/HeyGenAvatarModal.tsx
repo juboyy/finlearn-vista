@@ -6,6 +6,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Video, Mic, MicOff, Phone, Send, Loader2, MessageCircle, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
 
 interface HeyGenAvatarModalProps {
   open: boolean;
@@ -32,7 +33,6 @@ export const HeyGenAvatarModal = ({
   const [isConnecting, setIsConnecting] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [connectionState, setConnectionState] = useState<string>('new');
-  const [isMuted, setIsMuted] = useState(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputText, setInputText] = useState('');
@@ -41,10 +41,22 @@ export const HeyGenAvatarModal = ({
   const [retryCount, setRetryCount] = useState(0);
   const [hasVideoStream, setHasVideoStream] = useState(false);
   const [videoDebugInfo, setVideoDebugInfo] = useState<string>('');
+  const [isProcessingVoice, setIsProcessingVoice] = useState(false);
+  
+  // Speech recognition for voice input
+  const {
+    isListening,
+    transcript,
+    isProcessing: isTranscribing,
+    hasFinishedRecording,
+    startListening,
+    stopListening,
+    resetTranscript,
+    resetFinished,
+  } = useSpeechRecognition();
   
   const videoRef = useRef<HTMLVideoElement>(null);
   const peerConnectionRef = useRef<RTCPeerConnection | null>(null);
-  const localStreamRef = useRef<MediaStream | null>(null);
   const chatScrollRef = useRef<HTMLDivElement>(null);
   const sessionIdRef = useRef<string | null>(null);
 
@@ -85,14 +97,6 @@ export const HeyGenAvatarModal = ({
     setRetryCount(retry);
     
     try {
-      // Request microphone access
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        localStreamRef.current = stream;
-      } catch (micError) {
-        console.warn('Microphone access denied, continuing without audio input');
-      }
-
       // Create HeyGen session
       const { data, error } = await supabase.functions.invoke('heygen-avatar-session', {
         body: { action: 'create_session' }
@@ -314,9 +318,9 @@ export const HeyGenAvatarModal = ({
       peerConnectionRef.current = null;
     }
 
-    if (localStreamRef.current) {
-      localStreamRef.current.getTracks().forEach(track => track.stop());
-      localStreamRef.current = null;
+    // Stop any ongoing voice recording
+    if (isListening) {
+      stopListening();
     }
 
     setSessionId(null);
@@ -327,7 +331,8 @@ export const HeyGenAvatarModal = ({
     setRetryCount(0);
     setHasVideoStream(false);
     setVideoDebugInfo('');
-  }, [sessionId]);
+    setIsProcessingVoice(false);
+  }, [sessionId, isListening, stopListening]);
 
   const sendTextToAvatar = useCallback(async (text: string) => {
     if (!sessionIdRef.current || !text.trim()) return;
@@ -358,7 +363,7 @@ export const HeyGenAvatarModal = ({
   }, []);
 
   const handleSendMessage = useCallback(async () => {
-    if (!inputText.trim() || !isConnected) return;
+    if (!inputText.trim() || !isConnected || isSpeaking) return;
 
     const userMessage = inputText.trim();
     const timestamp = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
@@ -367,40 +372,186 @@ export const HeyGenAvatarModal = ({
     setMessages(prev => [...prev, { role: 'user', content: userMessage, timestamp }]);
     setInputText('');
 
-    // Generate AI response and send to avatar
+    // Generate AI response and send to avatar using fetch for SSE handling
     try {
-      const { data, error } = await supabase.functions.invoke('chat-agent', {
-        body: {
-          messages: [
-            { role: 'system', content: `Voce e ${agentName}, um assistente especializado em financas e mercado financeiro. Responda de forma concisa e profissional em portugues.` },
-            ...messages.map(m => ({ role: m.role === 'user' ? 'user' : 'assistant', content: m.content })),
-            { role: 'user', content: userMessage }
-          ],
-          agentName,
-          useReasoning: false
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat-agent`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+            'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+          },
+          body: JSON.stringify({
+            messages: [
+              { role: 'system', content: `Voce e ${agentName}, um assistente especializado em financas e mercado financeiro. Responda de forma concisa, breve e profissional em portugues. Maximo 2 frases.` },
+              ...messages.map(m => ({ role: m.role === 'user' ? 'user' : 'assistant', content: m.content })),
+              { role: 'user', content: userMessage }
+            ],
+            agentName,
+            useReasoning: false
+          })
         }
-      });
+      );
 
-      if (error) throw error;
+      if (!response.ok) {
+        throw new Error(`Chat request failed: ${response.status}`);
+      }
 
-      const aiResponse = data?.content || data?.message || 'Desculpe, nao consegui processar sua mensagem.';
+      // Parse SSE stream to collect full response
+      const reader = response.body?.getReader();
+      if (!reader) throw new Error('No response body');
+      
+      const decoder = new TextDecoder();
+      let fullContent = '';
+      let buffer = '';
+      
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        
+        buffer += decoder.decode(value, { stream: true });
+        
+        // Process line by line
+        let newlineIndex: number;
+        while ((newlineIndex = buffer.indexOf('\n')) !== -1) {
+          const line = buffer.slice(0, newlineIndex).trim();
+          buffer = buffer.slice(newlineIndex + 1);
+          
+          if (!line || line.startsWith(':')) continue;
+          if (!line.startsWith('data: ')) continue;
+          
+          const jsonStr = line.slice(6).trim();
+          if (jsonStr === '[DONE]') continue;
+          
+          try {
+            const parsed = JSON.parse(jsonStr);
+            const content = parsed.choices?.[0]?.delta?.content;
+            if (content) {
+              fullContent += content;
+            }
+          } catch {
+            // Ignore parse errors for partial JSON
+          }
+        }
+      }
+
+      const aiResponse = fullContent.trim() || 'Desculpe, nao consegui processar sua mensagem.';
       await sendTextToAvatar(aiResponse);
 
     } catch (error) {
       console.error('Error generating response:', error);
       await sendTextToAvatar('Desculpe, ocorreu um erro ao processar sua mensagem. Por favor, tente novamente.');
     }
-  }, [inputText, isConnected, messages, agentName, sendTextToAvatar]);
+  }, [inputText, isConnected, isSpeaking, messages, agentName, sendTextToAvatar]);
 
-  const toggleMute = useCallback(() => {
-    if (localStreamRef.current) {
-      const audioTrack = localStreamRef.current.getAudioTracks()[0];
-      if (audioTrack) {
-        audioTrack.enabled = !audioTrack.enabled;
-        setIsMuted(!audioTrack.enabled);
-      }
+  // Handle voice input toggle
+  const toggleVoiceInput = useCallback(() => {
+    if (!isConnected || isSpeaking) return;
+    
+    if (isListening) {
+      stopListening();
+    } else {
+      startListening();
     }
-  }, []);
+  }, [isConnected, isSpeaking, isListening, startListening, stopListening]);
+
+  // Process voice transcription and send to avatar
+  const processVoiceInput = useCallback(async (voiceText: string) => {
+    if (!voiceText.trim() || !isConnected || isProcessingVoice) return;
+    
+    setIsProcessingVoice(true);
+    const timestamp = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    
+    // Add user message
+    setMessages(prev => [...prev, { role: 'user', content: voiceText, timestamp }]);
+    
+    try {
+      // Use fetch directly to handle SSE streaming response
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat-agent`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+            'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+          },
+          body: JSON.stringify({
+            messages: [
+              { role: 'system', content: `Voce e ${agentName}, um assistente especializado em financas e mercado financeiro. Responda de forma concisa, breve e profissional em portugues. Maximo 2 frases.` },
+              ...messages.map(m => ({ role: m.role === 'user' ? 'user' : 'assistant', content: m.content })),
+              { role: 'user', content: voiceText }
+            ],
+            agentName,
+            useReasoning: false
+          })
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Chat request failed: ${response.status}`);
+      }
+
+      // Parse SSE stream to collect full response
+      const reader = response.body?.getReader();
+      if (!reader) throw new Error('No response body');
+      
+      const decoder = new TextDecoder();
+      let fullContent = '';
+      let buffer = '';
+      
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        
+        buffer += decoder.decode(value, { stream: true });
+        
+        // Process line by line
+        let newlineIndex: number;
+        while ((newlineIndex = buffer.indexOf('\n')) !== -1) {
+          const line = buffer.slice(0, newlineIndex).trim();
+          buffer = buffer.slice(newlineIndex + 1);
+          
+          if (!line || line.startsWith(':')) continue;
+          if (!line.startsWith('data: ')) continue;
+          
+          const jsonStr = line.slice(6).trim();
+          if (jsonStr === '[DONE]') continue;
+          
+          try {
+            const parsed = JSON.parse(jsonStr);
+            const content = parsed.choices?.[0]?.delta?.content;
+            if (content) {
+              fullContent += content;
+            }
+          } catch {
+            // Ignore parse errors for partial JSON
+          }
+        }
+      }
+
+      const aiResponse = fullContent.trim() || 'Desculpe, nao consegui processar sua mensagem.';
+      await sendTextToAvatar(aiResponse);
+
+    } catch (error) {
+      console.error('Error generating response:', error);
+      await sendTextToAvatar('Desculpe, ocorreu um erro ao processar sua mensagem. Por favor, tente novamente.');
+    } finally {
+      setIsProcessingVoice(false);
+    }
+  }, [isConnected, isProcessingVoice, messages, agentName, sendTextToAvatar]);
+
+  // Effect to handle completed voice transcription
+  useEffect(() => {
+    if (hasFinishedRecording && transcript && isConnected && !isProcessingVoice) {
+      console.log('Voice transcription completed:', transcript);
+      processVoiceInput(transcript);
+      resetTranscript();
+      resetFinished();
+    }
+  }, [hasFinishedRecording, transcript, isConnected, isProcessingVoice, processVoiceInput, resetTranscript, resetFinished]);
 
   const handleEndCall = useCallback(() => {
     stopSession();
@@ -434,6 +585,9 @@ export const HeyGenAvatarModal = ({
       return retryCount > 0 ? `Reconectando... (${retryCount}/${MAX_RETRIES})` : 'Conectando ao avatar...';
     }
     if (isConnected) {
+      if (isListening) return 'Ouvindo...';
+      if (isTranscribing) return 'Transcrevendo...';
+      if (isProcessingVoice) return 'Processando...';
       if (isSpeaking) return 'Falando...';
       return `Conectado - ${formatDuration(callDuration)}`;
     }
@@ -538,13 +692,27 @@ export const HeyGenAvatarModal = ({
 
             {/* Controls */}
             <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-4">
+              {/* Voice Input Button */}
               <Button
                 variant="outline"
                 size="icon"
-                onClick={toggleMute}
-                className={`w-12 h-12 rounded-full ${isMuted ? 'bg-red-500/20 border-red-500' : 'bg-slate-800 border-slate-600'}`}
+                onClick={toggleVoiceInput}
+                disabled={!isConnected || isSpeaking || isProcessingVoice}
+                className={`w-12 h-12 rounded-full transition-all ${
+                  isListening 
+                    ? 'bg-pastel-green/30 border-pastel-green animate-pulse' 
+                    : isTranscribing || isProcessingVoice
+                      ? 'bg-pastel-yellow/30 border-pastel-yellow'
+                      : 'bg-slate-800 border-slate-600 hover:bg-slate-700'
+                }`}
               >
-                {isMuted ? <MicOff className="text-red-400" /> : <Mic className="text-white" />}
+                {isListening ? (
+                  <Mic className="text-pastel-green" />
+                ) : isTranscribing || isProcessingVoice ? (
+                  <Loader2 className="text-pastel-yellow animate-spin" />
+                ) : (
+                  <Mic className="text-white" />
+                )}
               </Button>
               
               <Button
@@ -565,6 +733,32 @@ export const HeyGenAvatarModal = ({
                 </Button>
               )}
             </div>
+
+            {/* Voice Status Indicator */}
+            {(isListening || isTranscribing || isProcessingVoice) && (
+              <div className="absolute bottom-24 left-1/2 -translate-x-1/2 bg-slate-800/90 px-4 py-2 rounded-full">
+                <p className="text-sm text-white flex items-center gap-2">
+                  {isListening && (
+                    <>
+                      <span className="w-2 h-2 bg-pastel-green rounded-full animate-pulse" />
+                      Ouvindo... (fale agora)
+                    </>
+                  )}
+                  {isTranscribing && (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin text-pastel-yellow" />
+                      Transcrevendo...
+                    </>
+                  )}
+                  {isProcessingVoice && !isTranscribing && (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin text-pastel-blue" />
+                      Processando resposta...
+                    </>
+                  )}
+                </p>
+              </div>
+            )}
           </div>
 
           {/* Chat Sidebar */}
