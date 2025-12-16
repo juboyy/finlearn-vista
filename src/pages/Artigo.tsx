@@ -737,13 +737,18 @@ const Artigo = () => {
               {/* Article HTML Content */}
               <div 
                 className="prose prose-slate dark:prose-invert max-w-none
-                  prose-headings:text-foreground prose-headings:font-semibold
-                  prose-p:text-muted-foreground prose-p:leading-relaxed
+                  prose-headings:text-foreground prose-headings:font-bold prose-headings:mt-8 prose-headings:mb-4
+                  prose-h1:text-3xl prose-h1:leading-tight
+                  prose-h2:text-2xl prose-h2:leading-snug
+                  prose-h3:text-xl prose-h3:leading-snug
+                  prose-h4:text-lg prose-h4:font-semibold
+                  prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:text-base
                   prose-a:text-primary prose-a:no-underline hover:prose-a:underline
-                  prose-strong:text-foreground
+                  prose-strong:text-foreground prose-strong:font-bold
                   prose-img:rounded-xl prose-img:my-6
                   prose-ul:text-muted-foreground prose-ol:text-muted-foreground
-                  prose-blockquote:border-l-primary prose-blockquote:text-muted-foreground
+                  prose-li:my-1
+                  prose-blockquote:border-l-primary prose-blockquote:text-muted-foreground prose-blockquote:italic
                   prose-code:text-primary prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:rounded
                   prose-pre:bg-muted prose-pre:border prose-pre:border-border"
                 dangerouslySetInnerHTML={{ __html: post.html || '<p>Conteudo nao disponivel.</p>' }}
