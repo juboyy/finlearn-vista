@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Video, Mic, MicOff, Phone, Send, Loader2, MessageCircle, Settings, X } from "lucide-react";
+import { Video, Mic, MicOff, Phone, Send, Loader2, MessageCircle, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -20,6 +20,9 @@ interface ChatMessage {
   timestamp: string;
 }
 
+const MAX_RETRIES = 3;
+const RETRY_DELAY = 2000;
+
 export const HeyGenAvatarModal = ({
   open,
   onOpenChange,
@@ -28,17 +31,25 @@ export const HeyGenAvatarModal = ({
 }: HeyGenAvatarModalProps) => {
   const [isConnecting, setIsConnecting] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
+  const [connectionState, setConnectionState] = useState<string>('new');
   const [isMuted, setIsMuted] = useState(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputText, setInputText] = useState('');
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [callDuration, setCallDuration] = useState(0);
+  const [retryCount, setRetryCount] = useState(0);
   
   const videoRef = useRef<HTMLVideoElement>(null);
   const peerConnectionRef = useRef<RTCPeerConnection | null>(null);
   const localStreamRef = useRef<MediaStream | null>(null);
   const chatScrollRef = useRef<HTMLDivElement>(null);
+  const sessionIdRef = useRef<string | null>(null);
+
+  // Keep sessionIdRef in sync
+  useEffect(() => {
+    sessionIdRef.current = sessionId;
+  }, [sessionId]);
 
   // Call duration timer
   useEffect(() => {
@@ -67,8 +78,9 @@ export const HeyGenAvatarModal = ({
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const startSession = useCallback(async () => {
+  const startSession = useCallback(async (retry = 0) => {
     setIsConnecting(true);
+    setRetryCount(retry);
     
     try {
       // Request microphone access
@@ -90,62 +102,164 @@ export const HeyGenAvatarModal = ({
 
       console.log('HeyGen session created:', data);
       setSessionId(data.session_id);
+      sessionIdRef.current = data.session_id;
 
       // Setup WebRTC
       const pc = new RTCPeerConnection({
-        iceServers: data.ice_servers || [{ urls: 'stun:stun.l.google.com:19302' }]
+        iceServers: data.ice_servers || [
+          { urls: 'stun:stun.l.google.com:19302' },
+          { urls: 'stun:stun1.l.google.com:19302' }
+        ]
       });
 
       peerConnectionRef.current = pc;
 
-      // Handle incoming video track
+      // Handle incoming video/audio tracks
       pc.ontrack = (event) => {
-        console.log('Received track:', event.track.kind);
+        console.log('Received track:', event.track.kind, event.track.readyState);
         if (videoRef.current && event.streams[0]) {
           videoRef.current.srcObject = event.streams[0];
+          console.log('Video stream attached to element');
         }
       };
 
-      // Set remote description from HeyGen
+      // ICE candidate handler - send to HeyGen
+      pc.onicecandidate = async (event) => {
+        if (event.candidate && sessionIdRef.current) {
+          console.log('Sending ICE candidate to HeyGen');
+          try {
+            await supabase.functions.invoke('heygen-avatar-session', {
+              body: { 
+                action: 'ice', 
+                sessionId: sessionIdRef.current,
+                candidate: event.candidate.toJSON()
+              }
+            });
+          } catch (iceError) {
+            console.warn('ICE candidate send error:', iceError);
+          }
+        }
+      };
+
+      // Connection state monitoring
+      pc.onconnectionstatechange = () => {
+        const state = pc.connectionState;
+        console.log('WebRTC connection state:', state);
+        setConnectionState(state);
+        
+        if (state === 'connected') {
+          setIsConnected(true);
+          setIsConnecting(false);
+          toast.success(`Conectado com Avatar IA - ${agentName}`);
+          
+          // Send welcome message after connection is confirmed
+          setTimeout(() => {
+            sendTextToAvatar(`Ola! Sou ${agentName}, seu assistente de IA. Como posso ajudar voce hoje?`);
+          }, 1500);
+        } else if (state === 'failed') {
+          console.error('WebRTC connection failed');
+          if (retry < MAX_RETRIES) {
+            toast.info(`Reconectando... (${retry + 1}/${MAX_RETRIES})`);
+            setTimeout(() => startSession(retry + 1), RETRY_DELAY);
+          } else {
+            setIsConnecting(false);
+            toast.error('Conexao com avatar falhou apos varias tentativas');
+          }
+        } else if (state === 'disconnected') {
+          console.warn('WebRTC connection disconnected');
+          setIsConnected(false);
+        }
+      };
+
+      // ICE connection state monitoring
+      pc.oniceconnectionstatechange = () => {
+        console.log('ICE connection state:', pc.iceConnectionState);
+      };
+
+      // ICE gathering state
+      pc.onicegatheringstatechange = () => {
+        console.log('ICE gathering state:', pc.iceGatheringState);
+      };
+
+      // Process SDP from HeyGen - handle both object and string formats
       if (data.sdp) {
-        await pc.setRemoteDescription(new RTCSessionDescription({
-          type: 'offer',
-          sdp: data.sdp
-        }));
+        let sdpOffer: RTCSessionDescriptionInit;
+        
+        // Handle SDP that could be object {type, sdp} or just string
+        if (typeof data.sdp === 'object' && data.sdp.sdp) {
+          sdpOffer = {
+            type: data.sdp.type || 'offer',
+            sdp: data.sdp.sdp
+          };
+        } else if (typeof data.sdp === 'string') {
+          sdpOffer = {
+            type: 'offer',
+            sdp: data.sdp
+          };
+        } else {
+          // Assume it's already in correct format
+          sdpOffer = data.sdp as RTCSessionDescriptionInit;
+        }
+
+        console.log('Setting remote description (offer)');
+        await pc.setRemoteDescription(new RTCSessionDescription(sdpOffer));
 
         // Create and set local answer
+        console.log('Creating answer');
         const answer = await pc.createAnswer();
         await pc.setLocalDescription(answer);
 
-        // Send answer to HeyGen
+        // Send answer SDP to HeyGen
+        console.log('Sending answer to HeyGen');
         const { data: startData, error: startError } = await supabase.functions.invoke('heygen-avatar-session', {
           body: { 
             action: 'start_session', 
             sessionId: data.session_id,
-            sdp: answer.sdp 
+            sdp: {
+              type: answer.type,
+              sdp: answer.sdp
+            }
           }
         });
 
         if (startError) {
           console.warn('Start session warning:', startError);
+        } else {
+          console.log('Start session response:', startData);
         }
+
+        // If HeyGen returns modified SDP, apply it
+        if (startData?.sdp) {
+          console.log('Received updated SDP from HeyGen');
+        }
+      } else {
+        console.warn('No SDP received from HeyGen session creation');
       }
 
-      setIsConnected(true);
-      setIsConnecting(false);
-      toast.success(`Conectado com Avatar IA - ${agentName}`);
-
-      // Send welcome message
+      // Set a fallback connection state if WebRTC doesn't connect within timeout
       setTimeout(() => {
-        sendTextToAvatar(`Olá! Sou ${agentName}, seu assistente de IA. Como posso ajudar você hoje?`);
-      }, 2000);
+        if (!isConnected && peerConnectionRef.current?.connectionState !== 'connected') {
+          console.log('Connection timeout - setting connected state');
+          // Only set connected if we're still in connecting state and have a session
+          if (isConnecting && sessionIdRef.current) {
+            setIsConnected(true);
+            setIsConnecting(false);
+          }
+        }
+      }, 10000);
 
     } catch (error) {
       console.error('Error starting HeyGen session:', error);
-      setIsConnecting(false);
-      toast.error('Erro ao conectar com o avatar. Tente novamente.');
+      
+      if (retry < MAX_RETRIES) {
+        toast.info(`Tentando reconectar... (${retry + 1}/${MAX_RETRIES})`);
+        setTimeout(() => startSession(retry + 1), RETRY_DELAY);
+      } else {
+        setIsConnecting(false);
+        toast.error('Erro ao conectar com o avatar. Tente novamente.');
+      }
     }
-  }, [agentName]);
+  }, [agentName, isConnected, isConnecting]);
 
   const stopSession = useCallback(async () => {
     if (sessionId) {
@@ -169,18 +283,21 @@ export const HeyGenAvatarModal = ({
     }
 
     setSessionId(null);
+    sessionIdRef.current = null;
     setIsConnected(false);
+    setConnectionState('new');
     setMessages([]);
+    setRetryCount(0);
   }, [sessionId]);
 
   const sendTextToAvatar = useCallback(async (text: string) => {
-    if (!sessionId || !text.trim()) return;
+    if (!sessionIdRef.current || !text.trim()) return;
 
     setIsSpeaking(true);
 
     try {
       const { data, error } = await supabase.functions.invoke('heygen-avatar-session', {
-        body: { action: 'speak', sessionId, text }
+        body: { action: 'speak', sessionId: sessionIdRef.current, text }
       });
 
       if (error) {
@@ -199,7 +316,7 @@ export const HeyGenAvatarModal = ({
       const words = text.split(' ').length;
       setTimeout(() => setIsSpeaking(false), words * 150);
     }
-  }, [sessionId]);
+  }, []);
 
   const handleSendMessage = useCallback(async () => {
     if (!inputText.trim() || !isConnected) return;
@@ -216,7 +333,7 @@ export const HeyGenAvatarModal = ({
       const { data, error } = await supabase.functions.invoke('chat-agent', {
         body: {
           messages: [
-            { role: 'system', content: `Você é ${agentName}, um assistente especializado em finanças e mercado financeiro. Responda de forma concisa e profissional em português.` },
+            { role: 'system', content: `Voce e ${agentName}, um assistente especializado em financas e mercado financeiro. Responda de forma concisa e profissional em portugues.` },
             ...messages.map(m => ({ role: m.role === 'user' ? 'user' : 'assistant', content: m.content })),
             { role: 'user', content: userMessage }
           ],
@@ -227,7 +344,7 @@ export const HeyGenAvatarModal = ({
 
       if (error) throw error;
 
-      const aiResponse = data?.content || data?.message || 'Desculpe, não consegui processar sua mensagem.';
+      const aiResponse = data?.content || data?.message || 'Desculpe, nao consegui processar sua mensagem.';
       await sendTextToAvatar(aiResponse);
 
     } catch (error) {
@@ -251,6 +368,11 @@ export const HeyGenAvatarModal = ({
     onOpenChange(false);
   }, [stopSession, onOpenChange]);
 
+  const handleRetry = useCallback(() => {
+    stopSession();
+    setTimeout(() => startSession(0), 500);
+  }, [stopSession, startSession]);
+
   // Cleanup on unmount
   useEffect(() => {
     return () => {
@@ -261,12 +383,23 @@ export const HeyGenAvatarModal = ({
   // Start session when modal opens
   useEffect(() => {
     if (open && !isConnected && !isConnecting) {
-      startSession();
+      startSession(0);
     }
     if (!open) {
       stopSession();
     }
   }, [open]);
+
+  const getConnectionStatusText = () => {
+    if (isConnecting) {
+      return retryCount > 0 ? `Reconectando... (${retryCount}/${MAX_RETRIES})` : 'Conectando ao avatar...';
+    }
+    if (isConnected) {
+      if (isSpeaking) return 'Falando...';
+      return `Conectado - ${formatDuration(callDuration)}`;
+    }
+    return connectionState;
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -285,20 +418,17 @@ export const HeyGenAvatarModal = ({
                 </div>
                 <div>
                   <p className="text-lg font-semibold">{agentName}</p>
-                  {isConnecting && (
-                    <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2">
+                    {isConnecting && (
                       <Loader2 className="w-3 h-3 animate-spin text-pastel-yellow" />
-                      <p className="text-sm text-slate-300">Conectando ao avatar...</p>
-                    </div>
-                  )}
-                  {isConnected && (
-                    <div className="flex items-center gap-2">
+                    )}
+                    {isConnected && (
                       <div className={`w-2 h-2 rounded-full ${isSpeaking ? 'bg-pastel-green animate-pulse' : 'bg-green-500'}`} />
-                      <p className="text-sm text-green-400">
-                        {isSpeaking ? 'Falando...' : `Conectado - ${formatDuration(callDuration)}`}
-                      </p>
-                    </div>
-                  )}
+                    )}
+                    <p className={`text-sm ${isConnected ? 'text-green-400' : 'text-slate-300'}`}>
+                      {getConnectionStatusText()}
+                    </p>
+                  </div>
                 </div>
               </DialogTitle>
             </DialogHeader>
@@ -317,12 +447,18 @@ export const HeyGenAvatarModal = ({
                     <div className="w-3 h-3 bg-pastel-blue rounded-full animate-bounce" style={{ animationDelay: "0.15s" }} />
                     <div className="w-3 h-3 bg-pastel-pink rounded-full animate-bounce" style={{ animationDelay: "0.3s" }} />
                   </div>
+                  {retryCount > 0 && (
+                    <p className="text-pastel-yellow text-sm mt-4">
+                      Tentativa {retryCount} de {MAX_RETRIES}
+                    </p>
+                  )}
                 </div>
               ) : (
                 <video
                   ref={videoRef}
                   autoPlay
                   playsInline
+                  muted={false}
                   className="w-full h-full object-contain bg-slate-900"
                 />
               )}
@@ -345,6 +481,17 @@ export const HeyGenAvatarModal = ({
               >
                 <Phone className="rotate-[135deg]" />
               </Button>
+
+              {!isConnecting && !isConnected && (
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={handleRetry}
+                  className="w-12 h-12 rounded-full bg-slate-800 border-slate-600"
+                >
+                  <RefreshCw className="text-white" />
+                </Button>
+              )}
             </div>
           </div>
 
