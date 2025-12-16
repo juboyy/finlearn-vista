@@ -29,7 +29,7 @@ import { Switch } from "@/components/ui/switch";
 import { Progress } from "@/components/ui/progress";
 import { useUserAgents } from "@/hooks/useUserAgents";
 import { SidebarMeusAgentes } from "@/components/Dashboard/SidebarMeusAgentes";
-import { VideoCallModal } from "@/components/VideoCallModal";
+import { HeyGenAvatarModal } from "@/components/HeyGenAvatarModal";
 import VoiceCallModal from "@/components/VoiceCallModal";
 import { useState } from "react";
 
@@ -382,9 +382,9 @@ export default function MeusAgentes() {
       </main>
       </div>
 
-      {/* Video Call Modal */}
+      {/* HeyGen Avatar Modal */}
       {selectedAgent && (
-        <VideoCallModal
+        <HeyGenAvatarModal
           open={videoCallOpen}
           onOpenChange={setVideoCallOpen}
           agentName={selectedAgent.name}
