@@ -736,7 +736,7 @@ const Artigo = () => {
 
               {/* Article HTML Content */}
               <div 
-                className="prose prose-slate dark:prose-invert max-w-none
+                className="prose dark:prose-invert max-w-none
                   prose-headings:text-foreground prose-headings:font-bold prose-headings:mt-8 prose-headings:mb-4
                   prose-h1:text-3xl prose-h1:leading-tight
                   prose-h2:text-2xl prose-h2:leading-snug
