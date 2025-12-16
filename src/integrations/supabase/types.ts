@@ -1452,23 +1452,41 @@ export type Database = {
       }
       posts: {
         Row: {
+          author_name: string | null
+          category: string | null
+          comments: number | null
+          description: string | null
           html: string | null
           id: number
+          likes: number | null
           published_at: string
+          read_time: string | null
           title: string | null
           visibility: string | null
         }
         Insert: {
+          author_name?: string | null
+          category?: string | null
+          comments?: number | null
+          description?: string | null
           html?: string | null
           id?: number
+          likes?: number | null
           published_at?: string
+          read_time?: string | null
           title?: string | null
           visibility?: string | null
         }
         Update: {
+          author_name?: string | null
+          category?: string | null
+          comments?: number | null
+          description?: string | null
           html?: string | null
           id?: number
+          likes?: number | null
           published_at?: string
+          read_time?: string | null
           title?: string | null
           visibility?: string | null
         }
