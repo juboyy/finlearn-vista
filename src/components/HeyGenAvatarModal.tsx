@@ -132,6 +132,7 @@ export const HeyGenAvatarModal = ({
             console.log('Attaching stream to video element');
             videoRef.current.srcObject = stream;
             setHasVideoStream(true);
+            setIsConnecting(false);
             
             // Force play with muted fallback for autoplay policy
             videoRef.current.play().then(() => {
@@ -276,21 +277,17 @@ export const HeyGenAvatarModal = ({
         console.warn('No SDP received from HeyGen session creation');
       }
 
-      // Set a fallback connection state if WebRTC doesn't connect within timeout
-      setTimeout(() => {
-        if (!isConnected && peerConnectionRef.current?.connectionState !== 'connected') {
-          console.log('Connection timeout - setting connected state');
-          // Only set connected if we're still in connecting state and have a session
-          if (isConnecting && sessionIdRef.current) {
-            setIsConnected(true);
-            setIsConnecting(false);
-          }
-        }
-      }, 10000);
 
     } catch (error) {
       console.error('Error starting HeyGen session:', error);
-      
+
+      const msg = error instanceof Error ? error.message : String(error);
+      if (msg.includes('Concurrent limit reached') || msg.includes('"code":10004') || msg.includes('10004')) {
+        setIsConnecting(false);
+        toast.error('Limite de sessoes simultaneas do HeyGen atingido. Finalize outras sessoes ou faça upgrade.');
+        return;
+      }
+
       if (retry < MAX_RETRIES) {
         toast.info(`Tentando reconectar... (${retry + 1}/${MAX_RETRIES})`);
         setTimeout(() => startSession(retry + 1), RETRY_DELAY);
@@ -476,67 +473,67 @@ export const HeyGenAvatarModal = ({
             </DialogHeader>
 
             {/* Avatar Video */}
-            <div className="flex-1 bg-slate-950 flex items-center justify-center">
-              {isConnecting ? (
-                <div className="text-center">
-                  <div className="w-32 h-32 rounded-full bg-gradient-to-br from-pastel-purple to-pastel-blue mb-6 mx-auto flex items-center justify-center animate-pulse">
-                    <Video className="text-slate-800" size={64} />
-                  </div>
-                  <p className="text-white text-xl font-medium mb-3">Iniciando Avatar IA...</p>
-                  <p className="text-slate-400 text-sm">Powered by HeyGen</p>
-                  <div className="flex gap-2 justify-center mt-4">
-                    <div className="w-3 h-3 bg-pastel-purple rounded-full animate-bounce" />
-                    <div className="w-3 h-3 bg-pastel-blue rounded-full animate-bounce" style={{ animationDelay: "0.15s" }} />
-                    <div className="w-3 h-3 bg-pastel-pink rounded-full animate-bounce" style={{ animationDelay: "0.3s" }} />
-                  </div>
-                  {retryCount > 0 && (
-                    <p className="text-pastel-yellow text-sm mt-4">
-                      Tentativa {retryCount} de {MAX_RETRIES}
-                    </p>
-                  )}
-                </div>
-              ) : (
-                <div className="relative w-full h-full">
-                  <video
-                    ref={videoRef}
-                    autoPlay
-                    playsInline
-                    muted={true}
-                    onLoadedMetadata={() => {
-                      console.log('Video metadata loaded');
-                      if (videoRef.current) {
-                        console.log('Video dimensions:', videoRef.current.videoWidth, 'x', videoRef.current.videoHeight);
-                        // Try to unmute after metadata loads
-                        videoRef.current.muted = false;
-                      }
-                    }}
-                    onPlay={() => console.log('Video playing')}
-                    onError={(e) => console.error('Video error:', e)}
-                    onLoadedData={() => console.log('Video data loaded')}
-                    className="w-full h-full object-contain bg-slate-900"
-                  />
-                  
-                  {/* Debug info overlay */}
-                  {isConnected && !hasVideoStream && (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-900/80">
-                      <div className="w-24 h-24 rounded-full bg-gradient-to-br from-pastel-purple to-pastel-blue mb-4 flex items-center justify-center">
-                        <img src={agentAvatar} alt={agentName} className="w-20 h-20 rounded-full object-cover" />
+            <div className="flex-1 bg-slate-950">
+              <div className="relative w-full h-full">
+                <video
+                  ref={videoRef}
+                  autoPlay
+                  playsInline
+                  muted={true}
+                  onLoadedMetadata={() => {
+                    console.log('Video metadata loaded');
+                    if (videoRef.current) {
+                      console.log('Video dimensions:', videoRef.current.videoWidth, 'x', videoRef.current.videoHeight);
+                    }
+                  }}
+                  onPlay={() => console.log('Video playing')}
+                  onError={(e) => console.error('Video error:', e)}
+                  onLoadedData={() => console.log('Video data loaded')}
+                  className="w-full h-full object-contain bg-slate-900"
+                />
+
+                {isConnecting && (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="w-32 h-32 rounded-full bg-gradient-to-br from-pastel-purple to-pastel-blue mb-6 mx-auto flex items-center justify-center animate-pulse">
+                        <Video className="text-slate-800" size={64} />
                       </div>
-                      <p className="text-white text-lg mb-2">Aguardando video do avatar...</p>
-                      <p className="text-slate-400 text-sm">{videoDebugInfo || 'Conectando stream de video...'}</p>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={handleRetry}
-                        className="mt-4 border-slate-600"
-                      >
-                        <RefreshCw className="w-4 h-4 mr-2" />
-                        Reconectar
-                      </Button>
+                      <p className="text-white text-xl font-medium mb-3">Iniciando Avatar IA...</p>
+                      <p className="text-slate-400 text-sm">Powered by HeyGen</p>
+                      <div className="flex gap-2 justify-center mt-4">
+                        <div className="w-3 h-3 bg-pastel-purple rounded-full animate-bounce" />
+                        <div className="w-3 h-3 bg-pastel-blue rounded-full animate-bounce" style={{ animationDelay: "0.15s" }} />
+                        <div className="w-3 h-3 bg-pastel-pink rounded-full animate-bounce" style={{ animationDelay: "0.3s" }} />
+                      </div>
+                      {retryCount > 0 && (
+                        <p className="text-pastel-yellow text-sm mt-4">
+                          Tentativa {retryCount} de {MAX_RETRIES}
+                        </p>
+                      )}
                     </div>
-                  )}
-                </div>
-              )}
+                  </div>
+                )}
+
+                {/* Debug info overlay */}
+                {!isConnecting && isConnected && !hasVideoStream && (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-900/80">
+                    <div className="w-24 h-24 rounded-full bg-gradient-to-br from-pastel-purple to-pastel-blue mb-4 flex items-center justify-center">
+                      <img src={agentAvatar} alt={agentName} className="w-20 h-20 rounded-full object-cover" />
+                    </div>
+                    <p className="text-white text-lg mb-2">Aguardando video do avatar...</p>
+                    <p className="text-slate-400 text-sm">{videoDebugInfo || 'Conectando stream de video...'}</p>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleRetry}
+                      className="mt-4 border-slate-600"
+                    >
+                      <RefreshCw className="w-4 h-4 mr-2" />
+                      Reconectar
+                    </Button>
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Controls */}
