@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { 
   Bookmark, Share2, Printer, TrendingUp, ChevronRight, Volume2, 
   Video, Loader2, Pause, Play, RotateCcw, CheckCircle2, MessageCircle, Bot,
-  ChevronLeft
+  ChevronLeft, List
 } from "lucide-react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { ArticleExpertChat } from "@/components/Dashboard/ArticleExpertChat";
@@ -24,6 +24,36 @@ const extractFirstImage = (html: string | null): string | null => {
 const stripHtml = (html: string | null): string => {
   if (!html) return '';
   return html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+};
+
+// Extract headings from HTML for table of contents
+interface TOCItem {
+  id: string;
+  text: string;
+  level: number;
+}
+
+const extractHeadings = (html: string | null): TOCItem[] => {
+  if (!html) return [];
+  const headings: TOCItem[] = [];
+  const regex = /<(h[1-3])[^>]*>([^<]+)<\/\1>/gi;
+  let match;
+  let index = 0;
+  
+  while ((match = regex.exec(html)) !== null) {
+    const level = parseInt(match[1].charAt(1));
+    const text = match[2].trim();
+    if (text) {
+      headings.push({
+        id: `heading-${index}`,
+        text,
+        level
+      });
+      index++;
+    }
+  }
+  
+  return headings;
 };
 
 const Artigo = () => {
@@ -71,6 +101,15 @@ const Artigo = () => {
   const articleImage = useMemo(() => extractFirstImage(post?.html), [post?.html]);
   const articleDescription = post?.description || '';
   const articleText = useMemo(() => stripHtml(post?.html), [post?.html]);
+  const tableOfContents = useMemo(() => extractHeadings(post?.html), [post?.html]);
+
+  // Scroll to heading
+  const scrollToHeading = (index: number) => {
+    const headings = document.querySelectorAll('.prose h1, .prose h2, .prose h3');
+    if (headings[index]) {
+      headings[index].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   const speedOptions = [0.5, 0.75, 1, 1.25, 1.5, 2];
 
@@ -731,6 +770,33 @@ const Artigo = () => {
           {/* Right Sidebar */}
           <aside className="col-span-12 lg:col-span-3">
             <div className="sticky top-24 space-y-6">
+              {/* Table of Contents */}
+              {tableOfContents.length > 0 && (
+                <div className="bg-card rounded-xl p-6 border border-border">
+                  <h3 className="text-sm font-semibold text-foreground mb-4 flex items-center gap-2">
+                    <List size={16} className="text-primary" />
+                    Neste Artigo
+                  </h3>
+                  <nav className="space-y-1">
+                    {tableOfContents.map((item, index) => (
+                      <button
+                        key={item.id}
+                        onClick={() => scrollToHeading(index)}
+                        className={`w-full text-left text-sm hover:text-primary transition py-1.5 ${
+                          item.level === 1 
+                            ? 'font-medium text-foreground' 
+                            : item.level === 2 
+                              ? 'pl-3 text-muted-foreground' 
+                              : 'pl-6 text-muted-foreground text-xs'
+                        }`}
+                      >
+                        {item.text}
+                      </button>
+                    ))}
+                  </nav>
+                </div>
+              )}
+
               {/* AI Chat */}
               <div className="bg-card rounded-xl p-6 border border-border">
                 <h3 className="text-sm font-semibold text-foreground mb-4 flex items-center gap-2">

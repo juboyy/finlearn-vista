@@ -16,6 +16,13 @@ const fetchPosts = async () => {
   return data;
 };
 
+// Extract first image from HTML content
+const extractFirstImage = (html: string | null): string | null => {
+  if (!html) return null;
+  const imgMatch = html.match(/<img[^>]+src=["']([^"']+)["']/i);
+  return imgMatch ? imgMatch[1] : null;
+};
+
 const getCategoryColor = (category: string | null) => {
   const colors: Record<string, string> = {
     'Criptomoedas': 'secondary',
@@ -174,8 +181,21 @@ const Conteudo = () => {
                     ? new Date(post.published_at).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' })
                     : '';
                   
+                  const coverImage = extractFirstImage(post.html);
+                  
                   return (
                     <article key={post.id} className="bg-card border border-border rounded-xl overflow-hidden hover:shadow-md transition">
+                      {coverImage && (
+                        <Link to={`/artigo/${post.id}`}>
+                          <div className="h-48 overflow-hidden">
+                            <img 
+                              src={coverImage} 
+                              alt={post.title || 'Capa do artigo'} 
+                              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                            />
+                          </div>
+                        </Link>
+                      )}
                       <div className="p-6">
                         <div className="flex items-center gap-2 mb-3">
                           {post.category && (
