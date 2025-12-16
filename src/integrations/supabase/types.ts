@@ -1450,30 +1450,6 @@ export type Database = {
         }
         Relationships: []
       }
-      posts: {
-        Row: {
-          html: string | null
-          id: number
-          published_at: string
-          title: string | null
-          visibility: string | null
-        }
-        Insert: {
-          html?: string | null
-          id?: number
-          published_at?: string
-          title?: string | null
-          visibility?: string | null
-        }
-        Update: {
-          html?: string | null
-          id?: number
-          published_at?: string
-          title?: string | null
-          visibility?: string | null
-        }
-        Relationships: []
-      }
       presentations: {
         Row: {
           author_name: string
