@@ -21,9 +21,58 @@ serve(async (req) => {
     const body = await req.json();
     const { action, sessionToken } = body;
 
+    // Cleanup: stop an old session if provided
+    if (action === 'cleanup' && sessionToken) {
+      console.log('Cleaning up old session before creating new one...');
+      
+      try {
+        const stopResponse = await fetch(`${LIVEAVATAR_API_URL}/sessions/stop`, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${sessionToken}`,
+          },
+        });
+        
+        if (!stopResponse.ok) {
+          const errorText = await stopResponse.text();
+          console.warn('Cleanup warning (expected if session expired):', errorText);
+        } else {
+          console.log('Old session cleaned up successfully');
+        }
+      } catch (e) {
+        console.warn('Cleanup error (non-fatal):', e);
+      }
+      
+      // Small delay to ensure LiveAvatar processes the stop
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
     // Create session token (FULL mode)
     if (action === 'token') {
       console.log('Creating LiveAvatar session token (FULL mode)...');
+      
+      // If old token provided, try to clean it up first
+      if (body.oldSessionToken) {
+        console.log('Stopping old session before creating new token...');
+        try {
+          await fetch(`${LIVEAVATAR_API_URL}/sessions/stop`, {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Authorization': `Bearer ${body.oldSessionToken}`,
+            },
+          });
+          // Wait a bit for cleanup
+          await new Promise(resolve => setTimeout(resolve, 300));
+        } catch (e) {
+          console.warn('Old session cleanup failed (non-fatal):', e);
+        }
+      }
       
       const response = await fetch(`${LIVEAVATAR_API_URL}/sessions/token`, {
         method: 'POST',
@@ -54,19 +103,19 @@ serve(async (req) => {
       
       // Handle different possible response structures from LiveAvatar API
       const sessionId = data.session_id || data.sessionId || data.id || data.data?.session_id;
-      const sessionToken = data.session_token || data.sessionToken || data.token || data.access_token || data.data?.session_token || data.data?.token;
+      const extractedToken = data.session_token || data.sessionToken || data.token || data.access_token || data.data?.session_token || data.data?.token;
       
       console.log('Extracted session_id:', sessionId);
-      console.log('Extracted session_token:', sessionToken ? 'present' : 'missing');
+      console.log('Extracted session_token:', extractedToken ? 'present' : 'missing');
 
-      if (!sessionToken) {
+      if (!extractedToken) {
         throw new Error('No session token in API response');
       }
 
       return new Response(JSON.stringify({
         success: true,
         session_id: sessionId,
-        session_token: sessionToken,
+        session_token: extractedToken,
       }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
