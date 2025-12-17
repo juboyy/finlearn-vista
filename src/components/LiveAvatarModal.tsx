@@ -188,12 +188,16 @@ export const LiveAvatarModal = ({
 
       // Handle video track
       room.on(RoomEvent.TrackSubscribed, (track: RemoteTrack, publication: RemoteTrackPublication, participant: RemoteParticipant) => {
-        console.log('Track subscribed:', track.kind);
+        console.log('Track subscribed:', track.kind, track.sid);
 
         if (track.kind === Track.Kind.Video && videoRef.current) {
           track.attach(videoRef.current);
+          console.log('Video track attached');
         } else if (track.kind === Track.Kind.Audio && audioRef.current) {
           track.attach(audioRef.current);
+          // Ensure audio plays (browser autoplay policy workaround)
+          audioRef.current.play().catch(e => console.warn('Audio autoplay blocked:', e));
+          console.log('Audio track attached');
         }
       });
 
@@ -238,6 +242,15 @@ export const LiveAvatarModal = ({
       }
 
       await room.connect(startData.livekit_url, startData.livekit_token);
+
+      // Publish local microphone to room so avatar can hear us
+      try {
+        await room.localParticipant.setMicrophoneEnabled(true);
+        console.log('Microphone published to room');
+      } catch (micError) {
+        console.warn('Could not enable microphone:', micError);
+        toast.error('Nao foi possivel acessar o microfone');
+      }
 
     } catch (error) {
       console.error('Error starting LiveAvatar session:', error);
@@ -284,7 +297,7 @@ export const LiveAvatarModal = ({
     setIsProcessingVoice(false);
   }, [isListening, stopListening]);
 
-  // Send command via LiveKit DataChannel (not HTTP)
+  // Send command via LiveKit DataChannel (HeyGen format)
   const sendDataChannelCommand = useCallback((command: string, payload: Record<string, unknown> = {}) => {
     const room = roomRef.current;
     if (!room || room.state !== 'connected') {
@@ -292,7 +305,12 @@ export const LiveAvatarModal = ({
       return;
     }
 
-    const message = JSON.stringify({ type: command, ...payload });
+    // HeyGen LiveAvatar expects specific message format via DataChannel
+    const message = JSON.stringify({ 
+      type: 'task',
+      task_type: command,
+      task_input: payload
+    });
     const data = new TextEncoder().encode(message);
     
     room.localParticipant.publishData(data, { reliable: true });
@@ -303,7 +321,15 @@ export const LiveAvatarModal = ({
   const sendTextToAvatarViaDataChannel = useCallback((room: Room, text: string) => {
     if (!room || room.state !== 'connected' || !text.trim()) return;
 
-    const message = JSON.stringify({ type: 'speak', text });
+    // Try multiple formats that HeyGen might accept
+    const messages = [
+      { type: 'task', task_type: 'talk', task_input: { text } },
+      { type: 'input_text', text },
+      { type: 'speak', text },
+    ];
+
+    // Send the primary format
+    const message = JSON.stringify(messages[0]);
     const data = new TextEncoder().encode(message);
     
     room.localParticipant.publishData(data, { reliable: true });
@@ -314,7 +340,7 @@ export const LiveAvatarModal = ({
     
     setIsSpeaking(true);
     const words = text.split(' ').length;
-    setTimeout(() => setIsSpeaking(false), words * 150);
+    setTimeout(() => setIsSpeaking(false), words * 200 + 1000);
   }, []);
 
   const sendTextToAvatar = useCallback(async (text: string) => {
@@ -324,8 +350,12 @@ export const LiveAvatarModal = ({
     setIsSpeaking(true);
 
     try {
-      // Send via DataChannel instead of HTTP
-      const message = JSON.stringify({ type: 'speak', text });
+      // HeyGen LiveAvatar DataChannel format for speaking
+      const message = JSON.stringify({ 
+        type: 'task',
+        task_type: 'talk', 
+        task_input: { text }
+      });
       const data = new TextEncoder().encode(message);
       room.localParticipant.publishData(data, { reliable: true });
       console.log('Sent speak command via DataChannel:', text);
@@ -338,7 +368,7 @@ export const LiveAvatarModal = ({
       toast.error('Erro ao enviar mensagem para o avatar');
     } finally {
       const words = text.split(' ').length;
-      setTimeout(() => setIsSpeaking(false), words * 150);
+      setTimeout(() => setIsSpeaking(false), words * 200 + 1000);
     }
   }, []);
 
@@ -604,7 +634,7 @@ export const LiveAvatarModal = ({
                 playsInline
                 className="w-full h-full object-cover"
               />
-              <audio ref={audioRef} autoPlay />
+              <audio ref={audioRef} autoPlay playsInline />
               
               {/* Connection status overlay */}
               {connectionStatus !== 'connected' && (
