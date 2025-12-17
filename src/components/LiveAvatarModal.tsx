@@ -55,6 +55,22 @@ export const LiveAvatarModal = ({
   const chatScrollRef = useRef<HTMLDivElement>(null);
   const sessionTokenRef = useRef<string | null>(null);
 
+  const openRef = useRef(open);
+  const unmountedRef = useRef(false);
+  const startRunIdRef = useRef(0);
+  const isStartingRef = useRef(false);
+
+  useEffect(() => {
+    openRef.current = open;
+  }, [open]);
+
+  useEffect(() => {
+    unmountedRef.current = false;
+    return () => {
+      unmountedRef.current = true;
+    };
+  }, []);
+
   useEffect(() => {
     sessionTokenRef.current = sessionToken;
   }, [sessionToken]);
@@ -87,8 +103,13 @@ export const LiveAvatarModal = ({
   };
 
   const startSession = useCallback(async () => {
+    // Guard against duplicate starts (StrictMode, rapid open/close, retry spamming)
+    if (isStartingRef.current || connectionStatus !== 'disconnected') return;
+
+    isStartingRef.current = true;
+    const runId = ++startRunIdRef.current;
     setConnectionStatus('connecting');
-    
+
     try {
       // Step 1: Get session token
       const { data: tokenData, error: tokenError } = await supabase.functions.invoke('live-avatar-session', {
@@ -97,6 +118,21 @@ export const LiveAvatarModal = ({
 
       if (tokenError || !tokenData?.success) {
         throw new Error(tokenData?.error || tokenError?.message || 'Failed to create session token');
+      }
+
+      // If the modal got closed/unmounted while token was being created, do not proceed.
+      if (unmountedRef.current || runId !== startRunIdRef.current || !openRef.current) {
+        if (tokenData?.session_token) {
+          try {
+            await supabase.functions.invoke('live-avatar-session', {
+              body: { action: 'stop', sessionToken: tokenData.session_token }
+            });
+          } catch {
+            // Best-effort cleanup
+          }
+        }
+        setConnectionStatus('disconnected');
+        return;
       }
 
       console.log('LiveAvatar token created:', tokenData.session_id);
@@ -109,7 +145,27 @@ export const LiveAvatarModal = ({
       });
 
       if (startError || !startData?.success) {
+        const code = startData?.code;
+
+        if (code === 4003) {
+          // LiveAvatar vendor-side limit
+          toast.error('Limite de sessoes simultaneas atingido. Feche outras abas/sessoes e tente novamente em 1-2 minutos.');
+        }
+
         throw new Error(startData?.error || startError?.message || 'Failed to start session');
+      }
+
+      // If the modal got closed/unmounted while session was starting, do not connect to LiveKit.
+      if (unmountedRef.current || runId !== startRunIdRef.current || !openRef.current) {
+        try {
+          await supabase.functions.invoke('live-avatar-session', {
+            body: { action: 'stop', sessionToken: tokenData.session_token }
+          });
+        } catch {
+          // Best-effort cleanup
+        }
+        setConnectionStatus('disconnected');
+        return;
       }
 
       console.log('LiveAvatar session started, connecting to LiveKit...');
@@ -121,7 +177,7 @@ export const LiveAvatarModal = ({
       // Handle video track
       room.on(RoomEvent.TrackSubscribed, (track: RemoteTrack, publication: RemoteTrackPublication, participant: RemoteParticipant) => {
         console.log('Track subscribed:', track.kind);
-        
+
         if (track.kind === Track.Kind.Video && videoRef.current) {
           track.attach(videoRef.current);
         } else if (track.kind === Track.Kind.Audio && audioRef.current) {
@@ -161,7 +217,7 @@ export const LiveAvatarModal = ({
         try {
           const message = JSON.parse(new TextDecoder().decode(payload));
           console.log('Data received from avatar:', message);
-          
+
           if (message.type === 'speaking_started') {
             setIsSpeaking(true);
           } else if (message.type === 'speaking_ended') {
@@ -178,11 +234,19 @@ export const LiveAvatarModal = ({
     } catch (error) {
       console.error('Error starting LiveAvatar session:', error);
       setConnectionStatus('error');
-      toast.error('Erro ao conectar com o avatar. Tente novamente.');
+      // toast handled above for known cases; keep a safe fallback
+      if (!String(error).includes('Session concurrency limit reached')) {
+        toast.error('Erro ao conectar com o avatar. Tente novamente.');
+      }
+    } finally {
+      isStartingRef.current = false;
     }
-  }, [agentName]);
-
+  }, [agentName, connectionStatus, open]);
   const stopSession = useCallback(async () => {
+    // Invalidate any in-flight start attempt
+    startRunIdRef.current += 1;
+    isStartingRef.current = false;
+
     if (isListening) {
       stopListening();
     }
@@ -432,8 +496,8 @@ export const LiveAvatarModal = ({
     onOpenChange(false);
   }, [stopSession, onOpenChange]);
 
-  const handleRetry = useCallback(() => {
-    stopSession();
+  const handleRetry = useCallback(async () => {
+    await stopSession();
     setTimeout(() => startSession(), 500);
   }, [stopSession, startSession]);
 
