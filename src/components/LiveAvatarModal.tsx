@@ -55,6 +55,7 @@ export const LiveAvatarModal = ({
   const chatScrollRef = useRef<HTMLDivElement>(null);
   const sessionTokenRef = useRef<string | null>(null);
   const isConnectingRef = useRef(false);
+  const STORAGE_KEY = "liveavatar_session_token";
 
   // Call duration timer
   useEffect(() => {
@@ -83,16 +84,24 @@ export const LiveAvatarModal = ({
   };
 
   const cleanupSession = useCallback(async (token?: string) => {
-    const tokenToUse = token || sessionTokenRef.current;
+    const tokenToUse = token || sessionTokenRef.current || localStorage.getItem(STORAGE_KEY);
     if (!tokenToUse) return;
 
     console.log('[LiveAvatar] Cleaning up session...');
     try {
       await supabase.functions.invoke('live-avatar-session', {
-        body: { action: 'stop', sessionToken: tokenToUse }
+        body: { action: 'stop', sessionToken: tokenToUse },
       });
     } catch (error) {
       console.warn('[LiveAvatar] Cleanup error:', error);
+    } finally {
+      try {
+        if (localStorage.getItem(STORAGE_KEY) === tokenToUse) {
+          localStorage.removeItem(STORAGE_KEY);
+        }
+      } catch {
+        // ignore
+      }
     }
   }, []);
 
@@ -115,49 +124,74 @@ export const LiveAvatarModal = ({
     console.log('[LiveAvatar] Starting session...');
 
     try {
+      // Best-effort: stop any previous session that might be lingering (crash/refresh)
+      const existingToken = localStorage.getItem(STORAGE_KEY);
+      if (existingToken) {
+        console.log('[LiveAvatar] Found previous token in storage, stopping it first...');
+        await cleanupSession(existingToken);
+      }
+
       // Step 1: Create session token
       console.log('[LiveAvatar] Step 1: Creating token...');
       const { data: tokenData, error: tokenError } = await supabase.functions.invoke('live-avatar-session', {
-        body: { action: 'token', language: 'pt-BR' }
+        body: { action: 'token', language: 'pt-BR' },
       });
 
       if (tokenError) {
         console.error('[LiveAvatar] Token error:', tokenError);
-        throw new Error(tokenError.message || 'Failed to create token');
+        throw new Error(tokenError.message || 'Falha ao criar token');
       }
 
       if (!tokenData?.success || !tokenData?.session_token) {
         console.error('[LiveAvatar] Token response invalid:', tokenData);
-        throw new Error(tokenData?.error || 'No session token received');
+        throw new Error(tokenData?.error || 'Token de sessao nao recebido');
       }
 
       const sessionToken = tokenData.session_token;
       sessionTokenRef.current = sessionToken;
+      try {
+        localStorage.setItem(STORAGE_KEY, sessionToken);
+      } catch {
+        // ignore
+      }
+
       console.log('[LiveAvatar] Token created, session_id:', tokenData.session_id);
 
       // Step 2: Start session
       console.log('[LiveAvatar] Step 2: Starting session...');
       const { data: startData, error: startError } = await supabase.functions.invoke('live-avatar-session', {
-        body: { action: 'start', sessionToken }
+        body: { action: 'start', sessionToken },
       });
 
       if (startError) {
         console.error('[LiveAvatar] Start error:', startError);
-        throw new Error(startError.message || 'Failed to start session');
+        throw new Error(startError.message || 'Falha ao iniciar sessao');
       }
 
       if (!startData?.success) {
         console.error('[LiveAvatar] Start response invalid:', startData);
-        if (startData?.code === 4003) {
+
+        const errorType = startData?.error_type as string | undefined;
+        const vendorMessage =
+          startData?.vendor_message || startData?.error || startData?.message || 'Falha ao iniciar sessao';
+
+        if (errorType === 'no_credits' || /no\s+credits/i.test(String(vendorMessage))) {
+          throw new Error(
+            'Sem creditos disponiveis para iniciar a sessao do avatar. Recarregue creditos no LiveAvatar e tente novamente.'
+          );
+        }
+
+        if (errorType === 'concurrency_limit') {
           throw new Error('Limite de sessoes simultaneas. Feche outras abas e tente em 1-2 minutos.');
         }
-        throw new Error(startData?.error || 'Failed to start session');
+
+        throw new Error(String(vendorMessage));
       }
 
       const { livekit_url, livekit_token } = startData;
       if (!livekit_url || !livekit_token) {
         console.error('[LiveAvatar] Missing LiveKit credentials:', { livekit_url, livekit_token });
-        throw new Error('LiveKit credentials not received');
+        throw new Error('Credenciais do LiveKit nao recebidas');
       }
 
       console.log('[LiveAvatar] Session started, connecting to LiveKit...');
@@ -166,25 +200,29 @@ export const LiveAvatarModal = ({
       const room = new Room();
       roomRef.current = room;
 
-      room.on(RoomEvent.TrackSubscribed, (track: RemoteTrack, publication: RemoteTrackPublication, participant: RemoteParticipant) => {
-        console.log('[LiveAvatar] Track subscribed:', track.kind);
+      room.on(
+        RoomEvent.TrackSubscribed,
+        (track: RemoteTrack, publication: RemoteTrackPublication, participant: RemoteParticipant) => {
+          console.log('[LiveAvatar] Track subscribed:', track.kind);
 
-        if (track.kind === Track.Kind.Video && videoRef.current) {
-          track.attach(videoRef.current);
-          console.log('[LiveAvatar] Video attached');
-        } else if (track.kind === Track.Kind.Audio && audioRef.current) {
-          track.attach(audioRef.current);
-          audioRef.current.play()
-            .then(() => {
-              console.log('[LiveAvatar] Audio playing');
-              setIsAudioBlocked(false);
-            })
-            .catch(e => {
-              console.warn('[LiveAvatar] Audio autoplay blocked:', e);
-              setIsAudioBlocked(true);
-            });
+          if (track.kind === Track.Kind.Video && videoRef.current) {
+            track.attach(videoRef.current);
+            console.log('[LiveAvatar] Video attached');
+          } else if (track.kind === Track.Kind.Audio && audioRef.current) {
+            track.attach(audioRef.current);
+            audioRef.current
+              .play()
+              .then(() => {
+                console.log('[LiveAvatar] Audio playing');
+                setIsAudioBlocked(false);
+              })
+              .catch((e) => {
+                console.warn('[LiveAvatar] Audio autoplay blocked:', e);
+                setIsAudioBlocked(true);
+              });
+          }
         }
-      });
+      );
 
       room.on(RoomEvent.TrackUnsubscribed, (track: RemoteTrack) => {
         track.detach();
@@ -207,42 +245,44 @@ export const LiveAvatarModal = ({
         setConnectionStatus('idle');
       });
 
-      room.on(RoomEvent.DataReceived, (payload: Uint8Array, participant?: RemoteParticipant, kind?: DataPacket_Kind, topic?: string) => {
-        try {
-          const message = JSON.parse(new TextDecoder().decode(payload));
-          console.log('[LiveAvatar] Data received:', message);
+      room.on(
+        RoomEvent.DataReceived,
+        (payload: Uint8Array, participant?: RemoteParticipant, kind?: DataPacket_Kind, topic?: string) => {
+          try {
+            const message = JSON.parse(new TextDecoder().decode(payload));
+            console.log('[LiveAvatar] Data received:', message);
 
-          const eventType = message.event_type || message.type;
-          
-          if (eventType === 'avatar.speak_started' || eventType === 'speaking_started') {
-            setIsSpeaking(true);
-          } else if (eventType === 'avatar.speak_ended' || eventType === 'speaking_ended') {
-            setIsSpeaking(false);
-          } else if (eventType === 'avatar.transcription_ended' && message.text) {
-            const timestamp = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-            setMessages(prev => {
-              if (prev.length > 0 && prev[prev.length - 1].content === message.text) {
-                return prev;
-              }
-              return [...prev, { role: 'avatar', content: message.text, timestamp }];
-            });
+            const eventType = message.event_type || message.type;
+
+            if (eventType === 'avatar.speak_started' || eventType === 'speaking_started') {
+              setIsSpeaking(true);
+            } else if (eventType === 'avatar.speak_ended' || eventType === 'speaking_ended') {
+              setIsSpeaking(false);
+            } else if (eventType === 'avatar.transcription_ended' && message.text) {
+              const timestamp = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+              setMessages((prev) => {
+                if (prev.length > 0 && prev[prev.length - 1].content === message.text) {
+                  return prev;
+                }
+                return [...prev, { role: 'avatar', content: message.text, timestamp }];
+              });
+            }
+          } catch (err) {
+            console.warn('[LiveAvatar] Parse data error:', err);
           }
-        } catch (err) {
-          console.warn('[LiveAvatar] Parse data error:', err);
         }
-      });
+      );
 
       await room.connect(livekit_url, livekit_token);
       console.log('[LiveAvatar] Room connect called');
-
     } catch (error) {
       console.error('[LiveAvatar] Session error:', error);
       setConnectionStatus('error');
       isConnectingRef.current = false;
-      
+
       const errorMessage = error instanceof Error ? error.message : 'Erro ao conectar';
       toast.error(errorMessage);
-      
+
       // Cleanup on error
       if (sessionTokenRef.current) {
         await cleanupSession(sessionTokenRef.current);
@@ -253,14 +293,14 @@ export const LiveAvatarModal = ({
 
   const stopSession = useCallback(async () => {
     console.log('[LiveAvatar] Stopping session...');
-    
+
     if (isListening) {
       stopListening();
     }
 
     disconnectRoom();
     await cleanupSession();
-    
+
     sessionTokenRef.current = null;
     isConnectingRef.current = false;
     setConnectionStatus('idle');
@@ -495,11 +535,16 @@ export const LiveAvatarModal = ({
   // Cleanup on unmount
   useEffect(() => {
     return () => {
+      const token = sessionTokenRef.current || localStorage.getItem(STORAGE_KEY);
+      if (token) {
+        cleanupSession(token);
+      }
+
       if (roomRef.current) {
         roomRef.current.disconnect();
       }
     };
-  }, []);
+  }, [cleanupSession]);
 
   const getConnectionStatusText = () => {
     switch (connectionStatus) {
