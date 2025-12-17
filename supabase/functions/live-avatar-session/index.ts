@@ -162,7 +162,11 @@ serve(async (req) => {
        }
 
       const data = await response.json();
-      console.log('Full LiveAvatar start response:', JSON.stringify(data));
+      console.log('START_RESPONSE_RAW:', JSON.stringify(data));
+      console.log('START_RESPONSE_KEYS:', Object.keys(data));
+      if (data.data) {
+        console.log('START_RESPONSE_DATA_KEYS:', Object.keys(data.data));
+      }
 
       // Handle different possible response structures from LiveAvatar API
       const livekitUrl =
