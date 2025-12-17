@@ -92,25 +92,36 @@ serve(async (req) => {
       console.log('[LiveAvatar] Start response:', responseText);
 
       if (!response.ok) {
-        // Handle vendor-side concurrency limit
+        // Pass-through vendor error details so the frontend can show the real cause
         try {
           const parsed = JSON.parse(responseText);
-          if (response.status === 403 && parsed?.code === 4003) {
-            return new Response(
-              JSON.stringify({
-                success: false,
-                code: 4003,
-                error: 'Session concurrency limit reached',
-              }),
-              {
-                status: 200,
-                headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-              }
-            );
+          const vendorCode = parsed?.code;
+          const vendorMessage = parsed?.message;
+
+          let errorType: 'no_credits' | 'concurrency_limit' | 'vendor_error' = 'vendor_error';
+          if (response.status === 403 && vendorCode === 4003) {
+            const msg = String(vendorMessage || '');
+            if (/no\s+credits/i.test(msg)) errorType = 'no_credits';
+            else if (/concurr/i.test(msg)) errorType = 'concurrency_limit';
           }
+
+          return new Response(
+            JSON.stringify({
+              success: false,
+              code: vendorCode ?? response.status,
+              error_type: errorType,
+              vendor_message: vendorMessage ?? responseText,
+              error: vendorMessage ?? responseText,
+            }),
+            {
+              status: 200,
+              headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+            }
+          );
         } catch {
           // ignore JSON parse errors
         }
+
         throw new Error(`Start session failed: ${response.status} - ${responseText}`);
       }
 
