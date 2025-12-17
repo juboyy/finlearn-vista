@@ -198,7 +198,15 @@ export const LiveAvatarModal = ({
         } else if (track.kind === Track.Kind.Audio && audioRef.current) {
           track.attach(audioRef.current);
           // Ensure audio plays (browser autoplay policy workaround)
-          audioRef.current.play().catch(e => console.warn('Audio autoplay blocked:', e));
+          audioRef.current.play()
+            .then(() => {
+              console.log('Audio playing');
+              setIsAudioBlocked(false);
+            })
+            .catch(e => {
+              console.warn('Audio autoplay blocked:', e);
+              setIsAudioBlocked(true);
+            });
           console.log('Audio track attached');
         }
       });
@@ -213,9 +221,10 @@ export const LiveAvatarModal = ({
         toast.success(`Conectado com Avatar IA - ${agentName}`);
 
         // Send welcome message via DataChannel after a short delay
+        // Using LiveAvatar official format: topic 'agent-control', event_type 'avatar.speak_text'
         setTimeout(() => {
-          sendTextToAvatarViaDataChannel(room, `Ola! Sou ${agentName}, seu assistente de IA. Como posso ajudar voce hoje?`);
-        }, 1500);
+          sendWelcomeMessage(room, `Ola! Sou ${agentName}, seu assistente de IA. Como posso ajudar voce hoje?`);
+        }, 2000);
       });
 
       room.on(RoomEvent.Disconnected, () => {
@@ -223,15 +232,30 @@ export const LiveAvatarModal = ({
         setConnectionStatus('disconnected');
       });
 
-      room.on(RoomEvent.DataReceived, (payload: Uint8Array, participant?: RemoteParticipant, kind?: DataPacket_Kind) => {
+      // Listen for server events from topic 'agent-response'
+      room.on(RoomEvent.DataReceived, (payload: Uint8Array, participant?: RemoteParticipant, kind?: DataPacket_Kind, topic?: string) => {
         try {
           const message = JSON.parse(new TextDecoder().decode(payload));
-          console.log('Data received from avatar:', message);
+          console.log('Data received from avatar (topic:', topic, '):', message);
 
-          if (message.type === 'speaking_started') {
+          const eventType = message.event_type || message.type;
+          
+          if (eventType === 'avatar.speak_started' || eventType === 'speaking_started') {
             setIsSpeaking(true);
-          } else if (message.type === 'speaking_ended') {
+          } else if (eventType === 'avatar.speak_ended' || eventType === 'speaking_ended') {
             setIsSpeaking(false);
+          } else if (eventType === 'user.transcription_ended' && message.text) {
+            console.log('User transcription:', message.text);
+          } else if (eventType === 'avatar.transcription_ended' && message.text) {
+            // Avatar finished speaking, add to chat
+            const timestamp = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+            setMessages(prev => {
+              // Avoid duplicate messages
+              if (prev.length > 0 && prev[prev.length - 1].content === message.text) {
+                return prev;
+              }
+              return [...prev, { role: 'avatar', content: message.text, timestamp }];
+            });
           }
         } catch (err) {
           console.warn('Could not parse data message:', err);
@@ -245,14 +269,9 @@ export const LiveAvatarModal = ({
 
       await room.connect(startData.livekit_url, startData.livekit_token);
 
-      // Publish local microphone to room so avatar can hear us
-      try {
-        await room.localParticipant.setMicrophoneEnabled(true);
-        console.log('Microphone published to room');
-      } catch (micError) {
-        console.warn('Could not enable microphone:', micError);
-        toast.error('Nao foi possivel acessar o microfone');
-      }
+      // DO NOT auto-publish microphone here - it conflicts with useSpeechRecognition
+      // The avatar will hear us via the LiveKit room's audio when we speak
+      console.log('LiveKit room connected, ready for interaction');
 
     } catch (error) {
       console.error('Error starting LiveAvatar session:', error);
@@ -299,42 +318,39 @@ export const LiveAvatarModal = ({
     setIsProcessingVoice(false);
   }, [isListening, stopListening]);
 
-  // Send command via LiveKit DataChannel (HeyGen format)
-  const sendDataChannelCommand = useCallback((command: string, payload: Record<string, unknown> = {}) => {
+  // Send command via LiveKit DataChannel using LiveAvatar official format
+  // Topic: 'agent-control', Format: { event_type: "avatar.xxx", ...data }
+  const sendAvatarCommand = useCallback((eventType: string, payload: Record<string, unknown> = {}) => {
     const room = roomRef.current;
     if (!room || room.state !== 'connected') {
       console.warn('Room not connected, cannot send command');
       return;
     }
 
-    // HeyGen LiveAvatar expects specific message format via DataChannel
+    // LiveAvatar official format for command events
     const message = JSON.stringify({ 
-      type: 'task',
-      task_type: command,
-      task_input: payload
+      event_type: eventType,
+      ...payload
     });
     const data = new TextEncoder().encode(message);
     
-    room.localParticipant.publishData(data, { reliable: true });
-    console.log('Sent DataChannel command:', command, payload);
+    // Publish to topic 'agent-control' as per LiveAvatar docs
+    room.localParticipant.publishData(data, { reliable: true, topic: 'agent-control' });
+    console.log('Sent DataChannel command:', eventType, payload);
   }, []);
 
-  // Helper function to send text to avatar via DataChannel
-  const sendTextToAvatarViaDataChannel = useCallback((room: Room, text: string) => {
+  // Send welcome message to avatar
+  const sendWelcomeMessage = useCallback((room: Room, text: string) => {
     if (!room || room.state !== 'connected' || !text.trim()) return;
 
-    // Try multiple formats that HeyGen might accept
-    const messages = [
-      { type: 'task', task_type: 'talk', task_input: { text } },
-      { type: 'input_text', text },
-      { type: 'speak', text },
-    ];
-
-    // Send the primary format
-    const message = JSON.stringify(messages[0]);
+    // LiveAvatar official format: event_type 'avatar.speak_text'
+    const message = JSON.stringify({ 
+      event_type: 'avatar.speak_text',
+      text
+    });
     const data = new TextEncoder().encode(message);
     
-    room.localParticipant.publishData(data, { reliable: true });
+    room.localParticipant.publishData(data, { reliable: true, topic: 'agent-control' });
     console.log('Sent speak command via DataChannel:', text);
 
     const timestamp = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
@@ -342,9 +358,10 @@ export const LiveAvatarModal = ({
     
     setIsSpeaking(true);
     const words = text.split(' ').length;
-    setTimeout(() => setIsSpeaking(false), words * 200 + 1000);
+    setTimeout(() => setIsSpeaking(false), words * 300 + 2000);
   }, []);
 
+  // Send text to avatar (for AI responses)
   const sendTextToAvatar = useCallback(async (text: string) => {
     const room = roomRef.current;
     if (!room || room.state !== 'connected' || !text.trim()) return;
@@ -352,14 +369,13 @@ export const LiveAvatarModal = ({
     setIsSpeaking(true);
 
     try {
-      // HeyGen LiveAvatar DataChannel format for speaking
+      // LiveAvatar official format: event_type 'avatar.speak_text'
       const message = JSON.stringify({ 
-        type: 'task',
-        task_type: 'talk', 
-        task_input: { text }
+        event_type: 'avatar.speak_text',
+        text
       });
       const data = new TextEncoder().encode(message);
-      room.localParticipant.publishData(data, { reliable: true });
+      room.localParticipant.publishData(data, { reliable: true, topic: 'agent-control' });
       console.log('Sent speak command via DataChannel:', text);
 
       const timestamp = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
@@ -370,7 +386,22 @@ export const LiveAvatarModal = ({
       toast.error('Erro ao enviar mensagem para o avatar');
     } finally {
       const words = text.split(' ').length;
-      setTimeout(() => setIsSpeaking(false), words * 200 + 1000);
+      setTimeout(() => setIsSpeaking(false), words * 300 + 2000);
+    }
+  }, []);
+
+  // Enable audio playback (for browsers that block autoplay)
+  const enableAudio = useCallback(() => {
+    if (audioRef.current) {
+      audioRef.current.play()
+        .then(() => {
+          setIsAudioBlocked(false);
+          toast.success('Audio ativado');
+        })
+        .catch(e => {
+          console.error('Failed to enable audio:', e);
+          toast.error('Nao foi possivel ativar o audio');
+        });
     }
   }, []);
 
@@ -385,13 +416,13 @@ export const LiveAvatarModal = ({
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat-agent`,
+        `https://kldjajwwyluhvkcubrlg.supabase.co/functions/v1/chat-agent`,
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-            'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+            'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtsZGphand3eWx1aHZrY3VicmxnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQwMDAxNzYsImV4cCI6MjA3OTU3NjE3Nn0.ROuNGBAeVBZ9Cw40phv5rm7z08D0fJOTiClN216eoEI`,
+            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtsZGphand3eWx1aHZrY3VicmxnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQwMDAxNzYsImV4cCI6MjA3OTU3NjE3Nn0.ROuNGBAeVBZ9Cw40phv5rm7z08D0fJOTiClN216eoEI',
           },
           body: JSON.stringify({
             messages: [
@@ -474,13 +505,13 @@ export const LiveAvatarModal = ({
     
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat-agent`,
+        `https://kldjajwwyluhvkcubrlg.supabase.co/functions/v1/chat-agent`,
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-            'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+            'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtsZGphand3eWx1aHZrY3VicmxnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQwMDAxNzYsImV4cCI6MjA3OTU3NjE3Nn0.ROuNGBAeVBZ9Cw40phv5rm7z08D0fJOTiClN216eoEI`,
+            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtsZGphand3eWx1aHZrY3VicmxnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQwMDAxNzYsImV4cCI6MjA3OTU3NjE3Nn0.ROuNGBAeVBZ9Cw40phv5rm7z08D0fJOTiClN216eoEI',
           },
           body: JSON.stringify({
             messages: [
@@ -572,12 +603,16 @@ export const LiveAvatarModal = ({
     };
   }, [stopSession]);
 
-  // Auto-start session when modal opens
+  // Auto-start session when modal opens (only once per open)
   useEffect(() => {
-    if (open && connectionStatus === 'disconnected') {
+    if (open && connectionStatus === 'disconnected' && !hasAutoStartedRef.current) {
+      hasAutoStartedRef.current = true;
       startSession();
-    } else if (!open && connectionStatus !== 'disconnected') {
-      stopSession();
+    } else if (!open) {
+      hasAutoStartedRef.current = false;
+      if (connectionStatus !== 'disconnected') {
+        stopSession();
+      }
     }
   }, [open, connectionStatus, startSession, stopSession]);
 
@@ -671,6 +706,21 @@ export const LiveAvatarModal = ({
                     <span className="w-1.5 h-3 bg-primary rounded-full animate-pulse delay-150" />
                   </div>
                   <span className="text-sm text-foreground">Falando...</span>
+                </div>
+              )}
+
+              {/* Audio blocked indicator */}
+              {isAudioBlocked && connectionStatus === 'connected' && (
+                <div className="absolute top-4 right-4">
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    onClick={enableAudio}
+                    className="flex items-center gap-2"
+                  >
+                    <Volume2 className="w-4 h-4" />
+                    Ativar audio
+                  </Button>
                 </div>
               )}
             </div>
