@@ -68,3 +68,6 @@ verify_jwt = true
 
 [functions.heygen-avatar-session]
 verify_jwt = true
+
+[functions.live-avatar-session]
+verify_jwt = true
