@@ -50,12 +50,23 @@ serve(async (req) => {
       }
 
       const data = await response.json();
-      console.log('Session token created:', data.session_id);
+      console.log('Full LiveAvatar token response:', JSON.stringify(data));
+      
+      // Handle different possible response structures from LiveAvatar API
+      const sessionId = data.session_id || data.sessionId || data.id || data.data?.session_id;
+      const sessionToken = data.session_token || data.sessionToken || data.token || data.access_token || data.data?.session_token || data.data?.token;
+      
+      console.log('Extracted session_id:', sessionId);
+      console.log('Extracted session_token:', sessionToken ? 'present' : 'missing');
+
+      if (!sessionToken) {
+        throw new Error('No session token in API response');
+      }
 
       return new Response(JSON.stringify({
         success: true,
-        session_id: data.session_id,
-        session_token: data.session_token,
+        session_id: sessionId,
+        session_token: sessionToken,
       }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
