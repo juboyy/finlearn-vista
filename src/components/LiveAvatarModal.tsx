@@ -206,17 +206,9 @@ export const LiveAvatarModal = ({
         setConnectionStatus('connected');
         toast.success(`Conectado com Avatar IA - ${agentName}`);
 
-        // Step 4: Send stop_listening to mute LiveAvatar's internal ears
-        try {
-          await sendAvatarCommand('avatar.stop_listening', {});
-          console.log('Avatar internal listening disabled');
-        } catch (err) {
-          console.warn('Could not disable avatar listening:', err);
-        }
-
-        // Send welcome message
+        // Send welcome message via DataChannel after a short delay
         setTimeout(() => {
-          sendTextToAvatar(`Ola! Sou ${agentName}, seu assistente de IA. Como posso ajudar voce hoje?`);
+          sendTextToAvatarViaDataChannel(room, `Ola! Sou ${agentName}, seu assistente de IA. Como posso ajudar voce hoje?`);
         }, 1500);
       });
 
@@ -292,29 +284,51 @@ export const LiveAvatarModal = ({
     setIsProcessingVoice(false);
   }, [isListening, stopListening]);
 
-  const sendAvatarCommand = async (command: string, payload: Record<string, unknown>) => {
-    if (!sessionTokenRef.current) return;
+  // Send command via LiveKit DataChannel (not HTTP)
+  const sendDataChannelCommand = useCallback((command: string, payload: Record<string, unknown> = {}) => {
+    const room = roomRef.current;
+    if (!room || room.state !== 'connected') {
+      console.warn('Room not connected, cannot send command');
+      return;
+    }
 
-    const { data, error } = await supabase.functions.invoke('live-avatar-session', {
-      body: { 
-        action: 'command', 
-        sessionToken: sessionTokenRef.current,
-        command,
-        payload
-      }
-    });
+    const message = JSON.stringify({ type: command, ...payload });
+    const data = new TextEncoder().encode(message);
+    
+    room.localParticipant.publishData(data, { reliable: true });
+    console.log('Sent DataChannel command:', command, payload);
+  }, []);
 
-    if (error) throw error;
-    return data;
-  };
+  // Helper function to send text to avatar via DataChannel
+  const sendTextToAvatarViaDataChannel = useCallback((room: Room, text: string) => {
+    if (!room || room.state !== 'connected' || !text.trim()) return;
+
+    const message = JSON.stringify({ type: 'speak', text });
+    const data = new TextEncoder().encode(message);
+    
+    room.localParticipant.publishData(data, { reliable: true });
+    console.log('Sent speak command via DataChannel:', text);
+
+    const timestamp = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    setMessages(prev => [...prev, { role: 'avatar', content: text, timestamp }]);
+    
+    setIsSpeaking(true);
+    const words = text.split(' ').length;
+    setTimeout(() => setIsSpeaking(false), words * 150);
+  }, []);
 
   const sendTextToAvatar = useCallback(async (text: string) => {
-    if (!sessionTokenRef.current || !text.trim()) return;
+    const room = roomRef.current;
+    if (!room || room.state !== 'connected' || !text.trim()) return;
 
     setIsSpeaking(true);
 
     try {
-      await sendAvatarCommand('avatar.speak_text', { text });
+      // Send via DataChannel instead of HTTP
+      const message = JSON.stringify({ type: 'speak', text });
+      const data = new TextEncoder().encode(message);
+      room.localParticipant.publishData(data, { reliable: true });
+      console.log('Sent speak command via DataChannel:', text);
 
       const timestamp = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
       setMessages(prev => [...prev, { role: 'avatar', content: text, timestamp }]);
