@@ -84,11 +84,33 @@ serve(async (req) => {
         },
       });
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Start session error:', errorText);
-        throw new Error(`Failed to start session: ${response.status} - ${errorText}`);
-      }
+       if (!response.ok) {
+         const errorText = await response.text();
+         console.error('Start session error:', errorText);
+
+         // Handle vendor-side concurrency limit gracefully (avoid 500)
+         try {
+           const parsed = JSON.parse(errorText);
+           if (response.status === 403 && parsed?.code === 4003) {
+             return new Response(
+               JSON.stringify({
+                 success: false,
+                 code: 4003,
+                 error: 'Session concurrency limit reached',
+               }),
+               {
+                 // Keep 200 so the client can handle via data.success without throwing a transport error
+                 status: 200,
+                 headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+               }
+             );
+           }
+         } catch {
+           // ignore JSON parse errors
+         }
+
+         throw new Error(`Failed to start session: ${response.status} - ${errorText}`);
+       }
 
       const data = await response.json();
       console.log('Session started, LiveKit URL received');
