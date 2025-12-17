@@ -34,10 +34,11 @@ serve(async (req) => {
         },
         body: JSON.stringify({
           mode: 'FULL',
-          avatar_id: body.avatarId || 'default',
+          avatar_id: body.avatarId || '6e32f90a-f566-45be-9ec7-a5f6999ee606',
           avatar_persona: {
-            voice_id: body.voiceId || 'default',
+            voice_id: body.voiceId || 'c84af063-5ce2-4370-8ef8-dcd0ef903d43',
             language: body.language || 'pt-BR',
+            context_id: body.contextId || '60c358de-c354-4363-bf75-8c7d1662e8d5',
           },
         }),
       });
