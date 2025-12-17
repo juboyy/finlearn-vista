@@ -162,16 +162,66 @@ serve(async (req) => {
        }
 
       const data = await response.json();
+      console.log('Full LiveAvatar start response:', JSON.stringify(data));
+
+      // Handle different possible response structures from LiveAvatar API
+      const livekitUrl =
+        data.livekit_url ||
+        data.livekitUrl ||
+        data.livekit_server_url ||
+        data.livekitServerUrl ||
+        data.livekit_ws_url ||
+        data.livekitWsUrl ||
+        data.data?.livekit_url ||
+        data.data?.livekitUrl ||
+        data.data?.livekit_server_url ||
+        data.data?.livekitServerUrl ||
+        data.data?.livekit_ws_url ||
+        data.data?.livekitWsUrl ||
+        data.url ||
+        data.data?.url;
+
+      const livekitToken =
+        data.livekit_client_token ||
+        data.livekitClientToken ||
+        data.livekit_token ||
+        data.livekitToken ||
+        data.data?.livekit_client_token ||
+        data.data?.livekitClientToken ||
+        data.data?.livekit_token ||
+        data.data?.livekitToken;
+
+      const roomName = data.room_name || data.roomName || data.data?.room_name || data.data?.roomName;
+
+      if (!livekitUrl || !livekitToken) {
+        console.error('Start session response missing LiveKit info:', JSON.stringify({ livekitUrl, livekitToken, roomName }));
+
+        // Keep 200 so the client can handle via data.success without a transport error
+        return new Response(
+          JSON.stringify({
+            success: false,
+            error: 'LiveKit URL/token ausentes na resposta da LiveAvatar. Nao foi possivel conectar.',
+          }),
+          {
+            status: 200,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        );
+      }
+
       console.log('Session started, LiveKit URL received');
 
-      return new Response(JSON.stringify({
-        success: true,
-        livekit_url: data.livekit_url,
-        livekit_token: data.livekit_client_token,
-        room_name: data.room_name,
-      }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({
+          success: true,
+          livekit_url: livekitUrl,
+          livekit_token: livekitToken,
+          room_name: roomName,
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     // Stop session

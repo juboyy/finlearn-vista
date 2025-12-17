@@ -241,6 +241,10 @@ export const LiveAvatarModal = ({
       });
 
       // Connect to LiveKit
+      if (!startData?.livekit_url || !startData?.livekit_token) {
+        throw new Error('Dados de conexao do LiveKit nao recebidos (URL/token).');
+      }
+
       await room.connect(startData.livekit_url, startData.livekit_token);
 
     } catch (error) {
