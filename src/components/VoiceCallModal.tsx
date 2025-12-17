@@ -165,15 +165,31 @@ const VoiceCallModal: React.FC<VoiceCallModalProps> = ({
     });
   };
 
-  const toggleRecording = () => {
+  const recordingStartTimeRef = useRef<number>(0);
+  const MIN_RECORDING_DURATION_MS = 1000; // Minimum 1 second of recording
+
+  const toggleRecording = async () => {
     if (!mediaRecorderRef.current || isProcessing) return;
 
     if (isRecording) {
+      // Check minimum recording duration
+      const recordingDuration = Date.now() - recordingStartTimeRef.current;
+      if (recordingDuration < MIN_RECORDING_DURATION_MS) {
+        toast({
+          title: "Gravacao muito curta",
+          description: "Mantenha pressionado por pelo menos 1 segundo.",
+          variant: "destructive",
+        });
+        return;
+      }
       mediaRecorderRef.current.stop();
       setIsRecording(false);
     } else {
       audioChunksRef.current = [];
-      mediaRecorderRef.current.start();
+      
+      // Start recording immediately and update UI
+      mediaRecorderRef.current.start(100); // Capture in 100ms chunks for faster response
+      recordingStartTimeRef.current = Date.now();
       setIsRecording(true);
       setCurrentTranscript("");
     }
