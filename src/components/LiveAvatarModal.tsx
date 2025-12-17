@@ -102,6 +102,8 @@ export const LiveAvatarModal = ({
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
+  const STORAGE_KEY = 'liveavatar_session_token';
+
   const startSession = useCallback(async () => {
     // Guard against duplicate starts (StrictMode, rapid open/close, retry spamming)
     if (isStartingRef.current || connectionStatus !== 'disconnected') return;
@@ -111,9 +113,16 @@ export const LiveAvatarModal = ({
     setConnectionStatus('connecting');
 
     try {
-      // Step 1: Get session token
+      // Cleanup: get old session token from storage and pass to backend
+      const oldSessionToken = localStorage.getItem(STORAGE_KEY);
+      
+      // Step 1: Get session token (backend will cleanup old session if provided)
       const { data: tokenData, error: tokenError } = await supabase.functions.invoke('live-avatar-session', {
-        body: { action: 'token', language: 'pt-BR' }
+        body: { 
+          action: 'token', 
+          language: 'pt-BR',
+          oldSessionToken: oldSessionToken || undefined
+        }
       });
 
       if (tokenError || !tokenData?.success) {
@@ -127,6 +136,7 @@ export const LiveAvatarModal = ({
             await supabase.functions.invoke('live-avatar-session', {
               body: { action: 'stop', sessionToken: tokenData.session_token }
             });
+            localStorage.removeItem(STORAGE_KEY);
           } catch {
             // Best-effort cleanup
           }
@@ -138,6 +148,8 @@ export const LiveAvatarModal = ({
       console.log('LiveAvatar token created:', tokenData.session_id);
       setSessionToken(tokenData.session_token);
       sessionTokenRef.current = tokenData.session_token;
+      // Store new token for future cleanup
+      localStorage.setItem(STORAGE_KEY, tokenData.session_token);
 
       // Step 2: Start session
       const { data: startData, error: startError } = await supabase.functions.invoke('live-avatar-session', {
@@ -266,6 +278,8 @@ export const LiveAvatarModal = ({
       }
     }
 
+    // Clear stored session token
+    localStorage.removeItem(STORAGE_KEY);
     setSessionToken(null);
     sessionTokenRef.current = null;
     setConnectionStatus('disconnected');
