@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Video, Mic, MicOff, Phone, Send, Loader2, MessageCircle, RefreshCw } from "lucide-react";
+import { Video, Mic, MicOff, Phone, Send, Loader2, MessageCircle, RefreshCw, Volume2 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
@@ -37,6 +37,7 @@ export const LiveAvatarModal = ({
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [callDuration, setCallDuration] = useState(0);
   const [isProcessingVoice, setIsProcessingVoice] = useState(false);
+  const [isAudioBlocked, setIsAudioBlocked] = useState(false);
   
   const {
     isListening,
@@ -59,6 +60,7 @@ export const LiveAvatarModal = ({
   const unmountedRef = useRef(false);
   const startRunIdRef = useRef(0);
   const isStartingRef = useRef(false);
+  const hasAutoStartedRef = useRef(false);
 
   useEffect(() => {
     openRef.current = open;
